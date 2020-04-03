@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1585864329704.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2091028821",
+    "id" : "380D363D",
+    "lastKnownWriteTime" : 1585429974,
+    "last_content_update" : 1585429974,
+    "path" : "~/Documents/AdvancedR/Exercises/Exercises.Rmd",
+    "project_path" : "Exercises/Exercises.Rmd",
+    "properties" : {
+        "cursorPosition" : "6,19",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
