@@ -1,6 +1,6 @@
 ---
 title: "Advanced R"
-subtitle: "Chapter 02"
+subtitle: "Template"
 author: "R4DS Reading Group"
 output:
   xaringan::moon_reader:
