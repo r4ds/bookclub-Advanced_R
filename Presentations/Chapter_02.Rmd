@@ -6,6 +6,8 @@ output:
   xaringan::moon_reader:
     lib_dir: libs
     css: xaringan-themer.css
+    includes:
+      after_body: insert-logo.html
 ---
 
 
@@ -27,4 +29,9 @@ mono_light(
 
 ---
 
+class: inverse, hide-logo
+
 # Another Slide
+This slide doesn't have a logo
+
+---
