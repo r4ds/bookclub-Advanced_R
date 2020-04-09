@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 # R4Ds Advanced R Bookclub
+=======
+# R4DS [Advanced R](https://adv-r.hadley.nz/) Bookclub
+
+>>>>>>> 05483b4aa94fe94abe5304cad58b66bdf60d4d72
 
 This repo contains 4 main folders:
 
@@ -16,5 +21,32 @@ We will also be recording these presentations for those who cannot attend.
 - data: The dataset we will be using for presentations
 
 # Meeting Schedule 
-- 2020-04-02: Introductions and Meeting Format
-- DATE TBD: Chapter 2: Asmae Toumi
+### Following the Chapters of [Advanced R](https://adv-r.hadley.nz/) 2nd Edition
+All Meetings Scheduled for 8:00 PM Eastern unless otherwise noted
+
+
+- 2020-04-02 Introductions and Meeting Format
+- 2020-04-09 Chapter 2: Asmae Toumi
+- 2020-04-16 Chapter 3: 
+- 2020-04-23 Chapter 4:
+- 2020-04-30 Chapter 5:
+- 2020-05-07 Chapter 6:
+- 2020-05-14 Chapter 7:
+- 2020-05-21 Chapter 8:
+- 2020-05-28 Chapter 9:
+- 2020-06-04 Chapter 10:
+- 2020-06-11 Chapter 11:
+- 2020-06-18 Chapter 12:
+- 2020-06-25 Chapter 13:
+- 2020-07-02 Chapter 14:
+- 2020-07-09 Chapter 15:
+- 2020-07-16 Chapter 16:
+- 2020-07-23 Chapter 17:
+- 2020-07-30 Chapter 18:
+- 2020-08-06 Chapter 19:
+- 2020-08-13 Chapter 20:
+- 2020-08-20 Chapter 21:
+- 2020-08-27 Chapter 22:
+- 2020-09-03 Chapter 23:
+- 2020-09-10 Chapter 24:
+- 2020-09-17 Chapter 25:
