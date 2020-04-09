@@ -1,4 +1,5 @@
-# R4Ds Advanced R Bookclub
+# R4DS [Advanced R](https://adv-r.hadley.nz/) Bookclub
+
 
 This repo contains 4 main folders:
 
