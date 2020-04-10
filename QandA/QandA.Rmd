@@ -110,7 +110,7 @@ for (i in seq_along(medians)) {
 ```
 :::
 
-If we run the following chunk, `dubugging` our loop
+If we run the following chunk, `dubug`ing our loop
 
 ```{r, eval=FALSE}
 cat(tracemem(x), "\n")
@@ -146,7 +146,11 @@ tracemem[0x7fdc9de843e8 -> 0x7fdc9de84458]: [[<-.data.frame [[<-
 
 When we run `tracemem` on the for loop above we see each column is copied twice followed by the `[[<-.data.frame [[<- `, the stack trace showing exactly where the duplication occured.
 
-When we write `x[[i]] <- value`, we're really calling the function `[[<-.data.frame` with inputs `x`, `i`, and `value`. We can step into the call of this function by running `debug(``[[<-.data.frame``)`:
+So what is ``[[<-.data.frame``? It's a function! By looking at `?``[[<-.data.frame`` we see this is used to "extract or replace subsets of data frames."
+
+When we write `x[[i]] <- value`, it's really shorthand for calling the function `[[<-.data.frame` with inputs `x`, `i`, and `value`. 
+
+Now let's step into the call of this base function by running `debug(``[[<-.data.frame``)`:
 
 ```{r, eval=FALSE}
 debug(`[[<-.data.frame`)
