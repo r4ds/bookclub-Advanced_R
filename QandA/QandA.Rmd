@@ -110,7 +110,6 @@ for (i in seq_along(medians)) {
 ```
 :::
 
-Using `tracemem` we see `x`s original address: 
 
 ```{r, eval=FALSE}
 cat(tracemem(x), "\n")
