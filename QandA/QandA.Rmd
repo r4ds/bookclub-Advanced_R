@@ -35,7 +35,29 @@ modify in place only happens when objects with a single binding get a special pe
 Can we go over and break down figure in 2.3.2
 :::
 
-XXX
+When you create this function:
+
+```{r, eval=FALSE}
+crazyfunction <- function(eh) {eh}
+```
+
+`eh` doesn't exist in memory at this point.
+
+```{r, eval=FALSE}
+x <- c(1,2,3)
+```
+
+x exists in memory.
+
+```{r, eval=FALSE}
+z <- crazyfunction(x) 
+```
+
+`z` now points at `x`, and `eh` still doesn't exist (except metaphorically in Canada). `eh` was created and exists WHILE `crazyfunction()` was being run, but doesn't get saved to the global environment, so after the function is run you can't see its memory reference. 
+
+The round brackets `(eh)` list the arguments, the curly brackets `{eh}` define the operation that it's doing - and you're assigning it to `crazyfunction`. 
+
+**R functions automatically return the result of the last expression** so when you call that object (the argument `eh`) it returns the value of that argument. This is called **implicit returns**
 
 ## 2.3.3 Lists
 
@@ -86,4 +108,129 @@ for (i in seq_along(medians)) {
 ```
 :::
 
-XXX
+If we run the following chunk, `dubugging` our loop
+
+```{r, eval=FALSE}
+cat(tracemem(x), "\n")
+```
+
+```
+# <0x7fdc9d852a18>
+```
+
+```{r, eval=FALSE}
+debug(`[[<-.data.frame`)
+for (i in 1:5) {
+  x[[i]] <- x[[i]] - medians[[i]]
+}
+```
+
+We get to step into the call to `[[<-.data.frame` and use `tracemem` once inside to find where the new values are assigned to the column
+
+```{r eval=FALSE}
+function (x, i, j, value) 
+{
+  if (!all(names(sys.call()) %in% c("", "value"))) 
+    warning("named arguments are discouraged")
+  cl <- oldClass(x)
+  # this is where another copy of x is made!
+  class(x) <- NULL
+```
+
+```
+ # tracemem[0x7fdc9d852a18 -> 0x7fdc9c99cc08]: 
+```
+
+```{r, eval = FALSE}
+nrows <- .row_names_info(x, 2L)
+  if (is.atomic(value) && !is.null(names(value))) 
+    names(value) <- NULL
+  if (nargs() < 4L) {
+    nc <- length(x)
+    if (!is.null(value)) {
+      N <- NROW(value)
+      if (N > nrows) 
+        stop(sprintf(ngettext(N, "replacement has %d row, data has %d", 
+          "replacement has %d rows, data has %d"), N, 
+          nrows), domain = NA)
+      if (N < nrows) 
+        if (N > 0L && (nrows%%N == 0L) && length(dim(value)) <= 
+          1L) 
+          value <- rep(value, length.out = nrows)
+        else stop(sprintf(ngettext(N, "replacement has %d row, data has %d", 
+          "replacement has %d rows, data has %d"), N, 
+          nrows), domain = NA)
+    }
+    x[[i]] <- value
+    if (length(x) > nc) {
+      nc <- length(x)
+      if (names(x)[nc] == "") 
+        names(x)[nc] <- paste0("V", nc)
+      names(x) <- make.unique(names(x))
+    }
+    class(x) <- cl
+    return(x)
+  }
+  if (missing(i) || missing(j)) 
+    stop("only valid calls are x[[j]] <- value or x[[i,j]] <- value")
+  rows <- attr(x, "row.names")
+  nvars <- length(x)
+  if (n <- is.character(i)) {
+    ii <- match(i, rows)
+    n <- sum(new.rows <- is.na(ii))
+    if (n > 0L) {
+      ii[new.rows] <- seq.int(from = nrows + 1L, length.out = n)
+      new.rows <- i[new.rows]
+    }
+    i <- ii
+  }
+  if (all(i >= 0L) && (nn <- max(i)) > nrows) {
+    if (n == 0L) {
+      nrr <- (nrows + 1L):nn
+      if (inherits(value, "data.frame") && (dim(value)[1L]) >= 
+        length(nrr)) {
+        new.rows <- attr(value, "row.names")[seq_len(nrr)]
+        repl <- duplicated(new.rows) | match(new.rows, 
+          rows, 0L)
+        if (any(repl)) 
+          new.rows[repl] <- nrr[repl]
+      }
+      else new.rows <- nrr
+    }
+    x <- xpdrows.data.frame(x, rows, new.rows)
+    rows <- attr(x, "row.names")
+    nrows <- length(rows)
+  }
+  iseq <- seq_len(nrows)[i]
+  if (anyNA(iseq)) 
+    stop("non-existent rows not allowed")
+  if (is.character(j)) {
+    if ("" %in% j) 
+      stop("column name \"\" cannot match any column")
+    jseq <- match(j, names(x))
+    if (anyNA(jseq)) 
+      stop(gettextf("replacing element in non-existent column: %s", 
+        j[is.na(jseq)]), domain = NA)
+  }
+  else if (is.logical(j) || min(j) < 0L) 
+    jseq <- seq_along(x)[j]
+  else {
+    jseq <- j
+    if (max(jseq) > nvars) 
+      stop(gettextf("replacing element in non-existent column: %s", 
+        jseq[jseq > nvars]), domain = NA)
+  }
+  if (length(iseq) > 1L || length(jseq) > 1L) 
+    stop("only a single element should be replaced")
+  x[[jseq]][[iseq]] <- value
+  # here is where x is copied again!
+  class(x) <- cl
+```
+
+```
+# tracemem[0x7fdc992ae9d8 -> 0x7fdc9be55258]: 
+```
+```{r, eval=FALSE} 
+  x
+}
+```
