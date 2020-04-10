@@ -27,7 +27,7 @@ htmltools::img(src = knitr::image_uri("r4ds.png"),
 copy-on-modify vs copy-in-place: is one more preferable in certain situations?
 :::
 
-XXX
+modify in place only happens when objects with a single binding get a special performance optimisation and to enviornments.
 
 ## 2.3.2 Function calls
 
@@ -35,7 +35,29 @@ XXX
 Can we go over and break down figure in 2.3.2
 :::
 
-XXX
+When you create this function:
+
+```{r, eval=FALSE}
+crazyfunction <- function(eh) {eh}
+```
+
+`eh` doesn't exist in memory at this point.
+
+```{r, eval=FALSE}
+x <- c(1,2,3)
+```
+
+x exists in memory.
+
+```{r, eval=FALSE}
+z <- crazyfunction(x) 
+```
+
+`z` now points at `x`, and `eh` still doesn't exist (except metaphorically in Canada). `eh` was created and exists WHILE `crazyfunction()` was being run, but doesn't get saved to the global environment, so after the function is run you can't see its memory reference. 
+
+The round brackets `(eh)` list the arguments, the curly brackets `{eh}` define the operation that it's doing - and you're assigning it to `crazyfunction`. 
+
+**R functions automatically return the result of the last expression** so when you call that object (the argument `eh`) it returns the value of that argument. This is called **implicit returns**
 
 ## 2.3.3 Lists
 
@@ -43,16 +65,14 @@ XXX
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
 :::
 
-XXX
+Automagical!
 
 ## 2.3.5 Character vectors
 
 
 :::question
-What exactly is the "global string pool" and what does `ref()` show us?
+Is there a way to clear the "global string pool"?
 :::
-
-XXX
 
 ## 2.4.1 Object size
 
@@ -61,12 +81,12 @@ XXX
 I understand that `ALTREP` makes the size of `obj_size(1:3) == obj_size(1:100)` but do I need to have a better grasp than that? [Should we go over this](https://blog.revolutionanalytics.com/2017/09/altrep-preview.html)
 :::
 
-XXX
+It's kind of cool to know but... Probably not.
 
 ## 2.5.1 Modify-in-place
 
 :::question
-"When it comes to bindings, R can currently7 only count 0, 1, or many. That means that if an object has two bindings, and one goes away, the reference count does not go back to 1: one less than many is still many. In turn, this means that R will make copies when it sometimes doesn’t need to."
+"When it comes to bindings, R can currently only count 0, 1, or many. That means that if an object has two bindings, and one goes away, the reference count does not go back to 1: one less than many is still many. In turn, this means that R will make copies when it sometimes doesn’t need to."
 
 Can we come up with an example of this? It seems really theoretical right now.
 :::
@@ -74,14 +94,174 @@ Can we come up with an example of this? It seems really theoretical right now.
 XXX
 
 :::question
-Can we break down this code diagrammatically? I'd like to really solidify why it's copying three times per loop.
+
+Can we break down this code a bit more? I'd like to really understand when and how it's copying three times.
+
 ```{r}
+# dataframe of 5 columns of numbers
 x <- data.frame(matrix(runif(5 * 1e4), ncol = 5))
+# median number for each column
 medians <- vapply(x, median, numeric(1))
+
+# subtract the median of each column from each value in the column
 for (i in seq_along(medians)) {
   x[[i]] <- x[[i]] - medians[[i]]
 }
 ```
 :::
 
-XXX
+```{r, eval=FALSE}
+cat(tracemem(x), "\n")
+```
+
+```
+<0x7fdc99a6f9a8> 
+```
+
+```{r, eval=FALSE}
+for (i in 1:5) {
+  x[[i]] <- x[[i]] - medians[[i]]
+}
+```
+
+```
+tracemem[0x7fdc99a6f9a8 -> 0x7fdc9de83e38]: 
+tracemem[0x7fdc9de83e38 -> 0x7fdc9de83ea8]: [[<-.data.frame [[<- 
+tracemem[0x7fdc9de83ea8 -> 0x7fdc9de83f18]: [[<-.data.frame [[<- 
+tracemem[0x7fdc9de83f18 -> 0x7fdc9de83f88]: 
+tracemem[0x7fdc9de83f88 -> 0x7fdc9de83ff8]: [[<-.data.frame [[<- 
+tracemem[0x7fdc9de83ff8 -> 0x7fdc9de84068]: [[<-.data.frame [[<- 
+tracemem[0x7fdc9de84068 -> 0x7fdc9de840d8]: 
+tracemem[0x7fdc9de840d8 -> 0x7fdc9de84148]: [[<-.data.frame [[<- 
+tracemem[0x7fdc9de84148 -> 0x7fdc9de841b8]: [[<-.data.frame [[<- 
+tracemem[0x7fdc9de841b8 -> 0x7fdc9de84228]: 
+tracemem[0x7fdc9de84228 -> 0x7fdc9de84298]: [[<-.data.frame [[<- 
+tracemem[0x7fdc9de84298 -> 0x7fdc9de84308]: [[<-.data.frame [[<- 
+tracemem[0x7fdc9de84308 -> 0x7fdc9de84378]: 
+tracemem[0x7fdc9de84378 -> 0x7fdc9de843e8]: [[<-.data.frame [[<- 
+tracemem[0x7fdc9de843e8 -> 0x7fdc9de84458]: [[<-.data.frame [[<- 
+```
+
+When we run `tracemem` on the for loop above we see each column is copied twice followed by the `[[<-.data.frame [[<- `, the stack trace showing exactly where the duplication occured.
+
+So what is ``[[<-.data.frame``? It's a function! By looking at `?``[[<-.data.frame`` we see this is used to "extract or replace subsets of data frames."
+
+When we write `x[[i]] <- value`, it's really shorthand for calling the function `[[<-.data.frame` with inputs `x`, `i`, and `value`. 
+
+Now let's step into the call of this base function by running `debug(``[[<-.data.frame``)`:
+
+```{r, eval=FALSE}
+debug(`[[<-.data.frame`)
+```
+
+and once inside, use `tracemem()` to find where the new values are assigned to the column:
+
+```{r eval=FALSE}
+function (x, i, j, value) 
+{
+  if (!all(names(sys.call()) %in% c("", "value"))) 
+    warning("named arguments are discouraged")
+  cl <- oldClass(x)
+  # this is where another copy of x is made!
+  class(x) <- NULL
+```
+
+```
+ # tracemem[0x7fdc9d852a18 -> 0x7fdc9c99cc08]: 
+```
+
+```{r, eval = FALSE}
+nrows <- .row_names_info(x, 2L)
+  if (is.atomic(value) && !is.null(names(value))) 
+    names(value) <- NULL
+  if (nargs() < 4L) {
+    nc <- length(x)
+    if (!is.null(value)) {
+      N <- NROW(value)
+      if (N > nrows) 
+        stop(sprintf(ngettext(N, "replacement has %d row, data has %d", 
+          "replacement has %d rows, data has %d"), N, 
+          nrows), domain = NA)
+      if (N < nrows) 
+        if (N > 0L && (nrows%%N == 0L) && length(dim(value)) <= 
+          1L) 
+          value <- rep(value, length.out = nrows)
+        else stop(sprintf(ngettext(N, "replacement has %d row, data has %d", 
+          "replacement has %d rows, data has %d"), N, 
+          nrows), domain = NA)
+    }
+    x[[i]] <- value
+    if (length(x) > nc) {
+      nc <- length(x)
+      if (names(x)[nc] == "") 
+        names(x)[nc] <- paste0("V", nc)
+      names(x) <- make.unique(names(x))
+    }
+    class(x) <- cl
+    return(x)
+  }
+  if (missing(i) || missing(j)) 
+    stop("only valid calls are x[[j]] <- value or x[[i,j]] <- value")
+  rows <- attr(x, "row.names")
+  nvars <- length(x)
+  if (n <- is.character(i)) {
+    ii <- match(i, rows)
+    n <- sum(new.rows <- is.na(ii))
+    if (n > 0L) {
+      ii[new.rows] <- seq.int(from = nrows + 1L, length.out = n)
+      new.rows <- i[new.rows]
+    }
+    i <- ii
+  }
+  if (all(i >= 0L) && (nn <- max(i)) > nrows) {
+    if (n == 0L) {
+      nrr <- (nrows + 1L):nn
+      if (inherits(value, "data.frame") && (dim(value)[1L]) >= 
+        length(nrr)) {
+        new.rows <- attr(value, "row.names")[seq_len(nrr)]
+        repl <- duplicated(new.rows) | match(new.rows, 
+          rows, 0L)
+        if (any(repl)) 
+          new.rows[repl] <- nrr[repl]
+      }
+      else new.rows <- nrr
+    }
+    x <- xpdrows.data.frame(x, rows, new.rows)
+    rows <- attr(x, "row.names")
+    nrows <- length(rows)
+  }
+  iseq <- seq_len(nrows)[i]
+  if (anyNA(iseq)) 
+    stop("non-existent rows not allowed")
+  if (is.character(j)) {
+    if ("" %in% j) 
+      stop("column name \"\" cannot match any column")
+    jseq <- match(j, names(x))
+    if (anyNA(jseq)) 
+      stop(gettextf("replacing element in non-existent column: %s", 
+        j[is.na(jseq)]), domain = NA)
+  }
+  else if (is.logical(j) || min(j) < 0L) 
+    jseq <- seq_along(x)[j]
+  else {
+    jseq <- j
+    if (max(jseq) > nvars) 
+      stop(gettextf("replacing element in non-existent column: %s", 
+        jseq[jseq > nvars]), domain = NA)
+  }
+  if (length(iseq) > 1L || length(jseq) > 1L) 
+    stop("only a single element should be replaced")
+  x[[jseq]][[iseq]] <- value
+  # here is where x is copied again!
+  class(x) <- cl
+```
+
+```
+# tracemem[0x7fdc992ae9d8 -> 0x7fdc9be55258]: 
+```
+```{r, eval=FALSE} 
+  x
+}
+```
+
+Thus seeing exactly where the three copies are happening!

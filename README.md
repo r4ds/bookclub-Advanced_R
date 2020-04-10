@@ -1,6 +1,5 @@
 # R4DS [Advanced R](https://adv-r.hadley.nz/) Bookclub
 
-
 This repo contains 4 main folders:
 
 - Exercises: The official Advanced R exercises from https://advanced-r-solutions.rbind.io/, 
