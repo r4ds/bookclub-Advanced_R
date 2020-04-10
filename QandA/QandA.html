@@ -1587,16 +1587,15 @@ div.tocify {
 <div id="character-vectors" class="section level2">
 <h2>2.3.5 Character vectors</h2>
 <div class="question">
-<p>What exactly is the “global string pool” and what does <code>ref()</code> show us?</p>
+<p>Is there a way to clear the “global string pool”?</p>
 </div>
-<p><code>ref</code> shows the connection between shared references.</p>
 </div>
 <div id="object-size" class="section level2">
 <h2>2.4.1 Object size</h2>
 <div class="question">
 <p>I understand that <code>ALTREP</code> makes the size of <code>obj_size(1:3) == obj_size(1:100)</code> but do I need to have a better grasp than that? <a href="https://blog.revolutionanalytics.com/2017/09/altrep-preview.html">Should we go over this</a></p>
 </div>
-<p>Probably not.</p>
+<p>It’s kind of cool to know but… Probably not.</p>
 </div>
 <div id="modify-in-place" class="section level2">
 <h2>2.5.1 Modify-in-place</h2>
@@ -1607,21 +1606,41 @@ div.tocify {
 <p>XXX</p>
 <div class="question">
 <p>Can we break down this code a bit more? I’d like to really understand when and how it’s copying three times.</p>
-<pre class="r"><code>x &lt;- data.frame(matrix(runif(5 * 1e4), ncol = 5))
+<pre class="r"><code># dataframe of 5 columns of numbers
+x &lt;- data.frame(matrix(runif(5 * 1e4), ncol = 5))
+# median number for each column
 medians &lt;- vapply(x, median, numeric(1))
 
+# subtract the median of each column from each value in the column
 for (i in seq_along(medians)) {
   x[[i]] &lt;- x[[i]] - medians[[i]]
 }</code></pre>
 </div>
 <p>If we run the following chunk, <code>dubugging</code> our loop</p>
 <pre class="r"><code>cat(tracemem(x), &quot;\n&quot;)</code></pre>
-<pre><code># &lt;0x7fdc9d852a18&gt;</code></pre>
-<pre class="r"><code>debug(`[[&lt;-.data.frame`)
-for (i in 1:5) {
+<pre><code>&lt;0x7fdc99a6f9a8&gt; </code></pre>
+<pre class="r"><code>for (i in 1:5) {
   x[[i]] &lt;- x[[i]] - medians[[i]]
 }</code></pre>
-<p>We get to step into the call to <code>[[&lt;-.data.frame</code> and use <code>tracemem</code> once inside to find where the new values are assigned to the column</p>
+<pre><code>tracemem[0x7fdc99a6f9a8 -&gt; 0x7fdc9de83e38]: 
+tracemem[0x7fdc9de83e38 -&gt; 0x7fdc9de83ea8]: [[&lt;-.data.frame [[&lt;- 
+tracemem[0x7fdc9de83ea8 -&gt; 0x7fdc9de83f18]: [[&lt;-.data.frame [[&lt;- 
+tracemem[0x7fdc9de83f18 -&gt; 0x7fdc9de83f88]: 
+tracemem[0x7fdc9de83f88 -&gt; 0x7fdc9de83ff8]: [[&lt;-.data.frame [[&lt;- 
+tracemem[0x7fdc9de83ff8 -&gt; 0x7fdc9de84068]: [[&lt;-.data.frame [[&lt;- 
+tracemem[0x7fdc9de84068 -&gt; 0x7fdc9de840d8]: 
+tracemem[0x7fdc9de840d8 -&gt; 0x7fdc9de84148]: [[&lt;-.data.frame [[&lt;- 
+tracemem[0x7fdc9de84148 -&gt; 0x7fdc9de841b8]: [[&lt;-.data.frame [[&lt;- 
+tracemem[0x7fdc9de841b8 -&gt; 0x7fdc9de84228]: 
+tracemem[0x7fdc9de84228 -&gt; 0x7fdc9de84298]: [[&lt;-.data.frame [[&lt;- 
+tracemem[0x7fdc9de84298 -&gt; 0x7fdc9de84308]: [[&lt;-.data.frame [[&lt;- 
+tracemem[0x7fdc9de84308 -&gt; 0x7fdc9de84378]: 
+tracemem[0x7fdc9de84378 -&gt; 0x7fdc9de843e8]: [[&lt;-.data.frame [[&lt;- 
+tracemem[0x7fdc9de843e8 -&gt; 0x7fdc9de84458]: [[&lt;-.data.frame [[&lt;- </code></pre>
+<p>When we run <code>tracemem</code> on the for loop above we see each column is copied twice followed by the <code>[[&lt;-.data.frame [[&lt;-</code>, the stack trace showing exactly where the duplication occured.</p>
+<p>When we write <code>x[[i]] &lt;- value</code>, we’re really calling the function <code>[[&lt;-.data.frame</code> with inputs <code>x</code>, <code>i</code>, and <code>value</code>. We can step into the call of this function by running <code>debug(``[[&lt;-.data.frame``)</code>:</p>
+<pre class="r"><code>debug(`[[&lt;-.data.frame`)</code></pre>
+<p>and once inside, use <code>tracemem()</code> to find where the new values are assigned to the column:</p>
 <pre class="r"><code>function (x, i, j, value) 
 {
   if (!all(names(sys.call()) %in% c(&quot;&quot;, &quot;value&quot;))) 
@@ -1716,6 +1735,7 @@ for (i in 1:5) {
 <pre><code># tracemem[0x7fdc992ae9d8 -&gt; 0x7fdc9be55258]: </code></pre>
 <pre class="r"><code>  x
 }</code></pre>
+<p>Thus seeing exactly where the three copies are happening!</p>
 </div>
 </div>
 
