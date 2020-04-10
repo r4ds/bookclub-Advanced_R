@@ -110,8 +110,6 @@ for (i in seq_along(medians)) {
 ```
 :::
 
-If we run the following chunk, `dubug`ing our loop
-
 ```{r, eval=FALSE}
 cat(tracemem(x), "\n")
 ```
