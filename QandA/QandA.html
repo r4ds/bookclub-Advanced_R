@@ -1616,7 +1616,6 @@ for (i in seq_along(medians)) {
   x[[i]] &lt;- x[[i]] - medians[[i]]
 }</code></pre>
 </div>
-<p>If we run the following chunk, <code>dubugging</code> our loop</p>
 <pre class="r"><code>cat(tracemem(x), &quot;\n&quot;)</code></pre>
 <pre><code>&lt;0x7fdc99a6f9a8&gt; </code></pre>
 <pre class="r"><code>for (i in 1:5) {
@@ -1638,7 +1637,9 @@ tracemem[0x7fdc9de84308 -&gt; 0x7fdc9de84378]:
 tracemem[0x7fdc9de84378 -&gt; 0x7fdc9de843e8]: [[&lt;-.data.frame [[&lt;- 
 tracemem[0x7fdc9de843e8 -&gt; 0x7fdc9de84458]: [[&lt;-.data.frame [[&lt;- </code></pre>
 <p>When we run <code>tracemem</code> on the for loop above we see each column is copied twice followed by the <code>[[&lt;-.data.frame [[&lt;-</code>, the stack trace showing exactly where the duplication occured.</p>
-<p>When we write <code>x[[i]] &lt;- value</code>, we’re really calling the function <code>[[&lt;-.data.frame</code> with inputs <code>x</code>, <code>i</code>, and <code>value</code>. We can step into the call of this function by running <code>debug(``[[&lt;-.data.frame``)</code>:</p>
+<p>So what is <code>[[&lt;-.data.frame</code>? It’s a function! By looking at `?<code>[[&lt;-.data.frame</code> we see this is used to “extract or replace subsets of data frames.”</p>
+<p>When we write <code>x[[i]] &lt;- value</code>, it’s really shorthand for calling the function <code>[[&lt;-.data.frame</code> with inputs <code>x</code>, <code>i</code>, and <code>value</code>.</p>
+<p>Now let’s step into the call of this base function by running <code>debug(``[[&lt;-.data.frame``)</code>:</p>
 <pre class="r"><code>debug(`[[&lt;-.data.frame`)</code></pre>
 <p>and once inside, use <code>tracemem()</code> to find where the new values are assigned to the column:</p>
 <pre class="r"><code>function (x, i, j, value) 
@@ -1737,6 +1738,9 @@ tracemem[0x7fdc9de843e8 -&gt; 0x7fdc9de84458]: [[&lt;-.data.frame [[&lt;- </code
 }</code></pre>
 <p>Thus seeing exactly where the three copies are happening!</p>
 </div>
+</div>
+<div id="chapter-3" class="section level1">
+<h1>Chapter 3</h1>
 </div>
 
 
