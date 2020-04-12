@@ -7,7 +7,7 @@ output:
     css: styles.css
 ---
 
-A companion to [Advanced R](https://adv-r.hadley.nz/rcpp.html#acknowledgments) and suppliment to [Advanced R Solutions](https://advanced-r-solutions.rbind.io/names-and-values.html#copy-on-modify)
+A companion to [Advanced R](https://adv-r.hadley.nz/rcpp.html#acknowledgments) and supplement to [Advanced R Solutions](https://advanced-r-solutions.rbind.io/names-and-values.html#copy-on-modify)
 
 ```{r, echo=FALSE}
 htmltools::img(src = knitr::image_uri("r4ds.png"), 
@@ -27,7 +27,7 @@ htmltools::img(src = knitr::image_uri("r4ds.png"),
 copy-on-modify vs copy-in-place: is one more preferable in certain situations?
 :::
 
-modify in place only happens when objects with a single binding get a special performance optimisation and to enviornments.
+modify in place only happens when objects with a single binding get a special performance optimization and to environments.
 
 ## 2.3.2 Function calls
 
@@ -143,7 +143,7 @@ tracemem[0x7fdc9de84378 -> 0x7fdc9de843e8]: [[<-.data.frame [[<-
 tracemem[0x7fdc9de843e8 -> 0x7fdc9de84458]: [[<-.data.frame [[<- 
 ```
 
-When we run `tracemem` on the for loop above we see each column is copied twice followed by the `[[<-.data.frame [[<- `, the stack trace showing exactly where the duplication occured.
+When we run `tracemem` on the for loop above we see each column is copied twice followed by the `[[<-.data.frame [[<- `, the stack trace showing exactly where the duplication occurred.
 
 So what is ``[[<-.data.frame``? It's a function! By looking at `?``[[<-.data.frame`` we see this is used to "extract or replace subsets of data frames."
 
@@ -344,9 +344,47 @@ ncol(my_matrix) == NCOL(my_matrix)
 :::question
 Putting it all together: the diagram.
 
-```{r}
+```{r, echo=FALSE}
 knitr::include_graphics("../images/vectors.png")
 ```
 
 What changes should we make? What did I forget to include?
+:::
+
+
+:::question
+As long as the number of rows matches the data frame, it’s also possible to have a matrix or array as a column of a data frame. (This requires a slight extension to our definition of a data frame: it’s not the `length()` of each column that must be equal, but the `NROW()`.)
+
+```{r}
+df <- data.frame(x = c(1,2,3,4,5),
+                 y = c(letters[1:5]))
+
+length(df$y) == NROW(df$y)
+```
+
+What's an example of where `length() != NROW()`
+:::
+
+
+:::question
+
+The solution manual gives the answer and notes: 
+
+```{r}
+df_coltypes <- data.frame(
+  a = c("a", "b"),
+  b = c(TRUE, FALSE),
+  c = c(1L, 0L),
+  d = c(1.5, 2),
+  e = c("one" = 1, "two" = 2),
+  g = factor(c("f1", "f2")),
+  stringsAsFactors = FALSE
+)
+
+as.matrix(df_coltypes)
+```
+
+"Note that `format()` is applied to the characters, which gives surprising results: `TRUE` is transformed to `" TRUE"` (starting with a space!)."
+
+...But where is the `format()` call happening? I don't see a space!
 :::
