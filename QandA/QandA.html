@@ -1820,6 +1820,25 @@ length(df$y) == NROW(df$y)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>What’s an example of where <code>length() != NROW()</code></p>
 </div>
+<div class="question">
+<p>The solution manual gives the answer and notes:</p>
+<pre class="r"><code>df_coltypes &lt;- data.frame(
+  a = c(&quot;a&quot;, &quot;b&quot;),
+  b = c(TRUE, FALSE),
+  c = c(1L, 0L),
+  d = c(1.5, 2),
+  e = c(&quot;one&quot; = 1, &quot;two&quot; = 2),
+  g = factor(c(&quot;f1&quot;, &quot;f2&quot;)),
+  stringsAsFactors = FALSE
+)
+
+as.matrix(df_coltypes)</code></pre>
+<pre><code>##     a   b       c   d     e   g   
+## one &quot;a&quot; &quot;TRUE&quot;  &quot;1&quot; &quot;1.5&quot; &quot;1&quot; &quot;f1&quot;
+## two &quot;b&quot; &quot;FALSE&quot; &quot;0&quot; &quot;2.0&quot; &quot;2&quot; &quot;f2&quot;</code></pre>
+<p>“Note that <code>format()</code> is applied to the characters, which gives surprising results: <code>TRUE</code> is transformed to <code>&quot; TRUE&quot;</code> (starting with a space!).”</p>
+<p>…But where is the <code>format()</code> call happening? I don’t see a space!</p>
+</div>
 </div>
 
 
