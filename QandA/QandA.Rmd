@@ -344,9 +344,23 @@ ncol(my_matrix) == NCOL(my_matrix)
 :::question
 Putting it all together: the diagram.
 
-```{r}
+```{r, echo=FALSE}
 knitr::include_graphics("../images/vectors.png")
 ```
 
 What changes should we make? What did I forget to include?
+:::
+
+
+:::question
+As long as the number of rows matches the data frame, it’s also possible to have a matrix or array as a column of a data frame. (This requires a slight extension to our definition of a data frame: it’s not the `length()` of each column that must be equal, but the `NROW()`.)
+
+```{r}
+df <- data.frame(x = c(1,2,3,4,5),
+                 y = c(letters[1:5]))
+
+length(df$y) == NROW(df$y)
+```
+
+What's an example of where `length() != NROW()`
 :::
