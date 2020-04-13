@@ -4,7 +4,7 @@
     <title>Advanced R by Hadley Wickham</title>
     <meta charset="utf-8" />
     <meta name="author" content="Asmae Toumi" />
-    <meta name="date" content="2020-04-09" />
+    <meta name="date" content="2020-04-11" />
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
   </head>
@@ -16,7 +16,7 @@ class: center, middle, inverse, title-slide
 ## Chapter 2: Names and Values
 ### Asmae Toumi
 ### <span class="citation">@asmae_toumi</span>
-### 2020-04-09
+### 2020-04-11
 
 ---
 
@@ -110,7 +110,7 @@ obj_addr(x)
 ```
 
 ```
-## [1] "0x7facd7be74e8"
+## [1] "0x1c1a4a496b8"
 ```
 
 
@@ -132,7 +132,7 @@ obj_addr(y)
 ```
 
 ```
-## [1] "0x7facd7be74e8"
+## [1] "0x1c1a4a496b8"
 ```
 
 
@@ -181,7 +181,7 @@ obj_addr(x)
 ```
 
 ```
-## [1] "0x7facd7be74e8"
+## [1] "0x1c1a4a496b8"
 ```
 
 ```r
@@ -189,7 +189,7 @@ obj_addr(y)
 ```
 
 ```
-## [1] "0x7facd7341e38"
+## [1] "0x1c1a48e8848"
 ```
 
 
@@ -223,7 +223,7 @@ cat(tracemem(x), "\n")
 ```
 
 ```
-## &lt;0x7facd7f79c48&gt;
+## &lt;000001C1A471EC88&gt;
 ```
 
 
@@ -272,7 +272,7 @@ obj_addr(list_1)
 ```
 
 ```
-## [1] "0x7facd6be0f08"
+## [1] "0x1c1a418fb18"
 ```
 
 ```r
@@ -280,7 +280,7 @@ obj_addr(list_2)
 ```
 
 ```
-## [1] "0x7facd6be0f08"
+## [1] "0x1c1a418fb18"
 ```
 
 
@@ -298,7 +298,7 @@ obj_addr(list_2)
 ```
 
 ```
-## [1] "0x7facd7c328e8"
+## [1] "0x1c1a39bf648"
 ```
 
 
@@ -318,15 +318,15 @@ ref(list_1, list_2)
 ```
 
 ```
-## █ [1:0x7facd6be0f08] &lt;list&gt; 
-## ├─[2:0x7facd648acb8] &lt;dbl&gt; 
-## ├─[3:0x7facd648acf0] &lt;dbl&gt; 
-## └─[4:0x7facd648ad28] &lt;dbl&gt; 
+## o [1:0x1c1a418fb18] &lt;list&gt; 
+## +-[2:0x1c19e82f910] &lt;dbl&gt; 
+## +-[3:0x1c19e82f980] &lt;dbl&gt; 
+## \-[4:0x1c19e82f9b8] &lt;dbl&gt; 
 ##  
-## █ [5:0x7facd7c328e8] &lt;list&gt; 
-## ├─[2:0x7facd648acb8] 
-## ├─[3:0x7facd648acf0] 
-## └─[6:0x7facd5df96c8] &lt;dbl&gt;
+## o [5:0x1c1a39bf648] &lt;list&gt; 
+## +-[2:0x1c19e82f910] 
+## +-[3:0x1c19e82f980] 
+## \-[6:0x1c1a3a3e3b0] &lt;dbl&gt;
 ```
 
 This shows that `list_1` and `list_2` have shared components, namely integers 2 and 3 corresponding to the 2nd and 3rd element in their vectors.
@@ -347,7 +347,7 @@ Data frames are lists of vectors.
 
   - the others will still point to their original references:
   
-&lt;img src="colummod.png" width="242" /&gt;
+![](colummod.png)&lt;!-- --&gt;
 ]
   
 
@@ -359,7 +359,7 @@ Data frames are lists of vectors.
 
   - every column must be copied:
 
-&lt;img src="rowmod.png" width="362" /&gt;
+![](rowmod.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -378,11 +378,11 @@ ref(x, character = T)
 ```
 
 ```
-## █ [1:0x7facd7d47d28] &lt;chr&gt; 
-## ├─[2:0x7facd5db5620] &lt;string: "marco"&gt; 
-## ├─[3:0x7facd5db5578] &lt;string: "polo"&gt; 
-## ├─[2:0x7facd5db5620] 
-## └─[3:0x7facd5db5578]
+## o [1:0x1c1a5c5ca20] &lt;chr&gt; 
+## +-[2:0x1c19e830518] &lt;string: "marco"&gt; 
+## +-[3:0x1c19e8305c0] &lt;string: "polo"&gt; 
+## +-[2:0x1c19e830518] 
+## \-[3:0x1c19e8305c0]
 ```
 
 This is called a **global string pool** where each element of a character vector is a pointer to a *unique string* in the pool. This has implications for how much memory a character vector uses. To find out, use `lobstr::obj_size()`
@@ -409,7 +409,7 @@ Modyfing an R object **usually** creates a copy. Exceptions:
 
 # Modify-in-place (2)
 
-&lt;img src="envmod.png" width="394" /&gt;
+![](envmod.png)&lt;!-- --&gt;
 
 Implication: create functions that “remember” their previous state (more on this in Chapter 16)
 

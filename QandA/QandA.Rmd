@@ -7,7 +7,7 @@ output:
     css: styles.css
 ---
 
-A companion to [Advanced R](https://adv-r.hadley.nz/rcpp.html#acknowledgments) and suppliment to [Advanced R Solutions](https://advanced-r-solutions.rbind.io/names-and-values.html#copy-on-modify)
+A companion to [Advanced R](https://adv-r.hadley.nz/rcpp.html#acknowledgments) and supplement to [Advanced R Solutions](https://advanced-r-solutions.rbind.io/names-and-values.html#copy-on-modify)
 
 ```{r, echo=FALSE}
 htmltools::img(src = knitr::image_uri("r4ds.png"), 
@@ -27,7 +27,7 @@ htmltools::img(src = knitr::image_uri("r4ds.png"),
 copy-on-modify vs copy-in-place: is one more preferable in certain situations?
 :::
 
-modify in place only happens when objects with a single binding get a special performance optimisation and to enviornments.
+modify in place only happens when objects with a single binding get a special performance optimization and to environments.
 
 ## 2.3.2 Function calls
 
@@ -110,6 +110,7 @@ for (i in seq_along(medians)) {
 ```
 :::
 
+
 ```{r, eval=FALSE}
 cat(tracemem(x), "\n")
 ```
@@ -142,7 +143,7 @@ tracemem[0x7fdc9de84378 -> 0x7fdc9de843e8]: [[<-.data.frame [[<-
 tracemem[0x7fdc9de843e8 -> 0x7fdc9de84458]: [[<-.data.frame [[<- 
 ```
 
-When we run `tracemem` on the for loop above we see each column is copied twice followed by the `[[<-.data.frame [[<- `, the stack trace showing exactly where the duplication occured.
+When we run `tracemem` on the for loop above we see each column is copied twice followed by the `[[<-.data.frame [[<- `, the stack trace showing exactly where the duplication occurred.
 
 So what is ``[[<-.data.frame``? It's a function! By looking at `?``[[<-.data.frame`` we see this is used to "extract or replace subsets of data frames."
 
@@ -265,3 +266,125 @@ nrows <- .row_names_info(x, 2L)
 ```
 
 Thus seeing exactly where the three copies are happening!
+
+# Chapter 3
+
+:::question
+How is data type `typeof()` different from `class()`?
+:::
+
+Classes are built on top of base types - they're like special, more specific kinds of types. In fact, if a class isn't specified then `class()` will default to either the `implicit class` or `typeof`.
+
+So `Date`, `POSIXct`, and `difftime` are specific kinds of doubles, falling under its umbrella.
+```{r}
+lubridate::is.Date(Sys.Date())
+is.double(Sys.Date())
+
+lubridate::is.POSIXct(Sys.time())
+is.double(Sys.time())
+
+lubridate::is.difftime(as.difftime(c("0:3:20", "11:23:15")))
+is.double(as.difftime(c("0:3:20", "11:23:15")))
+```
+
+But then why does `my_factor` fail to be recognized under its more general `integer` umbrella?
+
+```{r}
+my_factor <- factor(c("a", "b", "c"))
+is.factor(my_factor)
+is.integer(my_factor)
+```
+
+
+:::question
+Why does the book warn us against using `is.vector()`, `is.atomic()` and `is.numeric()`? [read docs]
+:::
+
+- `is.atomic` will also return true if `NULL`
+- `is.numeric` tests if integer or double **NOT** factor, Date, POSIXt, difftime
+- `is.vector` will return false if it has attributes other than names
+
+:::question
+Working in the medical field I have to import SAS files a lot where the column names have to adhere to specific abbreviations so they're given a label attribute for their full name. What are some other common uses for attributes?
+:::
+
+:::question
+We can use `setNames` to apply different values to each element in a vector. How do we do this for our own custom attribute? The code below does NOT work!
+
+```{r}
+my_vector <- c(
+  structure(1, x = "firstatt_1", y = "secondatt_1"), 
+  structure(2, x = "firstatt_2", y = "secondatt_2"), 
+  structure(3, x = "firstatt_3", y = "secondatt_3")
+)
+
+my_vector <- setNames(my_vector, c("name_1", "name_2", "name_3"))
+
+# mental model: shouldn't this should return $names, $x and $y ?
+attributes(my_vector)
+```
+:::
+
+:::question
+Because `NROW` and `NCOL` don't return `NULL` on a one dimensional vector they just seem to me as a more flexible option. When do you *have* to use `ncol` and `nrow`?
+```{r}
+# doesn't seem to matter for a data frame
+my_df <- data.frame(x = c(1,2,3), y = c(4, 5, 6))
+nrow(my_df) == NROW(my_df)
+ncol(my_df) ==NCOL(my_df)
+
+# and a matrix....
+my_matrix <- 1:6
+dim(my_matrix) <- c(3,2)
+nrow(my_matrix) == NROW(my_matrix)
+ncol(my_matrix) == NCOL(my_matrix)
+```
+:::
+
+:::question
+Putting it all together: the diagram.
+
+```{r, echo=FALSE}
+knitr::include_graphics("../images/vectors.png")
+```
+
+What changes should we make? What did I forget to include?
+:::
+
+
+:::question
+As long as the number of rows matches the data frame, it’s also possible to have a matrix or array as a column of a data frame. (This requires a slight extension to our definition of a data frame: it’s not the `length()` of each column that must be equal, but the `NROW()`.)
+
+```{r}
+df <- data.frame(x = c(1,2,3,4,5),
+                 y = c(letters[1:5]))
+
+length(df$y) == NROW(df$y)
+```
+
+What's an example of where `length() != NROW()`
+:::
+
+
+:::question
+
+The solution manual gives the answer and notes: 
+
+```{r}
+df_coltypes <- data.frame(
+  a = c("a", "b"),
+  b = c(TRUE, FALSE),
+  c = c(1L, 0L),
+  d = c(1.5, 2),
+  e = c("one" = 1, "two" = 2),
+  g = factor(c("f1", "f2")),
+  stringsAsFactors = FALSE
+)
+
+as.matrix(df_coltypes)
+```
+
+"Note that `format()` is applied to the characters, which gives surprising results: `TRUE` is transformed to `" TRUE"` (starting with a space!)."
+
+...But where is the `format()` call happening? I don't see a space!
+:::
