@@ -10,7 +10,7 @@ to submit any PRs.
 - QandA: Questions about the chapters that come up during meetings (or between!).
 We can use this document to ask and answer questions within and outside of class
 
-- Presentations: each week a presenter will give a talk tying the chapter to the XXX dataset.
+- Presentations: each week a presenter will give a talk tying the chapter to the [Beer Production](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-03-31/readme.md) dataset.
 We will also be recording these presentations for those who cannot attend.
 
 - data: The dataset we will be using for presentations
