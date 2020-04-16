@@ -26,7 +26,7 @@ All Meetings Scheduled for 8:00 PM Eastern unless otherwise noted
 - 2020-04-23 Chapter 4:
 - 2020-04-30 Chapter 5:
 - 2020-05-07 Chapter 6:
-- 2020-05-14 Chapter 7:
+- 2020-05-14 Chapter 7: [Daryn Ramsden](https://twitter.com/thisisdaryn)
 - 2020-05-21 Chapter 8:
 - 2020-05-28 Chapter 9:
 - 2020-06-04 Chapter 10:
