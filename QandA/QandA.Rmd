@@ -528,4 +528,10 @@ Hell yeah!
 How does vectorization make your code faster
 :::
 
-If you know what your data type is you don't have to coerce to different types along the way. It's related too to copy-on-modify, because you don't have to copy over every row of your data as you would within a for-loop. [Check out Jenny Brian's slides for more info!](https://speakerdeck.com/jennybc/row-oriented-workflows-in-r-with-the-tidyverse)
+All vectors are of types in R, and if you know what your data type is you don't have to coerce to different types along the way. It's related too to copy-on-modify, because... TODO you don't have to copy over every row of your data as you would within a for-loop. 
+
+Resources:
+
+- [Check out Jenny Brian's slides](https://speakerdeck.com/jennybc/row-oriented-workflows-in-r-with-the-tidyverse)
+
+- [Great article by Noam Ross](https://www.noamross.net/archives/2014-04-16-vectorization-in-r-why/)

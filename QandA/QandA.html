@@ -1844,6 +1844,7 @@ as.matrix(df_coltypes)</code></pre>
 <p>…But where is the <code>format()</code> call happening? I don’t see a space!</p>
 </div>
 <pre class="r"><code>debug(as.matrix(df_coltypes))</code></pre>
+<p>If we step into the as.matrix function we see that the values are all first converted to character, the least specific (TODO - specific is not the right word) type.</p>
 <pre class="r"><code>&gt; as.matrix(df_coltypes)
 debugging in: as.matrix(df_coltypes)
 debug: UseMethod(&quot;as.matrix&quot;)
@@ -1927,6 +1928,7 @@ debug: {
     dimnames(X) &lt;- list(dn[[1L]], unlist(collabs[nc &gt; 0], use.names = FALSE))
     X
 }</code></pre>
+<p>We can see where <code>format()</code> is called but why does it introduce a space? And why don’t we see it in our answer?</p>
 <div class="question">
 <p><code>NA</code> is a ‘sentinel’ value for explicit missingness - what does ‘sentinel’ mean?</p>
 </div>
@@ -1950,7 +1952,12 @@ debug: {
 <div class="question">
 <p>How does vectorization make your code faster</p>
 </div>
-<p>If you know what your data type is you don’t have to coerce to different types along the way. It’s related too to copy-on-modify, because you don’t have to copy over every row of your data as you would within a for-loop. <a href="https://speakerdeck.com/jennybc/row-oriented-workflows-in-r-with-the-tidyverse">Check out Jenny Brian’s slides for more info!</a></p>
+<p>All vectors are of types in R, and if you know what your data type is you don’t have to coerce to different types along the way. It’s related too to copy-on-modify, because… TODO you don’t have to copy over every row of your data as you would within a for-loop.</p>
+<p>Resources:</p>
+<ul>
+<li><p><a href="https://speakerdeck.com/jennybc/row-oriented-workflows-in-r-with-the-tidyverse">Check out Jenny Brian’s slides</a></p></li>
+<li><p><a href="https://www.noamross.net/archives/2014-04-16-vectorization-in-r-why/">Great article by Noam Ross</a></p></li>
+</ul>
 </div>
 
 
