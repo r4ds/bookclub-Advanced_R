@@ -308,6 +308,8 @@ Why does the book warn us against using `is.vector()`, `is.atomic()` and `is.num
 Working in the medical field I have to import SAS files a lot where the column names have to adhere to specific abbreviations so they're given a label attribute for their full name. What are some other common uses for attributes?
 :::
 
+Hypothesis test attributes!
+
 :::question
 We can use `setNames` to apply different values to each element in a vector. How do we do this for our own custom attribute? The code below does NOT work!
 
@@ -325,31 +327,26 @@ attributes(my_vector)
 ```
 :::
 
+As soon as you instantiate my vector the attributes are lost, store it as a list to keep them:
+
+```{r}
+# TODO
+```
+
+
 :::question
 Because `NROW` and `NCOL` don't return `NULL` on a one dimensional vector they just seem to me as a more flexible option. When do you *have* to use `ncol` and `nrow`?
-```{r}
-# doesn't seem to matter for a data frame
-my_df <- data.frame(x = c(1,2,3), y = c(4, 5, 6))
-nrow(my_df) == NROW(my_df)
-ncol(my_df) ==NCOL(my_df)
-
-# and a matrix....
-my_matrix <- 1:6
-dim(my_matrix) <- c(3,2)
-nrow(my_matrix) == NROW(my_matrix)
-ncol(my_matrix) == NCOL(my_matrix)
-```
 :::
+
+It may be better practice to always use `NROW` and `NCOL`!
 
 :::question
 Putting it all together: the diagram.
+:::
 
 ```{r, echo=FALSE}
 knitr::include_graphics("../images/vectors.png")
 ```
-
-What changes should we make? What did I forget to include?
-:::
 
 
 :::question
@@ -365,9 +362,22 @@ length(df$y) == NROW(df$y)
 What's an example of where `length() != NROW()`
 :::
 
+```{r}
+# doesn't seem to matter for a data frame
+my_df <- data.frame(x = c(1,2,3), y = c(4, 5, 6))
+nrow(my_df) == NROW(my_df)
+ncol(my_df) ==NCOL(my_df)
+
+# and a matrix....
+my_matrix <- 1:6
+dim(my_matrix) <- c(3,2)
+nrow(my_matrix) == NROW(my_matrix)
+ncol(my_matrix) == NCOL(my_matrix)
+```
+
+The length of the dataframe is the same, but the length of the matrix is the same as every element of that matrix.
 
 :::question
-
 The solution manual gives the answer and notes: 
 
 ```{r}
@@ -388,3 +398,41 @@ as.matrix(df_coltypes)
 
 ...But where is the `format()` call happening? I don't see a space!
 :::
+
+XXX
+
+:::question
+`NA` is a 'sentinel' value for explicit missingness - what does 'sentinel' mean?
+:::
+
+A sentinel value (also referred to as a flag value, trip value, rogue value, signal value, or dummy data) is a special value in the context of an algorithm which uses its presence as a condition of termination. Also worth noting two NAs are not equal to each other! For instance, in C++ there’s a special character to identify the end of a string
+
+:::question
+Why are dates calculated from January 1st, 1970?
+:::
+
+XXX
+
+:::question
+What does 'lazy' mean in terms of `as_tibble`?
+:::
+
+Technically `lazy evaluation` means that expressions are not evaluated when they are bound to variables, but their evaluation is deferred until their results are needed by other computations. In this context though we think Hadley just meant that it's treated as a character if it "looks and smells like a character". 
+
+:::question
+When should u be using `list()` instead of `c()`
+:::
+
+It's really contingent on the use case...
+
+:::question
+Can you have `NA` in vector
+:::
+
+Hell yeah!
+
+:::question
+How does vectorization make your code faster
+:::
+
+If you know what your data type is you don't have to coerce to different types along the way. It's related too to copy-on-modify, because you don't have to copy over every row of your data as you would within a for-loop. [Check out Jenny Brian's slides for more info!](https://speakerdeck.com/jennybc/row-oriented-workflows-in-r-with-the-tidyverse)
