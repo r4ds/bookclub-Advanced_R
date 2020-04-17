@@ -308,6 +308,8 @@ Why does the book warn us against using `is.vector()`, `is.atomic()` and `is.num
 Working in the medical field I have to import SAS files a lot where the column names have to adhere to specific abbreviations so they're given a label attribute for their full name. What are some other common uses for attributes?
 :::
 
+Hypothesis test attributes!
+
 :::question
 We can use `setNames` to apply different values to each element in a vector. How do we do this for our own custom attribute? The code below does NOT work!
 
@@ -325,31 +327,26 @@ attributes(my_vector)
 ```
 :::
 
+As soon as you instantiate my vector the attributes are lost, store it as a list to keep them:
+
+```{r}
+# TODO
+```
+
+
 :::question
 Because `NROW` and `NCOL` don't return `NULL` on a one dimensional vector they just seem to me as a more flexible option. When do you *have* to use `ncol` and `nrow`?
-```{r}
-# doesn't seem to matter for a data frame
-my_df <- data.frame(x = c(1,2,3), y = c(4, 5, 6))
-nrow(my_df) == NROW(my_df)
-ncol(my_df) ==NCOL(my_df)
-
-# and a matrix....
-my_matrix <- 1:6
-dim(my_matrix) <- c(3,2)
-nrow(my_matrix) == NROW(my_matrix)
-ncol(my_matrix) == NCOL(my_matrix)
-```
 :::
+
+It *may* be better practice to always use `NROW` and `NCOL`!
 
 :::question
 Putting it all together: the diagram.
+:::
 
 ```{r, echo=FALSE}
 knitr::include_graphics("../images/vectors.png")
 ```
-
-What changes should we make? What did I forget to include?
-:::
 
 
 :::question
@@ -365,9 +362,22 @@ length(df$y) == NROW(df$y)
 What's an example of where `length() != NROW()`
 :::
 
+```{r}
+# doesn't seem to matter for a data frame
+my_df <- data.frame(x = c(1,2,3), y = c(4, 5, 6))
+nrow(my_df) == NROW(my_df)
+ncol(my_df) ==NCOL(my_df)
+
+# and a matrix....
+my_matrix <- 1:6
+dim(my_matrix) <- c(3,2)
+nrow(my_matrix) == NROW(my_matrix)
+ncol(my_matrix) == NCOL(my_matrix)
+```
+
+TODO: explain this code a little more.... The length of the dataframe is the same, but the length of the matrix is the same as every element of that matrix.
 
 :::question
-
 The solution manual gives the answer and notes: 
 
 ```{r}
@@ -388,3 +398,149 @@ as.matrix(df_coltypes)
 
 ...But where is the `format()` call happening? I don't see a space!
 :::
+
+```{r, eval=FALSE}
+debug(as.matrix(df_coltypes))
+```
+
+If we step into the as.matrix function we see that the values are all first converted to character, the least specific (TODO - specific is not the right word) type.
+
+```{r eval=FALSE}
+> as.matrix(df_coltypes)
+debugging in: as.matrix(df_coltypes)
+debug: UseMethod("as.matrix")
+Browse[2]> 
+debugging in: as.matrix.data.frame(df_coltypes)
+debug: {
+    dm <- dim(x)
+    rn <- if (rownames.force %in% FALSE) 
+        NULL
+    else if (rownames.force %in% TRUE || .row_names_info(x) > 
+        0L) 
+        row.names(x)
+    dn <- list(rn, names(x))
+    if (any(dm == 0L)) 
+        return(array(NA, dim = dm, dimnames = dn))
+    p <- dm[2L]
+    pseq <- seq_len(p)
+    n <- dm[1L]
+    X <- unclass(x)
+    non.numeric <- non.atomic <- FALSE
+    all.logical <- TRUE
+    for (j in pseq) {
+        xj <- X[[j]]
+        if (inherits(xj, "data.frame")) 
+            X[[j]] <- xj <- as.matrix(xj)
+        j.logic <- is.logical(xj)
+        if (all.logical && !j.logic) 
+            all.logical <- FALSE
+        if (length(levels(xj)) > 0L || !(j.logic || is.numeric(xj) || 
+            is.complex(xj)) || (!is.null(cl <- attr(xj, "class")) && 
+            any(cl %in% c("Date", "POSIXct", "POSIXlt")))) 
+            non.numeric <- TRUE
+        if (!is.atomic(xj) && !inherits(xj, "POSIXlt")) 
+            non.atomic <- TRUE
+    }
+    if (non.atomic) {
+        for (j in pseq) {
+            xj <- X[[j]]
+            if (!is.recursive(xj)) 
+                X[[j]] <- as.list(as.vector(xj))
+        }
+    }
+    else if (all.logical) {
+    }
+    else if (non.numeric) {
+        for (j in pseq) {
+            if (is.character(X[[j]])) 
+                next
+            else if (is.logical(xj <- X[[j]])) 
+                xj <- as.character(xj)
+            else {
+                miss <- is.na(xj)
+                xj <- if (length(levels(xj))) 
+                  as.vector(xj)
+                else format(xj)
+                is.na(xj) <- miss
+            }
+            X[[j]] <- xj
+        }
+    }
+    collabs <- as.list(dn[[2L]])
+    for (j in pseq) {
+        xj <- X[[j]]
+        dj <- dim(xj)
+        if (length(dj) == 2L && dj[2L] > 0L) {
+            if (!length(dnj <- colnames(xj))) 
+                dnj <- seq_len(dj[2L])
+            collabs[[j]] <- if (length(collabs)) {
+                if (dj[2L] > 1L) 
+                  paste(collabs[[j]], dnj, sep = ".")
+                else if (is.character(collabs[[j]])) 
+                  collabs[[j]]
+                else dnj
+            }
+            else dnj
+        }
+    }
+    nc <- vapply(X, NCOL, numeric(1), USE.NAMES = FALSE)
+    X <- unlist(X, recursive = FALSE, use.names = FALSE)
+    dim(X) <- c(n, length(X)/n)
+    dimnames(X) <- list(dn[[1L]], unlist(collabs[nc > 0], use.names = FALSE))
+    X
+}
+```
+
+We can see where `format()` is called but why does it introduce a space? And why don't we see it in our answer?
+
+
+:::question
+`NA` is a 'sentinel' value for explicit missingness - what does 'sentinel' mean?
+:::
+
+A sentinel value (also referred to as a flag value, trip value, rogue value, signal value, or dummy data) is a special value in the context of an algorithm which uses its presence as a condition of termination. Also worth noting two NAs are not equal to each other! For instance, in C++ there’s a special character to identify the end of a string I think another example of a sentinel value might be in surveys where you sometimes see missing data or N/A coded as 999, or 9999 (or maybe just 9)
+
+
+Another example of a sentinel value might be in surveys where you sometimes see missing data or `N/A` coded as `999`, or `9999` (or maybe just `9`). The possible values in a column of data might be:
+
+```{r eval=FALSE}
+factor(c(1,1,1,1,2,3,3,4,4,9), levels = c(1,2,3,4,9))
+```
+
+Sentinels are typically employed in situations where it's easier/preferable to have a collection of values of the same type - represented internally using the same conventions and requiring the same amount of memory - but you also need a way to indicate a special circumstance. So like in the case of survey data you may, for example, see a variable indicating that an individual is `999` years old but the correct way to interpret that is that the data was not collected.
+
+:::question
+Why are dates calculated from January 1st, 1970?
+:::
+
+XXX
+
+:::question
+What does 'lazy' mean in terms of `as_tibble`?
+:::
+
+Technically `lazy evaluation` means that expressions are not evaluated when they are bound to variables, but their evaluation is deferred until their results are needed by other computations. In this context though we think Hadley just meant that it's treated as a character if it "looks and smells like a character". 
+
+:::question
+When should u be using `list()` instead of `c()`
+:::
+
+It's really contingent on the use case...
+
+:::question
+Can you have `NA` in vector
+:::
+
+Hell yeah!
+
+:::question
+How does vectorization make your code faster
+:::
+
+All vectors are of types in R, and if you know what your data type is you don't have to coerce to different types along the way. It's related too to copy-on-modify, because... TODO you don't have to copy over every row of your data as you would within a for-loop. 
+
+Resources:
+
+- [Check out Jenny Brian's slides](https://speakerdeck.com/jennybc/row-oriented-workflows-in-r-with-the-tidyverse)
+
+- [Great article by Noam Ross](https://www.noamross.net/archives/2014-04-16-vectorization-in-r-why/)
