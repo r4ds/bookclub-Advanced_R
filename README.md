@@ -22,7 +22,7 @@ All Meetings Scheduled for 8:00 PM Eastern unless otherwise noted
 
 - 2020-04-02 Introductions and Meeting Format
 - 2020-04-09 Chapter 2: [Asmae Toumi](https://twitter.com/asmae_toumi) ([RMD](Presentations/Week2/Chap2slides.Rmd) | [PDF](Presentations/Week2/Chap2slides.pdf) |  [HTML](Presentations/Week2/Chap2slides.html))
-- 2020-04-16 Chapter 3: Tony ElHabr
+- 2020-04-16 Chapter 3: [Tony ElHabr](https://twitter.com/TonyElHabr) ([RMD](Presentations/Week3/Chap3slides.Rmd) | [PDF](Presentations/Week3/Chap3slides.pdf) |  [HTML](Presentations/Week3/Chap3slides.html))
 - 2020-04-23 Chapter 4:
 - 2020-04-30 Chapter 5:
 - 2020-05-07 Chapter 6:
