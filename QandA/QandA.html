@@ -1796,7 +1796,7 @@ attributes(my_vector)</code></pre>
 <div class="question">
 <p>Because <code>NROW</code> and <code>NCOL</code> don’t return <code>NULL</code> on a one dimensional vector they just seem to me as a more flexible option. When do you <em>have</em> to use <code>ncol</code> and <code>nrow</code>?</p>
 </div>
-<p>It may be better practice to always use <code>NROW</code> and <code>NCOL</code>!</p>
+<p>It <em>may</em> be better practice to always use <code>NROW</code> and <code>NCOL</code>!</p>
 <div class="question">
 <p>Putting it all together: the diagram.</p>
 </div>
@@ -1823,7 +1823,7 @@ nrow(my_matrix) == NROW(my_matrix)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>ncol(my_matrix) == NCOL(my_matrix)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>The length of the dataframe is the same, but the length of the matrix is the same as every element of that matrix.</p>
+<p>TODO: explain this code a little more…. The length of the dataframe is the same, but the length of the matrix is the same as every element of that matrix.</p>
 <div class="question">
 <p>The solution manual gives the answer and notes:</p>
 <pre class="r"><code>df_coltypes &lt;- data.frame(
@@ -1843,7 +1843,90 @@ as.matrix(df_coltypes)</code></pre>
 <p>“Note that <code>format()</code> is applied to the characters, which gives surprising results: <code>TRUE</code> is transformed to <code>&quot; TRUE&quot;</code> (starting with a space!).”</p>
 <p>…But where is the <code>format()</code> call happening? I don’t see a space!</p>
 </div>
-<p>XXX</p>
+<pre class="r"><code>debug(as.matrix(df_coltypes))</code></pre>
+<pre class="r"><code>&gt; as.matrix(df_coltypes)
+debugging in: as.matrix(df_coltypes)
+debug: UseMethod(&quot;as.matrix&quot;)
+Browse[2]&gt; 
+debugging in: as.matrix.data.frame(df_coltypes)
+debug: {
+    dm &lt;- dim(x)
+    rn &lt;- if (rownames.force %in% FALSE) 
+        NULL
+    else if (rownames.force %in% TRUE || .row_names_info(x) &gt; 
+        0L) 
+        row.names(x)
+    dn &lt;- list(rn, names(x))
+    if (any(dm == 0L)) 
+        return(array(NA, dim = dm, dimnames = dn))
+    p &lt;- dm[2L]
+    pseq &lt;- seq_len(p)
+    n &lt;- dm[1L]
+    X &lt;- unclass(x)
+    non.numeric &lt;- non.atomic &lt;- FALSE
+    all.logical &lt;- TRUE
+    for (j in pseq) {
+        xj &lt;- X[[j]]
+        if (inherits(xj, &quot;data.frame&quot;)) 
+            X[[j]] &lt;- xj &lt;- as.matrix(xj)
+        j.logic &lt;- is.logical(xj)
+        if (all.logical &amp;&amp; !j.logic) 
+            all.logical &lt;- FALSE
+        if (length(levels(xj)) &gt; 0L || !(j.logic || is.numeric(xj) || 
+            is.complex(xj)) || (!is.null(cl &lt;- attr(xj, &quot;class&quot;)) &amp;&amp; 
+            any(cl %in% c(&quot;Date&quot;, &quot;POSIXct&quot;, &quot;POSIXlt&quot;)))) 
+            non.numeric &lt;- TRUE
+        if (!is.atomic(xj) &amp;&amp; !inherits(xj, &quot;POSIXlt&quot;)) 
+            non.atomic &lt;- TRUE
+    }
+    if (non.atomic) {
+        for (j in pseq) {
+            xj &lt;- X[[j]]
+            if (!is.recursive(xj)) 
+                X[[j]] &lt;- as.list(as.vector(xj))
+        }
+    }
+    else if (all.logical) {
+    }
+    else if (non.numeric) {
+        for (j in pseq) {
+            if (is.character(X[[j]])) 
+                next
+            else if (is.logical(xj &lt;- X[[j]])) 
+                xj &lt;- as.character(xj)
+            else {
+                miss &lt;- is.na(xj)
+                xj &lt;- if (length(levels(xj))) 
+                  as.vector(xj)
+                else format(xj)
+                is.na(xj) &lt;- miss
+            }
+            X[[j]] &lt;- xj
+        }
+    }
+    collabs &lt;- as.list(dn[[2L]])
+    for (j in pseq) {
+        xj &lt;- X[[j]]
+        dj &lt;- dim(xj)
+        if (length(dj) == 2L &amp;&amp; dj[2L] &gt; 0L) {
+            if (!length(dnj &lt;- colnames(xj))) 
+                dnj &lt;- seq_len(dj[2L])
+            collabs[[j]] &lt;- if (length(collabs)) {
+                if (dj[2L] &gt; 1L) 
+                  paste(collabs[[j]], dnj, sep = &quot;.&quot;)
+                else if (is.character(collabs[[j]])) 
+                  collabs[[j]]
+                else dnj
+            }
+            else dnj
+        }
+    }
+    nc &lt;- vapply(X, NCOL, numeric(1), USE.NAMES = FALSE)
+    X &lt;- unlist(X, recursive = FALSE, use.names = FALSE)
+    dim(X) &lt;- c(n, length(X)/n)
+    dimnames(X) &lt;- list(dn[[1L]], unlist(collabs[nc &gt; 0], use.names = FALSE))
+    X
+}</code></pre>
 <div class="question">
 <p><code>NA</code> is a ‘sentinel’ value for explicit missingness - what does ‘sentinel’ mean?</p>
 </div>
