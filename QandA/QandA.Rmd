@@ -338,7 +338,7 @@ As soon as you instantiate my vector the attributes are lost, store it as a list
 Because `NROW` and `NCOL` don't return `NULL` on a one dimensional vector they just seem to me as a more flexible option. When do you *have* to use `ncol` and `nrow`?
 :::
 
-It may be better practice to always use `NROW` and `NCOL`!
+It *may* be better practice to always use `NROW` and `NCOL`!
 
 :::question
 Putting it all together: the diagram.
@@ -375,7 +375,7 @@ nrow(my_matrix) == NROW(my_matrix)
 ncol(my_matrix) == NCOL(my_matrix)
 ```
 
-The length of the dataframe is the same, but the length of the matrix is the same as every element of that matrix.
+TODO: explain this code a little more.... The length of the dataframe is the same, but the length of the matrix is the same as every element of that matrix.
 
 :::question
 The solution manual gives the answer and notes: 
