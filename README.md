@@ -13,7 +13,7 @@ We can use this document to ask and answer questions within and outside of class
 - Presentations: each week a presenter will give a talk tying the chapter to the [Beer Production](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-03-31/readme.md) dataset.
 We will also be recording these presentations for those who cannot attend.
 
-- data: The dataset we will be using for presentations
+- Data: The dataset we will be using for presentations
 
 # Meeting Schedule 
 ### Following the Chapters of [Advanced R](https://adv-r.hadley.nz/) 2nd Edition
@@ -22,7 +22,7 @@ All Meetings Scheduled for 8:00 PM Eastern unless otherwise noted
 
 - 2020-04-02 Introductions and Meeting Format
 - 2020-04-09 Chapter 2 - Names and values: [Asmae Toumi](https://twitter.com/asmae_toumi) ([RMD](Presentations/Week2/Chap2slides.Rmd) | [PDF](Presentations/Week2/Chap2slides.pdf) |  [HTML](Presentations/Week2/Chap2slides.html))
-- 2020-04-16 Chapter 3 - Vectors: Tony ElHabr
+- 2020-04-16 Chapter 3 - Vectors: [Tony ElHabr](https://twitter.com/TonyElHabr) ([RMD](Presentations/Week3/Chap3slides.Rmd) | [PDF](Presentations/Week3/Chap3slides.pdf) |  [HTML](Presentations/Week3/Chap3slides.html))
 - 2020-04-23 Chapter 4 - Subsetting: [Scott Nestler](https://twitter.com/ScottNestler)
 - 2020-04-30 Chapter 5 - Control flow:
 - 2020-05-07 Chapter 6 - Functions:
@@ -31,7 +31,7 @@ All Meetings Scheduled for 8:00 PM Eastern unless otherwise noted
 - 2020-05-28 Chapter 9 - Functionals:
 - 2020-06-04 Chapter 10 - Function factories:
 - 2020-06-11 Chapter 11 - Function operators:
-- 2020-06-18 Chapter 12 - OOP Base types:
+- 2020-06-18 Chapter 12 - OOP base types:
 - 2020-06-25 Chapter 13 - S3:
 - 2020-07-02 Chapter 14 - R6:
 - 2020-07-09 Chapter 15 - S4:

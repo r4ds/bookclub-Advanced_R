@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Advanced R by Hadley Wickham</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Tony ElHabr" />
+    <meta name="date" content="2020-04-16" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Advanced R by Hadley Wickham
+## Chapter 3: Vectors
+### Tony ElHabr
+### 2020-04-16
+
+---
+
+
+
+
+&lt;style&gt;
+img {
+  display: block;
+  margin: 0 auto;
+}
+hide {
+  display: none;
+}
+.remark-slide-content h1 {
+    font-size: 45px;
+}
+h1 {
+  font-size: 2em;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+}
+.remark-slide-content {
+  font-size: 16px
+}
+.remark-code {
+  font-size: 16px;
+}
+code.r {
+  font-size: 16px;
+}
+pre {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+&lt;/style&gt;
+
+# What's in Chapter 3
+
+--
+
+&lt;br /&gt;&lt;br /&gt;
+
+- Section 3.2: atomic vectors
+
+- Section 3.3: attributes
+
+- Section 3.4: "special" vectors (S3 atomic vectors)
+
+- Section 3.5: lists
+
+- Section 3.6: data frames and tibbles
+
+- Section 3.7: `NULL`
+
+--
+
+---
+
+# Vectors
+
+--
+
++ 2 types: atomic and list
+
+&lt;hide&gt;
+The difference is that elements of atomic vectors have the same "type", while the elements of list vectors can be of different types. In general, the word "atomic" describes things that are irreducible units or components of a system. Here, the irreducible units are the data types, and the system is the R programming language. So we can see why its appropriate to call vectors of a single type "atomic". Lists have their own special properties.
+&lt;/hide&gt;
+
+.pull-left[
+
+atomic
+
+&lt;img src="https://d33wubrfki0l68.cloudfront.net/8a3d360c80da1186b1373a0ff0ddf7803b96e20d/254c6/diagrams/vectors/atomic.png" width="100%" /&gt;
+
+]
+
+.pull-right[
+
+list
+
+&lt;img src="https://d33wubrfki0l68.cloudfront.net/9628eed602df6fd55d9bced4fba0a5a85d93db8a/36c16/diagrams/vectors/list.png" width="100%" /&gt;
+
+]
+
+--
+
+... and there is also `NULL`
+
+
+&lt;hide&gt;
+Bringing `NULL` into the picture, we have our complete set of vector types.
+&lt;/hide&gt;
+
+&lt;img src="https://d33wubrfki0l68.cloudfront.net/2ff3a6cebf1bb80abb2a814ae1cfc67b12817713/ae848/diagrams/vectors/summary-tree.png" width="40%" /&gt;
+
+---
+
+# Atomic Vectors
+
+--
+
++ **4** primary types: logical, integer, double, character (i.e. strings)
+
+
+&lt;img src="https://d33wubrfki0l68.cloudfront.net/eb6730b841e32292d9ff36b33a590e24b6221f43/57192/diagrams/vectors/summary-tree-atomic.png" width="30%" /&gt;
+
+
+```r
+c(TRUE, FALSE, T, F)
+c(1234L, 42L)
+c(3.14, .314e1, 0xbada55)
+c('single quote', "double quote")
+```
+
+&lt;hide&gt;
+I think everyone is probably familiar with these types, so I won't spend too much time on them.
+
+When we create individual instances of these "types", we have what we call "scalars". In other programming languages, such a form---a single value of a single type---may have different properties. But with R, everything is a vector, even "scalars".
+&lt;/hide&gt;
+
+--
+
+... also raw and complex
+
+
+```r
+raw(42)
+complex(real = 0, imaginary = -1)
+```
+
+--
+
++ Check type with `typeof()`
+
+&lt;hide&gt;
+Use `typeof()` to identify the type of a variable.
+&lt;/hide&gt;
+
+---
+
+#  Coercion
+
+--
+
++ **Coercion** happens when you attempt to combine vectors with elements of different types
+
+&lt;hide&gt;
+Coercion often happens automatically. Most mathematical functions (+, log, abs, etc.) will coerce to numeric.
+&lt;/hide&gt;
+
+--
+
++ Coercion order: character → double → integer → logical
+
+
+```r
+c(1, 1.01) # to double
+```
+
+```
+## [1] 1.00 1.01
+```
+
+```r
+c(1, '1') # to character
+```
+
+```
+## [1] "1" "1"
+```
+
+```r
+c(1, TRUE) # to integer
+```
+
+```
+## [1] 1 1
+```
+
+--
+
++ Explicity coerce with `as.*()` functions
+
+
+```r
+as.integer(c(1, 1.01))
+```
+
+```
+## [1] 1 1
+```
+
+--
+
++ Failed coercion leads to warnings and `NA`
+
+
+```r
+as.integer(c('1', '1.01', 'a'))
+```
+
+```
+## Warning: NAs introduced by coercion
+```
+
+```
+## [1]  1  1 NA
+```
+
+---
+
+# `NA` and `NULL`
+
+--
+
+.pull-left[
+
++ `NA` is a "sentinel" value for explicit missingness
+
++ `NA` can be of any type, e.g. `NA_integer_`, `NA_character_`, etc.
+
+&lt;hide&gt;
+Default is logical, which is achieved by just `NA`.
+&lt;/hide&gt;
+
++ Calculations involving `NA`s usually result in more `NA`s
+
+
+```r
+1 + NA
+```
+
+```
+## [1] NA
+```
+
+...although not always
+
+
+```r
+1 | NA
+```
+
+```
+## [1] TRUE
+```
+
+
++ Test with `is.na()`
+
+]
+
+--
+
+.pull-right[
+
++ `NULL` is its own vector type
+
+
+```r
+typeof(NULL)
+```
+
+```
+## [1] "NULL"
+```
+
++ Zero-length
+
+
+```r
+length(NULL)
+```
+
+```
+## [1] 0
+```
+
++ Cannot have attributes
+
+
+```r
+x &lt;- NULL
+attr(x, 'y') &lt;- 1 # error
+```
+
+&lt;hide&gt;
+A vector with `NA` can have attributes.
+&lt;/hide&gt;
+
++ Test with `is.null()`
+
+]
+
+&lt;hide&gt;
+Speaking of attributes...
+&lt;/hide&gt;
+
+---
+
+# Attributes
+
+--
+
++ Name-value pairs of metadata for R objects
+
+--
+
++ Get and set a single attribute with `attr()`
+
+
+```r
+x &lt;- 'a'
+attr(x, 'what') &lt;- 'apple'
+attr(x, 'what')
+```
+
+```
+## [1] "apple"
+```
+
+--
+
++ Get and set multiple attributes with `attributes()` and `structure()`
+
+--
+
+
+```r
+x &lt;- structure('a', what = 'apple', type = 'fruit')
+attributes(x)
+```
+
+```
+## $what
+## [1] "apple"
+## 
+## $type
+## [1] "fruit"
+```
+
+--
+
++ With the exception of `names()` and `dim()`, most attributes are lost with calculations
+
+
+```r
+attributes(x[1])
+```
+
+```
+## NULL
+```
+
+---
+
+# `names()`
+
+--
+
++ `names()` can be assigned in multiple ways
+
+
+```r
+x &lt;- c(apple = 'a', banana = 'b') # 1
+x
+y &lt;- c('a', 'b')
+names(y) &lt;- c('apple', 'banana') # 2
+y
+setNames(y, c('apple', 'banana')) # 3
+```
+
+```
+##  apple banana 
+##    "a"    "b" 
+##  apple banana 
+##    "a"    "b" 
+##  apple banana 
+##    "a"    "b"
+```
+
+---
+
+# `dim()`
+
+--
+
++ `dim()` has the capability of turning a 1-d vector into a 2-d matrix or an n-d array
+
+
+```r
+a &lt;- matrix(1:6, nrow = 2, ncol = 3)
+a
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    2    4    6
+```
+
+```r
+b &lt;- array(1:6, dim = c(1, 3, 2))
+b
+```
+
+```
+## , , 1
+## 
+##      [,1] [,2] [,3]
+## [1,]    1    2    3
+## 
+## , , 2
+## 
+##      [,1] [,2] [,3]
+## [1,]    4    5    6
+```
+
+--
+
++ Weird things
+
+--
+
+  + 1-d vector without a `dim` attribute has `NULL` dimension 
+
+--
+
+  + Matrices and arrays can be a single column or row vector
+
+---
+
+# S3 atomic vectors
+
+--
+
++ Objects with a `class` attribute, making them **S3 objects**
+
+&lt;hide&gt;
+This means that the vector will behave different with a generic function such as `print()` or even mathematical operators such as `+`
+&lt;/hide&gt;
+
+--
+
++ **4** important S3 vector types in base R: `factor` (categorical), `Date` (Date), `POSIXct` (date-time), `duration` (difftime).
+
+&lt;img src="https://d33wubrfki0l68.cloudfront.net/baa19d0ebf9b97949a7ad259b29a1c4ae031c8e2/8e9b8/diagrams/vectors/summary-tree-s3-1.png" width="30%" /&gt;
+
+---
+
+# Factors
+
+--
+
++ Vector that can only contain pre-defined values
+
+&lt;hide&gt;
+Thus, it is commonly used to store categorical data.
+&lt;/hide&gt;
+
+--
+
++ Has two attributes: `class` and `levels`
+
+--
+
++ Built on top of integers, not characters
+
+
+```r
+fruits &lt;- factor(c('banana', 'apple', 'carrot'))
+fruits
+```
+
+```
+## [1] banana apple  carrot
+## Levels: apple banana carrot
+```
+&lt;hide&gt;
+Note that it is ordered alphabetically by default.
+&lt;/hide&gt;
+
+--
+
++ Variation: **ordered** factors
+
+
+```r
+x &lt;- ordered(c('two', 'three', 'one'), levels = c('one', 'two', 'three'))
+x
+```
+
+```
+## [1] two   three one  
+## Levels: one &lt; two &lt; three
+```
+
+&lt;hide&gt;
+[Interesting story about `stringsAsFactors`](https://simplystatistics.org/2015/07/24/stringsasfactors-an-unauthorized-biography/)
+&lt;/hide&gt;
+
+---
+
+# `Date`, `POSIXct`, and `duration`
+
+--
+
++ All built on top of doubles
+
+--
+
++ Dates have `class = "Date"`
+
+--
+
++ Date-times are trickier...
+
+--
+
+  + Represent seconds since Jan. 1, 1970
+
+--
+
+  + `POSIXct` isn't the only possible class; there's also `POSIXlt`
+
+--
+
+  + Also have a "parent" class of `POSIXt`
+
+--
+
+  + Have a `tzone` attribute
+
+
+&lt;hide&gt;
+c is for "calendar" time and "l" is for local time
+&lt;/hide&gt;
+
+--
+
++ Durations have 2 attributes: `class = "difftime"` and `units` corresponding to a temporal unit, e.g. `"day"`
+
+&lt;hide&gt;
+This temporal unit is purely for pretty printing.
+&lt;/hide&gt;
+
+---
+
+# Lists
+
+--
+
++ Each element can by of any atomic type, or even another list
+
+&lt;img src="https://d33wubrfki0l68.cloudfront.net/c13ad724c9a86a01e96519066ce09f7ce361d29c/5cf75/diagrams/vectors/list-recursive.png" width="10%" /&gt;
+
+&lt;hide&gt;
+Lists are sometimes called "recursive" vectors because a list can contain other lists. Atomic vectors don't have the same capability
+&lt;/hide&gt;
+
+--
+
++ Each element is really a reference
+
+&lt;hide&gt;
+As shown in the last chapter, lists are references. (Pointer may be a more familiar term.) This means that the size of a list does not really scale as you might expect.)
+&lt;/hide&gt;
+
+
+```r
+x &lt;- 1L
+lobstr::obj_size(x)
+```
+
+```
+## 56 B
+```
+
+```r
+lobstr::obj_size(rep(x, 3L))
+```
+
+```
+## 64 B
+```
+--
+
++ Combining with `c` is different than wrapping with `list()`
+
+&lt;hide&gt;
+This follows from the capability of lists to store other lists.
+&lt;/hide&gt;
+
+
+```r
+x &lt;- list(a = 1, b = 2)
+y &lt;- list(c = -1, d = -2)
+length(list(x, y))
+```
+
+```
+## [1] 2
+```
+
+```r
+length(c(x, y))
+```
+
+```
+## [1] 4
+```
+
+&lt;hide&gt;
+--
+
++ Coercing to a list may not result in what you'd expect
+
+
+```r
+as.list(letters[1:2])
+```
+
+```
+## [[1]]
+## [1] "a"
+## 
+## [[2]]
+## [1] "b"
+```
+&lt;/hide&gt;
+
+---
+
+# Data frames
+
+--
+
++ S3 vectors built on top of lists
+
+&lt;img src="https://d33wubrfki0l68.cloudfront.net/9ec5e1f8982238a413847eb5c9bbc5dcf44c9893/bc590/diagrams/vectors/summary-tree-s3-2.png" width="15%" /&gt;
+
+--
+
+
+```r
+df &lt;- data.frame(col1 = 1:2, col2 = c('a', 'b'))
+df
+```
+
+```
+##   col1 col2
+## 1    1    a
+## 2    2    b
+```
+
+--
+
++ Data frames have some undesireable default behavior
+
+
+```r
+class(df$col2)
+```
+
+```
+## [1] "factor"
+```
+
+--
+
+... which spawned tibbles (with the `{tibble}` package)
+
+
+
+```r
+tbl &lt;- tibble::tibble(col1 = 1:2, col2 = c('a', 'b'))
+class(tbl$col2)
+```
+
+```
+## [1] "character"
+```
+
+---
+
+# Data frame vs tibble behavior
+
+--
+
++ Tibble don't coerce strings to factors by default
+
+--
+
++ Tibbles discourage rownames, which are generally "bad"
+
+&lt;hide&gt;
+Rownames are "bad" because: (1) storing metadata in a different way than the rest of the data is generally not a good idea; (2) only work if a row can be identified by a single string; (3) must be unique.
+&lt;/hide&gt;
+
+--
+
++ Tibbles have a "prettier" print method
+
+--
+
++ Tibbles have stricter subsetting rules
+
+&lt;hide&gt;
+tibbles always return a tibble and don't allow partial matching with `$`
+&lt;/hide&gt;
+
+---
+
+# Non-your-typical column
+
+--
+
++ Data frame columns can be lists
+
+&lt;hide&gt;
+Need to wrap with `I()` here. (`I` is for identity.)
+&lt;/hide&gt;
+
+
+```r
+data.frame(x = 1:2, y = I(list(1:3, 1:4)))
+```
+
+```
+##   x          y
+## 1 1    1, 2, 3
+## 2 2 1, 2, 3, 4
+```
+--
+
++ Easier list-column creation with tibbles
+
+
+```r
+tibble::tibble(x = 1:2, y = list(1:3, 1:4))
+```
+
+```
+## # A tibble: 2 x 2
+##       x y        
+##   &lt;int&gt; &lt;list&gt;   
+## 1     1 &lt;int [3]&gt;
+## 2     2 &lt;int [4]&gt;
+```
+--
+
++ Columns can even be matrices and data frames
+
+&lt;hide&gt;
+Notably, don't need to wrap with `I()` here.
+&lt;/hide&gt;
+
+
+
+```r
+data.frame(x = 1:2, y = matrix(3:6, nrow = 2))
+data.frame(x = 1:2, y = data.frame(a = 3:4, b = 5:6))
+```
+
+---
+
+# In Review
+
+--
+
+&lt;img src="../../images/vectors.png" width="100%" /&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
