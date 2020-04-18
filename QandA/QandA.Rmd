@@ -426,6 +426,14 @@ Why are dates calculated from January 1st, 1970?
 
 Unix counts time in seconds since its official "birthday," -- called "epoch" in computing terms -- which is Jan. 1, 1970. [This article](https://www.wired.com/2001/09/unix-tick-tocks-to-a-billion/) explains that the early Unix engineers picked that date arbitrarily, because they needed to set a uniform date for the start of time, and New Year's Day, 1970, seemed most convenient.
 
+## 3.5.1 Lists
+
+:::question
+When should you be using `list()` instead of `c()`
+:::
+
+It's really contingent on the use case. In the case of adding custom classes it's worth noting that those are lost once you `c()` those objects together!
+
 ## 3.6.8 Dataframes and tibbles
 
 :::question
@@ -562,20 +570,6 @@ as.character(TRUE)
 ## Conclusion 
 
 :::question
-Putting it all together: the diagram.
-:::
-
-```{r, echo=FALSE}
-knitr::include_graphics("../images/vectors.png")
-```
-
-:::question
-When should you be using `list()` instead of `c()`
-:::
-
-It's really contingent on the use case. In the case of adding custom classes it's worth noting that those are lost once you `c()` those objects together!
-
-:::question
 How does vectorization make your code faster
 :::
 
@@ -586,3 +580,11 @@ Resources:
 - [Check out Jenny Brian's slides](https://speakerdeck.com/jennybc/row-oriented-workflows-in-r-with-the-tidyverse)
 
 - [Great article by Noam Ross](https://www.noamross.net/archives/2014-04-16-vectorization-in-r-why/)
+
+:::question
+Putting it all together in a single diagram:
+:::
+
+```{r, echo=FALSE}
+knitr::include_graphics("../images/vectors.png")
+```
