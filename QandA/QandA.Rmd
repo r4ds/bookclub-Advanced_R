@@ -17,6 +17,7 @@ htmltools::img(src = knitr::image_uri("r4ds.png"),
                         padding:0;
                         width: 25%;
                height 25%')
+library(tidyverse)
 ```
 
 # Chapter 2 
@@ -511,7 +512,12 @@ debug: {
 
 
 :::TODO
-We can see where `format()` is called but why does it introduce a space? And why don't we see it in our answer?
+We can see where `format()` is called but why does the author mention a space before "TRUE" when it is converted to a character?
+
+```{r}
+as.character(TRUE)
+```
+
 :::
 
 :::question
@@ -533,9 +539,7 @@ Sentinels are typically employed in situations where it's easier/preferable to h
 Why are dates calculated from January 1st, 1970?
 :::
 
-:::TODO
-XXX
-:::
+Unix counts time in seconds since its official "birthday," -- called "epoch" in computing terms -- which is Jan. 1, 1970. [This article](https://www.wired.com/2001/09/unix-tick-tocks-to-a-billion/) explains that the early Unix engineers picked that date arbitrarily, because they needed to set a uniform date for the start of time, and New Year's Day, 1970, seemed most convenient.
 
 :::question
 What does 'lazy' mean in terms of `as_tibble`?
