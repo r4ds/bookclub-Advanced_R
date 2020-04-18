@@ -275,32 +275,32 @@ Thus seeing exactly where the three copies are happening!
 
 # Chapter 3
 
+## 3.2.1 Scalars
+
 :::question
-How is data type `typeof()` different from `class()`?
+Can you have `NA` in vector
 :::
 
-Classes are built on top of base types - they're like special, more specific kinds of types. In fact, if a class isn't specified then `class()` will default to either the `implicit class` or `typeof`.
+Hell yeah!
 
-So `Date`, `POSIXct`, and `difftime` are specific kinds of doubles, falling under its umbrella.
-```{r}
-lubridate::is.Date(Sys.Date())
-is.double(Sys.Date())
+## 3.2.3 Missing values
 
-lubridate::is.POSIXct(Sys.time())
-is.double(Sys.time())
+:::question
+`NA` is a 'sentinel' value for explicit missingness - what does 'sentinel' mean?
+:::
 
-lubridate::is.difftime(as.difftime(c("0:3:20", "11:23:15")))
-is.double(as.difftime(c("0:3:20", "11:23:15")))
+A sentinel value (also referred to as a flag value, trip value, rogue value, signal value, or dummy data) is a special value in the context of an algorithm which uses its presence as a condition of termination. Also worth noting two NAs are not equal to each other! For instance, in C++ there’s a special character to identify the end of a string I think another example of a sentinel value might be in surveys where you sometimes see missing data or N/A coded as 999, or 9999 (or maybe just 9)
+
+
+Another example of a sentinel value might be in surveys where you sometimes see missing data or `N/A` coded as `999`, or `9999` (or maybe just `9`). The possible values in a column of data might be:
+
+```{r eval=FALSE}
+factor(c(1,1,1,1,2,3,3,4,4,9), levels = c(1,2,3,4,9))
 ```
 
-But then why does `my_factor` fail to be recognized under its more general `integer` umbrella?
+Sentinels are typically employed in situations where it's easier/preferable to have a collection of values of the same type - represented internally using the same conventions and requiring the same amount of memory - but you also need a way to indicate a special circumstance. So like in the case of survey data you may, for example, see a variable indicating that an individual is `999` years old but the correct way to interpret that is that the data was not collected.
 
-```{r}
-my_factor <- factor(c("a", "b", "c"))
-is.factor(my_factor)
-is.integer(my_factor)
-```
-
+## 3.2.4 Testing and coercion
 
 :::question
 Why does the book warn us against using `is.vector()`, `is.atomic()` and `is.numeric()`? [read docs]
@@ -310,11 +310,16 @@ Why does the book warn us against using `is.vector()`, `is.atomic()` and `is.num
 - `is.numeric` tests if integer or double **NOT** factor, Date, POSIXt, difftime
 - `is.vector` will return false if it has attributes other than names
 
+## 3.3.1 Setting Attributes 
+
 :::question
 Working in the medical field I have to import SAS files a lot where the column names have to adhere to specific abbreviations so they're given a label attribute for their full name. What are some other common uses for attributes?
 :::
 
 Hypothesis test attributes!
+
+
+## 3.3.2 setNames
 
 :::question
 We can use `setNames` to apply different values to each element in a vector. How do we do this for our own custom attribute? The code below does NOT work!
@@ -351,20 +356,13 @@ as_tb <-
 as_tb$with_arr
 ```
 
+## 3.3.3 Dimensions
+
 :::question
 Because `NROW` and `NCOL` don't return `NULL` on a one dimensional vector they just seem to me as a more flexible option. When do you *have* to use `ncol` and `nrow`?
 :::
 
 It *may* be better practice to always use `NROW` and `NCOL`!
-
-:::question
-Putting it all together: the diagram.
-:::
-
-```{r, echo=FALSE}
-knitr::include_graphics("../images/vectors.png")
-```
-
 
 :::question
 As long as the number of rows matches the data frame, it’s also possible to have a matrix or array as a column of a data frame. (This requires a slight extension to our definition of a data frame: it’s not the `length()` of each column that must be equal, but the `NROW()`.)
@@ -391,8 +389,54 @@ length(my_matrix) == NCOL(my_matrix) # 6 != 2
 
 The length of the matrix is `6`, and if we manipulate the dimensions of the matrix we see that the NROW is `3` and and NCOL is `2`.
 
+## 3.4 S3 atomic vectors
+
 :::question
-The solution manual gives the answer and notes: 
+How is data type `typeof()` different from `class()`?
+:::
+
+Classes are built on top of base types - they're like special, more specific kinds of types. In fact, if a class isn't specified then `class()` will default to either the `implicit class` or `typeof`.
+
+So `Date`, `POSIXct`, and `difftime` are specific kinds of doubles, falling under its umbrella.
+```{r}
+lubridate::is.Date(Sys.Date())
+is.double(Sys.Date())
+
+lubridate::is.POSIXct(Sys.time())
+is.double(Sys.time())
+
+lubridate::is.difftime(as.difftime(c("0:3:20", "11:23:15")))
+is.double(as.difftime(c("0:3:20", "11:23:15")))
+```
+
+But then why does `my_factor` fail to be recognized under its more general `integer` umbrella?
+
+```{r}
+my_factor <- factor(c("a", "b", "c"))
+is.factor(my_factor)
+is.integer(my_factor)
+```
+
+
+## 3.4.2 Dates
+
+:::question
+Why are dates calculated from January 1st, 1970?
+:::
+
+Unix counts time in seconds since its official "birthday," -- called "epoch" in computing terms -- which is Jan. 1, 1970. [This article](https://www.wired.com/2001/09/unix-tick-tocks-to-a-billion/) explains that the early Unix engineers picked that date arbitrarily, because they needed to set a uniform date for the start of time, and New Year's Day, 1970, seemed most convenient.
+
+## 3.6.8 Dataframes and tibbles
+
+:::question
+What does 'lazy' mean in terms of `as_tibble`?
+:::
+  
+Technically `lazy evaluation` means that expressions are not evaluated when they are bound to variables, but their evaluation is deferred until their results are needed by other computations. In this context though we think Hadley just meant that it's treated as a character if it "looks and smells like a character". 
+
+
+:::question
+The solution manual gives the answer and notes:
 
 ```{r}
 df_coltypes <- data.frame(
@@ -512,47 +556,24 @@ We can see where `format()` is called but why does the author mention a space be
 ```{r}
 as.character(TRUE)
 ```
-
 :::
+
+
+## Conclusion 
 
 :::question
-`NA` is a 'sentinel' value for explicit missingness - what does 'sentinel' mean?
+Putting it all together: the diagram.
 :::
 
-A sentinel value (also referred to as a flag value, trip value, rogue value, signal value, or dummy data) is a special value in the context of an algorithm which uses its presence as a condition of termination. Also worth noting two NAs are not equal to each other! For instance, in C++ there’s a special character to identify the end of a string I think another example of a sentinel value might be in surveys where you sometimes see missing data or N/A coded as 999, or 9999 (or maybe just 9)
-
-
-Another example of a sentinel value might be in surveys where you sometimes see missing data or `N/A` coded as `999`, or `9999` (or maybe just `9`). The possible values in a column of data might be:
-
-```{r eval=FALSE}
-factor(c(1,1,1,1,2,3,3,4,4,9), levels = c(1,2,3,4,9))
+```{r, echo=FALSE}
+knitr::include_graphics("../images/vectors.png")
 ```
 
-Sentinels are typically employed in situations where it's easier/preferable to have a collection of values of the same type - represented internally using the same conventions and requiring the same amount of memory - but you also need a way to indicate a special circumstance. So like in the case of survey data you may, for example, see a variable indicating that an individual is `999` years old but the correct way to interpret that is that the data was not collected.
-
 :::question
-Why are dates calculated from January 1st, 1970?
-:::
-
-Unix counts time in seconds since its official "birthday," -- called "epoch" in computing terms -- which is Jan. 1, 1970. [This article](https://www.wired.com/2001/09/unix-tick-tocks-to-a-billion/) explains that the early Unix engineers picked that date arbitrarily, because they needed to set a uniform date for the start of time, and New Year's Day, 1970, seemed most convenient.
-
-:::question
-What does 'lazy' mean in terms of `as_tibble`?
-:::
-
-Technically `lazy evaluation` means that expressions are not evaluated when they are bound to variables, but their evaluation is deferred until their results are needed by other computations. In this context though we think Hadley just meant that it's treated as a character if it "looks and smells like a character". 
-
-:::question
-When should u be using `list()` instead of `c()`
+When should you be using `list()` instead of `c()`
 :::
 
 It's really contingent on the use case. In the case of adding custom classes it's worth noting that those are lost once you `c()` those objects together!
-
-:::question
-Can you have `NA` in vector
-:::
-
-Hell yeah!
 
 :::question
 How does vectorization make your code faster

@@ -1764,6 +1764,8 @@ tracemem[0x7fdc9de843e8 -&gt; 0x7fdc9de84458]: [[&lt;-.data.frame [[&lt;- </code
 </div>
 <div id="chapter-3" class="section level1">
 <h1>Chapter 3</h1>
+<div id="introduction" class="section level2">
+<h2>3.1 Introduction</h2>
 <div class="question">
 <p>How is data type <code>typeof()</code> different from <code>class()</code>?</p>
 </div>
@@ -1857,15 +1859,8 @@ as_tb$with_arr</code></pre>
 
 length(df$y) == NROW(df$y)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code># doesn't seem to matter for a data frame
-my_df &lt;- data.frame(x = c(1,2,3), y = c(4, 5, 6))
-nrow(my_df) == NROW(my_df)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>ncol(my_df) == NCOL(my_df)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
 <p>What’s an example of where <code>length() != NROW()</code></p>
 </div>
-<div class="TODO">
 <p>The case of a matrix!</p>
 <pre class="r"><code>my_matrix &lt;- 1:6
 dim(my_matrix) &lt;- c(3,2)
@@ -1874,12 +1869,11 @@ my_matrix</code></pre>
 ## [1,]    1    4
 ## [2,]    2    5
 ## [3,]    3    6</code></pre>
-<pre class="r"><code>nrow(my_matrix) == NROW(my_matrix)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>ncol(my_matrix) == NCOL(my_matrix)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<p>Explain this code a little more…. The length of the dataframe is the same, but the length of the matrix is the same as every element of that matrix?</p>
-</div>
+<pre class="r"><code>length(my_matrix) == NROW(my_matrix) # 6 != 3</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="r"><code>length(my_matrix) == NCOL(my_matrix) # 6 != 2</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>The length of the matrix is <code>6</code>, and if we manipulate the dimensions of the matrix we see that the NROW is <code>3</code> and and NCOL is <code>2</code>.</p>
 <div class="question">
 <p>The solution manual gives the answer and notes:</p>
 <pre class="r"><code>df_coltypes &lt;- data.frame(
@@ -2021,6 +2015,7 @@ debug: {
 <li><p><a href="https://speakerdeck.com/jennybc/row-oriented-workflows-in-r-with-the-tidyverse">Check out Jenny Brian’s slides</a></p></li>
 <li><p><a href="https://www.noamross.net/archives/2014-04-16-vectorization-in-r-why/">Great article by Noam Ross</a></p></li>
 </ul>
+</div>
 </div>
 
 
