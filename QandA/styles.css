@@ -20,6 +20,17 @@ div.answer, div.question {
     background-color: #bed3ec;
     border: solid 5px #dfedff;
 }
+
+div.TODO {
+    padding: 1em;
+    margin: 1em 0;
+    background-size: 40px;
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    color: white;
+    background-color: #b53737;
+    border: solid 5px #8e1600;
+}
   
 div.question {
   background-image: url("../www/images/question.png");

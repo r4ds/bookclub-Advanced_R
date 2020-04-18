@@ -74,8 +74,11 @@ Automagical!
 Is there a way to clear the "global string pool"?
 :::
 
-## 2.4.1 Object size
+:::TODO
+XXX
+:::
 
+## 2.4.1 Object size
 
 :::question
 I understand that `ALTREP` makes the size of `obj_size(1:3) == obj_size(1:100)` but do I need to have a better grasp than that? [Should we go over this](https://blog.revolutionanalytics.com/2017/09/altrep-preview.html)
@@ -91,7 +94,9 @@ It's kind of cool to know but... Probably not.
 Can we come up with an example of this? It seems really theoretical right now.
 :::
 
+:::TODO
 XXX
+:::
 
 :::question
 
@@ -329,10 +334,10 @@ attributes(my_vector)
 
 As soon as you instantiate my vector the attributes are lost, store it as a list to keep them:
 
+:::TODO
 ```{r}
-# TODO
 ```
-
+:::
 
 :::question
 Because `NROW` and `NCOL` don't return `NULL` on a one dimensional vector they just seem to me as a more flexible option. When do you *have* to use `ncol` and `nrow`?
@@ -375,7 +380,9 @@ nrow(my_matrix) == NROW(my_matrix)
 ncol(my_matrix) == NCOL(my_matrix)
 ```
 
-TODO: explain this code a little more.... The length of the dataframe is the same, but the length of the matrix is the same as every element of that matrix.
+:::TODO
+Explain this code a little more.... The length of the dataframe is the same, but the length of the matrix is the same as every element of that matrix.
+:::
 
 :::question
 The solution manual gives the answer and notes: 
@@ -491,8 +498,10 @@ debug: {
 }
 ```
 
-We can see where `format()` is called but why does it introduce a space? And why don't we see it in our answer?
 
+:::TODO
+We can see where `format()` is called but why does it introduce a space? And why don't we see it in our answer?
+:::
 
 :::question
 `NA` is a 'sentinel' value for explicit missingness - what does 'sentinel' mean?
@@ -513,7 +522,9 @@ Sentinels are typically employed in situations where it's easier/preferable to h
 Why are dates calculated from January 1st, 1970?
 :::
 
+:::TODO
 XXX
+:::
 
 :::question
 What does 'lazy' mean in terms of `as_tibble`?
@@ -525,7 +536,7 @@ Technically `lazy evaluation` means that expressions are not evaluated when they
 When should u be using `list()` instead of `c()`
 :::
 
-It's really contingent on the use case...
+It's really contingent on the use case. In the case of adding custom classes it's worth noting that those are lost once you `c()` those objects together!
 
 :::question
 Can you have `NA` in vector
