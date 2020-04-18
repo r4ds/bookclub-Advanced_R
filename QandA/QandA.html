@@ -1857,23 +1857,28 @@ as_tb$with_arr</code></pre>
 
 length(df$y) == NROW(df$y)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>What’s an example of where <code>length() != NROW()</code></p>
-</div>
 <pre class="r"><code># doesn't seem to matter for a data frame
 my_df &lt;- data.frame(x = c(1,2,3), y = c(4, 5, 6))
 nrow(my_df) == NROW(my_df)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>ncol(my_df) ==NCOL(my_df)</code></pre>
+<pre class="r"><code>ncol(my_df) == NCOL(my_df)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code># and a matrix....
-my_matrix &lt;- 1:6
+<p>What’s an example of where <code>length() != NROW()</code></p>
+</div>
+<div class="TODO">
+<p>The case of a matrix!</p>
+<pre class="r"><code>my_matrix &lt;- 1:6
 dim(my_matrix) &lt;- c(3,2)
-nrow(my_matrix) == NROW(my_matrix)</code></pre>
+my_matrix</code></pre>
+<pre><code>##      [,1] [,2]
+## [1,]    1    4
+## [2,]    2    5
+## [3,]    3    6</code></pre>
+<pre class="r"><code>nrow(my_matrix) == NROW(my_matrix)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>ncol(my_matrix) == NCOL(my_matrix)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<div class="TODO">
-<p>Explain this code a little more…. The length of the dataframe is the same, but the length of the matrix is the same as every element of that matrix.</p>
+<p>Explain this code a little more…. The length of the dataframe is the same, but the length of the matrix is the same as every element of that matrix?</p>
 </div>
 <div class="question">
 <p>The solution manual gives the answer and notes:</p>
