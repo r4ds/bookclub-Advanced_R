@@ -320,24 +320,35 @@ We can use `setNames` to apply different values to each element in a vector. How
 
 ```{r}
 my_vector <- c(
-  structure(1, x = "firstatt_1", y = "secondatt_1"), 
-  structure(2, x = "firstatt_2", y = "secondatt_2"), 
-  structure(3, x = "firstatt_3", y = "secondatt_3")
+  structure(1, x = "firstatt_1"),
+  structure(2, x = "firstatt_2"), 
+  structure(3, x = "firstatt_3")
 )
 
 my_vector <- setNames(my_vector, c("name_1", "name_2", "name_3"))
 
-# mental model: shouldn't this should return $names, $x and $y ?
+# mental model: shouldn't this should return $names and $x?
 attributes(my_vector)
 ```
 :::
 
-As soon as you instantiate my vector the attributes are lost, store it as a list to keep them:
+As soon as you instantiate a vector the attributes are lost. BUT we can store it as a list *within* the vector to keep them! We can create a custom attribute function and use that with `map` to add a list inside our dataframe:
 
-:::TODO
 ```{r}
+custom_attr <- function(x, my_attr) {
+  attr(x, "x") <- my_attr
+  return(x)
+}
+
+as_tb <- 
+  tibble(
+  one = c(1,2,3),
+  x = c("att_1", "att_2", "att_3"),
+  with_arr = map2(one, x, ~custom_attr(.x, .y))
+)
+
+as_tb$with_arr
 ```
-:::
 
 :::question
 Because `NROW` and `NCOL` don't return `NULL` on a one dimensional vector they just seem to me as a more flexible option. When do you *have* to use `ncol` and `nrow`?
