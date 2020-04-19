@@ -588,3 +588,134 @@ Putting it all together in a single diagram:
 ```{r, echo=FALSE}
 knitr::include_graphics("../images/vectors.png")
 ```
+
+# Chapter 4
+
+## 4.1 Introduction
+
+:::question
+"There are three subsetting operators `[`. `[[`, `$`. What is the destinction between an operator and a function? When you look up the help page it brings up the same page for all three extraction methods. What are their destinctions and do their definitions change based on what you're subsetting? Can we make a table? 
+:::
+
+:::TODO
+|  | `[` | `[[` | `$` |
+|---|---|---|---|
+| atomic | select any number of elements | extract single element | |
+| list | returns a smaller list | single element from a list | |
+| matrices | simplifies to lowest dimensonality | |
+| data frame | subsetting a list of columns | subsets like matrices | subset column |
+:::
+
+## 4.3.5 Exercise
+
+:::question
+The question asks to describe the `upper.tri` function - let's dig into it!
+:::
+
+```{r}
+x <- outer(1:5, 1:5, FUN = "*")
+upper.tri(x)
+```
+
+We see that it returns the upper triangle of the matrix. But I wanted to walk through how this function actually works and what is meant in the solution manual by leveraging `.row(dim(x)) <= .col(dim(x))`.
+
+:::TODO
+```{r, eval=FALSE}
+# ?upper.tri
+function (x, diag = FALSE) 
+{
+    d <- dim(x)
+    # what is this part of the function doing
+    if (length(d) != 2L) 
+        d <- dim(as.matrix(x))
+    if (diag) 
+      # this is our subsetting logical!
+        .row(d) <= .col(d)
+    else .row(d) < .col(d)
+}
+```
+:::
+
+The function `.row()` and `.col()` return a matrix of integers indicating their row number
+
+```{r}
+.row(dim(x))
+```
+
+```{r}
+.col(dim(x))
+```
+
+```{r}
+.row(dim(x)) <= .col(dim(x))
+```
+
+## 4.3.3 Mising and OOB
+
+:::question
+Let's walk through examples of each
+:::
+
+:::TODO
+### ATOMIC
+
+```{r, eval=FALSE}
+x <- c(1,2,3, NULL)
+# zero length
+# out of bounds
+# missing
+```
+
+### LIST 
+```{r, eval=FALSE}
+
+num_list <- list(1,2,3)
+chr_list <- list("1","2","3")
+
+# zero length
+# out of bounds
+# out of bounds character
+# missing 
+```
+
+### NULL
+
+```{r}
+# zero length
+# out of bounds
+# missing
+```
+:::
+
+## 4.5.8 Logical subsetting
+
+:::question
+"Remember to use the vector boolean operators `&` and `|`, not the short-circuiting scalar operators `&&` and `||`, which are more useful inside if statements." 
+
+Can we go over the difference between `&` and `&&` (and `|` vs `||`) I use brute force to figure out which ones I need...
+:::
+
+:::TODO
+XXX
+:::
+
+## Boolean algebra
+
+:::question
+What is a use case for reversing which with the `unwhich()` function
+:::
+
+:::TODO
+XXX
+:::
+
+:::question
+"`x[-which(y)]` is not equivalent to `x[!y]`: if `y` is all FALSE, `which(y)` will be `integer(0)` and `-integer(0)` is still `integer(0)`, so you’ll get no values, instead of all values."
+
+Can we come up with an example for this plugging in values for `x` and `y`
+:::
+
+:::TODO
+XXX
+:::
+
