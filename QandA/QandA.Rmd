@@ -682,7 +682,7 @@ Can we go over the difference between `&` and `&&` (and `|` vs `||`) I use brute
 XXX
 :::
 
-## Boolean algebra
+## 4.5.9 Boolean algebra
 
 :::question
 What is a use case for reversing which with the `unwhich()` function
