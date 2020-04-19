@@ -108,7 +108,6 @@ Can we break down this code a bit more? I'd like to really understand when and h
 x <- data.frame(matrix(runif(5 * 1e4), ncol = 5))
 # median number for each column
 medians <- vapply(x, median, numeric(1))
-
 # subtract the median of each column from each value in the column
 for (i in seq_along(medians)) {
   x[[i]] <- x[[i]] - medians[[i]]
@@ -152,11 +151,8 @@ tracemem[0x7fdc9de843e8 -> 0x7fdc9de84458]: [[<-.data.frame [[<-
 When we run `tracemem` on the for loop above we see each column is copied twice followed by the `[[<-.data.frame [[<- `, the stack trace showing exactly where the duplication occurred.
 
 So what is ``[[<-.data.frame``? It's a function! By looking at `?``[[<-.data.frame`` we see this is used to "extract or replace subsets of data frames."
-
 When we write `x[[i]] <- value`, it's really shorthand for calling the function `[[<-.data.frame` with inputs `x`, `i`, and `value`. 
-
 Now let's step into the call of this base function by running `debug(``[[<-.data.frame``)`:
-
 ```{r, eval=FALSE}
 debug(`[[<-.data.frame`)
 ```
@@ -172,11 +168,9 @@ function (x, i, j, value)
   # this is where another copy of x is made!
   class(x) <- NULL
 ```
-
 ```
  # tracemem[0x7fdc9d852a18 -> 0x7fdc9c99cc08]: 
 ```
-
 ```{r, eval = FALSE}
 nrows <- .row_names_info(x, 2L)
   if (is.atomic(value) && !is.null(names(value))) 
@@ -262,7 +256,6 @@ nrows <- .row_names_info(x, 2L)
   # here is where x is copied again!
   class(x) <- cl
 ```
-
 ```
 # tracemem[0x7fdc992ae9d8 -> 0x7fdc9be55258]: 
 ```
@@ -330,9 +323,7 @@ my_vector <- c(
   structure(2, x = "firstatt_2"), 
   structure(3, x = "firstatt_3")
 )
-
 my_vector <- setNames(my_vector, c("name_1", "name_2", "name_3"))
-
 # mental model: shouldn't this should return $names and $x?
 attributes(my_vector)
 ```
@@ -345,14 +336,12 @@ custom_attr <- function(x, my_attr) {
   attr(x, "x") <- my_attr
   return(x)
 }
-
 as_tb <- 
   tibble(
   one = c(1,2,3),
   x = c("att_1", "att_2", "att_3"),
   with_arr = map2(one, x, ~custom_attr(.x, .y))
 )
-
 as_tb$with_arr
 ```
 
@@ -370,7 +359,6 @@ As long as the number of rows matches the data frame, it’s also possible to ha
 ```{r}
 df <- data.frame(x = c(1,2,3,4,5),
                  y = c(letters[1:5]))
-
 length(df$y) == NROW(df$y)
 ```
 
@@ -401,10 +389,8 @@ So `Date`, `POSIXct`, and `difftime` are specific kinds of doubles, falling unde
 ```{r}
 lubridate::is.Date(Sys.Date())
 is.double(Sys.Date())
-
 lubridate::is.POSIXct(Sys.time())
 is.double(Sys.time())
-
 lubridate::is.difftime(as.difftime(c("0:3:20", "11:23:15")))
 is.double(as.difftime(c("0:3:20", "11:23:15")))
 ```
@@ -456,7 +442,6 @@ df_coltypes <- data.frame(
   g = factor(c("f1", "f2")),
   stringsAsFactors = FALSE
 )
-
 as.matrix(df_coltypes)
 ```
 
@@ -668,10 +653,8 @@ x <- c(1,2,3, NULL)
 
 ### LIST 
 ```{r, eval=FALSE}
-
 num_list <- list(1,2,3)
 chr_list <- list("1","2","3")
-
 # zero length
 # out of bounds
 # out of bounds character
@@ -718,4 +701,3 @@ Can we come up with an example for this plugging in values for `x` and `y`
 :::TODO
 XXX
 :::
-
