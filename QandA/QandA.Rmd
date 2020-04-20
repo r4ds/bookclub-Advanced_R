@@ -108,6 +108,7 @@ Can we break down this code a bit more? I'd like to really understand when and h
 x <- data.frame(matrix(runif(5 * 1e4), ncol = 5))
 # median number for each column
 medians <- vapply(x, median, numeric(1))
+
 # subtract the median of each column from each value in the column
 for (i in seq_along(medians)) {
   x[[i]] <- x[[i]] - medians[[i]]
@@ -151,8 +152,11 @@ tracemem[0x7fdc9de843e8 -> 0x7fdc9de84458]: [[<-.data.frame [[<-
 When we run `tracemem` on the for loop above we see each column is copied twice followed by the `[[<-.data.frame [[<- `, the stack trace showing exactly where the duplication occurred.
 
 So what is ``[[<-.data.frame``? It's a function! By looking at `?``[[<-.data.frame`` we see this is used to "extract or replace subsets of data frames."
+
 When we write `x[[i]] <- value`, it's really shorthand for calling the function `[[<-.data.frame` with inputs `x`, `i`, and `value`. 
+
 Now let's step into the call of this base function by running `debug(``[[<-.data.frame``)`:
+
 ```{r, eval=FALSE}
 debug(`[[<-.data.frame`)
 ```
@@ -168,9 +172,11 @@ function (x, i, j, value)
   # this is where another copy of x is made!
   class(x) <- NULL
 ```
+
 ```
  # tracemem[0x7fdc9d852a18 -> 0x7fdc9c99cc08]: 
 ```
+
 ```{r, eval = FALSE}
 nrows <- .row_names_info(x, 2L)
   if (is.atomic(value) && !is.null(names(value))) 
@@ -256,6 +262,7 @@ nrows <- .row_names_info(x, 2L)
   # here is where x is copied again!
   class(x) <- cl
 ```
+
 ```
 # tracemem[0x7fdc992ae9d8 -> 0x7fdc9be55258]: 
 ```
@@ -323,7 +330,9 @@ my_vector <- c(
   structure(2, x = "firstatt_2"), 
   structure(3, x = "firstatt_3")
 )
+
 my_vector <- setNames(my_vector, c("name_1", "name_2", "name_3"))
+
 # mental model: shouldn't this should return $names and $x?
 attributes(my_vector)
 ```
@@ -336,12 +345,14 @@ custom_attr <- function(x, my_attr) {
   attr(x, "x") <- my_attr
   return(x)
 }
+
 as_tb <- 
   tibble(
   one = c(1,2,3),
   x = c("att_1", "att_2", "att_3"),
   with_arr = map2(one, x, ~custom_attr(.x, .y))
 )
+
 as_tb$with_arr
 ```
 
@@ -359,6 +370,7 @@ As long as the number of rows matches the data frame, it’s also possible to ha
 ```{r}
 df <- data.frame(x = c(1,2,3,4,5),
                  y = c(letters[1:5]))
+
 length(df$y) == NROW(df$y)
 ```
 
@@ -373,6 +385,7 @@ dim(my_matrix) <- c(3,2)
 my_matrix
 length(my_matrix) == NROW(my_matrix) # 6 != 3
 length(my_matrix) == NCOL(my_matrix) # 6 != 2
+<<<<<<< HEAD
 ```
 
 The length of the matrix is `6`, and if we manipulate the dimensions of the matrix we see that the NROW is `3` and and NCOL is `2`.
@@ -389,8 +402,10 @@ So `Date`, `POSIXct`, and `difftime` are specific kinds of doubles, falling unde
 ```{r}
 lubridate::is.Date(Sys.Date())
 is.double(Sys.Date())
+
 lubridate::is.POSIXct(Sys.time())
 is.double(Sys.time())
+
 lubridate::is.difftime(as.difftime(c("0:3:20", "11:23:15")))
 is.double(as.difftime(c("0:3:20", "11:23:15")))
 ```
@@ -415,6 +430,52 @@ Unix counts time in seconds since its official "birthday," -- called "epoch" in 
 ## 3.5.1 Lists
 
 :::question
+=======
+```
+
+The length of the matrix is `6`, and if we manipulate the dimensions of the matrix we see that the NROW is `3` and and NCOL is `2`.
+
+## 3.4 S3 atomic vectors
+
+:::question
+How is data type `typeof()` different from `class()`?
+:::
+
+Classes are built on top of base types - they're like special, more specific kinds of types. In fact, if a class isn't specified then `class()` will default to either the `implicit class` or `typeof`.
+
+So `Date`, `POSIXct`, and `difftime` are specific kinds of doubles, falling under its umbrella.
+```{r}
+lubridate::is.Date(Sys.Date())
+is.double(Sys.Date())
+
+lubridate::is.POSIXct(Sys.time())
+is.double(Sys.time())
+
+lubridate::is.difftime(as.difftime(c("0:3:20", "11:23:15")))
+is.double(as.difftime(c("0:3:20", "11:23:15")))
+```
+
+But then why does `my_factor` fail to be recognized under its more general `integer` umbrella?
+
+```{r}
+my_factor <- factor(c("a", "b", "c"))
+is.factor(my_factor)
+is.integer(my_factor)
+```
+
+
+## 3.4.2 Dates
+
+:::question
+Why are dates calculated from January 1st, 1970?
+:::
+
+Unix counts time in seconds since its official "birthday," -- called "epoch" in computing terms -- which is Jan. 1, 1970. [This article](https://www.wired.com/2001/09/unix-tick-tocks-to-a-billion/) explains that the early Unix engineers picked that date arbitrarily, because they needed to set a uniform date for the start of time, and New Year's Day, 1970, seemed most convenient.
+
+## 3.5.1 Lists
+
+:::question
+>>>>>>> 0920864e1dfc04388cf93b6090dae8ce2d9c749a
 When should you be using `list()` instead of `c()`
 :::
 
@@ -442,6 +503,7 @@ df_coltypes <- data.frame(
   g = factor(c("f1", "f2")),
   stringsAsFactors = FALSE
 )
+
 as.matrix(df_coltypes)
 ```
 
@@ -542,6 +604,7 @@ debug: {
 }
 ```
 
+<<<<<<< HEAD
 
 :::TODO
 We can see where `format()` is called but why does the author mention a space before "TRUE" when it is converted to a character?
@@ -653,8 +716,10 @@ x <- c(1,2,3, NULL)
 
 ### LIST 
 ```{r, eval=FALSE}
+
 num_list <- list(1,2,3)
 chr_list <- list("1","2","3")
+
 # zero length
 # out of bounds
 # out of bounds character
@@ -682,22 +747,13 @@ Can we go over the difference between `&` and `&&` (and `|` vs `||`) I use brute
 XXX
 :::
 
-## 4.5.9 Boolean algebra
-
-:::question
-What is a use case for reversing which with the `unwhich()` function
-:::
+## Boolean algebra
+=======
 
 :::TODO
-XXX
-:::
+We can see where `format()` is called but why does the author mention a space before "TRUE" when it is converted to a character?
 
-:::question
-"`x[-which(y)]` is not equivalent to `x[!y]`: if `y` is all FALSE, `which(y)` will be `integer(0)` and `-integer(0)` is still `integer(0)`, so you’ll get no values, instead of all values."
-
-Can we come up with an example for this plugging in values for `x` and `y`
-:::
-
-:::TODO
-XXX
+```{r}
+as.character(TRUE)
+```
 :::
