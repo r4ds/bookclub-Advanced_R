@@ -385,7 +385,6 @@ dim(my_matrix) <- c(3,2)
 my_matrix
 length(my_matrix) == NROW(my_matrix) # 6 != 3
 length(my_matrix) == NCOL(my_matrix) # 6 != 2
-<<<<<<< HEAD
 ```
 
 The length of the matrix is `6`, and if we manipulate the dimensions of the matrix we see that the NROW is `3` and and NCOL is `2`.
@@ -430,8 +429,6 @@ Unix counts time in seconds since its official "birthday," -- called "epoch" in 
 ## 3.5.1 Lists
 
 :::question
-=======
-```
 
 The length of the matrix is `6`, and if we manipulate the dimensions of the matrix we see that the NROW is `3` and and NCOL is `2`.
 
@@ -475,7 +472,6 @@ Unix counts time in seconds since its official "birthday," -- called "epoch" in 
 ## 3.5.1 Lists
 
 :::question
->>>>>>> 0920864e1dfc04388cf93b6090dae8ce2d9c749a
 When should you be using `list()` instead of `c()`
 :::
 
@@ -604,8 +600,6 @@ debug: {
 }
 ```
 
-<<<<<<< HEAD
-
 :::TODO
 We can see where `format()` is called but why does the author mention a space before "TRUE" when it is converted to a character?
 
@@ -613,7 +607,6 @@ We can see where `format()` is called but why does the author mention a space be
 as.character(TRUE)
 ```
 :::
-
 
 ## Conclusion 
 
@@ -743,17 +736,49 @@ chr_list <- list("1","2","3")
 Can we go over the difference between `&` and `&&` (and `|` vs `||`) I use brute force to figure out which ones I need...
 :::
 
+`&&` and `||` only ever return a single (scalar, length-1 vector) `TRUE` or `FALSE` value, whereas `|` and `&` return a vector after doing element-by-element comparisons.
+
+The only place in R you routinely use a scalar `TRUE`/`FALSE` value is in the conditional of an `if` statement, so you'll often see `&&` or `||` used in idioms like: `if (length(x) > 0 && any(is.na(x))) { do.something() }`
+
+In most other instances you'll be working with vectors and use `&` and `|` instead.
+
+Using `&&` or `||` results in some unexpected behavior - which could be a big performance gain in some cases:
+
+- `||` will not evaluate the second argument when the first is `TRUE`
+- `&&` will not evaluate the second argument when the first is `FALSE`
+
+```{r}
+true_one <- function() { print("true_one evaluated."); TRUE}
+true_two <- function() { print("true_two evaluated."); TRUE}
+# arguments are evaluated lazily.  Unexpected behavior can result.
+c(T, true_one()) && c(T, true_two())
+c(T, true_one()) && c(F, true_two())
+c(F, true_one()) && c(T, true_two()) 
+c(F, true_one()) && c(F, true_two()) 
+c(T, true_one()) || c(T, true_two())
+c(T, true_one()) || c(F, true_two())
+c(F, true_one()) || c(T, true_two()) 
+c(F, true_one()) || c(F, true_two()) 
+```
+
+Read more about [Special Primatives](https://cran.r-project.org/doc/manuals/r-release/R-ints.html#Special-primitives) here
+
+## 4.5.8 Boolean algebra
+
+:::question
+What is a use case for reversing which with the `unwhich()` function
+:::
+
 :::TODO
 XXX
 :::
 
-## Boolean algebra
-=======
+:::question
+"`x[-which(y)]` is not equivalent to `x[!y]`: if `y` is all FALSE, `which(y)` will be `integer(0)` and `-integer(0)` is still `integer(0)`, so you’ll get no values, instead of all values."
+
+Can we come up with an example for this plugging in values for `x` and `y`
+:::
 
 :::TODO
-We can see where `format()` is called but why does the author mention a space before "TRUE" when it is converted to a character?
-
-```{r}
-as.character(TRUE)
-```
+XXX
 :::

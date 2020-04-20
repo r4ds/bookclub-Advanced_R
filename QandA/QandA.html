@@ -1633,6 +1633,7 @@ div.tocify {
 x &lt;- data.frame(matrix(runif(5 * 1e4), ncol = 5))
 # median number for each column
 medians &lt;- vapply(x, median, numeric(1))
+
 # subtract the median of each column from each value in the column
 for (i in seq_along(medians)) {
   x[[i]] &lt;- x[[i]] - medians[[i]]
@@ -1659,7 +1660,9 @@ tracemem[0x7fdc9de84308 -&gt; 0x7fdc9de84378]:
 tracemem[0x7fdc9de84378 -&gt; 0x7fdc9de843e8]: [[&lt;-.data.frame [[&lt;- 
 tracemem[0x7fdc9de843e8 -&gt; 0x7fdc9de84458]: [[&lt;-.data.frame [[&lt;- </code></pre>
 <p>When we run <code>tracemem</code> on the for loop above we see each column is copied twice followed by the <code>[[&lt;-.data.frame [[&lt;-</code>, the stack trace showing exactly where the duplication occurred.</p>
-<p>So what is <code>[[&lt;-.data.frame</code>? It’s a function! By looking at <code>?``[[&lt;-.data.frame`` we see this is used to &quot;extract or replace subsets of data frames.&quot; When we write</code>x[[i]] &lt;- value<code>, it's really shorthand for calling the function</code>[[&lt;-.data.frame<code>with inputs</code>x<code>,</code>i<code>, and</code>value<code>.  Now let's step into the call of this base function by running</code>debug(<code>[[&lt;-.data.frame</code>)`:</p>
+<p>So what is <code>[[&lt;-.data.frame</code>? It’s a function! By looking at `?<code>[[&lt;-.data.frame</code> we see this is used to “extract or replace subsets of data frames.”</p>
+<p>When we write <code>x[[i]] &lt;- value</code>, it’s really shorthand for calling the function <code>[[&lt;-.data.frame</code> with inputs <code>x</code>, <code>i</code>, and <code>value</code>.</p>
+<p>Now let’s step into the call of this base function by running <code>debug(``[[&lt;-.data.frame``)</code>:</p>
 <pre class="r"><code>debug(`[[&lt;-.data.frame`)</code></pre>
 <p>and once inside, use <code>tracemem()</code> to find where the new values are assigned to the column:</p>
 <pre class="r"><code>function (x, i, j, value) 
@@ -1805,7 +1808,9 @@ tracemem[0x7fdc9de843e8 -&gt; 0x7fdc9de84458]: [[&lt;-.data.frame [[&lt;- </code
   structure(2, x = &quot;firstatt_2&quot;), 
   structure(3, x = &quot;firstatt_3&quot;)
 )
+
 my_vector &lt;- setNames(my_vector, c(&quot;name_1&quot;, &quot;name_2&quot;, &quot;name_3&quot;))
+
 # mental model: shouldn't this should return $names and $x?
 attributes(my_vector)</code></pre>
 <pre><code>## $names
@@ -1816,12 +1821,14 @@ attributes(my_vector)</code></pre>
   attr(x, &quot;x&quot;) &lt;- my_attr
   return(x)
 }
+
 as_tb &lt;- 
   tibble(
   one = c(1,2,3),
   x = c(&quot;att_1&quot;, &quot;att_2&quot;, &quot;att_3&quot;),
   with_arr = map2(one, x, ~custom_attr(.x, .y))
 )
+
 as_tb$with_arr</code></pre>
 <pre><code>## [[1]]
 ## [1] 1
@@ -1848,6 +1855,7 @@ as_tb$with_arr</code></pre>
 <p>As long as the number of rows matches the data frame, it’s also possible to have a matrix or array as a column of a data frame. (This requires a slight extension to our definition of a data frame: it’s not the <code>length()</code> of each column that must be equal, but the <code>NROW()</code>.)</p>
 <pre class="r"><code>df &lt;- data.frame(x = c(1,2,3,4,5),
                  y = c(letters[1:5]))
+
 length(df$y) == NROW(df$y)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>What’s an example of where <code>length() != NROW()</code></p>
@@ -1901,6 +1909,44 @@ is.factor(my_factor)</code></pre>
 </div>
 <div id="lists-1" class="section level2">
 <h2>3.5.1 Lists</h2>
+<p>:::question</p>
+<p>The length of the matrix is <code>6</code>, and if we manipulate the dimensions of the matrix we see that the NROW is <code>3</code> and and NCOL is <code>2</code>.</p>
+</div>
+<div id="s3-atomic-vectors-1" class="section level2">
+<h2>3.4 S3 atomic vectors</h2>
+<div class="question">
+<p>How is data type <code>typeof()</code> different from <code>class()</code>?</p>
+</div>
+<p>Classes are built on top of base types - they’re like special, more specific kinds of types. In fact, if a class isn’t specified then <code>class()</code> will default to either the <code>implicit class</code> or <code>typeof</code>.</p>
+<p>So <code>Date</code>, <code>POSIXct</code>, and <code>difftime</code> are specific kinds of doubles, falling under its umbrella.</p>
+<pre class="r"><code>lubridate::is.Date(Sys.Date())</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>is.double(Sys.Date())</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>lubridate::is.POSIXct(Sys.time())</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>is.double(Sys.time())</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>lubridate::is.difftime(as.difftime(c(&quot;0:3:20&quot;, &quot;11:23:15&quot;)))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>is.double(as.difftime(c(&quot;0:3:20&quot;, &quot;11:23:15&quot;)))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>But then why does <code>my_factor</code> fail to be recognized under its more general <code>integer</code> umbrella?</p>
+<pre class="r"><code>my_factor &lt;- factor(c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;))
+is.factor(my_factor)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>is.integer(my_factor)</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+</div>
+<div id="dates-1" class="section level2">
+<h2>3.4.2 Dates</h2>
+<div class="question">
+<p>Why are dates calculated from January 1st, 1970?</p>
+</div>
+<p>Unix counts time in seconds since its official “birthday,” – called “epoch” in computing terms – which is Jan. 1, 1970. <a href="https://www.wired.com/2001/09/unix-tick-tocks-to-a-billion/">This article</a> explains that the early Unix engineers picked that date arbitrarily, because they needed to set a uniform date for the start of time, and New Year’s Day, 1970, seemed most convenient.</p>
+</div>
+<div id="lists-2" class="section level2">
+<h2>3.5.1 Lists</h2>
 <div class="question">
 <p>When should you be using <code>list()</code> instead of <code>c()</code></p>
 </div>
@@ -1923,6 +1969,7 @@ is.factor(my_factor)</code></pre>
   g = factor(c(&quot;f1&quot;, &quot;f2&quot;)),
   stringsAsFactors = FALSE
 )
+
 as.matrix(df_coltypes)</code></pre>
 <pre><code>##     a   b       c   d     e   g   
 ## one &quot;a&quot; &quot;TRUE&quot;  &quot;1&quot; &quot;1.5&quot; &quot;1&quot; &quot;f1&quot;
@@ -2149,6 +2196,7 @@ function (x, diag = FALSE)
 <h3 id="list">LIST</h3>
 <pre class="r"><code>num_list &lt;- list(1,2,3)
 chr_list &lt;- list(&quot;1&quot;,&quot;2&quot;,&quot;3&quot;)
+
 # zero length
 # out of bounds
 # out of bounds character
@@ -2165,12 +2213,49 @@ chr_list &lt;- list(&quot;1&quot;,&quot;2&quot;,&quot;3&quot;)
 <p>“Remember to use the vector boolean operators <code>&amp;</code> and <code>|</code>, not the short-circuiting scalar operators <code>&amp;&amp;</code> and <code>||</code>, which are more useful inside if statements.”</p>
 <p>Can we go over the difference between <code>&amp;</code> and <code>&amp;&amp;</code> (and <code>|</code> vs <code>||</code>) I use brute force to figure out which ones I need…</p>
 </div>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<p><code>&amp;&amp;</code> and <code>||</code> only ever return a single (scalar, length-1 vector) <code>TRUE</code> or <code>FALSE</code> value, whereas <code>|</code> and <code>&amp;</code> return a vector after doing element-by-element comparisons.</p>
+<p>The only place in R you routinely use a scalar <code>TRUE</code>/<code>FALSE</code> value is in the conditional of an <code>if</code> statement, so you’ll often see <code>&amp;&amp;</code> or <code>||</code> used in idioms like: <code>if (length(x) &gt; 0 &amp;&amp; any(is.na(x))) { do.something() }</code></p>
+<p>In most other instances you’ll be working with vectors and use <code>&amp;</code> and <code>|</code> instead.</p>
+<p>Using <code>&amp;&amp;</code> or <code>||</code> results in some unexpected behavior - which could be a big performance gain in some cases:</p>
+<ul>
+<li><code>||</code> will not evaluate the second argument when the first is <code>TRUE</code></li>
+<li><code>&amp;&amp;</code> will not evaluate the second argument when the first is <code>FALSE</code></li>
+</ul>
+<pre class="r"><code>true_one &lt;- function() { print(&quot;true_one evaluated.&quot;); TRUE}
+true_two &lt;- function() { print(&quot;true_two evaluated.&quot;); TRUE}
+# arguments are evaluated lazily.  Unexpected behavior can result.
+c(T, true_one()) &amp;&amp; c(T, true_two())</code></pre>
+<pre><code>## [1] &quot;true_one evaluated.&quot;
+## [1] &quot;true_two evaluated.&quot;</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>c(T, true_one()) &amp;&amp; c(F, true_two())</code></pre>
+<pre><code>## [1] &quot;true_one evaluated.&quot;
+## [1] &quot;true_two evaluated.&quot;</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="r"><code>c(F, true_one()) &amp;&amp; c(T, true_two()) </code></pre>
+<pre><code>## [1] &quot;true_one evaluated.&quot;</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="r"><code>c(F, true_one()) &amp;&amp; c(F, true_two()) </code></pre>
+<pre><code>## [1] &quot;true_one evaluated.&quot;</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="r"><code>c(T, true_one()) || c(T, true_two())</code></pre>
+<pre><code>## [1] &quot;true_one evaluated.&quot;</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>c(T, true_one()) || c(F, true_two())</code></pre>
+<pre><code>## [1] &quot;true_one evaluated.&quot;</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>c(F, true_one()) || c(T, true_two()) </code></pre>
+<pre><code>## [1] &quot;true_one evaluated.&quot;
+## [1] &quot;true_two evaluated.&quot;</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>c(F, true_one()) || c(F, true_two()) </code></pre>
+<pre><code>## [1] &quot;true_one evaluated.&quot;
+## [1] &quot;true_two evaluated.&quot;</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>Read more about <a href="https://cran.r-project.org/doc/manuals/r-release/R-ints.html#Special-primitives">Special Primatives</a> here</p>
 </div>
 <div id="boolean-algebra" class="section level2">
-<h2>4.5.9 Boolean algebra</h2>
+<h2>4.5.8 Boolean algebra</h2>
 <div class="question">
 <p>What is a use case for reversing which with the <code>unwhich()</code> function</p>
 </div>
