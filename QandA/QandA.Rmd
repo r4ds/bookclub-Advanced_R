@@ -571,10 +571,14 @@ The vectorized code is faster because it obeys the golden rule of R programming:
   2. `log`
   
 - Non-vectorized:
-  1. `+`  [* `length(x)`]
-  2. `log` [* `length(x)`]
-  
-A vectorized function calls primitives directly, but a loop calls each function `length(x)` times, and there are `1 + length(x)` assignments to `s`. **Theres on the order of 3x primitive function calls in the non-vectorised form!!**
+  1. `+`
+  2. `log`
+
+In the vectorised version, there are two primitive function calls: one to `log` (which performs `x` steps in the C level) and one to `sum` (which performs `x` updates in the C level). So you end up doing a similar number of operations at C level regardless of the route. 
+
+In the non-vectorised form you are passing the logic back and forth between R and C many many times and this is why the non-vectorised form is much slower.
+
+**A vectorized function calls primitives directly, but a loop calls each function `length(x)` times, and there are `1 + length(x)` assignments to `s`. Theres on the order of 3x primitive function calls in the non-vectorised form!!**
 
 Resources:
 
