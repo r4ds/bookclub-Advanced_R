@@ -566,15 +566,15 @@ for(x0 in x) {
 
 The vectorized code is faster because it obeys the golden rule of R programming: *"access the underlying C/Fortran routines as quickly as possible; the fewer functions calls required to achieve this, the better"*. 
 
-- Vectorized functions:
-  1. `sum`
-  2. `log`
+- Vectorized Version:
+  1. `sum` [called once]
+  2. `log` [called once]
   
 - Non-vectorized:
-  1. `+`
-  2. `log`
+  1. `+` [called `length(x)` times]
+  2. `log` [called `length(x)` times]
 
-In the vectorised version, there are two primitive function calls: one to `log` (which performs `x` steps in the C level) and one to `sum` (which performs `x` updates in the C level). So you end up doing a similar number of operations at C level regardless of the route. 
+In the vectorised version, there are two primitive function calls: one to `log` (which performs `length(x)` steps in the C level) and one to `sum` (which performs `x` updates in the C level). So you end up doing a similar number of operations at C level regardless of the route. 
 
 In the non-vectorised form you are passing the logic back and forth between R and C many many times and this is why the non-vectorised form is much slower.
 
