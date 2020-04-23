@@ -1623,33 +1623,33 @@ div.tocify {
 <p>Now we can create a vector:</p>
 <pre class="r"><code>v &lt;- c(1, 2, 3)
 (old_address &lt;- lobstr::obj_addr(v))</code></pre>
-<pre><code>## [1] &quot;0x7fc74dfaeec8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fab4294b718&quot;</code></pre>
 <p>Changing a value within it changes its address:</p>
 <pre class="r"><code>v[[3]] &lt;- 4
 (new_address &lt;- lobstr::obj_addr(v))</code></pre>
-<pre><code>## [1] &quot;0x7fc74decf1b8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fab4290be08&quot;</code></pre>
 <pre class="r"><code>old_address == new_address</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <p>We can assign the modified vector to a new name, where <code>y</code> and <code>v</code> point to the same thing.</p>
 <pre class="r"><code>y &lt;- v
 (y_address &lt;- lobstr::obj_addr(y))</code></pre>
-<pre><code>## [1] &quot;0x7fc74decf1b8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fab4290be08&quot;</code></pre>
 <pre class="r"><code>(v_address &lt;- lobstr::obj_addr(v))</code></pre>
-<pre><code>## [1] &quot;0x7fc74decf1b8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fab4290be08&quot;</code></pre>
 <pre class="r"><code>y_address == v_address</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>Now if we modify <code>v</code> it won’t point to the same thing as <code>y</code>:</p>
 <pre class="r"><code>v[[3]] &lt;- 3
 (y_address &lt;- lobstr::obj_addr(y))</code></pre>
-<pre><code>## [1] &quot;0x7fc74decf1b8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fab4290be08&quot;</code></pre>
 <pre class="r"><code>(v_address &lt;- lobstr::obj_addr(v))</code></pre>
-<pre><code>## [1] &quot;0x7fc74fe75b88&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fab4069f5d8&quot;</code></pre>
 <pre class="r"><code>y_address == v_address</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <p>But if we now change <code>y</code> to look like <code>v</code>, the original address, in theory editing y should occur in place, but it doesn’t - the “count does not go back to one”!</p>
 <pre class="r"><code>y[[3]] &lt;- 3
 (new_y_address &lt;- lobstr::obj_addr(y))</code></pre>
-<pre><code>## [1] &quot;0x7fc74fe83098&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fab4067f8e8&quot;</code></pre>
 <pre class="r"><code>new_y_address == y_address</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <div class="question">
@@ -1977,12 +1977,12 @@ is.factor(my_factor)</code></pre>
 </div>
 <p>It’s really contingent on the use case. In the case of adding custom classes it’s worth noting that those are lost once you <code>c()</code> those objects together!</p>
 </div>
-<div id="dataframes-and-tibbles" class="section level2">
-<h2>3.6.8 Dataframes and tibbles</h2>
+<div id="data-frames-and-tibbles" class="section level2">
+<h2>3.6.8 Data frames and tibbles</h2>
 <div class="question">
 <p>What does ‘lazy’ mean in terms of <code>as_tibble</code>?</p>
 </div>
-<p>Technically <code>lazy evaluation</code> means that expressions are not evaluated when they are bound to variables, but their evaluation is deferred until their results are needed by other computations. In this context though we think Hadley just meant that it’s treated as a character if it “looks and smells like a character”.</p>
+<p>Technically <code>lazy evaluation</code> means that expressions are not evaluated when they are bound to variables, but their evaluation is deferred until their results are needed by other computations. In this context though we think Haley just meant that it’s treated as a character if it “looks and smells like a character”.</p>
 <div class="question">
 <p>The solution manual gives the answer and notes:</p>
 <pre class="r"><code>df_coltypes &lt;- data.frame(
@@ -2053,7 +2053,7 @@ for(x0 in x) {
 <div id="introduction" class="section level2">
 <h2>4.1 Introduction</h2>
 <div class="question">
-<p>&quot;There are three subsetting operators <code>[</code>. <code>[[</code>, <code>$</code>. What is the destinction between an operator and a function? When you look up the help page it brings up the same page for all three extraction methods. What are their destinctions and do their definitions change based on what you’re subsetting? Can we make a table?</p>
+<p>&quot;There are three subsetting operators <code>[</code>. <code>[[</code>, <code>$</code>. What is the distinction between an operator and a function? When you look up the help page it brings up the same page for all three extraction methods. What are their distinctions and do their definitions change based on what you’re subsetting? Can we make a table?</p>
 </div>
 <div class="TODO">
 <table>
@@ -2145,8 +2145,8 @@ function (x, diag = FALSE)
 ## [4,] FALSE FALSE FALSE  TRUE TRUE
 ## [5,] FALSE FALSE FALSE FALSE TRUE</code></pre>
 </div>
-<div id="mising-and-oob" class="section level2">
-<h2>4.3.3 Mising and OOB</h2>
+<div id="missing-and-oob" class="section level2">
+<h2>4.3.3 Missing and OOB</h2>
 <div class="question">
 <p>Let’s walk through examples of each</p>
 </div>
@@ -2173,7 +2173,7 @@ chr_list &lt;- list(&quot;1&quot;,&quot;2&quot;,&quot;3&quot;)
 <div id="logical-subsetting" class="section level2">
 <h2>4.5.8 Logical subsetting</h2>
 <div class="question">
-<p>“Remember to use the vector boolean operators <code>&amp;</code> and <code>|</code>, not the short-circuiting scalar operators <code>&amp;&amp;</code> and <code>||</code>, which are more useful inside if statements.”</p>
+<p>“Remember to use the vector Boolean operators <code>&amp;</code> and <code>|</code>, not the short-circuiting scalar operators <code>&amp;&amp;</code> and <code>||</code>, which are more useful inside if statements.”</p>
 <p>Can we go over the difference between <code>&amp;</code> and <code>&amp;&amp;</code> (and <code>|</code> vs <code>||</code>) I use brute force to figure out which ones I need…</p>
 </div>
 <p><code>&amp;&amp;</code> and <code>||</code> only ever return a single (scalar, length-1 vector) <code>TRUE</code> or <code>FALSE</code> value, whereas <code>|</code> and <code>&amp;</code> return a vector after doing element-by-element comparisons.</p>

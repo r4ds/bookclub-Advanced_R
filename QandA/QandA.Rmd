@@ -504,13 +504,13 @@ When should you be using `list()` instead of `c()`
 
 It's really contingent on the use case. In the case of adding custom classes it's worth noting that those are lost once you `c()` those objects together!
 
-## 3.6.8 Dataframes and tibbles
+## 3.6.8 Data frames and tibbles
 
 :::question
 What does 'lazy' mean in terms of `as_tibble`?
 :::
   
-Technically `lazy evaluation` means that expressions are not evaluated when they are bound to variables, but their evaluation is deferred until their results are needed by other computations. In this context though we think Hadley just meant that it's treated as a character if it "looks and smells like a character". 
+Technically `lazy evaluation` means that expressions are not evaluated when they are bound to variables, but their evaluation is deferred until their results are needed by other computations. In this context though we think Haley just meant that it's treated as a character if it "looks and smells like a character". 
 
 
 :::question
@@ -593,7 +593,7 @@ knitr::include_graphics("../images/vectors.png")
 ## 4.1 Introduction
 
 :::question
-"There are three subsetting operators `[`. `[[`, `$`. What is the destinction between an operator and a function? When you look up the help page it brings up the same page for all three extraction methods. What are their destinctions and do their definitions change based on what you're subsetting? Can we make a table? 
+"There are three subsetting operators `[`. `[[`, `$`. What is the distinction between an operator and a function? When you look up the help page it brings up the same page for all three extraction methods. What are their distinctions and do their definitions change based on what you're subsetting? Can we make a table? 
 :::
 
 :::TODO
@@ -649,7 +649,7 @@ The function `.row()` and `.col()` return a matrix of integers indicating their 
 .row(dim(x)) <= .col(dim(x))
 ```
 
-## 4.3.3 Mising and OOB
+## 4.3.3 Missing and OOB
 
 :::question
 Let's walk through examples of each
@@ -689,7 +689,7 @@ chr_list <- list("1","2","3")
 ## 4.5.8 Logical subsetting
 
 :::question
-"Remember to use the vector boolean operators `&` and `|`, not the short-circuiting scalar operators `&&` and `||`, which are more useful inside if statements." 
+"Remember to use the vector Boolean operators `&` and `|`, not the short-circuiting scalar operators `&&` and `||`, which are more useful inside if statements." 
 
 Can we go over the difference between `&` and `&&` (and `|` vs `||`) I use brute force to figure out which ones I need...
 :::
