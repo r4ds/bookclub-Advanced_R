@@ -75,9 +75,7 @@ Automagical!
 Is there a way to clear the "global string pool"?
 :::
 
-:::TODO
-XXX
-:::
+According to [this post](https://community.rstudio.com/t/memory-usage-and-rs-global-string-pool/4762/3) it doesn't look like you can directly, but clearing all references to a string that's in the global string pool clears that string from the pool, eventually
 
 ## 2.4.1 Object size
 
@@ -95,9 +93,44 @@ It's kind of cool to know but... Probably not.
 Can we come up with an example of this? It seems really theoretical right now.
 :::
 
-:::TODO
-XXX
-:::
+First you need to switch your Environment tab to something other than global in RStudio!
+
+Now we can create a vector:
+```{r}
+v <- c(1, 2, 3)
+(old_address <- lobstr::obj_addr(v))
+```
+
+Changing a value within it changes its address:
+```{r}
+v[[3]] <- 4
+(new_address <- lobstr::obj_addr(v))
+old_address == new_address
+```
+
+We can assign the modified vector to a new name, where `y` and `v` point to the same thing.
+```{r}
+y <- v
+(y_address <- lobstr::obj_addr(y))
+(v_address <- lobstr::obj_addr(v))
+y_address == v_address
+```
+
+Now if we modify `v` it won't point to the same thing as `y`:
+```{r}
+v[[3]] <- 3
+(y_address <- lobstr::obj_addr(y))
+(v_address <- lobstr::obj_addr(v))
+y_address == v_address
+```
+
+But if we now change `y` to look like `v`, the original address, in theory editing y should occur in place, but it doesn't - the "count does not go back to one"!
+
+```{r}
+y[[3]] <- 3
+(new_y_address <- lobstr::obj_addr(y))
+new_y_address == y_address
+```
 
 :::question
 
@@ -508,105 +541,7 @@ as.matrix(df_coltypes)
 ...But where is the `format()` call happening? I don't see a space!
 :::
 
-```{r, eval=FALSE}
-debug(as.matrix(df_coltypes))
-```
-
-If we step into the as.matrix function we see that the values are all first converted to character, the least specific (TODO - specific is not the right word) type.
-
-```{r eval=FALSE}
-> as.matrix(df_coltypes)
-debugging in: as.matrix(df_coltypes)
-debug: UseMethod("as.matrix")
-Browse[2]> 
-debugging in: as.matrix.data.frame(df_coltypes)
-debug: {
-    dm <- dim(x)
-    rn <- if (rownames.force %in% FALSE) 
-        NULL
-    else if (rownames.force %in% TRUE || .row_names_info(x) > 
-        0L) 
-        row.names(x)
-    dn <- list(rn, names(x))
-    if (any(dm == 0L)) 
-        return(array(NA, dim = dm, dimnames = dn))
-    p <- dm[2L]
-    pseq <- seq_len(p)
-    n <- dm[1L]
-    X <- unclass(x)
-    non.numeric <- non.atomic <- FALSE
-    all.logical <- TRUE
-    for (j in pseq) {
-        xj <- X[[j]]
-        if (inherits(xj, "data.frame")) 
-            X[[j]] <- xj <- as.matrix(xj)
-        j.logic <- is.logical(xj)
-        if (all.logical && !j.logic) 
-            all.logical <- FALSE
-        if (length(levels(xj)) > 0L || !(j.logic || is.numeric(xj) || 
-            is.complex(xj)) || (!is.null(cl <- attr(xj, "class")) && 
-            any(cl %in% c("Date", "POSIXct", "POSIXlt")))) 
-            non.numeric <- TRUE
-        if (!is.atomic(xj) && !inherits(xj, "POSIXlt")) 
-            non.atomic <- TRUE
-    }
-    if (non.atomic) {
-        for (j in pseq) {
-            xj <- X[[j]]
-            if (!is.recursive(xj)) 
-                X[[j]] <- as.list(as.vector(xj))
-        }
-    }
-    else if (all.logical) {
-    }
-    else if (non.numeric) {
-        for (j in pseq) {
-            if (is.character(X[[j]])) 
-                next
-            else if (is.logical(xj <- X[[j]])) 
-                xj <- as.character(xj)
-            else {
-                miss <- is.na(xj)
-                xj <- if (length(levels(xj))) 
-                  as.vector(xj)
-                else format(xj)
-                is.na(xj) <- miss
-            }
-            X[[j]] <- xj
-        }
-    }
-    collabs <- as.list(dn[[2L]])
-    for (j in pseq) {
-        xj <- X[[j]]
-        dj <- dim(xj)
-        if (length(dj) == 2L && dj[2L] > 0L) {
-            if (!length(dnj <- colnames(xj))) 
-                dnj <- seq_len(dj[2L])
-            collabs[[j]] <- if (length(collabs)) {
-                if (dj[2L] > 1L) 
-                  paste(collabs[[j]], dnj, sep = ".")
-                else if (is.character(collabs[[j]])) 
-                  collabs[[j]]
-                else dnj
-            }
-            else dnj
-        }
-    }
-    nc <- vapply(X, NCOL, numeric(1), USE.NAMES = FALSE)
-    X <- unlist(X, recursive = FALSE, use.names = FALSE)
-    dim(X) <- c(n, length(X)/n)
-    dimnames(X) <- list(dn[[1L]], unlist(collabs[nc > 0], use.names = FALSE))
-    X
-}
-```
-
-:::TODO
-We can see where `format()` is called but why does the author mention a space before "TRUE" when it is converted to a character?
-
-```{r}
-as.character(TRUE)
-```
-:::
+After running `debug(as.matrix(df_coltypes))` and going down a rabbit hole we found this is a bug that has been addressed! [See issue here](https://github.com/Tazinho/Advanced-R-Solutions/issues/213)
 
 ## Conclusion 
 
@@ -614,7 +549,36 @@ as.character(TRUE)
 How does vectorization make your code faster
 :::
 
-All vectors are of types in R, and if you know what your data type is you don't have to coerce to different types along the way. It's related too to copy-on-modify, because... TODO you don't have to copy over every row of your data as you would within a for-loop. 
+Taking the example from [Efficient R Programming](https://csgillespie.github.io/efficientR/programming.html#vectorised-code):
+
+### VECTORIZED: 
+```{r, eval=FALSE}
+sum(log(x))
+```
+
+### NON-VECTORIZED:
+```{r, eval=FALSE}
+s <- 0
+for(x0 in x) {
+  s <- s + log(x0)
+}
+```
+
+The vectorized code is faster because it obeys the golden rule of R programming: *"access the underlying C/Fortran routines as quickly as possible; the fewer functions calls required to achieve this, the better"*. 
+
+- Vectorized functions:
+  1. `sum`
+  2. `log`
+  
+- Non-vectorized:
+  1. `+`
+  2. `log`
+
+In the vectorised version, there are two primitive function calls: one to `log` (which performs `x` steps in the C level) and one to `sum` (which performs `x` updates in the C level). So you end up doing a similar number of operations at C level regardless of the route. 
+
+In the non-vectorised form you are passing the logic back and forth between R and C many many times and this is why the non-vectorised form is much slower.
+
+**A vectorized function calls primitives directly, but a loop calls each function `length(x)` times, and there are `1 + length(x)` assignments to `s`. Theres on the order of 3x primitive function calls in the non-vectorised form!!**
 
 Resources:
 
@@ -750,7 +714,7 @@ Using `&&` or `||` results in some unexpected behavior - which could be a big pe
 ```{r}
 true_one <- function() { print("true_one evaluated."); TRUE}
 true_two <- function() { print("true_two evaluated."); TRUE}
-# arguments are evaluated lazily.  Unexpected behavior can result.
+# arguments are evaluated lazily.  Unexpected behavior can result:
 c(T, true_one()) && c(T, true_two())
 c(T, true_one()) && c(F, true_two())
 c(F, true_one()) && c(T, true_two()) 
