@@ -9,14 +9,8 @@ output:
 
 A companion to [Advanced R](https://adv-r.hadley.nz/rcpp.html#acknowledgments) and supplement to [Advanced R Solutions](https://advanced-r-solutions.rbind.io/names-and-values.html#copy-on-modify)
 
-```{r, echo=FALSE}
-htmltools::img(src = knitr::image_uri("r4ds.png"), 
-               alt = 'logo', 
-               style = 'position:absolute; top:0; 
-                        right:0;
-                        padding:0;
-                        width: 25%;
-               height 25%')
+
+```{r, include=FALSE}
 library(tidyverse)
 ```
 

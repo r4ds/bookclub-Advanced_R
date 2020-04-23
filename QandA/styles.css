@@ -1,12 +1,12 @@
 .list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
     z-index: 2;
     color: #fff;
-    background-color: #3092FF;
-    border-color: #3092FF;
+    background-color: #418898;
+    border-color: #418898;
 }
 
 h1 {
-  color: #3092FF;
+  color: #418898;
 }
 
 div.answer, div.question {
@@ -17,8 +17,8 @@ div.answer, div.question {
     background-repeat: no-repeat;
     background-position: 15px center;
     color: #1f5386;
-    background-color: #bed3ec;
-    border: solid 5px #dfedff;
+    background-color: #53B1C2;
+    border: dashed 5px #418898;
 }
 
 div.TODO {
@@ -53,4 +53,11 @@ div.answer {
 .started {
   color: orange;
   font-weight: bold;
+}
+
+#TOC {
+  background: url("r4ds_square.png");
+  background-size: contain;
+  padding-top: 160px !important;
+  background-repeat: no-repeat;
 }
