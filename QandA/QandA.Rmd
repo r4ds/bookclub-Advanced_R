@@ -510,7 +510,7 @@ It's really contingent on the use case. In the case of adding custom classes it'
 What does 'lazy' mean in terms of `as_tibble`?
 :::
   
-Technically `lazy evaluation` means that expressions are not evaluated when they are bound to variables, but their evaluation is deferred until their results are needed by other computations. In this context though we think Haley just meant that it's treated as a character if it "looks and smells like a character". 
+Technically `lazy evaluation` means that expressions are not evaluated when they are bound to variables, but their evaluation is deferred until their results are needed by other computations. In this context though we think Hadley just meant that it's treated as a character if it "looks and smells like a character". 
 
 
 :::question
