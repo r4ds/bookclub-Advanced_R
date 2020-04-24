@@ -618,7 +618,7 @@ Why is subsetting with factors "not a good idea"
 :::
 
 :::TODO
-XXX
+Hadley's notes seem to say subsetting with factors uses the "integer vector of levels" - and if they all have the same level, it'll just return the first argument. Subsetting a factor vector leaves the factor levels behind unless you explicitly drop the unused levels
 :::
 
 ## 4.2.2 lists
