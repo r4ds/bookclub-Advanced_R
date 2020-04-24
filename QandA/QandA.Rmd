@@ -634,7 +634,10 @@ As such, `$` is a shorthand for `x[["name_of_vector"]]` and not shorthand for `x
 ## 4.3.1 `[[`
 
 :::question
-"While you must use [[ when working with lists, I’d also recommend using it with atomic vectors whenever you want to extract a single value. For example, instead of writing:"
+
+The book states: 
+
+*While you must use [[ when working with lists, I’d also recommend using it with atomic vectors whenever you want to extract a single value. For example, instead of writing:*
 
 ```{r, eval=FALSE}
 for (i in 2:length(x)) {
@@ -642,7 +645,7 @@ for (i in 2:length(x)) {
 }
 ```
 
-"It's better to write":
+*It's better to write*
 
 ```{r, eval=FALSE}
 for (i in 2:length(x)) {
@@ -650,7 +653,7 @@ for (i in 2:length(x)) {
 }
 ```
 
-Why?
+Why? Can we see this in action by giving `x`, `out`, and `fun` real life values?
 :::
 
 :::TODO
