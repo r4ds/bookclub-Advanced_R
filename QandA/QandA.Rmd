@@ -12,6 +12,7 @@ A companion to [Advanced R](https://adv-r.hadley.nz/rcpp.html#acknowledgments) a
 
 ```{r, include=FALSE}
 library(tidyverse)
+library(kableExtra)
 ```
 
 # Chapter 2 
@@ -596,11 +597,40 @@ knitr::include_graphics("../images/vectors.png")
 "There are three subsetting operators `[`. `[[`, `$`. What is the distinction between an operator and a function? When you look up the help page it brings up the same page for all three extraction methods. What are their distinctions and do their definitions change based on what you're subsetting? Can we make a table? 
 :::
 
-:::TODO
-```{r, echo=FALSE}
-knitr::include_graphics("../images/subsetting.png")
+```{r}
+subsetting_table <- tibble(
+  names = c("ATOMIC", "LIST", "MATRIX", "DATA FRAME", "TIBBLE"),
+  
+  `[` = c("RETURNS VECTOR WITH ONE ELEMENT",
+          "RETURNS A LIST",
+          "RETURNS A VECTOR",
+          "RETURNS A VECTOR OR DATA FRAME",
+          "RETURNS A TIBBLE"
+   ),
+  
+  `[[` = c("SAME AS [", 
+           "RETURNS SINGLE ELEMENT FROM WITHIN LIST",
+           "RETURNS A VECTOR OR SINGLE VALUE",
+           "RETURNS VECTOR/LIST/MATRIX OR SINGLE VALUE",
+           "RETURNS A VECTOR OR SINGLE VALUE"
+    
+  ),
+  
+  `$` = c(
+    "NOPE!",
+    "RETURN SINGLE ELEMENT FROM LIST [CAN ONLY USE WHEN LIST VECTOR HAS A NAME]",
+    "NOPE!",
+    "RETURNS VECTOR/LIST/MATRIX USING COLUMN NAME",
+    "RETURNS THE STR OF THE COLUMN - TIBBLE/LIST/MATRIX"
+  )
+) %>%
+  column_to_rownames("names")
+
+kable(subsetting_table) %>% 
+  kable_styling("striped") %>%
+  column_spec(1, bold = T, border_right = T)
 ```
-:::
+
 
 ## 4.2.1 Selecting multiple elements
 
