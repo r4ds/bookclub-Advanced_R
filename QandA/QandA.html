@@ -1632,33 +1632,33 @@ div.tocify {
 <p>Now we can create a vector:</p>
 <pre class="r"><code>v &lt;- c(1, 2, 3)
 (old_address &lt;- lobstr::obj_addr(v))</code></pre>
-<pre><code>## [1] &quot;0x7fd03eba1748&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f88f6b89798&quot;</code></pre>
 <p>Changing a value within it changes its address:</p>
 <pre class="r"><code>v[[3]] &lt;- 4
 (new_address &lt;- lobstr::obj_addr(v))</code></pre>
-<pre><code>## [1] &quot;0x7fd03ddaa6a8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f88f6b916f8&quot;</code></pre>
 <pre class="r"><code>old_address == new_address</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <p>We can assign the modified vector to a new name, where <code>y</code> and <code>v</code> point to the same thing.</p>
 <pre class="r"><code>y &lt;- v
 (y_address &lt;- lobstr::obj_addr(y))</code></pre>
-<pre><code>## [1] &quot;0x7fd03ddaa6a8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f88f6b916f8&quot;</code></pre>
 <pre class="r"><code>(v_address &lt;- lobstr::obj_addr(v))</code></pre>
-<pre><code>## [1] &quot;0x7fd03ddaa6a8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f88f6b916f8&quot;</code></pre>
 <pre class="r"><code>y_address == v_address</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>Now if we modify <code>v</code> it won’t point to the same thing as <code>y</code>:</p>
 <pre class="r"><code>v[[3]] &lt;- 3
 (y_address &lt;- lobstr::obj_addr(y))</code></pre>
-<pre><code>## [1] &quot;0x7fd03ddaa6a8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f88f6b916f8&quot;</code></pre>
 <pre class="r"><code>(v_address &lt;- lobstr::obj_addr(v))</code></pre>
-<pre><code>## [1] &quot;0x7fd03af4de58&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f88f46810a8&quot;</code></pre>
 <pre class="r"><code>y_address == v_address</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <p>But if we now change <code>y</code> to look like <code>v</code>, the original address, in theory editing y should occur in place, but it doesn’t - the “count does not go back to one”!</p>
 <pre class="r"><code>y[[3]] &lt;- 3
 (new_y_address &lt;- lobstr::obj_addr(y))</code></pre>
-<pre><code>## [1] &quot;0x7fd03dcd7cf8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f88f3daf348&quot;</code></pre>
 <pre class="r"><code>new_y_address == y_address</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <div class="question">
@@ -2064,37 +2064,6 @@ for(x0 in x) {
 <div class="question">
 <p>&quot;There are three subsetting operators <code>[</code>. <code>[[</code>, <code>$</code>. What is the distinction between an operator and a function? When you look up the help page it brings up the same page for all three extraction methods. What are their distinctions and do their definitions change based on what you’re subsetting? Can we make a table?</p>
 </div>
-<pre class="r"><code>subsetting_table &lt;- tibble(
-  names = c(&quot;ATOMIC&quot;, &quot;LIST&quot;, &quot;MATRIX&quot;, &quot;DATA FRAME&quot;, &quot;TIBBLE&quot;),
-  
-  `[` = c(&quot;RETURNS VECTOR WITH ONE ELEMENT&quot;,
-          &quot;RETURNS A LIST&quot;,
-          &quot;RETURNS A VECTOR&quot;,
-          &quot;RETURNS A VECTOR OR DATA FRAME&quot;,
-          &quot;RETURNS A TIBBLE&quot;
-   ),
-  
-  `[[` = c(&quot;SAME AS [&quot;, 
-           &quot;RETURNS SINGLE ELEMENT FROM WITHIN LIST&quot;,
-           &quot;RETURNS A VECTOR OR SINGLE VALUE&quot;,
-           &quot;RETURNS VECTOR/LIST/MATRIX OR SINGLE VALUE&quot;,
-           &quot;RETURNS A VECTOR OR SINGLE VALUE&quot;
-    
-  ),
-  
-  `$` = c(
-    &quot;NOPE!&quot;,
-    &quot;RETURN SINGLE ELEMENT FROM LIST [CAN ONLY USE WHEN LIST VECTOR HAS A NAME]&quot;,
-    &quot;NOPE!&quot;,
-    &quot;RETURNS VECTOR/LIST/MATRIX USING COLUMN NAME&quot;,
-    &quot;RETURNS THE STR OF THE COLUMN - TIBBLE/LIST/MATRIX&quot;
-  )
-) %&gt;%
-  column_to_rownames(&quot;names&quot;)
-
-kable(subsetting_table) %&gt;% 
-  kable_styling(&quot;striped&quot;) %&gt;%
-  column_spec(1, bold = T, border_right = T)</code></pre>
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>

@@ -597,7 +597,7 @@ knitr::include_graphics("../images/vectors.png")
 "There are three subsetting operators `[`. `[[`, `$`. What is the distinction between an operator and a function? When you look up the help page it brings up the same page for all three extraction methods. What are their distinctions and do their definitions change based on what you're subsetting? Can we make a table? 
 :::
 
-```{r}
+```{r, echo=FALSE}
 subsetting_table <- tibble(
   names = c("ATOMIC", "LIST", "MATRIX", "DATA FRAME", "TIBBLE"),
   
