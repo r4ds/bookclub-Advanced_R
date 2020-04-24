@@ -1623,33 +1623,33 @@ div.tocify {
 <p>Now we can create a vector:</p>
 <pre class="r"><code>v &lt;- c(1, 2, 3)
 (old_address &lt;- lobstr::obj_addr(v))</code></pre>
-<pre><code>## [1] &quot;0x7fab4294b718&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f8435242ef8&quot;</code></pre>
 <p>Changing a value within it changes its address:</p>
 <pre class="r"><code>v[[3]] &lt;- 4
 (new_address &lt;- lobstr::obj_addr(v))</code></pre>
-<pre><code>## [1] &quot;0x7fab4290be08&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f8434013c18&quot;</code></pre>
 <pre class="r"><code>old_address == new_address</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <p>We can assign the modified vector to a new name, where <code>y</code> and <code>v</code> point to the same thing.</p>
 <pre class="r"><code>y &lt;- v
 (y_address &lt;- lobstr::obj_addr(y))</code></pre>
-<pre><code>## [1] &quot;0x7fab4290be08&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f8434013c18&quot;</code></pre>
 <pre class="r"><code>(v_address &lt;- lobstr::obj_addr(v))</code></pre>
-<pre><code>## [1] &quot;0x7fab4290be08&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f8434013c18&quot;</code></pre>
 <pre class="r"><code>y_address == v_address</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>Now if we modify <code>v</code> it won’t point to the same thing as <code>y</code>:</p>
 <pre class="r"><code>v[[3]] &lt;- 3
 (y_address &lt;- lobstr::obj_addr(y))</code></pre>
-<pre><code>## [1] &quot;0x7fab4290be08&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f8434013c18&quot;</code></pre>
 <pre class="r"><code>(v_address &lt;- lobstr::obj_addr(v))</code></pre>
-<pre><code>## [1] &quot;0x7fab4069f5d8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f843537a148&quot;</code></pre>
 <pre class="r"><code>y_address == v_address</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <p>But if we now change <code>y</code> to look like <code>v</code>, the original address, in theory editing y should occur in place, but it doesn’t - the “count does not go back to one”!</p>
 <pre class="r"><code>y[[3]] &lt;- 3
 (new_y_address &lt;- lobstr::obj_addr(y))</code></pre>
-<pre><code>## [1] &quot;0x7fab4067f8e8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f843616aa58&quot;</code></pre>
 <pre class="r"><code>new_y_address == y_address</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <div class="question">
@@ -2057,6 +2057,12 @@ for(x0 in x) {
 </div>
 <div class="TODO">
 <table>
+<colgroup>
+<col width="25%"></col>
+<col width="25%"></col>
+<col width="25%"></col>
+<col width="25%"></col>
+</colgroup>
 <thead>
 <tr class="header">
 <th></th>
@@ -2068,27 +2074,27 @@ for(x0 in x) {
 <tbody>
 <tr class="odd">
 <td>atomic</td>
-<td>select any number of elements</td>
-<td>extract single element</td>
-<td></td>
+<td>vector with one element</td>
+<td>same as <code>[</code></td>
+<td>NOPE!</td>
 </tr>
 <tr class="even">
 <td>list</td>
 <td>returns a smaller list</td>
-<td>single element from a list</td>
-<td></td>
+<td>vector from list</td>
+<td>shorthand for <code>[[</code> using the name of the vector</td>
 </tr>
 <tr class="odd">
 <td>matrices</td>
-<td>simplifies to lowest dimensonality</td>
-<td></td>
-<td></td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
 </tr>
 <tr class="even">
 <td>data frame</td>
-<td>subsetting a list of columns</td>
-<td>subsets like matrices</td>
-<td>subset column</td>
+<td>1 value: returns list, 2 value: returns matrix</td>
+<td>?</td>
+<td>?</td>
 </tr>
 </tbody>
 </table>
@@ -2232,6 +2238,47 @@ c(T, true_one()) &amp;&amp; c(T, true_two())</code></pre>
 <div class="TODO">
 <p>XXX</p>
 </div>
+<div class="question">
+<p>Why is <code>numeric(0)</code> “helpful for test data?”</p>
+</div>
+<div class="TODO">
+<p>XXX</p>
+</div>
+<div class="question">
+<p>Why is subsetting with factors “not a good idea”</p>
+</div>
+<div class="TODO">
+<p>XXX</p>
+</div>
+<div class="question">
+<p>We’ve been talking about <code>$</code> as a shorthand for <code>[[</code>. Using the example list <code>x &lt;- list(1:3, &quot;a&quot;, 4:6)</code> can we use <code>x$1</code> as shorthand for <code>x[[1]]</code>?</p>
+</div>
+<p>The “shorthand” refers to using the name of the vector to extract the vector. If we give <code>1:3</code> a name such as test = <code>1:3</code></p>
+<pre class="r"><code>x &lt;- list(named_vector = 1:3, &quot;a&quot;, 4:6)
+x[[1]] == x$named_vector</code></pre>
+<pre><code>## [1] TRUE TRUE TRUE</code></pre>
+<p>As such, <code>$</code> is a shorthand for <code>x[[&quot;name_of_vector&quot;]]</code> and not shorthand for <code>x[[index]]</code></p>
+<div class="question">
+<p>“While you must use [[ when working with lists, I’d also recommend using it with atomic vectors whenever you want to extract a single value. For example, instead of writing:”</p>
+<pre class="r"><code>for (i in 2:length(x)) {
+  out[i] &lt;- fun(x[i], out[i - 1])
+}</code></pre>
+<p>“It’s better to write”:</p>
+<pre class="r"><code>for (i in 2:length(x)) {
+  out[[i]] &lt;- fun(x[[i]], out[[i - 1]])
+}</code></pre>
+<p>Why?</p>
+</div>
+<div class="TODO">
+<p>XXX</p>
+</div>
+<p>:::question Can we use <code>tracemem</code> to see if copy-in-place or modifyis happening when we subset a list?</p>
+<div class="TODO">
+<pre class="r"><code>n_brewers &lt;- 
+n_brewers[5] &lt;- 42
+n_brewers[c(1,2)] &lt;- </code></pre>
+</div>
+<p>:::question Is there a high level meaning to a <code>.</code> before function? Does this refer to internal functions? [see: ?<code>row</code> vs ?<code>.row</code>]</p>
 </div>
 </div>
 

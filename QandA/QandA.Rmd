@@ -599,10 +599,10 @@ knitr::include_graphics("../images/vectors.png")
 :::TODO
 |  | `[` | `[[` | `$` |
 |---|---|---|---|
-| atomic | select any number of elements | extract single element | |
-| list | returns a smaller list | single element from a list | |
-| matrices | simplifies to lowest dimensonality | |
-| data frame | subsetting a list of columns | subsets like matrices | subset column |
+| atomic | vector with one element | same as `[` | NOPE! |
+| list | returns a smaller list | vector from list | shorthand for `[[` using the name of the vector |
+| matrices | ? | ? | ? |
+| data frame | 1 value: returns list, 2 value: returns matrix |? |? |
 :::
 
 ## 4.3.5 Exercise
@@ -740,3 +740,69 @@ Can we come up with an example for this plugging in values for `x` and `y`
 :::TODO
 XXX
 :::
+
+:::question
+Why is `numeric(0)` "helpful for test data?"
+:::
+
+This is more of a general comment that one should make sure one's code doesn't crash with vectors of zero length (or data frames with zero rows)
+
+:::question
+Why is subsetting with factors "not a good idea"
+:::
+
+:::TODO
+XXX
+:::
+
+:::question
+We've been talking about `$` as a shorthand for `[[`. Using the example list `x <- list(1:3, "a", 4:6)` can we use `x$1` as shorthand for `x[[1]]`?
+:::
+
+The "shorthand" refers to using the name of the vector to extract the vector. If we give `1:3` a name such as test = `1:3`
+
+```{r}
+x <- list(named_vector = 1:3, "a", 4:6)
+x[[1]] == x$named_vector
+```
+
+As such, `$` is a shorthand for `x[["name_of_vector"]]` and not shorthand for `x[[index]]`
+
+
+:::question
+"While you must use [[ when working with lists, I’d also recommend using it with atomic vectors whenever you want to extract a single value. For example, instead of writing:"
+
+```{r, eval=FALSE}
+for (i in 2:length(x)) {
+  out[i] <- fun(x[i], out[i - 1])
+}
+```
+
+"It's better to write":
+
+```{r, eval=FALSE}
+for (i in 2:length(x)) {
+  out[[i]] <- fun(x[[i]], out[[i - 1]])
+}
+```
+
+Why?
+:::
+
+:::TODO
+XXX
+:::
+
+:::question
+Can we use `tracemem` to see if copy-in-place or modifyis happening when we subset a list?
+
+:::TODO
+```{r, eval=FALSE}
+n_brewers <- 
+n_brewers[5] <- 42
+n_brewers[c(1,2)] <- 
+```
+:::
+
+:::question
+Is there a high level meaning to a `.` before function? Does this refer to internal functions? [see: ?`row` vs ?`.row`]
