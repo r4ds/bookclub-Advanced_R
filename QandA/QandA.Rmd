@@ -809,6 +809,7 @@ XXX
 
 :::question
 Can we use `tracemem` to see if copy-in-place or modify is happening when we subset a list?
+:::
 
 :::TODO
 ```{r, eval=FALSE}
