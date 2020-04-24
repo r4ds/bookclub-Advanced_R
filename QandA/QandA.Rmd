@@ -597,12 +597,9 @@ knitr::include_graphics("../images/vectors.png")
 :::
 
 :::TODO
-|  | `[` | `[[` | `$` |
-|---|---|---|---|
-| atomic | vector with one element | same as `[` | NOPE! |
-| list | returns a smaller list | vector from list | shorthand for `[[` using the name of the vector |
-| matrices | ? | ? | ? |
-| data frame | 1 value: returns list, 2 value: returns matrix |? |? |
+```{r, echo=FALSE}
+knitr::include_graphics("../images/subsetting.png")
+```
 :::
 
 ## 4.2.1 Selecting multiple elements
@@ -657,6 +654,7 @@ Why?
 :::
 
 :::TODO
+XXX
 :::
 
 ## 4.3.5 Exercise
@@ -709,7 +707,6 @@ Is there a high level meaning to a `.` before function? Does this refer to inter
 :::
 
 Objects in the global environment prefixed with `.` are hidden in the R (and RStudio) environment panes - so functions prefixed as such are not visible unless you do `ls(all=TRUE)`. [Read more here](https://community.rstudio.com/t/function-argument-naming-conventions-x-vs-x/7764) and (here)[https://stackoverflow.com/questions/7526467/what-does-the-dot-mean-in-r-personal-preference-naming-convention-or-more]
-:::
 
 ## 4.3.3 Missing and OOB
 
