@@ -798,17 +798,3 @@ Can we come up with an example for this plugging in values for `x` and `y`
 :::TODO
 XXX
 :::
-
-## Slides 
-
-:::question
-Can we use `tracemem` to see if copy-in-place or modify is happening when we subset a list?
-:::
-
-:::TODO
-```{r, eval=FALSE}
-n_brewers <- 
-n_brewers[5] <- 42
-n_brewers[c(1,2)] <- 
-```
-:::
