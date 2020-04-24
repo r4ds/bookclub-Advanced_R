@@ -656,9 +656,26 @@ for (i in 2:length(x)) {
 Why? Can we see this in action by giving `x`, `out`, and `fun` real life values?
 :::
 
-:::TODO
-XXX
-:::
+If we have a vector
+```{r}
+df_x <- c("Advanced","R","Book","Club")
+```
+
+We can use `[` or `[[` to extract the third element of `df_x`
+```{r}
+df_x[3]
+df_x[[3]]
+```
+
+But in the case where we want to extract an element from a list `[` and `[[` no longer give us the same results
+```{r}
+df_x <- list(A = "Advanced", B = "R", C = "Book", D = "Club")
+
+df_x[3]
+df_x[[3]]
+```
+
+Because using `[[` returns "one element of this vector" in both cases, it makes sense to default to `[[` instead of `[` since it will reliably return a single element. 
 
 ## 4.3.5 Exercise
 
