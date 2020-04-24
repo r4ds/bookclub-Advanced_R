@@ -670,22 +670,21 @@ upper.tri(x)
 
 We see that it returns the upper triangle of the matrix. But I wanted to walk through how this function actually works and what is meant in the solution manual by leveraging `.row(dim(x)) <= .col(dim(x))`.
 
-:::TODO
 ```{r, eval=FALSE}
 # ?upper.tri
 function (x, diag = FALSE) 
 {
     d <- dim(x)
-    # what is this part of the function doing
+    # if you have an array thats more than 2 dimension
+    # we need to flatten it to a matrix
     if (length(d) != 2L) 
         d <- dim(as.matrix(x))
     if (diag) 
       # this is our subsetting logical!
-        .row(d) <= .col(d)
+         .row(d) <= .col(d)
     else .row(d) < .col(d)
 }
 ```
-:::
 
 The function `.row()` and `.col()` return a matrix of integers indicating their row number
 
