@@ -23,7 +23,7 @@ All Meetings Scheduled for 8:00 PM Eastern unless otherwise noted
 - 2020-04-09 Chapter 2 - Names and values: [Asmae Toumi](https://twitter.com/asmae_toumi) ([RMD](Presentations/Week2/Chap2slides.Rmd) | [PDF](Presentations/Week2/Chap2slides.pdf) |  [HTML](Presentations/Week2/Chap2slides.html))
 - 2020-04-16 Chapter 3 - Vectors: [Tony ElHabr](https://twitter.com/TonyElHabr) ([RMD](Presentations/Week3/Chap3slides.Rmd) | [PDF](Presentations/Week3/Chap3slides.pdf) |  [HTML](Presentations/Week3/Chap3slides.html) | [Zoom Recording](https://www.youtube.com/watch?v=pQ-xDAPEQaw))
 - 2020-04-23 Chapter 4 - Subsetting: [Scott Nestler](https://twitter.com/ScottNestler)
-- 2020-04-30 Chapter 5 - Control flow: [Maya Gans](https://maya.rbind.io)
+- 2020-04-30 Chapter 5 - Control flow: Pavitra Chakravarty
 - 2020-05-07 Chapter 6 - Functions: [Asmae Toumi](https://twitter.com/asmae_toumi)
 - 2020-05-14 Chapter 7 - Environments: [Daryn Ramsden](https://twitter.com/thisisdaryn)
 - 2020-05-21 Chapter 8 - Conditions:
