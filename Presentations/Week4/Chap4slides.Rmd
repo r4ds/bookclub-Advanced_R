@@ -1,0 +1,592 @@
+---
+title: "Advanced R by Hadley Wickham"
+subtitle: "Chapter 4: Subsetting"
+author: "Scott Nestler"
+institute: "@ScottNestler"
+date: "2020-04-23"
+output:
+  xaringan::moon_reader:
+  lib_dir: libs
+nature:
+  highlightStyle: github
+highlightLines: true
+countIncrementalSlides: false
+---
+  
+  
+  ```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = TRUE)
+```
+<style>
+  img {
+    display: block;
+    margin: 0 auto;
+  }
+hide {
+  display: none;
+}
+.remark-slide-content h1 {
+  font-size: 45px;
+}
+h1 {
+  font-size: 2em;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+}
+.remark-slide-content {
+  font-size: 16px
+}
+.remark-code {
+  font-size: 16px;
+}
+code.r {
+  font-size: 16px;
+}
+pre {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+</style>
+  
+# What's in Chapter 4
+  
+- Section 4.1: Introduction & Key Points
+
+- Section 4.2: Selecting multiple elements
+
+- Section 4.3: Selecting a single element
+
+- Section 4.4: Subsetting and assignment
+
+- Section 4.5: Applications (Using subsetting to solve problems)
+
+---
+  
+# Introduction & Key Points
+  
+  + There are 6 ways to subset atomic vectors (more in 4.2 & 4.3)
+  
+  + There are 3 subsetting operators:  [[, [, and $
+  
+  + Subsetting operators interact differently with various vector types (e.g. atomic vectors, lists, factors, matrices, and data frames)
+  
+  + Subsetting and assignment can be combined ("subsassignment")
+  
+  + Subsetting complements structure, or `str()`, which shows you *all* the pieces of an object, but subsetting lets you pull out only the pieces you are interested in
+  
+  + Often useful to use RStudio Viewer, with `View(my_object)` to know which pieces you want to subset
+
+---
+  
+# Selecting Multiple Elements
+  
+  + Use `[` to select any number of elements from a vector (of any type), in one of 6 ways
+  
+  + We will use the following vector (from the beer dataset) in the examples
+  
+```{r eval=T, warning=F, message=F}
+library(dplyr)
+brewer_size <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/brewer_size.csv')
+brewers <- brewer_size %>%
+  group_by(year) %>%
+  summarize(sum = sum(n_of_brewers), barrels = sum(total_barrels)) %>%
+  select(sum, barrels) %>%
+  c()
+n_brewers <- brewers$sum
+n_barrels <- brewers$barrels
+n_brewers
+n_barrels
+
+```
+
+---
+
+# Selecting Multiple Elements:  Approaches 1 & 2
+
+  + **Positive integers** return elements at the specified position(s).
+
+```{r eval=T}
+n_brewers[2] # Can also be used for a single element
+n_brewers[c(1,11,12)] # Note what happens with out of bounds index
+n_brewers[4:6]
+
+```
+
+  + **Negative integers** *exclude* elements at the specified position(s).
+
+```{r eval=T}
+n_brewers[-11] # Omits the last (11th) value
+n_brewers[c(-1:-5)] # Omits the first 5 values
+```
+NOTE:  You can't mix positive and negative integers in a subset
+
+---
+
+# Selecting Multiple Elements:  Approaches 3 & 4
+
+  + **Logical vectors** select elements where the corresponding logical value is true.  Perhaps the most useful type of subsetting.
+
+```{r eval=T}
+n_brewers[c(TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, TRUE)]
+n_brewers[n_brewers > 10000]
+n_brewers[n_brewers > 4000 & n_brewers < 9000]
+n_brewers[c(TRUE, TRUE, FALSE)] # Usual recycling rules apply
+```
+
+  + **Nothing** returns the original vector.  Useful for matricies, data frames, and arrays (later).
+
+```{r eval=T}
+n_brewers[]
+```
+
+  + More useful with matrices, data frames, and arrays.
+  
+---
+
+# Selecting Multiple Elements:  Approaches 5 & 6
+
+  + **Zero** return returns a zero length vector.  Useful for generating test data.
+
+```{r eval=T}
+n_brewers[0]
+
+```
+
+  + Helpful for generating test data
+
+  + **Character vectors** return elements of vectors *with names*.
+
+```{r eval=T}
+nb <- setNames(n_brewers, letters[1:11])
+nb[c("a", "b", "c")]
+nb[c("b", "b")] # Can repeat indices
+
+```
+
+  + Recommendation is to not subset with factors
+  
+---
+
+#  Selecting Multiple Elements of Lists, Matrices, and Arrays
+
+  + For Lists, it's the same as for an atopmic vector
+  
+    + `[` always returns a list; `[[` and `$` let you pull out elements (later)
+    
+  + For **matrices** and **arrays**, there are 3 ways:
+  
+    + With multiple vectors
+    + With a single vector
+    + With a matrix
+    
+```{r eval=T}
+A <- matrix(n_brewers[1:10], nrow = 2)
+A
+A[1,] # To select first row
+A[,2:3] # To select 2nd and 3rd columns
+A[2,4] # Can also select a single element
+```   
+
+---
+
+# Selecting Multiple Elements of Data Frames
+
+  + Data frames have characteristics of both lists and matrices, so:
+  
+    + When subsetting with a single index, they behave like lists.
+    + When subsetting with two indices, they behave like matrices.
+    
+```{r eval=T}
+B <- data.frame(year = 2009:2013, num = n_brewers[1:5], prod = n_barrels[1:5])
+B[1:2] # Selects first two columns
+B[2,] # Selects the second row
+B[4,2] # Select a single element
+str(B["year"]) # list subsetting does not simplify
+str(B[, "year"]) # matrix subsetting simplifies by default
+```   
+
+---
+
+# Selecting Multiple Elements of Tibbles
+
+
++ Subsetting a tibble with `[` always returns a tibble.
+
+```{r eval=T, results='hold'}
+C <- tibble::tibble(B)
+C[2,] # Selects the second row
+C[4,2] # Select a single element
+str(C["year"]) # Same as next
+str(C[,"year"]) # Same as previous
+```
+
+---
+
+# Preserving Dimensionality
+
+  + Subsetting a matrix or data frame with a single number will (by default) simplify the returned output to an object with lower dimensionality
+
+  + You can change this with `drop = FALSE`.
+  
+  + Tibbles default to `drop = FALSE` because the default `drop = TRUE` behavior is a common source of bugs in functions.
+  
+  + Factor subsetting is different; it affects levels (not dimensions) and defaults to `FALSE`.
+  
+  + If you are using `drop = TRUE` a lot, you shoudl probably use a character vector instead of a factor.
+
+```{r eval=T}
+str(A[1,])
+str(A[1, , drop = FALSE])
+
+```
+
+---
+
+# Selecting a single element
+
++ Two subsetting operators
+
+  + `[[` is used for extracing single elements
+
+  + `$` is just shorthand operator, i.e. x$y is the same as x[["y"]] (in 5 fewer keystrokes)
+  
+  + Primary use case for `[[` is when working with lists, as you get a list back.
+  
+  + The "train of cars" example is useful in illustrating the difference between `[` and `[[`.
+  
+```{r eval=T}
+x <- list(1:3, "a", 4:6)
+```
+
+
+```{r echo=F, include=T, eval=T, out.width='60%'}
+knitr::include_graphics('train.png')
+```
+
+```{r echo=F, include=T, eval=T, out.width='60%'}
+knitr::include_graphics('train-single.png')
+```
+
+---
+
+# More on `[[`
+
+  + `[[` can only return a single item, so you can only use it with a single positive integer or a single string.
+  
+  + If you use a vector with `[[`, it will subset recursively.
+  
+    + This means that `x[[c(1,2)]]` is equivalent to `x[[1]][[2]]`
+    
+  + You have to use `[[` when workign with lists, but it is recommended for extracting a single value from atomic vectors too.
+  
+  + For somethign like this, it probably doesn't matter.
+
+```{r eval=T}
+n_brewers[7]
+n_brewers[[7]]
+```
+
+  + But in code like this, somehow it does?
+
+```{r eval=F}
+for (i in 2:length(x)) {
+  out[i] <- fun(x[i], out[i-1])
+}
+
+for (i in 2:length(x)) {
+  out[[i]] <- fun(x[[i]], out[[i-1]])
+}
+
+```
+
+---
+
+# Now about `$`
+
+  + As mentioned, it is a shortcut, with `x$y` being *roughly equivalent* to x[["y"]].
+  
+  + Often used to access variables in data frames.
+  
+  + A common mistake is using it when the name of a column is stored in a variable.
+  
+  + An important difference betweeen `$` and `[[` is that `$` does partial (left to right) matching.
+  
+  + A common mistake with `$` is using it when you have the name of a column stored in a variable
+
+```{r eval=T}
+# Tried to put an example here with the beer data set but ran out of time
+# and refused to use the mtcars example from the book.  Will add in later.
+
+```
+
+---
+
+# Missing and Out-of-Bounds Indices
+
+  + What happens when you use an "invalid" index with `[[`?
+  
+  + Inconsistencies in this table led to the development of `purr::pluck()` and `purr::chuck`().
+  
+```{r echo = FALSE, results='asis'}
+xyz <- matrix(c("Atomic", rep("Error",4), "List", rep("Error",2), rep("NULL",7)), nrow=3)
+colnames(xyz) <- c("row[[col]]", "Zero-length", "OOB(int)", "OOB(chr)", "Missing")
+kableExtra::kable(xyz, caption = "Table from 4.3.3")
+```
+
+---
+
+# @ and `slot()` Operators
+
+  + These operators are needed for S4 objects (covered in Chap. 15)
+  
+  + @ is the equivalent of $; @ is more restrictive
+  
+  + `slot()` is the equivalent to `[[`
+  
+  
+---
+
+# Subsetting and Assignment ("Subassignment")
+
+  +All subsetting operators can be combined with assignment to modify selected values of the input vector.
+  
+```{r eval=T}
+n_brewers
+n_brewers[5] <- 42
+n_brewers[c(1,2)] <- c(1.618, 186282)
+n_brewers
+
+```
+  
+  + Be sure that the length(value) is the same length of x[i] due to complex recycling rules.
+  
+---
+  
+# Application - Lookup Tables
+###Character Subsetting
+
+  + Character matching can be used to create lookup tables.
+    
+  + You can use `unname()` to remove the names if you want
+
+```{r eval=T, warning=F, message=F}
+brewing_materials <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/brewing_materials.csv')
+types <- substring(brewing_materials$type[1:15],1,1)
+types
+lookup <- c(M = "Malt", C = "Corn", R = "Rice", B = "Barley", W = "Wheat", T = "Total", S= "Sugar", H = "Hops", O = "Other")
+lookup[types]
+
+unname(lookup[types])
+
+```
+    
+---
+  
+# Application - Matching and Merging By Hand
+### Integer Subsetting
+
+  + Can have more complicated lookup tables with multiple columns.
+    
+  + You can use `unname()` to remove the names if you want
+
+```{r eval=T, warning=F, message=F}
+
+grades <- c(1, 2, 2, 3, 1)
+info <- data.frame(
+  grade = 3:1,
+  desc = c("Excellent", "Good", "Poor"),
+fail = c(F, F, T)
+)
+id <- match(grades, info$grade)
+id
+info[id, ]
+
+```
+
+---
+  
+# Application - Random Samples and Bootstraps
+### IntegerSubsetting
+
+  + Can use integer indices to randomly sample or bootstrap a vector or data frame using `sample()`.
+
+```{r eval=T, warning=F, message=F}
+B <- data.frame(year = 2009:2013, num = n_brewers[1:5], prod = n_barrels[1:5])
+B
+
+# Randomly reorder
+B[sample(nrow(B)), ]
+
+```
+      
+---
+  
+# Application - Random Samples and Bootstraps (cont.)
+### Integer Subsetting
+
+  + Can use integer indices to randomly sampel or bootstrap a vector or data frame using `sample()`.
+
+```{r eval=T, warning=F, message=F}
+# Select 3 randow rows
+B[sample(nrow(B), 2), ]
+
+#Select 10 bootstrap replicates
+B[sample(nrow(B), 10, replace = TRUE), ]
+# The number after decimal indicates additional occurrences
+
+```
+    
+---
+  
+# Application - Ordering
+### Integer Subsetting
+
+  + Provide a vector to `order()` and it returns an integer vector describing how to order the subsetted vector.
+
+  + To break ties, you can supply additional variables to `order()`.
+
+
+```{r eval=T, warning=F, message=F}
+types
+order(types)
+types[order(types)]
+types[order(types, decreasing = TRUE)] # Change order from ascending to descending
+
+```
+
+---
+  
+# Application - Ordering (cont.)
+### Integer Subsetting
+
+  + For two or more dimensions, `order()` makes it easy to order *either* the rows or columns of an object.
+
+```{r eval=T, warning=F, message=F}
+# Reorder by 'num' column
+B[order(B$num), ]
+
+# Reorder by names of columns
+B[, order(names(B))]
+
+```
+
+---
+  
+# Application - Expanding Aggregated Counts
+### Character Subsetting
+
+  + Given a data frame where identical rows have been collapsed into one and a count column, use `rep()` and integer subsetting to uncollapse.
+  
+  + This works because `rep(x, y)` repeats `x[i] y[i]` times.
+  
+```{r eval=T}
+df <- data.frame(x = c(2, 4, 1), y = c(9, 11, 6), n = c(3,5,1))
+rep(1:nrow(df), df$n)
+
+df[rep(1:nrow(df), df$n), ]
+```
+
+---
+
+# Application - Removing Columns From Data Frames
+### Character Subsetting
+
+  + There are two ways to remove columns from a data frame.
+    
+    + You can set individual columns to `NULL`.
+    
+    + Or you can subset to return only the columns you want.
+
+   + If you only know the columns you **don't** want, use set operations to work out which columns to keep:
+
+
+```{r eval=T}
+df <- data.frame(x = 1:3, y = 3:1, z = letters[1:3])
+df$z <- NULL
+
+df <- data.frame(x = 1:3, y = 3:1, z = letters[1:3])
+df[c("x", "y")]
+
+df[setdiff(names(df), "z")]
+
+```
+
+---
+  
+# Application - Selecting Rows Based on a Condition
+### Logical Subsetting
+
+  + To combine conditions from multiple columns use logical subsetting
+
+```{r eval=T, warning=F, message=F}
+B <- data.frame(year = 2009:2013, num = n_brewers[1:5], prod = n_barrels[1:5])
+B[B$num >= 4000,]
+B[B$num >= 4000 & B$year < 2013,]
+```
+    
+---
+  
+# Application - Boolean Algebra vs Sets 
+### Logical & Integer Subsetting
+
+  + Using set operations is useful when:
+    
+    + You want to find the first (or last) `TRUE`.
+    
+    + You have very few `TRUE`s and very few `FALSE`s, so a set representation is faster and uses less storage
+    
+  + Use `which()` to convert a Boolean representation to an integer representation.
+  
+  + There is no reverse operation in base R, but it can be written like this:
+
+
+```{r eval=T, warning=F, message=F}
+x <- sample(10) < 4
+which(x)
+
+unwhich <- function(x, n) {
+  out <- rep_len(FALSE, n)
+  out[x] <- TRUE
+  out
+}
+
+unwhich(which(x), 10)
+```
+
+---
+  
+# Application - Boolean Algebra vs Sets (cont.)
+### Logical & Integer Subsetting
+
+  + Here are two logical vectors and some operations useful in subsetting.
+    
+```{r eval=T, warning=F, message=F}
+x1 <- 1:10 %% 2 == 0 # uses the mod operator `%%` to identify even numbers
+x2 <- which(x1)
+y1 <- 1:10 %% 5 == 0 # Finds numbers divisible by 5 with remainder 0
+y2 <- which(y1)
+
+x1 & y1 # gives the intersection
+intersect (x2, y2) # check it this way; gives even numbers
+
+x1 | y1 # gives the union
+union(x2, y2) # provides even numbers and those divisible by 5
+
+x1 & !y1 # gives even numbers *not* divisible by 5
+setdiff(x2, y2) # check it this way
+```
+        
+---
+  
+# Application - Boolean Algebra vs Sets (cont. cont.)
+### Logical & Integer Subsetting
+
+  + Common mistake is using `x[which(y)]` instead of `x[y]`.  Problem is that the `which()` switches from logical to integer subsetting but doesnt' really do anything here.  But it can make a difference:
+  
+    + When there is an `NA` in the logical vector, logical subsetting replaces them with `NA`, but `which()` drops these values.
+    
+    + `x[-which(y)]` is **not** equivalent to `x[!y]`
+    
+  + Bottom line:  avoid switching from logical to integer subsetting unless you really want to, like to find the first (last) `TRUE` value.
+    
+        
