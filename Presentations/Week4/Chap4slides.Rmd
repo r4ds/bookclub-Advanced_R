@@ -5,8 +5,8 @@ author: "Scott Nestler"
 institute: "@ScottNestler"
 date: "2020-04-23"
 output:
-  lib_dir: libs
   xaringan::moon_reader:
+  lib_dir: libs
 nature:
   highlightStyle: github
 highlightLines: true
@@ -328,10 +328,9 @@ for (i in 2:length(x)) {
   + Inconsistencies in this table led to the development of `purr::pluck()` and `purr::chuck`().
   
 ```{r echo = FALSE, results='asis'}
-library(knitr)
 xyz <- matrix(c("Atomic", rep("Error",4), "List", rep("Error",2), rep("NULL",7)), nrow=3)
 colnames(xyz) <- c("row[[col]]", "Zero-length", "OOB(int)", "OOB(chr)", "Missing")
-kable(xyz, caption = "Table from 4.3.3")
+kableExtra::kable(xyz, caption = "Table from 4.3.3")
 ```
 
 ---

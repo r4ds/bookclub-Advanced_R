@@ -529,14 +529,41 @@ for (i in 2:length(x)) {
   
   + Inconsistencies in this table led to the development of `purr::pluck()` and `purr::chuck`().
   
-
-Table: Table from 4.3.3
-
-row[[col]]   Zero-length   OOB(int)   OOB(chr)   Missing 
------------  ------------  ---------  ---------  --------
-Atomic       Error         Error      NULL       NULL    
-Error        Error         Error      NULL       NULL    
-Error        List          NULL       NULL       NULL    
+&lt;table&gt;
+&lt;caption&gt;Table from 4.3.3&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; row[[col]] &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Zero-length &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; OOB(int) &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; OOB(chr) &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Missing &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Atomic &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Error &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Error &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NULL &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NULL &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Error &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Error &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Error &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NULL &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NULL &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Error &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; List &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NULL &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NULL &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NULL &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 
 ---
 
@@ -685,11 +712,11 @@ B[sample(nrow(B)), ]
 
 ```
 ##   year        num      prod
-## 3 2011   4186.000 385493644
 ## 4 2012   4860.000 392294405
-## 5 2013     42.000 383994749
+## 3 2011   4186.000 385493644
 ## 1 2009      1.618 393938550
 ## 2 2010 186282.000 390422806
+## 5 2013     42.000 383994749
 ```
       
 ---
@@ -706,9 +733,9 @@ B[sample(nrow(B), 2), ]
 ```
 
 ```
-##   year      num      prod
-## 1 2009    1.618 393938550
-## 3 2011 4186.000 385493644
+##   year  num      prod
+## 5 2013   42 383994749
+## 3 2011 4186 385493644
 ```
 
 ```r
@@ -718,16 +745,16 @@ B[sample(nrow(B), 10, replace = TRUE), ]
 
 ```
 ##     year        num      prod
-## 4   2012   4860.000 392294405
-## 1   2009      1.618 393938550
 ## 2   2010 186282.000 390422806
-## 4.1 2012   4860.000 392294405
-## 5   2013     42.000 383994749
-## 1.1 2009      1.618 393938550
-## 3   2011   4186.000 385493644
-## 5.1 2013     42.000 383994749
-## 5.2 2013     42.000 383994749
+## 4   2012   4860.000 392294405
 ## 2.1 2010 186282.000 390422806
+## 2.2 2010 186282.000 390422806
+## 3   2011   4186.000 385493644
+## 4.1 2012   4860.000 392294405
+## 3.1 2011   4186.000 385493644
+## 2.3 2010 186282.000 390422806
+## 5   2013     42.000 383994749
+## 1   2009      1.618 393938550
 ```
 
 ```r
@@ -944,7 +971,7 @@ which(x)
 ```
 
 ```
-## [1] 5 6 8
+## [1] 2 6 8
 ```
 
 ```r
@@ -958,7 +985,7 @@ unwhich(which(x), 10)
 ```
 
 ```
-##  [1] FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE
+##  [1] FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE
 ```
 
 ---
