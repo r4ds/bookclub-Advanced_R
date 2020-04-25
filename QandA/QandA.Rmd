@@ -58,6 +58,35 @@ The round brackets `(eh)` list the arguments, the curly brackets `{eh}` define t
 ## 2.3.3 Lists
 
 :::question
+
+Checking the address for a list and its copy we see they share the same references:
+
+```{r}
+l1 <- list(1,2,3)
+l2 <- l1
+identical(lobstr::ref(l1),lobstr::ref(l2))
+lobstr::obj_addr(l1[[1]])
+lobstr::obj_addr(l2[[1]])
+```
+
+But why isn't this the case for their subsets? Using `obj_addr` they have different addresses, but when we look at their references they are the same
+
+```{r}
+lobstr::obj_addr(l1[1])
+lobstr::obj_addr(l2[1])
+```
+
+
+```{r}
+lobstr::ref(l1[1], (l2[1]))
+```
+:::
+
+:::TODO
+XXX
+:::
+
+:::question
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
 :::
 
@@ -852,3 +881,5 @@ Can we come up with an example for this plugging in values for `x` and `y`
 c(TRUE, FALSE)[-which(FALSE)]
 c(TRUE, FALSE)[!FALSE]
 ```
+
+

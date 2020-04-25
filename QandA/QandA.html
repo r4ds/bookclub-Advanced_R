@@ -1605,6 +1605,31 @@ div.tocify {
 <div id="lists" class="section level2">
 <h2>2.3.3 Lists</h2>
 <div class="question">
+<p>Checking the address for a list and its copy we see they share the same references:</p>
+<pre class="r"><code>l1 &lt;- list(1,2,3)
+l2 &lt;- l1
+identical(lobstr::ref(l1),lobstr::ref(l2))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>lobstr::obj_addr(l1[[1]])</code></pre>
+<pre><code>## [1] &quot;0x7fc6e71ae3f8&quot;</code></pre>
+<pre class="r"><code>lobstr::obj_addr(l2[[1]])</code></pre>
+<pre><code>## [1] &quot;0x7fc6e71ae3f8&quot;</code></pre>
+<p>But why isn’t this the case for their subsets? Using <code>obj_addr</code> they have different addresses, but when we look at their references they are the same</p>
+<pre class="r"><code>lobstr::obj_addr(l1[1])</code></pre>
+<pre><code>## [1] &quot;0x7fc6e7573f70&quot;</code></pre>
+<pre class="r"><code>lobstr::obj_addr(l2[1])</code></pre>
+<pre><code>## [1] &quot;0x7fc6e74f5ca0&quot;</code></pre>
+<pre class="r"><code>lobstr::ref(l1[1], (l2[1]))</code></pre>
+<pre><code>## █ [1:0x7fc6e797a8f8] &lt;list&gt; 
+## └─[2:0x7fc6e71ae3f8] &lt;dbl&gt; 
+##  
+## █ [3:0x7fc6e797a8c0] &lt;list&gt; 
+## └─[2:0x7fc6e71ae3f8]</code></pre>
+</div>
+<div class="TODO">
+<p>XXX</p>
+</div>
+<div class="question">
 <p>When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that’s optimized behind the scenes?</p>
 </div>
 <p>Automagical!</p>
@@ -1633,33 +1658,33 @@ div.tocify {
 <p>Now we can create a vector:</p>
 <pre class="r"><code>v &lt;- c(1, 2, 3)
 (old_address &lt;- lobstr::obj_addr(v))</code></pre>
-<pre><code>## [1] &quot;0x7fadae368368&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fc6e2de96a8&quot;</code></pre>
 <p>Changing a value within it changes its address:</p>
 <pre class="r"><code>v[[3]] &lt;- 4
 (new_address &lt;- lobstr::obj_addr(v))</code></pre>
-<pre><code>## [1] &quot;0x7fadb109aac8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fc6e67dac28&quot;</code></pre>
 <pre class="r"><code>old_address == new_address</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <p>We can assign the modified vector to a new name, where <code>y</code> and <code>v</code> point to the same thing.</p>
 <pre class="r"><code>y &lt;- v
 (y_address &lt;- lobstr::obj_addr(y))</code></pre>
-<pre><code>## [1] &quot;0x7fadb109aac8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fc6e67dac28&quot;</code></pre>
 <pre class="r"><code>(v_address &lt;- lobstr::obj_addr(v))</code></pre>
-<pre><code>## [1] &quot;0x7fadb109aac8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fc6e67dac28&quot;</code></pre>
 <pre class="r"><code>y_address == v_address</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>Now if we modify <code>v</code> it won’t point to the same thing as <code>y</code>:</p>
 <pre class="r"><code>v[[3]] &lt;- 3
 (y_address &lt;- lobstr::obj_addr(y))</code></pre>
-<pre><code>## [1] &quot;0x7fadb109aac8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fc6e67dac28&quot;</code></pre>
 <pre class="r"><code>(v_address &lt;- lobstr::obj_addr(v))</code></pre>
-<pre><code>## [1] &quot;0x7fadb070a568&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fc6e2dc6a18&quot;</code></pre>
 <pre class="r"><code>y_address == v_address</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <p>But if we now change <code>y</code> to look like <code>v</code>, the original address, in theory editing y should occur in place, but it doesn’t - the “count does not go back to one”!</p>
 <pre class="r"><code>y[[3]] &lt;- 3
 (new_y_address &lt;- lobstr::obj_addr(y))</code></pre>
-<pre><code>## [1] &quot;0x7fadb0ddf658&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fc6e2dda928&quot;</code></pre>
 <pre class="r"><code>new_y_address == y_address</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <div class="question">
