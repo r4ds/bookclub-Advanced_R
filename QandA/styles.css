@@ -55,6 +55,8 @@ div.answer {
   font-weight: bold;
 }
 
+.indent { margin-left: 1em; }
+
 #TOC {
   background: url("r4ds_square.png");
   background-size: contain;
