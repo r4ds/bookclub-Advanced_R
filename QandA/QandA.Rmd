@@ -1020,7 +1020,7 @@ XXX
 ## Conclusion
 
 :::question
-Putting the concepts together in diagram form. Let's work on these schematics!
+Can we put these concepts together in diagram form? Let's work on improving these schematics!
 :::
 
 ```{r, echo=FALSE}
