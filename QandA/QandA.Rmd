@@ -56,7 +56,7 @@ Import using the tidyverse where names are not adjusted
 read_csv(file = "example2223.csv")
 ```
 
-However I really don´t undestand the difference between backticks and quotation marks. For example when I select a column in the case of non-syntactic in the tidyverse I can use quotation marks or backticks 
+However I really don´t understand the difference between backticks and quotation marks. For example when I select a column in the case of non-syntactic in the tidyverse I can use quotation marks or backticks 
 
 ```{r}
 df__non_syntactic_name %>% select("if")
@@ -171,6 +171,36 @@ Is there a way to clear the "global string pool"?
 :::
 
 According to [this post](https://community.rstudio.com/t/memory-usage-and-rs-global-string-pool/4762/3) it doesn't look like you can directly, but clearing all references to a string that's in the global string pool clears that string from the pool, eventually
+
+## 2.3.6.2 Exercise
+
+:::question
+When we look at `tracemem` when we modify `x` from an integer to numeric, x is assigned to three objects. The first is the integer, and the third numeric - so what's the intermediate type?
+
+```{r, eval=FALSE}
+x <- c(1L, 2L, 3L)
+obj_addr(x)
+tracemem(x)
+x[[3]] <- 4
+```
+
+```
+[1] "0x7f84b7fe2c88"
+[1] "<0x7f84b7fe2c88>"
+tracemem[0x7f84b7fe2c88 -> 0x7f84b7fe5288]: 
+tracemem[0x7f84b7fe5288 -> 0x7f84bc0817c8]: 
+```
+
+What is `0x7f84b7fe5288` when the intermediate `x <- c(1L, 2L, 4)` is impossible?
+:::
+
+When we assign the new value as an integer there is no intermediate step, this probably means `c(1,2, NA)` is the intermediate step 
+```{r}
+x <- c(1L, 2L, 3L)
+obj_addr(x)
+tracemem(x)
+x[[3]] <- 4L
+```
 
 ## 2.4.1 Object size
 
@@ -933,7 +963,7 @@ Read more about [Special Primatives](https://cran.r-project.org/doc/manuals/r-re
 ## 4.5.8 Boolean algebra
 
 :::question
-What is a use case for reversing which with the `unwhich()` function?
+The `unwhich()` function in the book specifies the length of the vector we want of `FALSE` statements, why is this preferable to creating a vector of the length of the input itself? 
 :::
 
 :::TODO
