@@ -135,13 +135,15 @@ lobstr::obj_addr(l2[1])
 
 
 ```{r}
-lobstr::ref(l1[1], (l2[1]))
+identical(lobstr::obj_addr(l1[1]), lobstr::obj_addr(l2[1]))
 ```
 :::
 
-:::TODO
-XXX
-:::
+This is because using singular brackets wraps the value 1 in a new list that is created on the fly which will have a unique address. We can use double brackets to confirm our mental model that the sublists are also identical:
+
+```{r}
+identical(lobstr::obj_addr(l1[[1]]), lobstr::obj_addr(l2[[1]]))
+```
 
 
 :::question
@@ -194,12 +196,19 @@ tracemem[0x7f84b7fe5288 -> 0x7f84bc0817c8]:
 What is `0x7f84b7fe5288` when the intermediate `x <- c(1L, 2L, 4)` is impossible?
 :::
 
-When we assign the new value as an integer there is no intermediate step, this probably means `c(1,2, NA)` is the intermediate step 
+When we assign the new value as an integer there is no intermediate step. This probably means `c(1,2, NA)` is the intermediate step; creating an intermediate vector that's the same length of the final product with NA values at all locations that are new or to be changed
+
 ```{r}
 x <- c(1L, 2L, 3L)
 obj_addr(x)
 tracemem(x)
 x[[3]] <- 4L
+```
+
+You can dig into the C code running this: 
+
+```{r, eval=FALSE}
+pryr::show_c_source(.Internal("[<-"))
 ```
 
 ## 2.4.1 Object size
