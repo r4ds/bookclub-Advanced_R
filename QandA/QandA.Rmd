@@ -13,6 +13,7 @@ A companion to [Advanced R](https://adv-r.hadley.nz/rcpp.html#acknowledgments) a
 ```{r, include=FALSE}
 library(tidyverse)
 library(kableExtra)
+library(lobstr)
 ```
 
 # Chapter 2 
@@ -53,23 +54,23 @@ read.csv(file = "example2223.csv", check.names = FALSE)
 
 Import using the tidyverse where names are not adjusted
 ```{r}
-read_csv(file = "example2223.csv")
+df_non_syntactic_name  <- read_csv(file = "example2223.csv")
 ```
 
 However I really don´t understand the difference between backticks and quotation marks. For example when I select a column in the case of non-syntactic in the tidyverse I can use quotation marks or backticks 
 
 ```{r}
-df__non_syntactic_name %>% select("if")
-df__non_syntactic_name %>% select(`if`)
+df_non_syntactic_name %>% select("if")
+```
+
+```{r, eval=FALSE}
+df_non_syntactic_name %>% select(`if`)
 ```
 
 But in base R, I can do this with quotation marks, but not backticks:
 
-```{r}
-df__non_syntactic_name["if"]
-```
 ```{r, eval=FALSE}
-df__non_syntactic_name[`if`]
+df__non_syntactic_name["if"]
 ```
 
 ```
