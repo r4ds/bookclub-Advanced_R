@@ -27,7 +27,7 @@ All Meetings Scheduled for 8:00 PM Eastern unless otherwise noted
 - 2020-05-07 Chapter 6 - Functions: [Asmae Toumi](https://twitter.com/asmae_toumi)
 - 2020-05-14 Chapter 7 - Environments: [Daryn Ramsden](https://twitter.com/thisisdaryn)
 - 2020-05-21 Chapter 8 - Conditions:
-- 2020-05-28 Chapter 9 - Functionals:
+- 2020-05-28 Chapter 9 - Functionals: [Tan Ho](https://twitter.com/_tanho)
 - 2020-06-04 Chapter 10 - Function factories:
 - 2020-06-11 Chapter 11 - Function operators:
 - 2020-06-18 Chapter 12 - OOP base types:
