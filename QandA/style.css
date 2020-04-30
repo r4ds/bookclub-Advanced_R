@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    z-index: 2;
+    color: #fff;
+    background-color: #418898;
+    border-color: #418898;
+}
+
+h1 {
+  color: #418898;
+}
+
+div.answer, div.question {
+    padding: 1em;
+    margin: 1em 0;
+    padding-left: 100px;
+    background-size: 40px;
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    color: #1f5386;
+    background-color: #53B1C2;
+    border: dashed 5px #418898;
+}
+
+div.TODO {
+    padding: 1em;
+    margin: 1em 0;
+    background-size: 40px;
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    color: white;
+    background-color: #b53737;
+    border: solid 5px #8e1600;
+}
+
+div.question {
+  background-image: url("images/question.png");
+}
+
+.Q {
+  color: red;
+  font-weight: bold;
+}
+
+.solved {
+  color: green;
+  font-weight: bold;
+}
+
+.started {
+  color: orange;
+  font-weight: bold;
+}
+
+.indent { margin-left: 1em; }
+
+#TOC {
+  background: url("www/r4ds_square.png");
+  background-size: contain;
+  padding-top: 135px !important;
+  background-repeat: no-repeat;
+}
+
+.summary {
+  background-color: rgba(48,146,255,0.2);
+}
+
+.book .book-summary ul.summary li.divider {
+  margin: 0;
+  height: 0;
+}
+
+p, div {
+  font-family: 'Raleway';
+}
