@@ -236,11 +236,11 @@ ui &lt;- fluidPage(
 server &lt;- function(input, output) {
     
     datasetInput &lt;- reactive({
-        switch(input$dataset, #&lt;&lt;
-               "materials" = brewing_materials, #&lt;&lt;
-               "size" = brewer_size, #&lt;&lt;
-               "states" = beer_states, #&lt;&lt;
-               "taxed" = beer_taxed) #&lt;&lt;
+*       switch(input$dataset,
+*              "materials" = brewing_materials,
+*              "size" = brewer_size,
+*              "states" = beer_states,
+*              "taxed" = beer_taxed)
     })
 
     output$summary &lt;- renderPrint({
@@ -277,7 +277,7 @@ runApp("Presentations/Week5/switch_app/app.R", display.mode = "showcase")
 .pull-left[
 
 ```r
-for (i in 1:nrow(beer_states)) {
+*for (i in 1:nrow(beer_states)) {
   if (beer_states$state[i] %in% Region1) {
     beer_states$region[i] &lt;- "Region 1"
   } else if (beer_states$state[i] %in% Region2) {
@@ -301,7 +301,7 @@ for (i in 1:nrow(beer_states)) {
   } else {
     beer_states$region[i] &lt;- "Missing"
   }
-}
+*} 
 ```
 ]]
 
@@ -329,15 +329,15 @@ server &lt;- function(input, output, session) {
     
    states &lt;- unique(beer_states$state)
     
-   my_vector &lt;- reactive({
-        i &lt;- 0
-        my_vector &lt;- vector()
-        while (i &lt;= input$xqty) {
-            my_vector[i] &lt;- i
-            i = i+1
-        }
-        return(my_vector)
-    })
+*  my_vector &lt;- reactive({
+*       i &lt;- 0
+*       my_vector &lt;- vector()
+*       while (i &lt;= input$xqty) {
+*           my_vector[i] &lt;- i
+*           i = i+1
+*       }
+*       return(my_vector)
+*   })
     
     output$while_debug &lt;- renderTable({
         
@@ -419,11 +419,16 @@ font-size: 0.5em;
 font-size: 0.9em;
 }
 
+.remark-code-line-highlighted {
+    background-color: rgba(48,146,255,0.2);
+}
 &lt;/style&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/remark/0.14.0/remark.min.js"></script>
-<script>var slideshow = remark.create();
+<script>var slideshow = remark.create({
+"highlightLines": true
+});
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
 });
@@ -462,7 +467,24 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 <style>
 .logo {
   background-image: url(r4ds.png);

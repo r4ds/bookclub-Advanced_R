@@ -1659,17 +1659,17 @@ l2 &lt;- l1
 identical(lobstr::ref(l1),lobstr::ref(l2))</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>lobstr::obj_addr(l1[[1]])</code></pre>
-<pre><code>## [1] &quot;0x7fc686ff2198&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f9ad5fd4998&quot;</code></pre>
 <pre class="r"><code>lobstr::obj_addr(l2[[1]])</code></pre>
-<pre><code>## [1] &quot;0x7fc686ff2198&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f9ad5fd4998&quot;</code></pre>
 <p>But why isn’t this the case for their subsets? Using <code>obj_addr</code> they have different addresses, but when we look at their references they are the same</p>
 <pre class="r"><code>lobstr::obj_addr(l1[1])</code></pre>
-<pre><code>## [1] &quot;0x7fc68a005c08&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f9ad6eb6808&quot;</code></pre>
 <pre class="r"><code>lobstr::ref(l1[1])</code></pre>
-<pre><code>## █ [1:0x7fc686769958] &lt;list&gt; 
-## └─[2:0x7fc686ff2198] &lt;dbl&gt;</code></pre>
+<pre><code>## █ [1:0x7f9ad6efa958] &lt;list&gt; 
+## └─[2:0x7f9ad5fd4998] &lt;dbl&gt;</code></pre>
 <pre class="r"><code>lobstr::obj_addr(l2[1])</code></pre>
-<pre><code>## [1] &quot;0x7fc689876bd8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f9ad6ecb3d8&quot;</code></pre>
 <pre class="r"><code>identical(lobstr::obj_addr(l1[1]), lobstr::obj_addr(l2[1]))</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 </div>
@@ -1682,11 +1682,11 @@ identical(lobstr::ref(l1),lobstr::ref(l2))</code></pre>
 <p>Nothing - it has to do with the printing method:</p>
 <pre class="r"><code>x &lt;- c(1, 2, 3)
 print(tracemem(x))</code></pre>
-<pre><code>## [1] &quot;&lt;0x7fc689366368&gt;&quot;</code></pre>
+<pre><code>## [1] &quot;&lt;0x7f9ad70fc568&gt;&quot;</code></pre>
 <pre class="r"><code>cat(tracemem(x))</code></pre>
-<pre><code>## &lt;0x7fc689366368&gt;</code></pre>
+<pre><code>## &lt;0x7f9ad70fc568&gt;</code></pre>
 <pre class="r"><code>lobstr::obj_addr(x)</code></pre>
-<pre><code>## [1] &quot;0x7fc689366368&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f9ad70fc568&quot;</code></pre>
 <div class="question">
 <p>When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that’s optimized behind the scenes?</p>
 </div>
@@ -1716,11 +1716,11 @@ tracemem[0x7f84b7fe5288 -&gt; 0x7f84bc0817c8]: </code></pre>
 <p>When we assign the new value as an integer there is no intermediate step. This probably means <code>c(1,2, NA)</code> is the intermediate step; creating an intermediate vector that’s the same length of the final product with NA values at all locations that are new or to be changed</p>
 <pre class="r"><code>x &lt;- c(1L, 2L, 3L)
 obj_addr(x)</code></pre>
-<pre><code>## [1] &quot;0x7fc6892e0108&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f9ad6ca3308&quot;</code></pre>
 <pre class="r"><code>tracemem(x)</code></pre>
-<pre><code>## [1] &quot;&lt;0x7fc6892e0108&gt;&quot;</code></pre>
+<pre><code>## [1] &quot;&lt;0x7f9ad6ca3308&gt;&quot;</code></pre>
 <pre class="r"><code>x[[3]] &lt;- 4L</code></pre>
-<pre><code>## tracemem[0x7fc6892e0108 -&gt; 0x7fc68930f408]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt;</code></pre>
+<pre><code>## tracemem[0x7f9ad6ca3308 -&gt; 0x7f9ad6c27208]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt;</code></pre>
 <p>You can dig into the C code running this:</p>
 <pre class="r"><code>pryr::show_c_source(.Internal(&quot;[&lt;-&quot;))</code></pre>
 </div>
@@ -1763,33 +1763,33 @@ lobstr::obj_sizes(x4, x5)</code></pre>
 <p>Now we can create a vector:</p>
 <pre class="r"><code>v &lt;- c(1, 2, 3)
 (old_address &lt;- lobstr::obj_addr(v))</code></pre>
-<pre><code>## [1] &quot;0x7fc6867e59e8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f9ad6ee9ca8&quot;</code></pre>
 <p>Changing a value within it changes its address:</p>
 <pre class="r"><code>v[[3]] &lt;- 4
 (new_address &lt;- lobstr::obj_addr(v))</code></pre>
-<pre><code>## [1] &quot;0x7fc6892864d8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f9ad7106198&quot;</code></pre>
 <pre class="r"><code>old_address == new_address</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <p>We can assign the modified vector to a new name, where <code>y</code> and <code>v</code> point to the same thing.</p>
 <pre class="r"><code>y &lt;- v
 (y_address &lt;- lobstr::obj_addr(y))</code></pre>
-<pre><code>## [1] &quot;0x7fc6892864d8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f9ad7106198&quot;</code></pre>
 <pre class="r"><code>(v_address &lt;- lobstr::obj_addr(v))</code></pre>
-<pre><code>## [1] &quot;0x7fc6892864d8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f9ad7106198&quot;</code></pre>
 <pre class="r"><code>y_address == v_address</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>Now if we modify <code>v</code> it won’t point to the same thing as <code>y</code>:</p>
 <pre class="r"><code>v[[3]] &lt;- 3
 (y_address &lt;- lobstr::obj_addr(y))</code></pre>
-<pre><code>## [1] &quot;0x7fc6892864d8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f9ad7106198&quot;</code></pre>
 <pre class="r"><code>(v_address &lt;- lobstr::obj_addr(v))</code></pre>
-<pre><code>## [1] &quot;0x7fc688f8d018&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f9ad6d84b28&quot;</code></pre>
 <pre class="r"><code>y_address == v_address</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <p>But if we now change <code>y</code> to look like <code>v</code>, the original address, in theory editing y should occur in place, but it doesn’t - the “count does not go back to one”!</p>
 <pre class="r"><code>y[[3]] &lt;- 3
 (new_y_address &lt;- lobstr::obj_addr(y))</code></pre>
-<pre><code>## [1] &quot;0x7fc68a15f9b8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7f9ad70d0ac8&quot;</code></pre>
 <pre class="r"><code>new_y_address == y_address</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <div class="question">

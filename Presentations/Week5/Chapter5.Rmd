@@ -4,6 +4,8 @@ subtitle: "Chapter 5"
 author: "R4DS Reading Group"
 output:
   xaringan::moon_reader:
+    nature:
+      highlightLines: true
     lib_dir: libs
     css: xaringan-themer.css
     includes:
@@ -17,7 +19,7 @@ mono_light(
   base_color = "#3092FF",
   header_font_google = google_font("Josefin Sans"),
   text_font_google   = google_font("Montserrat", "300", "300i"),
-  code_font_google   = google_font("Droid Mono"),
+  code_font_google   = google_font("Droid Mono")
 )
 library(tidyverse)
 ```
@@ -219,7 +221,7 @@ Region10 <- c("AK", "ID", "OR", "WA")
 .smaller-pre[
 .pull-left[
 ```{r, warning=FALSE}
-for (i in 1:nrow(beer_states)) {
+for (i in 1:nrow(beer_states)) { #<<
   if (beer_states$state[i] %in% Region1) {
     beer_states$region[i] <- "Region 1"
   } else if (beer_states$state[i] %in% Region2) {
@@ -243,7 +245,7 @@ for (i in 1:nrow(beer_states)) {
   } else {
     beer_states$region[i] <- "Missing"
   }
-}
+} #<<
 ```
 ]]
 
@@ -272,15 +274,15 @@ server <- function(input, output, session) {
     
    states <- unique(beer_states$state)
     
-   my_vector <- reactive({
-        i <- 0
-        my_vector <- vector()
-        while (i <= input$xqty) {
-            my_vector[i] <- i
-            i = i+1
-        }
-        return(my_vector)
-    })
+   my_vector <- reactive({ #<<
+        i <- 0 #<<
+        my_vector <- vector() #<<
+        while (i <= input$xqty) { #<<
+            my_vector[i] <- i #<<
+            i = i+1 #<<
+        } #<<
+        return(my_vector) #<<
+    }) #<<
     
     output$while_debug <- renderTable({
         
@@ -365,4 +367,7 @@ font-size: 0.5em;
 font-size: 0.9em;
 }
 
+.remark-code-line-highlighted {
+    background-color: rgba(48,146,255,0.2);
+}
 </style>
