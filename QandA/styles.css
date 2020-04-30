@@ -58,7 +58,7 @@ div.answer {
 .indent { margin-left: 1em; }
 
 #TOC {
-  background: url("r4ds_square.png");
+  background: url("www/r4ds_square.png");
   background-size: contain;
   padding-top: 135px !important;
   background-repeat: no-repeat;
