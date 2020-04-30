@@ -34,6 +34,7 @@
             pdfborder={0 0 0},
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
+\usepackage[margin=1in]{geometry}
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -127,11 +128,6 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
-\hypertarget{preface}{%
-\chapter{Preface}\label{preface}}
-
-A companion to \href{https://adv-r.hadley.nz/rcpp.html\#acknowledgments}{Advanced R} and supplement to \href{https://advanced-r-solutions.rbind.io/names-and-values.html\#copy-on-modify}{Advanced R Solutions}
-
 \hypertarget{names-and-values}{%
 \chapter{Names and Values}\label{names-and-values}}
 
@@ -310,7 +306,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe782089770"
+## [1] "0x7fc2be8e5b60"
 \end{verbatim}
 
 \begin{Shaded}
@@ -320,7 +316,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe782089770"
+## [1] "0x7fc2be8e5b60"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -332,7 +328,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe78128b830"
+## [1] "0x7fc2b6bdbda8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -342,8 +338,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fe78124ede8] <list> 
-## └─[2:0x7fe782089770] <dbl>
+## █ [1:0x7fc2b646b400] <list> 
+## └─[2:0x7fc2be8e5b60] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -353,7 +349,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe7806d7ca8"
+## [1] "0x7fc2c08a5868"
 \end{verbatim}
 
 \begin{Shaded}
@@ -390,7 +386,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fe77ef79568>"
+## [1] "<0x7fc2bc1bc268>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -400,7 +396,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fe77ef79568>
+## <0x7fc2bc1bc268>
 \end{verbatim}
 
 \begin{Shaded}
@@ -410,7 +406,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe77ef79568"
+## [1] "0x7fc2bc1bc268"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -459,7 +455,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe78109c188"
+## [1] "0x7fc2c35f4388"
 \end{verbatim}
 
 \begin{Shaded}
@@ -469,7 +465,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fe78109c188>"
+## [1] "<0x7fc2c35f4388>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -479,7 +475,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fe78109c188 -> 0x7fe781066208]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fc2c35f4388 -> 0x7fc2b8a0cc48]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -575,7 +571,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe780d20488"
+## [1] "0x7fc2bfb239e8"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -588,7 +584,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe77b84f188"
+## [1] "0x7fc2bc287ef8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -611,7 +607,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe77b84f188"
+## [1] "0x7fc2bc287ef8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -621,7 +617,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe77b84f188"
+## [1] "0x7fc2bc287ef8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -644,7 +640,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe77b84f188"
+## [1] "0x7fc2bc287ef8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -654,7 +650,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe78121df08"
+## [1] "0x7fc2b89f3658"
 \end{verbatim}
 
 \begin{Shaded}
@@ -677,7 +673,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe77f016078"
+## [1] "0x7fc2b8897158"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1802,6 +1798,11 @@ XXX
 Can we put these concepts together in diagram form? Let's work on improving these schematics!
 
 \includegraphics[width=28.19in]{images/controlflow}
+
+\hypertarget{preface}{%
+\chapter{Preface}\label{preface}}
+
+A companion to \href{https://adv-r.hadley.nz/rcpp.html\#acknowledgments}{Advanced R} and supplement to \href{https://advanced-r-solutions.rbind.io/names-and-values.html\#copy-on-modify}{Advanced R Solutions}
 
 \bibliography{book.bib,packages.bib}
 

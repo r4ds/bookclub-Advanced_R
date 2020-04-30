@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Control Flow | Advanced R Companion</title>
+  <title>Chapter 5 Preface | Advanced R Companion</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Control Flow | Advanced R Companion" />
+  <meta property="og:title" content="Chapter 5 Preface | Advanced R Companion" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Control Flow | Advanced R Companion" />
+  <meta name="twitter:title" content="Chapter 5 Preface | Advanced R Companion" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="subsetting.html"/>
-<link rel="next" href="references.html"/>
+<link rel="prev" href="references.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -199,77 +199,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="control-flow" class="section level1">
-<h1><span class="header-section-number">Chapter 4</span> Control Flow</h1>
-<div id="switch-statement" class="section level2 unnumbered">
-<h2>5.2.3 switch statement</h2>
-<div class="question">
-<p>“Closely related to if is the <code>switch()</code> statement. It’s a compact, special purpose equivalent”</p>
-<p>What is meant here by “special purpose”? Can we come up with a case where you can’t substitute <code>if</code> for <code>switch</code> or the other way around? Use <code>switch</code>. Is it safe to say to <code>switch</code> when you have character inputs (as the book suggests) and use <code>case_when</code> or <code>if</code> for numerics?</p>
-</div>
-<div class="TODO">
-<p>XXX</p>
-</div>
-</div>
-<div id="common-pitfalls" class="section level2 unnumbered">
-<h2>5.3.1 common pitfalls</h2>
-<div class="question">
-<p>What does the book mean by leveraging <code>vector</code> for preallocating the loop output? How is this different from creating an empty list to instantiate the loop?</p>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb174-1" data-line-number="1">means &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">50</span>, <span class="dv">20</span>)</a>
-<a class="sourceLine" id="cb174-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb174-3" data-line-number="3">out_vector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="kw">length</span>(means))</a>
-<a class="sourceLine" id="cb174-4" data-line-number="4"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(means)) {</a>
-<a class="sourceLine" id="cb174-5" data-line-number="5">  out_vector[[i]] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, means[[i]])</a>
-<a class="sourceLine" id="cb174-6" data-line-number="6">}</a>
-<a class="sourceLine" id="cb174-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb174-8" data-line-number="8">out_list &lt;-<span class="st"> </span><span class="kw">list</span>()</a>
-<a class="sourceLine" id="cb174-9" data-line-number="9"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(means)) {</a>
-<a class="sourceLine" id="cb174-10" data-line-number="10">  out_list[[i]] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, means[[i]])</a>
-<a class="sourceLine" id="cb174-11" data-line-number="11">}</a></code></pre></div>
-</div>
-<div class="TODO">
-<p>XXX</p>
-</div>
-<div class="question">
-<p>The book warns against using <code>length(x)</code> and suggests using <code>seq_along</code> instead. Is there any downside to using <code>seq_along</code> or a case when you’d prefer <code>length(x)</code> over <code>seq_along(x)</code>? I can’t think of any downsides to using it!</p>
-</div>
-<div class="TODO">
-<p>XXX</p>
-</div>
-</div>
-<div id="exercise5331" class="section level2 unnumbered">
-<h2>5.3.3.1 Exercises</h2>
-<div class="question">
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">numeric</span>()</a>
-<a class="sourceLine" id="cb175-2" data-line-number="2">out &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="kw">length</span>(x))</a>
-<a class="sourceLine" id="cb175-3" data-line-number="3"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(x)) {</a>
-<a class="sourceLine" id="cb175-4" data-line-number="4">  out[i] &lt;-<span class="st"> </span>x[i] <span class="op">^</span><span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb175-5" data-line-number="5">}</a>
-<a class="sourceLine" id="cb175-6" data-line-number="6">out</a></code></pre></div>
-<pre><code>## [[1]]
-## [1] NA</code></pre>
-<p>I understand that this works because we can count down in a loop - so the first iteration <code>x[1] == NA</code>, and the second <code>x[2] == numeric(0)</code> but where does this value go? Is it just evaluated but not stored since R counts from 1?</p>
-</div>
-<div class="TODO">
-<p>XXX</p>
-</div>
-</div>
-<div id="conclusion_5" class="section level2 unnumbered">
-<h2>Conclusion</h2>
-<div class="question">
-<p>Can we put these concepts together in diagram form? Let’s work on improving these schematics!</p>
-</div>
-<p><img src="images/controlflow.png" width="1015" /></p>
+<div id="preface" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Preface</h1>
+<p>A companion to <a href="https://adv-r.hadley.nz/rcpp.html#acknowledgments">Advanced R</a> and supplement to <a href="https://advanced-r-solutions.rbind.io/names-and-values.html#copy-on-modify">Advanced R Solutions</a></p>
 
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="subsetting.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="references.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -300,7 +241,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/05-control_flow.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/Index.Rmd",
 "text": "Edit"
 },
 "history": {
