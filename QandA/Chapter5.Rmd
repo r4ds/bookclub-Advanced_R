@@ -7,8 +7,6 @@ output:
     css: styles.css
 ---
 
-# Chapter 5
-
 ```{r, include=FALSE}
 library(tidyverse)
 library(kableExtra)

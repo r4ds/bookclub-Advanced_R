@@ -7,16 +7,12 @@ output:
     css: styles.css
 ---
 
-A companion to [Advanced R](https://adv-r.hadley.nz/rcpp.html#acknowledgments) and supplement to [Advanced R Solutions](https://advanced-r-solutions.rbind.io/names-and-values.html#copy-on-modify)
-
 
 ```{r, include=FALSE}
 library(tidyverse)
 library(kableExtra)
 library(lobstr)
 ```
-
-# Chapter 2 
 
 ## 2.3 Copy-on-modify 
 
@@ -39,22 +35,22 @@ example2223 <- tibble(
   `column 1` = c(7,8,9)
 )
 
-write.csv(example2223, "example2223.csv", row.names = FALSE)
+# write.csv(example2223, "example2223.csv", row.names = FALSE)
 ```
 
 Import using adjusted column names to be syntactically valid:
 ```{r}
-read.csv(file = "example2223.csv",check.names = TRUE)
+read.csv(file = "docs/example2223.csv",check.names = TRUE)
 ```
 
 Import using non-adjusted column names
 ```{r}
-read.csv(file = "example2223.csv", check.names = FALSE)
+read.csv(file = "docs/example2223.csv", check.names = FALSE)
 ```
 
 Import using the tidyverse where names are not adjusted
 ```{r}
-df_non_syntactic_name  <- read_csv(file = "example2223.csv")
+df_non_syntactic_name  <- read_csv(file = "docs/example2223.csv")
 ```
 
 However I really don´t understand the difference between backticks and quotation marks. For example when I select a column in the case of non-syntactic in the tidyverse I can use quotation marks or backticks 
