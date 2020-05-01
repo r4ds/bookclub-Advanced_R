@@ -73,9 +73,18 @@ Looks like you can't!
 What is meant here by "special purpose"? Can we come up with a case where you can't substitute `if` for `switch` or the other way around? Use `switch`. Is it safe to say to `switch` when you have character inputs (as the book suggests) and use `case_when` or `if` for numerics?
 :::
 
-:::TODO
-XXX
-:::
+Switch is special in that only ONE value can be true, as in the case from our presentation the shiny input can only ever be ONE of the strings on the left it cannot be multiple.
+
+```{r, eval=FALSE}
+datasetInput <- reactive({ 
+  switch(input$dataset,
+         "materials" = brewing_materials,
+         "size" = brewer_size,
+         "states" = beer_states,
+         "taxed" = beer_taxed)
+})
+```
+
 
 ## 5.3.1 common pitfalls
 
@@ -97,16 +106,14 @@ for (i in 1:length(means)) {
 ```
 :::
 
-:::TODO
-XXX
-:::
+By preallocating the length of the `out_vector` we're leveraging `modify-in-place` rather than `copy-on-modify`.
 
 :::question
 The book warns against using `length(x)` and suggests using `seq_along` instead. Is there any downside to using `seq_along` or a case when you'd prefer `length(x)` over `seq_along(x)`? I can't think of any downsides to using it!
 :::
 
 :::TODO
-XXX
+We have yet to find a downside but should look into this further!
 :::
 
 ## 5.3.3.1 Exercises
@@ -124,9 +131,13 @@ out
 I understand that this works because we can count down in a loop - so the first iteration `x[1] == NA`, and the second `x[2] == numeric(0)` but where does this value go? Is it just evaluated but not stored since R counts from 1?
 :::
 
-:::TODO
-XXX
-:::
+This question is actually the bigger question, "Can you assign something to index 0 in R? 
+
+```{r}
+mylist <- list()
+mylist[[0]] <- "test"
+mylist
+```
 
 
 ## Conclusion
