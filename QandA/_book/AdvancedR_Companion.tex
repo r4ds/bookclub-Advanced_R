@@ -311,7 +311,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8ce1c04b30"
+## [1] "0x7fc7739a4b18"
 \end{verbatim}
 
 \begin{Shaded}
@@ -321,7 +321,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8ce1c04b30"
+## [1] "0x7fc7739a4b18"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -333,7 +333,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8ce524a708"
+## [1] "0x7fc771a6c228"
 \end{verbatim}
 
 \begin{Shaded}
@@ -343,8 +343,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7f8ce52bd3b8] <list> 
-## └─[2:0x7f8ce1c04b30] <dbl>
+## █ [1:0x7fc771941a28] <list> 
+## └─[2:0x7fc7739a4b18] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -354,7 +354,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8ce5398ee8"
+## [1] "0x7fc7715f4d10"
 \end{verbatim}
 
 \begin{Shaded}
@@ -391,7 +391,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7f8ce41216d8>"
+## [1] "<0x7fc77b1a7cd8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -401,7 +401,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7f8ce41216d8>
+## <0x7fc77b1a7cd8>
 \end{verbatim}
 
 \begin{Shaded}
@@ -411,7 +411,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8ce41216d8"
+## [1] "0x7fc77b1a7cd8"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -460,7 +460,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8ce4703d88"
+## [1] "0x7fc77c88c288"
 \end{verbatim}
 
 \begin{Shaded}
@@ -470,7 +470,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7f8ce4703d88>"
+## [1] "<0x7fc77c88c288>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -480,7 +480,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7f8ce4703d88 -> 0x7f8ce776fc48]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fc77c88c288 -> 0x7fc77b917d48]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -576,7 +576,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8ce72b7e78"
+## [1] "0x7fc778a7bdb8"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -589,7 +589,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8cdd8819c8"
+## [1] "0x7fc77a18a558"
 \end{verbatim}
 
 \begin{Shaded}
@@ -612,7 +612,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8cdd8819c8"
+## [1] "0x7fc77a18a558"
 \end{verbatim}
 
 \begin{Shaded}
@@ -622,7 +622,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8cdd8819c8"
+## [1] "0x7fc77a18a558"
 \end{verbatim}
 
 \begin{Shaded}
@@ -645,7 +645,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8cdd8819c8"
+## [1] "0x7fc77a18a558"
 \end{verbatim}
 
 \begin{Shaded}
@@ -655,7 +655,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8ce462f798"
+## [1] "0x7fc77b91eb88"
 \end{verbatim}
 
 \begin{Shaded}
@@ -678,7 +678,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8cde7843a8"
+## [1] "0x7fc77c882d98"
 \end{verbatim}
 
 \begin{Shaded}

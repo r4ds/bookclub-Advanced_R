@@ -1,9 +1,9 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019) (preloaded format=xelatex 2019.5.8)  1 MAY 2020 06:27
+This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019) (preloaded format=xelatex 2019.5.8)  1 MAY 2020 06:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**bookdown-demo.tex
-(./bookdown-demo.tex
+**AdvancedR_Companion.tex
+(./AdvancedR_Companion.tex
 LaTeX2e <2018-12-01>
 (/usr/local/texlive/2019/texmf-dist/tex/latex/base/book.cls
 Document Class: book 2018/09/03 v1.4i Standard LaTeX document class
@@ -694,12 +694,12 @@ Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibsep=\skip62
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count301
-) (./bookdown-demo.aux
+) (./AdvancedR_Companion.aux
 
 LaTeX Warning: Label `lists' multiply defined.
 
 )
-\openout1 = `bookdown-demo.aux'.
+\openout1 = `AdvancedR_Companion.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 124.
 LaTeX Font Info:    ... okay on input line 124.
@@ -1011,9 +1011,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 124.
 LaTeX Info: Redefining \pageref on input line 124.
 LaTeX Info: Redefining \nameref on input line 124.
-(./bookdown-demo.out) (./bookdown-demo.out)
+(./AdvancedR_Companion.out) (./AdvancedR_Companion.out)
 \@outlinefile=\write4
-\openout4 = `bookdown-demo.out'.
+\openout4 = `AdvancedR_Companion.out'.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -1088,7 +1088,7 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 
 ] [2
 
-] (./bookdown-demo.toc
+] (./AdvancedR_Companion.toc
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
 (Font)              scaled to size 7.0pt on input line 3.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
@@ -1107,7 +1107,7 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 (Font)              scaled to size 4.99947pt on input line 3.
 )
 \tf@toc=\write5
-\openout5 = `bookdown-demo.toc'.
+\openout5 = `AdvancedR_Companion.toc'.
 
 [3] [4
 
@@ -1125,7 +1125,7 @@ Missing character: There is no └ in font [lmmono10-regular]:!
 Missing character: There is no ─ in font [lmmono10-regular]:!
 [9]
 Overfull \hbox (1477.99498pt too wide) in paragraph at lines 484--484
-[]\TU/lmtt/m/n/10 ## tracemem[0x7f8ce4703d88 -> 0x7f8ce776fc48]: eval eval with
+[]\TU/lmtt/m/n/10 ## tracemem[0x7fc77c88c288 -> 0x7fc77b917d48]: eval eval with
 Visible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate
  in_dir block_exec call_block process_group.block process_group withCallingHand
 lers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN la
@@ -1193,18 +1193,18 @@ Overfull \hbox (975.78186pt too wide) in paragraph at lines 2024--2025
 [][] 
  []
 
-No file bookdown-demo.bbl.
+No file AdvancedR_Companion.bbl.
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2028.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [32] [33]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 2028.
-(./bookdown-demo.aux)
+(./AdvancedR_Companion.aux)
 Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 2028.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2028.
 
-Package rerunfilecheck Info: File `bookdown-demo.out' has not changed.
+Package rerunfilecheck Info: File `AdvancedR_Companion.out' has not changed.
 (rerunfilecheck)             Checksum: C882450AB072F5A5BA84529F852E3560.
 
 LaTeX Warning: There were multiply-defined labels.
@@ -1212,11 +1212,11 @@ LaTeX Warning: There were multiply-defined labels.
  ) 
 Here is how much of TeX's memory you used:
  27812 strings out of 492916
- 507287 string characters out of 6133346
- 740456 words of memory out of 5000000
+ 507377 string characters out of 6133346
+ 740492 words of memory out of 5000000
  31598 multiletter control sequences out of 15000+600000
  538764 words of font info for 81 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 58i,6n,115p,821b,457s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 58i,6n,115p,827b,457s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on bookdown-demo.pdf (33 pages).
+Output written on AdvancedR_Companion.pdf (33 pages).
