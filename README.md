@@ -20,7 +20,7 @@ All Meetings Scheduled for 8:00 PM Eastern unless otherwise noted
 
 
 - 2020-04-02 Introductions and Meeting Format
-- 2020-04-09 Chapter 2 - Names and values: [Asmae Toumi](https://twitter.com/asmae_toumi) ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week3/Chap3slides.html#1))
+- 2020-04-09 Chapter 2 - Names and values: [Asmae Toumi](https://twitter.com/asmae_toumi) ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week2/Chap2slides.html#1))
 - 2020-04-16 Chapter 3 - Vectors: [Tony ElHabr](https://twitter.com/TonyElHabr) ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week3/Chap3slides.html#1) | [Zoom Recording](https://www.youtube.com/watch?v=pQ-xDAPEQaw))
 - 2020-04-23 Chapter 4 - Subsetting: [Scott Nestler](https://twitter.com/ScottNestler) | ( [Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week4/Chap4slides.html#1) | [Zoom Recording](https://www.youtube.com/watch?v=eLMpCc0t1cg))
 - 2020-04-30 Chapter 5 - Control flow: [Maya Gans](https://maya.rbind.io) | ( [Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week5/Chapter5.html#1) | [Zoom Recording](https://www.youtube.com/watch?v=96eY6YS_3hU&feature=youtu.be))
