@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Names and Values | Advanced R Companion</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Names and Values | Advanced R Companion" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Names and Values | Advanced R Companion" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="R4DS Reading Group" />
+
+
+<meta name="date" content="2020-05-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="preface.html"/>
+<link rel="next" href="vectors.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<img src="images/r4ds.png" style="width:300px;height:180px;padding-bottom:0px;"></img>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
+<li class="chapter" data-level="2" data-path="names-and-values.html"><a href="names-and-values.html"><i class="fa fa-check"></i><b>2</b> Names and Values</a><ul>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#copy-on-modify"><i class="fa fa-check"></i>2.3 Copy-on-modify</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>2.2.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#function-calls"><i class="fa fa-check"></i>2.3.2 Function calls</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#lists"><i class="fa fa-check"></i>2.3.3 Lists</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#character-vectors"><i class="fa fa-check"></i>2.3.5 Character vectors</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercise"><i class="fa fa-check"></i>2.3.6.2 Exercise</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#object-size"><i class="fa fa-check"></i>2.4.1 Object size</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#modify-in-place"><i class="fa fa-check"></i>2.5.1 Modify-in-place</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="vectors.html"><a href="vectors.html"><i class="fa fa-check"></i><b>3</b> Vectors</a><ul>
+<li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#scalars"><i class="fa fa-check"></i>3.2.1 Scalars</a></li>
+<li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#missing-values"><i class="fa fa-check"></i>3.2.3 Missing values</a></li>
+<li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#testing-and-coercion"><i class="fa fa-check"></i>3.2.4 Testing and coercion</a></li>
+<li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#setting-attributes"><i class="fa fa-check"></i>3.3.1 Setting Attributes</a></li>
+<li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#setnames"><i class="fa fa-check"></i>3.3.2 setNames</a></li>
+<li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#dimensions"><i class="fa fa-check"></i>3.3.3 Dimensions</a></li>
+<li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#s3-atomic-vectors"><i class="fa fa-check"></i>3.4 S3 atomic vectors</a></li>
+<li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#dates"><i class="fa fa-check"></i>3.4.2 Dates</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#lists"><i class="fa fa-check"></i>3.5.1 Lists</a></li>
+<li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#data-frames-and-tibbles"><i class="fa fa-check"></i>3.6.8 Data frames and tibbles</a></li>
+<li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#conclusion"><i class="fa fa-check"></i>Conclusion</a><ul>
+<li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#vectorized"><i class="fa fa-check"></i>VECTORIZED:</a></li>
+<li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#non-vectorized"><i class="fa fa-check"></i>NON-VECTORIZED:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="subsetting.html"><a href="subsetting.html"><i class="fa fa-check"></i><b>4</b> Subsetting</a><ul>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#introduction"><i class="fa fa-check"></i>4.1 Introduction</a></li>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#selecting-multiple-elements"><i class="fa fa-check"></i>4.2.1 Selecting multiple elements</a></li>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#lists_4"><i class="fa fa-check"></i>4.2.2 lists</a></li>
+<li><a href="subsetting.html#subset_2">4.3.1 <code>[[</code></a></li>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#exercise_435"><i class="fa fa-check"></i>4.3.5 Exercise</a></li>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#missing-and-oob"><i class="fa fa-check"></i>4.3.3 Missing and OOB</a><ul>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#logical-atomic"><i class="fa fa-check"></i>LOGICAL ATOMIC</a></li>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#lists_missing"><i class="fa fa-check"></i>LIST</a></li>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#null"><i class="fa fa-check"></i>NULL</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#logical-subsetting"><i class="fa fa-check"></i>4.5.8 Logical subsetting</a></li>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#boolean-algebra"><i class="fa fa-check"></i>4.5.8 Boolean algebra</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="control-flow.html"><a href="control-flow.html"><i class="fa fa-check"></i><b>5</b> Control Flow</a><ul>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#vectorised-if"><i class="fa fa-check"></i>5.2.2 Vectorised if</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#loops"><i class="fa fa-check"></i>5.3 Loops</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#switch"><i class="fa fa-check"></i>5.2.3 switch statement</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#common-pitfalls"><i class="fa fa-check"></i>5.3.1 common pitfalls</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#exercise5331"><i class="fa fa-check"></i>5.3.3.1 Exercises</a><ul>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#assignment-valid"><i class="fa fa-check"></i>Assignment to a valid index</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#assignment-0"><i class="fa fa-check"></i>Assignment to [0]</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#empty-index"><i class="fa fa-check"></i>Empty index</a></li>
+<li><a href="control-flow.html#impossible-double">Impossible Index <code>[[</code></a></li>
+<li><a href="control-flow.html#impossible-double-assign">Impossible Index <code>[[&lt;-</code></a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#undefined-5"><i class="fa fa-check"></i>Undefined name</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#oob-5"><i class="fa fa-check"></i>Out of Bounds</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#conclusion-5"><i class="fa fa-check"></i>Conclusion</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Advanced R Companion</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="names-and-values" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Names and Values</h1>
+<div id="copy-on-modify" class="section level2 unnumbered">
+<h2>2.3 Copy-on-modify</h2>
+<div class="question">
+<p>copy-on-modify vs copy-in-place: is one more preferable in certain situations?</p>
+</div>
+<p>modify in place only happens when objects with a single binding get a special performance optimization and to environments.</p>
+</div>
+<div id="exercises" class="section level2 unnumbered">
+<h2>2.2.2 Exercises</h2>
+<div class="question">
+<p>Question 3 digs into the syntactically valid names created when using <code>read.csv()</code>, but what is the difference between quotation and backticks?</p>
+<p>If we create an example csv</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">example2223 &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="st">`</span><span class="dt">if</span><span class="st">`</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>),</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="st">`</span><span class="dt">_1234</span><span class="st">`</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>),</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="st">`</span><span class="dt">column 1</span><span class="st">`</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw">write.csv</span>(example2223, <span class="st">&quot;example2223.csv&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p>Import using adjusted column names to be syntactically valid:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">read.csv</span>(<span class="dt">file =</span> <span class="st">&quot;example2223.csv&quot;</span>,<span class="dt">check.names =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>##   if. X_1234 column.1
+## 1   1      4        7
+## 2   2      5        8
+## 3   3      6        9</code></pre>
+<p>Import using non-adjusted column names</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">read.csv</span>(<span class="dt">file =</span> <span class="st">&quot;example2223.csv&quot;</span>, <span class="dt">check.names =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code>##   if _1234 column 1
+## 1  1     4        7
+## 2  2     5        8
+## 3  3     6        9</code></pre>
+<p>Import using the tidyverse where names are not adjusted</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">df_non_syntactic_name  &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="dt">file =</span> <span class="st">&quot;example2223.csv&quot;</span>)</a></code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   `if` = col_double(),
+##   `_1234` = col_double(),
+##   `column 1` = col_double()
+## )</code></pre>
+<p>However I really don´t understand the difference between backticks and quotation marks. For example when I select a column in the case of non-syntactic in the tidyverse I can use quotation marks or backticks</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">df_non_syntactic_name <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="st">&quot;if&quot;</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 3 x 1
+##    `if`
+##   &lt;dbl&gt;
+## 1     1
+## 2     2
+## 3     3</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">df_non_syntactic_name <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="st">`</span><span class="dt">if</span><span class="st">`</span>)</a></code></pre></div>
+<p>But in base R, I can do this with quotation marks, but not backticks:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">df__non_syntactic_name[<span class="st">&quot;if&quot;</span>]</a></code></pre></div>
+<pre><code>Error in `[.default`(df__non_syntactic_name, `if`) : invalid subscript type &#39;special&#39;</code></pre>
+<p>According to <code>?Quotes</code> backticks are used for “non-standard variable names” but why in base R they don´t work to select columns but in the tidyverse they work to select variables?</p>
+</div>
+<p>The easiest way to think about this is that backticks refer to objects while quotation marks refer to strings. <code>dplyr::select()</code> accepts object references as well as string references, while base R subsetting is done with a string or integer position.</p>
+</div>
+<div id="function-calls" class="section level2 unnumbered">
+<h2>2.3.2 Function calls</h2>
+<div class="question">
+<p>Can we go over and break down figure in 2.3.2</p>
+</div>
+<p>When you create this function:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">crazyfunction &lt;-<span class="st"> </span><span class="cf">function</span>(eh) {eh}</a></code></pre></div>
+<p><code>eh</code> doesn’t exist in memory at this point.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</a></code></pre></div>
+<p>x exists in memory.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">z &lt;-<span class="st"> </span><span class="kw">crazyfunction</span>(x) </a></code></pre></div>
+<p><code>z</code> now points at <code>x</code>, and <code>eh</code> still doesn’t exist (except metaphorically in Canada). <code>eh</code> was created and exists WHILE <code>crazyfunction()</code> was being run, but doesn’t get saved to the global environment, so after the function is run you can’t see its memory reference.</p>
+<p>The round brackets <code>(eh)</code> list the arguments, the curly brackets <code>{eh}</code> define the operation that it’s doing - and you’re assigning it to <code>crazyfunction</code>.</p>
+<p><strong>R functions automatically return the result of the last expression</strong> so when you call that object (the argument <code>eh</code>) it returns the value of that argument. This is called <strong>implicit returns</strong></p>
+</div>
+<div id="lists" class="section level2 unnumbered">
+<h2>2.3.3 Lists</h2>
+<div class="question">
+<p>Checking the address for a list and its copy we see they share the same references:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">l1 &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">l2 &lt;-<span class="st"> </span>l1</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="kw">identical</span>(lobstr<span class="op">::</span><span class="kw">ref</span>(l1),lobstr<span class="op">::</span><span class="kw">ref</span>(l2))</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">obj_addr</span>(l1[[<span class="dv">1</span>]])</a></code></pre></div>
+<pre><code>## [1] &quot;0x7fc7739be698&quot;</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">obj_addr</span>(l2[[<span class="dv">1</span>]])</a></code></pre></div>
+<pre><code>## [1] &quot;0x7fc7739be698&quot;</code></pre>
+<p>But why isn’t this the case for their subsets? Using <code>obj_addr</code> they have different addresses, but when we look at their references they are the same</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">obj_addr</span>(l1[<span class="dv">1</span>])</a></code></pre></div>
+<pre><code>## [1] &quot;0x7fc771a37508&quot;</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">ref</span>(l1[<span class="dv">1</span>])</a></code></pre></div>
+<pre><code>## █ [1:0x7fc770a74380] &lt;list&gt; 
+## └─[2:0x7fc7739be698] &lt;dbl&gt;</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">obj_addr</span>(l2[<span class="dv">1</span>])</a></code></pre></div>
+<pre><code>## [1] &quot;0x7fc7712b8098&quot;</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">identical</span>(lobstr<span class="op">::</span><span class="kw">obj_addr</span>(l1[<span class="dv">1</span>]), lobstr<span class="op">::</span><span class="kw">obj_addr</span>(l2[<span class="dv">1</span>]))</a></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+</div>
+<p>This is because using singular brackets wraps the value 1 in a new list that is created on the fly which will have a unique address. We can use double brackets to confirm our mental model that the sublists are also identical:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">identical</span>(lobstr<span class="op">::</span><span class="kw">obj_addr</span>(l1[[<span class="dv">1</span>]]), lobstr<span class="op">::</span><span class="kw">obj_addr</span>(l2[[<span class="dv">1</span>]]))</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="question">
+<p>What’s the difference between these 2 addresses <code>&lt;0x55d53fa975b8&gt;</code> and <code>0x55d53fa975b8</code>?</p>
+</div>
+<p>Nothing - it has to do with the printing method:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="kw">print</span>(<span class="kw">tracemem</span>(x))</a></code></pre></div>
+<pre><code>## [1] &quot;&lt;0x7fc7778a1ce8&gt;&quot;</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">cat</span>(<span class="kw">tracemem</span>(x))</a></code></pre></div>
+<pre><code>## &lt;0x7fc7778a1ce8&gt;</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">obj_addr</span>(x)</a></code></pre></div>
+<pre><code>## [1] &quot;0x7fc7778a1ce8&quot;</code></pre>
+<div class="question">
+<p>When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that’s optimized behind the scenes?</p>
+</div>
+<p>Automagical!</p>
+</div>
+<div id="character-vectors" class="section level2 unnumbered">
+<h2>2.3.5 Character vectors</h2>
+<div class="question">
+<p>Is there a way to clear the “global string pool”?</p>
+</div>
+<p>According to <a href="https://community.rstudio.com/t/memory-usage-and-rs-global-string-pool/4762/3">this post</a> it doesn’t look like you can directly, but clearing all references to a string that’s in the global string pool clears that string from the pool, eventually</p>
+</div>
+<div id="exercise" class="section level2 unnumbered">
+<h2>2.3.6.2 Exercise</h2>
+<div class="question">
+<p>When we look at <code>tracemem</code> when we modify <code>x</code> from an integer to numeric, x is assigned to three objects. The first is the integer, and the third numeric - so what’s the intermediate type?</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(1L, 2L, 3L)</a>
+<a class="sourceLine" id="cb38-2" data-line-number="2"><span class="kw">obj_addr</span>(x)</a>
+<a class="sourceLine" id="cb38-3" data-line-number="3"><span class="kw">tracemem</span>(x)</a>
+<a class="sourceLine" id="cb38-4" data-line-number="4">x[[<span class="dv">3</span>]] &lt;-<span class="st"> </span><span class="dv">4</span></a></code></pre></div>
+<pre><code>[1] &quot;0x7f84b7fe2c88&quot;
+[1] &quot;&lt;0x7f84b7fe2c88&gt;&quot;
+tracemem[0x7f84b7fe2c88 -&gt; 0x7f84b7fe5288]: 
+tracemem[0x7f84b7fe5288 -&gt; 0x7f84bc0817c8]: </code></pre>
+<p>What is <code>0x7f84b7fe5288</code> when the intermediate <code>x &lt;- c(1L, 2L, 4)</code> is impossible?</p>
+</div>
+<p>When we assign the new value as an integer there is no intermediate step. This probably means <code>c(1,2, NA)</code> is the intermediate step; creating an intermediate vector that’s the same length of the final product with NA values at all locations that are new or to be changed</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(1L, 2L, 3L)</a>
+<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="kw">obj_addr</span>(x)</a></code></pre></div>
+<pre><code>## [1] &quot;0x7fc7749cf088&quot;</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">tracemem</span>(x)</a></code></pre></div>
+<pre><code>## [1] &quot;&lt;0x7fc7749cf088&gt;&quot;</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">x[[<span class="dv">3</span>]] &lt;-<span class="st"> </span>4L</a></code></pre></div>
+<pre><code>## tracemem[0x7fc7749cf088 -&gt; 0x7fc770de0c48]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir &lt;Anonymous&gt; &lt;Anonymous&gt;</code></pre>
+<p>You can dig into the C code running this:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">pryr<span class="op">::</span><span class="kw">show_c_source</span>(<span class="kw">.Internal</span>(<span class="st">&quot;[&lt;-&quot;</span>))</a></code></pre></div>
+</div>
+<div id="object-size" class="section level2 unnumbered">
+<h2>2.4.1 Object size</h2>
+<div class="question">
+<p>If I have two vectors, one <code>1:10</code> and another <code>c(1:10, 10)</code>, intuitively, I would expect the size of the second vector to be greater than the size of the first. However, it seems to be the other way round, why?</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">x1 &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb47-2" data-line-number="2">x2 &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb47-3" data-line-number="3">lobstr<span class="op">::</span><span class="kw">obj_size</span>(x1)</a></code></pre></div>
+<pre><code>## 680 B</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">obj_size</span>(x2)</a></code></pre></div>
+<pre><code>## 448 B</code></pre>
+</div>
+<p>If we start with the following three vectors:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1">x1 &lt;-<span class="st"> </span><span class="kw">c</span>(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L)</a>
+<a class="sourceLine" id="cb51-2" data-line-number="2">x2 &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb51-3" data-line-number="3">x3 &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb51-4" data-line-number="4">lobstr<span class="op">::</span><span class="kw">obj_sizes</span>(x1, x2, x3)</a></code></pre></div>
+<pre><code>## *  96 B
+## * 680 B
+## * 448 B</code></pre>
+<p>Intuitively, we would have expected <code>x1</code> &lt; <code>x2</code> &lt; <code>x3</code> but this is not the case. It appears that the <code>rep()</code> function coerces a double into integer and hence optimizes on space. Using <code>:</code>, R internally uses <a href="https://blog.revolutionanalytics.com/2017/09/altrep-preview.html">ALTREP</a>.</p>
+<p>ALTREP would actually be more efficient if the numbers represented were significantly large, say <code>1e7</code>.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1">x4 &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="fl">1e7</span></a>
+<a class="sourceLine" id="cb53-2" data-line-number="2">x5 &lt;-<span class="st"> </span>x4</a>
+<a class="sourceLine" id="cb53-3" data-line-number="3">x5[<span class="dv">1</span>] &lt;-<span class="st"> </span>1L</a>
+<a class="sourceLine" id="cb53-4" data-line-number="4">lobstr<span class="op">::</span><span class="kw">obj_sizes</span>(x4, x5)</a></code></pre></div>
+<pre><code>## *        680 B
+## * 40,000,048 B</code></pre>
+<p>Now, the size of x4 is significantly lower than that of x5 . This seems to indicate that ALTREP becomes super efficient as the vector size is increased.</p>
+</div>
+<div id="modify-in-place" class="section level2 unnumbered">
+<h2>2.5.1 Modify-in-place</h2>
+<div class="question">
+<p>“When it comes to bindings, R can currently only count 0, 1, or many. That means that if an object has two bindings, and one goes away, the reference count does not go back to 1: one less than many is still many. In turn, this means that R will make copies when it sometimes doesn’t need to.”</p>
+<p>Can we come up with an example of this? It seems really theoretical right now.</p>
+</div>
+<p>First you need to switch your Environment tab to something other than global in RStudio!</p>
+<p>Now we can create a vector:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1">v &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb55-2" data-line-number="2">(old_address &lt;-<span class="st"> </span>lobstr<span class="op">::</span><span class="kw">obj_addr</span>(v))</a></code></pre></div>
+<pre><code>## [1] &quot;0x7fc773b943a8&quot;</code></pre>
+<p>Changing a value within it changes its address:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1">v[[<span class="dv">3</span>]] &lt;-<span class="st"> </span><span class="dv">4</span></a>
+<a class="sourceLine" id="cb57-2" data-line-number="2">(new_address &lt;-<span class="st"> </span>lobstr<span class="op">::</span><span class="kw">obj_addr</span>(v))</a></code></pre></div>
+<pre><code>## [1] &quot;0x7fc773dbd528&quot;</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1">old_address <span class="op">==</span><span class="st"> </span>new_address</a></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>We can assign the modified vector to a new name, where <code>y</code> and <code>v</code> point to the same thing.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1">y &lt;-<span class="st"> </span>v</a>
+<a class="sourceLine" id="cb61-2" data-line-number="2">(y_address &lt;-<span class="st"> </span>lobstr<span class="op">::</span><span class="kw">obj_addr</span>(y))</a></code></pre></div>
+<pre><code>## [1] &quot;0x7fc773dbd528&quot;</code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1">(v_address &lt;-<span class="st"> </span>lobstr<span class="op">::</span><span class="kw">obj_addr</span>(v))</a></code></pre></div>
+<pre><code>## [1] &quot;0x7fc773dbd528&quot;</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1">y_address <span class="op">==</span><span class="st"> </span>v_address</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>Now if we modify <code>v</code> it won’t point to the same thing as <code>y</code>:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1">v[[<span class="dv">3</span>]] &lt;-<span class="st"> </span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb67-2" data-line-number="2">(y_address &lt;-<span class="st"> </span>lobstr<span class="op">::</span><span class="kw">obj_addr</span>(y))</a></code></pre></div>
+<pre><code>## [1] &quot;0x7fc773dbd528&quot;</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1">(v_address &lt;-<span class="st"> </span>lobstr<span class="op">::</span><span class="kw">obj_addr</span>(v))</a></code></pre></div>
+<pre><code>## [1] &quot;0x7fc773ed2998&quot;</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1">y_address <span class="op">==</span><span class="st"> </span>v_address</a></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>But if we now change <code>y</code> to look like <code>v</code>, the original address, in theory editing y should occur in place, but it doesn’t - the “count does not go back to one”!</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1">y[[<span class="dv">3</span>]] &lt;-<span class="st"> </span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb73-2" data-line-number="2">(new_y_address &lt;-<span class="st"> </span>lobstr<span class="op">::</span><span class="kw">obj_addr</span>(y))</a></code></pre></div>
+<pre><code>## [1] &quot;0x7fc7777f2658&quot;</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1">new_y_address <span class="op">==</span><span class="st"> </span>y_address</a></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="question">
+<p>Can we break down this code a bit more? I’d like to really understand when and how it’s copying three times.</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1"><span class="co"># dataframe of 5 columns of numbers</span></a>
+<a class="sourceLine" id="cb77-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">matrix</span>(<span class="kw">runif</span>(<span class="dv">5</span> <span class="op">*</span><span class="st"> </span><span class="fl">1e4</span>), <span class="dt">ncol =</span> <span class="dv">5</span>))</a>
+<a class="sourceLine" id="cb77-3" data-line-number="3"><span class="co"># median number for each column</span></a>
+<a class="sourceLine" id="cb77-4" data-line-number="4">medians &lt;-<span class="st"> </span><span class="kw">vapply</span>(x, median, <span class="kw">numeric</span>(<span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb77-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb77-6" data-line-number="6"><span class="co"># subtract the median of each column from each value in the column</span></a>
+<a class="sourceLine" id="cb77-7" data-line-number="7"><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_along</span>(medians)) {</a>
+<a class="sourceLine" id="cb77-8" data-line-number="8">  x[[i]] &lt;-<span class="st"> </span>x[[i]] <span class="op">-</span><span class="st"> </span>medians[[i]]</a>
+<a class="sourceLine" id="cb77-9" data-line-number="9">}</a></code></pre></div>
+</div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1"><span class="kw">cat</span>(<span class="kw">tracemem</span>(x), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
+<pre><code>&lt;0x7fdc99a6f9a8&gt; </code></pre>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" data-line-number="1"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>) {</a>
+<a class="sourceLine" id="cb80-2" data-line-number="2">  x[[i]] &lt;-<span class="st"> </span>x[[i]] <span class="op">-</span><span class="st"> </span>medians[[i]]</a>
+<a class="sourceLine" id="cb80-3" data-line-number="3">}</a></code></pre></div>
+<pre><code>tracemem[0x7fdc99a6f9a8 -&gt; 0x7fdc9de83e38]: 
+tracemem[0x7fdc9de83e38 -&gt; 0x7fdc9de83ea8]: [[&lt;-.data.frame [[&lt;- 
+tracemem[0x7fdc9de83ea8 -&gt; 0x7fdc9de83f18]: [[&lt;-.data.frame [[&lt;- 
+tracemem[0x7fdc9de83f18 -&gt; 0x7fdc9de83f88]: 
+tracemem[0x7fdc9de83f88 -&gt; 0x7fdc9de83ff8]: [[&lt;-.data.frame [[&lt;- 
+tracemem[0x7fdc9de83ff8 -&gt; 0x7fdc9de84068]: [[&lt;-.data.frame [[&lt;- 
+tracemem[0x7fdc9de84068 -&gt; 0x7fdc9de840d8]: 
+tracemem[0x7fdc9de840d8 -&gt; 0x7fdc9de84148]: [[&lt;-.data.frame [[&lt;- 
+tracemem[0x7fdc9de84148 -&gt; 0x7fdc9de841b8]: [[&lt;-.data.frame [[&lt;- 
+tracemem[0x7fdc9de841b8 -&gt; 0x7fdc9de84228]: 
+tracemem[0x7fdc9de84228 -&gt; 0x7fdc9de84298]: [[&lt;-.data.frame [[&lt;- 
+tracemem[0x7fdc9de84298 -&gt; 0x7fdc9de84308]: [[&lt;-.data.frame [[&lt;- 
+tracemem[0x7fdc9de84308 -&gt; 0x7fdc9de84378]: 
+tracemem[0x7fdc9de84378 -&gt; 0x7fdc9de843e8]: [[&lt;-.data.frame [[&lt;- 
+tracemem[0x7fdc9de843e8 -&gt; 0x7fdc9de84458]: [[&lt;-.data.frame [[&lt;- </code></pre>
+<p>When we run <code>tracemem</code> on the for loop above we see each column is copied twice followed by the <code>[[&lt;-.data.frame [[&lt;-</code>, the stack trace showing exactly where the duplication occurred.</p>
+<p>So what is <code>[[&lt;-.data.frame</code>? It’s a function! By looking at `?<code>[[&lt;-.data.frame</code> we see this is used to “extract or replace subsets of data frames.”</p>
+<p>When we write <code>x[[i]] &lt;- value</code>, it’s really shorthand for calling the function <code>[[&lt;-.data.frame</code> with inputs <code>x</code>, <code>i</code>, and <code>value</code>.</p>
+<p>Now let’s step into the call of this base function by running <code>debug(``[[&lt;-.data.frame``)</code>:</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1"><span class="kw">debug</span>(<span class="st">`</span><span class="dt">[[&lt;-.data.frame</span><span class="st">`</span>)</a></code></pre></div>
+<p>and once inside, use <code>tracemem()</code> to find where the new values are assigned to the column:</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1"><span class="cf">function</span> (x, i, j, value) </a>
+<a class="sourceLine" id="cb83-2" data-line-number="2">{</a>
+<a class="sourceLine" id="cb83-3" data-line-number="3">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">all</span>(<span class="kw">names</span>(<span class="kw">sys.call</span>()) <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;value&quot;</span>))) </a>
+<a class="sourceLine" id="cb83-4" data-line-number="4">    <span class="kw">warning</span>(<span class="st">&quot;named arguments are discouraged&quot;</span>)</a>
+<a class="sourceLine" id="cb83-5" data-line-number="5">  cl &lt;-<span class="st"> </span><span class="kw">oldClass</span>(x)</a>
+<a class="sourceLine" id="cb83-6" data-line-number="6">  <span class="co"># this is where another copy of x is made!</span></a>
+<a class="sourceLine" id="cb83-7" data-line-number="7">  <span class="kw">class</span>(x) &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
+<pre><code> # tracemem[0x7fdc9d852a18 -&gt; 0x7fdc9c99cc08]: </code></pre>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1">nrows &lt;-<span class="st"> </span><span class="kw">.row_names_info</span>(x, 2L)</a>
+<a class="sourceLine" id="cb85-2" data-line-number="2">  <span class="cf">if</span> (<span class="kw">is.atomic</span>(value) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.null</span>(<span class="kw">names</span>(value))) </a>
+<a class="sourceLine" id="cb85-3" data-line-number="3">    <span class="kw">names</span>(value) &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb85-4" data-line-number="4">  <span class="cf">if</span> (<span class="kw">nargs</span>() <span class="op">&lt;</span><span class="st"> </span>4L) {</a>
+<a class="sourceLine" id="cb85-5" data-line-number="5">    nc &lt;-<span class="st"> </span><span class="kw">length</span>(x)</a>
+<a class="sourceLine" id="cb85-6" data-line-number="6">    <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.null</span>(value)) {</a>
+<a class="sourceLine" id="cb85-7" data-line-number="7">      N &lt;-<span class="st"> </span><span class="kw">NROW</span>(value)</a>
+<a class="sourceLine" id="cb85-8" data-line-number="8">      <span class="cf">if</span> (N <span class="op">&gt;</span><span class="st"> </span>nrows) </a>
+<a class="sourceLine" id="cb85-9" data-line-number="9">        <span class="kw">stop</span>(<span class="kw">sprintf</span>(<span class="kw">ngettext</span>(N, <span class="st">&quot;replacement has %d row, data has %d&quot;</span>, </a>
+<a class="sourceLine" id="cb85-10" data-line-number="10">          <span class="st">&quot;replacement has %d rows, data has %d&quot;</span>), N, </a>
+<a class="sourceLine" id="cb85-11" data-line-number="11">          nrows), <span class="dt">domain =</span> <span class="ot">NA</span>)</a>
+<a class="sourceLine" id="cb85-12" data-line-number="12">      <span class="cf">if</span> (N <span class="op">&lt;</span><span class="st"> </span>nrows) </a>
+<a class="sourceLine" id="cb85-13" data-line-number="13">        <span class="cf">if</span> (N <span class="op">&gt;</span><span class="st"> </span>0L <span class="op">&amp;&amp;</span><span class="st"> </span>(nrows<span class="op">%%</span>N <span class="op">==</span><span class="st"> </span>0L) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">dim</span>(value)) <span class="op">&lt;=</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb85-14" data-line-number="14"><span class="st">          </span>1L) </a>
+<a class="sourceLine" id="cb85-15" data-line-number="15">          value &lt;-<span class="st"> </span><span class="kw">rep</span>(value, <span class="dt">length.out =</span> nrows)</a>
+<a class="sourceLine" id="cb85-16" data-line-number="16">        <span class="cf">else</span> <span class="kw">stop</span>(<span class="kw">sprintf</span>(<span class="kw">ngettext</span>(N, <span class="st">&quot;replacement has %d row, data has %d&quot;</span>, </a>
+<a class="sourceLine" id="cb85-17" data-line-number="17">          <span class="st">&quot;replacement has %d rows, data has %d&quot;</span>), N, </a>
+<a class="sourceLine" id="cb85-18" data-line-number="18">          nrows), <span class="dt">domain =</span> <span class="ot">NA</span>)</a>
+<a class="sourceLine" id="cb85-19" data-line-number="19">    }</a>
+<a class="sourceLine" id="cb85-20" data-line-number="20">    x[[i]] &lt;-<span class="st"> </span>value</a>
+<a class="sourceLine" id="cb85-21" data-line-number="21">    <span class="cf">if</span> (<span class="kw">length</span>(x) <span class="op">&gt;</span><span class="st"> </span>nc) {</a>
+<a class="sourceLine" id="cb85-22" data-line-number="22">      nc &lt;-<span class="st"> </span><span class="kw">length</span>(x)</a>
+<a class="sourceLine" id="cb85-23" data-line-number="23">      <span class="cf">if</span> (<span class="kw">names</span>(x)[nc] <span class="op">==</span><span class="st"> &quot;&quot;</span>) </a>
+<a class="sourceLine" id="cb85-24" data-line-number="24">        <span class="kw">names</span>(x)[nc] &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;V&quot;</span>, nc)</a>
+<a class="sourceLine" id="cb85-25" data-line-number="25">      <span class="kw">names</span>(x) &lt;-<span class="st"> </span><span class="kw">make.unique</span>(<span class="kw">names</span>(x))</a>
+<a class="sourceLine" id="cb85-26" data-line-number="26">    }</a>
+<a class="sourceLine" id="cb85-27" data-line-number="27">    <span class="kw">class</span>(x) &lt;-<span class="st"> </span>cl</a>
+<a class="sourceLine" id="cb85-28" data-line-number="28">    <span class="kw">return</span>(x)</a>
+<a class="sourceLine" id="cb85-29" data-line-number="29">  }</a>
+<a class="sourceLine" id="cb85-30" data-line-number="30">  <span class="cf">if</span> (<span class="kw">missing</span>(i) <span class="op">||</span><span class="st"> </span><span class="kw">missing</span>(j)) </a>
+<a class="sourceLine" id="cb85-31" data-line-number="31">    <span class="kw">stop</span>(<span class="st">&quot;only valid calls are x[[j]] &lt;- value or x[[i,j]] &lt;- value&quot;</span>)</a>
+<a class="sourceLine" id="cb85-32" data-line-number="32">  rows &lt;-<span class="st"> </span><span class="kw">attr</span>(x, <span class="st">&quot;row.names&quot;</span>)</a>
+<a class="sourceLine" id="cb85-33" data-line-number="33">  nvars &lt;-<span class="st"> </span><span class="kw">length</span>(x)</a>
+<a class="sourceLine" id="cb85-34" data-line-number="34">  <span class="cf">if</span> (n &lt;-<span class="st"> </span><span class="kw">is.character</span>(i)) {</a>
+<a class="sourceLine" id="cb85-35" data-line-number="35">    ii &lt;-<span class="st"> </span><span class="kw">match</span>(i, rows)</a>
+<a class="sourceLine" id="cb85-36" data-line-number="36">    n &lt;-<span class="st"> </span><span class="kw">sum</span>(new.rows &lt;-<span class="st"> </span><span class="kw">is.na</span>(ii))</a>
+<a class="sourceLine" id="cb85-37" data-line-number="37">    <span class="cf">if</span> (n <span class="op">&gt;</span><span class="st"> </span>0L) {</a>
+<a class="sourceLine" id="cb85-38" data-line-number="38">      ii[new.rows] &lt;-<span class="st"> </span><span class="kw">seq.int</span>(<span class="dt">from =</span> nrows <span class="op">+</span><span class="st"> </span>1L, <span class="dt">length.out =</span> n)</a>
+<a class="sourceLine" id="cb85-39" data-line-number="39">      new.rows &lt;-<span class="st"> </span>i[new.rows]</a>
+<a class="sourceLine" id="cb85-40" data-line-number="40">    }</a>
+<a class="sourceLine" id="cb85-41" data-line-number="41">    i &lt;-<span class="st"> </span>ii</a>
+<a class="sourceLine" id="cb85-42" data-line-number="42">  }</a>
+<a class="sourceLine" id="cb85-43" data-line-number="43">  <span class="cf">if</span> (<span class="kw">all</span>(i <span class="op">&gt;=</span><span class="st"> </span>0L) <span class="op">&amp;&amp;</span><span class="st"> </span>(nn &lt;-<span class="st"> </span><span class="kw">max</span>(i)) <span class="op">&gt;</span><span class="st"> </span>nrows) {</a>
+<a class="sourceLine" id="cb85-44" data-line-number="44">    <span class="cf">if</span> (n <span class="op">==</span><span class="st"> </span>0L) {</a>
+<a class="sourceLine" id="cb85-45" data-line-number="45">      nrr &lt;-<span class="st"> </span>(nrows <span class="op">+</span><span class="st"> </span>1L)<span class="op">:</span>nn</a>
+<a class="sourceLine" id="cb85-46" data-line-number="46">      <span class="cf">if</span> (<span class="kw">inherits</span>(value, <span class="st">&quot;data.frame&quot;</span>) <span class="op">&amp;&amp;</span><span class="st"> </span>(<span class="kw">dim</span>(value)[1L]) <span class="op">&gt;=</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb85-47" data-line-number="47"><span class="st">        </span><span class="kw">length</span>(nrr)) {</a>
+<a class="sourceLine" id="cb85-48" data-line-number="48">        new.rows &lt;-<span class="st"> </span><span class="kw">attr</span>(value, <span class="st">&quot;row.names&quot;</span>)[<span class="kw">seq_len</span>(nrr)]</a>
+<a class="sourceLine" id="cb85-49" data-line-number="49">        repl &lt;-<span class="st"> </span><span class="kw">duplicated</span>(new.rows) <span class="op">|</span><span class="st"> </span><span class="kw">match</span>(new.rows, </a>
+<a class="sourceLine" id="cb85-50" data-line-number="50">          rows, 0L)</a>
+<a class="sourceLine" id="cb85-51" data-line-number="51">        <span class="cf">if</span> (<span class="kw">any</span>(repl)) </a>
+<a class="sourceLine" id="cb85-52" data-line-number="52">          new.rows[repl] &lt;-<span class="st"> </span>nrr[repl]</a>
+<a class="sourceLine" id="cb85-53" data-line-number="53">      }</a>
+<a class="sourceLine" id="cb85-54" data-line-number="54">      <span class="cf">else</span> new.rows &lt;-<span class="st"> </span>nrr</a>
+<a class="sourceLine" id="cb85-55" data-line-number="55">    }</a>
+<a class="sourceLine" id="cb85-56" data-line-number="56">    x &lt;-<span class="st"> </span><span class="kw">xpdrows.data.frame</span>(x, rows, new.rows)</a>
+<a class="sourceLine" id="cb85-57" data-line-number="57">    rows &lt;-<span class="st"> </span><span class="kw">attr</span>(x, <span class="st">&quot;row.names&quot;</span>)</a>
+<a class="sourceLine" id="cb85-58" data-line-number="58">    nrows &lt;-<span class="st"> </span><span class="kw">length</span>(rows)</a>
+<a class="sourceLine" id="cb85-59" data-line-number="59">  }</a>
+<a class="sourceLine" id="cb85-60" data-line-number="60">  iseq &lt;-<span class="st"> </span><span class="kw">seq_len</span>(nrows)[i]</a>
+<a class="sourceLine" id="cb85-61" data-line-number="61">  <span class="cf">if</span> (<span class="kw">anyNA</span>(iseq)) </a>
+<a class="sourceLine" id="cb85-62" data-line-number="62">    <span class="kw">stop</span>(<span class="st">&quot;non-existent rows not allowed&quot;</span>)</a>
+<a class="sourceLine" id="cb85-63" data-line-number="63">  <span class="cf">if</span> (<span class="kw">is.character</span>(j)) {</a>
+<a class="sourceLine" id="cb85-64" data-line-number="64">    <span class="cf">if</span> (<span class="st">&quot;&quot;</span> <span class="op">%in%</span><span class="st"> </span>j) </a>
+<a class="sourceLine" id="cb85-65" data-line-number="65">      <span class="kw">stop</span>(<span class="st">&quot;column name </span><span class="ch">\&quot;\&quot;</span><span class="st"> cannot match any column&quot;</span>)</a>
+<a class="sourceLine" id="cb85-66" data-line-number="66">    jseq &lt;-<span class="st"> </span><span class="kw">match</span>(j, <span class="kw">names</span>(x))</a>
+<a class="sourceLine" id="cb85-67" data-line-number="67">    <span class="cf">if</span> (<span class="kw">anyNA</span>(jseq)) </a>
+<a class="sourceLine" id="cb85-68" data-line-number="68">      <span class="kw">stop</span>(<span class="kw">gettextf</span>(<span class="st">&quot;replacing element in non-existent column: %s&quot;</span>, </a>
+<a class="sourceLine" id="cb85-69" data-line-number="69">        j[<span class="kw">is.na</span>(jseq)]), <span class="dt">domain =</span> <span class="ot">NA</span>)</a>
+<a class="sourceLine" id="cb85-70" data-line-number="70">  }</a>
+<a class="sourceLine" id="cb85-71" data-line-number="71">  <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">is.logical</span>(j) <span class="op">||</span><span class="st"> </span><span class="kw">min</span>(j) <span class="op">&lt;</span><span class="st"> </span>0L) </a>
+<a class="sourceLine" id="cb85-72" data-line-number="72">    jseq &lt;-<span class="st"> </span><span class="kw">seq_along</span>(x)[j]</a>
+<a class="sourceLine" id="cb85-73" data-line-number="73">  <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb85-74" data-line-number="74">    jseq &lt;-<span class="st"> </span>j</a>
+<a class="sourceLine" id="cb85-75" data-line-number="75">    <span class="cf">if</span> (<span class="kw">max</span>(jseq) <span class="op">&gt;</span><span class="st"> </span>nvars) </a>
+<a class="sourceLine" id="cb85-76" data-line-number="76">      <span class="kw">stop</span>(<span class="kw">gettextf</span>(<span class="st">&quot;replacing element in non-existent column: %s&quot;</span>, </a>
+<a class="sourceLine" id="cb85-77" data-line-number="77">        jseq[jseq <span class="op">&gt;</span><span class="st"> </span>nvars]), <span class="dt">domain =</span> <span class="ot">NA</span>)</a>
+<a class="sourceLine" id="cb85-78" data-line-number="78">  }</a>
+<a class="sourceLine" id="cb85-79" data-line-number="79">  <span class="cf">if</span> (<span class="kw">length</span>(iseq) <span class="op">&gt;</span><span class="st"> </span>1L <span class="op">||</span><span class="st"> </span><span class="kw">length</span>(jseq) <span class="op">&gt;</span><span class="st"> </span>1L) </a>
+<a class="sourceLine" id="cb85-80" data-line-number="80">    <span class="kw">stop</span>(<span class="st">&quot;only a single element should be replaced&quot;</span>)</a>
+<a class="sourceLine" id="cb85-81" data-line-number="81">  x[[jseq]][[iseq]] &lt;-<span class="st"> </span>value</a>
+<a class="sourceLine" id="cb85-82" data-line-number="82">  <span class="co"># here is where x is copied again!</span></a>
+<a class="sourceLine" id="cb85-83" data-line-number="83">  <span class="kw">class</span>(x) &lt;-<span class="st"> </span>cl</a></code></pre></div>
+<pre><code># tracemem[0x7fdc992ae9d8 -&gt; 0x7fdc9be55258]: </code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1">  x</a>
+<a class="sourceLine" id="cb87-2" data-line-number="2"><span class="er">}</span></a></code></pre></div>
+<p>Thus seeing exactly where the three copies are happening!</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="preface.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="vectors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/02-names_and_values.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["AdvancedR_Companion.pdf", "AdvancedR_Companion.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

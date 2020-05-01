@@ -1,0 +1,219 @@
+# Control Flow
+
+```{r, include=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(lobstr)
+```
+
+## 5.2.2 Vectorised if {-#vectorised-if}
+
+:::question
+Why does `if` `else` print `"Out of range"` once but `ifelse` prints it twice?
+
+```{r, eval=FALSE}
+if (sample(1:10, 1) == 1) print("In range") else print("Out of range")
+```
+
+```
+[1] "Out of range"
+```
+
+```{r, eval=FALSE}
+ifelse((sample(1:10, 1) == 1), print("In range"), print("Out of range"))
+```
+
+```
+[1] "Out of range"
+[1] "Out of range"
+```
+:::
+
+```{r, eval=FALSE}
+var <- if (sample(1:10, 1) == 1) print("In range")
+var
+```
+
+```
+NULL
+```
+
+```{r}
+var <- ifelse((sample(1:10, 1) == 1), print("In range"), print("Out of range"))
+var
+```
+
+`ifelse` explicitly returns its result, whereas `if` invisibly returns it!
+
+
+## 5.3 Loops  {-#loops}
+
+:::question
+Can the body of the loop change the set?
+:::
+
+```{r}
+my_set <- c(1, 20, 99)
+
+for (i in my_set){
+  if (i==1){
+    my_set[9]= 20
+    }
+  print("hello")
+  print(my_set)
+  }
+```
+Looks like you can't!
+
+## 5.2.3 switch statement {-#switch}
+
+:::question
+"Closely related to if is the `switch()` statement. It’s a compact, special purpose equivalent"
+
+What is meant here by "special purpose"? Can we come up with a case where you can't substitute `if` for `switch` or the other way around? Use `switch`. Is it safe to say to `switch` when you have character inputs (as the book suggests) and use `case_when` or `if` for numerics?
+:::
+
+Switch is special in that only ONE value can be true, as in the case from our presentation the shiny input can only ever be ONE of the strings on the left it cannot be multiple.
+
+```{r, eval=FALSE}
+datasetInput <- reactive({ 
+  switch(input$dataset,
+         "materials" = brewing_materials,
+         "size" = brewer_size,
+         "states" = beer_states,
+         "taxed" = beer_taxed)
+})
+```
+
+
+## 5.3.1 common pitfalls {-#common-pitfalls}
+
+:::question
+What does the book mean by leveraging `vector` for preallocating the loop output? How is this different from creating an empty list to instantiate the loop? 
+
+```{r}
+means <- c(1, 50, 20)
+
+out_vector <- vector("list", length(means))
+for (i in 1:length(means)) {
+  out_vector[[i]] <- rnorm(10, means[[i]])
+}
+
+out_list <- list()
+for (i in 1:length(means)) {
+  out_list[[i]] <- rnorm(10, means[[i]])
+}
+```
+:::
+
+By preallocating the length of the `out_vector` we're leveraging `modify-in-place` rather than `copy-on-modify`.
+
+:::question
+The book warns against using `length(x)` and suggests using `seq_along` instead. Is there any downside to using `seq_along` or a case when you'd prefer `length(x)` over `seq_along(x)`? I can't think of any downsides to using it!
+:::
+
+:::TODO
+We have yet to find a downside but should look into this further!
+:::
+
+## 5.3.3.1 Exercises {-#exercise5331}
+
+:::question
+```{r}
+x <- numeric()
+out <- vector("list", length(x))
+for (i in 1:length(x)) {
+  out[i] <- x[i] ^ 2
+}
+out
+```
+
+I understand that this works because we can count down in a loop - so the first iteration `x[1] == NA`, and the second `x[2] == numeric(0)` but where does this value go? Is it just evaluated but not stored since R counts from 1?
+:::
+
+This question is actually the bigger question, "Can you assign something to index 0 in R?" and it doesn't seem that you can.
+
+
+### Assignment to a valid index {-#assignment-valid}
+
+```{r}
+mylist = list()
+mylist[1] <- c("something")
+mylist[1]
+```
+
+### Assignment to [0] {-#assignment-0}
+
+```{r}
+mylist = list()
+mylist[0] <- c("something")
+mylist[0]
+```
+
+It's interesting that it's syntactically correct to assign to `mylist[0]`  but it does nothing!
+
+### Empty index {-#empty-index}
+
+```{r}
+mylist = list()
+mylist[1]
+```
+
+R defaultly accesses the first layer using `[` and says there are no elements in the first layer of `mylist` and returns `NULL`. But when you do `mylist[[1]]` R says `Out of Bounds` because the first layer of `mylist` has been called and there is no layer at all. That's why R throws error in `[[` case.
+
+### Impossible Index `[[` {-#impossible-double}
+
+```{r, eval=FALSE}
+mylist = list()
+mylist[[0]]
+```
+
+```
+Error in mylist[[0]] : attempt to select less than one element in get1index <real>
+```
+
+`[[` isolates one element whereas `[` can be used to get subsets of varying sizes.
+`[[` gets precisely one element, no more no less, or it fails. So `[[0]]<-` cannot work because index zero cannot hold a value. 
+
+### Impossible Index `[[<-`  {-#impossible-double-assign}
+
+```{r, eval=FALSE}
+mylist = list()
+mylist[[0]] <- "something"
+```
+
+```
+Error in mylist[[0]] <- "something" : attempt to select less than one element in integerOneIndex
+```
+
+### Undefined name {-#undefined-5}
+
+Selection using an undefined - but possible name - gives NULL
+
+```{r, eval=FALSE}
+mylist = list()
+mylist[["undefined_name"]]
+```
+
+### Out of Bounds {-#oob-5}
+
+Selection using a possible - but not currently allocated - index gives an out of bounds error
+
+```{r, eval=FALSE}
+mylist = list()
+mylist[[10]]
+```
+
+```
+Error in mylist[[10]] : subscript out of bounds 
+```
+
+## Conclusion {-#conclusion-5}
+
+:::question
+Can we put these concepts together in diagram form? Let's work on improving these schematics!
+:::
+
+```{r, echo=FALSE}
+knitr::include_graphics("images/controlflow.png")
+```
