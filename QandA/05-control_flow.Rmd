@@ -131,11 +131,11 @@ out
 I understand that this works because we can count down in a loop - so the first iteration `x[1] == NA`, and the second `x[2] == numeric(0)` but where does this value go? Is it just evaluated but not stored since R counts from 1?
 :::
 
-This question is actually the bigger question, "Can you assign something to index 0 in R? 
+This question is actually the bigger question, "Can you assign something to index 0 in R?" and it doesn't seem that you can.
 
 ```{r}
 mylist <- list()
-mylist[[0]] <- "test"
+mylist[0]<-"test"
 mylist
 ```
 
