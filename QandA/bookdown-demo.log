@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019) (preloaded format=xelatex 2019.5.8)  1 MAY 2020 06:23
+This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019) (preloaded format=xelatex 2019.5.8)  1 MAY 2020 06:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1125,7 +1125,7 @@ Missing character: There is no └ in font [lmmono10-regular]:!
 Missing character: There is no ─ in font [lmmono10-regular]:!
 [9]
 Overfull \hbox (1477.99498pt too wide) in paragraph at lines 484--484
-[]\TU/lmtt/m/n/10 ## tracemem[0x7f81a2838888 -> 0x7f81a9089b48]: eval eval with
+[]\TU/lmtt/m/n/10 ## tracemem[0x7fee56e42c08 -> 0x7fee544e5cc8]: eval eval with
 Visible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate
  in_dir block_exec call_block process_group.block process_group withCallingHand
 lers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN la
