@@ -119,7 +119,7 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-04-30}
+\date{2020-05-01}
 
 \begin{document}
 \maketitle
@@ -311,7 +311,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8e137f4128"
+## [1] "0x7f81a33e6e08"
 \end{verbatim}
 
 \begin{Shaded}
@@ -321,7 +321,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8e137f4128"
+## [1] "0x7f81a33e6e08"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -333,7 +333,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8e0ec77ab0"
+## [1] "0x7f81a6466268"
 \end{verbatim}
 
 \begin{Shaded}
@@ -343,8 +343,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7f8e0ec6aaa8] <list> 
-## └─[2:0x7f8e137f4128] <dbl>
+## █ [1:0x7f81a64d8f18] <list> 
+## └─[2:0x7f81a33e6e08] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -354,7 +354,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8e0ec2a340"
+## [1] "0x7f81a65b4a48"
 \end{verbatim}
 
 \begin{Shaded}
@@ -391,7 +391,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7f8e0eea32f8>"
+## [1] "<0x7f81a8bcfd98>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -401,7 +401,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7f8e0eea32f8>
+## <0x7f81a8bcfd98>
 \end{verbatim}
 
 \begin{Shaded}
@@ -411,7 +411,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8e0eea32f8"
+## [1] "0x7f81a8bcfd98"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -460,7 +460,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8e15d92c08"
+## [1] "0x7f81a2838888"
 \end{verbatim}
 
 \begin{Shaded}
@@ -470,7 +470,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7f8e15d92c08>"
+## [1] "<0x7f81a2838888>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -480,7 +480,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7f8e15d92c08 -> 0x7f8e15a6a0c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7f81a2838888 -> 0x7f81a9089b48]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -576,7 +576,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8e18576d78"
+## [1] "0x7f81a4a5d678"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -589,7 +589,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8e0ef29758"
+## [1] "0x7f81a78ca3c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -612,7 +612,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8e0ef29758"
+## [1] "0x7f81a78ca3c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -622,7 +622,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8e0ef29758"
+## [1] "0x7f81a78ca3c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -645,7 +645,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8e0ef29758"
+## [1] "0x7f81a78ca3c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -655,7 +655,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8e181bdd68"
+## [1] "0x7f81a6e65398"
 \end{verbatim}
 
 \begin{Shaded}
@@ -678,7 +678,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8e17838c88"
+## [1] "0x7f81a8b677a8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1735,7 +1735,8 @@ Can we come up with an example for this plugging in values for \texttt{x} and \t
 \chapter{Control Flow}\label{control-flow}}
 
 \hypertarget{vectorised-if}{%
-\section{5.2.2 Vectorised if}\label{vectorised-if}}
+\section*{5.2.2 Vectorised if}\label{vectorised-if}}
+\addcontentsline{toc}{section}{5.2.2 Vectorised if}
 
 Why does \texttt{if} \texttt{else} print \texttt{"Out\ of\ range"} once but \texttt{ifelse} prints it twice?
 
@@ -1794,7 +1795,8 @@ NULL
 \texttt{ifelse} explicitly returns its result, whereas \texttt{if} invisibly returns it!
 
 \hypertarget{loops}{%
-\section{5.3 Loops}\label{loops}}
+\section*{5.3 Loops}\label{loops}}
+\addcontentsline{toc}{section}{5.3 Loops}
 
 Can the body of the loop change the set?
 
@@ -1823,17 +1825,31 @@ Can the body of the loop change the set?
 
 Looks like you can't!
 
-\hypertarget{switch-statement}{%
-\section{5.2.3 switch statement}\label{switch-statement}}
+\hypertarget{switch}{%
+\section*{5.2.3 switch statement}\label{switch}}
+\addcontentsline{toc}{section}{5.2.3 switch statement}
 
 ``Closely related to if is the \texttt{switch()} statement. It's a compact, special purpose equivalent''
 
 What is meant here by ``special purpose''? Can we come up with a case where you can't substitute \texttt{if} for \texttt{switch} or the other way around? Use \texttt{switch}. Is it safe to say to \texttt{switch} when you have character inputs (as the book suggests) and use \texttt{case\_when} or \texttt{if} for numerics?
 
-XXX
+Switch is special in that only ONE value can be true, as in the case from our presentation the shiny input can only ever be ONE of the strings on the left it cannot be multiple.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datasetInput <-}\StringTok{ }\KeywordTok{reactive}\NormalTok{(\{ }
+  \ControlFlowTok{switch}\NormalTok{(input}\OperatorTok{$}\NormalTok{dataset,}
+         \StringTok{"materials"}\NormalTok{ =}\StringTok{ }\NormalTok{brewing_materials,}
+         \StringTok{"size"}\NormalTok{ =}\StringTok{ }\NormalTok{brewer_size,}
+         \StringTok{"states"}\NormalTok{ =}\StringTok{ }\NormalTok{beer_states,}
+         \StringTok{"taxed"}\NormalTok{ =}\StringTok{ }\NormalTok{beer_taxed)}
+\NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{common-pitfalls}{%
-\section{5.3.1 common pitfalls}\label{common-pitfalls}}
+\section*{5.3.1 common pitfalls}\label{common-pitfalls}}
+\addcontentsline{toc}{section}{5.3.1 common pitfalls}
 
 What does the book mean by leveraging \texttt{vector} for preallocating the loop output? How is this different from creating an empty list to instantiate the loop?
 
@@ -1853,14 +1869,15 @@ What does the book mean by leveraging \texttt{vector} for preallocating the loop
 \end{Highlighting}
 \end{Shaded}
 
-XXX
+By preallocating the length of the \texttt{out\_vector} we're leveraging \texttt{modify-in-place} rather than \texttt{copy-on-modify}.
 
 The book warns against using \texttt{length(x)} and suggests using \texttt{seq\_along} instead. Is there any downside to using \texttt{seq\_along} or a case when you'd prefer \texttt{length(x)} over \texttt{seq\_along(x)}? I can't think of any downsides to using it!
 
-XXX
+We have yet to find a downside but should look into this further!
 
-\hypertarget{exercises-1}{%
-\section{5.3.3.1 Exercises}\label{exercises-1}}
+\hypertarget{exercise5331}{%
+\section*{5.3.3.1 Exercises}\label{exercise5331}}
+\addcontentsline{toc}{section}{5.3.3.1 Exercises}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1880,10 +1897,127 @@ XXX
 
 I understand that this works because we can count down in a loop - so the first iteration \texttt{x{[}1{]}\ ==\ NA}, and the second \texttt{x{[}2{]}\ ==\ numeric(0)} but where does this value go? Is it just evaluated but not stored since R counts from 1?
 
-XXX
+This question is actually the bigger question, ``Can you assign something to index 0 in R?'' and it doesn't seem that you can.
 
-\hypertarget{conclusion-1}{%
-\section{Conclusion}\label{conclusion-1}}
+\hypertarget{assignment-valid}{%
+\subsection*{Assignment to a valid index}\label{assignment-valid}}
+\addcontentsline{toc}{subsection}{Assignment to a valid index}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mylist =}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\NormalTok{mylist[}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"something"}\NormalTok{)}
+\NormalTok{mylist[}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] "something"
+\end{verbatim}
+
+\hypertarget{assignment-0}{%
+\subsection*{Assignment to {[}0{]}}\label{assignment-0}}
+\addcontentsline{toc}{subsection}{Assignment to {[}0{]}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mylist =}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\NormalTok{mylist[}\DecValTok{0}\NormalTok{] <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"something"}\NormalTok{)}
+\NormalTok{mylist[}\DecValTok{0}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## list()
+\end{verbatim}
+
+It's interesting that it's syntactically correct to assign to \texttt{mylist{[}0{]}} but it does nothing!
+
+\hypertarget{empty-index}{%
+\subsection*{Empty index}\label{empty-index}}
+\addcontentsline{toc}{subsection}{Empty index}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mylist =}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\NormalTok{mylist[}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## NULL
+\end{verbatim}
+
+R defaultly accesses the first layer using \texttt{{[}} and says there are no elements in the first layer of \texttt{mylist} and returns \texttt{NULL}. But when you do \texttt{mylist{[}{[}1{]}{]}} R says \texttt{Out\ of\ Bounds} because the first layer of \texttt{mylist} has been called and there is no layer at all. That's why R throws error in \texttt{{[}{[}} case.
+
+\hypertarget{impossible-double}{%
+\subsection*{\texorpdfstring{Impossible Index \texttt{{[}{[}}}{Impossible Index {[}{[}}}\label{impossible-double}}
+\addcontentsline{toc}{subsection}{Impossible Index \texttt{{[}{[}}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mylist =}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\NormalTok{mylist[[}\DecValTok{0}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Error in mylist[[0]] : attempt to select less than one element in get1index <real>
+\end{verbatim}
+
+\texttt{{[}{[}} isolates one element whereas \texttt{{[}} can be used to get subsets of varying sizes.
+\texttt{{[}{[}} gets precisely one element, no more no less, or it fails. So \texttt{{[}{[}0{]}{]}\textless{}-} cannot work because index zero cannot hold a value.
+
+\hypertarget{impossible-double-assign}{%
+\subsection*{\texorpdfstring{Impossible Index \texttt{{[}{[}\textless{}-}}{Impossible Index {[}{[}\textless{}-}}\label{impossible-double-assign}}
+\addcontentsline{toc}{subsection}{Impossible Index \texttt{{[}{[}\textless{}-}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mylist =}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\NormalTok{mylist[[}\DecValTok{0}\NormalTok{]] <-}\StringTok{ "something"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Error in mylist[[0]] <- "something" : attempt to select less than one element in integerOneIndex
+\end{verbatim}
+
+\hypertarget{undefined-5}{%
+\subsection*{Undefined name}\label{undefined-5}}
+\addcontentsline{toc}{subsection}{Undefined name}
+
+Selection using an undefined - but possible name - gives NULL
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mylist =}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\NormalTok{mylist[[}\StringTok{"undefined_name"}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{oob-5}{%
+\subsection*{Out of Bounds}\label{oob-5}}
+\addcontentsline{toc}{subsection}{Out of Bounds}
+
+Selection using a possible - but not currently allocated - index gives an out of bounds error
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mylist =}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\NormalTok{mylist[[}\DecValTok{10}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Error in mylist[[10]] : subscript out of bounds 
+\end{verbatim}
+
+\hypertarget{conclusion-5}{%
+\section*{Conclusion}\label{conclusion-5}}
+\addcontentsline{toc}{section}{Conclusion}
 
 Can we put these concepts together in diagram form? Let's work on improving these schematics!
 

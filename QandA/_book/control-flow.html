@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-04-30" />
+<meta name="date" content="2020-05-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -173,12 +173,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#boolean-algebra"><i class="fa fa-check"></i>4.5.8 Boolean algebra</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="control-flow.html"><a href="control-flow.html"><i class="fa fa-check"></i><b>5</b> Control Flow</a><ul>
-<li class="chapter" data-level="5.1" data-path="control-flow.html"><a href="control-flow.html#vectorised-if"><i class="fa fa-check"></i><b>5.1</b> 5.2.2 Vectorised if</a></li>
-<li class="chapter" data-level="5.2" data-path="control-flow.html"><a href="control-flow.html#loops"><i class="fa fa-check"></i><b>5.2</b> 5.3 Loops</a></li>
-<li class="chapter" data-level="5.3" data-path="control-flow.html"><a href="control-flow.html#switch-statement"><i class="fa fa-check"></i><b>5.3</b> 5.2.3 switch statement</a></li>
-<li class="chapter" data-level="5.4" data-path="control-flow.html"><a href="control-flow.html#common-pitfalls"><i class="fa fa-check"></i><b>5.4</b> 5.3.1 common pitfalls</a></li>
-<li class="chapter" data-level="5.5" data-path="control-flow.html"><a href="control-flow.html#exercises-1"><i class="fa fa-check"></i><b>5.5</b> 5.3.3.1 Exercises</a></li>
-<li class="chapter" data-level="5.6" data-path="control-flow.html"><a href="control-flow.html#conclusion-1"><i class="fa fa-check"></i><b>5.6</b> Conclusion</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#vectorised-if"><i class="fa fa-check"></i>5.2.2 Vectorised if</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#loops"><i class="fa fa-check"></i>5.3 Loops</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#switch"><i class="fa fa-check"></i>5.2.3 switch statement</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#common-pitfalls"><i class="fa fa-check"></i>5.3.1 common pitfalls</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#exercise5331"><i class="fa fa-check"></i>5.3.3.1 Exercises</a><ul>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#assignment-valid"><i class="fa fa-check"></i>Assignment to a valid index</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#assignment-0"><i class="fa fa-check"></i>Assignment to [0]</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#empty-index"><i class="fa fa-check"></i>Empty index</a></li>
+<li><a href="control-flow.html#impossible-double">Impossible Index <code>[[</code></a></li>
+<li><a href="control-flow.html#impossible-double-assign">Impossible Index <code>[[&lt;-</code></a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#undefined-5"><i class="fa fa-check"></i>Undefined name</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#oob-5"><i class="fa fa-check"></i>Out of Bounds</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#conclusion-5"><i class="fa fa-check"></i>Conclusion</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -203,8 +211,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="control-flow" class="section level1">
 <h1><span class="header-section-number">Chapter 5</span> Control Flow</h1>
-<div id="vectorised-if" class="section level2">
-<h2><span class="header-section-number">5.1</span> 5.2.2 Vectorised if</h2>
+<div id="vectorised-if" class="section level2 unnumbered">
+<h2>5.2.2 Vectorised if</h2>
 <div class="question">
 <p>Why does <code>if</code> <code>else</code> print <code>&quot;Out of range&quot;</code> once but <code>ifelse</code> prints it twice?</p>
 <div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb174-1" data-line-number="1"><span class="cf">if</span> (<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">1</span>) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="kw">print</span>(<span class="st">&quot;In range&quot;</span>) <span class="cf">else</span> <span class="kw">print</span>(<span class="st">&quot;Out of range&quot;</span>)</a></code></pre></div>
@@ -222,8 +230,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] &quot;Out of range&quot;</code></pre>
 <p><code>ifelse</code> explicitly returns its result, whereas <code>if</code> invisibly returns it!</p>
 </div>
-<div id="loops" class="section level2">
-<h2><span class="header-section-number">5.2</span> 5.3 Loops</h2>
+<div id="loops" class="section level2 unnumbered">
+<h2>5.3 Loops</h2>
 <div class="question">
 <p>Can the body of the loop change the set?</p>
 </div>
@@ -244,61 +252,113 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [1]  1 20 99 NA NA NA NA NA 20</code></pre>
 <p>Looks like you can’t!</p>
 </div>
-<div id="switch-statement" class="section level2">
-<h2><span class="header-section-number">5.3</span> 5.2.3 switch statement</h2>
+<div id="switch" class="section level2 unnumbered">
+<h2>5.2.3 switch statement</h2>
 <div class="question">
 <p>“Closely related to if is the <code>switch()</code> statement. It’s a compact, special purpose equivalent”</p>
 <p>What is meant here by “special purpose”? Can we come up with a case where you can’t substitute <code>if</code> for <code>switch</code> or the other way around? Use <code>switch</code>. Is it safe to say to <code>switch</code> when you have character inputs (as the book suggests) and use <code>case_when</code> or <code>if</code> for numerics?</p>
 </div>
-<div class="TODO">
-<p>XXX</p>
+<p>Switch is special in that only ONE value can be true, as in the case from our presentation the shiny input can only ever be ONE of the strings on the left it cannot be multiple.</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" data-line-number="1">datasetInput &lt;-<span class="st"> </span><span class="kw">reactive</span>({ </a>
+<a class="sourceLine" id="cb186-2" data-line-number="2">  <span class="cf">switch</span>(input<span class="op">$</span>dataset,</a>
+<a class="sourceLine" id="cb186-3" data-line-number="3">         <span class="st">&quot;materials&quot;</span> =<span class="st"> </span>brewing_materials,</a>
+<a class="sourceLine" id="cb186-4" data-line-number="4">         <span class="st">&quot;size&quot;</span> =<span class="st"> </span>brewer_size,</a>
+<a class="sourceLine" id="cb186-5" data-line-number="5">         <span class="st">&quot;states&quot;</span> =<span class="st"> </span>beer_states,</a>
+<a class="sourceLine" id="cb186-6" data-line-number="6">         <span class="st">&quot;taxed&quot;</span> =<span class="st"> </span>beer_taxed)</a>
+<a class="sourceLine" id="cb186-7" data-line-number="7">})</a></code></pre></div>
 </div>
-</div>
-<div id="common-pitfalls" class="section level2">
-<h2><span class="header-section-number">5.4</span> 5.3.1 common pitfalls</h2>
+<div id="common-pitfalls" class="section level2 unnumbered">
+<h2>5.3.1 common pitfalls</h2>
 <div class="question">
 <p>What does the book mean by leveraging <code>vector</code> for preallocating the loop output? How is this different from creating an empty list to instantiate the loop?</p>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" data-line-number="1">means &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">50</span>, <span class="dv">20</span>)</a>
-<a class="sourceLine" id="cb186-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb186-3" data-line-number="3">out_vector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="kw">length</span>(means))</a>
-<a class="sourceLine" id="cb186-4" data-line-number="4"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(means)) {</a>
-<a class="sourceLine" id="cb186-5" data-line-number="5">  out_vector[[i]] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, means[[i]])</a>
-<a class="sourceLine" id="cb186-6" data-line-number="6">}</a>
-<a class="sourceLine" id="cb186-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb186-8" data-line-number="8">out_list &lt;-<span class="st"> </span><span class="kw">list</span>()</a>
-<a class="sourceLine" id="cb186-9" data-line-number="9"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(means)) {</a>
-<a class="sourceLine" id="cb186-10" data-line-number="10">  out_list[[i]] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, means[[i]])</a>
-<a class="sourceLine" id="cb186-11" data-line-number="11">}</a></code></pre></div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb187-1" data-line-number="1">means &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">50</span>, <span class="dv">20</span>)</a>
+<a class="sourceLine" id="cb187-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb187-3" data-line-number="3">out_vector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="kw">length</span>(means))</a>
+<a class="sourceLine" id="cb187-4" data-line-number="4"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(means)) {</a>
+<a class="sourceLine" id="cb187-5" data-line-number="5">  out_vector[[i]] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, means[[i]])</a>
+<a class="sourceLine" id="cb187-6" data-line-number="6">}</a>
+<a class="sourceLine" id="cb187-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb187-8" data-line-number="8">out_list &lt;-<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb187-9" data-line-number="9"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(means)) {</a>
+<a class="sourceLine" id="cb187-10" data-line-number="10">  out_list[[i]] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, means[[i]])</a>
+<a class="sourceLine" id="cb187-11" data-line-number="11">}</a></code></pre></div>
 </div>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<p>By preallocating the length of the <code>out_vector</code> we’re leveraging <code>modify-in-place</code> rather than <code>copy-on-modify</code>.</p>
 <div class="question">
 <p>The book warns against using <code>length(x)</code> and suggests using <code>seq_along</code> instead. Is there any downside to using <code>seq_along</code> or a case when you’d prefer <code>length(x)</code> over <code>seq_along(x)</code>? I can’t think of any downsides to using it!</p>
 </div>
 <div class="TODO">
-<p>XXX</p>
+<p>We have yet to find a downside but should look into this further!</p>
 </div>
 </div>
-<div id="exercises-1" class="section level2">
-<h2><span class="header-section-number">5.5</span> 5.3.3.1 Exercises</h2>
+<div id="exercise5331" class="section level2 unnumbered">
+<h2>5.3.3.1 Exercises</h2>
 <div class="question">
-<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb187-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">numeric</span>()</a>
-<a class="sourceLine" id="cb187-2" data-line-number="2">out &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="kw">length</span>(x))</a>
-<a class="sourceLine" id="cb187-3" data-line-number="3"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(x)) {</a>
-<a class="sourceLine" id="cb187-4" data-line-number="4">  out[i] &lt;-<span class="st"> </span>x[i] <span class="op">^</span><span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb187-5" data-line-number="5">}</a>
-<a class="sourceLine" id="cb187-6" data-line-number="6">out</a></code></pre></div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb188-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">numeric</span>()</a>
+<a class="sourceLine" id="cb188-2" data-line-number="2">out &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="kw">length</span>(x))</a>
+<a class="sourceLine" id="cb188-3" data-line-number="3"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(x)) {</a>
+<a class="sourceLine" id="cb188-4" data-line-number="4">  out[i] &lt;-<span class="st"> </span>x[i] <span class="op">^</span><span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb188-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb188-6" data-line-number="6">out</a></code></pre></div>
 <pre><code>## [[1]]
 ## [1] NA</code></pre>
 <p>I understand that this works because we can count down in a loop - so the first iteration <code>x[1] == NA</code>, and the second <code>x[2] == numeric(0)</code> but where does this value go? Is it just evaluated but not stored since R counts from 1?</p>
 </div>
-<div class="TODO">
-<p>XXX</p>
+<p>This question is actually the bigger question, “Can you assign something to index 0 in R?” and it doesn’t seem that you can.</p>
+<div id="assignment-valid" class="section level3 unnumbered">
+<h3>Assignment to a valid index</h3>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb190-2" data-line-number="2">mylist[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;something&quot;</span>)</a>
+<a class="sourceLine" id="cb190-3" data-line-number="3">mylist[<span class="dv">1</span>]</a></code></pre></div>
+<pre><code>## [[1]]
+## [1] &quot;something&quot;</code></pre>
+</div>
+<div id="assignment-0" class="section level3 unnumbered">
+<h3>Assignment to [0]</h3>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb192-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb192-2" data-line-number="2">mylist[<span class="dv">0</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;something&quot;</span>)</a>
+<a class="sourceLine" id="cb192-3" data-line-number="3">mylist[<span class="dv">0</span>]</a></code></pre></div>
+<pre><code>## list()</code></pre>
+<p>It’s interesting that it’s syntactically correct to assign to <code>mylist[0]</code> but it does nothing!</p>
+</div>
+<div id="empty-index" class="section level3 unnumbered">
+<h3>Empty index</h3>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb194-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb194-2" data-line-number="2">mylist[<span class="dv">1</span>]</a></code></pre></div>
+<pre><code>## [[1]]
+## NULL</code></pre>
+<p>R defaultly accesses the first layer using <code>[</code> and says there are no elements in the first layer of <code>mylist</code> and returns <code>NULL</code>. But when you do <code>mylist[[1]]</code> R says <code>Out of Bounds</code> because the first layer of <code>mylist</code> has been called and there is no layer at all. That’s why R throws error in <code>[[</code> case.</p>
+</div>
+<div id="impossible-double" class="section level3 unnumbered">
+<h3>Impossible Index <code>[[</code></h3>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb196-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb196-2" data-line-number="2">mylist[[<span class="dv">0</span>]]</a></code></pre></div>
+<pre><code>Error in mylist[[0]] : attempt to select less than one element in get1index &lt;real&gt;</code></pre>
+<p><code>[[</code> isolates one element whereas <code>[</code> can be used to get subsets of varying sizes.
+<code>[[</code> gets precisely one element, no more no less, or it fails. So <code>[[0]]&lt;-</code> cannot work because index zero cannot hold a value.</p>
+</div>
+<div id="impossible-double-assign" class="section level3 unnumbered">
+<h3>Impossible Index <code>[[&lt;-</code></h3>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb198-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb198-2" data-line-number="2">mylist[[<span class="dv">0</span>]] &lt;-<span class="st"> &quot;something&quot;</span></a></code></pre></div>
+<pre><code>Error in mylist[[0]] &lt;- &quot;something&quot; : attempt to select less than one element in integerOneIndex</code></pre>
+</div>
+<div id="undefined-5" class="section level3 unnumbered">
+<h3>Undefined name</h3>
+<p>Selection using an undefined - but possible name - gives NULL</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb200-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb200-2" data-line-number="2">mylist[[<span class="st">&quot;undefined_name&quot;</span>]]</a></code></pre></div>
+</div>
+<div id="oob-5" class="section level3 unnumbered">
+<h3>Out of Bounds</h3>
+<p>Selection using a possible - but not currently allocated - index gives an out of bounds error</p>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb201-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb201-2" data-line-number="2">mylist[[<span class="dv">10</span>]]</a></code></pre></div>
+<pre><code>Error in mylist[[10]] : subscript out of bounds </code></pre>
 </div>
 </div>
-<div id="conclusion-1" class="section level2">
-<h2><span class="header-section-number">5.6</span> Conclusion</h2>
+<div id="conclusion-5" class="section level2 unnumbered">
+<h2>Conclusion</h2>
 <div class="question">
 <p>Can we put these concepts together in diagram form? Let’s work on improving these schematics!</p>
 </div>
