@@ -173,10 +173,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#boolean-algebra"><i class="fa fa-check"></i>4.5.8 Boolean algebra</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="control-flow.html"><a href="control-flow.html"><i class="fa fa-check"></i><b>5</b> Control Flow</a><ul>
-<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#switch-statement"><i class="fa fa-check"></i>5.2.3 switch statement</a></li>
-<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#common-pitfalls"><i class="fa fa-check"></i>5.3.1 common pitfalls</a></li>
-<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#exercise5331"><i class="fa fa-check"></i>5.3.3.1 Exercises</a></li>
-<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#conclusion_5"><i class="fa fa-check"></i>Conclusion</a></li>
+<li class="chapter" data-level="5.1" data-path="control-flow.html"><a href="control-flow.html#vectorised-if"><i class="fa fa-check"></i><b>5.1</b> 5.2.2 Vectorised if</a></li>
+<li class="chapter" data-level="5.2" data-path="control-flow.html"><a href="control-flow.html#loops"><i class="fa fa-check"></i><b>5.2</b> 5.3 Loops</a></li>
+<li class="chapter" data-level="5.3" data-path="control-flow.html"><a href="control-flow.html#switch-statement"><i class="fa fa-check"></i><b>5.3</b> 5.2.3 switch statement</a></li>
+<li class="chapter" data-level="5.4" data-path="control-flow.html"><a href="control-flow.html#common-pitfalls"><i class="fa fa-check"></i><b>5.4</b> 5.3.1 common pitfalls</a></li>
+<li class="chapter" data-level="5.5" data-path="control-flow.html"><a href="control-flow.html#exercises-1"><i class="fa fa-check"></i><b>5.5</b> 5.3.3.1 Exercises</a></li>
+<li class="chapter" data-level="5.6" data-path="control-flow.html"><a href="control-flow.html#conclusion-1"><i class="fa fa-check"></i><b>5.6</b> Conclusion</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -201,8 +203,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="control-flow" class="section level1">
 <h1><span class="header-section-number">Chapter 5</span> Control Flow</h1>
-<div id="switch-statement" class="section level2 unnumbered">
-<h2>5.2.3 switch statement</h2>
+<div id="vectorised-if" class="section level2">
+<h2><span class="header-section-number">5.1</span> 5.2.2 Vectorised if</h2>
+<div class="question">
+<p>Why does <code>if</code> <code>else</code> print <code>&quot;Out of range&quot;</code> once but <code>ifelse</code> prints it twice?</p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb174-1" data-line-number="1"><span class="cf">if</span> (<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">1</span>) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="kw">print</span>(<span class="st">&quot;In range&quot;</span>) <span class="cf">else</span> <span class="kw">print</span>(<span class="st">&quot;Out of range&quot;</span>)</a></code></pre></div>
+<pre><code>[1] &quot;Out of range&quot;</code></pre>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" data-line-number="1"><span class="kw">ifelse</span>((<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">1</span>) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>), <span class="kw">print</span>(<span class="st">&quot;In range&quot;</span>), <span class="kw">print</span>(<span class="st">&quot;Out of range&quot;</span>))</a></code></pre></div>
+<pre><code>[1] &quot;Out of range&quot;
+[1] &quot;Out of range&quot;</code></pre>
+</div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" data-line-number="1">var &lt;-<span class="st"> </span><span class="cf">if</span> (<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">1</span>) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="kw">print</span>(<span class="st">&quot;In range&quot;</span>)</a>
+<a class="sourceLine" id="cb178-2" data-line-number="2">var</a></code></pre></div>
+<pre><code>NULL</code></pre>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" data-line-number="1">var &lt;-<span class="st"> </span><span class="kw">ifelse</span>((<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">1</span>) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>), <span class="kw">print</span>(<span class="st">&quot;In range&quot;</span>), <span class="kw">print</span>(<span class="st">&quot;Out of range&quot;</span>))</a></code></pre></div>
+<pre><code>## [1] &quot;Out of range&quot;</code></pre>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb182-1" data-line-number="1">var</a></code></pre></div>
+<pre><code>## [1] &quot;Out of range&quot;</code></pre>
+<p><code>ifelse</code> explicitly returns its result, whereas <code>if</code> invisibly returns it!</p>
+</div>
+<div id="loops" class="section level2">
+<h2><span class="header-section-number">5.2</span> 5.3 Loops</h2>
+<div class="question">
+<p>Can the body of the loop change the set?</p>
+</div>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" data-line-number="1">my_set &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">20</span>, <span class="dv">99</span>)</a>
+<a class="sourceLine" id="cb184-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb184-3" data-line-number="3"><span class="cf">for</span> (i <span class="cf">in</span> my_set){</a>
+<a class="sourceLine" id="cb184-4" data-line-number="4">  <span class="cf">if</span> (i<span class="op">==</span><span class="dv">1</span>){</a>
+<a class="sourceLine" id="cb184-5" data-line-number="5">    my_set[<span class="dv">9</span>]=<span class="st"> </span><span class="dv">20</span></a>
+<a class="sourceLine" id="cb184-6" data-line-number="6">    }</a>
+<a class="sourceLine" id="cb184-7" data-line-number="7">  <span class="kw">print</span>(<span class="st">&quot;hello&quot;</span>)</a>
+<a class="sourceLine" id="cb184-8" data-line-number="8">  <span class="kw">print</span>(my_set)</a>
+<a class="sourceLine" id="cb184-9" data-line-number="9">  }</a></code></pre></div>
+<pre><code>## [1] &quot;hello&quot;
+## [1]  1 20 99 NA NA NA NA NA 20
+## [1] &quot;hello&quot;
+## [1]  1 20 99 NA NA NA NA NA 20
+## [1] &quot;hello&quot;
+## [1]  1 20 99 NA NA NA NA NA 20</code></pre>
+<p>Looks like you can’t!</p>
+</div>
+<div id="switch-statement" class="section level2">
+<h2><span class="header-section-number">5.3</span> 5.2.3 switch statement</h2>
 <div class="question">
 <p>“Closely related to if is the <code>switch()</code> statement. It’s a compact, special purpose equivalent”</p>
 <p>What is meant here by “special purpose”? Can we come up with a case where you can’t substitute <code>if</code> for <code>switch</code> or the other way around? Use <code>switch</code>. Is it safe to say to <code>switch</code> when you have character inputs (as the book suggests) and use <code>case_when</code> or <code>if</code> for numerics?</p>
@@ -211,21 +254,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>XXX</p>
 </div>
 </div>
-<div id="common-pitfalls" class="section level2 unnumbered">
-<h2>5.3.1 common pitfalls</h2>
+<div id="common-pitfalls" class="section level2">
+<h2><span class="header-section-number">5.4</span> 5.3.1 common pitfalls</h2>
 <div class="question">
 <p>What does the book mean by leveraging <code>vector</code> for preallocating the loop output? How is this different from creating an empty list to instantiate the loop?</p>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb174-1" data-line-number="1">means &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">50</span>, <span class="dv">20</span>)</a>
-<a class="sourceLine" id="cb174-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb174-3" data-line-number="3">out_vector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="kw">length</span>(means))</a>
-<a class="sourceLine" id="cb174-4" data-line-number="4"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(means)) {</a>
-<a class="sourceLine" id="cb174-5" data-line-number="5">  out_vector[[i]] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, means[[i]])</a>
-<a class="sourceLine" id="cb174-6" data-line-number="6">}</a>
-<a class="sourceLine" id="cb174-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb174-8" data-line-number="8">out_list &lt;-<span class="st"> </span><span class="kw">list</span>()</a>
-<a class="sourceLine" id="cb174-9" data-line-number="9"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(means)) {</a>
-<a class="sourceLine" id="cb174-10" data-line-number="10">  out_list[[i]] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, means[[i]])</a>
-<a class="sourceLine" id="cb174-11" data-line-number="11">}</a></code></pre></div>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" data-line-number="1">means &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">50</span>, <span class="dv">20</span>)</a>
+<a class="sourceLine" id="cb186-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb186-3" data-line-number="3">out_vector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="kw">length</span>(means))</a>
+<a class="sourceLine" id="cb186-4" data-line-number="4"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(means)) {</a>
+<a class="sourceLine" id="cb186-5" data-line-number="5">  out_vector[[i]] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, means[[i]])</a>
+<a class="sourceLine" id="cb186-6" data-line-number="6">}</a>
+<a class="sourceLine" id="cb186-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb186-8" data-line-number="8">out_list &lt;-<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb186-9" data-line-number="9"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(means)) {</a>
+<a class="sourceLine" id="cb186-10" data-line-number="10">  out_list[[i]] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, means[[i]])</a>
+<a class="sourceLine" id="cb186-11" data-line-number="11">}</a></code></pre></div>
 </div>
 <div class="TODO">
 <p>XXX</p>
@@ -237,15 +280,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>XXX</p>
 </div>
 </div>
-<div id="exercise5331" class="section level2 unnumbered">
-<h2>5.3.3.1 Exercises</h2>
+<div id="exercises-1" class="section level2">
+<h2><span class="header-section-number">5.5</span> 5.3.3.1 Exercises</h2>
 <div class="question">
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">numeric</span>()</a>
-<a class="sourceLine" id="cb175-2" data-line-number="2">out &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="kw">length</span>(x))</a>
-<a class="sourceLine" id="cb175-3" data-line-number="3"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(x)) {</a>
-<a class="sourceLine" id="cb175-4" data-line-number="4">  out[i] &lt;-<span class="st"> </span>x[i] <span class="op">^</span><span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb175-5" data-line-number="5">}</a>
-<a class="sourceLine" id="cb175-6" data-line-number="6">out</a></code></pre></div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb187-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">numeric</span>()</a>
+<a class="sourceLine" id="cb187-2" data-line-number="2">out &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="kw">length</span>(x))</a>
+<a class="sourceLine" id="cb187-3" data-line-number="3"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(x)) {</a>
+<a class="sourceLine" id="cb187-4" data-line-number="4">  out[i] &lt;-<span class="st"> </span>x[i] <span class="op">^</span><span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb187-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb187-6" data-line-number="6">out</a></code></pre></div>
 <pre><code>## [[1]]
 ## [1] NA</code></pre>
 <p>I understand that this works because we can count down in a loop - so the first iteration <code>x[1] == NA</code>, and the second <code>x[2] == numeric(0)</code> but where does this value go? Is it just evaluated but not stored since R counts from 1?</p>
@@ -254,12 +297,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>XXX</p>
 </div>
 </div>
-<div id="conclusion_5" class="section level2 unnumbered">
-<h2>Conclusion</h2>
+<div id="conclusion-1" class="section level2">
+<h2><span class="header-section-number">5.6</span> Conclusion</h2>
 <div class="question">
 <p>Can we put these concepts together in diagram form? Let’s work on improving these schematics!</p>
 </div>
-<p><img src="images/controlflow.png" width="1015" /></p>
+<p><img src="images/controlflow.png" width="1440" /></p>
 
 </div>
 </div>

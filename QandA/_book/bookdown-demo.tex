@@ -311,7 +311,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe644fbce08"
+## [1] "0x7f8e137f4128"
 \end{verbatim}
 
 \begin{Shaded}
@@ -321,7 +321,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe644fbce08"
+## [1] "0x7f8e137f4128"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -333,7 +333,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe64c0ff730"
+## [1] "0x7f8e0ec77ab0"
 \end{verbatim}
 
 \begin{Shaded}
@@ -343,8 +343,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fe64c0baa38] <list> 
-## └─[2:0x7fe644fbce08] <dbl>
+## █ [1:0x7f8e0ec6aaa8] <list> 
+## └─[2:0x7f8e137f4128] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -354,7 +354,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe64b4bc920"
+## [1] "0x7f8e0ec2a340"
 \end{verbatim}
 
 \begin{Shaded}
@@ -391,7 +391,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fe64c032ce8>"
+## [1] "<0x7f8e0eea32f8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -401,7 +401,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fe64c032ce8>
+## <0x7f8e0eea32f8>
 \end{verbatim}
 
 \begin{Shaded}
@@ -411,7 +411,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe64c032ce8"
+## [1] "0x7f8e0eea32f8"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -460,7 +460,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe64b8fc1c8"
+## [1] "0x7f8e15d92c08"
 \end{verbatim}
 
 \begin{Shaded}
@@ -470,7 +470,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fe64b8fc1c8>"
+## [1] "<0x7f8e15d92c08>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -480,7 +480,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fe64b8fc1c8 -> 0x7fe64ba42c08]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7f8e15d92c08 -> 0x7f8e15a6a0c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -576,7 +576,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe64d18f7d8"
+## [1] "0x7f8e18576d78"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -589,7 +589,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe644f99d98"
+## [1] "0x7f8e0ef29758"
 \end{verbatim}
 
 \begin{Shaded}
@@ -612,7 +612,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe644f99d98"
+## [1] "0x7f8e0ef29758"
 \end{verbatim}
 
 \begin{Shaded}
@@ -622,7 +622,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe644f99d98"
+## [1] "0x7f8e0ef29758"
 \end{verbatim}
 
 \begin{Shaded}
@@ -645,7 +645,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe644f99d98"
+## [1] "0x7f8e0ef29758"
 \end{verbatim}
 
 \begin{Shaded}
@@ -655,7 +655,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe64f00c418"
+## [1] "0x7f8e181bdd68"
 \end{verbatim}
 
 \begin{Shaded}
@@ -678,7 +678,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe64bf3e6f8"
+## [1] "0x7f8e17838c88"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1734,9 +1734,97 @@ Can we come up with an example for this plugging in values for \texttt{x} and \t
 \hypertarget{control-flow}{%
 \chapter{Control Flow}\label{control-flow}}
 
+\hypertarget{vectorised-if}{%
+\section{5.2.2 Vectorised if}\label{vectorised-if}}
+
+Why does \texttt{if} \texttt{else} print \texttt{"Out\ of\ range"} once but \texttt{ifelse} prints it twice?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{, }\DecValTok{1}\NormalTok{) }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{) }\KeywordTok{print}\NormalTok{(}\StringTok{"In range"}\NormalTok{) }\ControlFlowTok{else} \KeywordTok{print}\NormalTok{(}\StringTok{"Out of range"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "Out of range"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ifelse}\NormalTok{((}\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{, }\DecValTok{1}\NormalTok{) }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{), }\KeywordTok{print}\NormalTok{(}\StringTok{"In range"}\NormalTok{), }\KeywordTok{print}\NormalTok{(}\StringTok{"Out of range"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "Out of range"
+[1] "Out of range"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{var <-}\StringTok{ }\ControlFlowTok{if}\NormalTok{ (}\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{, }\DecValTok{1}\NormalTok{) }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{) }\KeywordTok{print}\NormalTok{(}\StringTok{"In range"}\NormalTok{)}
+\NormalTok{var}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+NULL
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{var <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{((}\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{, }\DecValTok{1}\NormalTok{) }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{), }\KeywordTok{print}\NormalTok{(}\StringTok{"In range"}\NormalTok{), }\KeywordTok{print}\NormalTok{(}\StringTok{"Out of range"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Out of range"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{var}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Out of range"
+\end{verbatim}
+
+\texttt{ifelse} explicitly returns its result, whereas \texttt{if} invisibly returns it!
+
+\hypertarget{loops}{%
+\section{5.3 Loops}\label{loops}}
+
+Can the body of the loop change the set?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my_set <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{99}\NormalTok{)}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in}\NormalTok{ my_set)\{}
+  \ControlFlowTok{if}\NormalTok{ (i}\OperatorTok{==}\DecValTok{1}\NormalTok{)\{}
+\NormalTok{    my_set[}\DecValTok{9}\NormalTok{]=}\StringTok{ }\DecValTok{20}
+\NormalTok{    \}}
+  \KeywordTok{print}\NormalTok{(}\StringTok{"hello"}\NormalTok{)}
+  \KeywordTok{print}\NormalTok{(my_set)}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "hello"
+## [1]  1 20 99 NA NA NA NA NA 20
+## [1] "hello"
+## [1]  1 20 99 NA NA NA NA NA 20
+## [1] "hello"
+## [1]  1 20 99 NA NA NA NA NA 20
+\end{verbatim}
+
+Looks like you can't!
+
 \hypertarget{switch-statement}{%
-\section*{5.2.3 switch statement}\label{switch-statement}}
-\addcontentsline{toc}{section}{5.2.3 switch statement}
+\section{5.2.3 switch statement}\label{switch-statement}}
 
 ``Closely related to if is the \texttt{switch()} statement. It's a compact, special purpose equivalent''
 
@@ -1745,8 +1833,7 @@ What is meant here by ``special purpose''? Can we come up with a case where you 
 XXX
 
 \hypertarget{common-pitfalls}{%
-\section*{5.3.1 common pitfalls}\label{common-pitfalls}}
-\addcontentsline{toc}{section}{5.3.1 common pitfalls}
+\section{5.3.1 common pitfalls}\label{common-pitfalls}}
 
 What does the book mean by leveraging \texttt{vector} for preallocating the loop output? How is this different from creating an empty list to instantiate the loop?
 
@@ -1772,9 +1859,8 @@ The book warns against using \texttt{length(x)} and suggests using \texttt{seq\_
 
 XXX
 
-\hypertarget{exercise5331}{%
-\section*{5.3.3.1 Exercises}\label{exercise5331}}
-\addcontentsline{toc}{section}{5.3.3.1 Exercises}
+\hypertarget{exercises-1}{%
+\section{5.3.3.1 Exercises}\label{exercises-1}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1796,13 +1882,12 @@ I understand that this works because we can count down in a loop - so the first 
 
 XXX
 
-\hypertarget{conclusion_5}{%
-\section*{Conclusion}\label{conclusion_5}}
-\addcontentsline{toc}{section}{Conclusion}
+\hypertarget{conclusion-1}{%
+\section{Conclusion}\label{conclusion-1}}
 
 Can we put these concepts together in diagram form? Let's work on improving these schematics!
 
-\includegraphics[width=28.19in]{images/controlflow}
+\includegraphics[width=40in]{images/controlflow}
 
 \bibliography{book.bib,packages.bib}
 

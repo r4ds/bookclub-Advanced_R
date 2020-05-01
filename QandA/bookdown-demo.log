@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019) (preloaded format=xelatex 2019.5.8)  30 APR 2020 18:01
+This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019) (preloaded format=xelatex 2019.5.8)  30 APR 2020 19:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1125,7 +1125,7 @@ Missing character: There is no └ in font [lmmono10-regular]:!
 Missing character: There is no ─ in font [lmmono10-regular]:!
 [9]
 Overfull \hbox (1477.99498pt too wide) in paragraph at lines 484--484
-[]\TU/lmtt/m/n/10 ## tracemem[0x7fe64b8fc1c8 -> 0x7fe64ba42c08]: eval eval with
+[]\TU/lmtt/m/n/10 ## tracemem[0x7f8e15d92c08 -> 0x7f8e15a6a0c8]: eval eval with
 Visible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate
  in_dir block_exec call_block process_group.block process_group withCallingHand
 lers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN la
@@ -1170,35 +1170,38 @@ Underfull \hbox (badness 10000) in paragraph at lines 1504--1505
 
 ]
 Chapter 5.
-[29]
+[29] [30]
 File: images/controlflow.png Graphic file (type bmp)
 <images/controlflow.png>
 
-Overfull \hbox (549.10107pt too wide) in paragraph at lines 1805--1806
+Overfull \hbox (975.78186pt too wide) in paragraph at lines 1890--1891
 [][] 
  []
 
 No file bookdown-demo.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1809.
-[30]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1809.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1894.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[31] [32]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1894.
 (./bookdown-demo.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1809.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1809.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1894.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1894.
 
 Package rerunfilecheck Info: File `bookdown-demo.out' has not changed.
-(rerunfilecheck)             Checksum: 880D4BD2144665C2AE99ACE89C97AFC6.
+(rerunfilecheck)             Checksum: A59D265E09C57D9C0410C5515049E5AF.
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 27799 strings out of 492916
- 507094 string characters out of 6133346
- 739711 words of memory out of 5000000
- 31586 multiletter control sequences out of 15000+600000
+ 27801 strings out of 492916
+ 507115 string characters out of 6133346
+ 740084 words of memory out of 5000000
+ 31588 multiletter control sequences out of 15000+600000
  538756 words of font info for 80 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  58i,6n,115p,821b,455s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on bookdown-demo.pdf (30 pages).
+Output written on bookdown-demo.pdf (32 pages).

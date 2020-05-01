@@ -6,7 +6,66 @@ library(kableExtra)
 library(lobstr)
 ```
 
-## 5.2.3 switch statement {-#switch-statement}
+## 5.2.2 Vectorised if
+
+:::question
+Why does `if` `else` print `"Out of range"` once but `ifelse` prints it twice?
+
+```{r, eval=FALSE}
+if (sample(1:10, 1) == 1) print("In range") else print("Out of range")
+```
+
+```
+[1] "Out of range"
+```
+
+```{r, eval=FALSE}
+ifelse((sample(1:10, 1) == 1), print("In range"), print("Out of range"))
+```
+
+```
+[1] "Out of range"
+[1] "Out of range"
+```
+:::
+
+```{r, eval=FALSE}
+var <- if (sample(1:10, 1) == 1) print("In range")
+var
+```
+
+```
+NULL
+```
+
+```{r}
+var <- ifelse((sample(1:10, 1) == 1), print("In range"), print("Out of range"))
+var
+```
+
+`ifelse` explicitly returns its result, whereas `if` invisibly returns it!
+
+
+## 5.3 Loops 
+
+:::question
+Can the body of the loop change the set?
+:::
+
+```{r}
+my_set <- c(1, 20, 99)
+
+for (i in my_set){
+  if (i==1){
+    my_set[9]= 20
+    }
+  print("hello")
+  print(my_set)
+  }
+```
+Looks like you can't!
+
+## 5.2.3 switch statement
 
 :::question
 "Closely related to if is the `switch()` statement. It’s a compact, special purpose equivalent"
@@ -18,7 +77,7 @@ What is meant here by "special purpose"? Can we come up with a case where you ca
 XXX
 :::
 
-## 5.3.1 common pitfalls {-#common-pitfalls}
+## 5.3.1 common pitfalls
 
 :::question
 What does the book mean by leveraging `vector` for preallocating the loop output? How is this different from creating an empty list to instantiate the loop? 
@@ -50,7 +109,7 @@ The book warns against using `length(x)` and suggests using `seq_along` instead.
 XXX
 :::
 
-## 5.3.3.1 Exercises {-#exercise5331}
+## 5.3.3.1 Exercises
 
 :::question
 ```{r}
@@ -69,7 +128,8 @@ I understand that this works because we can count down in a loop - so the first 
 XXX
 :::
 
-## Conclusion {-#conclusion_5}
+
+## Conclusion
 
 :::question
 Can we put these concepts together in diagram form? Let's work on improving these schematics!
