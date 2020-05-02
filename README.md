@@ -1,18 +1,12 @@
 # R4DS [Advanced R](https://adv-r.hadley.nz/) Bookclub
 
-This repo contains 4 main folders:
+This repo contains 3 main folders:
 
-- Exercises: The official Advanced R exercises from https://advanced-r-solutions.rbind.io/, 
-rather than copy all the answers we'll use this space to answer the questions that have yet to be answered!
-These markdown documents follow the styling/conventions of the book to streamline if we wanted 
-to submit any PRs.
+- QandA: A bookdown of questions (and answers) on the chapters that come up during meetings (or between!). We're also using this to try to answer questions marked "started" in the solutions manual with the potential goal of submitting PRs with our own answers!
 
-- QandA: Questions about the chapters that come up during meetings (or between!).
-We can use this document to ask and answer questions within and outside of class
+- Presentations: each week a presenter will give a talk summarizing the chapter, and discussing applications using the beer dataset. We meet every week at Thursday, 8:00 PM Eastern on [Zoom](notredame.zoom.us/j/490502945). 
 
-- Presentations: each week a presenter will give a talk tying the chapter to the [Beer Production](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-03-31/readme.md) dataset. [Presentations are recorded](https://www.youtube.com/channel/UCCaChdLMTYMxyawR_Qf-kYA) (see chapter title links) for those who cannot attend.
-
-- Data: The dataset we will be using for presentations
+- Data: The dataset we will be using for presentations is on [Beer Production](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-03-31/readme.md) 
 
 # Meeting Schedule 
 ### Following the Chapters of [Advanced R](https://adv-r.hadley.nz/) 2nd Edition

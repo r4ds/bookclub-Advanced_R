@@ -6,7 +6,7 @@ library(kableExtra)
 library(lobstr)
 ```
 
-## 2.3 Copy-on-modify {-#copy-on-modify}
+## 2.3 Copy-on-modify {-}
 
 :::question
 copy-on-modify vs copy-in-place: is one more preferable in certain situations?
@@ -14,7 +14,7 @@ copy-on-modify vs copy-in-place: is one more preferable in certain situations?
 
 modify in place only happens when objects with a single binding get a special performance optimization and to environments.
 
-## 2.2.2 Exercises {-#exercises}
+## 2.2.2 Exercises {-}
 
 :::question
 Question 3 digs into the syntactically valid names created when using `read.csv()`, but what is the difference between quotation and backticks? 
@@ -70,7 +70,7 @@ According to `?Quotes` backticks are used for "non-standard variable names" but 
 
 The easiest way to think about this is that backticks refer to objects while quotation marks refer to strings. `dplyr::select()` accepts object references as well as string references, while base R subsetting is done with a string or integer position.
 
-## 2.3.2 Function calls {-#function-calls}
+## 2.3.2 Function calls {-}
 
 :::question
 Can we go over and break down figure in 2.3.2
@@ -100,7 +100,7 @@ The round brackets `(eh)` list the arguments, the curly brackets `{eh}` define t
 
 **R functions automatically return the result of the last expression** so when you call that object (the argument `eh`) it returns the value of that argument. This is called **implicit returns**
 
-## 2.3.3 Lists {-#lists_2}
+## 2.3.3 Lists {-}
 
 :::question
 
@@ -154,7 +154,7 @@ When would you prefer a deep copy of a list to a shallow copy? Is this something
 
 Automagical!
 
-## 2.3.5 Character vectors {-#character-vectors}
+## 2.3.5 Character vectors {-}
 
 
 :::question
@@ -163,7 +163,7 @@ Is there a way to clear the "global string pool"?
 
 According to [this post](https://community.rstudio.com/t/memory-usage-and-rs-global-string-pool/4762/3) it doesn't look like you can directly, but clearing all references to a string that's in the global string pool clears that string from the pool, eventually
 
-## 2.3.6.2 Exercise {-#exercise}
+## 2.3.6.2 Exercise {-}
 
 :::question
 When we look at `tracemem` when we modify `x` from an integer to numeric, x is assigned to three objects. The first is the integer, and the third numeric - so what's the intermediate type?
@@ -200,7 +200,7 @@ You can dig into the C code running this:
 pryr::show_c_source(.Internal("[<-"))
 ```
 
-## 2.4.1 Object size {-#object-size}
+## 2.4.1 Object size {-}
 
 :::question
 If I have two vectors, one `1:10` and another `c(1:10, 10)`, intuitively, I would expect the size of the second vector to be greater than the size of the first. However, it seems to be the other way round, why?
@@ -233,7 +233,7 @@ lobstr::obj_sizes(x4, x5)
 
 Now, the size of x4  is significantly lower than that of x5 .  This seems to indicate that ALTREP becomes super efficient as the vector size is increased.
 
-## 2.5.1 Modify-in-place {-#modify-in-place}
+## 2.5.1 Modify-in-place {-}
 
 :::question
 "When it comes to bindings, R can currently only count 0, 1, or many. That means that if an object has two bindings, and one goes away, the reference count does not go back to 1: one less than many is still many. In turn, this means that R will make copies when it sometimes doesn’t need to."

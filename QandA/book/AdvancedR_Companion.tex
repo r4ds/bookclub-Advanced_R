@@ -119,7 +119,7 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-05-01}
+\date{2020-05-02}
 
 \begin{document}
 \maketitle
@@ -128,10 +128,12 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
-\hypertarget{preface}{%
-\chapter{Preface}\label{preface}}
+\hypertarget{welcome}{%
+\chapter{Welcome}\label{welcome}}
 
 A companion to \href{https://adv-r.hadley.nz/rcpp.html\#acknowledgments}{Advanced R} and supplement to \href{https://advanced-r-solutions.rbind.io/names-and-values.html\#copy-on-modify}{Advanced R Solutions}
+
+Recordings for the accompanied presentation for each chapter can be seen \href{https://www.youtube.com/watch?v=pQ-xDAPEQaw\&list=PL3x6DOfs2NGi9lH7q-phZlPrl6HKXYDbn}{here}.
 
 \hypertarget{names-and-values}{%
 \chapter{Names and Values}\label{names-and-values}}
@@ -286,8 +288,8 @@ The round brackets \texttt{(eh)} list the arguments, the curly brackets \texttt{
 
 \textbf{R functions automatically return the result of the last expression} so when you call that object (the argument \texttt{eh}) it returns the value of that argument. This is called \textbf{implicit returns}
 
-\hypertarget{lists_2}{%
-\section*{2.3.3 Lists}\label{lists_2}}
+\hypertarget{lists}{%
+\section*{2.3.3 Lists}\label{lists}}
 \addcontentsline{toc}{section}{2.3.3 Lists}
 
 Checking the address for a list and its copy we see they share the same references:
@@ -311,7 +313,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0f533680"
+## [1] "0x7fbbd0c11bc0"
 \end{verbatim}
 
 \begin{Shaded}
@@ -321,7 +323,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0f533680"
+## [1] "0x7fbbd0c11bc0"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -333,7 +335,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0f634bc8"
+## [1] "0x7fbbd14ed3f0"
 \end{verbatim}
 
 \begin{Shaded}
@@ -343,8 +345,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fbf0f697878] <list> 
-## └─[2:0x7fbf0f533680] <dbl>
+## █ [1:0x7fbbd0518610] <list> 
+## └─[2:0x7fbbd0c11bc0] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -354,7 +356,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0e769ef8"
+## [1] "0x7fbbd04bdb28"
 \end{verbatim}
 
 \begin{Shaded}
@@ -391,7 +393,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fbf0e7ea9e8>"
+## [1] "<0x7fbbd6832168>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -401,7 +403,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fbf0e7ea9e8>
+## <0x7fbbd6832168>
 \end{verbatim}
 
 \begin{Shaded}
@@ -411,7 +413,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0e7ea9e8"
+## [1] "0x7fbbd6832168"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -460,7 +462,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0d8d30c8"
+## [1] "0x7fbbd7fdea08"
 \end{verbatim}
 
 \begin{Shaded}
@@ -470,7 +472,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fbf0d8d30c8>"
+## [1] "<0x7fbbd7fdea08>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -480,7 +482,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fbf0d8d30c8 -> 0x7fbf0d880348]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fbbd7fdea08 -> 0x7fbbd7f6e0c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -576,7 +578,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0e7ac628"
+## [1] "0x7fbbcc1201f8"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -589,7 +591,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0c3c5978"
+## [1] "0x7fbbd392e9b8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -612,7 +614,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0c3c5978"
+## [1] "0x7fbbd392e9b8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -622,7 +624,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0c3c5978"
+## [1] "0x7fbbd392e9b8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -645,7 +647,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0c3c5978"
+## [1] "0x7fbbd392e9b8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -655,7 +657,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0f5f3f98"
+## [1] "0x7fbbd1dc8ed8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -678,7 +680,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0c19e5a8"
+## [1] "0x7fbbd17d9288"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1159,8 +1161,8 @@ Why are dates calculated from January 1st, 1970?
 
 Unix counts time in seconds since its official ``birthday,'' -- called ``epoch'' in computing terms -- which is Jan.~1, 1970. \href{https://www.wired.com/2001/09/unix-tick-tocks-to-a-billion/}{This article} explains that the early Unix engineers picked that date arbitrarily, because they needed to set a uniform date for the start of time, and New Year's Day, 1970, seemed most convenient.
 
-\hypertarget{lists}{%
-\section*{3.5.1 Lists}\label{lists}}
+\hypertarget{lists-1}{%
+\section*{3.5.1 Lists}\label{lists-1}}
 \addcontentsline{toc}{section}{3.5.1 Lists}
 
 When should you be using \texttt{list()} instead of \texttt{c()}
@@ -1304,8 +1306,8 @@ Why is subsetting with factors ``not a good idea''
 
 Hadley's notes seem to say subsetting with factors uses the ``integer vector of levels'' - and if they all have the same level, it'll just return the first argument. Subsetting a factor vector leaves the factor levels behind unless you explicitly drop the unused levels
 
-\hypertarget{lists_4}{%
-\section*{4.2.2 lists}\label{lists_4}}
+\hypertarget{lists-2}{%
+\section*{4.2.2 lists}\label{lists-2}}
 \addcontentsline{toc}{section}{4.2.2 lists}
 
 We've been talking about \texttt{\$} as a shorthand for \texttt{{[}{[}}. Using the example list \texttt{x\ \textless{}-\ list(1:3,\ "a",\ 4:6)} can we use \texttt{x\$1} as shorthand for \texttt{x{[}{[}1{]}{]}}?
@@ -1325,8 +1327,8 @@ The ``shorthand'' refers to using the name of the vector to extract the vector. 
 
 As such, \texttt{\$} is a shorthand for \texttt{x{[}{[}"name\_of\_vector"{]}{]}} and not shorthand for \texttt{x{[}{[}index{]}{]}}
 
-\hypertarget{subset_2}{%
-\section*{\texorpdfstring{4.3.1 \texttt{{[}{[}}}{4.3.1 {[}{[}}}\label{subset_2}}
+\hypertarget{section}{%
+\section*{\texorpdfstring{4.3.1 \texttt{{[}{[}}}{4.3.1 {[}{[}}}\label{section}}
 \addcontentsline{toc}{section}{4.3.1 \texttt{{[}{[}}}
 
 The book states:
@@ -1410,8 +1412,8 @@ But in the case where we want to extract an element from a list \texttt{{[}} and
 
 Because using \texttt{{[}{[}} returns ``one element of this vector'' in both cases, it makes sense to default to \texttt{{[}{[}} instead of \texttt{{[}} since it will reliably return a single element.
 
-\hypertarget{exercise_435}{%
-\section*{4.3.5 Exercise}\label{exercise_435}}
+\hypertarget{exercise-1}{%
+\section*{4.3.5 Exercise}\label{exercise-1}}
 \addcontentsline{toc}{section}{4.3.5 Exercise}
 
 The question asks to describe the \texttt{upper.tri} function - let's dig into it!
@@ -1524,8 +1526,8 @@ Let's walk through examples of each
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{lists_missing}{%
-\subsection*{LIST}\label{lists_missing}}
+\hypertarget{list}{%
+\subsection*{LIST}\label{list}}
 \addcontentsline{toc}{subsection}{LIST}
 
 \begin{Shaded}
@@ -1779,7 +1781,7 @@ NULL
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Out of range"
+## [1] "In range"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1789,7 +1791,7 @@ NULL
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Out of range"
+## [1] "In range"
 \end{verbatim}
 
 \texttt{ifelse} explicitly returns its result, whereas \texttt{if} invisibly returns it!
@@ -1847,8 +1849,8 @@ Can the body of the loop change the set?
 
 Looks like you can't!
 
-\hypertarget{switch}{%
-\section*{5.2.3 switch statement}\label{switch}}
+\hypertarget{switch-statement}{%
+\section*{5.2.3 switch statement}\label{switch-statement}}
 \addcontentsline{toc}{section}{5.2.3 switch statement}
 
 ``Closely related to if is the \texttt{switch()} statement. It's a compact, special purpose equivalent''
@@ -1897,8 +1899,8 @@ The book warns against using \texttt{length(x)} and suggests using \texttt{seq\_
 
 We have yet to find a downside but should look into this further!
 
-\hypertarget{exercise5331}{%
-\section*{5.3.3.1 Exercises}\label{exercise5331}}
+\hypertarget{exercises-1}{%
+\section*{5.3.3.1 Exercises}\label{exercises-1}}
 \addcontentsline{toc}{section}{5.3.3.1 Exercises}
 
 \begin{Shaded}
@@ -1921,8 +1923,8 @@ I understand that this works because we can count down in a loop - so the first 
 
 This question is actually the bigger question, ``Can you assign something to index 0 in R?'' and it doesn't seem that you can.
 
-\hypertarget{assignment-valid}{%
-\subsection*{Assignment to a valid index}\label{assignment-valid}}
+\hypertarget{assignment-to-a-valid-index}{%
+\subsection*{Assignment to a valid index}\label{assignment-to-a-valid-index}}
 \addcontentsline{toc}{subsection}{Assignment to a valid index}
 
 \begin{Shaded}
@@ -1938,8 +1940,8 @@ This question is actually the bigger question, ``Can you assign something to ind
 ## [1] "something"
 \end{verbatim}
 
-\hypertarget{assignment-0}{%
-\subsection*{Assignment to {[}0{]}}\label{assignment-0}}
+\hypertarget{assignment-to-0}{%
+\subsection*{Assignment to {[}0{]}}\label{assignment-to-0}}
 \addcontentsline{toc}{subsection}{Assignment to {[}0{]}}
 
 \begin{Shaded}
@@ -1974,8 +1976,8 @@ It's interesting that it's syntactically correct to assign to \texttt{mylist{[}0
 
 R defaultly accesses the first layer using \texttt{{[}} and says there are no elements in the first layer of \texttt{mylist} and returns \texttt{NULL}. But when you do \texttt{mylist{[}{[}1{]}{]}} R says \texttt{Out\ of\ Bounds} because the first layer of \texttt{mylist} has been called and there is no layer at all. That's why R throws error in \texttt{{[}{[}} case.
 
-\hypertarget{impossible-double}{%
-\subsection*{\texorpdfstring{Impossible Index \texttt{{[}{[}}}{Impossible Index {[}{[}}}\label{impossible-double}}
+\hypertarget{impossible-index}{%
+\subsection*{\texorpdfstring{Impossible Index \texttt{{[}{[}}}{Impossible Index {[}{[}}}\label{impossible-index}}
 \addcontentsline{toc}{subsection}{Impossible Index \texttt{{[}{[}}}
 
 \begin{Shaded}
@@ -1992,8 +1994,8 @@ Error in mylist[[0]] : attempt to select less than one element in get1index <rea
 \texttt{{[}{[}} isolates one element whereas \texttt{{[}} can be used to get subsets of varying sizes.
 \texttt{{[}{[}} gets precisely one element, no more no less, or it fails. So \texttt{{[}{[}0{]}{]}\textless{}-} cannot work because index zero cannot hold a value.
 
-\hypertarget{impossible-double-assign}{%
-\subsection*{\texorpdfstring{Impossible Index \texttt{{[}{[}\textless{}-}}{Impossible Index {[}{[}\textless{}-}}\label{impossible-double-assign}}
+\hypertarget{impossible-index--}{%
+\subsection*{\texorpdfstring{Impossible Index \texttt{{[}{[}\textless{}-}}{Impossible Index {[}{[}\textless{}-}}\label{impossible-index--}}
 \addcontentsline{toc}{subsection}{Impossible Index \texttt{{[}{[}\textless{}-}}
 
 \begin{Shaded}
@@ -2007,8 +2009,8 @@ Error in mylist[[0]] : attempt to select less than one element in get1index <rea
 Error in mylist[[0]] <- "something" : attempt to select less than one element in integerOneIndex
 \end{verbatim}
 
-\hypertarget{undefined-5}{%
-\subsection*{Undefined name}\label{undefined-5}}
+\hypertarget{undefined-name}{%
+\subsection*{Undefined name}\label{undefined-name}}
 \addcontentsline{toc}{subsection}{Undefined name}
 
 Selection using an undefined - but possible name - gives NULL
@@ -2020,8 +2022,8 @@ Selection using an undefined - but possible name - gives NULL
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{oob-5}{%
-\subsection*{Out of Bounds}\label{oob-5}}
+\hypertarget{out-of-bounds}{%
+\subsection*{Out of Bounds}\label{out-of-bounds}}
 \addcontentsline{toc}{subsection}{Out of Bounds}
 
 Selection using a possible - but not currently allocated - index gives an out of bounds error
@@ -2037,8 +2039,8 @@ Selection using a possible - but not currently allocated - index gives an out of
 Error in mylist[[10]] : subscript out of bounds 
 \end{verbatim}
 
-\hypertarget{conclusion-5}{%
-\section*{Conclusion}\label{conclusion-5}}
+\hypertarget{conclusion-1}{%
+\section*{Conclusion}\label{conclusion-1}}
 \addcontentsline{toc}{section}{Conclusion}
 
 Can we put these concepts together in diagram form? Let's work on improving these schematics!
@@ -2133,6 +2135,557 @@ Another example: we can run
 \end{verbatim}
 
 we can see that ifelse places the numbers in \texttt{1:10} based on their index where our condition is to \texttt{TRUE} and inserts the string \texttt{"FALSE"} whenever the condition is \texttt{FALSE}
+
+\hypertarget{functions}{%
+\chapter{Functions}\label{functions}}
+
+\hypertarget{primitives}{%
+\section*{6.2.2 Primitives}\label{primitives}}
+\addcontentsline{toc}{section}{6.2.2 Primitives}
+
+So if you are familiar with C can you just write a function in C \emph{in} R? What does that process look like? I think this is a bigger question of digging into the relationship between C and R.
+
+I think we cover this in Chapter 25!
+
+\hypertarget{exercises-2}{%
+\section*{6.2.5.1 Exercises}\label{exercises-2}}
+\addcontentsline{toc}{section}{6.2.5.1 Exercises}
+
+\href{https://github.com/Tazinho/Advanced-R-Solutions/blob/5043d9b06c7469a010c568ecb85e12bedca75207/2-06-Functions.Rmd\#L9}{This question is flagged as ``started'' let's try to complete it!}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{{Q}}: Given a name, like \texttt{"mean"}, \texttt{match.fun()} lets you find a function. Given a function, can you find its name? Why doesn't that make sense in R?
+
+  \textbf{{A}}: A name can only point to a single object, but an object can be pointed to by 0, 1, or many names. What are names of the functions in the following block?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{sd}\NormalTok{(x) }\OperatorTok{/}\StringTok{ }\KeywordTok{mean}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function(x) sd(x) / mean(x)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  f1 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) (x }\OperatorTok{-}\StringTok{ }\KeywordTok{min}\NormalTok{(x)) }\OperatorTok{/}\StringTok{ }\NormalTok{(}\KeywordTok{max}\NormalTok{(x) }\OperatorTok{-}\StringTok{ }\KeywordTok{min}\NormalTok{(x))}
+\NormalTok{  f2 <-}\StringTok{ }\NormalTok{f1}
+\NormalTok{  f3 <-}\StringTok{ }\NormalTok{f1}
+\end{Highlighting}
+\end{Shaded}
+\end{enumerate}
+
+XXX
+
+\hypertarget{lexical-scoping}{%
+\section*{6.4 Lexical scoping}\label{lexical-scoping}}
+\addcontentsline{toc}{section}{6.4 Lexical scoping}
+
+``The scoping rules use a parse-time, rather than a run-time structure''? What is ``parse-time'' and ``run-time''? How do they differ?
+
+The function is run at parse-time, meaning it is only run when it is called.
+
+\hypertarget{a-fresh-start}{%
+\section*{6.4.3 A fresh start}\label{a-fresh-start}}
+\addcontentsline{toc}{section}{6.4.3 A fresh start}
+
+How would we change this code so that the second call of \texttt{g11()} is 2?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g11 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+  \ControlFlowTok{if}\NormalTok{ (}\OperatorTok{!}\KeywordTok{exists}\NormalTok{(}\StringTok{"a"}\NormalTok{)) \{}
+\NormalTok{    a <-}\StringTok{ }\DecValTok{1}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{    a <-}\StringTok{ }\NormalTok{a }\OperatorTok{+}\StringTok{ }\DecValTok{1}
+\NormalTok{  \}}
+\NormalTok{  a}
+\NormalTok{\}}
+
+\KeywordTok{g11}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{g11}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+XXX
+
+\hypertarget{lazy-evaluation}{%
+\section*{6.5 Lazy evaluation}\label{lazy-evaluation}}
+\addcontentsline{toc}{section}{6.5 Lazy evaluation}
+
+``This allows you to do things like include potentially expensive computations in function arguments that will only be evaluated if needed''
+
+Does anyone have an example of this?
+
+XXX
+
+\hypertarget{promises}{%
+\section*{6.5.1 Promises}\label{promises}}
+\addcontentsline{toc}{section}{6.5.1 Promises}
+
+Can we discuss the order that this happening in? Is it that \texttt{Calculating...} is printed, then \texttt{x*2} then \texttt{x*2} again? I am still reading this as: \texttt{h03(double(20),\ double(20))} which is an incorrect mental model because the message is only printed once\ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{double <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{ }
+  \KeywordTok{message}\NormalTok{(}\StringTok{"Calculating..."}\NormalTok{)}
+\NormalTok{  x }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+\NormalTok{\}}
+
+\NormalTok{h03 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \KeywordTok{c}\NormalTok{(x, x)}
+\NormalTok{\}}
+
+\KeywordTok{h03}\NormalTok{(}\KeywordTok{double}\NormalTok{(}\DecValTok{20}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Calculating...
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 40 40
+\end{verbatim}
+
+XXX
+
+\hypertarget{default-arguments}{%
+\section*{6.5.2 Default arguments}\label{default-arguments}}
+\addcontentsline{toc}{section}{6.5.2 Default arguments}
+
+I don't quite understand why \texttt{x\ =\ ls()} is different from \texttt{ls()} here; aren't we still assigning \texttt{x\ =\ ls()} but without specifying x?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h05 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{ls}\NormalTok{()) \{}
+\NormalTok{  a <-}\StringTok{ }\DecValTok{1}
+\NormalTok{  x}
+\NormalTok{\}}
+
+\CommentTok{# this makes sense to me}
+\KeywordTok{h05}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "a" "x"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# how is this different from above?}
+\KeywordTok{h05}\NormalTok{(}\KeywordTok{ls}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "answer"                "as_tb"                 "custom_attr"          
+##  [4] "df"                    "df_coltypes"           "df_non_syntactic_name"
+##  [7] "df_x"                  "double"                "example2223"          
+## [10] "f1"                    "f2"                    "f3"                   
+## [13] "g11"                   "h03"                   "h05"                  
+## [16] "i"                     "l1"                    "l2"                   
+## [19] "means"                 "medians"               "my_factor"            
+## [22] "my_matrix"             "my_set"                "my_vector"            
+## [25] "mylist"                "new_address"           "new_y_address"        
+## [28] "no"                    "no_final"              "no_idx"               
+## [31] "old_address"           "out"                   "out_list"             
+## [34] "out_vector"            "subsetting_table"      "test"                 
+## [37] "true_one"              "true_two"              "v"                    
+## [40] "v_address"             "var"                   "x"                    
+## [43] "x1"                    "x2"                    "x3"                   
+## [46] "x4"                    "x5"                    "y"                    
+## [49] "y_address"             "yes"                   "yes_final"            
+## [52] "yes_idx"
+\end{verbatim}
+
+XXX
+
+\hypertarget{missing-arguments}{%
+\section*{6.5.3 Missing arguments}\label{missing-arguments}}
+\addcontentsline{toc}{section}{6.5.3 Missing arguments}
+
+Comparing the default sample function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sample <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{ (x, size, }\DataTypeTok{replace =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{prob =} \OtherTok{NULL}\NormalTok{) }
+\NormalTok{\{}
+    \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{length}\NormalTok{(x) }\OperatorTok{==}\StringTok{ }\NormalTok{1L }\OperatorTok{&&}\StringTok{ }\KeywordTok{is.numeric}\NormalTok{(x) }\OperatorTok{&&}\StringTok{ }\KeywordTok{is.finite}\NormalTok{(x) }\OperatorTok{&&}\StringTok{ }\NormalTok{x }\OperatorTok{>=}\StringTok{ }
+\StringTok{        }\DecValTok{1}\NormalTok{) \{}
+        \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{missing}\NormalTok{(size))}
+          \CommentTok{# if you don't supply the sample size}
+          \CommentTok{# you will just get random samples}
+          \CommentTok{# the length of the supplied vector}
+\NormalTok{            size <-}\StringTok{ }\NormalTok{x}
+        \KeywordTok{sample.int}\NormalTok{(x, size, replace, prob)}
+\NormalTok{    \}}
+    \ControlFlowTok{else}\NormalTok{ \{}
+        \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{missing}\NormalTok{(size)) }
+\NormalTok{            size <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
+\NormalTok{        x[}\KeywordTok{sample.int}\NormalTok{(}\KeywordTok{length}\NormalTok{(x), size, replace, prob)]}
+\NormalTok{    \}}
+\NormalTok{\}}
+
+\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  7 10  9  5  4  8  3  6  2
+\end{verbatim}
+
+To using Hadley's recommended \texttt{NULL} version:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my_sample_null <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, }\DataTypeTok{size =} \OtherTok{NULL}\NormalTok{, }\DataTypeTok{replace =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{prob =} \OtherTok{NULL}\NormalTok{) \{}
+\NormalTok{  size <-}\StringTok{ }\NormalTok{size }\OperatorTok{%||%}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
+\NormalTok{  x[}\KeywordTok{sample.int}\NormalTok{(}\KeywordTok{length}\NormalTok{(x), size, }\DataTypeTok{replace =}\NormalTok{ replace, }\DataTypeTok{prob =}\NormalTok{ prob)]}
+\NormalTok{\}}
+
+\KeywordTok{my_sample_null}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  3 10  1  9  7  6  5  2  8  4
+\end{verbatim}
+
+The second function is obviously more concise, but why is Hadley recommending we we steer clear of \texttt{missing()}? Is this just for code read-ability or is there something inherent in the behavior of \texttt{missing} we need to consider that we don't when using \texttt{NULL}?
+
+XXX
+
+\hypertarget{exercise-2}{%
+\section*{6.5.4.3 Exercise}\label{exercise-2}}
+\addcontentsline{toc}{section}{6.5.4.3 Exercise}
+
+I understand this problem is showing us an example of name masking (the function doesn't need to use the \texttt{y\ =\ 0} argument because it gets \texttt{y} from within the definition of x, but I'm fuzzy on what exactly the \texttt{;} does. What does the syntax \texttt{\{y\ \textless{}-\ 1;\ 2\}} mean? Could it be read as "Set \texttt{y\ \textless{}-\ 1} and \texttt{x\ \textless{}-\ 2}?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y <-}\StringTok{ }\DecValTok{10}
+\NormalTok{f1 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ \{y <-}\StringTok{ }\DecValTok{1}\NormalTok{; }\DecValTok{2}\NormalTok{\}, }\DataTypeTok{y =} \DecValTok{0}\NormalTok{) \{}
+  \KeywordTok{c}\NormalTok{(x, y)}
+\NormalTok{\}}
+\KeywordTok{f1}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2 1
+\end{verbatim}
+
+\hypertarget{exercise-3}{%
+\section*{6.5.4.4 Exercise}\label{exercise-3}}
+\addcontentsline{toc}{section}{6.5.4.4 Exercise}
+
+I know this isn't exactly needed to answer the question, but how do we access a function that has methods? For instance - here I want to dig into the \texttt{hist} function using \texttt{hist}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hist}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function (x, ...) 
+## UseMethod("hist")
+## <bytecode: 0x7fbbcb12dfc8>
+## <environment: namespace:graphics>
+\end{verbatim}
+
+does not give me the actual contents of the actual function\ldots{}.
+
+XXX
+
+\hypertarget{dot-dot-dot}{%
+\section*{6.6 dot dot dot}\label{dot-dot-dot}}
+\addcontentsline{toc}{section}{6.6 dot dot dot}
+
+``(See also \texttt{rlang::list2()} to support splicing and to silently ignore trailing commas\ldots{}'' Can we come up with a simple use case for \texttt{list2} here?
+
+XXX
+
+``\texttt{lapply()} uses \texttt{...} to pass \texttt{na.rm} on to \texttt{mean()}'' Um, how?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, }\OtherTok{NA}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\DecValTok{6}\NormalTok{))}
+\KeywordTok{str}\NormalTok{(}\KeywordTok{lapply}\NormalTok{(x, mean, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## List of 2
+##  $ : num 2
+##  $ : num 5
+\end{verbatim}
+
+XXX
+
+\hypertarget{exercise-4}{%
+\section*{6.6.1.2 Exercise}\label{exercise-4}}
+\addcontentsline{toc}{section}{6.6.1.2 Exercise}
+
+I tried running \texttt{browser(plot(1:10,\ col\ =\ "red"))} to peek under the hood but only got \texttt{Called\ from:\ top\ level} in the console. What am I missing?
+
+XXX
+
+\hypertarget{exit-handlers}{%
+\section*{6.7.4 Exit handlers}\label{exit-handlers}}
+\addcontentsline{toc}{section}{6.7.4 Exit handlers}
+
+``Always set \texttt{add\ =\ TRUE} when using \texttt{on.exit()} If you don't, each call to \texttt{on.exit()} will overwrite the previous exit handler.'' Can we come up with an example for not using \texttt{add\ =\ TRUE} and how it results in unwanted behavior?
+
+\texttt{add\ =\ TRUE} is important when you have more than one \texttt{on.exit} function!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{j08 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+  \KeywordTok{on.exit}\NormalTok{(}\KeywordTok{message}\NormalTok{(}\StringTok{"a"}\NormalTok{))}
+  \KeywordTok{on.exit}\NormalTok{(}\KeywordTok{message}\NormalTok{(}\StringTok{"b"}\NormalTok{), }\DataTypeTok{add=}\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{\}}
+
+\KeywordTok{j08}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## a
+\end{verbatim}
+
+\begin{verbatim}
+## b
+\end{verbatim}
+
+Can we go over this code? How does it not change your working directory after you run the function
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cleanup <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(dir, code) \{}
+\NormalTok{  old_dir <-}\StringTok{ }\KeywordTok{setwd}\NormalTok{(dir)}
+  \KeywordTok{on.exit}\NormalTok{(}\KeywordTok{setwd}\NormalTok{(old_dir), }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{)}
+  
+\NormalTok{  old_opt <-}\StringTok{ }\KeywordTok{options}\NormalTok{(}\DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{)}
+  \CommentTok{# what's happening here?}
+  \KeywordTok{on.exit}\NormalTok{(}\KeywordTok{options}\NormalTok{(old_opt), }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{\}}
+
+\CommentTok{# what is this output}
+\KeywordTok{cleanup}\NormalTok{(}\StringTok{"~"}\NormalTok{)}
+\CommentTok{# how is it different from this?}
+\KeywordTok{getwd}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "/Users/mayagans/Documents/bookclub-Advanced_R/QandA"
+\end{verbatim}
+
+XXX
+
+\hypertarget{exercise-5}{%
+\section*{6.7.5.4 Exercise}\label{exercise-5}}
+\addcontentsline{toc}{section}{6.7.5.4 Exercise}
+
+\href{https://github.com/Tazinho/Advanced-R-Solutions/blob/5043d9b06c7469a010c568ecb85e12bedca75207/2-06-Functions.Rmd\#L350}{This question is flagged as ``started'' let's try to complete it!} Hadley comments in the repo: ``I think I'm more interested in supplying a path vs.~a logical value here''.
+
+\textbf{{Q}}: How does the \texttt{chdir} parameter of \texttt{source()} compare to \texttt{in\_dir()}? Why might you prefer one approach to the other?
+The \texttt{in\_dir()} approach was given in the book as
+
+\begin{verbatim}
+```r
+in_dir <- function(dir, code) {
+  old <- setwd(dir)
+  on.exit(setwd(old))
+  
+  force(code)
+}
+```
+\end{verbatim}
+
+\textbf{{A}}: \texttt{in\_dir()} takes a path to a working directory as an argument. First the working directory is changed accordingly. \texttt{on.exit()} ensures that the modification to the working directory are reset to the initial value when the function exits.
+
+In \texttt{source()} the \texttt{chdir} argument specifies if the working directory should be changed during the evaluation of the \texttt{file} argument (which in this case has to be a path name).
+
+XXX
+
+\hypertarget{exercise-6}{%
+\section*{6.7.5.5 Exercise}\label{exercise-6}}
+\addcontentsline{toc}{section}{6.7.5.5 Exercise}
+
+Can we go over the source code of \texttt{capture.output} and \texttt{capture.output2}?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{body}\NormalTok{(capture.output)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## {
+##     args <- substitute(list(...))[-1L]
+##     type <- match.arg(type)
+##     rval <- NULL
+##     closeit <- TRUE
+##     if (is.null(file)) 
+##         file <- textConnection("rval", "w", local = TRUE)
+##     else if (is.character(file)) 
+##         file <- file(file, if (append) 
+##             "a"
+##         else "w")
+##     else if (inherits(file, "connection")) {
+##         if (!isOpen(file)) 
+##             open(file, if (append) 
+##                 "a"
+##             else "w")
+##         else closeit <- FALSE
+##     }
+##     else stop("'file' must be NULL, a character string or a connection")
+##     sink(file, type = type, split = split)
+##     on.exit({
+##         sink(type = type, split = split)
+##         if (closeit) close(file)
+##     })
+##     pf <- parent.frame()
+##     evalVis <- function(expr) withVisible(eval(expr, pf))
+##     for (i in seq_along(args)) {
+##         expr <- args[[i]]
+##         tmp <- switch(mode(expr), expression = lapply(expr, evalVis), 
+##             call = , name = list(evalVis(expr)), stop("bad argument"))
+##         for (item in tmp) if (item$visible) 
+##             print(item$value)
+##     }
+##     on.exit()
+##     sink(type = type, split = split)
+##     if (closeit) 
+##         close(file)
+##     if (is.null(rval)) 
+##         invisible(NULL)
+##     else rval
+## }
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{capture.output2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(code) \{}
+\NormalTok{  temp <-}\StringTok{ }\KeywordTok{tempfile}\NormalTok{()}
+  \KeywordTok{on.exit}\NormalTok{(}\KeywordTok{file.remove}\NormalTok{(temp), }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{)}
+
+  \KeywordTok{sink}\NormalTok{(temp)}
+  \KeywordTok{on.exit}\NormalTok{(}\KeywordTok{sink}\NormalTok{(), }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{)}
+
+  \KeywordTok{force}\NormalTok{(code)}
+  \KeywordTok{readLines}\NormalTok{(temp)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{identical}\NormalTok{(}
+  \KeywordTok{capture.output}\NormalTok{(}\KeywordTok{cat}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\StringTok{"c"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)),}
+  \KeywordTok{capture.output2}\NormalTok{(}\KeywordTok{cat}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\StringTok{"c"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+The second function is more concise but what is it missing from the first? I'd like to go over the first one line by line.
+
+XXX
+
+\hypertarget{replacement-functions}{%
+\section*{6.8.4 Replacement functions}\label{replacement-functions}}
+\addcontentsline{toc}{section}{6.8.4 Replacement functions}
+
+Can we put into words the translation for
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DataTypeTok{a =} \DecValTok{1}\NormalTok{, }\DataTypeTok{b =} \DecValTok{2}\NormalTok{, }\DataTypeTok{c =} \DecValTok{3}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "a" "b" "c"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{names}\NormalTok{(x)[}\DecValTok{2}\NormalTok{] <-}\StringTok{ "two"}
+\KeywordTok{names}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "a"   "two" "c"
+\end{verbatim}
+
+Being equal to
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\StringTok{`}\DataTypeTok{*tmp*}\StringTok{`}\NormalTok{ <-}\StringTok{ }\NormalTok{x}
+\NormalTok{x <-}\StringTok{ `}\DataTypeTok{names<-}\StringTok{`}\NormalTok{(}\StringTok{`}\DataTypeTok{*tmp*}\StringTok{`}\NormalTok{, }\StringTok{`}\DataTypeTok{[<-}\StringTok{`}\NormalTok{(}\KeywordTok{names}\NormalTok{(}\StringTok{`}\DataTypeTok{*tmp*}\StringTok{`}\NormalTok{), }\DecValTok{2}\NormalTok{, }\StringTok{"two"}\NormalTok{))}
+\KeywordTok{rm}\NormalTok{(}\StringTok{`}\DataTypeTok{*tmp*}\StringTok{`}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+XXX
+
+\hypertarget{exercise-7}{%
+\section*{6.8.6.3 Exercise}\label{exercise-7}}
+\addcontentsline{toc}{section}{6.8.6.3 Exercise}
+
+\href{https://github.com/Tazinho/Advanced-R-Solutions/blob/5043d9b06c7469a010c568ecb85e12bedca75207/2-06-Functions.Rmd\#L433}{This question is flagged as ``started'' let's try to complete it!}
+
+\textbf{{Q}}: Explain why the following code fails:
+
+\begin{verbatim}
+```r
+modify(get("x"), 1) <- 10
+#> Error: target of assignment expands to non-language object
+```
+\end{verbatim}
+
+\textbf{{A}}: First, let's define \texttt{x} and recall the definition of \texttt{modify()} from the textbook:
+
+\begin{verbatim}
+```r
+x <- 1:3
+
+`modify<-` <- function(x, position, value) {
+  x[position] <- value
+  x
+}
+```
+\end{verbatim}
+
+XXX
 
 \bibliography{book.bib,packages.bib}
 
