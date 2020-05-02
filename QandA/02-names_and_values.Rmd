@@ -100,7 +100,7 @@ The round brackets `(eh)` list the arguments, the curly brackets `{eh}` define t
 
 **R functions automatically return the result of the last expression** so when you call that object (the argument `eh`) it returns the value of that argument. This is called **implicit returns**
 
-## 2.3.3 Lists {-#lists}
+## 2.3.3 Lists {-#lists_2}
 
 :::question
 
