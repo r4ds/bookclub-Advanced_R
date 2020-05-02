@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="subsetting.html"/>
-<link rel="next" href="references.html"/>
+<link rel="next" href="functions.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -136,7 +136,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#copy-on-modify"><i class="fa fa-check"></i>2.3 Copy-on-modify</a></li>
 <li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>2.2.2 Exercises</a></li>
 <li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#function-calls"><i class="fa fa-check"></i>2.3.2 Function calls</a></li>
-<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#lists_2"><i class="fa fa-check"></i>2.3.3 Lists</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#lists"><i class="fa fa-check"></i>2.3.3 Lists</a></li>
 <li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#character-vectors"><i class="fa fa-check"></i>2.3.5 Character vectors</a></li>
 <li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercise"><i class="fa fa-check"></i>2.3.6.2 Exercise</a></li>
 <li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#object-size"><i class="fa fa-check"></i>2.4.1 Object size</a></li>
@@ -151,7 +151,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#dimensions"><i class="fa fa-check"></i>3.3.3 Dimensions</a></li>
 <li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#s3-atomic-vectors"><i class="fa fa-check"></i>3.4 S3 atomic vectors</a></li>
 <li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#dates"><i class="fa fa-check"></i>3.4.2 Dates</a></li>
-<li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#lists"><i class="fa fa-check"></i>3.5.1 Lists</a></li>
+<li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#lists-1"><i class="fa fa-check"></i>3.5.1 Lists</a></li>
 <li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#data-frames-and-tibbles"><i class="fa fa-check"></i>3.6.8 Data frames and tibbles</a></li>
 <li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#conclusion"><i class="fa fa-check"></i>Conclusion</a><ul>
 <li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#vectorized"><i class="fa fa-check"></i>VECTORIZED:</a></li>
@@ -161,12 +161,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4" data-path="subsetting.html"><a href="subsetting.html"><i class="fa fa-check"></i><b>4</b> Subsetting</a><ul>
 <li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#introduction"><i class="fa fa-check"></i>4.1 Introduction</a></li>
 <li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#selecting-multiple-elements"><i class="fa fa-check"></i>4.2.1 Selecting multiple elements</a></li>
-<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#lists_4"><i class="fa fa-check"></i>4.2.2 lists</a></li>
-<li><a href="subsetting.html#subset_2">4.3.1 <code>[[</code></a></li>
-<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#exercise_435"><i class="fa fa-check"></i>4.3.5 Exercise</a></li>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#lists-2"><i class="fa fa-check"></i>4.2.2 lists</a></li>
+<li><a href="subsetting.html#section">4.3.1 <code>[[</code></a></li>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#exercise-1"><i class="fa fa-check"></i>4.3.5 Exercise</a></li>
 <li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#missing-and-oob"><i class="fa fa-check"></i>4.3.3 Missing and OOB</a><ul>
 <li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#logical-atomic"><i class="fa fa-check"></i>LOGICAL ATOMIC</a></li>
-<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#lists_missing"><i class="fa fa-check"></i>LIST</a></li>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#list"><i class="fa fa-check"></i>LIST</a></li>
 <li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#null"><i class="fa fa-check"></i>NULL</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#logical-subsetting"><i class="fa fa-check"></i>4.5.8 Logical subsetting</a></li>
@@ -175,20 +175,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5" data-path="control-flow.html"><a href="control-flow.html"><i class="fa fa-check"></i><b>5</b> Control Flow</a><ul>
 <li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#vectorised-if"><i class="fa fa-check"></i>5.2.2 Vectorised if</a></li>
 <li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#loops"><i class="fa fa-check"></i>5.3 Loops</a></li>
-<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#switch"><i class="fa fa-check"></i>5.2.3 switch statement</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#switch-statement"><i class="fa fa-check"></i>5.2.3 switch statement</a></li>
 <li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#common-pitfalls"><i class="fa fa-check"></i>5.3.1 common pitfalls</a></li>
-<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#exercise5331"><i class="fa fa-check"></i>5.3.3.1 Exercises</a><ul>
-<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#assignment-valid"><i class="fa fa-check"></i>Assignment to a valid index</a></li>
-<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#assignment-0"><i class="fa fa-check"></i>Assignment to [0]</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#exercises-1"><i class="fa fa-check"></i>5.3.3.1 Exercises</a><ul>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#assignment-to-a-valid-index"><i class="fa fa-check"></i>Assignment to a valid index</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#assignment-to-0"><i class="fa fa-check"></i>Assignment to [0]</a></li>
 <li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#empty-index"><i class="fa fa-check"></i>Empty index</a></li>
-<li><a href="control-flow.html#impossible-double">Impossible Index <code>[[</code></a></li>
-<li><a href="control-flow.html#impossible-double-assign">Impossible Index <code>[[&lt;-</code></a></li>
-<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#undefined-5"><i class="fa fa-check"></i>Undefined name</a></li>
-<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#oob-5"><i class="fa fa-check"></i>Out of Bounds</a></li>
+<li><a href="control-flow.html#impossible-index">Impossible Index <code>[[</code></a></li>
+<li><a href="control-flow.html#impossible-index--">Impossible Index <code>[[&lt;-</code></a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#undefined-name"><i class="fa fa-check"></i>Undefined name</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#out-of-bounds"><i class="fa fa-check"></i>Out of Bounds</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#conclusion-5"><i class="fa fa-check"></i>Conclusion</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#conclusion-1"><i class="fa fa-check"></i>Conclusion</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="6" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>6</b> Functions</a><ul>
+<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#primitives"><i class="fa fa-check"></i>6.2.2 Primitives</a></li>
+<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercises-2"><i class="fa fa-check"></i>6.2.5.1 Exercises</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -257,7 +260,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [1]  1 20 99 NA NA NA NA NA 20</code></pre>
 <p>Looks like you can’t!</p>
 </div>
-<div id="switch" class="section level2 unnumbered">
+<div id="switch-statement" class="section level2 unnumbered">
 <h2>5.2.3 switch statement</h2>
 <div class="question">
 <p>“Closely related to if is the <code>switch()</code> statement. It’s a compact, special purpose equivalent”</p>
@@ -296,7 +299,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We have yet to find a downside but should look into this further!</p>
 </div>
 </div>
-<div id="exercise5331" class="section level2 unnumbered">
+<div id="exercises-1" class="section level2 unnumbered">
 <h2>5.3.3.1 Exercises</h2>
 <div class="question">
 <div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb192-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">numeric</span>()</a>
@@ -310,7 +313,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>I understand that this works because we can count down in a loop - so the first iteration <code>x[1] == NA</code>, and the second <code>x[2] == numeric(0)</code> but where does this value go? Is it just evaluated but not stored since R counts from 1?</p>
 </div>
 <p>This question is actually the bigger question, “Can you assign something to index 0 in R?” and it doesn’t seem that you can.</p>
-<div id="assignment-valid" class="section level3 unnumbered">
+<div id="assignment-to-a-valid-index" class="section level3 unnumbered">
 <h3>Assignment to a valid index</h3>
 <div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb194-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
 <a class="sourceLine" id="cb194-2" data-line-number="2">mylist[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;something&quot;</span>)</a>
@@ -318,7 +321,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [[1]]
 ## [1] &quot;something&quot;</code></pre>
 </div>
-<div id="assignment-0" class="section level3 unnumbered">
+<div id="assignment-to-0" class="section level3 unnumbered">
 <h3>Assignment to [0]</h3>
 <div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb196-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
 <a class="sourceLine" id="cb196-2" data-line-number="2">mylist[<span class="dv">0</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;something&quot;</span>)</a>
@@ -334,7 +337,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## NULL</code></pre>
 <p>R defaultly accesses the first layer using <code>[</code> and says there are no elements in the first layer of <code>mylist</code> and returns <code>NULL</code>. But when you do <code>mylist[[1]]</code> R says <code>Out of Bounds</code> because the first layer of <code>mylist</code> has been called and there is no layer at all. That’s why R throws error in <code>[[</code> case.</p>
 </div>
-<div id="impossible-double" class="section level3 unnumbered">
+<div id="impossible-index" class="section level3 unnumbered">
 <h3>Impossible Index <code>[[</code></h3>
 <div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb200-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
 <a class="sourceLine" id="cb200-2" data-line-number="2">mylist[[<span class="dv">0</span>]]</a></code></pre></div>
@@ -342,19 +345,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><code>[[</code> isolates one element whereas <code>[</code> can be used to get subsets of varying sizes.
 <code>[[</code> gets precisely one element, no more no less, or it fails. So <code>[[0]]&lt;-</code> cannot work because index zero cannot hold a value.</p>
 </div>
-<div id="impossible-double-assign" class="section level3 unnumbered">
+<div id="impossible-index--" class="section level3 unnumbered">
 <h3>Impossible Index <code>[[&lt;-</code></h3>
 <div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb202-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
 <a class="sourceLine" id="cb202-2" data-line-number="2">mylist[[<span class="dv">0</span>]] &lt;-<span class="st"> &quot;something&quot;</span></a></code></pre></div>
 <pre><code>Error in mylist[[0]] &lt;- &quot;something&quot; : attempt to select less than one element in integerOneIndex</code></pre>
 </div>
-<div id="undefined-5" class="section level3 unnumbered">
+<div id="undefined-name" class="section level3 unnumbered">
 <h3>Undefined name</h3>
 <p>Selection using an undefined - but possible name - gives NULL</p>
 <div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb204-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
 <a class="sourceLine" id="cb204-2" data-line-number="2">mylist[[<span class="st">&quot;undefined_name&quot;</span>]]</a></code></pre></div>
 </div>
-<div id="oob-5" class="section level3 unnumbered">
+<div id="out-of-bounds" class="section level3 unnumbered">
 <h3>Out of Bounds</h3>
 <p>Selection using a possible - but not currently allocated - index gives an out of bounds error</p>
 <div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb205-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
@@ -362,7 +365,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>Error in mylist[[10]] : subscript out of bounds </code></pre>
 </div>
 </div>
-<div id="conclusion-5" class="section level2 unnumbered">
+<div id="conclusion-1" class="section level2 unnumbered">
 <h2>Conclusion</h2>
 <div class="question">
 <p>Can we put these concepts together in diagram form? Let’s work on improving these schematics!</p>
@@ -405,7 +408,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="subsetting.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="functions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

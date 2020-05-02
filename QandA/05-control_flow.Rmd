@@ -6,7 +6,7 @@ library(kableExtra)
 library(lobstr)
 ```
 
-## 5.2.2 Vectorised if {-#vectorised-if}
+## 5.2.2 Vectorised if {-}
 
 :::question
 Why does `if` `else` print `"Out of range"` once but `ifelse` prints it twice?
@@ -55,7 +55,7 @@ Honestly, `ifelse()` is weird. Try this too:
 ifelse(c(TRUE, FALSE, TRUE), 1:10, 3)
 ```
 
-## 5.3 Loops  {-#loops}
+## 5.3 Loops  {-}
 
 :::question
 Can the body of the loop change the set?
@@ -74,7 +74,7 @@ for (i in my_set){
 ```
 Looks like you can't!
 
-## 5.2.3 switch statement {-#switch}
+## 5.2.3 switch statement {-}
 
 :::question
 "Closely related to if is the `switch()` statement. It’s a compact, special purpose equivalent"
@@ -95,7 +95,7 @@ datasetInput <- reactive({
 ```
 
 
-## 5.3.1 common pitfalls {-#common-pitfalls}
+## 5.3.1 common pitfalls {-}
 
 :::question
 What does the book mean by leveraging `vector` for preallocating the loop output? How is this different from creating an empty list to instantiate the loop? 
@@ -125,7 +125,7 @@ The book warns against using `length(x)` and suggests using `seq_along` instead.
 We have yet to find a downside but should look into this further!
 :::
 
-## 5.3.3.1 Exercises {-#exercise5331}
+## 5.3.3.1 Exercises {-}
 
 :::question
 ```{r}
@@ -143,7 +143,7 @@ I understand that this works because we can count down in a loop - so the first 
 This question is actually the bigger question, "Can you assign something to index 0 in R?" and it doesn't seem that you can.
 
 
-### Assignment to a valid index {-#assignment-valid}
+### Assignment to a valid index {-}
 
 ```{r}
 mylist = list()
@@ -151,7 +151,7 @@ mylist[1] <- c("something")
 mylist[1]
 ```
 
-### Assignment to [0] {-#assignment-0}
+### Assignment to [0] {-}
 
 ```{r}
 mylist = list()
@@ -161,7 +161,7 @@ mylist[0]
 
 It's interesting that it's syntactically correct to assign to `mylist[0]`  but it does nothing!
 
-### Empty index {-#empty-index}
+### Empty index {-}
 
 ```{r}
 mylist = list()
@@ -170,7 +170,7 @@ mylist[1]
 
 R defaultly accesses the first layer using `[` and says there are no elements in the first layer of `mylist` and returns `NULL`. But when you do `mylist[[1]]` R says `Out of Bounds` because the first layer of `mylist` has been called and there is no layer at all. That's why R throws error in `[[` case.
 
-### Impossible Index `[[` {-#impossible-double}
+### Impossible Index `[[` {-}
 
 ```{r, eval=FALSE}
 mylist = list()
@@ -184,7 +184,7 @@ Error in mylist[[0]] : attempt to select less than one element in get1index <rea
 `[[` isolates one element whereas `[` can be used to get subsets of varying sizes.
 `[[` gets precisely one element, no more no less, or it fails. So `[[0]]<-` cannot work because index zero cannot hold a value. 
 
-### Impossible Index `[[<-`  {-#impossible-double-assign}
+### Impossible Index `[[<-`  {-}
 
 ```{r, eval=FALSE}
 mylist = list()
@@ -195,7 +195,7 @@ mylist[[0]] <- "something"
 Error in mylist[[0]] <- "something" : attempt to select less than one element in integerOneIndex
 ```
 
-### Undefined name {-#undefined-5}
+### Undefined name {-}
 
 Selection using an undefined - but possible name - gives NULL
 
@@ -204,7 +204,7 @@ mylist = list()
 mylist[["undefined_name"]]
 ```
 
-### Out of Bounds {-#oob-5}
+### Out of Bounds {-}
 
 Selection using a possible - but not currently allocated - index gives an out of bounds error
 
@@ -217,7 +217,7 @@ mylist[[10]]
 Error in mylist[[10]] : subscript out of bounds 
 ```
 
-## Conclusion {-#conclusion-5}
+## Conclusion {-}
 
 :::question
 Can we put these concepts together in diagram form? Let's work on improving these schematics!

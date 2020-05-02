@@ -286,8 +286,8 @@ The round brackets \texttt{(eh)} list the arguments, the curly brackets \texttt{
 
 \textbf{R functions automatically return the result of the last expression} so when you call that object (the argument \texttt{eh}) it returns the value of that argument. This is called \textbf{implicit returns}
 
-\hypertarget{lists_2}{%
-\section*{2.3.3 Lists}\label{lists_2}}
+\hypertarget{lists}{%
+\section*{2.3.3 Lists}\label{lists}}
 \addcontentsline{toc}{section}{2.3.3 Lists}
 
 Checking the address for a list and its copy we see they share the same references:
@@ -311,7 +311,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0f533680"
+## [1] "0x7ff61e6f7198"
 \end{verbatim}
 
 \begin{Shaded}
@@ -321,7 +321,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0f533680"
+## [1] "0x7ff61e6f7198"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -333,7 +333,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0f634bc8"
+## [1] "0x7ff61fade828"
 \end{verbatim}
 
 \begin{Shaded}
@@ -343,8 +343,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fbf0f697878] <list> 
-## └─[2:0x7fbf0f533680] <dbl>
+## █ [1:0x7ff61fa474d8] <list> 
+## └─[2:0x7ff61e6f7198] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -354,7 +354,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0e769ef8"
+## [1] "0x7ff61f946f58"
 \end{verbatim}
 
 \begin{Shaded}
@@ -391,7 +391,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fbf0e7ea9e8>"
+## [1] "<0x7ff6200b72c8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -401,7 +401,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fbf0e7ea9e8>
+## <0x7ff6200b72c8>
 \end{verbatim}
 
 \begin{Shaded}
@@ -411,7 +411,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0e7ea9e8"
+## [1] "0x7ff6200b72c8"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -460,7 +460,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0d8d30c8"
+## [1] "0x7ff61ed4c308"
 \end{verbatim}
 
 \begin{Shaded}
@@ -470,7 +470,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fbf0d8d30c8>"
+## [1] "<0x7ff61ed4c308>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -480,7 +480,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fbf0d8d30c8 -> 0x7fbf0d880348]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7ff61ed4c308 -> 0x7ff61ed0eb88]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -576,7 +576,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0e7ac628"
+## [1] "0x7ff6215d0628"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -589,7 +589,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0c3c5978"
+## [1] "0x7ff61fc90578"
 \end{verbatim}
 
 \begin{Shaded}
@@ -612,7 +612,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0c3c5978"
+## [1] "0x7ff61fc90578"
 \end{verbatim}
 
 \begin{Shaded}
@@ -622,7 +622,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0c3c5978"
+## [1] "0x7ff61fc90578"
 \end{verbatim}
 
 \begin{Shaded}
@@ -645,7 +645,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0c3c5978"
+## [1] "0x7ff61fc90578"
 \end{verbatim}
 
 \begin{Shaded}
@@ -655,7 +655,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0f5f3f98"
+## [1] "0x7ff61ec1bf98"
 \end{verbatim}
 
 \begin{Shaded}
@@ -678,7 +678,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbf0c19e5a8"
+## [1] "0x7ff622f2f3a8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1159,8 +1159,8 @@ Why are dates calculated from January 1st, 1970?
 
 Unix counts time in seconds since its official ``birthday,'' -- called ``epoch'' in computing terms -- which is Jan.~1, 1970. \href{https://www.wired.com/2001/09/unix-tick-tocks-to-a-billion/}{This article} explains that the early Unix engineers picked that date arbitrarily, because they needed to set a uniform date for the start of time, and New Year's Day, 1970, seemed most convenient.
 
-\hypertarget{lists}{%
-\section*{3.5.1 Lists}\label{lists}}
+\hypertarget{lists-1}{%
+\section*{3.5.1 Lists}\label{lists-1}}
 \addcontentsline{toc}{section}{3.5.1 Lists}
 
 When should you be using \texttt{list()} instead of \texttt{c()}
@@ -1304,8 +1304,8 @@ Why is subsetting with factors ``not a good idea''
 
 Hadley's notes seem to say subsetting with factors uses the ``integer vector of levels'' - and if they all have the same level, it'll just return the first argument. Subsetting a factor vector leaves the factor levels behind unless you explicitly drop the unused levels
 
-\hypertarget{lists_4}{%
-\section*{4.2.2 lists}\label{lists_4}}
+\hypertarget{lists-2}{%
+\section*{4.2.2 lists}\label{lists-2}}
 \addcontentsline{toc}{section}{4.2.2 lists}
 
 We've been talking about \texttt{\$} as a shorthand for \texttt{{[}{[}}. Using the example list \texttt{x\ \textless{}-\ list(1:3,\ "a",\ 4:6)} can we use \texttt{x\$1} as shorthand for \texttt{x{[}{[}1{]}{]}}?
@@ -1325,8 +1325,8 @@ The ``shorthand'' refers to using the name of the vector to extract the vector. 
 
 As such, \texttt{\$} is a shorthand for \texttt{x{[}{[}"name\_of\_vector"{]}{]}} and not shorthand for \texttt{x{[}{[}index{]}{]}}
 
-\hypertarget{subset_2}{%
-\section*{\texorpdfstring{4.3.1 \texttt{{[}{[}}}{4.3.1 {[}{[}}}\label{subset_2}}
+\hypertarget{section}{%
+\section*{\texorpdfstring{4.3.1 \texttt{{[}{[}}}{4.3.1 {[}{[}}}\label{section}}
 \addcontentsline{toc}{section}{4.3.1 \texttt{{[}{[}}}
 
 The book states:
@@ -1410,8 +1410,8 @@ But in the case where we want to extract an element from a list \texttt{{[}} and
 
 Because using \texttt{{[}{[}} returns ``one element of this vector'' in both cases, it makes sense to default to \texttt{{[}{[}} instead of \texttt{{[}} since it will reliably return a single element.
 
-\hypertarget{exercise_435}{%
-\section*{4.3.5 Exercise}\label{exercise_435}}
+\hypertarget{exercise-1}{%
+\section*{4.3.5 Exercise}\label{exercise-1}}
 \addcontentsline{toc}{section}{4.3.5 Exercise}
 
 The question asks to describe the \texttt{upper.tri} function - let's dig into it!
@@ -1524,8 +1524,8 @@ Let's walk through examples of each
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{lists_missing}{%
-\subsection*{LIST}\label{lists_missing}}
+\hypertarget{list}{%
+\subsection*{LIST}\label{list}}
 \addcontentsline{toc}{subsection}{LIST}
 
 \begin{Shaded}
@@ -1847,8 +1847,8 @@ Can the body of the loop change the set?
 
 Looks like you can't!
 
-\hypertarget{switch}{%
-\section*{5.2.3 switch statement}\label{switch}}
+\hypertarget{switch-statement}{%
+\section*{5.2.3 switch statement}\label{switch-statement}}
 \addcontentsline{toc}{section}{5.2.3 switch statement}
 
 ``Closely related to if is the \texttt{switch()} statement. It's a compact, special purpose equivalent''
@@ -1897,8 +1897,8 @@ The book warns against using \texttt{length(x)} and suggests using \texttt{seq\_
 
 We have yet to find a downside but should look into this further!
 
-\hypertarget{exercise5331}{%
-\section*{5.3.3.1 Exercises}\label{exercise5331}}
+\hypertarget{exercises-1}{%
+\section*{5.3.3.1 Exercises}\label{exercises-1}}
 \addcontentsline{toc}{section}{5.3.3.1 Exercises}
 
 \begin{Shaded}
@@ -1921,8 +1921,8 @@ I understand that this works because we can count down in a loop - so the first 
 
 This question is actually the bigger question, ``Can you assign something to index 0 in R?'' and it doesn't seem that you can.
 
-\hypertarget{assignment-valid}{%
-\subsection*{Assignment to a valid index}\label{assignment-valid}}
+\hypertarget{assignment-to-a-valid-index}{%
+\subsection*{Assignment to a valid index}\label{assignment-to-a-valid-index}}
 \addcontentsline{toc}{subsection}{Assignment to a valid index}
 
 \begin{Shaded}
@@ -1938,8 +1938,8 @@ This question is actually the bigger question, ``Can you assign something to ind
 ## [1] "something"
 \end{verbatim}
 
-\hypertarget{assignment-0}{%
-\subsection*{Assignment to {[}0{]}}\label{assignment-0}}
+\hypertarget{assignment-to-0}{%
+\subsection*{Assignment to {[}0{]}}\label{assignment-to-0}}
 \addcontentsline{toc}{subsection}{Assignment to {[}0{]}}
 
 \begin{Shaded}
@@ -1974,8 +1974,8 @@ It's interesting that it's syntactically correct to assign to \texttt{mylist{[}0
 
 R defaultly accesses the first layer using \texttt{{[}} and says there are no elements in the first layer of \texttt{mylist} and returns \texttt{NULL}. But when you do \texttt{mylist{[}{[}1{]}{]}} R says \texttt{Out\ of\ Bounds} because the first layer of \texttt{mylist} has been called and there is no layer at all. That's why R throws error in \texttt{{[}{[}} case.
 
-\hypertarget{impossible-double}{%
-\subsection*{\texorpdfstring{Impossible Index \texttt{{[}{[}}}{Impossible Index {[}{[}}}\label{impossible-double}}
+\hypertarget{impossible-index}{%
+\subsection*{\texorpdfstring{Impossible Index \texttt{{[}{[}}}{Impossible Index {[}{[}}}\label{impossible-index}}
 \addcontentsline{toc}{subsection}{Impossible Index \texttt{{[}{[}}}
 
 \begin{Shaded}
@@ -1992,8 +1992,8 @@ Error in mylist[[0]] : attempt to select less than one element in get1index <rea
 \texttt{{[}{[}} isolates one element whereas \texttt{{[}} can be used to get subsets of varying sizes.
 \texttt{{[}{[}} gets precisely one element, no more no less, or it fails. So \texttt{{[}{[}0{]}{]}\textless{}-} cannot work because index zero cannot hold a value.
 
-\hypertarget{impossible-double-assign}{%
-\subsection*{\texorpdfstring{Impossible Index \texttt{{[}{[}\textless{}-}}{Impossible Index {[}{[}\textless{}-}}\label{impossible-double-assign}}
+\hypertarget{impossible-index--}{%
+\subsection*{\texorpdfstring{Impossible Index \texttt{{[}{[}\textless{}-}}{Impossible Index {[}{[}\textless{}-}}\label{impossible-index--}}
 \addcontentsline{toc}{subsection}{Impossible Index \texttt{{[}{[}\textless{}-}}
 
 \begin{Shaded}
@@ -2007,8 +2007,8 @@ Error in mylist[[0]] : attempt to select less than one element in get1index <rea
 Error in mylist[[0]] <- "something" : attempt to select less than one element in integerOneIndex
 \end{verbatim}
 
-\hypertarget{undefined-5}{%
-\subsection*{Undefined name}\label{undefined-5}}
+\hypertarget{undefined-name}{%
+\subsection*{Undefined name}\label{undefined-name}}
 \addcontentsline{toc}{subsection}{Undefined name}
 
 Selection using an undefined - but possible name - gives NULL
@@ -2020,8 +2020,8 @@ Selection using an undefined - but possible name - gives NULL
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{oob-5}{%
-\subsection*{Out of Bounds}\label{oob-5}}
+\hypertarget{out-of-bounds}{%
+\subsection*{Out of Bounds}\label{out-of-bounds}}
 \addcontentsline{toc}{subsection}{Out of Bounds}
 
 Selection using a possible - but not currently allocated - index gives an out of bounds error
@@ -2037,8 +2037,8 @@ Selection using a possible - but not currently allocated - index gives an out of
 Error in mylist[[10]] : subscript out of bounds 
 \end{verbatim}
 
-\hypertarget{conclusion-5}{%
-\section*{Conclusion}\label{conclusion-5}}
+\hypertarget{conclusion-1}{%
+\section*{Conclusion}\label{conclusion-1}}
 \addcontentsline{toc}{section}{Conclusion}
 
 Can we put these concepts together in diagram form? Let's work on improving these schematics!
@@ -2133,6 +2133,47 @@ Another example: we can run
 \end{verbatim}
 
 we can see that ifelse places the numbers in \texttt{1:10} based on their index where our condition is to \texttt{TRUE} and inserts the string \texttt{"FALSE"} whenever the condition is \texttt{FALSE}
+
+\hypertarget{functions}{%
+\chapter{Functions}\label{functions}}
+
+\hypertarget{primitives}{%
+\section*{6.2.2 Primitives}\label{primitives}}
+\addcontentsline{toc}{section}{6.2.2 Primitives}
+
+So if you are familiar with C can you just write a function in C \emph{in} R? What does that process look like?
+
+XXX
+
+\hypertarget{exercises-2}{%
+\section*{6.2.5.1 Exercises}\label{exercises-2}}
+\addcontentsline{toc}{section}{6.2.5.1 Exercises}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{{Q}}: Given a name, like \texttt{"mean"}, \texttt{match.fun()} lets you find a function. Given a function, can you find its name? Why doesn't that make sense in R?
+
+  \textbf{{A}}: A name can only point to a single object, but an object can be pointed to by 0, 1, or many names. What are names of the functions in the following block?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{sd}\NormalTok{(x) }\OperatorTok{/}\StringTok{ }\KeywordTok{mean}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function(x) sd(x) / mean(x)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  f1 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) (x }\OperatorTok{-}\StringTok{ }\KeywordTok{min}\NormalTok{(x)) }\OperatorTok{/}\StringTok{ }\NormalTok{(}\KeywordTok{max}\NormalTok{(x) }\OperatorTok{-}\StringTok{ }\KeywordTok{min}\NormalTok{(x))}
+\NormalTok{  f2 <-}\StringTok{ }\NormalTok{f1}
+\NormalTok{  f3 <-}\StringTok{ }\NormalTok{f1}
+\end{Highlighting}
+\end{Shaded}
+\end{enumerate}
 
 \bibliography{book.bib,packages.bib}
 
