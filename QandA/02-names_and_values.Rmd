@@ -1,27 +1,12 @@
----
-title: "R4DS Questions From Advanced R"
-output:
-  html_document:
-    toc: true
-    toc_float: true
-    css: styles.css
----
+# Names and Values
 
-A companion to [Advanced R](https://adv-r.hadley.nz/rcpp.html#acknowledgments) and supplement to [Advanced R Solutions](https://advanced-r-solutions.rbind.io/names-and-values.html#copy-on-modify)
-
-```{r, echo=FALSE}
-htmltools::img(src = knitr::image_uri("r4ds.png"), 
-               alt = 'logo', 
-               style = 'position:absolute; top:0; 
-                        right:0;
-                        padding:0;
-                        width: 25%;
-               height 25%')
+```{r, include=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(lobstr)
 ```
 
-# Chapter 2 
-
-## 2.3 Copy-on-modify 
+## 2.3 Copy-on-modify {-#copy-on-modify}
 
 :::question
 copy-on-modify vs copy-in-place: is one more preferable in certain situations?
@@ -29,7 +14,63 @@ copy-on-modify vs copy-in-place: is one more preferable in certain situations?
 
 modify in place only happens when objects with a single binding get a special performance optimization and to environments.
 
-## 2.3.2 Function calls
+## 2.2.2 Exercises {-#exercises}
+
+:::question
+Question 3 digs into the syntactically valid names created when using `read.csv()`, but what is the difference between quotation and backticks? 
+
+If we create an example csv
+```{r}
+example2223 <- tibble(
+  `if` = c(1,2,3),
+  `_1234` = c(4,5,6),
+  `column 1` = c(7,8,9)
+)
+
+write.csv(example2223, "example2223.csv", row.names = FALSE)
+```
+
+Import using adjusted column names to be syntactically valid:
+```{r}
+read.csv(file = "example2223.csv",check.names = TRUE)
+```
+
+Import using non-adjusted column names
+```{r}
+read.csv(file = "example2223.csv", check.names = FALSE)
+```
+
+Import using the tidyverse where names are not adjusted
+```{r}
+df_non_syntactic_name  <- read_csv(file = "example2223.csv")
+```
+
+However I really don´t understand the difference between backticks and quotation marks. For example when I select a column in the case of non-syntactic in the tidyverse I can use quotation marks or backticks 
+
+```{r}
+df_non_syntactic_name %>% select("if")
+```
+
+```{r, eval=FALSE}
+df_non_syntactic_name %>% select(`if`)
+```
+
+But in base R, I can do this with quotation marks, but not backticks:
+
+```{r, eval=FALSE}
+df__non_syntactic_name["if"]
+```
+
+```
+Error in `[.default`(df__non_syntactic_name, `if`) : invalid subscript type 'special'
+```
+
+According to `?Quotes` backticks are used for "non-standard variable names" but why in base R they don´t work to select columns but in the tidyverse they work to select variables?
+:::
+
+The easiest way to think about this is that backticks refer to objects while quotation marks refer to strings. `dplyr::select()` accepts object references as well as string references, while base R subsetting is done with a string or integer position.
+
+## 2.3.2 Function calls {-#function-calls}
 
 :::question
 Can we go over and break down figure in 2.3.2
@@ -59,7 +100,53 @@ The round brackets `(eh)` list the arguments, the curly brackets `{eh}` define t
 
 **R functions automatically return the result of the last expression** so when you call that object (the argument `eh`) it returns the value of that argument. This is called **implicit returns**
 
-## 2.3.3 Lists
+## 2.3.3 Lists {-#lists_2}
+
+:::question
+
+Checking the address for a list and its copy we see they share the same references:
+
+```{r}
+l1 <- list(1,2,3)
+l2 <- l1
+identical(lobstr::ref(l1),lobstr::ref(l2))
+lobstr::obj_addr(l1[[1]])
+lobstr::obj_addr(l2[[1]])
+```
+
+But why isn't this the case for their subsets? Using `obj_addr` they have different addresses, but when we look at their references they are the same
+
+```{r}
+lobstr::obj_addr(l1[1])
+lobstr::ref(l1[1])
+lobstr::obj_addr(l2[1])
+```
+
+
+```{r}
+identical(lobstr::obj_addr(l1[1]), lobstr::obj_addr(l2[1]))
+```
+:::
+
+This is because using singular brackets wraps the value 1 in a new list that is created on the fly which will have a unique address. We can use double brackets to confirm our mental model that the sublists are also identical:
+
+```{r}
+identical(lobstr::obj_addr(l1[[1]]), lobstr::obj_addr(l2[[1]]))
+```
+
+
+:::question
+What's the difference between these 2 addresses `<0x55d53fa975b8>` and `0x55d53fa975b8`?
+:::
+
+Nothing - it has to do with the printing method:
+
+```{r}
+x <- c(1, 2, 3)
+print(tracemem(x))
+cat(tracemem(x))
+lobstr::obj_addr(x)
+```
 
 :::question
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -67,23 +154,86 @@ When would you prefer a deep copy of a list to a shallow copy? Is this something
 
 Automagical!
 
-## 2.3.5 Character vectors
+## 2.3.5 Character vectors {-#character-vectors}
 
 
 :::question
 Is there a way to clear the "global string pool"?
 :::
 
-## 2.4.1 Object size
+According to [this post](https://community.rstudio.com/t/memory-usage-and-rs-global-string-pool/4762/3) it doesn't look like you can directly, but clearing all references to a string that's in the global string pool clears that string from the pool, eventually
 
+## 2.3.6.2 Exercise {-#exercise}
 
 :::question
-I understand that `ALTREP` makes the size of `obj_size(1:3) == obj_size(1:100)` but do I need to have a better grasp than that? [Should we go over this](https://blog.revolutionanalytics.com/2017/09/altrep-preview.html)
+When we look at `tracemem` when we modify `x` from an integer to numeric, x is assigned to three objects. The first is the integer, and the third numeric - so what's the intermediate type?
+
+```{r, eval=FALSE}
+x <- c(1L, 2L, 3L)
+obj_addr(x)
+tracemem(x)
+x[[3]] <- 4
+```
+
+```
+[1] "0x7f84b7fe2c88"
+[1] "<0x7f84b7fe2c88>"
+tracemem[0x7f84b7fe2c88 -> 0x7f84b7fe5288]: 
+tracemem[0x7f84b7fe5288 -> 0x7f84bc0817c8]: 
+```
+
+What is `0x7f84b7fe5288` when the intermediate `x <- c(1L, 2L, 4)` is impossible?
 :::
 
-It's kind of cool to know but... Probably not.
+When we assign the new value as an integer there is no intermediate step. This probably means `c(1,2, NA)` is the intermediate step; creating an intermediate vector that's the same length of the final product with NA values at all locations that are new or to be changed
 
-## 2.5.1 Modify-in-place
+```{r}
+x <- c(1L, 2L, 3L)
+obj_addr(x)
+tracemem(x)
+x[[3]] <- 4L
+```
+
+You can dig into the C code running this: 
+
+```{r, eval=FALSE}
+pryr::show_c_source(.Internal("[<-"))
+```
+
+## 2.4.1 Object size {-#object-size}
+
+:::question
+If I have two vectors, one `1:10` and another `c(1:10, 10)`, intuitively, I would expect the size of the second vector to be greater than the size of the first. However, it seems to be the other way round, why?
+```{r}
+x1 <- 1:10
+x2 <- rep(1:10, 10)
+lobstr::obj_size(x1)
+lobstr::obj_size(x2)
+```
+:::
+
+If we start with the following three vectors:
+```{r}
+x1 <- c(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L)
+x2 <- 1:10
+x3 <- rep(1:10, 10)
+lobstr::obj_sizes(x1, x2, x3)
+```
+
+Intuitively, we would have expected `x1` < `x2` < `x3` but this is not the case. It appears that the `rep()` function coerces a double into integer and hence optimizes on space. Using `:`, R internally uses [ALTREP](https://blog.revolutionanalytics.com/2017/09/altrep-preview.html). 
+
+ALTREP would actually be more efficient if the numbers represented were significantly large, say `1e7`.
+
+```{r}
+x4 <- 1:1e7
+x5 <- x4
+x5[1] <- 1L
+lobstr::obj_sizes(x4, x5)
+```
+
+Now, the size of x4  is significantly lower than that of x5 .  This seems to indicate that ALTREP becomes super efficient as the vector size is increased.
+
+## 2.5.1 Modify-in-place {-#modify-in-place}
 
 :::question
 "When it comes to bindings, R can currently only count 0, 1, or many. That means that if an object has two bindings, and one goes away, the reference count does not go back to 1: one less than many is still many. In turn, this means that R will make copies when it sometimes doesn’t need to."
@@ -91,7 +241,44 @@ It's kind of cool to know but... Probably not.
 Can we come up with an example of this? It seems really theoretical right now.
 :::
 
-XXX
+First you need to switch your Environment tab to something other than global in RStudio!
+
+Now we can create a vector:
+```{r}
+v <- c(1, 2, 3)
+(old_address <- lobstr::obj_addr(v))
+```
+
+Changing a value within it changes its address:
+```{r}
+v[[3]] <- 4
+(new_address <- lobstr::obj_addr(v))
+old_address == new_address
+```
+
+We can assign the modified vector to a new name, where `y` and `v` point to the same thing.
+```{r}
+y <- v
+(y_address <- lobstr::obj_addr(y))
+(v_address <- lobstr::obj_addr(v))
+y_address == v_address
+```
+
+Now if we modify `v` it won't point to the same thing as `y`:
+```{r}
+v[[3]] <- 3
+(y_address <- lobstr::obj_addr(y))
+(v_address <- lobstr::obj_addr(v))
+y_address == v_address
+```
+
+But if we now change `y` to look like `v`, the original address, in theory editing y should occur in place, but it doesn't - the "count does not go back to one"!
+
+```{r}
+y[[3]] <- 3
+(new_y_address <- lobstr::obj_addr(y))
+new_y_address == y_address
+```
 
 :::question
 
@@ -266,125 +453,3 @@ nrows <- .row_names_info(x, 2L)
 ```
 
 Thus seeing exactly where the three copies are happening!
-
-# Chapter 3
-
-:::question
-How is data type `typeof()` different from `class()`?
-:::
-
-Classes are built on top of base types - they're like special, more specific kinds of types. In fact, if a class isn't specified then `class()` will default to either the `implicit class` or `typeof`.
-
-So `Date`, `POSIXct`, and `difftime` are specific kinds of doubles, falling under its umbrella.
-```{r}
-lubridate::is.Date(Sys.Date())
-is.double(Sys.Date())
-
-lubridate::is.POSIXct(Sys.time())
-is.double(Sys.time())
-
-lubridate::is.difftime(as.difftime(c("0:3:20", "11:23:15")))
-is.double(as.difftime(c("0:3:20", "11:23:15")))
-```
-
-But then why does `my_factor` fail to be recognized under its more general `integer` umbrella?
-
-```{r}
-my_factor <- factor(c("a", "b", "c"))
-is.factor(my_factor)
-is.integer(my_factor)
-```
-
-
-:::question
-Why does the book warn us against using `is.vector()`, `is.atomic()` and `is.numeric()`? [read docs]
-:::
-
-- `is.atomic` will also return true if `NULL`
-- `is.numeric` tests if integer or double **NOT** factor, Date, POSIXt, difftime
-- `is.vector` will return false if it has attributes other than names
-
-:::question
-Working in the medical field I have to import SAS files a lot where the column names have to adhere to specific abbreviations so they're given a label attribute for their full name. What are some other common uses for attributes?
-:::
-
-:::question
-We can use `setNames` to apply different values to each element in a vector. How do we do this for our own custom attribute? The code below does NOT work!
-
-```{r}
-my_vector <- c(
-  structure(1, x = "firstatt_1", y = "secondatt_1"), 
-  structure(2, x = "firstatt_2", y = "secondatt_2"), 
-  structure(3, x = "firstatt_3", y = "secondatt_3")
-)
-
-my_vector <- setNames(my_vector, c("name_1", "name_2", "name_3"))
-
-# mental model: shouldn't this should return $names, $x and $y ?
-attributes(my_vector)
-```
-:::
-
-:::question
-Because `NROW` and `NCOL` don't return `NULL` on a one dimensional vector they just seem to me as a more flexible option. When do you *have* to use `ncol` and `nrow`?
-```{r}
-# doesn't seem to matter for a data frame
-my_df <- data.frame(x = c(1,2,3), y = c(4, 5, 6))
-nrow(my_df) == NROW(my_df)
-ncol(my_df) ==NCOL(my_df)
-
-# and a matrix....
-my_matrix <- 1:6
-dim(my_matrix) <- c(3,2)
-nrow(my_matrix) == NROW(my_matrix)
-ncol(my_matrix) == NCOL(my_matrix)
-```
-:::
-
-:::question
-Putting it all together: the diagram.
-
-```{r, echo=FALSE}
-knitr::include_graphics("../images/vectors.png")
-```
-
-What changes should we make? What did I forget to include?
-:::
-
-
-:::question
-As long as the number of rows matches the data frame, it’s also possible to have a matrix or array as a column of a data frame. (This requires a slight extension to our definition of a data frame: it’s not the `length()` of each column that must be equal, but the `NROW()`.)
-
-```{r}
-df <- data.frame(x = c(1,2,3,4,5),
-                 y = c(letters[1:5]))
-
-length(df$y) == NROW(df$y)
-```
-
-What's an example of where `length() != NROW()`
-:::
-
-
-:::question
-
-The solution manual gives the answer and notes: 
-
-```{r}
-df_coltypes <- data.frame(
-  a = c("a", "b"),
-  b = c(TRUE, FALSE),
-  c = c(1L, 0L),
-  d = c(1.5, 2),
-  e = c("one" = 1, "two" = 2),
-  g = factor(c("f1", "f2")),
-  stringsAsFactors = FALSE
-)
-
-as.matrix(df_coltypes)
-```
-
-"Note that `format()` is applied to the characters, which gives surprising results: `TRUE` is transformed to `" TRUE"` (starting with a space!)."
-
-...But where is the `format()` call happening? I don't see a space!
-:::
