@@ -153,7 +153,7 @@ sample <- function (x, size, replace = FALSE, prob = NULL)
 sample(1:10)
 ```
 
-To using Hadley's reccomended `NULL` version:
+To using Hadley's recommended `NULL` version:
 
 ```{r}
 my_sample_null <- function(x, size = NULL, replace = FALSE, prob = NULL) {
@@ -164,7 +164,7 @@ my_sample_null <- function(x, size = NULL, replace = FALSE, prob = NULL) {
 my_sample_null(1:10)
 ```
 
-The second function is obviously more concise, but why is Hadley reccomending we we steer clear of `missing()`? Is this just for code read-ability or is there something inherent in the behvior of `missing` we need to consider that we don't when using `NULL`?
+The second function is obviously more concise, but why is Hadley recommending we we steer clear of `missing()`? Is this just for code read-ability or is there something inherent in the behavior of `missing` we need to consider that we don't when using `NULL`?
 :::
 
 :::TODO
@@ -280,7 +280,7 @@ XXX
 ## 6.7.5.4 Exercise {-}
 
 :::question
-[This question is flagged as "started" let's try to complete it!](https://github.com/Tazinho/Advanced-R-Solutions/blob/5043d9b06c7469a010c568ecb85e12bedca75207/2-06-Functions.Rmd#L350) Hadley comments in the repo: "I think I'm more intersted in supplying a path vs. a logical value here".
+[This question is flagged as "started" let's try to complete it!](https://github.com/Tazinho/Advanced-R-Solutions/blob/5043d9b06c7469a010c568ecb85e12bedca75207/2-06-Functions.Rmd#L350) Hadley comments in the repo: "I think I'm more interested in supplying a path vs. a logical value here".
 :::
 
 __[Q]{.Q}__: How does the `chdir` parameter of `source()` compare to `in_dir()`? Why might you prefer one approach to the other?
@@ -297,7 +297,7 @@ __[Q]{.Q}__: How does the `chdir` parameter of `source()` compare to `in_dir()`?
     
    __[A]{.started}__: `in_dir()` takes a path to a working directory as an argument. First the working directory is changed accordingly. `on.exit()` ensures that the modification to the working directory are reset to the initial value when the function exits.
     
-   In `source()` the `chdir` argument specifies if the working directory should be changed during the evaluation of the `file` argument (which in this case has to be a pathname). 
+   In `source()` the `chdir` argument specifies if the working directory should be changed during the evaluation of the `file` argument (which in this case has to be a path name). 
 
 :::TODO
 XXX
