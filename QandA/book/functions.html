@@ -197,7 +197,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#lazy-evaluation"><i class="fa fa-check"></i>6.5 Lazy evaluation</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#promises"><i class="fa fa-check"></i>6.5.1 Promises</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#default-arguments"><i class="fa fa-check"></i>6.5.2 Default arguments</a></li>
-<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#missing-arguments"><i class="fa fa-check"></i>Missing arguments</a></li>
+<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#missing-arguments"><i class="fa fa-check"></i>6.5.3 Missing arguments</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-2"><i class="fa fa-check"></i>6.5.4.3 Exercise</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-3"><i class="fa fa-check"></i>6.5.4.4 Exercise</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#dot-dot-dot"><i class="fa fa-check"></i>6.6 dot dot dot</a></li>
@@ -349,7 +349,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb15-3" data-line-number="3">  <span class="kw">print</span>(x)</a>
 <a class="sourceLine" id="cb15-4" data-line-number="4">}</a>
 <a class="sourceLine" id="cb15-5" data-line-number="5"><span class="kw">show_time</span>()</a></code></pre></div>
-<pre><code>## [1] &quot;2020-05-02 10:56:30 PDT&quot;</code></pre>
+<pre><code>## [1] &quot;2020-05-02 15:42:02 PDT&quot;</code></pre>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">show_time</span>(<span class="dt">x =</span> <span class="kw">stop</span>(<span class="st">&quot;Error!&quot;</span>))</a></code></pre></div>
 <pre><code>Error in print(x) : Error!</code></pre>
 </div>
@@ -358,7 +358,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div id="missing-arguments" class="section level2 unnumbered">
-<h2>Missing arguments</h2>
+<h2>6.5.3 Missing arguments</h2>
 <div class="question">
 <p>Comparing the default sample function:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">sample &lt;-<span class="st"> </span><span class="cf">function</span> (x, size, <span class="dt">replace =</span> <span class="ot">FALSE</span>, <span class="dt">prob =</span> <span class="ot">NULL</span>) </a>
@@ -380,7 +380,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb19-17" data-line-number="17">}</a>
 <a class="sourceLine" id="cb19-18" data-line-number="18"></a>
 <a class="sourceLine" id="cb19-19" data-line-number="19"><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a></code></pre></div>
-<pre><code>##  [1]  8  2  7 10  3  1  5  6  4  9</code></pre>
+<pre><code>##  [1]  4 10  8  5  6  7  3  1  9  2</code></pre>
 <p>To using Hadley’s reccomended <code>NULL</code> version:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">my_sample_null &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">size =</span> <span class="ot">NULL</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>, <span class="dt">prob =</span> <span class="ot">NULL</span>) {</a>
 <a class="sourceLine" id="cb21-2" data-line-number="2">  size &lt;-<span class="st"> </span>size <span class="op">%||%</span><span class="st"> </span><span class="kw">length</span>(x)</a>
@@ -388,7 +388,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb21-4" data-line-number="4">}</a>
 <a class="sourceLine" id="cb21-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb21-6" data-line-number="6"><span class="kw">my_sample_null</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a></code></pre></div>
-<pre><code>##  [1]  6  1  5  8  7  9 10  4  2  3</code></pre>
+<pre><code>##  [1]  5  6  4  7  1  9  2  8  3 10</code></pre>
 <p>The second function is obviously more concise, but why is Hadley reccomending we we steer clear of <code>missing()</code>? Is this just for code read-ability or is there something inherent in the behvior of <code>missing</code> we need to consider that we don’t when using <code>NULL</code>?</p>
 </div>
 <div class="TODO">
@@ -414,7 +414,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">hist</a></code></pre></div>
 <pre><code>## function (x, ...) 
 ## UseMethod(&quot;hist&quot;)
-## &lt;bytecode: 0x7fbee68fce00&gt;
+## &lt;bytecode: 0x7f8ac1580000&gt;
 ## &lt;environment: namespace:graphics&gt;</code></pre>
 <p>does not give me the actual contents of the actual function….</p>
 </div>
