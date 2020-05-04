@@ -237,7 +237,7 @@ Let's first put functions into words:
 knitr::include_graphics("images/controlflow.png")
 ```
 
-It is also important to note that unlike the other control flow statements, `ifelse` is vectorized -- we can visualize the `ifelse` logic above operating on each element within a vector:
+We can visualize how the `ifelse` logic on a single element above will operate on each element within a vector:
 
 ```{r, echo=FALSE, fig.align='center'  }
 knitr::include_graphics("images/ifelse.png")
