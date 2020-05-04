@@ -228,7 +228,7 @@ Let's first put functions into words:
 
 
 * If condition then run code, else quit
-* If condition then run code, else run other code
+* A vectorized version of: if condition then run code, else run other code
 * For every element in list of elements do what is in between the curly braces
 * While this condition is true do this
 * Repeat this until something tells you to break out
