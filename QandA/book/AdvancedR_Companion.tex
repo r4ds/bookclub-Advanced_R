@@ -119,7 +119,7 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-05-02}
+\date{2020-05-04}
 
 \begin{document}
 \maketitle
@@ -313,7 +313,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbbd0c11bc0"
+## [1] "0x7fa953d93080"
 \end{verbatim}
 
 \begin{Shaded}
@@ -323,7 +323,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbbd0c11bc0"
+## [1] "0x7fa953d93080"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -335,7 +335,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbbd14ed3f0"
+## [1] "0x7fa952ebe7c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -345,8 +345,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fbbd0518610] <list> 
-## └─[2:0x7fbbd0c11bc0] <dbl>
+## █ [1:0x7fa952edc240] <list> 
+## └─[2:0x7fa953d93080] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -356,7 +356,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbbd04bdb28"
+## [1] "0x7fa953c27b98"
 \end{verbatim}
 
 \begin{Shaded}
@@ -393,7 +393,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fbbd6832168>"
+## [1] "<0x7fa955d99438>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -403,7 +403,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fbbd6832168>
+## <0x7fa955d99438>
 \end{verbatim}
 
 \begin{Shaded}
@@ -413,7 +413,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbbd6832168"
+## [1] "0x7fa955d99438"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -462,7 +462,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbbd7fdea08"
+## [1] "0x7fa958fd8888"
 \end{verbatim}
 
 \begin{Shaded}
@@ -472,7 +472,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fbbd7fdea08>"
+## [1] "<0x7fa958fd8888>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -482,7 +482,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fbbd7fdea08 -> 0x7fbbd7f6e0c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fa958fd8888 -> 0x7fa958fdcb48]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -578,7 +578,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbbcc1201f8"
+## [1] "0x7fa954fbc3f8"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -591,7 +591,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbbd392e9b8"
+## [1] "0x7fa954434588"
 \end{verbatim}
 
 \begin{Shaded}
@@ -614,7 +614,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbbd392e9b8"
+## [1] "0x7fa954434588"
 \end{verbatim}
 
 \begin{Shaded}
@@ -624,7 +624,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbbd392e9b8"
+## [1] "0x7fa954434588"
 \end{verbatim}
 
 \begin{Shaded}
@@ -647,7 +647,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbbd392e9b8"
+## [1] "0x7fa954434588"
 \end{verbatim}
 
 \begin{Shaded}
@@ -657,7 +657,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbbd1dc8ed8"
+## [1] "0x7fa953ee24a8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -680,7 +680,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbbd17d9288"
+## [1] "0x7fa9536a5a08"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1781,7 +1781,7 @@ NULL
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "In range"
+## [1] "Out of range"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1791,7 +1791,7 @@ NULL
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "In range"
+## [1] "Out of range"
 \end{verbatim}
 
 \texttt{ifelse} explicitly returns its result, whereas \texttt{if} invisibly returns it!
@@ -2350,7 +2350,7 @@ Comparing the default sample function:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  1  7 10  9  5  4  8  3  6  2
+##  [1]  6 10  8  7  5  4  1  9  3  2
 \end{verbatim}
 
 To using Hadley's recommended \texttt{NULL} version:
@@ -2367,7 +2367,7 @@ To using Hadley's recommended \texttt{NULL} version:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  3 10  1  9  7  6  5  2  8  4
+##  [1]  1  2  8  5 10  6  3  4  7  9
 \end{verbatim}
 
 The second function is obviously more concise, but why is Hadley recommending we we steer clear of \texttt{missing()}? Is this just for code read-ability or is there something inherent in the behavior of \texttt{missing} we need to consider that we don't when using \texttt{NULL}?
@@ -2409,7 +2409,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fbbcb12dfc8>
+## <bytecode: 0x7fa94d92cfc8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
