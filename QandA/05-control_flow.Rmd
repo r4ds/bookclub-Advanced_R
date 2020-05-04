@@ -223,6 +223,16 @@ Error in mylist[[10]] : subscript out of bounds
 Can we put these concepts together in diagram form? Let's work on improving these schematics!
 :::
 
+
+Let's first put functions into words:
+
+
+* If condition then run code, else quit
+* If condition then run code, else run other code
+* For every element in list of elements do what is in between the curly braces
+* While this condition is true do this
+* Repeat this until something tells you to break out
+
 ```{r, echo=FALSE}
 knitr::include_graphics("images/controlflow.png")
 ```
