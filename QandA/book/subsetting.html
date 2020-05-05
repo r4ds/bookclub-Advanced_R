@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-05-04" />
+<meta name="date" content="2020-05-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,6 +50,7 @@
 
 
 
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
 <style type="text/css">
@@ -234,6 +235,96 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="question">
 <p>&quot;There are three subsetting operators <code>[</code>. <code>[[</code>, <code>$</code>. What is the distinction between an operator and a function? When you look up the help page it brings up the same page for all three extraction methods. What are their distinctions and do their definitions change based on what you’re subsetting? Can we make a table?</p>
 </div>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+[
+</th>
+<th style="text-align:left;">
+[[
+</th>
+<th style="text-align:left;">
+$
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+ATOMIC
+</td>
+<td style="text-align:left;">
+RETURNS VECTOR WITH ONE ELEMENT
+</td>
+<td style="text-align:left;">
+SAME AS [
+</td>
+<td style="text-align:left;">
+NOPE!
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+LIST
+</td>
+<td style="text-align:left;">
+RETURNS A LIST
+</td>
+<td style="text-align:left;">
+RETURNS SINGLE ELEMENT FROM WITHIN LIST
+</td>
+<td style="text-align:left;">
+RETURN SINGLE ELEMENT FROM LIST [CAN ONLY USE WHEN LIST VECTOR HAS A NAME]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+MATRIX
+</td>
+<td style="text-align:left;">
+RETURNS A VECTOR
+</td>
+<td style="text-align:left;">
+RETURNS A VECTOR OR SINGLE VALUE
+</td>
+<td style="text-align:left;">
+NOPE!
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+DATA FRAME
+</td>
+<td style="text-align:left;">
+RETURNS A VECTOR OR DATA FRAME
+</td>
+<td style="text-align:left;">
+RETURNS VECTOR/LIST/MATRIX OR SINGLE VALUE
+</td>
+<td style="text-align:left;">
+RETURNS VECTOR/LIST/MATRIX USING COLUMN NAME
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+TIBBLE
+</td>
+<td style="text-align:left;">
+RETURNS A TIBBLE
+</td>
+<td style="text-align:left;">
+RETURNS A VECTOR OR SINGLE VALUE
+</td>
+<td style="text-align:left;">
+RETURNS THE STR OF THE COLUMN - TIBBLE/LIST/MATRIX
+</td>
+</tr>
+</tbody>
+</table>
+<p>If we think of everything as sets (which have the properties of 0,1, or many elements), if the set has 1 element it only contains itself and <code>NULL</code> subsets. Before you subset using <code>[</code> or <code>[[</code> count the elements in the set. If it has zero elements you are done, if it has one element <code>[</code> will return itself - to go further you need to use <code>[[</code> to return its contents. If there is more than one element in the set then <code>[</code> will return those elements. <a href="https://bookdown.org/rdpeng/rprogdatascience/subsetting-r-objects.html#subsetting-a-vector">You can read more about subsetting here</a></p>
 </div>
 <div id="selecting-multiple-elements" class="section level2 unnumbered">
 <h2>4.2.1 Selecting multiple elements</h2>
@@ -252,8 +343,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We’ve been talking about <code>$</code> as a shorthand for <code>[[</code>. Using the example list <code>x &lt;- list(1:3, &quot;a&quot;, 4:6)</code> can we use <code>x$1</code> as shorthand for <code>x[[1]]</code>?</p>
 </div>
 <p>The “shorthand” refers to using the name of the vector to extract the vector. If we give <code>1:3</code> a name such as test = <code>1:3</code></p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">named_vector =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="st">&quot;a&quot;</span>, <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>)</a>
-<a class="sourceLine" id="cb121-2" data-line-number="2">x[[<span class="dv">1</span>]] <span class="op">==</span><span class="st"> </span>x<span class="op">$</span>named_vector</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">named_vector =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="st">&quot;a&quot;</span>, <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">x[[<span class="dv">1</span>]] <span class="op">==</span><span class="st"> </span>x<span class="op">$</span>named_vector</a></code></pre></div>
 <pre><code>## [1] TRUE TRUE TRUE</code></pre>
 <p>As such, <code>$</code> is a shorthand for <code>x[[&quot;name_of_vector&quot;]]</code> and not shorthand for <code>x[[index]]</code></p>
 </div>
@@ -262,29 +353,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="question">
 <p>The book states:</p>
 <p><em>While you must use [[ when working with lists, I’d also recommend using it with atomic vectors whenever you want to extract a single value. For example, instead of writing:</em></p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" data-line-number="1"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="kw">length</span>(x)) {</a>
-<a class="sourceLine" id="cb123-2" data-line-number="2">  out[i] &lt;-<span class="st"> </span><span class="kw">fun</span>(x[i], out[i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>])</a>
-<a class="sourceLine" id="cb123-3" data-line-number="3">}</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="kw">length</span>(x)) {</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">  out[i] &lt;-<span class="st"> </span><span class="kw">fun</span>(x[i], out[i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">}</a></code></pre></div>
 <p><em>It’s better to write</em></p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" data-line-number="1"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="kw">length</span>(x)) {</a>
-<a class="sourceLine" id="cb124-2" data-line-number="2">  out[[i]] &lt;-<span class="st"> </span><span class="kw">fun</span>(x[[i]], out[[i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>]])</a>
-<a class="sourceLine" id="cb124-3" data-line-number="3">}</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="kw">length</span>(x)) {</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">  out[[i]] &lt;-<span class="st"> </span><span class="kw">fun</span>(x[[i]], out[[i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>]])</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">}</a></code></pre></div>
 <p>Why? Can we see this in action by giving <code>x</code>, <code>out</code>, and <code>fun</code> real life values?</p>
 </div>
 <p>If we have a vector</p>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" data-line-number="1">df_x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Advanced&quot;</span>,<span class="st">&quot;R&quot;</span>,<span class="st">&quot;Book&quot;</span>,<span class="st">&quot;Club&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">df_x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Advanced&quot;</span>,<span class="st">&quot;R&quot;</span>,<span class="st">&quot;Book&quot;</span>,<span class="st">&quot;Club&quot;</span>)</a></code></pre></div>
 <p>We can use <code>[</code> or <code>[[</code> to extract the third element of <code>df_x</code></p>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1">df_x[<span class="dv">3</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">df_x[<span class="dv">3</span>]</a></code></pre></div>
 <pre><code>## [1] &quot;Book&quot;</code></pre>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1">df_x[[<span class="dv">3</span>]]</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">df_x[[<span class="dv">3</span>]]</a></code></pre></div>
 <pre><code>## [1] &quot;Book&quot;</code></pre>
 <p>But in the case where we want to extract an element from a list <code>[</code> and <code>[[</code> no longer give us the same results</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1">df_x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">A =</span> <span class="st">&quot;Advanced&quot;</span>, <span class="dt">B =</span> <span class="st">&quot;R&quot;</span>, <span class="dt">C =</span> <span class="st">&quot;Book&quot;</span>, <span class="dt">D =</span> <span class="st">&quot;Club&quot;</span>)</a>
-<a class="sourceLine" id="cb130-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb130-3" data-line-number="3">df_x[<span class="dv">3</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">df_x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">A =</span> <span class="st">&quot;Advanced&quot;</span>, <span class="dt">B =</span> <span class="st">&quot;R&quot;</span>, <span class="dt">C =</span> <span class="st">&quot;Book&quot;</span>, <span class="dt">D =</span> <span class="st">&quot;Club&quot;</span>)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">df_x[<span class="dv">3</span>]</a></code></pre></div>
 <pre><code>## $C
 ## [1] &quot;Book&quot;</code></pre>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1">df_x[[<span class="dv">3</span>]]</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">df_x[[<span class="dv">3</span>]]</a></code></pre></div>
 <pre><code>## [1] &quot;Book&quot;</code></pre>
 <p>Because using <code>[[</code> returns “one element of this vector” in both cases, it makes sense to default to <code>[[</code> instead of <code>[</code> since it will reliably return a single element.</p>
 </div>
@@ -293,8 +384,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="question">
 <p>The question asks to describe the <code>upper.tri</code> function - let’s dig into it!</p>
 </div>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">outer</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">FUN =</span> <span class="st">&quot;*&quot;</span>)</a>
-<a class="sourceLine" id="cb134-2" data-line-number="2"><span class="kw">upper.tri</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">outer</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">FUN =</span> <span class="st">&quot;*&quot;</span>)</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw">upper.tri</span>(x)</a></code></pre></div>
 <pre><code>##       [,1]  [,2]  [,3]  [,4]  [,5]
 ## [1,] FALSE  TRUE  TRUE  TRUE  TRUE
 ## [2,] FALSE FALSE  TRUE  TRUE  TRUE
@@ -302,35 +393,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [4,] FALSE FALSE FALSE FALSE  TRUE
 ## [5,] FALSE FALSE FALSE FALSE FALSE</code></pre>
 <p>We see that it returns the upper triangle of the matrix. But I wanted to walk through how this function actually works and what is meant in the solution manual by leveraging <code>.row(dim(x)) &lt;= .col(dim(x))</code>.</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" data-line-number="1"><span class="co"># ?upper.tri</span></a>
-<a class="sourceLine" id="cb136-2" data-line-number="2"><span class="cf">function</span> (x, <span class="dt">diag =</span> <span class="ot">FALSE</span>) </a>
-<a class="sourceLine" id="cb136-3" data-line-number="3">{</a>
-<a class="sourceLine" id="cb136-4" data-line-number="4">    d &lt;-<span class="st"> </span><span class="kw">dim</span>(x)</a>
-<a class="sourceLine" id="cb136-5" data-line-number="5">    <span class="co"># if you have an array thats more than 2 dimension</span></a>
-<a class="sourceLine" id="cb136-6" data-line-number="6">    <span class="co"># we need to flatten it to a matrix</span></a>
-<a class="sourceLine" id="cb136-7" data-line-number="7">    <span class="cf">if</span> (<span class="kw">length</span>(d) <span class="op">!=</span><span class="st"> </span>2L) </a>
-<a class="sourceLine" id="cb136-8" data-line-number="8">        d &lt;-<span class="st"> </span><span class="kw">dim</span>(<span class="kw">as.matrix</span>(x))</a>
-<a class="sourceLine" id="cb136-9" data-line-number="9">    <span class="cf">if</span> (diag) </a>
-<a class="sourceLine" id="cb136-10" data-line-number="10">      <span class="co"># this is our subsetting logical!</span></a>
-<a class="sourceLine" id="cb136-11" data-line-number="11">         <span class="kw">.row</span>(d) <span class="op">&lt;=</span><span class="st"> </span><span class="kw">.col</span>(d)</a>
-<a class="sourceLine" id="cb136-12" data-line-number="12">    <span class="cf">else</span> <span class="kw">.row</span>(d) <span class="op">&lt;</span><span class="st"> </span><span class="kw">.col</span>(d)</a>
-<a class="sourceLine" id="cb136-13" data-line-number="13">}</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># ?upper.tri</span></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="cf">function</span> (x, <span class="dt">diag =</span> <span class="ot">FALSE</span>) </a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">{</a>
+<a class="sourceLine" id="cb16-4" data-line-number="4">    d &lt;-<span class="st"> </span><span class="kw">dim</span>(x)</a>
+<a class="sourceLine" id="cb16-5" data-line-number="5">    <span class="co"># if you have an array thats more than 2 dimension</span></a>
+<a class="sourceLine" id="cb16-6" data-line-number="6">    <span class="co"># we need to flatten it to a matrix</span></a>
+<a class="sourceLine" id="cb16-7" data-line-number="7">    <span class="cf">if</span> (<span class="kw">length</span>(d) <span class="op">!=</span><span class="st"> </span>2L) </a>
+<a class="sourceLine" id="cb16-8" data-line-number="8">        d &lt;-<span class="st"> </span><span class="kw">dim</span>(<span class="kw">as.matrix</span>(x))</a>
+<a class="sourceLine" id="cb16-9" data-line-number="9">    <span class="cf">if</span> (diag) </a>
+<a class="sourceLine" id="cb16-10" data-line-number="10">      <span class="co"># this is our subsetting logical!</span></a>
+<a class="sourceLine" id="cb16-11" data-line-number="11">         <span class="kw">.row</span>(d) <span class="op">&lt;=</span><span class="st"> </span><span class="kw">.col</span>(d)</a>
+<a class="sourceLine" id="cb16-12" data-line-number="12">    <span class="cf">else</span> <span class="kw">.row</span>(d) <span class="op">&lt;</span><span class="st"> </span><span class="kw">.col</span>(d)</a>
+<a class="sourceLine" id="cb16-13" data-line-number="13">}</a></code></pre></div>
 <p>The function <code>.row()</code> and <code>.col()</code> return a matrix of integers indicating their row number</p>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb137-1" data-line-number="1"><span class="kw">.row</span>(<span class="kw">dim</span>(x))</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">.row</span>(<span class="kw">dim</span>(x))</a></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]    1    1    1    1    1
 ## [2,]    2    2    2    2    2
 ## [3,]    3    3    3    3    3
 ## [4,]    4    4    4    4    4
 ## [5,]    5    5    5    5    5</code></pre>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" data-line-number="1"><span class="kw">.col</span>(<span class="kw">dim</span>(x))</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">.col</span>(<span class="kw">dim</span>(x))</a></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]    1    2    3    4    5
 ## [2,]    1    2    3    4    5
 ## [3,]    1    2    3    4    5
 ## [4,]    1    2    3    4    5
 ## [5,]    1    2    3    4    5</code></pre>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb141-1" data-line-number="1"><span class="kw">.row</span>(<span class="kw">dim</span>(x)) <span class="op">&lt;=</span><span class="st"> </span><span class="kw">.col</span>(<span class="kw">dim</span>(x))</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">.row</span>(<span class="kw">dim</span>(x)) <span class="op">&lt;=</span><span class="st"> </span><span class="kw">.col</span>(<span class="kw">dim</span>(x))</a></code></pre></div>
 <pre><code>##       [,1]  [,2]  [,3]  [,4] [,5]
 ## [1,]  TRUE  TRUE  TRUE  TRUE TRUE
 ## [2,] FALSE  TRUE  TRUE  TRUE TRUE
@@ -349,30 +440,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="logical-atomic" class="section level3 unnumbered">
 <h3>LOGICAL ATOMIC</h3>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb143-1" data-line-number="1"><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)[[<span class="dv">0</span>]] <span class="co"># zero length</span></a>
-<a class="sourceLine" id="cb143-2" data-line-number="2"><span class="co"># attempt to select less than one element in get1index &lt;real&gt;</span></a>
-<a class="sourceLine" id="cb143-3" data-line-number="3"><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)[[<span class="dv">4</span>]] <span class="co"># out of bounds</span></a>
-<a class="sourceLine" id="cb143-4" data-line-number="4"><span class="co"># subscript out of bounds</span></a>
-<a class="sourceLine" id="cb143-5" data-line-number="5"><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)[[<span class="ot">NA</span>]] <span class="co"># missing</span></a>
-<a class="sourceLine" id="cb143-6" data-line-number="6"><span class="co"># subscript out of bounds</span></a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)[[<span class="dv">0</span>]] <span class="co"># zero length</span></a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="co"># attempt to select less than one element in get1index &lt;real&gt;</span></a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)[[<span class="dv">4</span>]] <span class="co"># out of bounds</span></a>
+<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="co"># subscript out of bounds</span></a>
+<a class="sourceLine" id="cb23-5" data-line-number="5"><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)[[<span class="ot">NA</span>]] <span class="co"># missing</span></a>
+<a class="sourceLine" id="cb23-6" data-line-number="6"><span class="co"># subscript out of bounds</span></a></code></pre></div>
 </div>
 <div id="list" class="section level3 unnumbered">
 <h3>LIST</h3>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" data-line-number="1"><span class="kw">list</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="ot">NULL</span>)[[<span class="dv">0</span>]] <span class="co"># zero length</span></a>
-<a class="sourceLine" id="cb144-2" data-line-number="2"><span class="co"># attempt to select less than one element in get1index &lt;real&gt;</span></a>
-<a class="sourceLine" id="cb144-3" data-line-number="3"><span class="kw">list</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="ot">NULL</span>)[[<span class="dv">3</span>]] <span class="co"># out of bounds</span></a>
-<a class="sourceLine" id="cb144-4" data-line-number="4"><span class="co"># subscript out of bounds</span></a>
-<a class="sourceLine" id="cb144-5" data-line-number="5"><span class="kw">list</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="ot">NULL</span>)[[<span class="ot">NA</span>]] <span class="co"># missing</span></a>
-<a class="sourceLine" id="cb144-6" data-line-number="6"><span class="co"># NULL</span></a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">list</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="ot">NULL</span>)[[<span class="dv">0</span>]] <span class="co"># zero length</span></a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="co"># attempt to select less than one element in get1index &lt;real&gt;</span></a>
+<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="kw">list</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="ot">NULL</span>)[[<span class="dv">3</span>]] <span class="co"># out of bounds</span></a>
+<a class="sourceLine" id="cb24-4" data-line-number="4"><span class="co"># subscript out of bounds</span></a>
+<a class="sourceLine" id="cb24-5" data-line-number="5"><span class="kw">list</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="ot">NULL</span>)[[<span class="ot">NA</span>]] <span class="co"># missing</span></a>
+<a class="sourceLine" id="cb24-6" data-line-number="6"><span class="co"># NULL</span></a></code></pre></div>
 </div>
 <div id="null" class="section level3 unnumbered">
 <h3>NULL</h3>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb145-1" data-line-number="1"><span class="ot">NULL</span>[[<span class="dv">0</span>]] <span class="co"># zero length</span></a>
-<a class="sourceLine" id="cb145-2" data-line-number="2"><span class="co"># NULL</span></a>
-<a class="sourceLine" id="cb145-3" data-line-number="3"><span class="ot">NULL</span>[[<span class="dv">1</span>]] <span class="co"># out of bounds</span></a>
-<a class="sourceLine" id="cb145-4" data-line-number="4"><span class="co"># NULL</span></a>
-<a class="sourceLine" id="cb145-5" data-line-number="5"><span class="ot">NULL</span>[[<span class="ot">NA</span>]] <span class="co"># missing</span></a>
-<a class="sourceLine" id="cb145-6" data-line-number="6"><span class="co"># NULL</span></a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="ot">NULL</span>[[<span class="dv">0</span>]] <span class="co"># zero length</span></a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="co"># NULL</span></a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="ot">NULL</span>[[<span class="dv">1</span>]] <span class="co"># out of bounds</span></a>
+<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="co"># NULL</span></a>
+<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="ot">NULL</span>[[<span class="ot">NA</span>]] <span class="co"># missing</span></a>
+<a class="sourceLine" id="cb25-6" data-line-number="6"><span class="co"># NULL</span></a></code></pre></div>
 </div>
 </div>
 <div id="logical-subsetting" class="section level2 unnumbered">
@@ -389,34 +480,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>||</code> will not evaluate the second argument when the first is <code>TRUE</code></li>
 <li><code>&amp;&amp;</code> will not evaluate the second argument when the first is <code>FALSE</code></li>
 </ul>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" data-line-number="1">true_one &lt;-<span class="st"> </span><span class="cf">function</span>() { <span class="kw">print</span>(<span class="st">&quot;true_one evaluated.&quot;</span>); <span class="ot">TRUE</span>}</a>
-<a class="sourceLine" id="cb146-2" data-line-number="2">true_two &lt;-<span class="st"> </span><span class="cf">function</span>() { <span class="kw">print</span>(<span class="st">&quot;true_two evaluated.&quot;</span>); <span class="ot">TRUE</span>}</a>
-<a class="sourceLine" id="cb146-3" data-line-number="3"><span class="co"># arguments are evaluated lazily.  Unexpected behavior can result:</span></a>
-<a class="sourceLine" id="cb146-4" data-line-number="4"><span class="kw">c</span>(T, <span class="kw">true_one</span>()) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">c</span>(T, <span class="kw">true_two</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">true_one &lt;-<span class="st"> </span><span class="cf">function</span>() { <span class="kw">print</span>(<span class="st">&quot;true_one evaluated.&quot;</span>); <span class="ot">TRUE</span>}</a>
+<a class="sourceLine" id="cb26-2" data-line-number="2">true_two &lt;-<span class="st"> </span><span class="cf">function</span>() { <span class="kw">print</span>(<span class="st">&quot;true_two evaluated.&quot;</span>); <span class="ot">TRUE</span>}</a>
+<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="co"># arguments are evaluated lazily.  Unexpected behavior can result:</span></a>
+<a class="sourceLine" id="cb26-4" data-line-number="4"><span class="kw">c</span>(T, <span class="kw">true_one</span>()) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">c</span>(T, <span class="kw">true_two</span>())</a></code></pre></div>
 <pre><code>## [1] &quot;true_one evaluated.&quot;
 ## [1] &quot;true_two evaluated.&quot;</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb149-1" data-line-number="1"><span class="kw">c</span>(T, <span class="kw">true_one</span>()) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">c</span>(F, <span class="kw">true_two</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">c</span>(T, <span class="kw">true_one</span>()) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">c</span>(F, <span class="kw">true_two</span>())</a></code></pre></div>
 <pre><code>## [1] &quot;true_one evaluated.&quot;
 ## [1] &quot;true_two evaluated.&quot;</code></pre>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1"><span class="kw">c</span>(F, <span class="kw">true_one</span>()) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">c</span>(T, <span class="kw">true_two</span>()) </a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">c</span>(F, <span class="kw">true_one</span>()) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">c</span>(T, <span class="kw">true_two</span>()) </a></code></pre></div>
 <pre><code>## [1] &quot;true_one evaluated.&quot;</code></pre>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" data-line-number="1"><span class="kw">c</span>(F, <span class="kw">true_one</span>()) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">c</span>(F, <span class="kw">true_two</span>()) </a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">c</span>(F, <span class="kw">true_one</span>()) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">c</span>(F, <span class="kw">true_two</span>()) </a></code></pre></div>
 <pre><code>## [1] &quot;true_one evaluated.&quot;</code></pre>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb158-1" data-line-number="1"><span class="kw">c</span>(T, <span class="kw">true_one</span>()) <span class="op">||</span><span class="st"> </span><span class="kw">c</span>(T, <span class="kw">true_two</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="kw">c</span>(T, <span class="kw">true_one</span>()) <span class="op">||</span><span class="st"> </span><span class="kw">c</span>(T, <span class="kw">true_two</span>())</a></code></pre></div>
 <pre><code>## [1] &quot;true_one evaluated.&quot;</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" data-line-number="1"><span class="kw">c</span>(T, <span class="kw">true_one</span>()) <span class="op">||</span><span class="st"> </span><span class="kw">c</span>(F, <span class="kw">true_two</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">c</span>(T, <span class="kw">true_one</span>()) <span class="op">||</span><span class="st"> </span><span class="kw">c</span>(F, <span class="kw">true_two</span>())</a></code></pre></div>
 <pre><code>## [1] &quot;true_one evaluated.&quot;</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1"><span class="kw">c</span>(F, <span class="kw">true_one</span>()) <span class="op">||</span><span class="st"> </span><span class="kw">c</span>(T, <span class="kw">true_two</span>()) </a></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">c</span>(F, <span class="kw">true_one</span>()) <span class="op">||</span><span class="st"> </span><span class="kw">c</span>(T, <span class="kw">true_two</span>()) </a></code></pre></div>
 <pre><code>## [1] &quot;true_one evaluated.&quot;
 ## [1] &quot;true_two evaluated.&quot;</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1"><span class="kw">c</span>(F, <span class="kw">true_one</span>()) <span class="op">||</span><span class="st"> </span><span class="kw">c</span>(F, <span class="kw">true_two</span>()) </a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="kw">c</span>(F, <span class="kw">true_one</span>()) <span class="op">||</span><span class="st"> </span><span class="kw">c</span>(F, <span class="kw">true_two</span>()) </a></code></pre></div>
 <pre><code>## [1] &quot;true_one evaluated.&quot;
 ## [1] &quot;true_two evaluated.&quot;</code></pre>
 <pre><code>## [1] FALSE</code></pre>
@@ -434,9 +525,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>“<code>x[-which(y)]</code> is not equivalent to <code>x[!y]</code>: if <code>y</code> is all FALSE, <code>which(y)</code> will be <code>integer(0)</code> and <code>-integer(0)</code> is still <code>integer(0)</code>, so you’ll get no values, instead of all values.”</p>
 <p>Can we come up with an example for this plugging in values for <code>x</code> and <code>y</code></p>
 </div>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" data-line-number="1"><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)[<span class="op">-</span><span class="kw">which</span>(<span class="ot">FALSE</span>)]</a></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)[<span class="op">-</span><span class="kw">which</span>(<span class="ot">FALSE</span>)]</a></code></pre></div>
 <pre><code>## logical(0)</code></pre>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb172-1" data-line-number="1"><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)[<span class="op">!</span><span class="ot">FALSE</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)[<span class="op">!</span><span class="ot">FALSE</span>]</a></code></pre></div>
 <pre><code>## [1]  TRUE FALSE</code></pre>
 
 </div>

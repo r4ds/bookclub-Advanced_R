@@ -119,7 +119,7 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-05-04}
+\date{2020-05-05}
 
 \begin{document}
 \maketitle
@@ -313,7 +313,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd63f0698"
+## [1] "0x7fb0ab351bc8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -323,7 +323,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd63f0698"
+## [1] "0x7fb0ab351bc8"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -335,7 +335,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd046a978"
+## [1] "0x7fb0a6a77850"
 \end{verbatim}
 
 \begin{Shaded}
@@ -345,8 +345,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fcfd317e970] <list> 
-## └─[2:0x7fcfd63f0698] <dbl>
+## █ [1:0x7fb0aa8ba060] <list> 
+## └─[2:0x7fb0ab351bc8] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -356,7 +356,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd036ba68"
+## [1] "0x7fb0ae8c2158"
 \end{verbatim}
 
 \begin{Shaded}
@@ -393,7 +393,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fcfdc84f858>"
+## [1] "<0x7fb0ad480c88>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -403,7 +403,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fcfdc84f858>
+## <0x7fb0ad480c88>
 \end{verbatim}
 
 \begin{Shaded}
@@ -413,7 +413,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfdc84f858"
+## [1] "0x7fb0ad480c88"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -462,7 +462,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd39caac8"
+## [1] "0x7fb0ad7a1d08"
 \end{verbatim}
 
 \begin{Shaded}
@@ -472,7 +472,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fcfd39caac8>"
+## [1] "<0x7fb0ad7a1d08>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -482,7 +482,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fcfd39caac8 -> 0x7fcfdb8e5d88]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fb0ad7a1d08 -> 0x7fb0afbed9c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -578,7 +578,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd67805d8"
+## [1] "0x7fb0adb0fbd8"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -591,7 +591,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd6870d28"
+## [1] "0x7fb0adad8058"
 \end{verbatim}
 
 \begin{Shaded}
@@ -614,7 +614,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd6870d28"
+## [1] "0x7fb0adad8058"
 \end{verbatim}
 
 \begin{Shaded}
@@ -624,7 +624,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd6870d28"
+## [1] "0x7fb0adad8058"
 \end{verbatim}
 
 \begin{Shaded}
@@ -647,7 +647,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd6870d28"
+## [1] "0x7fb0adad8058"
 \end{verbatim}
 
 \begin{Shaded}
@@ -657,7 +657,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd7904c38"
+## [1] "0x7fb0aaa4f0e8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -680,7 +680,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd66f42b8"
+## [1] "0x7fb0ad79faf8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -693,7 +693,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 ## [1] FALSE
 \end{verbatim}
 
-Can we break down this code a bit more? I'd like to really understand when and how it's copying three times.
+Can we break down this code a bit more? I'd like to really understand when and how it's copying three times. \textbf{As of R 4.0 it's now copied twice, the 3rd copy that's external to the function is now eliminated!!}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1293,6 +1293,8 @@ Putting it all together in a single diagram:
 \addcontentsline{toc}{section}{4.1 Introduction}
 
 "There are three subsetting operators \texttt{{[}}. \texttt{{[}{[}}, \texttt{\$}. What is the distinction between an operator and a function? When you look up the help page it brings up the same page for all three extraction methods. What are their distinctions and do their definitions change based on what you're subsetting? Can we make a table?
+
+If we think of everything as sets (which have the properties of 0,1, or many elements), if the set has 1 element it only contains itself and \texttt{NULL} subsets. Before you subset using \texttt{{[}} or \texttt{{[}{[}} count the elements in the set. If it has zero elements you are done, if it has one element \texttt{{[}} will return itself - to go further you need to use \texttt{{[}{[}} to return its contents. If there is more than one element in the set then \texttt{{[}} will return those elements. \href{https://bookdown.org/rdpeng/rprogdatascience/subsetting-r-objects.html\#subsetting-a-vector}{You can read more about subsetting here}
 
 \hypertarget{selecting-multiple-elements}{%
 \section*{4.2.1 Selecting multiple elements}\label{selecting-multiple-elements}}
@@ -2052,7 +2054,7 @@ Let's first put functions into words:
 \item
   If condition then run code, else quit
 \item
-  If condition then run code, else run other code
+  A vectorized version of: if condition then run code, else run other code
 \item
   For every element in list of elements do what is in between the curly braces
 \item
@@ -2063,7 +2065,7 @@ Let's first put functions into words:
 
 \includegraphics[width=40in]{images/controlflow}
 
-It is also important to note that unlike the other control flow statements, \texttt{ifelse} is vectorized -- we can visualize the \texttt{ifelse} logic above operating on each element within a vector:
+We can visualize how the \texttt{ifelse} logic on a single element above will operate on each element within a vector:
 
 \begin{center}\includegraphics[width=9.76in]{images/ifelse} \end{center}
 
@@ -2366,7 +2368,7 @@ Comparing the default sample function:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  8  9  4  1  2  6  3  5  7 10
+##  [1]  4  6  3  7  9  5  2 10  1  8
 \end{verbatim}
 
 To using Hadley's recommended \texttt{NULL} version:
@@ -2383,7 +2385,7 @@ To using Hadley's recommended \texttt{NULL} version:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  7  4  2 10  5  6  3  1  9  8
+##  [1] 10  5  4  6  8  2  3  1  9  7
 \end{verbatim}
 
 The second function is obviously more concise, but why is Hadley recommending we we steer clear of \texttt{missing()}? Is this just for code read-ability or is there something inherent in the behavior of \texttt{missing} we need to consider that we don't when using \texttt{NULL}?
@@ -2425,7 +2427,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fcfd128bdc8>
+## <bytecode: 0x7fb0a59101c8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 

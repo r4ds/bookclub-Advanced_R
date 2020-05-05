@@ -41,11 +41,12 @@ subsetting_table <- tibble(
 ) %>%
   column_to_rownames("names")
 
-# kableExtra::kable(subsetting_table) %>% 
-#  kable_styling(latex_options = "striped") %>%
-#  column_spec(1, bold = T, border_right = T)
+kableExtra::kable(subsetting_table) %>% 
+  kable_styling(latex_options = "striped") %>%
+  column_spec(1, bold = T, border_right = T)
 ```
 
+If we think of everything as sets (which have the properties of 0,1, or many elements), if the set has 1 element it only contains itself and `NULL` subsets. Before you subset using `[` or `[[` count the elements in the set. If it has zero elements you are done, if it has one element `[` will return itself - to go further you need to use `[[` to return its contents. If there is more than one element in the set then `[` will return those elements. [You can read more about subsetting here](https://bookdown.org/rdpeng/rprogdatascience/subsetting-r-objects.html#subsetting-a-vector)
 
 ## 4.2.1 Selecting multiple elements {-}
 

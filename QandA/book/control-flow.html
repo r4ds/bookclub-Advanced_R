@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-05-04" />
+<meta name="date" content="2020-05-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -388,13 +388,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Let’s first put functions into words:</p>
 <ul>
 <li>If condition then run code, else quit</li>
-<li>If condition then run code, else run other code</li>
+<li>A vectorized version of: if condition then run code, else run other code</li>
 <li>For every element in list of elements do what is in between the curly braces</li>
 <li>While this condition is true do this</li>
 <li>Repeat this until something tells you to break out</li>
 </ul>
 <p><img src="images/controlflow.png" width="1440" /></p>
-<p>It is also important to note that unlike the other control flow statements, <code>ifelse</code> is vectorized – we can visualize the <code>ifelse</code> logic above operating on each element within a vector:</p>
+<p>We can visualize how the <code>ifelse</code> logic on a single element above will operate on each element within a vector:</p>
 <p><img src="images/ifelse.png" width="352" style="display: block; margin: auto;" /></p>
 <p>For instance if we can run:</p>
 <div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb207-1" data-line-number="1"><span class="kw">ifelse</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>), <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">3</span>)</a></code></pre></div>
