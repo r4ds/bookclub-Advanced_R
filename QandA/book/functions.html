@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-05-02" />
+<meta name="date" content="2020-05-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -376,7 +376,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb232-17" data-line-number="17">}</a>
 <a class="sourceLine" id="cb232-18" data-line-number="18"></a>
 <a class="sourceLine" id="cb232-19" data-line-number="19"><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a></code></pre></div>
-<pre><code>##  [1]  3  6  4 10  9  1  5  2  8  7</code></pre>
+<pre><code>##  [1]  7  3  4  8  1  2  9  5  6 10</code></pre>
 <p>To using Hadley’s recommended <code>NULL</code> version:</p>
 <div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb234-1" data-line-number="1">my_sample_null &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">size =</span> <span class="ot">NULL</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>, <span class="dt">prob =</span> <span class="ot">NULL</span>) {</a>
 <a class="sourceLine" id="cb234-2" data-line-number="2">  size &lt;-<span class="st"> </span>size <span class="op">%||%</span><span class="st"> </span><span class="kw">length</span>(x)</a>
@@ -384,7 +384,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb234-4" data-line-number="4">}</a>
 <a class="sourceLine" id="cb234-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb234-6" data-line-number="6"><span class="kw">my_sample_null</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a></code></pre></div>
-<pre><code>##  [1]  3 10  4  5  6  9  2  1  7  8</code></pre>
+<pre><code>##  [1]  4  9  5 10  8  6  7  2  1  3</code></pre>
 <p>The second function is obviously more concise, but why is Hadley recommending we we steer clear of <code>missing()</code>? Is this just for code read-ability or is there something inherent in the behavior of <code>missing</code> we need to consider that we don’t when using <code>NULL</code>?</p>
 </div>
 <div class="TODO">
@@ -410,7 +410,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb238-1" data-line-number="1">hist</a></code></pre></div>
 <pre><code>## function (x, ...) 
 ## UseMethod(&quot;hist&quot;)
-## &lt;bytecode: 0x7fbbcb12dfc8&gt;
+## &lt;bytecode: 0x7fcfd128bdc8&gt;
 ## &lt;environment: namespace:graphics&gt;</code></pre>
 <p>does not give me the actual contents of the actual function….</p>
 </div>

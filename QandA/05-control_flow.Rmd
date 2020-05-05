@@ -223,11 +223,21 @@ Error in mylist[[10]] : subscript out of bounds
 Can we put these concepts together in diagram form? Let's work on improving these schematics!
 :::
 
+
+Let's first put functions into words:
+
+
+* If condition then run code, else quit
+* A vectorized version of: if condition then run code, else run other code
+* For every element in list of elements do what is in between the curly braces
+* While this condition is true do this
+* Repeat this until something tells you to break out
+
 ```{r, echo=FALSE}
 knitr::include_graphics("images/controlflow.png")
 ```
 
-It is also important to note that unlike the other control flow statements, `ifelse` is vectorized -- we can visualize the `ifelse` logic above operating on each element within a vector:
+We can visualize how the `ifelse` logic on a single element above will operate on each element within a vector:
 
 ```{r, echo=FALSE, fig.align='center'  }
 knitr::include_graphics("images/ifelse.png")
