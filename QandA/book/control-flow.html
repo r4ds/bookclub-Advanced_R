@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-05-04" />
+<meta name="date" content="2020-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -187,6 +187,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#out-of-bounds"><i class="fa fa-check"></i>Out of Bounds</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#conclusion-1"><i class="fa fa-check"></i>Conclusion</a></li>
+<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#complexity"><i class="fa fa-check"></i>Complexity</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>6</b> Functions</a><ul>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#primitives"><i class="fa fa-check"></i>6.2.2 Primitives</a></li>
@@ -388,13 +389,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Let’s first put functions into words:</p>
 <ul>
 <li>If condition then run code, else quit</li>
-<li>If condition then run code, else run other code</li>
+<li>A vectorized version of: if condition then run code, else run other code</li>
 <li>For every element in list of elements do what is in between the curly braces</li>
 <li>While this condition is true do this</li>
 <li>Repeat this until something tells you to break out</li>
 </ul>
 <p><img src="images/controlflow.png" width="1440" /></p>
-<p>It is also important to note that unlike the other control flow statements, <code>ifelse</code> is vectorized – we can visualize the <code>ifelse</code> logic above operating on each element within a vector:</p>
+<p>We can visualize how the <code>ifelse</code> logic on a single element above will operate on each element within a vector:</p>
 <p><img src="images/ifelse.png" width="352" style="display: block; margin: auto;" /></p>
 <p>For instance if we can run:</p>
 <div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb207-1" data-line-number="1"><span class="kw">ifelse</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>), <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">3</span>)</a></code></pre></div>
@@ -422,6 +423,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb216-1" data-line-number="1"><span class="kw">ifelse</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>), <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="st">&quot;FALSE&quot;</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;1&quot;     &quot;FALSE&quot; &quot;3&quot;     &quot;FALSE&quot; &quot;5&quot;     &quot;6&quot;</code></pre>
 <p>we can see that ifelse places the numbers in <code>1:10</code> based on their index where our condition is to <code>TRUE</code> and inserts the string <code>&quot;FALSE&quot;</code> whenever the condition is <code>FALSE</code></p>
+</div>
+<div id="complexity" class="section level2 unnumbered">
+<h2>Complexity</h2>
+<p>We can use the package <code>cyclocomp</code> to look at the cyclomatic complexity of our functions. Looking at each function from the Chapter 5 presentation:</p>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb218-1" data-line-number="1">controlflow_functions &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb218-2" data-line-number="2">  <span class="dt">if_func =</span> if_func,</a>
+<a class="sourceLine" id="cb218-3" data-line-number="3">  <span class="dt">if_else_func =</span> if_else_func,</a>
+<a class="sourceLine" id="cb218-4" data-line-number="4">  <span class="dt">ifelse_func =</span> ifelse_func,</a>
+<a class="sourceLine" id="cb218-5" data-line-number="5">  <span class="dt">casewhen_func =</span> casewhen_func,</a>
+<a class="sourceLine" id="cb218-6" data-line-number="6">  <span class="dt">switch_func =</span> switch_func, </a>
+<a class="sourceLine" id="cb218-7" data-line-number="7">  <span class="dt">for_func =</span> for_func,</a>
+<a class="sourceLine" id="cb218-8" data-line-number="8">  <span class="dt">while_func =</span> while_func,</a>
+<a class="sourceLine" id="cb218-9" data-line-number="9">  <span class="dt">repeat_func =</span> repeat_func)</a>
+<a class="sourceLine" id="cb218-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb218-11" data-line-number="11">purrr<span class="op">::</span><span class="kw">map_df</span>(controlflow_functions, cyclocomp)</a></code></pre></div>
+<pre><code>## # A tibble: 1 x 8
+##   if_func if_else_func ifelse_func casewhen_func switch_func for_func while_func
+##     &lt;int&gt;        &lt;int&gt;       &lt;int&gt;         &lt;int&gt;       &lt;int&gt;    &lt;int&gt;      &lt;int&gt;
+## 1       2            2           1             1           1       23          3
+## # … with 1 more variable: repeat_func &lt;int&gt;</code></pre>
+<p>We see that the <code>for</code> loop was our most complex function and <code>while</code> had a complexity of 3. The rest of our functions had a complexity of <code>1</code>.</p>
+<p>As <a href="https://engineering-shiny.org/successfulshinyapp.html">Colin Fay states</a>:</p>
+<p>“Splitting a complex function into smaller functions is not a magic solution because (A) the global complexity of the app is not lowered by splitting things into pieces (just local complexity), and (B) the deeper the call stack, the harder it can be to debug.”</p>
 
 </div>
 </div>

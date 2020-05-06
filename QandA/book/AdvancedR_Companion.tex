@@ -119,7 +119,7 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-05-04}
+\date{2020-05-06}
 
 \begin{document}
 \maketitle
@@ -313,7 +313,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd63f0698"
+## [1] "0x7fc1bb74cac0"
 \end{verbatim}
 
 \begin{Shaded}
@@ -323,7 +323,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd63f0698"
+## [1] "0x7fc1bb74cac0"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -335,7 +335,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd046a978"
+## [1] "0x7fc1bd10f888"
 \end{verbatim}
 
 \begin{Shaded}
@@ -345,8 +345,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fcfd317e970] <list> 
-## └─[2:0x7fcfd63f0698] <dbl>
+## █ [1:0x7fc1bd17fe00] <list> 
+## └─[2:0x7fc1bb74cac0] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -356,7 +356,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd036ba68"
+## [1] "0x7fc1bd236e78"
 \end{verbatim}
 
 \begin{Shaded}
@@ -393,7 +393,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fcfdc84f858>"
+## [1] "<0x7fc1bf838b98>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -403,7 +403,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fcfdc84f858>
+## <0x7fc1bf838b98>
 \end{verbatim}
 
 \begin{Shaded}
@@ -413,7 +413,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfdc84f858"
+## [1] "0x7fc1bf838b98"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -462,7 +462,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd39caac8"
+## [1] "0x7fc1bc2c79c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -472,7 +472,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fcfd39caac8>"
+## [1] "<0x7fc1bc2c79c8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -482,7 +482,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fcfd39caac8 -> 0x7fcfdb8e5d88]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fc1bc2c79c8 -> 0x7fc1bc2817c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -578,7 +578,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd67805d8"
+## [1] "0x7fc1bb9767d8"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -591,7 +591,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd6870d28"
+## [1] "0x7fc1b9e6d838"
 \end{verbatim}
 
 \begin{Shaded}
@@ -614,7 +614,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd6870d28"
+## [1] "0x7fc1b9e6d838"
 \end{verbatim}
 
 \begin{Shaded}
@@ -624,7 +624,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd6870d28"
+## [1] "0x7fc1b9e6d838"
 \end{verbatim}
 
 \begin{Shaded}
@@ -647,7 +647,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd6870d28"
+## [1] "0x7fc1b9e6d838"
 \end{verbatim}
 
 \begin{Shaded}
@@ -657,7 +657,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd7904c38"
+## [1] "0x7fc1bbbf9ae8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -680,7 +680,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcfd66f42b8"
+## [1] "0x7fc1bd2b2be8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -693,7 +693,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 ## [1] FALSE
 \end{verbatim}
 
-Can we break down this code a bit more? I'd like to really understand when and how it's copying three times.
+Can we break down this code a bit more? I'd like to really understand when and how it's copying three times. \textbf{As of R 4.0 it's now copied twice, the 3rd copy that's external to the function is now eliminated!!}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -876,7 +876,7 @@ and once inside, use \texttt{tracemem()} to find where the new values are assign
 \end{Highlighting}
 \end{Shaded}
 
-Thus seeing exactly where the three copies are happening!
+Thus seeing exactly where the three \textbf{as of R 4.0: two!} copies are happening.
 
 \hypertarget{vectors}{%
 \chapter{Vectors}\label{vectors}}
@@ -1293,6 +1293,54 @@ Putting it all together in a single diagram:
 \addcontentsline{toc}{section}{4.1 Introduction}
 
 "There are three subsetting operators \texttt{{[}}. \texttt{{[}{[}}, \texttt{\$}. What is the distinction between an operator and a function? When you look up the help page it brings up the same page for all three extraction methods. What are their distinctions and do their definitions change based on what you're subsetting? Can we make a table?
+
+{[}
+
+{[}{[}
+
+\$
+
+ATOMIC
+
+RETURNS VECTOR WITH ONE ELEMENT
+
+SAME AS {[}
+
+NOPE!
+
+LIST
+
+RETURNS A LIST
+
+RETURNS SINGLE ELEMENT FROM WITHIN LIST
+
+RETURN SINGLE ELEMENT FROM LIST {[}CAN ONLY USE WHEN LIST VECTOR HAS A NAME{]}
+
+MATRIX
+
+RETURNS A VECTOR
+
+RETURNS A VECTOR OR SINGLE VALUE
+
+NOPE!
+
+DATA FRAME
+
+RETURNS A VECTOR OR DATA FRAME
+
+RETURNS VECTOR/LIST/MATRIX OR SINGLE VALUE
+
+RETURNS VECTOR/LIST/MATRIX USING COLUMN NAME
+
+TIBBLE
+
+RETURNS A TIBBLE
+
+RETURNS A VECTOR OR SINGLE VALUE
+
+RETURNS THE STR OF THE COLUMN - TIBBLE/LIST/MATRIX
+
+If we think of everything as sets (which have the properties of 0,1, or many elements), if the set has 1 element it only contains itself and \texttt{NULL} subsets. Before you subset using \texttt{{[}} or \texttt{{[}{[}} count the elements in the set. If it has zero elements you are done, if it has one element \texttt{{[}} will return itself - to go further you need to use \texttt{{[}{[}} to return its contents. If there is more than one element in the set then \texttt{{[}} will return those elements. \href{https://bookdown.org/rdpeng/rprogdatascience/subsetting-r-objects.html\#subsetting-a-vector}{You can read more about subsetting here}
 
 \hypertarget{selecting-multiple-elements}{%
 \section*{4.2.1 Selecting multiple elements}\label{selecting-multiple-elements}}
@@ -2052,7 +2100,7 @@ Let's first put functions into words:
 \item
   If condition then run code, else quit
 \item
-  If condition then run code, else run other code
+  A vectorized version of: if condition then run code, else run other code
 \item
   For every element in list of elements do what is in between the curly braces
 \item
@@ -2063,7 +2111,7 @@ Let's first put functions into words:
 
 \includegraphics[width=40in]{images/controlflow}
 
-It is also important to note that unlike the other control flow statements, \texttt{ifelse} is vectorized -- we can visualize the \texttt{ifelse} logic above operating on each element within a vector:
+We can visualize how the \texttt{ifelse} logic on a single element above will operate on each element within a vector:
 
 \begin{center}\includegraphics[width=9.76in]{images/ifelse} \end{center}
 
@@ -2151,6 +2199,42 @@ Another example: we can run
 \end{verbatim}
 
 we can see that ifelse places the numbers in \texttt{1:10} based on their index where our condition is to \texttt{TRUE} and inserts the string \texttt{"FALSE"} whenever the condition is \texttt{FALSE}
+
+\hypertarget{complexity}{%
+\section*{Complexity}\label{complexity}}
+\addcontentsline{toc}{section}{Complexity}
+
+We can use the package \texttt{cyclocomp} to look at the cyclomatic complexity of our functions. Looking at each function from the Chapter 5 presentation:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{controlflow_functions <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{if_func =}\NormalTok{ if_func,}
+  \DataTypeTok{if_else_func =}\NormalTok{ if_else_func,}
+  \DataTypeTok{ifelse_func =}\NormalTok{ ifelse_func,}
+  \DataTypeTok{casewhen_func =}\NormalTok{ casewhen_func,}
+  \DataTypeTok{switch_func =}\NormalTok{ switch_func, }
+  \DataTypeTok{for_func =}\NormalTok{ for_func,}
+  \DataTypeTok{while_func =}\NormalTok{ while_func,}
+  \DataTypeTok{repeat_func =}\NormalTok{ repeat_func)}
+
+\NormalTok{purrr}\OperatorTok{::}\KeywordTok{map_df}\NormalTok{(controlflow_functions, cyclocomp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 8
+##   if_func if_else_func ifelse_func casewhen_func switch_func for_func while_func
+##     <int>        <int>       <int>         <int>       <int>    <int>      <int>
+## 1       2            2           1             1           1       23          3
+## # ... with 1 more variable: repeat_func <int>
+\end{verbatim}
+
+We see that the \texttt{for} loop was our most complex function and \texttt{while} had a complexity of 3. The rest of our functions had a complexity of \texttt{1}.
+
+As \href{https://engineering-shiny.org/successfulshinyapp.html}{Colin Fay states}:
+
+``Splitting a complex function into smaller functions is not a magic solution because (A) the global complexity of the app is not lowered by splitting things into pieces (just local complexity), and (B) the deeper the call stack, the harder it can be to debug.''
 
 \hypertarget{functions}{%
 \chapter{Functions}\label{functions}}
@@ -2313,24 +2397,27 @@ I don't quite understand why \texttt{x\ =\ ls()} is different from \texttt{ls()}
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "answer"                "as_tb"                 "custom_attr"          
-##  [4] "df"                    "df_coltypes"           "df_non_syntactic_name"
-##  [7] "df_x"                  "double"                "example2223"          
-## [10] "f1"                    "f2"                    "f3"                   
-## [13] "g11"                   "h03"                   "h05"                  
-## [16] "i"                     "l1"                    "l2"                   
-## [19] "means"                 "medians"               "my_factor"            
-## [22] "my_matrix"             "my_set"                "my_vector"            
-## [25] "mylist"                "new_address"           "new_y_address"        
-## [28] "no"                    "no_final"              "no_idx"               
-## [31] "old_address"           "out"                   "out_list"             
-## [34] "out_vector"            "subsetting_table"      "test"                 
-## [37] "true_one"              "true_two"              "v"                    
-## [40] "v_address"             "var"                   "x"                    
-## [43] "x1"                    "x2"                    "x3"                   
-## [46] "x4"                    "x5"                    "y"                    
-## [49] "y_address"             "yes"                   "yes_final"            
-## [52] "yes_idx"
+##  [1] "answer"                "as_tb"                 "casewhen_func"        
+##  [4] "controlflow_functions" "custom_attr"           "df"                   
+##  [7] "df_coltypes"           "df_non_syntactic_name" "df_x"                 
+## [10] "double"                "example2223"           "f1"                   
+## [13] "f2"                    "f3"                    "for_func"             
+## [16] "g11"                   "h03"                   "h05"                  
+## [19] "i"                     "if_else_func"          "if_func"              
+## [22] "ifelse_func"           "l1"                    "l2"                   
+## [25] "means"                 "medians"               "my_factor"            
+## [28] "my_matrix"             "my_set"                "my_vector"            
+## [31] "mylist"                "new_address"           "new_y_address"        
+## [34] "no"                    "no_final"              "no_idx"               
+## [37] "old_address"           "out"                   "out_list"             
+## [40] "out_vector"            "repeat_func"           "subsetting_table"     
+## [43] "switch_func"           "test"                  "true_one"             
+## [46] "true_two"              "v"                     "v_address"            
+## [49] "var"                   "while_func"            "x"                    
+## [52] "x1"                    "x2"                    "x3"                   
+## [55] "x4"                    "x5"                    "y"                    
+## [58] "y_address"             "yes"                   "yes_final"            
+## [61] "yes_idx"
 \end{verbatim}
 
 XXX
@@ -2366,7 +2453,7 @@ Comparing the default sample function:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  8  9  4  1  2  6  3  5  7 10
+##  [1]  9  1  8 10  6  4  3  7  5  2
 \end{verbatim}
 
 To using Hadley's recommended \texttt{NULL} version:
@@ -2383,7 +2470,7 @@ To using Hadley's recommended \texttt{NULL} version:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  7  4  2 10  5  6  3  1  9  8
+##  [1] 10  8  9  3  7  5  4  6  2  1
 \end{verbatim}
 
 The second function is obviously more concise, but why is Hadley recommending we we steer clear of \texttt{missing()}? Is this just for code read-ability or is there something inherent in the behavior of \texttt{missing} we need to consider that we don't when using \texttt{NULL}?
@@ -2425,7 +2512,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fcfd128bdc8>
+## <bytecode: 0x7fc1b2d48bc8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -2528,16 +2615,14 @@ XXX
 \textbf{{Q}}: How does the \texttt{chdir} parameter of \texttt{source()} compare to \texttt{in\_dir()}? Why might you prefer one approach to the other?
 The \texttt{in\_dir()} approach was given in the book as
 
-\begin{verbatim}
 ```r
-in_dir <- function(dir, code) {
-  old <- setwd(dir)
-  on.exit(setwd(old))
-  
-  force(code)
-}
+in\_dir \textless{}- function(dir, code) \{
+old \textless{}- setwd(dir)
+on.exit(setwd(old))
+
+force(code)
+\}
 ```
-\end{verbatim}
 
 \textbf{{A}}: \texttt{in\_dir()} takes a path to a working directory as an argument. First the working directory is changed accordingly. \texttt{on.exit()} ensures that the modification to the working directory are reset to the initial value when the function exits.
 
@@ -2681,25 +2766,18 @@ XXX
 
 \textbf{{Q}}: Explain why the following code fails:
 
-\begin{verbatim}
-```r
-modify(get("x"), 1) <- 10
-#> Error: target of assignment expands to non-language object
-```
-\end{verbatim}
+\texttt{r\ \ \ \ \ modify(get("x"),\ 1)\ \textless{}-\ 10\ \ \ \ \ \#\textgreater{}\ Error:\ target\ of\ assignment\ expands\ to\ non-language\ object}
 
 \textbf{{A}}: First, let's define \texttt{x} and recall the definition of \texttt{modify()} from the textbook:
 
-\begin{verbatim}
 ```r
-x <- 1:3
+x \textless{}- 1:3
 
-`modify<-` <- function(x, position, value) {
-  x[position] <- value
-  x
-}
+\texttt{modify\textless{}-} \textless{}- function(x, position, value) \{
+x{[}position{]} \textless{}- value
+x
+\}
 ```
-\end{verbatim}
 
 XXX
 

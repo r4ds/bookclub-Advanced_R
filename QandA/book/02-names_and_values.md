@@ -1,10 +1,6 @@
 # Names and Values
 
-```{r, include=FALSE}
-library(tidyverse)
-library(kableExtra)
-library(lobstr)
-```
+
 
 ## 2.3 Copy-on-modify {-}
 
@@ -20,7 +16,8 @@ modify in place only happens when objects with a single binding get a special pe
 Question 3 digs into the syntactically valid names created when using `read.csv()`, but what is the difference between quotation and backticks? 
 
 If we create an example csv
-```{r}
+
+```r
 example2223 <- tibble(
   `if` = c(1,2,3),
   `_1234` = c(4,5,6),
@@ -31,33 +28,71 @@ write.csv(example2223, "example2223.csv", row.names = FALSE)
 ```
 
 Import using adjusted column names to be syntactically valid:
-```{r}
+
+```r
 read.csv(file = "example2223.csv",check.names = TRUE)
 ```
 
+```
+##   if. X_1234 column.1
+## 1   1      4        7
+## 2   2      5        8
+## 3   3      6        9
+```
+
 Import using non-adjusted column names
-```{r}
+
+```r
 read.csv(file = "example2223.csv", check.names = FALSE)
 ```
 
+```
+##   if _1234 column 1
+## 1  1     4        7
+## 2  2     5        8
+## 3  3     6        9
+```
+
 Import using the tidyverse where names are not adjusted
-```{r}
+
+```r
 df_non_syntactic_name  <- read_csv(file = "example2223.csv")
+```
+
+```
+## Parsed with column specification:
+## cols(
+##   `if` = col_double(),
+##   `_1234` = col_double(),
+##   `column 1` = col_double()
+## )
 ```
 
 However I really don´t understand the difference between backticks and quotation marks. For example when I select a column in the case of non-syntactic in the tidyverse I can use quotation marks or backticks 
 
-```{r}
+
+```r
 df_non_syntactic_name %>% select("if")
 ```
 
-```{r, eval=FALSE}
+```
+## # A tibble: 3 x 1
+##    `if`
+##   <dbl>
+## 1     1
+## 2     2
+## 3     3
+```
+
+
+```r
 df_non_syntactic_name %>% select(`if`)
 ```
 
 But in base R, I can do this with quotation marks, but not backticks:
 
-```{r, eval=FALSE}
+
+```r
 df__non_syntactic_name["if"]
 ```
 
@@ -78,19 +113,22 @@ Can we go over and break down figure in 2.3.2
 
 When you create this function:
 
-```{r, eval=FALSE}
+
+```r
 crazyfunction <- function(eh) {eh}
 ```
 
 `eh` doesn't exist in memory at this point.
 
-```{r, eval=FALSE}
+
+```r
 x <- c(1,2,3)
 ```
 
 x exists in memory.
 
-```{r, eval=FALSE}
+
+```r
 z <- crazyfunction(x) 
 ```
 
@@ -106,32 +144,81 @@ The round brackets `(eh)` list the arguments, the curly brackets `{eh}` define t
 
 Checking the address for a list and its copy we see they share the same references:
 
-```{r}
+
+```r
 l1 <- list(1,2,3)
 l2 <- l1
 identical(lobstr::ref(l1),lobstr::ref(l2))
+```
+
+```
+## [1] TRUE
+```
+
+```r
 lobstr::obj_addr(l1[[1]])
+```
+
+```
+## [1] "0x7fcd93868f60"
+```
+
+```r
 lobstr::obj_addr(l2[[1]])
+```
+
+```
+## [1] "0x7fcd93868f60"
 ```
 
 But why isn't this the case for their subsets? Using `obj_addr` they have different addresses, but when we look at their references they are the same
 
-```{r}
+
+```r
 lobstr::obj_addr(l1[1])
+```
+
+```
+## [1] "0x7fcd9311f858"
+```
+
+```r
 lobstr::ref(l1[1])
+```
+
+```
+## █ [1:0x7fcd929c36d8] <list> 
+## └─[2:0x7fcd93868f60] <dbl>
+```
+
+```r
 lobstr::obj_addr(l2[1])
 ```
 
+```
+## [1] "0x7fcd92902a58"
+```
 
-```{r}
+
+
+```r
 identical(lobstr::obj_addr(l1[1]), lobstr::obj_addr(l2[1]))
+```
+
+```
+## [1] FALSE
 ```
 :::
 
 This is because using singular brackets wraps the value 1 in a new list that is created on the fly which will have a unique address. We can use double brackets to confirm our mental model that the sublists are also identical:
 
-```{r}
+
+```r
 identical(lobstr::obj_addr(l1[[1]]), lobstr::obj_addr(l2[[1]]))
+```
+
+```
+## [1] TRUE
 ```
 
 
@@ -141,11 +228,30 @@ What's the difference between these 2 addresses `<0x55d53fa975b8>` and `0x55d53f
 
 Nothing - it has to do with the printing method:
 
-```{r}
+
+```r
 x <- c(1, 2, 3)
 print(tracemem(x))
+```
+
+```
+## [1] "<0x7fcd92a81c88>"
+```
+
+```r
 cat(tracemem(x))
+```
+
+```
+## <0x7fcd92a81c88>
+```
+
+```r
 lobstr::obj_addr(x)
+```
+
+```
+## [1] "0x7fcd92a81c88"
 ```
 
 :::question
@@ -168,7 +274,8 @@ According to [this post](https://community.rstudio.com/t/memory-usage-and-rs-glo
 :::question
 When we look at `tracemem` when we modify `x` from an integer to numeric, x is assigned to three objects. The first is the integer, and the third numeric - so what's the intermediate type?
 
-```{r, eval=FALSE}
+
+```r
 x <- c(1L, 2L, 3L)
 obj_addr(x)
 tracemem(x)
@@ -187,16 +294,36 @@ What is `0x7f84b7fe5288` when the intermediate `x <- c(1L, 2L, 4)` is impossible
 
 When we assign the new value as an integer there is no intermediate step. This probably means `c(1,2, NA)` is the intermediate step; creating an intermediate vector that's the same length of the final product with NA values at all locations that are new or to be changed
 
-```{r}
+
+```r
 x <- c(1L, 2L, 3L)
 obj_addr(x)
+```
+
+```
+## [1] "0x7fcd92501308"
+```
+
+```r
 tracemem(x)
+```
+
+```
+## [1] "<0x7fcd92501308>"
+```
+
+```r
 x[[3]] <- 4L
+```
+
+```
+## tracemem[0x7fcd92501308 -> 0x7fcd924c78c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 ```
 
 You can dig into the C code running this: 
 
-```{r, eval=FALSE}
+
+```r
 pryr::show_c_source(.Internal("[<-"))
 ```
 
@@ -204,31 +331,56 @@ pryr::show_c_source(.Internal("[<-"))
 
 :::question
 If I have two vectors, one `1:10` and another `c(1:10, 10)`, intuitively, I would expect the size of the second vector to be greater than the size of the first. However, it seems to be the other way round, why?
-```{r}
+
+```r
 x1 <- 1:10
 x2 <- rep(1:10, 10)
 lobstr::obj_size(x1)
+```
+
+```
+## 680 B
+```
+
+```r
 lobstr::obj_size(x2)
+```
+
+```
+## 448 B
 ```
 :::
 
 If we start with the following three vectors:
-```{r}
+
+```r
 x1 <- c(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L)
 x2 <- 1:10
 x3 <- rep(1:10, 10)
 lobstr::obj_sizes(x1, x2, x3)
 ```
 
+```
+## *  96 B
+## * 680 B
+## * 448 B
+```
+
 Intuitively, we would have expected `x1` < `x2` < `x3` but this is not the case. It appears that the `rep()` function coerces a double into integer and hence optimizes on space. Using `:`, R internally uses [ALTREP](https://blog.revolutionanalytics.com/2017/09/altrep-preview.html). 
 
 ALTREP would actually be more efficient if the numbers represented were significantly large, say `1e7`.
 
-```{r}
+
+```r
 x4 <- 1:1e7
 x5 <- x4
 x5[1] <- 1L
 lobstr::obj_sizes(x4, x5)
+```
+
+```
+## *        680 B
+## * 40,000,048 B
 ```
 
 Now, the size of x4  is significantly lower than that of x5 .  This seems to indicate that ALTREP becomes super efficient as the vector size is increased.
@@ -244,47 +396,115 @@ Can we come up with an example of this? It seems really theoretical right now.
 First you need to switch your Environment tab to something other than global in RStudio!
 
 Now we can create a vector:
-```{r}
+
+```r
 v <- c(1, 2, 3)
 (old_address <- lobstr::obj_addr(v))
 ```
 
+```
+## [1] "0x7fcd9325dc08"
+```
+
 Changing a value within it changes its address:
-```{r}
+
+```r
 v[[3]] <- 4
 (new_address <- lobstr::obj_addr(v))
+```
+
+```
+## [1] "0x7fcd928f59a8"
+```
+
+```r
 old_address == new_address
 ```
 
+```
+## [1] FALSE
+```
+
 We can assign the modified vector to a new name, where `y` and `v` point to the same thing.
-```{r}
+
+```r
 y <- v
 (y_address <- lobstr::obj_addr(y))
+```
+
+```
+## [1] "0x7fcd928f59a8"
+```
+
+```r
 (v_address <- lobstr::obj_addr(v))
+```
+
+```
+## [1] "0x7fcd928f59a8"
+```
+
+```r
 y_address == v_address
 ```
 
+```
+## [1] TRUE
+```
+
 Now if we modify `v` it won't point to the same thing as `y`:
-```{r}
+
+```r
 v[[3]] <- 3
 (y_address <- lobstr::obj_addr(y))
+```
+
+```
+## [1] "0x7fcd928f59a8"
+```
+
+```r
 (v_address <- lobstr::obj_addr(v))
+```
+
+```
+## [1] "0x7fcd92a7cea8"
+```
+
+```r
 y_address == v_address
+```
+
+```
+## [1] FALSE
 ```
 
 But if we now change `y` to look like `v`, the original address, in theory editing y should occur in place, but it doesn't - the "count does not go back to one"!
 
-```{r}
+
+```r
 y[[3]] <- 3
 (new_y_address <- lobstr::obj_addr(y))
+```
+
+```
+## [1] "0x7fcd92faf788"
+```
+
+```r
 new_y_address == y_address
+```
+
+```
+## [1] FALSE
 ```
 
 :::question
 
 Can we break down this code a bit more? I'd like to really understand when and how it's copying three times. **As of R 4.0 it's now copied twice, the 3rd copy that's external to the function is now eliminated!!**
 
-```{r}
+
+```r
 # dataframe of 5 columns of numbers
 x <- data.frame(matrix(runif(5 * 1e4), ncol = 5))
 # median number for each column
@@ -298,7 +518,8 @@ for (i in seq_along(medians)) {
 :::
 
 
-```{r, eval=FALSE}
+
+```r
 cat(tracemem(x), "\n")
 ```
 
@@ -306,7 +527,8 @@ cat(tracemem(x), "\n")
 <0x7fdc99a6f9a8> 
 ```
 
-```{r, eval=FALSE}
+
+```r
 for (i in 1:5) {
   x[[i]] <- x[[i]] - medians[[i]]
 }
@@ -338,13 +560,15 @@ When we write `x[[i]] <- value`, it's really shorthand for calling the function 
 
 Now let's step into the call of this base function by running `debug(``[[<-.data.frame``)`:
 
-```{r, eval=FALSE}
+
+```r
 debug(`[[<-.data.frame`)
 ```
 
 and once inside, use `tracemem()` to find where the new values are assigned to the column:
 
-```{r eval=FALSE}
+
+```r
 function (x, i, j, value) 
 {
   if (!all(names(sys.call()) %in% c("", "value"))) 
@@ -358,7 +582,8 @@ function (x, i, j, value)
  # tracemem[0x7fdc9d852a18 -> 0x7fdc9c99cc08]: 
 ```
 
-```{r, eval = FALSE}
+
+```r
 nrows <- .row_names_info(x, 2L)
   if (is.atomic(value) && !is.null(names(value))) 
     names(value) <- NULL
@@ -447,7 +672,8 @@ nrows <- .row_names_info(x, 2L)
 ```
 # tracemem[0x7fdc992ae9d8 -> 0x7fdc9be55258]: 
 ```
-```{r, eval=FALSE} 
+
+```r
   x
 }
 ```

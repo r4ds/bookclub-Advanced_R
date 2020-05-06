@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Subsetting | Advanced R Companion</title>
+  <title>Chapter 10 Subsetting | Advanced R Companion</title>
   <meta name="description" content="This is a companion to Advanced R and supplement to Advanced R Solutions." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Subsetting | Advanced R Companion" />
+  <meta property="og:title" content="Chapter 10 Subsetting | Advanced R Companion" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Subsetting | Advanced R Companion" />
+  <meta name="twitter:title" content="Chapter 10 Subsetting | Advanced R Companion" />
   
   <meta name="twitter:description" content="This is a companion to Advanced R and supplement to Advanced R Solutions." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="vectors.html"/>
-<link rel="next" href="control-flow.html"/>
+<link rel="prev" href="vectors-1.html"/>
+<link rel="next" href="control-flow-1.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,6 +50,8 @@
 
 
 
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -208,6 +210,83 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#replacement-functions"><i class="fa fa-check"></i>6.8.4 Replacement functions</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-7"><i class="fa fa-check"></i>6.8.6.3 Exercise</a></li>
 </ul></li>
+<li class="chapter" data-level="7" data-path="welcome-1.html"><a href="welcome-1.html"><i class="fa fa-check"></i><b>7</b> Welcome</a></li>
+<li class="chapter" data-level="8" data-path="names-and-values-1.html"><a href="names-and-values-1.html"><i class="fa fa-check"></i><b>8</b> Names and Values</a><ul>
+<li class="chapter" data-level="" data-path="names-and-values-1.html"><a href="names-and-values-1.html#copy-on-modify-1"><i class="fa fa-check"></i>2.3 Copy-on-modify</a></li>
+<li class="chapter" data-level="" data-path="names-and-values-1.html"><a href="names-and-values-1.html#exercises-3"><i class="fa fa-check"></i>2.2.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="names-and-values-1.html"><a href="names-and-values-1.html#function-calls-1"><i class="fa fa-check"></i>2.3.2 Function calls</a></li>
+<li class="chapter" data-level="" data-path="names-and-values-1.html"><a href="names-and-values-1.html#lists-3"><i class="fa fa-check"></i>2.3.3 Lists</a></li>
+<li class="chapter" data-level="" data-path="names-and-values-1.html"><a href="names-and-values-1.html#character-vectors-1"><i class="fa fa-check"></i>2.3.5 Character vectors</a></li>
+<li class="chapter" data-level="" data-path="names-and-values-1.html"><a href="names-and-values-1.html#exercise-8"><i class="fa fa-check"></i>2.3.6.2 Exercise</a></li>
+<li class="chapter" data-level="" data-path="names-and-values-1.html"><a href="names-and-values-1.html#object-size-1"><i class="fa fa-check"></i>2.4.1 Object size</a></li>
+<li class="chapter" data-level="" data-path="names-and-values-1.html"><a href="names-and-values-1.html#modify-in-place-1"><i class="fa fa-check"></i>2.5.1 Modify-in-place</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="vectors-1.html"><a href="vectors-1.html"><i class="fa fa-check"></i><b>9</b> Vectors</a><ul>
+<li class="chapter" data-level="" data-path="vectors-1.html"><a href="vectors-1.html#scalars-1"><i class="fa fa-check"></i>3.2.1 Scalars</a></li>
+<li class="chapter" data-level="" data-path="vectors-1.html"><a href="vectors-1.html#missing-values-1"><i class="fa fa-check"></i>3.2.3 Missing values</a></li>
+<li class="chapter" data-level="" data-path="vectors-1.html"><a href="vectors-1.html#testing-and-coercion-1"><i class="fa fa-check"></i>3.2.4 Testing and coercion</a></li>
+<li class="chapter" data-level="" data-path="vectors-1.html"><a href="vectors-1.html#setting-attributes-1"><i class="fa fa-check"></i>3.3.1 Setting Attributes</a></li>
+<li class="chapter" data-level="" data-path="vectors-1.html"><a href="vectors-1.html#setnames-1"><i class="fa fa-check"></i>3.3.2 setNames</a></li>
+<li class="chapter" data-level="" data-path="vectors-1.html"><a href="vectors-1.html#dimensions-1"><i class="fa fa-check"></i>3.3.3 Dimensions</a></li>
+<li class="chapter" data-level="" data-path="vectors-1.html"><a href="vectors-1.html#s3-atomic-vectors-1"><i class="fa fa-check"></i>3.4 S3 atomic vectors</a></li>
+<li class="chapter" data-level="" data-path="vectors-1.html"><a href="vectors-1.html#dates-1"><i class="fa fa-check"></i>3.4.2 Dates</a></li>
+<li class="chapter" data-level="" data-path="vectors-1.html"><a href="vectors-1.html#lists-4"><i class="fa fa-check"></i>3.5.1 Lists</a></li>
+<li class="chapter" data-level="" data-path="vectors-1.html"><a href="vectors-1.html#data-frames-and-tibbles-1"><i class="fa fa-check"></i>3.6.8 Data frames and tibbles</a></li>
+<li class="chapter" data-level="" data-path="vectors-1.html"><a href="vectors-1.html#conclusion-2"><i class="fa fa-check"></i>Conclusion</a><ul>
+<li class="chapter" data-level="" data-path="vectors-1.html"><a href="vectors-1.html#vectorized-1"><i class="fa fa-check"></i>VECTORIZED:</a></li>
+<li class="chapter" data-level="" data-path="vectors-1.html"><a href="vectors-1.html#non-vectorized-1"><i class="fa fa-check"></i>NON-VECTORIZED:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="subsetting-1.html"><a href="subsetting-1.html"><i class="fa fa-check"></i><b>10</b> Subsetting</a><ul>
+<li class="chapter" data-level="" data-path="subsetting-1.html"><a href="subsetting-1.html#introduction-1"><i class="fa fa-check"></i>4.1 Introduction</a></li>
+<li class="chapter" data-level="" data-path="subsetting-1.html"><a href="subsetting-1.html#selecting-multiple-elements-1"><i class="fa fa-check"></i>4.2.1 Selecting multiple elements</a></li>
+<li class="chapter" data-level="" data-path="subsetting-1.html"><a href="subsetting-1.html#lists-5"><i class="fa fa-check"></i>4.2.2 lists</a></li>
+<li><a href="subsetting-1.html#section-1">4.3.1 <code>[[</code></a></li>
+<li class="chapter" data-level="" data-path="subsetting-1.html"><a href="subsetting-1.html#exercise-9"><i class="fa fa-check"></i>4.3.5 Exercise</a></li>
+<li class="chapter" data-level="" data-path="subsetting-1.html"><a href="subsetting-1.html#missing-and-oob-1"><i class="fa fa-check"></i>4.3.3 Missing and OOB</a><ul>
+<li class="chapter" data-level="" data-path="subsetting-1.html"><a href="subsetting-1.html#logical-atomic-1"><i class="fa fa-check"></i>LOGICAL ATOMIC</a></li>
+<li class="chapter" data-level="" data-path="subsetting-1.html"><a href="subsetting-1.html#list-1"><i class="fa fa-check"></i>LIST</a></li>
+<li class="chapter" data-level="" data-path="subsetting-1.html"><a href="subsetting-1.html#null-1"><i class="fa fa-check"></i>NULL</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="subsetting-1.html"><a href="subsetting-1.html#logical-subsetting-1"><i class="fa fa-check"></i>4.5.8 Logical subsetting</a></li>
+<li class="chapter" data-level="" data-path="subsetting-1.html"><a href="subsetting-1.html#boolean-algebra-1"><i class="fa fa-check"></i>4.5.8 Boolean algebra</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="control-flow-1.html"><a href="control-flow-1.html"><i class="fa fa-check"></i><b>11</b> Control Flow</a><ul>
+<li class="chapter" data-level="" data-path="control-flow-1.html"><a href="control-flow-1.html#vectorised-if-1"><i class="fa fa-check"></i>5.2.2 Vectorised if</a></li>
+<li class="chapter" data-level="" data-path="control-flow-1.html"><a href="control-flow-1.html#loops-1"><i class="fa fa-check"></i>5.3 Loops</a></li>
+<li class="chapter" data-level="" data-path="control-flow-1.html"><a href="control-flow-1.html#switch-statement-1"><i class="fa fa-check"></i>5.2.3 switch statement</a></li>
+<li class="chapter" data-level="" data-path="control-flow-1.html"><a href="control-flow-1.html#common-pitfalls-1"><i class="fa fa-check"></i>5.3.1 common pitfalls</a></li>
+<li class="chapter" data-level="" data-path="control-flow-1.html"><a href="control-flow-1.html#exercises-4"><i class="fa fa-check"></i>5.3.3.1 Exercises</a><ul>
+<li class="chapter" data-level="" data-path="control-flow-1.html"><a href="control-flow-1.html#assignment-to-a-valid-index-1"><i class="fa fa-check"></i>Assignment to a valid index</a></li>
+<li class="chapter" data-level="" data-path="control-flow-1.html"><a href="control-flow-1.html#assignment-to-0-1"><i class="fa fa-check"></i>Assignment to [0]</a></li>
+<li class="chapter" data-level="" data-path="control-flow-1.html"><a href="control-flow-1.html#empty-index-1"><i class="fa fa-check"></i>Empty index</a></li>
+<li><a href="control-flow-1.html#impossible-index-1">Impossible Index <code>[[</code></a></li>
+<li><a href="control-flow-1.html#impossible-index---1">Impossible Index <code>[[&lt;-</code></a></li>
+<li class="chapter" data-level="" data-path="control-flow-1.html"><a href="control-flow-1.html#undefined-name-1"><i class="fa fa-check"></i>Undefined name</a></li>
+<li class="chapter" data-level="" data-path="control-flow-1.html"><a href="control-flow-1.html#out-of-bounds-1"><i class="fa fa-check"></i>Out of Bounds</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="control-flow-1.html"><a href="control-flow-1.html#conclusion-3"><i class="fa fa-check"></i>Conclusion</a></li>
+<li class="chapter" data-level="" data-path="control-flow-1.html"><a href="control-flow-1.html#complexity-1"><i class="fa fa-check"></i>Complexity</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="functions-1.html"><a href="functions-1.html"><i class="fa fa-check"></i><b>12</b> Functions</a><ul>
+<li class="chapter" data-level="" data-path="functions-1.html"><a href="functions-1.html#primitives-1"><i class="fa fa-check"></i>6.2.2 Primitives</a></li>
+<li class="chapter" data-level="" data-path="functions-1.html"><a href="functions-1.html#exercises-5"><i class="fa fa-check"></i>6.2.5.1 Exercises</a></li>
+<li class="chapter" data-level="" data-path="functions-1.html"><a href="functions-1.html#lexical-scoping-1"><i class="fa fa-check"></i>6.4 Lexical scoping</a></li>
+<li class="chapter" data-level="" data-path="functions-1.html"><a href="functions-1.html#a-fresh-start-1"><i class="fa fa-check"></i>6.4.3 A fresh start</a></li>
+<li class="chapter" data-level="" data-path="functions-1.html"><a href="functions-1.html#lazy-evaluation-1"><i class="fa fa-check"></i>6.5 Lazy evaluation</a></li>
+<li class="chapter" data-level="" data-path="functions-1.html"><a href="functions-1.html#promises-1"><i class="fa fa-check"></i>6.5.1 Promises</a></li>
+<li class="chapter" data-level="" data-path="functions-1.html"><a href="functions-1.html#default-arguments-1"><i class="fa fa-check"></i>6.5.2 Default arguments</a></li>
+<li class="chapter" data-level="" data-path="functions-1.html"><a href="functions-1.html#missing-arguments-1"><i class="fa fa-check"></i>6.5.3 Missing arguments</a></li>
+<li class="chapter" data-level="" data-path="functions-1.html"><a href="functions-1.html#exercise-10"><i class="fa fa-check"></i>6.5.4.3 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functions-1.html"><a href="functions-1.html#exercise-11"><i class="fa fa-check"></i>6.5.4.4 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functions-1.html"><a href="functions-1.html#dot-dot-dot-1"><i class="fa fa-check"></i>6.6 dot dot dot</a></li>
+<li class="chapter" data-level="" data-path="functions-1.html"><a href="functions-1.html#exercise-12"><i class="fa fa-check"></i>6.6.1.2 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functions-1.html"><a href="functions-1.html#exit-handlers-1"><i class="fa fa-check"></i>6.7.4 Exit handlers</a></li>
+<li class="chapter" data-level="" data-path="functions-1.html"><a href="functions-1.html#exercise-13"><i class="fa fa-check"></i>6.7.5.4 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functions-1.html"><a href="functions-1.html#exercise-14"><i class="fa fa-check"></i>6.7.5.5 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functions-1.html"><a href="functions-1.html#replacement-functions-1"><i class="fa fa-check"></i>6.8.4 Replacement functions</a></li>
+<li class="chapter" data-level="" data-path="functions-1.html"><a href="functions-1.html#exercise-15"><i class="fa fa-check"></i>6.8.6.3 Exercise</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -228,14 +307,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="subsetting" class="section level1">
-<h1><span class="header-section-number">Chapter 4</span> Subsetting</h1>
-<div id="introduction" class="section level2 unnumbered">
+<div id="subsetting-1" class="section level1">
+<h1><span class="header-section-number">Chapter 10</span> Subsetting</h1>
+<div id="introduction-1" class="section level2 unnumbered">
 <h2>4.1 Introduction</h2>
 <div class="question">
 <p>&quot;There are three subsetting operators <code>[</code>. <code>[[</code>, <code>$</code>. What is the distinction between an operator and a function? When you look up the help page it brings up the same page for all three extraction methods. What are their distinctions and do their definitions change based on what you’re subsetting? Can we make a table?</p>
 </div>
-<table>
+<table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -253,7 +332,7 @@ $
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
 ATOMIC
 </td>
 <td style="text-align:left;">
@@ -267,7 +346,7 @@ NOPE!
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
 LIST
 </td>
 <td style="text-align:left;">
@@ -281,7 +360,7 @@ RETURN SINGLE ELEMENT FROM LIST [CAN ONLY USE WHEN LIST VECTOR HAS A NAME]
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
 MATRIX
 </td>
 <td style="text-align:left;">
@@ -295,7 +374,7 @@ NOPE!
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
 DATA FRAME
 </td>
 <td style="text-align:left;">
@@ -309,7 +388,7 @@ RETURNS VECTOR/LIST/MATRIX USING COLUMN NAME
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
 TIBBLE
 </td>
 <td style="text-align:left;">
@@ -326,7 +405,7 @@ RETURNS THE STR OF THE COLUMN - TIBBLE/LIST/MATRIX
 </table>
 <p>If we think of everything as sets (which have the properties of 0,1, or many elements), if the set has 1 element it only contains itself and <code>NULL</code> subsets. Before you subset using <code>[</code> or <code>[[</code> count the elements in the set. If it has zero elements you are done, if it has one element <code>[</code> will return itself - to go further you need to use <code>[[</code> to return its contents. If there is more than one element in the set then <code>[</code> will return those elements. <a href="https://bookdown.org/rdpeng/rprogdatascience/subsetting-r-objects.html#subsetting-a-vector">You can read more about subsetting here</a></p>
 </div>
-<div id="selecting-multiple-elements" class="section level2 unnumbered">
+<div id="selecting-multiple-elements-1" class="section level2 unnumbered">
 <h2>4.2.1 Selecting multiple elements</h2>
 <div class="question">
 <p>Why is <code>numeric(0)</code> “helpful for test data?”</p>
@@ -337,55 +416,55 @@ RETURNS THE STR OF THE COLUMN - TIBBLE/LIST/MATRIX
 </div>
 <p>Hadley’s notes seem to say subsetting with factors uses the “integer vector of levels” - and if they all have the same level, it’ll just return the first argument. Subsetting a factor vector leaves the factor levels behind unless you explicitly drop the unused levels</p>
 </div>
-<div id="lists-2" class="section level2 unnumbered">
+<div id="lists-5" class="section level2 unnumbered">
 <h2>4.2.2 lists</h2>
 <div class="question">
 <p>We’ve been talking about <code>$</code> as a shorthand for <code>[[</code>. Using the example list <code>x &lt;- list(1:3, &quot;a&quot;, 4:6)</code> can we use <code>x$1</code> as shorthand for <code>x[[1]]</code>?</p>
 </div>
 <p>The “shorthand” refers to using the name of the vector to extract the vector. If we give <code>1:3</code> a name such as test = <code>1:3</code></p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">named_vector =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="st">&quot;a&quot;</span>, <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>)</a>
-<a class="sourceLine" id="cb121-2" data-line-number="2">x[[<span class="dv">1</span>]] <span class="op">==</span><span class="st"> </span>x<span class="op">$</span>named_vector</a></code></pre></div>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb379-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">named_vector =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="st">&quot;a&quot;</span>, <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb379-2" data-line-number="2">x[[<span class="dv">1</span>]] <span class="op">==</span><span class="st"> </span>x<span class="op">$</span>named_vector</a></code></pre></div>
 <pre><code>## [1] TRUE TRUE TRUE</code></pre>
 <p>As such, <code>$</code> is a shorthand for <code>x[[&quot;name_of_vector&quot;]]</code> and not shorthand for <code>x[[index]]</code></p>
 </div>
-<div id="section" class="section level2 unnumbered">
+<div id="section-1" class="section level2 unnumbered">
 <h2>4.3.1 <code>[[</code></h2>
 <div class="question">
 <p>The book states:</p>
 <p><em>While you must use [[ when working with lists, I’d also recommend using it with atomic vectors whenever you want to extract a single value. For example, instead of writing:</em></p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" data-line-number="1"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="kw">length</span>(x)) {</a>
-<a class="sourceLine" id="cb123-2" data-line-number="2">  out[i] &lt;-<span class="st"> </span><span class="kw">fun</span>(x[i], out[i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>])</a>
-<a class="sourceLine" id="cb123-3" data-line-number="3">}</a></code></pre></div>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb381-1" data-line-number="1"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="kw">length</span>(x)) {</a>
+<a class="sourceLine" id="cb381-2" data-line-number="2">  out[i] &lt;-<span class="st"> </span><span class="kw">fun</span>(x[i], out[i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb381-3" data-line-number="3">}</a></code></pre></div>
 <p><em>It’s better to write</em></p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" data-line-number="1"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="kw">length</span>(x)) {</a>
-<a class="sourceLine" id="cb124-2" data-line-number="2">  out[[i]] &lt;-<span class="st"> </span><span class="kw">fun</span>(x[[i]], out[[i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>]])</a>
-<a class="sourceLine" id="cb124-3" data-line-number="3">}</a></code></pre></div>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb382-1" data-line-number="1"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="kw">length</span>(x)) {</a>
+<a class="sourceLine" id="cb382-2" data-line-number="2">  out[[i]] &lt;-<span class="st"> </span><span class="kw">fun</span>(x[[i]], out[[i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>]])</a>
+<a class="sourceLine" id="cb382-3" data-line-number="3">}</a></code></pre></div>
 <p>Why? Can we see this in action by giving <code>x</code>, <code>out</code>, and <code>fun</code> real life values?</p>
 </div>
 <p>If we have a vector</p>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" data-line-number="1">df_x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Advanced&quot;</span>,<span class="st">&quot;R&quot;</span>,<span class="st">&quot;Book&quot;</span>,<span class="st">&quot;Club&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb383-1" data-line-number="1">df_x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Advanced&quot;</span>,<span class="st">&quot;R&quot;</span>,<span class="st">&quot;Book&quot;</span>,<span class="st">&quot;Club&quot;</span>)</a></code></pre></div>
 <p>We can use <code>[</code> or <code>[[</code> to extract the third element of <code>df_x</code></p>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1">df_x[<span class="dv">3</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb384-1" data-line-number="1">df_x[<span class="dv">3</span>]</a></code></pre></div>
 <pre><code>## [1] &quot;Book&quot;</code></pre>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1">df_x[[<span class="dv">3</span>]]</a></code></pre></div>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb386-1" data-line-number="1">df_x[[<span class="dv">3</span>]]</a></code></pre></div>
 <pre><code>## [1] &quot;Book&quot;</code></pre>
 <p>But in the case where we want to extract an element from a list <code>[</code> and <code>[[</code> no longer give us the same results</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1">df_x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">A =</span> <span class="st">&quot;Advanced&quot;</span>, <span class="dt">B =</span> <span class="st">&quot;R&quot;</span>, <span class="dt">C =</span> <span class="st">&quot;Book&quot;</span>, <span class="dt">D =</span> <span class="st">&quot;Club&quot;</span>)</a>
-<a class="sourceLine" id="cb130-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb130-3" data-line-number="3">df_x[<span class="dv">3</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb388-1" data-line-number="1">df_x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">A =</span> <span class="st">&quot;Advanced&quot;</span>, <span class="dt">B =</span> <span class="st">&quot;R&quot;</span>, <span class="dt">C =</span> <span class="st">&quot;Book&quot;</span>, <span class="dt">D =</span> <span class="st">&quot;Club&quot;</span>)</a>
+<a class="sourceLine" id="cb388-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb388-3" data-line-number="3">df_x[<span class="dv">3</span>]</a></code></pre></div>
 <pre><code>## $C
 ## [1] &quot;Book&quot;</code></pre>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1">df_x[[<span class="dv">3</span>]]</a></code></pre></div>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb390-1" data-line-number="1">df_x[[<span class="dv">3</span>]]</a></code></pre></div>
 <pre><code>## [1] &quot;Book&quot;</code></pre>
 <p>Because using <code>[[</code> returns “one element of this vector” in both cases, it makes sense to default to <code>[[</code> instead of <code>[</code> since it will reliably return a single element.</p>
 </div>
-<div id="exercise-1" class="section level2 unnumbered">
+<div id="exercise-9" class="section level2 unnumbered">
 <h2>4.3.5 Exercise</h2>
 <div class="question">
 <p>The question asks to describe the <code>upper.tri</code> function - let’s dig into it!</p>
 </div>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">outer</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">FUN =</span> <span class="st">&quot;*&quot;</span>)</a>
-<a class="sourceLine" id="cb134-2" data-line-number="2"><span class="kw">upper.tri</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb392-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">outer</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">FUN =</span> <span class="st">&quot;*&quot;</span>)</a>
+<a class="sourceLine" id="cb392-2" data-line-number="2"><span class="kw">upper.tri</span>(x)</a></code></pre></div>
 <pre><code>##       [,1]  [,2]  [,3]  [,4]  [,5]
 ## [1,] FALSE  TRUE  TRUE  TRUE  TRUE
 ## [2,] FALSE FALSE  TRUE  TRUE  TRUE
@@ -393,35 +472,35 @@ RETURNS THE STR OF THE COLUMN - TIBBLE/LIST/MATRIX
 ## [4,] FALSE FALSE FALSE FALSE  TRUE
 ## [5,] FALSE FALSE FALSE FALSE FALSE</code></pre>
 <p>We see that it returns the upper triangle of the matrix. But I wanted to walk through how this function actually works and what is meant in the solution manual by leveraging <code>.row(dim(x)) &lt;= .col(dim(x))</code>.</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" data-line-number="1"><span class="co"># ?upper.tri</span></a>
-<a class="sourceLine" id="cb136-2" data-line-number="2"><span class="cf">function</span> (x, <span class="dt">diag =</span> <span class="ot">FALSE</span>) </a>
-<a class="sourceLine" id="cb136-3" data-line-number="3">{</a>
-<a class="sourceLine" id="cb136-4" data-line-number="4">    d &lt;-<span class="st"> </span><span class="kw">dim</span>(x)</a>
-<a class="sourceLine" id="cb136-5" data-line-number="5">    <span class="co"># if you have an array thats more than 2 dimension</span></a>
-<a class="sourceLine" id="cb136-6" data-line-number="6">    <span class="co"># we need to flatten it to a matrix</span></a>
-<a class="sourceLine" id="cb136-7" data-line-number="7">    <span class="cf">if</span> (<span class="kw">length</span>(d) <span class="op">!=</span><span class="st"> </span>2L) </a>
-<a class="sourceLine" id="cb136-8" data-line-number="8">        d &lt;-<span class="st"> </span><span class="kw">dim</span>(<span class="kw">as.matrix</span>(x))</a>
-<a class="sourceLine" id="cb136-9" data-line-number="9">    <span class="cf">if</span> (diag) </a>
-<a class="sourceLine" id="cb136-10" data-line-number="10">      <span class="co"># this is our subsetting logical!</span></a>
-<a class="sourceLine" id="cb136-11" data-line-number="11">         <span class="kw">.row</span>(d) <span class="op">&lt;=</span><span class="st"> </span><span class="kw">.col</span>(d)</a>
-<a class="sourceLine" id="cb136-12" data-line-number="12">    <span class="cf">else</span> <span class="kw">.row</span>(d) <span class="op">&lt;</span><span class="st"> </span><span class="kw">.col</span>(d)</a>
-<a class="sourceLine" id="cb136-13" data-line-number="13">}</a></code></pre></div>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb394-1" data-line-number="1"><span class="co"># ?upper.tri</span></a>
+<a class="sourceLine" id="cb394-2" data-line-number="2"><span class="cf">function</span> (x, <span class="dt">diag =</span> <span class="ot">FALSE</span>) </a>
+<a class="sourceLine" id="cb394-3" data-line-number="3">{</a>
+<a class="sourceLine" id="cb394-4" data-line-number="4">    d &lt;-<span class="st"> </span><span class="kw">dim</span>(x)</a>
+<a class="sourceLine" id="cb394-5" data-line-number="5">    <span class="co"># if you have an array thats more than 2 dimension</span></a>
+<a class="sourceLine" id="cb394-6" data-line-number="6">    <span class="co"># we need to flatten it to a matrix</span></a>
+<a class="sourceLine" id="cb394-7" data-line-number="7">    <span class="cf">if</span> (<span class="kw">length</span>(d) <span class="op">!=</span><span class="st"> </span>2L) </a>
+<a class="sourceLine" id="cb394-8" data-line-number="8">        d &lt;-<span class="st"> </span><span class="kw">dim</span>(<span class="kw">as.matrix</span>(x))</a>
+<a class="sourceLine" id="cb394-9" data-line-number="9">    <span class="cf">if</span> (diag) </a>
+<a class="sourceLine" id="cb394-10" data-line-number="10">      <span class="co"># this is our subsetting logical!</span></a>
+<a class="sourceLine" id="cb394-11" data-line-number="11">         <span class="kw">.row</span>(d) <span class="op">&lt;=</span><span class="st"> </span><span class="kw">.col</span>(d)</a>
+<a class="sourceLine" id="cb394-12" data-line-number="12">    <span class="cf">else</span> <span class="kw">.row</span>(d) <span class="op">&lt;</span><span class="st"> </span><span class="kw">.col</span>(d)</a>
+<a class="sourceLine" id="cb394-13" data-line-number="13">}</a></code></pre></div>
 <p>The function <code>.row()</code> and <code>.col()</code> return a matrix of integers indicating their row number</p>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb137-1" data-line-number="1"><span class="kw">.row</span>(<span class="kw">dim</span>(x))</a></code></pre></div>
+<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb395-1" data-line-number="1"><span class="kw">.row</span>(<span class="kw">dim</span>(x))</a></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]    1    1    1    1    1
 ## [2,]    2    2    2    2    2
 ## [3,]    3    3    3    3    3
 ## [4,]    4    4    4    4    4
 ## [5,]    5    5    5    5    5</code></pre>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" data-line-number="1"><span class="kw">.col</span>(<span class="kw">dim</span>(x))</a></code></pre></div>
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb397-1" data-line-number="1"><span class="kw">.col</span>(<span class="kw">dim</span>(x))</a></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]    1    2    3    4    5
 ## [2,]    1    2    3    4    5
 ## [3,]    1    2    3    4    5
 ## [4,]    1    2    3    4    5
 ## [5,]    1    2    3    4    5</code></pre>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb141-1" data-line-number="1"><span class="kw">.row</span>(<span class="kw">dim</span>(x)) <span class="op">&lt;=</span><span class="st"> </span><span class="kw">.col</span>(<span class="kw">dim</span>(x))</a></code></pre></div>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb399-1" data-line-number="1"><span class="kw">.row</span>(<span class="kw">dim</span>(x)) <span class="op">&lt;=</span><span class="st"> </span><span class="kw">.col</span>(<span class="kw">dim</span>(x))</a></code></pre></div>
 <pre><code>##       [,1]  [,2]  [,3]  [,4] [,5]
 ## [1,]  TRUE  TRUE  TRUE  TRUE TRUE
 ## [2,] FALSE  TRUE  TRUE  TRUE TRUE
@@ -433,40 +512,40 @@ RETURNS THE STR OF THE COLUMN - TIBBLE/LIST/MATRIX
 </div>
 <p>Objects in the global environment prefixed with <code>.</code> are hidden in the R (and RStudio) environment panes - so functions prefixed as such are not visible unless you do <code>ls(all=TRUE)</code>. <a href="https://community.rstudio.com/t/function-argument-naming-conventions-x-vs-x/7764">Read more here</a> and (here)[<a href="https://stackoverflow.com/questions/7526467/what-does-the-dot-mean-in-r-personal-preference-naming-convention-or-more" class="uri">https://stackoverflow.com/questions/7526467/what-does-the-dot-mean-in-r-personal-preference-naming-convention-or-more</a>]</p>
 </div>
-<div id="missing-and-oob" class="section level2 unnumbered">
+<div id="missing-and-oob-1" class="section level2 unnumbered">
 <h2>4.3.3 Missing and OOB</h2>
 <div class="question">
 <p>Let’s walk through examples of each</p>
 </div>
-<div id="logical-atomic" class="section level3 unnumbered">
+<div id="logical-atomic-1" class="section level3 unnumbered">
 <h3>LOGICAL ATOMIC</h3>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb143-1" data-line-number="1"><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)[[<span class="dv">0</span>]] <span class="co"># zero length</span></a>
-<a class="sourceLine" id="cb143-2" data-line-number="2"><span class="co"># attempt to select less than one element in get1index &lt;real&gt;</span></a>
-<a class="sourceLine" id="cb143-3" data-line-number="3"><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)[[<span class="dv">4</span>]] <span class="co"># out of bounds</span></a>
-<a class="sourceLine" id="cb143-4" data-line-number="4"><span class="co"># subscript out of bounds</span></a>
-<a class="sourceLine" id="cb143-5" data-line-number="5"><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)[[<span class="ot">NA</span>]] <span class="co"># missing</span></a>
-<a class="sourceLine" id="cb143-6" data-line-number="6"><span class="co"># subscript out of bounds</span></a></code></pre></div>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb401-1" data-line-number="1"><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)[[<span class="dv">0</span>]] <span class="co"># zero length</span></a>
+<a class="sourceLine" id="cb401-2" data-line-number="2"><span class="co"># attempt to select less than one element in get1index &lt;real&gt;</span></a>
+<a class="sourceLine" id="cb401-3" data-line-number="3"><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)[[<span class="dv">4</span>]] <span class="co"># out of bounds</span></a>
+<a class="sourceLine" id="cb401-4" data-line-number="4"><span class="co"># subscript out of bounds</span></a>
+<a class="sourceLine" id="cb401-5" data-line-number="5"><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)[[<span class="ot">NA</span>]] <span class="co"># missing</span></a>
+<a class="sourceLine" id="cb401-6" data-line-number="6"><span class="co"># subscript out of bounds</span></a></code></pre></div>
 </div>
-<div id="list" class="section level3 unnumbered">
+<div id="list-1" class="section level3 unnumbered">
 <h3>LIST</h3>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" data-line-number="1"><span class="kw">list</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="ot">NULL</span>)[[<span class="dv">0</span>]] <span class="co"># zero length</span></a>
-<a class="sourceLine" id="cb144-2" data-line-number="2"><span class="co"># attempt to select less than one element in get1index &lt;real&gt;</span></a>
-<a class="sourceLine" id="cb144-3" data-line-number="3"><span class="kw">list</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="ot">NULL</span>)[[<span class="dv">3</span>]] <span class="co"># out of bounds</span></a>
-<a class="sourceLine" id="cb144-4" data-line-number="4"><span class="co"># subscript out of bounds</span></a>
-<a class="sourceLine" id="cb144-5" data-line-number="5"><span class="kw">list</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="ot">NULL</span>)[[<span class="ot">NA</span>]] <span class="co"># missing</span></a>
-<a class="sourceLine" id="cb144-6" data-line-number="6"><span class="co"># NULL</span></a></code></pre></div>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb402-1" data-line-number="1"><span class="kw">list</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="ot">NULL</span>)[[<span class="dv">0</span>]] <span class="co"># zero length</span></a>
+<a class="sourceLine" id="cb402-2" data-line-number="2"><span class="co"># attempt to select less than one element in get1index &lt;real&gt;</span></a>
+<a class="sourceLine" id="cb402-3" data-line-number="3"><span class="kw">list</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="ot">NULL</span>)[[<span class="dv">3</span>]] <span class="co"># out of bounds</span></a>
+<a class="sourceLine" id="cb402-4" data-line-number="4"><span class="co"># subscript out of bounds</span></a>
+<a class="sourceLine" id="cb402-5" data-line-number="5"><span class="kw">list</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="ot">NULL</span>)[[<span class="ot">NA</span>]] <span class="co"># missing</span></a>
+<a class="sourceLine" id="cb402-6" data-line-number="6"><span class="co"># NULL</span></a></code></pre></div>
 </div>
-<div id="null" class="section level3 unnumbered">
+<div id="null-1" class="section level3 unnumbered">
 <h3>NULL</h3>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb145-1" data-line-number="1"><span class="ot">NULL</span>[[<span class="dv">0</span>]] <span class="co"># zero length</span></a>
-<a class="sourceLine" id="cb145-2" data-line-number="2"><span class="co"># NULL</span></a>
-<a class="sourceLine" id="cb145-3" data-line-number="3"><span class="ot">NULL</span>[[<span class="dv">1</span>]] <span class="co"># out of bounds</span></a>
-<a class="sourceLine" id="cb145-4" data-line-number="4"><span class="co"># NULL</span></a>
-<a class="sourceLine" id="cb145-5" data-line-number="5"><span class="ot">NULL</span>[[<span class="ot">NA</span>]] <span class="co"># missing</span></a>
-<a class="sourceLine" id="cb145-6" data-line-number="6"><span class="co"># NULL</span></a></code></pre></div>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb403-1" data-line-number="1"><span class="ot">NULL</span>[[<span class="dv">0</span>]] <span class="co"># zero length</span></a>
+<a class="sourceLine" id="cb403-2" data-line-number="2"><span class="co"># NULL</span></a>
+<a class="sourceLine" id="cb403-3" data-line-number="3"><span class="ot">NULL</span>[[<span class="dv">1</span>]] <span class="co"># out of bounds</span></a>
+<a class="sourceLine" id="cb403-4" data-line-number="4"><span class="co"># NULL</span></a>
+<a class="sourceLine" id="cb403-5" data-line-number="5"><span class="ot">NULL</span>[[<span class="ot">NA</span>]] <span class="co"># missing</span></a>
+<a class="sourceLine" id="cb403-6" data-line-number="6"><span class="co"># NULL</span></a></code></pre></div>
 </div>
 </div>
-<div id="logical-subsetting" class="section level2 unnumbered">
+<div id="logical-subsetting-1" class="section level2 unnumbered">
 <h2>4.5.8 Logical subsetting</h2>
 <div class="question">
 <p>“Remember to use the vector Boolean operators <code>&amp;</code> and <code>|</code>, not the short-circuiting scalar operators <code>&amp;&amp;</code> and <code>||</code>, which are more useful inside if statements.”</p>
@@ -480,40 +559,40 @@ RETURNS THE STR OF THE COLUMN - TIBBLE/LIST/MATRIX
 <li><code>||</code> will not evaluate the second argument when the first is <code>TRUE</code></li>
 <li><code>&amp;&amp;</code> will not evaluate the second argument when the first is <code>FALSE</code></li>
 </ul>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" data-line-number="1">true_one &lt;-<span class="st"> </span><span class="cf">function</span>() { <span class="kw">print</span>(<span class="st">&quot;true_one evaluated.&quot;</span>); <span class="ot">TRUE</span>}</a>
-<a class="sourceLine" id="cb146-2" data-line-number="2">true_two &lt;-<span class="st"> </span><span class="cf">function</span>() { <span class="kw">print</span>(<span class="st">&quot;true_two evaluated.&quot;</span>); <span class="ot">TRUE</span>}</a>
-<a class="sourceLine" id="cb146-3" data-line-number="3"><span class="co"># arguments are evaluated lazily.  Unexpected behavior can result:</span></a>
-<a class="sourceLine" id="cb146-4" data-line-number="4"><span class="kw">c</span>(T, <span class="kw">true_one</span>()) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">c</span>(T, <span class="kw">true_two</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb404-1" data-line-number="1">true_one &lt;-<span class="st"> </span><span class="cf">function</span>() { <span class="kw">print</span>(<span class="st">&quot;true_one evaluated.&quot;</span>); <span class="ot">TRUE</span>}</a>
+<a class="sourceLine" id="cb404-2" data-line-number="2">true_two &lt;-<span class="st"> </span><span class="cf">function</span>() { <span class="kw">print</span>(<span class="st">&quot;true_two evaluated.&quot;</span>); <span class="ot">TRUE</span>}</a>
+<a class="sourceLine" id="cb404-3" data-line-number="3"><span class="co"># arguments are evaluated lazily.  Unexpected behavior can result:</span></a>
+<a class="sourceLine" id="cb404-4" data-line-number="4"><span class="kw">c</span>(T, <span class="kw">true_one</span>()) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">c</span>(T, <span class="kw">true_two</span>())</a></code></pre></div>
 <pre><code>## [1] &quot;true_one evaluated.&quot;
 ## [1] &quot;true_two evaluated.&quot;</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb149-1" data-line-number="1"><span class="kw">c</span>(T, <span class="kw">true_one</span>()) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">c</span>(F, <span class="kw">true_two</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb407-1" data-line-number="1"><span class="kw">c</span>(T, <span class="kw">true_one</span>()) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">c</span>(F, <span class="kw">true_two</span>())</a></code></pre></div>
 <pre><code>## [1] &quot;true_one evaluated.&quot;
 ## [1] &quot;true_two evaluated.&quot;</code></pre>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1"><span class="kw">c</span>(F, <span class="kw">true_one</span>()) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">c</span>(T, <span class="kw">true_two</span>()) </a></code></pre></div>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb410-1" data-line-number="1"><span class="kw">c</span>(F, <span class="kw">true_one</span>()) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">c</span>(T, <span class="kw">true_two</span>()) </a></code></pre></div>
 <pre><code>## [1] &quot;true_one evaluated.&quot;</code></pre>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" data-line-number="1"><span class="kw">c</span>(F, <span class="kw">true_one</span>()) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">c</span>(F, <span class="kw">true_two</span>()) </a></code></pre></div>
+<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb413-1" data-line-number="1"><span class="kw">c</span>(F, <span class="kw">true_one</span>()) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">c</span>(F, <span class="kw">true_two</span>()) </a></code></pre></div>
 <pre><code>## [1] &quot;true_one evaluated.&quot;</code></pre>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb158-1" data-line-number="1"><span class="kw">c</span>(T, <span class="kw">true_one</span>()) <span class="op">||</span><span class="st"> </span><span class="kw">c</span>(T, <span class="kw">true_two</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb416-1" data-line-number="1"><span class="kw">c</span>(T, <span class="kw">true_one</span>()) <span class="op">||</span><span class="st"> </span><span class="kw">c</span>(T, <span class="kw">true_two</span>())</a></code></pre></div>
 <pre><code>## [1] &quot;true_one evaluated.&quot;</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" data-line-number="1"><span class="kw">c</span>(T, <span class="kw">true_one</span>()) <span class="op">||</span><span class="st"> </span><span class="kw">c</span>(F, <span class="kw">true_two</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb419-1" data-line-number="1"><span class="kw">c</span>(T, <span class="kw">true_one</span>()) <span class="op">||</span><span class="st"> </span><span class="kw">c</span>(F, <span class="kw">true_two</span>())</a></code></pre></div>
 <pre><code>## [1] &quot;true_one evaluated.&quot;</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1"><span class="kw">c</span>(F, <span class="kw">true_one</span>()) <span class="op">||</span><span class="st"> </span><span class="kw">c</span>(T, <span class="kw">true_two</span>()) </a></code></pre></div>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb422-1" data-line-number="1"><span class="kw">c</span>(F, <span class="kw">true_one</span>()) <span class="op">||</span><span class="st"> </span><span class="kw">c</span>(T, <span class="kw">true_two</span>()) </a></code></pre></div>
 <pre><code>## [1] &quot;true_one evaluated.&quot;
 ## [1] &quot;true_two evaluated.&quot;</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1"><span class="kw">c</span>(F, <span class="kw">true_one</span>()) <span class="op">||</span><span class="st"> </span><span class="kw">c</span>(F, <span class="kw">true_two</span>()) </a></code></pre></div>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb425-1" data-line-number="1"><span class="kw">c</span>(F, <span class="kw">true_one</span>()) <span class="op">||</span><span class="st"> </span><span class="kw">c</span>(F, <span class="kw">true_two</span>()) </a></code></pre></div>
 <pre><code>## [1] &quot;true_one evaluated.&quot;
 ## [1] &quot;true_two evaluated.&quot;</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <p>Read more about <a href="https://cran.r-project.org/doc/manuals/r-release/R-ints.html#Special-primitives">Special Primatives</a> here</p>
 </div>
-<div id="boolean-algebra" class="section level2 unnumbered">
+<div id="boolean-algebra-1" class="section level2 unnumbered">
 <h2>4.5.8 Boolean algebra</h2>
 <div class="question">
 <p>The <code>unwhich()</code> function takes a boolean and turns it into a numeric - would this ever be useful? How?</p>
@@ -525,9 +604,9 @@ RETURNS THE STR OF THE COLUMN - TIBBLE/LIST/MATRIX
 <p>“<code>x[-which(y)]</code> is not equivalent to <code>x[!y]</code>: if <code>y</code> is all FALSE, <code>which(y)</code> will be <code>integer(0)</code> and <code>-integer(0)</code> is still <code>integer(0)</code>, so you’ll get no values, instead of all values.”</p>
 <p>Can we come up with an example for this plugging in values for <code>x</code> and <code>y</code></p>
 </div>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" data-line-number="1"><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)[<span class="op">-</span><span class="kw">which</span>(<span class="ot">FALSE</span>)]</a></code></pre></div>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb428-1" data-line-number="1"><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)[<span class="op">-</span><span class="kw">which</span>(<span class="ot">FALSE</span>)]</a></code></pre></div>
 <pre><code>## logical(0)</code></pre>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb172-1" data-line-number="1"><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)[<span class="op">!</span><span class="ot">FALSE</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb430-1" data-line-number="1"><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)[<span class="op">!</span><span class="ot">FALSE</span>]</a></code></pre></div>
 <pre><code>## [1]  TRUE FALSE</code></pre>
 
 </div>
@@ -537,8 +616,8 @@ RETURNS THE STR OF THE COLUMN - TIBBLE/LIST/MATRIX
           </div>
         </div>
       </div>
-<a href="vectors.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="control-flow.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="vectors-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="control-flow-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
