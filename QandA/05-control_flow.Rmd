@@ -297,7 +297,9 @@ we can see that ifelse places the numbers in `1:10` based on their index where o
 
 ## Complexity {-}
 
-We can use the package `cyclocomp` to look at the cyclomatic complexity of our functions. Looking at each function from the Chapter 5 presentation:
+Cyclomatic complexity is a software metric used to indicate the complexity of a program. It is computed using the control flow graph of the program: the nodes of the graph correspond to indivisible groups of commands of a program, and a directed edge connects two nodes if the second command might be executed immediately after the first command. 
+
+We can use the package `cyclocomp` to look at the cyclomatic complexity of functions. Looking at each function from the Chapter 5 presentation:
 
 ```{r, echo=FALSE}
 library(cyclocomp)
