@@ -244,9 +244,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb178-2" data-line-number="2">var</a></code></pre></div>
 <pre><code>NULL</code></pre>
 <div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" data-line-number="1">var &lt;-<span class="st"> </span><span class="kw">ifelse</span>((<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">1</span>) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>), <span class="kw">print</span>(<span class="st">&quot;In range&quot;</span>), <span class="kw">print</span>(<span class="st">&quot;Out of range&quot;</span>))</a></code></pre></div>
-<pre><code>## [1] &quot;In range&quot;</code></pre>
+<pre><code>## [1] &quot;Out of range&quot;</code></pre>
 <div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb182-1" data-line-number="1">var</a></code></pre></div>
-<pre><code>## [1] &quot;In range&quot;</code></pre>
+<pre><code>## [1] &quot;Out of range&quot;</code></pre>
 <p><code>ifelse</code> explicitly returns its result, whereas <code>if</code> invisibly returns it!</p>
 <div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" data-line-number="1"><span class="kw">ifelse</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>), <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>## [1] 1 3 1</code></pre>
@@ -443,7 +443,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     &lt;int&gt;        &lt;int&gt;       &lt;int&gt;         &lt;int&gt;       &lt;int&gt;    &lt;int&gt;      &lt;int&gt;
 ## 1       2            2           1             1           1       23          3
 ## # … with 1 more variable: repeat_func &lt;int&gt;</code></pre>
-<p>We see that the <code>for</code> loop was our most complex function and <code>while</code> had a complexity of 3. The rest of our functions had a complexity of one. As <a href="https://engineering-shiny.org/successfulshinyapp.html">Colin Fay states</a> Splitting a complex function into smaller functions is not a magic solution because (A) the global complexity of the app is not lowered by splitting things into pieces (just local complexity), and (B) the deeper the call stack, the harder it can be to debug.</p>
+<p>We see that the <code>for</code> loop was our most complex function and <code>while</code> had a complexity of 3. The rest of our functions had a complexity of <code>1</code>.</p>
+<p>As <a href="https://engineering-shiny.org/successfulshinyapp.html">Colin Fay states</a>:</p>
+<p>“Splitting a complex function into smaller functions is not a magic solution because (A) the global complexity of the app is not lowered by splitting things into pieces (just local complexity), and (B) the deeper the call stack, the harder it can be to debug.”</p>
 
 </div>
 </div>

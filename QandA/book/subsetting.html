@@ -235,6 +235,95 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="question">
 <p>&quot;There are three subsetting operators <code>[</code>. <code>[[</code>, <code>$</code>. What is the distinction between an operator and a function? When you look up the help page it brings up the same page for all three extraction methods. What are their distinctions and do their definitions change based on what you’re subsetting? Can we make a table?</p>
 </div>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+[
+</th>
+<th style="text-align:left;">
+[[
+</th>
+<th style="text-align:left;">
+$
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+ATOMIC
+</td>
+<td style="text-align:left;">
+RETURNS VECTOR WITH ONE ELEMENT
+</td>
+<td style="text-align:left;">
+SAME AS [
+</td>
+<td style="text-align:left;">
+NOPE!
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+LIST
+</td>
+<td style="text-align:left;">
+RETURNS A LIST
+</td>
+<td style="text-align:left;">
+RETURNS SINGLE ELEMENT FROM WITHIN LIST
+</td>
+<td style="text-align:left;">
+RETURN SINGLE ELEMENT FROM LIST [CAN ONLY USE WHEN LIST VECTOR HAS A NAME]
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MATRIX
+</td>
+<td style="text-align:left;">
+RETURNS A VECTOR
+</td>
+<td style="text-align:left;">
+RETURNS A VECTOR OR SINGLE VALUE
+</td>
+<td style="text-align:left;">
+NOPE!
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DATA FRAME
+</td>
+<td style="text-align:left;">
+RETURNS A VECTOR OR DATA FRAME
+</td>
+<td style="text-align:left;">
+RETURNS VECTOR/LIST/MATRIX OR SINGLE VALUE
+</td>
+<td style="text-align:left;">
+RETURNS VECTOR/LIST/MATRIX USING COLUMN NAME
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TIBBLE
+</td>
+<td style="text-align:left;">
+RETURNS A TIBBLE
+</td>
+<td style="text-align:left;">
+RETURNS A VECTOR OR SINGLE VALUE
+</td>
+<td style="text-align:left;">
+RETURNS THE STR OF THE COLUMN - TIBBLE/LIST/MATRIX
+</td>
+</tr>
+</tbody>
+</table>
 <p>If we think of everything as sets (which have the properties of 0,1, or many elements), if the set has 1 element it only contains itself and <code>NULL</code> subsets. Before you subset using <code>[</code> or <code>[[</code> count the elements in the set. If it has zero elements you are done, if it has one element <code>[</code> will return itself - to go further you need to use <code>[[</code> to return its contents. If there is more than one element in the set then <code>[</code> will return those elements. <a href="https://bookdown.org/rdpeng/rprogdatascience/subsetting-r-objects.html#subsetting-a-vector">You can read more about subsetting here</a></p>
 </div>
 <div id="selecting-multiple-elements" class="section level2 unnumbered">

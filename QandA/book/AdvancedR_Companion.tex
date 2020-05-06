@@ -313,7 +313,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc837b178c0"
+## [1] "0x7fc1bb74cac0"
 \end{verbatim}
 
 \begin{Shaded}
@@ -323,7 +323,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc837b178c0"
+## [1] "0x7fc1bb74cac0"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -335,7 +335,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc8362ad888"
+## [1] "0x7fc1bd10f888"
 \end{verbatim}
 
 \begin{Shaded}
@@ -345,8 +345,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fc837e779a0] <list> 
-## └─[2:0x7fc837b178c0] <dbl>
+## █ [1:0x7fc1bd17fe00] <list> 
+## └─[2:0x7fc1bb74cac0] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -356,7 +356,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc83291bdb0"
+## [1] "0x7fc1bd236e78"
 \end{verbatim}
 
 \begin{Shaded}
@@ -393,7 +393,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fc8352abfb8>"
+## [1] "<0x7fc1bf838b98>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -403,7 +403,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fc8352abfb8>
+## <0x7fc1bf838b98>
 \end{verbatim}
 
 \begin{Shaded}
@@ -413,7 +413,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc8352abfb8"
+## [1] "0x7fc1bf838b98"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -462,7 +462,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc836607d08"
+## [1] "0x7fc1bc2c79c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -472,7 +472,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fc836607d08>"
+## [1] "<0x7fc1bc2c79c8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -482,7 +482,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fc836607d08 -> 0x7fc8366180c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fc1bc2c79c8 -> 0x7fc1bc2817c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -578,7 +578,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc8369f4c88"
+## [1] "0x7fc1bb9767d8"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -591,7 +591,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc836cf3d18"
+## [1] "0x7fc1b9e6d838"
 \end{verbatim}
 
 \begin{Shaded}
@@ -614,7 +614,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc836cf3d18"
+## [1] "0x7fc1b9e6d838"
 \end{verbatim}
 
 \begin{Shaded}
@@ -624,7 +624,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc836cf3d18"
+## [1] "0x7fc1b9e6d838"
 \end{verbatim}
 
 \begin{Shaded}
@@ -647,7 +647,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc836cf3d18"
+## [1] "0x7fc1b9e6d838"
 \end{verbatim}
 
 \begin{Shaded}
@@ -657,7 +657,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc8351d58d8"
+## [1] "0x7fc1bbbf9ae8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -680,7 +680,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc83371d7e8"
+## [1] "0x7fc1bd2b2be8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1293,6 +1293,52 @@ Putting it all together in a single diagram:
 \addcontentsline{toc}{section}{4.1 Introduction}
 
 "There are three subsetting operators \texttt{{[}}. \texttt{{[}{[}}, \texttt{\$}. What is the distinction between an operator and a function? When you look up the help page it brings up the same page for all three extraction methods. What are their distinctions and do their definitions change based on what you're subsetting? Can we make a table?
+
+{[}
+
+{[}{[}
+
+\$
+
+ATOMIC
+
+RETURNS VECTOR WITH ONE ELEMENT
+
+SAME AS {[}
+
+NOPE!
+
+LIST
+
+RETURNS A LIST
+
+RETURNS SINGLE ELEMENT FROM WITHIN LIST
+
+RETURN SINGLE ELEMENT FROM LIST {[}CAN ONLY USE WHEN LIST VECTOR HAS A NAME{]}
+
+MATRIX
+
+RETURNS A VECTOR
+
+RETURNS A VECTOR OR SINGLE VALUE
+
+NOPE!
+
+DATA FRAME
+
+RETURNS A VECTOR OR DATA FRAME
+
+RETURNS VECTOR/LIST/MATRIX OR SINGLE VALUE
+
+RETURNS VECTOR/LIST/MATRIX USING COLUMN NAME
+
+TIBBLE
+
+RETURNS A TIBBLE
+
+RETURNS A VECTOR OR SINGLE VALUE
+
+RETURNS THE STR OF THE COLUMN - TIBBLE/LIST/MATRIX
 
 If we think of everything as sets (which have the properties of 0,1, or many elements), if the set has 1 element it only contains itself and \texttt{NULL} subsets. Before you subset using \texttt{{[}} or \texttt{{[}{[}} count the elements in the set. If it has zero elements you are done, if it has one element \texttt{{[}} will return itself - to go further you need to use \texttt{{[}{[}} to return its contents. If there is more than one element in the set then \texttt{{[}} will return those elements. \href{https://bookdown.org/rdpeng/rprogdatascience/subsetting-r-objects.html\#subsetting-a-vector}{You can read more about subsetting here}
 
@@ -2184,7 +2230,11 @@ We can use the package \texttt{cyclocomp} to look at the cyclomatic complexity o
 ## # ... with 1 more variable: repeat_func <int>
 \end{verbatim}
 
-We see that the \texttt{for} loop was our most complex function and \texttt{while} had a complexity of 3. The rest of our functions had a complexity of one. As \href{https://engineering-shiny.org/successfulshinyapp.html}{Colin Fay states} Splitting a complex function into smaller functions is not a magic solution because (A) the global complexity of the app is not lowered by splitting things into pieces (just local complexity), and (B) the deeper the call stack, the harder it can be to debug.
+We see that the \texttt{for} loop was our most complex function and \texttt{while} had a complexity of 3. The rest of our functions had a complexity of \texttt{1}.
+
+As \href{https://engineering-shiny.org/successfulshinyapp.html}{Colin Fay states}:
+
+``Splitting a complex function into smaller functions is not a magic solution because (A) the global complexity of the app is not lowered by splitting things into pieces (just local complexity), and (B) the deeper the call stack, the harder it can be to debug.''
 
 \hypertarget{functions}{%
 \chapter{Functions}\label{functions}}
@@ -2403,7 +2453,7 @@ Comparing the default sample function:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  9 10  4  3  2  1  7  8  5  6
+##  [1]  9  1  8 10  6  4  3  7  5  2
 \end{verbatim}
 
 To using Hadley's recommended \texttt{NULL} version:
@@ -2420,7 +2470,7 @@ To using Hadley's recommended \texttt{NULL} version:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  3  9  7  8  4  6 10  2  1  5
+##  [1] 10  8  9  3  7  5  4  6  2  1
 \end{verbatim}
 
 The second function is obviously more concise, but why is Hadley recommending we we steer clear of \texttt{missing()}? Is this just for code read-ability or is there something inherent in the behavior of \texttt{missing} we need to consider that we don't when using \texttt{NULL}?
@@ -2462,7 +2512,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fc82d408bc8>
+## <bytecode: 0x7fc1b2d48bc8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -2565,16 +2615,14 @@ XXX
 \textbf{{Q}}: How does the \texttt{chdir} parameter of \texttt{source()} compare to \texttt{in\_dir()}? Why might you prefer one approach to the other?
 The \texttt{in\_dir()} approach was given in the book as
 
-\begin{verbatim}
 ```r
-in_dir <- function(dir, code) {
-  old <- setwd(dir)
-  on.exit(setwd(old))
-  
-  force(code)
-}
+in\_dir \textless{}- function(dir, code) \{
+old \textless{}- setwd(dir)
+on.exit(setwd(old))
+
+force(code)
+\}
 ```
-\end{verbatim}
 
 \textbf{{A}}: \texttt{in\_dir()} takes a path to a working directory as an argument. First the working directory is changed accordingly. \texttt{on.exit()} ensures that the modification to the working directory are reset to the initial value when the function exits.
 
@@ -2718,25 +2766,18 @@ XXX
 
 \textbf{{Q}}: Explain why the following code fails:
 
-\begin{verbatim}
-```r
-modify(get("x"), 1) <- 10
-#> Error: target of assignment expands to non-language object
-```
-\end{verbatim}
+\texttt{r\ \ \ \ \ modify(get("x"),\ 1)\ \textless{}-\ 10\ \ \ \ \ \#\textgreater{}\ Error:\ target\ of\ assignment\ expands\ to\ non-language\ object}
 
 \textbf{{A}}: First, let's define \texttt{x} and recall the definition of \texttt{modify()} from the textbook:
 
-\begin{verbatim}
 ```r
-x <- 1:3
+x \textless{}- 1:3
 
-`modify<-` <- function(x, position, value) {
-  x[position] <- value
-  x
-}
+\texttt{modify\textless{}-} \textless{}- function(x, position, value) \{
+x{[}position{]} \textless{}- value
+x
+\}
 ```
-\end{verbatim}
 
 XXX
 

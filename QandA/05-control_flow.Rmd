@@ -393,4 +393,8 @@ controlflow_functions <- list(
 purrr::map_df(controlflow_functions, cyclocomp)
 ```
 
-We see that the `for` loop was our most complex function and `while` had a complexity of 3. The rest of our functions had a complexity of one. As [Colin Fay states](https://engineering-shiny.org/successfulshinyapp.html) Splitting a complex function into smaller functions is not a magic solution because (A) the global complexity of the app is not lowered by splitting things into pieces (just local complexity), and (B) the deeper the call stack, the harder it can be to debug.
+We see that the `for` loop was our most complex function and `while` had a complexity of 3. The rest of our functions had a complexity of `1`. 
+
+As [Colin Fay states](https://engineering-shiny.org/successfulshinyapp.html): 
+
+"Splitting a complex function into smaller functions is not a magic solution because (A) the global complexity of the app is not lowered by splitting things into pieces (just local complexity), and (B) the deeper the call stack, the harder it can be to debug."
