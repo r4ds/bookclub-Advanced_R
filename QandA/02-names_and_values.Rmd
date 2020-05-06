@@ -452,4 +452,4 @@ nrows <- .row_names_info(x, 2L)
 }
 ```
 
-Thus seeing exactly where the three copies are happening!
+Thus seeing exactly where the three **as of R 4.0: two!** copies are happening.
