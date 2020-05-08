@@ -119,7 +119,7 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-05-06}
+\date{2020-05-07}
 
 \begin{document}
 \maketitle
@@ -313,7 +313,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1bb74cac0"
+## [1] "0x7fccde579d70"
 \end{verbatim}
 
 \begin{Shaded}
@@ -323,7 +323,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1bb74cac0"
+## [1] "0x7fccde579d70"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -335,7 +335,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1bd10f888"
+## [1] "0x7fcce4a8b800"
 \end{verbatim}
 
 \begin{Shaded}
@@ -345,8 +345,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fc1bd17fe00] <list> 
-## └─[2:0x7fc1bb74cac0] <dbl>
+## █ [1:0x7fcce4a98eb0] <list> 
+## └─[2:0x7fccde579d70] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -356,7 +356,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1bd236e78"
+## [1] "0x7fcce4ab0b30"
 \end{verbatim}
 
 \begin{Shaded}
@@ -393,7 +393,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fc1bf838b98>"
+## [1] "<0x7fccdfbc3ae8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -403,7 +403,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fc1bf838b98>
+## <0x7fccdfbc3ae8>
 \end{verbatim}
 
 \begin{Shaded}
@@ -413,7 +413,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1bf838b98"
+## [1] "0x7fccdfbc3ae8"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -462,7 +462,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1bc2c79c8"
+## [1] "0x7fccddd9ce08"
 \end{verbatim}
 
 \begin{Shaded}
@@ -472,7 +472,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fc1bc2c79c8>"
+## [1] "<0x7fccddd9ce08>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -482,7 +482,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fc1bc2c79c8 -> 0x7fc1bc2817c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fccddd9ce08 -> 0x7fccdeebbb48]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -578,7 +578,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1bb9767d8"
+## [1] "0x7fccde328718"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -591,7 +591,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1b9e6d838"
+## [1] "0x7fcce0889d18"
 \end{verbatim}
 
 \begin{Shaded}
@@ -614,7 +614,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1b9e6d838"
+## [1] "0x7fcce0889d18"
 \end{verbatim}
 
 \begin{Shaded}
@@ -624,7 +624,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1b9e6d838"
+## [1] "0x7fcce0889d18"
 \end{verbatim}
 
 \begin{Shaded}
@@ -647,7 +647,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1b9e6d838"
+## [1] "0x7fcce0889d18"
 \end{verbatim}
 
 \begin{Shaded}
@@ -657,7 +657,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1bbbf9ae8"
+## [1] "0x7fccde4641e8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -680,7 +680,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1bd2b2be8"
+## [1] "0x7fcce2403e08"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2204,7 +2204,9 @@ we can see that ifelse places the numbers in \texttt{1:10} based on their index 
 \section*{Complexity}\label{complexity}}
 \addcontentsline{toc}{section}{Complexity}
 
-We can use the package \texttt{cyclocomp} to look at the cyclomatic complexity of our functions. Looking at each function from the Chapter 5 presentation:
+Cyclomatic complexity is a software metric used to indicate the complexity of a program. It is computed using the control flow graph of the program: the nodes of the graph correspond to indivisible groups of commands of a program, and a directed edge connects two nodes if the second command might be executed immediately after the first command.
+
+We can use the package \texttt{cyclocomp} to look at the cyclomatic complexity of functions. Looking at each function from the Chapter 5 presentation:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2316,15 +2318,14 @@ How would we change this code so that the second call of \texttt{g11()} is 2?
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\NormalTok{a <-}\StringTok{ }\KeywordTok{g11}\NormalTok{()}
 \KeywordTok{g11}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 1
+## [1] 2
 \end{verbatim}
-
-XXX
 
 \hypertarget{lazy-evaluation}{%
 \section*{6.5 Lazy evaluation}\label{lazy-evaluation}}
@@ -2352,8 +2353,29 @@ Can we discuss the order that this happening in? Is it that \texttt{Calculating.
 \NormalTok{h03 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
   \KeywordTok{c}\NormalTok{(x, x)}
 \NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
 
-\KeywordTok{h03}\NormalTok{(}\KeywordTok{double}\NormalTok{(}\DecValTok{20}\NormalTok{))}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{double <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(y) \{}
+  \KeywordTok{message}\NormalTok{(}\StringTok{"Calculating..."}\NormalTok{)}
+  \KeywordTok{cat}\NormalTok{(}\StringTok{"double before}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \KeywordTok{print}\NormalTok{(pryr}\OperatorTok{::}\KeywordTok{promise_info}\NormalTok{(y))}
+  \KeywordTok{force}\NormalTok{(y)}
+  \KeywordTok{cat}\NormalTok{(}\StringTok{"double after}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \KeywordTok{print}\NormalTok{(pryr}\OperatorTok{::}\KeywordTok{promise_info}\NormalTok{(y))}
+\NormalTok{  y }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+\NormalTok{\}}
+\NormalTok{h03 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"h03 before}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+  \KeywordTok{print}\NormalTok{(pryr}\OperatorTok{::}\KeywordTok{promise_info}\NormalTok{(x))}
+  \KeywordTok{force}\NormalTok{(x)}
+  \KeywordTok{cat}\NormalTok{(}\StringTok{"h03 after}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \KeywordTok{print}\NormalTok{(pryr}\OperatorTok{::}\KeywordTok{promise_info}\NormalTok{(x))}
+  \KeywordTok{c}\NormalTok{(x, x)}
+\NormalTok{\}}
+\KeywordTok{double}\NormalTok{(}\KeywordTok{h03}\NormalTok{(}\DecValTok{20}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2362,10 +2384,77 @@ Can we discuss the order that this happening in? Is it that \texttt{Calculating.
 \end{verbatim}
 
 \begin{verbatim}
+## double before
+## $code
+## h03(20)
+## 
+## $env
+## <environment: R_GlobalEnv>
+## 
+## $evaled
+## [1] FALSE
+## 
+## $value
+## NULL
+## 
+## h03 before
+## $code
+## [1] 20
+## 
+## $env
+## <environment: R_GlobalEnv>
+## 
+## $evaled
+## [1] FALSE
+## 
+## $value
+## NULL
+## 
+## h03 after
+## $code
+## [1] 20
+## 
+## $env
+## NULL
+## 
+## $evaled
+## [1] TRUE
+## 
+## $value
+## [1] 20
+## 
+## double after
+## $code
+## h03(20)
+## 
+## $env
+## NULL
+## 
+## $evaled
+## [1] TRUE
+## 
+## $value
+## [1] 20 20
+\end{verbatim}
+
+\begin{verbatim}
 ## [1] 40 40
 \end{verbatim}
 
-XXX
+\begin{center}\includegraphics[width=20.22in]{images/promise} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, y) x }\OperatorTok{+}\StringTok{ }\DecValTok{2}
+\KeywordTok{f}\NormalTok{(}\DecValTok{2}\NormalTok{, var_doesnt_exist)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+\texttt{var\_doesnt\_exist} is a promise within \texttt{g}, we use the promises within \texttt{g} when we call \texttt{f} but \texttt{f} never uses its second argument so this runs without a problem. When would we want to leverage this behavior?
 
 \hypertarget{default-arguments}{%
 \section*{6.5.2 Default arguments}\label{default-arguments}}
@@ -2397,27 +2486,27 @@ I don't quite understand why \texttt{x\ =\ ls()} is different from \texttt{ls()}
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "answer"                "as_tb"                 "casewhen_func"        
-##  [4] "controlflow_functions" "custom_attr"           "df"                   
-##  [7] "df_coltypes"           "df_non_syntactic_name" "df_x"                 
-## [10] "double"                "example2223"           "f1"                   
-## [13] "f2"                    "f3"                    "for_func"             
-## [16] "g11"                   "h03"                   "h05"                  
-## [19] "i"                     "if_else_func"          "if_func"              
-## [22] "ifelse_func"           "l1"                    "l2"                   
-## [25] "means"                 "medians"               "my_factor"            
-## [28] "my_matrix"             "my_set"                "my_vector"            
-## [31] "mylist"                "new_address"           "new_y_address"        
-## [34] "no"                    "no_final"              "no_idx"               
-## [37] "old_address"           "out"                   "out_list"             
-## [40] "out_vector"            "repeat_func"           "subsetting_table"     
-## [43] "switch_func"           "test"                  "true_one"             
-## [46] "true_two"              "v"                     "v_address"            
-## [49] "var"                   "while_func"            "x"                    
-## [52] "x1"                    "x2"                    "x3"                   
-## [55] "x4"                    "x5"                    "y"                    
-## [58] "y_address"             "yes"                   "yes_final"            
-## [61] "yes_idx"
+##  [1] "a"                     "answer"                "as_tb"                
+##  [4] "casewhen_func"         "controlflow_functions" "custom_attr"          
+##  [7] "df"                    "df_coltypes"           "df_non_syntactic_name"
+## [10] "df_x"                  "double"                "example2223"          
+## [13] "f"                     "f1"                    "f2"                   
+## [16] "f3"                    "for_func"              "g11"                  
+## [19] "h03"                   "h05"                   "i"                    
+## [22] "if_else_func"          "if_func"               "ifelse_func"          
+## [25] "l1"                    "l2"                    "means"                
+## [28] "medians"               "my_factor"             "my_matrix"            
+## [31] "my_set"                "my_vector"             "mylist"               
+## [34] "new_address"           "new_y_address"         "no"                   
+## [37] "no_final"              "no_idx"                "old_address"          
+## [40] "out"                   "out_list"              "out_vector"           
+## [43] "repeat_func"           "subsetting_table"      "switch_func"          
+## [46] "test"                  "true_one"              "true_two"             
+## [49] "v"                     "v_address"             "var"                  
+## [52] "while_func"            "x"                     "x1"                   
+## [55] "x2"                    "x3"                    "x4"                   
+## [58] "x5"                    "y"                     "y_address"            
+## [61] "yes"                   "yes_final"             "yes_idx"
 \end{verbatim}
 
 XXX
@@ -2453,7 +2542,7 @@ Comparing the default sample function:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  9  1  8 10  6  4  3  7  5  2
+##  [1]  4  3 10  8  2  1  7  9  5  6
 \end{verbatim}
 
 To using Hadley's recommended \texttt{NULL} version:
@@ -2470,7 +2559,7 @@ To using Hadley's recommended \texttt{NULL} version:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 10  8  9  3  7  5  4  6  2  1
+##  [1]  7  3  2  1  6  5  4  8 10  9
 \end{verbatim}
 
 The second function is obviously more concise, but why is Hadley recommending we we steer clear of \texttt{missing()}? Is this just for code read-ability or is there something inherent in the behavior of \texttt{missing} we need to consider that we don't when using \texttt{NULL}?
@@ -2512,7 +2601,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fc1b2d48bc8>
+## <bytecode: 0x7fccd7aa7380>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -2524,9 +2613,20 @@ XXX
 \section*{6.6 dot dot dot}\label{dot-dot-dot}}
 \addcontentsline{toc}{section}{6.6 dot dot dot}
 
-``(See also \texttt{rlang::list2()} to support splicing and to silently ignore trailing commas\ldots{}'' Can we come up with a simple use case for \texttt{list2} here?
+``(See also \texttt{rlang::list2()} to support splicing and to silently ignore trailing commas\ldots{}'' Can we come up with a simple use case for \texttt{list2} here? The docs use \texttt{list2(a\ =\ 1,\ a\ =\ 2,\ b\ =\ 3,\ b\ =\ 4,\ 5,\ 6)} but how is this different from \texttt{list}?
 
-XXX
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{identical}\NormalTok{(}
+\NormalTok{  rlang}\OperatorTok{::}\KeywordTok{list2}\NormalTok{(}\DataTypeTok{a =} \DecValTok{1}\NormalTok{, }\DataTypeTok{a =} \DecValTok{2}\NormalTok{, }\DataTypeTok{b =} \DecValTok{3}\NormalTok{, }\DataTypeTok{b =} \DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{) ,}
+  \KeywordTok{list}\NormalTok{(}\DataTypeTok{a =} \DecValTok{1}\NormalTok{, }\DataTypeTok{a =} \DecValTok{2}\NormalTok{, }\DataTypeTok{b =} \DecValTok{3}\NormalTok{, }\DataTypeTok{b =} \DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
 
 ``\texttt{lapply()} uses \texttt{...} to pass \texttt{na.rm} on to \texttt{mean()}'' Um, how?
 

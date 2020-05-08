@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-05-06" />
+<meta name="date" content="2020-05-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -197,7 +197,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#lazy-evaluation"><i class="fa fa-check"></i>6.5 Lazy evaluation</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#promises"><i class="fa fa-check"></i>6.5.1 Promises</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#default-arguments"><i class="fa fa-check"></i>6.5.2 Default arguments</a></li>
-<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#missing-arguments"><i class="fa fa-check"></i>6.5.3 Missing arguments</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-2"><i class="fa fa-check"></i>6.5.4.3 Exercise</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-3"><i class="fa fa-check"></i>6.5.4.4 Exercise</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#dot-dot-dot"><i class="fa fa-check"></i>6.6 dot dot dot</a></li>
@@ -245,11 +244,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol style="list-style-type: decimal">
 <li><p><strong><span class="Q">Q</span></strong>: Given a name, like <code>&quot;mean&quot;</code>, <code>match.fun()</code> lets you find a function. Given a function, can you find its name? Why doesn’t that make sense in R?</p>
 <p><strong><span class="started">A</span></strong>: A name can only point to a single object, but an object can be pointed to by 0, 1, or many names. What are names of the functions in the following block?</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb220-1" data-line-number="1">  <span class="cf">function</span>(x) <span class="kw">sd</span>(x) <span class="op">/</span><span class="st"> </span><span class="kw">mean</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">  <span class="cf">function</span>(x) <span class="kw">sd</span>(x) <span class="op">/</span><span class="st"> </span><span class="kw">mean</span>(x)</a></code></pre></div>
 <pre><code>## function(x) sd(x) / mean(x)</code></pre>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb222-1" data-line-number="1">  f1 &lt;-<span class="st"> </span><span class="cf">function</span>(x) (x <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(x)) <span class="op">/</span><span class="st"> </span>(<span class="kw">max</span>(x) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(x))</a>
-<a class="sourceLine" id="cb222-2" data-line-number="2">  f2 &lt;-<span class="st"> </span>f1</a>
-<a class="sourceLine" id="cb222-3" data-line-number="3">  f3 &lt;-<span class="st"> </span>f1</a></code></pre></div></li>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">  f1 &lt;-<span class="st"> </span><span class="cf">function</span>(x) (x <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(x)) <span class="op">/</span><span class="st"> </span>(<span class="kw">max</span>(x) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(x))</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">  f2 &lt;-<span class="st"> </span>f1</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">  f3 &lt;-<span class="st"> </span>f1</a></code></pre></div></li>
 </ol>
 <div class="TODO">
 <p>XXX</p>
@@ -268,128 +267,161 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>6.4.3 A fresh start</h2>
 <div class="question">
 <p>How would we change this code so that the second call of <code>g11()</code> is 2?</p>
-<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb223-1" data-line-number="1">g11 &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb223-2" data-line-number="2">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">exists</span>(<span class="st">&quot;a&quot;</span>)) {</a>
-<a class="sourceLine" id="cb223-3" data-line-number="3">    a &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb223-4" data-line-number="4">  } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb223-5" data-line-number="5">    a &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb223-6" data-line-number="6">  }</a>
-<a class="sourceLine" id="cb223-7" data-line-number="7">  a</a>
-<a class="sourceLine" id="cb223-8" data-line-number="8">}</a>
-<a class="sourceLine" id="cb223-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb223-10" data-line-number="10"><span class="kw">g11</span>()</a></code></pre></div>
-<pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb225-1" data-line-number="1"><span class="kw">g11</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">g11 &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">exists</span>(<span class="st">&quot;a&quot;</span>)) {</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">    a &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">    a &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">  }</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">  a</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">}</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="kw">g11</span>()</a></code></pre></div>
 <pre><code>## [1] 1</code></pre>
 </div>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">g11 &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">exists</span>(<span class="st">&quot;a&quot;</span>)) {</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">    a &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">    a &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">  }</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">  a &lt;&lt;-<span class="st"> </span>a</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">  a</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">}</a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="kw">g11</span>()</a></code></pre></div>
+<pre><code>## [1] 1</code></pre>
 </div>
 <div id="lazy-evaluation" class="section level2 unnumbered">
 <h2>6.5 Lazy evaluation</h2>
 <div class="question">
 <p>“This allows you to do things like include potentially expensive computations in function arguments that will only be evaluated if needed”</p>
-<p>Does anyone have an example of this?</p>
+<p>Does anyone have an example of this? We discussed a function that will only perform expensive tasks given the context of the function perhaps?</p>
 </div>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<p>Maybe a situation where we can give a function default arguments where <code>sample</code>is a stand in for longer expensive functions like different fancy modeling techniques? We can workshop this…</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">mega_model &lt;-<span class="st"> </span><span class="cf">function</span>(values, <span class="dt">x =</span> <span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dv">10</span>), <span class="dt">y =</span> <span class="kw">sample</span>(<span class="dv">200</span><span class="op">:</span><span class="dv">300</span>, <span class="dv">10</span>), <span class="dt">z =</span> <span class="kw">sample</span>(<span class="dv">300</span><span class="op">:</span><span class="dv">400</span>, <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">) {</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">  dplyr<span class="op">::</span><span class="kw">case_when</span>(</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">    <span class="kw">is.numeric</span>(values) <span class="op">~</span><span class="st"> </span>x,</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">    <span class="kw">is.character</span>(values) <span class="op">~</span><span class="st"> </span>y,</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">    <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span>z</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">  )</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">}</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="kw">mega_model</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))</a></code></pre></div>
+<pre><code>##  [1] 284 237 235 216 203 290 232 251 204 250</code></pre>
 </div>
 <div id="promises" class="section level2 unnumbered">
 <h2>6.5.1 Promises</h2>
 <div class="question">
 <p>Can we discuss the order that this happening in? Is it that <code>Calculating...</code> is printed, then <code>x*2</code> then <code>x*2</code> again? I am still reading this as: <code>h03(double(20), double(20))</code> which is an incorrect mental model because the message is only printed once…</p>
-<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb227-1" data-line-number="1">double &lt;-<span class="st"> </span><span class="cf">function</span>(x) { </a>
-<a class="sourceLine" id="cb227-2" data-line-number="2">  <span class="kw">message</span>(<span class="st">&quot;Calculating...&quot;</span>)</a>
-<a class="sourceLine" id="cb227-3" data-line-number="3">  x <span class="op">*</span><span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb227-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb227-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb227-6" data-line-number="6">h03 &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb227-7" data-line-number="7">  <span class="kw">c</span>(x, x)</a>
-<a class="sourceLine" id="cb227-8" data-line-number="8">}</a>
-<a class="sourceLine" id="cb227-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb227-10" data-line-number="10"><span class="kw">h03</span>(<span class="kw">double</span>(<span class="dv">20</span>))</a></code></pre></div>
-<pre><code>## Calculating...</code></pre>
-<pre><code>## [1] 40 40</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">double &lt;-<span class="st"> </span><span class="cf">function</span>(x) { </a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">  <span class="kw">message</span>(<span class="st">&quot;Calculating...&quot;</span>)</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">  x <span class="op">*</span><span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">}</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">h03 &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">  <span class="kw">c</span>(x, x)</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">}</a></code></pre></div>
 </div>
-<div class="TODO">
-<p>XXX</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">double &lt;-<span class="st"> </span><span class="cf">function</span>(y) {</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">  <span class="kw">message</span>(<span class="st">&quot;Calculating...&quot;</span>)</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">  <span class="kw">cat</span>(<span class="st">&quot;double before</span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">  <span class="kw">print</span>(pryr<span class="op">::</span><span class="kw">promise_info</span>(y))</a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">  <span class="kw">force</span>(y)</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">  <span class="kw">cat</span>(<span class="st">&quot;double after</span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
+<a class="sourceLine" id="cb11-7" data-line-number="7">  <span class="kw">print</span>(pryr<span class="op">::</span><span class="kw">promise_info</span>(y))</a>
+<a class="sourceLine" id="cb11-8" data-line-number="8">  y <span class="op">*</span><span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb11-9" data-line-number="9">}</a>
+<a class="sourceLine" id="cb11-10" data-line-number="10">h03 &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb11-11" data-line-number="11">  <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;h03 before</span><span class="ch">\n</span><span class="st">&quot;</span>))</a>
+<a class="sourceLine" id="cb11-12" data-line-number="12">  <span class="kw">print</span>(pryr<span class="op">::</span><span class="kw">promise_info</span>(x))</a>
+<a class="sourceLine" id="cb11-13" data-line-number="13">  <span class="kw">force</span>(x)</a>
+<a class="sourceLine" id="cb11-14" data-line-number="14">  <span class="kw">cat</span>(<span class="st">&quot;h03 after</span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
+<a class="sourceLine" id="cb11-15" data-line-number="15">  <span class="kw">print</span>(pryr<span class="op">::</span><span class="kw">promise_info</span>(x))</a>
+<a class="sourceLine" id="cb11-16" data-line-number="16">  <span class="kw">c</span>(x, x)</a>
+<a class="sourceLine" id="cb11-17" data-line-number="17">}</a>
+<a class="sourceLine" id="cb11-18" data-line-number="18"><span class="kw">double</span>(<span class="kw">h03</span>(<span class="dv">20</span>))</a></code></pre></div>
+<pre><code>## Calculating...</code></pre>
+<pre><code>## double before</code></pre>
+<pre><code>## Registered S3 method overwritten by &#39;pryr&#39;:
+##   method      from
+##   print.bytes Rcpp</code></pre>
+<pre><code>## $code
+## h03(20)
+## 
+## $env
+## &lt;environment: R_GlobalEnv&gt;
+## 
+## $evaled
+## [1] FALSE
+## 
+## $value
+## NULL
+## 
+## h03 before
+## $code
+## [1] 20
+## 
+## $env
+## &lt;environment: R_GlobalEnv&gt;
+## 
+## $evaled
+## [1] FALSE
+## 
+## $value
+## NULL
+## 
+## h03 after
+## $code
+## [1] 20
+## 
+## $env
+## NULL
+## 
+## $evaled
+## [1] TRUE
+## 
+## $value
+## [1] 20
+## 
+## double after
+## $code
+## h03(20)
+## 
+## $env
+## NULL
+## 
+## $evaled
+## [1] TRUE
+## 
+## $value
+## [1] 20 20</code></pre>
+<pre><code>## [1] 40 40</code></pre>
+<p><img src="images/promise.png" width="728" style="display: block; margin: auto;" /></p>
+<div class="question">
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="cf">function</span>(x, y) x <span class="op">+</span><span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="kw">f</span>(<span class="dv">2</span>, var_doesnt_exist)</a></code></pre></div>
+<pre><code>## [1] 4</code></pre>
+<p><code>var_doesnt_exist</code> is a promise within <code>g</code>, we use the promises within <code>g</code> when we call <code>f</code> but <code>f</code> never uses its second argument so this runs without a problem. When would we want to leverage this behavior?</p>
 </div>
 </div>
 <div id="default-arguments" class="section level2 unnumbered">
 <h2>6.5.2 Default arguments</h2>
 <div class="question">
 <p>I don’t quite understand why <code>x = ls()</code> is different from <code>ls()</code> here; aren’t we still assigning <code>x = ls()</code> but without specifying x?</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb230-1" data-line-number="1">h05 &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">x =</span> <span class="kw">ls</span>()) {</a>
-<a class="sourceLine" id="cb230-2" data-line-number="2">  a &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb230-3" data-line-number="3">  x</a>
-<a class="sourceLine" id="cb230-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb230-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb230-6" data-line-number="6"><span class="co"># this makes sense to me</span></a>
-<a class="sourceLine" id="cb230-7" data-line-number="7"><span class="kw">h05</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">h05 &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">x =</span> <span class="kw">ls</span>()) {</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">  a &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">  x</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4">}</a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb19-6" data-line-number="6"><span class="co"># this makes sense to me</span></a>
+<a class="sourceLine" id="cb19-7" data-line-number="7"><span class="kw">h05</span>()</a></code></pre></div>
 <pre><code>## [1] &quot;a&quot; &quot;x&quot;</code></pre>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb232-1" data-line-number="1"><span class="co"># how is this different from above?</span></a>
-<a class="sourceLine" id="cb232-2" data-line-number="2"><span class="kw">h05</span>(<span class="kw">ls</span>())</a></code></pre></div>
-<pre><code>##  [1] &quot;answer&quot;                &quot;as_tb&quot;                 &quot;casewhen_func&quot;        
-##  [4] &quot;controlflow_functions&quot; &quot;custom_attr&quot;           &quot;df&quot;                   
-##  [7] &quot;df_coltypes&quot;           &quot;df_non_syntactic_name&quot; &quot;df_x&quot;                 
-## [10] &quot;double&quot;                &quot;example2223&quot;           &quot;f1&quot;                   
-## [13] &quot;f2&quot;                    &quot;f3&quot;                    &quot;for_func&quot;             
-## [16] &quot;g11&quot;                   &quot;h03&quot;                   &quot;h05&quot;                  
-## [19] &quot;i&quot;                     &quot;if_else_func&quot;          &quot;if_func&quot;              
-## [22] &quot;ifelse_func&quot;           &quot;l1&quot;                    &quot;l2&quot;                   
-## [25] &quot;means&quot;                 &quot;medians&quot;               &quot;my_factor&quot;            
-## [28] &quot;my_matrix&quot;             &quot;my_set&quot;                &quot;my_vector&quot;            
-## [31] &quot;mylist&quot;                &quot;new_address&quot;           &quot;new_y_address&quot;        
-## [34] &quot;no&quot;                    &quot;no_final&quot;              &quot;no_idx&quot;               
-## [37] &quot;old_address&quot;           &quot;out&quot;                   &quot;out_list&quot;             
-## [40] &quot;out_vector&quot;            &quot;repeat_func&quot;           &quot;subsetting_table&quot;     
-## [43] &quot;switch_func&quot;           &quot;test&quot;                  &quot;true_one&quot;             
-## [46] &quot;true_two&quot;              &quot;v&quot;                     &quot;v_address&quot;            
-## [49] &quot;var&quot;                   &quot;while_func&quot;            &quot;x&quot;                    
-## [52] &quot;x1&quot;                    &quot;x2&quot;                    &quot;x3&quot;                   
-## [55] &quot;x4&quot;                    &quot;x5&quot;                    &quot;y&quot;                    
-## [58] &quot;y_address&quot;             &quot;yes&quot;                   &quot;yes_final&quot;            
-## [61] &quot;yes_idx&quot;</code></pre>
-</div>
-<div class="TODO">
-<p>XXX</p>
-</div>
-</div>
-<div id="missing-arguments" class="section level2 unnumbered">
-<h2>6.5.3 Missing arguments</h2>
-<div class="question">
-<p>Comparing the default sample function:</p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb234-1" data-line-number="1">sample &lt;-<span class="st"> </span><span class="cf">function</span> (x, size, <span class="dt">replace =</span> <span class="ot">FALSE</span>, <span class="dt">prob =</span> <span class="ot">NULL</span>) </a>
-<a class="sourceLine" id="cb234-2" data-line-number="2">{</a>
-<a class="sourceLine" id="cb234-3" data-line-number="3">    <span class="cf">if</span> (<span class="kw">length</span>(x) <span class="op">==</span><span class="st"> </span>1L <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">is.numeric</span>(x) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">is.finite</span>(x) <span class="op">&amp;&amp;</span><span class="st"> </span>x <span class="op">&gt;=</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb234-4" data-line-number="4"><span class="st">        </span><span class="dv">1</span>) {</a>
-<a class="sourceLine" id="cb234-5" data-line-number="5">        <span class="cf">if</span> (<span class="kw">missing</span>(size))</a>
-<a class="sourceLine" id="cb234-6" data-line-number="6">          <span class="co"># if you don&#39;t supply the sample size</span></a>
-<a class="sourceLine" id="cb234-7" data-line-number="7">          <span class="co"># you will just get random samples</span></a>
-<a class="sourceLine" id="cb234-8" data-line-number="8">          <span class="co"># the length of the supplied vector</span></a>
-<a class="sourceLine" id="cb234-9" data-line-number="9">            size &lt;-<span class="st"> </span>x</a>
-<a class="sourceLine" id="cb234-10" data-line-number="10">        <span class="kw">sample.int</span>(x, size, replace, prob)</a>
-<a class="sourceLine" id="cb234-11" data-line-number="11">    }</a>
-<a class="sourceLine" id="cb234-12" data-line-number="12">    <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb234-13" data-line-number="13">        <span class="cf">if</span> (<span class="kw">missing</span>(size)) </a>
-<a class="sourceLine" id="cb234-14" data-line-number="14">            size &lt;-<span class="st"> </span><span class="kw">length</span>(x)</a>
-<a class="sourceLine" id="cb234-15" data-line-number="15">        x[<span class="kw">sample.int</span>(<span class="kw">length</span>(x), size, replace, prob)]</a>
-<a class="sourceLine" id="cb234-16" data-line-number="16">    }</a>
-<a class="sourceLine" id="cb234-17" data-line-number="17">}</a>
-<a class="sourceLine" id="cb234-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb234-19" data-line-number="19"><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a></code></pre></div>
-<pre><code>##  [1]  8  5  3  2  4  9 10  1  6  7</code></pre>
-<p>To using Hadley’s recommended <code>NULL</code> version:</p>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb236-1" data-line-number="1">my_sample_null &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">size =</span> <span class="ot">NULL</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>, <span class="dt">prob =</span> <span class="ot">NULL</span>) {</a>
-<a class="sourceLine" id="cb236-2" data-line-number="2">  size &lt;-<span class="st"> </span>size <span class="op">%||%</span><span class="st"> </span><span class="kw">length</span>(x)</a>
-<a class="sourceLine" id="cb236-3" data-line-number="3">  x[<span class="kw">sample.int</span>(<span class="kw">length</span>(x), size, <span class="dt">replace =</span> replace, <span class="dt">prob =</span> prob)]</a>
-<a class="sourceLine" id="cb236-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb236-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb236-6" data-line-number="6"><span class="kw">my_sample_null</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a></code></pre></div>
-<pre><code>##  [1]  8  6 10  3  5  9  4  7  2  1</code></pre>
-<p>The second function is obviously more concise, but why is Hadley recommending we we steer clear of <code>missing()</code>? Is this just for code read-ability or is there something inherent in the behavior of <code>missing</code> we need to consider that we don’t when using <code>NULL</code>?</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="co"># how is this different from above?</span></a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="kw">h05</span>(<span class="kw">ls</span>())</a></code></pre></div>
+<pre><code>##  [1] &quot;a&quot;          &quot;double&quot;     &quot;f&quot;          &quot;f1&quot;         &quot;f2&quot;        
+##  [6] &quot;f3&quot;         &quot;g11&quot;        &quot;h03&quot;        &quot;h05&quot;        &quot;mega_model&quot;</code></pre>
 </div>
 <div class="TODO">
 <p>XXX</p>
@@ -399,92 +431,107 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>6.5.4.3 Exercise</h2>
 <div class="question">
 <p>I understand this problem is showing us an example of name masking (the function doesn’t need to use the <code>y = 0</code> argument because it gets <code>y</code> from within the definition of x, but I’m fuzzy on what exactly the <code>;</code> does. What does the syntax <code>{y &lt;- 1; 2}</code> mean? Could it be read as &quot;Set <code>y &lt;- 1</code> and <code>x &lt;- 2</code>?</p>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb238-1" data-line-number="1">y &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb238-2" data-line-number="2">f1 &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">x =</span> {y &lt;-<span class="st"> </span><span class="dv">1</span>; <span class="dv">2</span>}, <span class="dt">y =</span> <span class="dv">0</span>) {</a>
-<a class="sourceLine" id="cb238-3" data-line-number="3">  <span class="kw">c</span>(x, y)</a>
-<a class="sourceLine" id="cb238-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb238-5" data-line-number="5"><span class="kw">f1</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">y &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb23-2" data-line-number="2">f1 &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">x =</span> {y &lt;-<span class="st"> </span><span class="dv">1</span>; <span class="dv">2</span>}, <span class="dt">y =</span> <span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb23-3" data-line-number="3">  <span class="kw">c</span>(x, y)</a>
+<a class="sourceLine" id="cb23-4" data-line-number="4">}</a>
+<a class="sourceLine" id="cb23-5" data-line-number="5"><span class="kw">f1</span>()</a></code></pre></div>
 <pre><code>## [1] 2 1</code></pre>
 </div>
+<p>The curly brackets are an expression, which can be read as</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">{</a>
+<a class="sourceLine" id="cb25-2" data-line-number="2">  y &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb25-3" data-line-number="3">  <span class="dv">2</span></a>
+<a class="sourceLine" id="cb25-4" data-line-number="4">}</a></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<p>This is returning <code>2</code> and setting <code>1</code> to <code>y</code>. The colon can be read as a new line in the expression. <code>x</code> is called inside the function and overwrites the argument value of <code>y</code></p>
 </div>
 <div id="exercise-3" class="section level2 unnumbered">
 <h2>6.5.4.4 Exercise</h2>
 <div class="question">
 <p>I know this isn’t exactly needed to answer the question, but how do we access a function that has methods? For instance - here I want to dig into the <code>hist</code> function using <code>hist</code></p>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb240-1" data-line-number="1">hist</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">hist</a></code></pre></div>
 <pre><code>## function (x, ...) 
 ## UseMethod(&quot;hist&quot;)
-## &lt;bytecode: 0x7fc1b2d48bc8&gt;
+## &lt;bytecode: 0x7fd80c212800&gt;
 ## &lt;environment: namespace:graphics&gt;</code></pre>
 <p>does not give me the actual contents of the actual function….</p>
 </div>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<p>We need to access is using <code>hist.&lt;method&gt;</code></p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">hist.default</a></code></pre></div>
 </div>
 <div id="dot-dot-dot" class="section level2 unnumbered">
 <h2>6.6 dot dot dot</h2>
 <div class="question">
-<p>“(See also <code>rlang::list2()</code> to support splicing and to silently ignore trailing commas…” Can we come up with a simple use case for <code>list2</code> here?</p>
+<p>“(See also <code>rlang::list2()</code> to support splicing and to silently ignore trailing commas…” Can we come up with a simple use case for <code>list2</code> here? The docs use <code>list2(a = 1, a = 2, b = 3, b = 4, 5, 6)</code> but how is this different from <code>list</code>?</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">identical</span>(</a>
+<a class="sourceLine" id="cb30-2" data-line-number="2">  rlang<span class="op">::</span><span class="kw">list2</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">a =</span> <span class="dv">2</span>, <span class="dt">b =</span> <span class="dv">3</span>, <span class="dt">b =</span> <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>) ,</a>
+<a class="sourceLine" id="cb30-3" data-line-number="3">  <span class="kw">list</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">a =</span> <span class="dv">2</span>, <span class="dt">b =</span> <span class="dv">3</span>, <span class="dt">b =</span> <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb30-4" data-line-number="4">)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
 </div>
 <div class="TODO">
 <p>XXX</p>
 </div>
 <div class="question">
 <p>“<code>lapply()</code> uses <code>...</code> to pass <code>na.rm</code> on to <code>mean()</code>” Um, how?</p>
-<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb242-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="ot">NA</span>), <span class="kw">c</span>(<span class="dv">4</span>, <span class="ot">NA</span>, <span class="dv">6</span>))</a>
-<a class="sourceLine" id="cb242-2" data-line-number="2"><span class="kw">str</span>(<span class="kw">lapply</span>(x, mean, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="ot">NA</span>), <span class="kw">c</span>(<span class="dv">4</span>, <span class="ot">NA</span>, <span class="dv">6</span>))</a>
+<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="kw">str</span>(<span class="kw">lapply</span>(x, mean, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
 <pre><code>## List of 2
 ##  $ : num 2
 ##  $ : num 5</code></pre>
 </div>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<p>An lapply takes on two main arguments: what you want to loop over and the function to apply to each element. By including <code>...</code> <code>lapply</code> allows you to supply additional arguments which will be passed to the function inside the <code>lapply</code>. In this case, <code>na.rm = TRUE</code> is being applied to mean every time it’s being called in the loop.</p>
 </div>
 <div id="exercise-4" class="section level2 unnumbered">
 <h2>6.6.1.2 Exercise</h2>
 <div class="question">
 <p>I tried running <code>browser(plot(1:10, col = &quot;red&quot;))</code> to peek under the hood but only got <code>Called from: top level</code> in the console. What am I missing?</p>
 </div>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<p>We can use <code>debugonce</code>!</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">debugonce</span>(<span class="kw">plot</span>())</a></code></pre></div>
 </div>
 <div id="exit-handlers" class="section level2 unnumbered">
 <h2>6.7.4 Exit handlers</h2>
 <div class="question">
-<p>“Always set <code>add = TRUE</code> when using <code>on.exit()</code> If you don’t, each call to <code>on.exit()</code> will overwrite the previous exit handler.” Can we come up with an example for not using <code>add = TRUE</code> and how it results in unwanted behavior?</p>
+<p>“Always set <code>add = TRUE</code> when using <code>on.exit()</code> If you don’t, each call to <code>on.exit()</code> will overwrite the previous exit handler.” What does this mean?</p>
 </div>
 <p><code>add = TRUE</code> is important when you have more than one <code>on.exit</code> function!</p>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb244-1" data-line-number="1">j08 &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb244-2" data-line-number="2">  <span class="kw">on.exit</span>(<span class="kw">message</span>(<span class="st">&quot;a&quot;</span>))</a>
-<a class="sourceLine" id="cb244-3" data-line-number="3">  <span class="kw">on.exit</span>(<span class="kw">message</span>(<span class="st">&quot;b&quot;</span>), <span class="dt">add=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb244-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb244-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb244-6" data-line-number="6"><span class="kw">j08</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">j08 &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb35-2" data-line-number="2">  <span class="kw">on.exit</span>(<span class="kw">message</span>(<span class="st">&quot;a&quot;</span>))</a>
+<a class="sourceLine" id="cb35-3" data-line-number="3">  <span class="kw">on.exit</span>(<span class="kw">message</span>(<span class="st">&quot;b&quot;</span>), <span class="dt">add=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb35-4" data-line-number="4">}</a>
+<a class="sourceLine" id="cb35-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb35-6" data-line-number="6"><span class="kw">j08</span>()</a></code></pre></div>
 <pre><code>## a</code></pre>
 <pre><code>## b</code></pre>
 <div class="question">
 <p>Can we go over this code? How does it not change your working directory after you run the function</p>
-<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb247-1" data-line-number="1">cleanup &lt;-<span class="st"> </span><span class="cf">function</span>(dir, code) {</a>
-<a class="sourceLine" id="cb247-2" data-line-number="2">  old_dir &lt;-<span class="st"> </span><span class="kw">setwd</span>(dir)</a>
-<a class="sourceLine" id="cb247-3" data-line-number="3">  <span class="kw">on.exit</span>(<span class="kw">setwd</span>(old_dir), <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb247-4" data-line-number="4">  </a>
-<a class="sourceLine" id="cb247-5" data-line-number="5">  old_opt &lt;-<span class="st"> </span><span class="kw">options</span>(<span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb247-6" data-line-number="6">  <span class="co"># what&#39;s happening here?</span></a>
-<a class="sourceLine" id="cb247-7" data-line-number="7">  <span class="kw">on.exit</span>(<span class="kw">options</span>(old_opt), <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb247-8" data-line-number="8">}</a>
-<a class="sourceLine" id="cb247-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb247-10" data-line-number="10"><span class="co"># what is this output</span></a>
-<a class="sourceLine" id="cb247-11" data-line-number="11"><span class="kw">cleanup</span>(<span class="st">&quot;~&quot;</span>)</a>
-<a class="sourceLine" id="cb247-12" data-line-number="12"><span class="co"># how is it different from this?</span></a>
-<a class="sourceLine" id="cb247-13" data-line-number="13"><span class="kw">getwd</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">cleanup &lt;-<span class="st"> </span><span class="cf">function</span>(dir, code) {</a>
+<a class="sourceLine" id="cb38-2" data-line-number="2">  old_dir &lt;-<span class="st"> </span><span class="kw">setwd</span>(dir)</a>
+<a class="sourceLine" id="cb38-3" data-line-number="3">  <span class="kw">on.exit</span>(<span class="kw">setwd</span>(old_dir), <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb38-4" data-line-number="4">  </a>
+<a class="sourceLine" id="cb38-5" data-line-number="5">  old_opt &lt;-<span class="st"> </span><span class="kw">options</span>(<span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb38-6" data-line-number="6">  <span class="kw">on.exit</span>(<span class="kw">options</span>(old_opt), <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb38-7" data-line-number="7">}</a>
+<a class="sourceLine" id="cb38-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb38-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb38-10" data-line-number="10"><span class="kw">cleanup</span>(<span class="st">&quot;~&quot;</span>)</a>
+<a class="sourceLine" id="cb38-11" data-line-number="11"><span class="kw">getwd</span>()</a></code></pre></div>
 <pre><code>## [1] &quot;/Users/mayagans/Documents/bookclub-Advanced_R/QandA&quot;</code></pre>
 </div>
-<div class="TODO">
-<p>XXX</p>
+<p>The behavior of <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/getwd"><code>setwd</code></a> “changing the working directory” is actually a <strong>side effect</strong> of the function - it invisibly returns the previous working directory as the value of the function (potentially for the exact purpose demonstrated).</p>
+<div class="question">
+<p>If <code>on.exit</code> fails will it continue onto the next <code>on.exit</code> so long as <code>add == TRUE</code>
+?``on.exit fails it’ll caontinue onto the next one</p>
 </div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb40-2" data-line-number="2">  <span class="kw">on.exit</span>(<span class="kw">stop</span>(<span class="st">&quot;Error&quot;</span>))</a>
+<a class="sourceLine" id="cb40-3" data-line-number="3">  <span class="kw">on.exit</span>(<span class="kw">message</span>(<span class="st">&quot;yay, still called.&quot;</span>), <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb40-4" data-line-number="4">}</a>
+<a class="sourceLine" id="cb40-5" data-line-number="5"><span class="kw">f</span>()</a></code></pre></div>
+<pre><code>Error in f() : Error
+yay, still called.</code></pre>
 </div>
 <div id="exercise-5" class="section level2 unnumbered">
 <h2>6.7.5.4 Exercise</h2>
@@ -493,13 +540,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p><strong><span class="Q">Q</span></strong>: How does the <code>chdir</code> parameter of <code>source()</code> compare to <code>in_dir()</code>? Why might you prefer one approach to the other?
 The <code>in_dir()</code> approach was given in the book as</p>
-<p>```r
-in_dir &lt;- function(dir, code) {
-old &lt;- setwd(dir)
-on.exit(setwd(old))</p>
-<p>force(code)
-}
-```</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">    in_dir &lt;-<span class="st"> </span><span class="cf">function</span>(dir, code) {</a>
+<a class="sourceLine" id="cb42-2" data-line-number="2">      old &lt;-<span class="st"> </span><span class="kw">setwd</span>(dir)</a>
+<a class="sourceLine" id="cb42-3" data-line-number="3">      <span class="kw">on.exit</span>(<span class="kw">setwd</span>(old))</a>
+<a class="sourceLine" id="cb42-4" data-line-number="4">      </a>
+<a class="sourceLine" id="cb42-5" data-line-number="5">      <span class="kw">force</span>(code)</a>
+<a class="sourceLine" id="cb42-6" data-line-number="6">    }</a></code></pre></div>
 <p><strong><span class="started">A</span></strong>: <code>in_dir()</code> takes a path to a working directory as an argument. First the working directory is changed accordingly. <code>on.exit()</code> ensures that the modification to the working directory are reset to the initial value when the function exits.</p>
 <p>In <code>source()</code> the <code>chdir</code> argument specifies if the working directory should be changed during the evaluation of the <code>file</code> argument (which in this case has to be a path name).</p>
 <div class="TODO">
@@ -510,7 +556,7 @@ on.exit(setwd(old))</p>
 <h2>6.7.5.5 Exercise</h2>
 <div class="question">
 <p>Can we go over the source code of <code>capture.output</code> and <code>capture.output2</code>?</p>
-<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb249-1" data-line-number="1"><span class="kw">body</span>(capture.output)</a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw">body</span>(capture.output)</a></code></pre></div>
 <pre><code>## {
 ##     args &lt;- substitute(list(...))[-1L]
 ##     type &lt;- match.arg(type)
@@ -552,20 +598,20 @@ on.exit(setwd(old))</p>
 ##         invisible(NULL)
 ##     else rval
 ## }</code></pre>
-<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb251-1" data-line-number="1">capture.output2 &lt;-<span class="st"> </span><span class="cf">function</span>(code) {</a>
-<a class="sourceLine" id="cb251-2" data-line-number="2">  temp &lt;-<span class="st"> </span><span class="kw">tempfile</span>()</a>
-<a class="sourceLine" id="cb251-3" data-line-number="3">  <span class="kw">on.exit</span>(<span class="kw">file.remove</span>(temp), <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb251-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb251-5" data-line-number="5">  <span class="kw">sink</span>(temp)</a>
-<a class="sourceLine" id="cb251-6" data-line-number="6">  <span class="kw">on.exit</span>(<span class="kw">sink</span>(), <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb251-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb251-8" data-line-number="8">  <span class="kw">force</span>(code)</a>
-<a class="sourceLine" id="cb251-9" data-line-number="9">  <span class="kw">readLines</span>(temp)</a>
-<a class="sourceLine" id="cb251-10" data-line-number="10">}</a></code></pre></div>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb252-1" data-line-number="1"><span class="kw">identical</span>(</a>
-<a class="sourceLine" id="cb252-2" data-line-number="2">  <span class="kw">capture.output</span>(<span class="kw">cat</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)),</a>
-<a class="sourceLine" id="cb252-3" data-line-number="3">  <span class="kw">capture.output2</span>(<span class="kw">cat</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>))</a>
-<a class="sourceLine" id="cb252-4" data-line-number="4">)</a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">capture.output2 &lt;-<span class="st"> </span><span class="cf">function</span>(code) {</a>
+<a class="sourceLine" id="cb45-2" data-line-number="2">  temp &lt;-<span class="st"> </span><span class="kw">tempfile</span>()</a>
+<a class="sourceLine" id="cb45-3" data-line-number="3">  <span class="kw">on.exit</span>(<span class="kw">file.remove</span>(temp), <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb45-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb45-5" data-line-number="5">  <span class="kw">sink</span>(temp)</a>
+<a class="sourceLine" id="cb45-6" data-line-number="6">  <span class="kw">on.exit</span>(<span class="kw">sink</span>(), <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb45-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb45-8" data-line-number="8">  <span class="kw">force</span>(code)</a>
+<a class="sourceLine" id="cb45-9" data-line-number="9">  <span class="kw">readLines</span>(temp)</a>
+<a class="sourceLine" id="cb45-10" data-line-number="10">}</a></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="kw">identical</span>(</a>
+<a class="sourceLine" id="cb46-2" data-line-number="2">  <span class="kw">capture.output</span>(<span class="kw">cat</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)),</a>
+<a class="sourceLine" id="cb46-3" data-line-number="3">  <span class="kw">capture.output2</span>(<span class="kw">cat</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>))</a>
+<a class="sourceLine" id="cb46-4" data-line-number="4">)</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>The second function is more concise but what is it missing from the first? I’d like to go over the first one line by line.</p>
 </div>
@@ -577,16 +623,16 @@ on.exit(setwd(old))</p>
 <h2>6.8.4 Replacement functions</h2>
 <div class="question">
 <p>Can we put into words the translation for</p>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb254-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">2</span>, <span class="dt">c =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb254-2" data-line-number="2"><span class="kw">names</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">2</span>, <span class="dt">c =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb48-2" data-line-number="2"><span class="kw">names</span>(x)</a></code></pre></div>
 <pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb256-1" data-line-number="1"><span class="kw">names</span>(x)[<span class="dv">2</span>] &lt;-<span class="st"> &quot;two&quot;</span></a>
-<a class="sourceLine" id="cb256-2" data-line-number="2"><span class="kw">names</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="kw">names</span>(x)[<span class="dv">2</span>] &lt;-<span class="st"> &quot;two&quot;</span></a>
+<a class="sourceLine" id="cb50-2" data-line-number="2"><span class="kw">names</span>(x)</a></code></pre></div>
 <pre><code>## [1] &quot;a&quot;   &quot;two&quot; &quot;c&quot;</code></pre>
 <p>Being equal to</p>
-<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb258-1" data-line-number="1"><span class="st">`</span><span class="dt">*tmp*</span><span class="st">`</span> &lt;-<span class="st"> </span>x</a>
-<a class="sourceLine" id="cb258-2" data-line-number="2">x &lt;-<span class="st"> `</span><span class="dt">names&lt;-</span><span class="st">`</span>(<span class="st">`</span><span class="dt">*tmp*</span><span class="st">`</span>, <span class="st">`</span><span class="dt">[&lt;-</span><span class="st">`</span>(<span class="kw">names</span>(<span class="st">`</span><span class="dt">*tmp*</span><span class="st">`</span>), <span class="dv">2</span>, <span class="st">&quot;two&quot;</span>))</a>
-<a class="sourceLine" id="cb258-3" data-line-number="3"><span class="kw">rm</span>(<span class="st">`</span><span class="dt">*tmp*</span><span class="st">`</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="st">`</span><span class="dt">*tmp*</span><span class="st">`</span> &lt;-<span class="st"> </span>x</a>
+<a class="sourceLine" id="cb52-2" data-line-number="2">x &lt;-<span class="st"> `</span><span class="dt">names&lt;-</span><span class="st">`</span>(<span class="st">`</span><span class="dt">*tmp*</span><span class="st">`</span>, <span class="st">`</span><span class="dt">[&lt;-</span><span class="st">`</span>(<span class="kw">names</span>(<span class="st">`</span><span class="dt">*tmp*</span><span class="st">`</span>), <span class="dv">2</span>, <span class="st">&quot;two&quot;</span>))</a>
+<a class="sourceLine" id="cb52-3" data-line-number="3"><span class="kw">rm</span>(<span class="st">`</span><span class="dt">*tmp*</span><span class="st">`</span>)</a></code></pre></div>
 </div>
 <div class="TODO">
 <p>XXX</p>
@@ -598,15 +644,19 @@ on.exit(setwd(old))</p>
 <p><a href="https://github.com/Tazinho/Advanced-R-Solutions/blob/5043d9b06c7469a010c568ecb85e12bedca75207/2-06-Functions.Rmd#L433">This question is flagged as “started” let’s try to complete it!</a></p>
 </div>
 <p><strong><span class="Q">Q</span></strong>: Explain why the following code fails:</p>
-<p><code>r     modify(get(&quot;x&quot;), 1) &lt;- 10     #&gt; Error: target of assignment expands to non-language object</code></p>
+<pre><code>```r
+modify(get(&quot;x&quot;), 1) &lt;- 10
+#&gt; Error: target of assignment expands to non-language object
+```</code></pre>
 <p><strong><span class="started">A</span></strong>: First, let’s define <code>x</code> and recall the definition of <code>modify()</code> from the textbook:</p>
-<p>```r
-x &lt;- 1:3</p>
-<p><code>modify&lt;-</code> &lt;- function(x, position, value) {
-x[position] &lt;- value
-x
+<pre><code>```r
+x &lt;- 1:3
+
+`modify&lt;-` &lt;- function(x, position, value) {
+  x[position] &lt;- value
+  x
 }
-```</p>
+```</code></pre>
 <div class="TODO">
 <p>XXX</p>
 </div>
