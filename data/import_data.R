@@ -21,6 +21,8 @@ beer_states <- readr::read_csv(
 
 #### BeerAdvocate.com Reviews ####
 
+## https://www.kaggle.com/rdoume/beerreviews
+
 beer_reviews <- readr::read_csv(here::here('data/beer_reviews.csv.gz'))
 
 ## The following is faster to read, write, and stores smaller on-disk
