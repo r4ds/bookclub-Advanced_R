@@ -91,7 +91,7 @@ get_state(iris, 'setosa')
 
 At R's build-time, if you want to run a function from a package that isn't loaded it will not throw an error but at run-time it will if the required package is not loaded:
 
-```{r, eval=FALSE}
+```{r}
 func_1 <- function(df, x) {
   select({{ df }}, {{ x }})
 }
@@ -236,6 +236,8 @@ f(2, var_doesnt_exist)
 `var_doesnt_exist` is a promise within `g`, we use the promises within `g` when we call `f` but `f` never uses its second argument so this runs without a problem. When would we want to leverage this behavior?
 :::
 
+In a chain of function calls, various promises can live in limbo until they are evaluated, and some might never be. If they are evaluated, though, they get a value, and we can use that value in other expressions.
+
 ## 6.5.2 Default arguments {-}
 
 :::question
@@ -315,9 +317,41 @@ identical(
 ```
 :::
 
-:::TODO
-XXX
-:::
+`list2` is most helpful when we need to force environment variables with ata variables. We can see this by crting a function that takes a variable number of arguments:
+
+```{r}
+library(rlang)
+
+numeric_list <- function(...) {
+  dots <- list(...)
+  num <- as.numeric(dots)
+  set_names(num, names(dots))
+}
+
+numeric_list2 <- function(...) {
+  dots <- list2(...)
+  num <- as.numeric(dots)
+  set_names(num, names(dots))
+}
+
+numeric_list(1, 2, 3)
+numeric_list2(1, 2, 3)
+```
+
+The main difference with list(...) is that list2(...) enables the `!!!` syntax to splice lists:
+
+```{r}
+x <- list(2, 3)
+numeric_list2(1, !!! x, 4)
+```
+
+```{r, eval=FALSE}
+numeric_list(1, !!! x, 4)
+```
+
+```
+Error in !x : invalid argument type
+```
 
 :::question
 "`lapply()` uses `...` to pass `na.rm` on to `mean()`" Um, how?
@@ -457,40 +491,9 @@ identical(
 The second function is more concise but what is it missing from the first? I'd like to go over the first one line by line.
 :::
 
-`list2` is most helpful when we need to force environment variables with ata variables. We can see this by crting a function that takes a variable number of arguments:
-
-```{r}
-library(rlang)
-
-numeric_list <- function(...) {
-  dots <- list(...)
-  num <- as.numeric(dots)
-  set_names(num, names(dots))
-}
-
-numeric_list2 <- function(...) {
-  dots <- list2(...)
-  num <- as.numeric(dots)
-  set_names(num, names(dots))
-}
-
-numeric_list(1, 2, 3)
-numeric_list2(1, 2, 3)
-```
-
-The main difference with list(...) is that list2(...) enables the `!!!` syntax to splice lists:
-
-```{r}
-x <- list(2, 3)
-numeric_list2(1, !!! x, 4)
-```
-
-```{r, eval=FALSE}
-numeric_list(1, !!! x, 4)
-```
-```
-Error in !x : invalid argument type
-```
+:::TODO
+XXX
+:::
 
 ## 6.8.4 Replacement functions {-}
 

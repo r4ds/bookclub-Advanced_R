@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-05-07" />
+<meta name="date" content="2020-05-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -197,7 +197,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#lazy-evaluation"><i class="fa fa-check"></i>6.5 Lazy evaluation</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#promises"><i class="fa fa-check"></i>6.5.1 Promises</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#default-arguments"><i class="fa fa-check"></i>6.5.2 Default arguments</a></li>
-<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#missing-arguments"><i class="fa fa-check"></i>6.5.3 Missing arguments</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-2"><i class="fa fa-check"></i>6.5.4.3 Exercise</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-3"><i class="fa fa-check"></i>6.5.4.4 Exercise</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#dot-dot-dot"><i class="fa fa-check"></i>6.6 dot dot dot</a></li>
@@ -244,9 +243,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb178-2" data-line-number="2">var</a></code></pre></div>
 <pre><code>NULL</code></pre>
 <div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" data-line-number="1">var &lt;-<span class="st"> </span><span class="kw">ifelse</span>((<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">1</span>) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>), <span class="kw">print</span>(<span class="st">&quot;In range&quot;</span>), <span class="kw">print</span>(<span class="st">&quot;Out of range&quot;</span>))</a></code></pre></div>
-<pre><code>## [1] &quot;In range&quot;</code></pre>
+<pre><code>## [1] &quot;Out of range&quot;</code></pre>
 <div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb182-1" data-line-number="1">var</a></code></pre></div>
-<pre><code>## [1] &quot;In range&quot;</code></pre>
+<pre><code>## [1] &quot;Out of range&quot;</code></pre>
 <p><code>ifelse</code> explicitly returns its result, whereas <code>if</code> invisibly returns it!</p>
 <div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" data-line-number="1"><span class="kw">ifelse</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>), <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>## [1] 1 3 1</code></pre>
