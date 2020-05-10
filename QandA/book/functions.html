@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="control-flow.html"/>
-
+<link rel="next" href="environments.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -212,6 +212,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#replacement-functions"><i class="fa fa-check"></i>6.8.4 Replacement functions</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-7"><i class="fa fa-check"></i>6.8.6.3 Exercise</a></li>
 </ul></li>
+<li class="chapter" data-level="7" data-path="environments.html"><a href="environments.html"><i class="fa fa-check"></i><b>7</b> Environments</a><ul>
+<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#parents"><i class="fa fa-check"></i>7.2.3 Parents</a></li>
+<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#getting-and-setting"><i class="fa fa-check"></i>7.2.5 Getting and setting</a></li>
+<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#advanced-bindings"><i class="fa fa-check"></i>7.2.6 Advanced bindings</a></li>
+<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#section-1"><i class="fa fa-check"></i>7.3.1.2</a></li>
+<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#function-enviornment"><i class="fa fa-check"></i>7.4.2 Function enviornment</a></li>
+<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#namespaces"><i class="fa fa-check"></i>7.4.3 Namespaces</a></li>
+<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#data-structures"><i class="fa fa-check"></i>7.6 Data Structures</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -356,11 +365,11 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <pre><code>## # A tibble: 5 x 1
 ##      x1
 ##   &lt;dbl&gt;
-## 1 0.787
-## 2 0.801
-## 3 0.263
-## 4 0.447
-## 5 0.815</code></pre>
+## 1 0.499
+## 2 0.582
+## 3 0.869
+## 4 0.380
+## 5 0.209</code></pre>
 </div>
 <div id="a-fresh-start" class="section level2 unnumbered">
 <h2>6.4.3 A fresh start</h2>
@@ -408,7 +417,7 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <a class="sourceLine" id="cb245-8" data-line-number="8">}</a>
 <a class="sourceLine" id="cb245-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb245-10" data-line-number="10"><span class="kw">mega_model</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))</a></code></pre></div>
-<pre><code>##  [1] 290 270 282 217 216 299 287 289 292 261</code></pre>
+<pre><code>##  [1] 237 251 224 286 244 243 242 290 234 276</code></pre>
 </div>
 <div id="promises" class="section level2 unnumbered">
 <h2>6.5.1 Promises</h2>
@@ -636,7 +645,7 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb287-1" data-line-number="1">hist</a></code></pre></div>
 <pre><code>## function (x, ...) 
 ## UseMethod(&quot;hist&quot;)
-## &lt;bytecode: 0x7fc8eebea9c8&gt;
+## &lt;bytecode: 0x7f878b9b0bc8&gt;
 ## &lt;environment: namespace:graphics&gt;</code></pre>
 <p>does not give me the actual contents of the actual function….</p>
 </div>
@@ -926,7 +935,6 @@ x
 <p>XXX</p>
 </div>
 
-
 </div>
 </div>
             </section>
@@ -934,8 +942,8 @@ x
           </div>
         </div>
       </div>
-<a href="control-flow.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="control-flow.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="environments.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

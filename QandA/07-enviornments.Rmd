@@ -1,0 +1,150 @@
+# Environments
+
+```{r, include=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(lobstr)
+library(rlang)
+library(openintro)
+```
+
+
+## 7.2.3 Parents {-}
+
+:::question
+What's the relationship between base, empty enviornment, and global enviornment?
+:::
+
+The global environment is your working enviornment, where all packages loaded are its parent. When you list the parents of the gloal environment the last environment is always `base` which is responsible for loading all other packages. The base's parent is the "ultimate ancestor", the empty enviornment.
+
+
+:::question
+Clarification: the global environment's parent is all the packages loaded within the environment, not the empty environment, right? How do we check this? `parent.env(global)`?
+:::
+
+Each package becomes a parent to the global environment. We can inspect local enviornments using `search_envs()`
+
+```{r}
+search_envs()
+```
+
+## 7.2.5 Getting and setting {-}
+
+:::question
+"But you can’t use `[[` with numeric indices, and you can’t use `[`:"
+
+It makes sense to me that you can't use numeric indexes because objects in an environment aren't ordered, but why can't you use `[`?
+:::
+
+:::TODO
+The solutions manual states: "The second option would return two objects at the same time. What data structure would they be contained inside? But can we elaborate on what this means?
+:::
+
+## 7.2.6 Advanced bindings {-}
+
+:::question
+Let's go over some source code that uses `env_bind_lazy()` - Hadley mentions its used when autoloading datasets with packages - can we find an example of this? How is this different from including `LazyData: true` in your description file?
+:::
+
+:::TODO
+XXX
+:::
+
+## 7.3.1.2 {-}
+
+:::question
+I understood the recursion in the prior example, but what is inherits doing here? Can we go through this line for line and discuss what is happening in this function?
+
+```{r}
+fget <- function(name, env = caller_env(), inherits = TRUE) {
+  # Base case
+  if (env_has(env, name)) {
+    obj <- env_get(env, name)
+
+    if (is.function(obj)) {
+      return(obj)
+    }
+  }
+
+  if (identical(env, emptyenv()) || !inherits) {
+    stop("Could not find function called \"", name, "\"", call. = FALSE)
+  }
+
+  # Recursive Case
+  fget(name, env_parent(env))
+}
+```
+
+```{r}
+# Test
+mean <- 10
+fget("mean", inherits = TRUE)
+```
+:::
+
+## 7.4.2 Function enviornment {-}
+
+:::question
+I found this section a little confusing. Can we go over the second figure in the section? Where does `x` live?  `g` points to x but `x` is in the global enviornment? Can we come up with our own example for a function being bound to the global environment but accessing variables from its own enviornment? (I think this is what the second figure in the section is trying to display)
+
+```{r}
+y <- 1
+e <- env()
+e$g <- function() 1
+e$g
+```
+:::
+
+
+:::TODO
+
+Is this example trying to display that if we change the function to return `y` this does not return `1` because `y` inside the function cannot access `y` at the global scope?
+
+```{r}
+y <- 1
+e <- env()
+e$g <- function() y
+e$g
+```
+:::
+
+## 7.4.3 Namespaces {-}
+
+:::question
+"Every binding in the package environment is also found in the namespace environment; this ensures every function can use every other function in the package. But some bindings only occur in the namespace environment. These are known as internal or non-exported objects, which make it possible to hide internal implementation details from the user."
+
+Can we find some simple-ish package source code as an example of this? 
+:::
+
+:::TODO
+XXX
+:::
+
+
+## 7.6 Data Structures {-}
+
+:::question
+Can we build on this function to include `on.exit()`?
+
+```{r}
+my_env <- new.env(parent = emptyenv())
+my_env$a <- 1
+
+get_a <- function() {
+  my_env$a
+}
+set_a <- function(value) {
+  old <- my_env$a
+  my_env$a <- value
+  invisible(old)
+}
+```
+:::
+
+:::question
+The bullet point mentions hashmaps but I'm still really unclear on what that is. What are hash tables and are they related?
+:::
+
+:::TODO
+:::
+

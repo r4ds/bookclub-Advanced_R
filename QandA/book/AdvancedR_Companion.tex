@@ -313,7 +313,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc8f762fff8"
+## [1] "0x7f879319dc40"
 \end{verbatim}
 
 \begin{Shaded}
@@ -323,7 +323,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc8f762fff8"
+## [1] "0x7f879319dc40"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -335,7 +335,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc8f4fb1f60"
+## [1] "0x7f87923cd7c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -345,8 +345,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fc8f4f61550] <list> 
-## └─[2:0x7fc8f762fff8] <dbl>
+## █ [1:0x7f879236ae60] <list> 
+## └─[2:0x7f879319dc40] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -356,7 +356,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc8f4ec9a20"
+## [1] "0x7f879204e678"
 \end{verbatim}
 
 \begin{Shaded}
@@ -393,7 +393,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fc8f634b5d8>"
+## [1] "<0x7f879423d2b8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -403,7 +403,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fc8f634b5d8>
+## <0x7f879423d2b8>
 \end{verbatim}
 
 \begin{Shaded}
@@ -413,7 +413,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc8f634b5d8"
+## [1] "0x7f879423d2b8"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -462,7 +462,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc8f945abc8"
+## [1] "0x7f8794217548"
 \end{verbatim}
 
 \begin{Shaded}
@@ -472,7 +472,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fc8f945abc8>"
+## [1] "<0x7f8794217548>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -482,7 +482,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fc8f945abc8 -> 0x7fc8f5575ec8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7f8794217548 -> 0x7f878c01fec8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -578,7 +578,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc8f725dc08"
+## [1] "0x7f879427b5c8"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -591,7 +591,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc8fa923d28"
+## [1] "0x7f87931a25a8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -614,7 +614,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc8fa923d28"
+## [1] "0x7f87931a25a8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -624,7 +624,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc8fa923d28"
+## [1] "0x7f87931a25a8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -647,7 +647,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc8fa923d28"
+## [1] "0x7f87931a25a8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -657,7 +657,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc8f765abf8"
+## [1] "0x7f879254a1a8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -680,7 +680,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc8effb9668"
+## [1] "0x7f879210f1e8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2461,11 +2461,11 @@ This will work:
 ## # A tibble: 5 x 1
 ##      x1
 ##   <dbl>
-## 1 0.531
-## 2 0.700
-## 3 0.114
-## 4 0.103
-## 5 0.167
+## 1 0.595
+## 2 0.526
+## 3 0.728
+## 4 0.470
+## 5 0.747
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2539,7 +2539,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 222 291 270 204 219 284 212 275 239 226
+##  [1] 221 291 264 276 292 265 213 202 233 203
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -2930,7 +2930,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fc8eebea9c8>
+## <bytecode: 0x7f878b9b0bc8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3375,6 +3375,180 @@ x
 ```
 
 XXX
+
+\hypertarget{environments}{%
+\chapter{Environments}\label{environments}}
+
+\hypertarget{parents}{%
+\section*{7.2.3 Parents}\label{parents}}
+\addcontentsline{toc}{section}{7.2.3 Parents}
+
+What's the relationship between base, empty enviornment, and global enviornment?
+
+The global environment is your working enviornment, where all packages loaded are its parent. When you list the parents of the gloal environment the last environment is always \texttt{base} which is responsible for loading all other packages. The base's parent is the ``ultimate ancestor'', the empty enviornment.
+
+Clarification: the global environment's parent is all the packages loaded within the environment, not the empty environment, right? How do we check this? \texttt{parent.env(global)}?
+
+Each package becomes a parent to the global environment. We can inspect local enviornments using \texttt{search\_envs()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{search_envs}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [[1]] $ <env: global>
+##  [[2]] $ <env: package:openintro>
+##  [[3]] $ <env: package:rlang>
+##  [[4]] $ <env: package:cyclocomp>
+##  [[5]] $ <env: package:lobstr>
+##  [[6]] $ <env: package:kableExtra>
+##  [[7]] $ <env: package:forcats>
+##  [[8]] $ <env: package:stringr>
+##  [[9]] $ <env: package:dplyr>
+## [[10]] $ <env: package:purrr>
+## [[11]] $ <env: package:readr>
+## [[12]] $ <env: package:tidyr>
+## [[13]] $ <env: package:tibble>
+## [[14]] $ <env: package:ggplot2>
+## [[15]] $ <env: package:tidyverse>
+## [[16]] $ <env: package:stats>
+## [[17]] $ <env: package:graphics>
+## [[18]] $ <env: package:grDevices>
+## [[19]] $ <env: package:utils>
+## [[20]] $ <env: package:datasets>
+## ... and 3 more environments
+\end{verbatim}
+
+\hypertarget{getting-and-setting}{%
+\section*{7.2.5 Getting and setting}\label{getting-and-setting}}
+\addcontentsline{toc}{section}{7.2.5 Getting and setting}
+
+``But you can't use \texttt{{[}{[}} with numeric indices, and you can't use \texttt{{[}}:''
+
+It makes sense to me that you can't use numeric indexes because objects in an environment aren't ordered, but why can't you use \texttt{{[}}?
+
+The solutions manual states: "The second option would return two objects at the same time. What data structure would they be contained inside? But can we elaborate on what this means?
+
+\hypertarget{advanced-bindings}{%
+\section*{7.2.6 Advanced bindings}\label{advanced-bindings}}
+\addcontentsline{toc}{section}{7.2.6 Advanced bindings}
+
+Let's go over some source code that uses \texttt{env\_bind\_lazy()} - Hadley mentions its used when autoloading datasets with packages - can we find an example of this? How is this different from including \texttt{LazyData:\ true} in your description file?
+
+XXX
+
+\hypertarget{section-1}{%
+\section*{7.3.1.2}\label{section-1}}
+\addcontentsline{toc}{section}{7.3.1.2}
+
+I understood the recursion in the prior example, but what is inherits doing here? Can we go through this line for line and discuss what is happening in this function?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fget <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(name, }\DataTypeTok{env =} \KeywordTok{caller_env}\NormalTok{(), }\DataTypeTok{inherits =} \OtherTok{TRUE}\NormalTok{) \{}
+  \CommentTok{# Base case}
+  \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{env_has}\NormalTok{(env, name)) \{}
+\NormalTok{    obj <-}\StringTok{ }\KeywordTok{env_get}\NormalTok{(env, name)}
+
+    \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{is.function}\NormalTok{(obj)) \{}
+      \KeywordTok{return}\NormalTok{(obj)}
+\NormalTok{    \}}
+\NormalTok{  \}}
+
+  \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{identical}\NormalTok{(env, }\KeywordTok{emptyenv}\NormalTok{()) }\OperatorTok{||}\StringTok{ }\OperatorTok{!}\NormalTok{inherits) \{}
+    \KeywordTok{stop}\NormalTok{(}\StringTok{"Could not find function called }\CharTok{\textbackslash{}"}\StringTok{"}\NormalTok{, name, }\StringTok{"}\CharTok{\textbackslash{}"}\StringTok{"}\NormalTok{, }\DataTypeTok{call. =} \OtherTok{FALSE}\NormalTok{)}
+\NormalTok{  \}}
+
+  \CommentTok{# Recursive Case}
+  \KeywordTok{fget}\NormalTok{(name, }\KeywordTok{env_parent}\NormalTok{(env))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Test}
+\NormalTok{mean <-}\StringTok{ }\DecValTok{10}
+\KeywordTok{fget}\NormalTok{(}\StringTok{"mean"}\NormalTok{, }\DataTypeTok{inherits =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function (x, ...) 
+## UseMethod("mean")
+## <bytecode: 0x7f878ea769b0>
+## <environment: namespace:base>
+\end{verbatim}
+
+\hypertarget{function-enviornment}{%
+\section*{7.4.2 Function enviornment}\label{function-enviornment}}
+\addcontentsline{toc}{section}{7.4.2 Function enviornment}
+
+I found this section a little confusing. Can we go over the second figure in the section? Where does \texttt{x} live? \texttt{g} points to x but \texttt{x} is in the global enviornment? Can we come up with our own example for a function being bound to the global environment but accessing variables from its own enviornment? (I think this is what the second figure in the section is trying to display)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y <-}\StringTok{ }\DecValTok{1}
+\NormalTok{e <-}\StringTok{ }\KeywordTok{env}\NormalTok{()}
+\NormalTok{e}\OperatorTok{$}\NormalTok{g <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() }\DecValTok{1}
+\NormalTok{e}\OperatorTok{$}\NormalTok{g}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function() 1
+\end{verbatim}
+
+Is this example trying to display that if we change the function to return \texttt{y} this does not return \texttt{1} because \texttt{y} inside the function cannot access \texttt{y} at the global scope?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y <-}\StringTok{ }\DecValTok{1}
+\NormalTok{e <-}\StringTok{ }\KeywordTok{env}\NormalTok{()}
+\NormalTok{e}\OperatorTok{$}\NormalTok{g <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() y}
+\NormalTok{e}\OperatorTok{$}\NormalTok{g}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function() y
+\end{verbatim}
+
+\hypertarget{namespaces}{%
+\section*{7.4.3 Namespaces}\label{namespaces}}
+\addcontentsline{toc}{section}{7.4.3 Namespaces}
+
+``Every binding in the package environment is also found in the namespace environment; this ensures every function can use every other function in the package. But some bindings only occur in the namespace environment. These are known as internal or non-exported objects, which make it possible to hide internal implementation details from the user.''
+
+Can we find some simple-ish package source code as an example of this?
+
+XXX
+
+\hypertarget{data-structures}{%
+\section*{7.6 Data Structures}\label{data-structures}}
+\addcontentsline{toc}{section}{7.6 Data Structures}
+
+Can we build on this function to include \texttt{on.exit()}?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my_env <-}\StringTok{ }\KeywordTok{new.env}\NormalTok{(}\DataTypeTok{parent =} \KeywordTok{emptyenv}\NormalTok{())}
+\NormalTok{my_env}\OperatorTok{$}\NormalTok{a <-}\StringTok{ }\DecValTok{1}
+
+\NormalTok{get_a <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+\NormalTok{  my_env}\OperatorTok{$}\NormalTok{a}
+\NormalTok{\}}
+\NormalTok{set_a <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(value) \{}
+\NormalTok{  old <-}\StringTok{ }\NormalTok{my_env}\OperatorTok{$}\NormalTok{a}
+\NormalTok{  my_env}\OperatorTok{$}\NormalTok{a <-}\StringTok{ }\NormalTok{value}
+  \KeywordTok{invisible}\NormalTok{(old)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+The bullet point mentions hashmaps but I'm still really unclear on what that is. What are hash tables and are they related?
 
 \bibliography{book.bib,packages.bib}
 
