@@ -119,7 +119,7 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-05-08}
+\date{2020-05-10}
 
 \begin{document}
 \maketitle
@@ -313,7 +313,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f88b5a5f800"
+## [1] "0x7fe95237ac80"
 \end{verbatim}
 
 \begin{Shaded}
@@ -323,7 +323,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f88b5a5f800"
+## [1] "0x7fe95237ac80"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -335,7 +335,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f88b7df6698"
+## [1] "0x7fe950fd2590"
 \end{verbatim}
 
 \begin{Shaded}
@@ -345,8 +345,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7f88b8960918] <list> 
-## └─[2:0x7f88b5a5f800] <dbl>
+## █ [1:0x7fe950f8d8d0] <list> 
+## └─[2:0x7fe95237ac80] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -356,7 +356,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f88b8974598"
+## [1] "0x7fe950d99648"
 \end{verbatim}
 
 \begin{Shaded}
@@ -393,7 +393,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7f88b8b597b8>"
+## [1] "<0x7fe954ef9ca8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -403,7 +403,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7f88b8b597b8>
+## <0x7fe954ef9ca8>
 \end{verbatim}
 
 \begin{Shaded}
@@ -413,7 +413,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f88b8b597b8"
+## [1] "0x7fe954ef9ca8"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -462,7 +462,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f88b6958608"
+## [1] "0x7fe95422fb48"
 \end{verbatim}
 
 \begin{Shaded}
@@ -472,7 +472,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7f88b6958608>"
+## [1] "<0x7fe95422fb48>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -482,7 +482,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7f88b6958608 -> 0x7f88b68a9bc8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fe95422fb48 -> 0x7fe95502ac88]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -578,7 +578,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f88b68f4148"
+## [1] "0x7fe954d23508"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -591,7 +591,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f88b6196b48"
+## [1] "0x7fe9524b35c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -614,7 +614,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f88b6196b48"
+## [1] "0x7fe9524b35c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -624,7 +624,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f88b6196b48"
+## [1] "0x7fe9524b35c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -647,7 +647,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f88b6196b48"
+## [1] "0x7fe9524b35c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -657,7 +657,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f88add41de8"
+## [1] "0x7fe953861688"
 \end{verbatim}
 
 \begin{Shaded}
@@ -680,7 +680,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f88b5fc56e8"
+## [1] "0x7fe9551babc8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2299,6 +2299,70 @@ We can use RCPP!
 
 XXX
 
+\hypertarget{function-composition}{%
+\section*{6.3 Function composition}\label{function-composition}}
+\addcontentsline{toc}{section}{6.3 Function composition}
+
+When comparing nested, intermediate, and piping functions, it looks like Hadley flips the order of \texttt{f()} and \texttt{g()} between bullet points
+
+It does look like he does that!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(z) \{}
+  \KeywordTok{cat}\NormalTok{(}\StringTok{"g is:"}\NormalTok{, z)}
+\NormalTok{\}}
+
+\NormalTok{g <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  x }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{nested}{%
+\subsection{Nested}\label{nested}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{f}\NormalTok{(}\KeywordTok{g}\NormalTok{(}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## g is: 4
+\end{verbatim}
+
+\hypertarget{intermediate}{%
+\subsection{Intermediate}\label{intermediate}}
+
+This is written in the book as \texttt{y\ \textless{}-\ f(x);\ g(y)} but should be flipped to \texttt{y\ \textless{}-\ g(x);\ f(y)} if we are to follow the nested example
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y <-}\StringTok{ }\KeywordTok{g}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\KeywordTok{f}\NormalTok{(y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## g is: 4
+\end{verbatim}
+
+\hypertarget{piping}{%
+\subsection{Piping}\label{piping}}
+
+This also needs to be flipped from \texttt{x\ \%\textgreater{}\%\ f()\ \%\textgreater{}\%\ g()} to \texttt{x\ \%\textgreater{}\%\ g()\ \%\textgreater{}\%\ f()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{2} \OperatorTok{%>%}\StringTok{ }\KeywordTok{g}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }\KeywordTok{f}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## g is: 4
+\end{verbatim}
+
 \hypertarget{lexical-scoping}{%
 \section*{6.4 Lexical scoping}\label{lexical-scoping}}
 \addcontentsline{toc}{section}{6.4 Lexical scoping}
@@ -2373,17 +2437,6 @@ Without \texttt{dplyr} this will fail
 \end{Shaded}
 
 \begin{verbatim}
-## # A tibble: 5 x 1
-##       x1
-##    <dbl>
-## 1 0.263 
-## 2 0.992 
-## 3 0.598 
-## 4 0.0501
-## 5 0.542
-\end{verbatim}
-
-\begin{verbatim}
 Error in select({: could not find function "select"
 \end{verbatim}
 
@@ -2406,13 +2459,13 @@ This will work:
 
 \begin{verbatim}
 ## # A tibble: 5 x 1
-##       x1
-##    <dbl>
-## 1 0.263 
-## 2 0.992 
-## 3 0.598 
-## 4 0.0501
-## 5 0.542
+##      x1
+##   <dbl>
+## 1 0.140
+## 2 0.514
+## 3 0.226
+## 4 0.488
+## 5 0.695
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2486,7 +2539,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 251 234 228 298 212 280 262 224 226 268
+##  [1] 254 208 279 273 283 257 277 270 239 293
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -2507,6 +2560,10 @@ Can we discuss the order that this happening in? Is it that \texttt{Calculating.
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
+
+::TODO
+
+Still need to work on explaining what's happening here and what that would look like graphically:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2595,20 +2652,56 @@ Can we discuss the order that this happening in? Is it that \texttt{Calculating.
 
 \begin{center}\includegraphics[width=20.22in]{images/promise} \end{center}
 
+:::
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{f <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, y) x }\OperatorTok{+}\StringTok{ }\DecValTok{2}
-\KeywordTok{f}\NormalTok{(}\DecValTok{2}\NormalTok{, var_doesnt_exist)}
+\NormalTok{plop <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(a, b) a }\OperatorTok{*}\StringTok{ }\DecValTok{10}
+\KeywordTok{plop}\NormalTok{(}\DecValTok{2}\NormalTok{, var_doesnt_exist)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 4
+## [1] 20
 \end{verbatim}
 
 \texttt{var\_doesnt\_exist} is a promise within \texttt{g}, we use the promises within \texttt{g} when we call \texttt{f} but \texttt{f} never uses its second argument so this runs without a problem. When would we want to leverage this behavior?
 
-In a chain of function calls, various promises can live in limbo until they are evaluated, and some might never be. If they are evaluated, though, they get a value, and we can use that value in other expressions.
+The unevaluated \texttt{var\_doesnt\_exist} doesn't exist , but we can use \texttt{substitute} to to get the expression out of a promise! If we modify our function we can play with the expression contained in b:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plop <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(a, b) \{}
+  \KeywordTok{cat}\NormalTok{(}\StringTok{"You entered"}\NormalTok{, }\KeywordTok{deparse}\NormalTok{(}\KeywordTok{substitute}\NormalTok{(b)), }\StringTok{"as `b` }\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{  a }\OperatorTok{*}\StringTok{ }\DecValTok{10}
+\NormalTok{\}}
+\KeywordTok{plop}\NormalTok{(}\DataTypeTok{a =} \DecValTok{2}\NormalTok{, }\DataTypeTok{b =}\NormalTok{ var_doesnt_exist)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## You entered var_doesnt_exist as `b`
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 20
+\end{verbatim}
+
+We can even evaluate \texttt{b} and use it to create a \texttt{dplyr} like \texttt{pull} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plop <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(a, b) \{}
+  \KeywordTok{eval}\NormalTok{(}\KeywordTok{substitute}\NormalTok{(b), }\DataTypeTok{envir =}\NormalTok{ a)}
+\NormalTok{\}}
+\KeywordTok{plop}\NormalTok{(iris, Species)[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] setosa setosa setosa setosa setosa setosa setosa setosa setosa setosa
+## Levels: setosa versicolor virginica
+\end{verbatim}
 
 \hypertarget{default-arguments}{%
 \section*{6.5.2 Default arguments}\label{default-arguments}}
@@ -2646,26 +2739,101 @@ I don't quite understand why \texttt{x\ =\ ls()} is different from \texttt{ls()}
 ## [10] "df_x"                  "double"                "example2223"          
 ## [13] "f"                     "f1"                    "f2"                   
 ## [16] "f3"                    "for_func"              "func_1"               
-## [19] "g11"                   "get_state"             "h03"                  
-## [22] "h05"                   "i"                     "if_else_func"         
-## [25] "if_func"               "ifelse_func"           "IPA"                  
-## [28] "l1"                    "l2"                    "means"                
-## [31] "medians"               "mega_model"            "my_factor"            
-## [34] "my_matrix"             "my_set"                "my_vector"            
-## [37] "mylist"                "new_address"           "new_y_address"        
-## [40] "no"                    "no_final"              "no_idx"               
-## [43] "old_address"           "out"                   "out_list"             
-## [46] "out_vector"            "repeat_func"           "subsetting_table"     
-## [49] "switch_func"           "test"                  "test_tbl"             
-## [52] "true_one"              "true_two"              "v"                    
-## [55] "v_address"             "val"                   "var"                  
-## [58] "while_func"            "x"                     "x1"                   
-## [61] "x2"                    "x3"                    "x4"                   
-## [64] "x5"                    "y"                     "y_address"            
-## [67] "yes"                   "yes_final"             "yes_idx"
+## [19] "g"                     "g11"                   "get_state"            
+## [22] "h03"                   "h05"                   "i"                    
+## [25] "if_else_func"          "if_func"               "ifelse_func"          
+## [28] "IPA"                   "l1"                    "l2"                   
+## [31] "means"                 "medians"               "mega_model"           
+## [34] "my_factor"             "my_matrix"             "my_set"               
+## [37] "my_vector"             "mylist"                "new_address"          
+## [40] "new_y_address"         "no"                    "no_final"             
+## [43] "no_idx"                "old_address"           "out"                  
+## [46] "out_list"              "out_vector"            "plop"                 
+## [49] "repeat_func"           "subsetting_table"      "switch_func"          
+## [52] "test"                  "test_tbl"              "true_one"             
+## [55] "true_two"              "v"                     "v_address"            
+## [58] "val"                   "var"                   "while_func"           
+## [61] "x"                     "x1"                    "x2"                   
+## [64] "x3"                    "x4"                    "x5"                   
+## [67] "y"                     "y_address"             "yes"                  
+## [70] "yes_final"             "yes_idx"
 \end{verbatim}
 
-XXX
+The difference is where the promise is created. \texttt{ls()} is always evaluated inside \texttt{h05} when \texttt{x} is evaluated. The difference is the environment. When \texttt{ls()} is provided as an explicit parameter, \texttt{x} is a promise whose environment is the global environment. When \texttt{ls()} is a default parameter, it is evaluated in the local environment where it is used.
+
+Hypothesis: does nesting \texttt{ls()} in \texttt{h05} first evaluate \texttt{ls()} then evaluate \texttt{h05()} ?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(magrittr)}
+\NormalTok{h05 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ \{y <-}\StringTok{ }\DecValTok{4}\NormalTok{;}\KeywordTok{ls}\NormalTok{()\}) \{}
+\NormalTok{   a <-}\StringTok{ }\DecValTok{1}
+\NormalTok{   x}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{h05}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "a" "x" "y"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ls}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "h05"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\{y <-}\StringTok{ }\DecValTok{4}\NormalTok{;}\KeywordTok{ls}\NormalTok{()\} }\OperatorTok{%>%}\StringTok{ }\KeywordTok{h05}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "h05" "y"  
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ls}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "h05" "y" 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{h05}\NormalTok{(\{x <-}\StringTok{ }\DecValTok{5}\NormalTok{;}\KeywordTok{ls}\NormalTok{()\})}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "h05" "x"   "y" 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ls}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "h05" "x"   "y" 
+\end{verbatim}
+
+Notice in all of the latter calls, a is not returned - so it's not evaluating \texttt{ls()} inside of the function.
 
 \hypertarget{exercise-2}{%
 \section*{6.5.4.3 Exercise}\label{exercise-2}}
@@ -2704,6 +2872,53 @@ The curly brackets are an expression, which can be read as
 
 This is returning \texttt{2} and setting \texttt{1} to \texttt{y}. The colon can be read as a new line in the expression. \texttt{x} is called inside the function and overwrites the argument value of \texttt{y}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f1 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ \{y <-}\StringTok{ }\DecValTok{1}\NormalTok{; }\DecValTok{2}\NormalTok{\}, }\DataTypeTok{y =} \DecValTok{0}\NormalTok{) \{}
+  \CommentTok{# At this point, neither x nor y have been needed or evaluated. This is "lazy".}
+  \KeywordTok{cat}\NormalTok{(y) }
+  \CommentTok{# "Summon the current state of y". }
+  \CommentTok{# R looks first in the function env - is there a y there? No}
+  \CommentTok{# R then looks at the arguments - is there a y there? Yes, it's 0 -> print out zero }
+  \CommentTok{# If R had not found y in the arguments, then it would look in the parent environment of the function - the global env.}
+  \CommentTok{# That's where it would find y = NULL - but since it already found a default arg, it already stopped evaluating. }
+  \KeywordTok{cat}\NormalTok{(x)}
+  \CommentTok{# "Summon the current state of x"}
+  \CommentTok{# x is an expression that first sets y to equal 1 and then returns the number 2 -> print out 2}
+  \KeywordTok{c}\NormalTok{(x, }\CommentTok{# "Summon the current state of x" - x is still the expression that sets y to 1 and then x to 2}
+\NormalTok{    y) }\CommentTok{# "Summon the current state of y" - y was set to 1, so y is 1 here.}
+\NormalTok{\}}
+\KeywordTok{f1}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 02
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 2 1
+\end{verbatim}
+
+Compare to:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f1 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ \{y <-}\StringTok{ }\DecValTok{1}\NormalTok{; }\DecValTok{2}\NormalTok{\}, }\DataTypeTok{y =} \DecValTok{0}\NormalTok{) \{}
+  \KeywordTok{c}\NormalTok{(y, }\CommentTok{# "Summon the current state of y" - y has not yet been set to anything else, so it returns zero}
+\NormalTok{    x) }\CommentTok{# "Summon the current state of x" - x is still the expression that sets y to 1 and then x to 2}
+       \CommentTok{# However, y has already been returned - so even though y is now set to 1, it's called after the previous y and does not affect the previous y.}
+\NormalTok{\}}
+\NormalTok{x =}\StringTok{ }\OtherTok{NULL}
+\NormalTok{y =}\StringTok{ }\OtherTok{NULL}
+\KeywordTok{f1}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0 2
+\end{verbatim}
+
 \hypertarget{exercise-3}{%
 \section*{6.5.4.4 Exercise}\label{exercise-3}}
 \addcontentsline{toc}{section}{6.5.4.4 Exercise}
@@ -2719,7 +2934,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7f88b115a3c8>
+## <bytecode: 0x7fe94c5db9c8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -2891,7 +3106,7 @@ Can we go over this code? How does it not change your working directory after yo
 ## [1] "/Users/mayagans/Documents/bookclub-Advanced_R/QandA"
 \end{verbatim}
 
-The behavior of \href{https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/getwd}{\texttt{setwd}} ``changing the working directory'' is actually a \textbf{side effect} of the function - it invisibly returns the previous working directory as the value of the function (potentially for the exact purpose demonstrated).
+The behavior of \href{https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/getwd}{\texttt{setwd}} ``changing the working directory'' is actually a \textbf{side effect} of the function - it invisibly returns the previous working directory as the value of the function (potentially for the exact purpose demonstrated). We can use this within our \texttt{on.exit} function to change back to the prior working directory!
 
 If \texttt{on.exit} fails will it continue onto the next \texttt{on.exit} so long as \texttt{add\ ==\ TRUE}
 ?``on.exit fails it'll caontinue onto the next one
@@ -3022,8 +3237,6 @@ Can we go over the source code of \texttt{capture.output} and \texttt{capture.ou
 \end{verbatim}
 
 The second function is more concise but what is it missing from the first? I'd like to go over the first one line by line.
-
-XXX
 
 \hypertarget{replacement-functions}{%
 \section*{6.8.4 Replacement functions}\label{replacement-functions}}
