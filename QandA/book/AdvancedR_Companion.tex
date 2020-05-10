@@ -313,7 +313,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe95237ac80"
+## [1] "0x7fc8f762fff8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -323,7 +323,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe95237ac80"
+## [1] "0x7fc8f762fff8"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -335,7 +335,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe950fd2590"
+## [1] "0x7fc8f4fb1f60"
 \end{verbatim}
 
 \begin{Shaded}
@@ -345,8 +345,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fe950f8d8d0] <list> 
-## └─[2:0x7fe95237ac80] <dbl>
+## █ [1:0x7fc8f4f61550] <list> 
+## └─[2:0x7fc8f762fff8] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -356,7 +356,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe950d99648"
+## [1] "0x7fc8f4ec9a20"
 \end{verbatim}
 
 \begin{Shaded}
@@ -393,7 +393,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fe954ef9ca8>"
+## [1] "<0x7fc8f634b5d8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -403,7 +403,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fe954ef9ca8>
+## <0x7fc8f634b5d8>
 \end{verbatim}
 
 \begin{Shaded}
@@ -413,7 +413,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe954ef9ca8"
+## [1] "0x7fc8f634b5d8"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -462,7 +462,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe95422fb48"
+## [1] "0x7fc8f945abc8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -472,7 +472,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fe95422fb48>"
+## [1] "<0x7fc8f945abc8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -482,7 +482,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fe95422fb48 -> 0x7fe95502ac88]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fc8f945abc8 -> 0x7fc8f5575ec8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -578,7 +578,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe954d23508"
+## [1] "0x7fc8f725dc08"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -591,7 +591,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe9524b35c8"
+## [1] "0x7fc8fa923d28"
 \end{verbatim}
 
 \begin{Shaded}
@@ -614,7 +614,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe9524b35c8"
+## [1] "0x7fc8fa923d28"
 \end{verbatim}
 
 \begin{Shaded}
@@ -624,7 +624,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe9524b35c8"
+## [1] "0x7fc8fa923d28"
 \end{verbatim}
 
 \begin{Shaded}
@@ -647,7 +647,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe9524b35c8"
+## [1] "0x7fc8fa923d28"
 \end{verbatim}
 
 \begin{Shaded}
@@ -657,7 +657,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe953861688"
+## [1] "0x7fc8f765abf8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -680,7 +680,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe9551babc8"
+## [1] "0x7fc8effb9668"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2461,11 +2461,11 @@ This will work:
 ## # A tibble: 5 x 1
 ##      x1
 ##   <dbl>
-## 1 0.140
-## 2 0.514
-## 3 0.226
-## 4 0.488
-## 5 0.695
+## 1 0.531
+## 2 0.700
+## 3 0.114
+## 4 0.103
+## 5 0.167
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2539,7 +2539,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 254 208 279 273 283 257 277 270 239 293
+##  [1] 222 291 270 204 219 284 212 275 239 226
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -2560,8 +2560,6 @@ Can we discuss the order that this happening in? Is it that \texttt{Calculating.
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
-
-::TODO
 
 Still need to work on explaining what's happening here and what that would look like graphically:
 
@@ -2651,8 +2649,6 @@ Still need to work on explaining what's happening here and what that would look 
 \end{verbatim}
 
 \begin{center}\includegraphics[width=20.22in]{images/promise} \end{center}
-
-:::
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2934,7 +2930,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fe94c5db9c8>
+## <bytecode: 0x7fc8eebea9c8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3237,6 +3233,72 @@ Can we go over the source code of \texttt{capture.output} and \texttt{capture.ou
 \end{verbatim}
 
 The second function is more concise but what is it missing from the first? I'd like to go over the first one line by line.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{capture_output <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(..., }\DataTypeTok{file =} \OtherTok{NULL}\NormalTok{, append, }\DataTypeTok{type =} \StringTok{"output"}\NormalTok{, }\DataTypeTok{split =} \OtherTok{FALSE}\NormalTok{) \{}
+  \CommentTok{# create a list from the arguments}
+  \CommentTok{# but how does c("a", "b", "c") become the args?}
+\NormalTok{  args <-}\StringTok{ }\KeywordTok{substitute}\NormalTok{(}\KeywordTok{list}\NormalTok{(...))[}\OperatorTok{-}\NormalTok{1L]}
+  \CommentTok{# get type based on table of canditate values}
+  \CommentTok{# but this errors when I try to just run }
+  \CommentTok{# type = "output" ?}
+\NormalTok{  type <-}\StringTok{ }\KeywordTok{match.arg}\NormalTok{(type)}
+  \CommentTok{# Error in match.arg(type) : 'arg' must be of length 1}
+\NormalTok{  rval <-}\StringTok{ }\OtherTok{NULL}
+\NormalTok{  closeit <-}\StringTok{ }\OtherTok{TRUE}
+  \CommentTok{# we can save the output to a textConnection if no file is specified}
+  \CommentTok{# but what is a textConnection?}
+  \CommentTok{# otherwise the output is saved to a file (I think?)}
+  \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{is.null}\NormalTok{(file)) }
+    \CommentTok{# what is a text connection?}
+    \CommentTok{# I know this returns a character vector but what is this function}
+\NormalTok{    file <-}\StringTok{ }\KeywordTok{textConnection}\NormalTok{(}\StringTok{"rval"}\NormalTok{, }\StringTok{"w"}\NormalTok{, }\DataTypeTok{local =} \OtherTok{TRUE}\NormalTok{)}
+  \ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{is.character}\NormalTok{(file)) }
+    \CommentTok{# what is a character file? What's happening here?}
+\NormalTok{    file <-}\StringTok{ }\KeywordTok{file}\NormalTok{(file, }\ControlFlowTok{if}\NormalTok{ (append)  }\StringTok{"a"} \ControlFlowTok{else} \StringTok{"w"}\NormalTok{)}
+  \CommentTok{# this is similar to the character file but what is the difference?}
+  \CommentTok{# what does it mean to inherit "connection"}
+  \ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{inherits}\NormalTok{(file, }\StringTok{"connection"}\NormalTok{)) \{}
+    \ControlFlowTok{if}\NormalTok{ (}\OperatorTok{!}\KeywordTok{isOpen}\NormalTok{(file))}
+      \KeywordTok{open}\NormalTok{(file, }\ControlFlowTok{if}\NormalTok{ (append)  }\StringTok{"a"} \ControlFlowTok{else} \StringTok{"w"}\NormalTok{)}
+    \ControlFlowTok{else}\NormalTok{ closeit <-}\StringTok{ }\OtherTok{FALSE}
+\NormalTok{  \}}
+  \CommentTok{# what is sink?}
+  \CommentTok{# is this what happened when you create a bad file extension to save your output?}
+  \ControlFlowTok{else} \KeywordTok{stop}\NormalTok{(}\StringTok{"'file' must be NULL, a character string or a connection"}\NormalTok{)}
+  \KeywordTok{sink}\NormalTok{(file, }\DataTypeTok{type =}\NormalTok{ type, }\DataTypeTok{split =}\NormalTok{ split)}
+  \CommentTok{# we're using on.exit here! }
+  \CommentTok{# ...but what is it doing exactly?}
+  \KeywordTok{on.exit}\NormalTok{(\{}
+    \KeywordTok{sink}\NormalTok{(}\DataTypeTok{type =}\NormalTok{ type, }\DataTypeTok{split =}\NormalTok{ split)}
+    \ControlFlowTok{if}\NormalTok{ (closeit) }\KeywordTok{close}\NormalTok{(file)}
+\NormalTok{  \})}
+  \CommentTok{# this is some environment term}
+  \CommentTok{# maybe we can talk about this next week?}
+\NormalTok{  pf <-}\StringTok{ }\KeywordTok{parent.frame}\NormalTok{()}
+  \CommentTok{# print value AND if visible or not }
+\NormalTok{  evalVis <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(expr) }\KeywordTok{withVisible}\NormalTok{(}\KeywordTok{eval}\NormalTok{(expr, pf))}
+  \CommentTok{# THIS IS THE ACTUAL CAPTURE FUNCTION MEAT AND POTATOES!}
+  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \KeywordTok{seq_along}\NormalTok{(args)) \{}
+    \CommentTok{# I assume this should be for each "a" "b" "c"}
+    \CommentTok{# but I'm struggling to go one without it and being able to step through}
+\NormalTok{    expr <-}\StringTok{ }\NormalTok{args[[i]]}
+\NormalTok{    tmp <-}\StringTok{ }\ControlFlowTok{switch}\NormalTok{(}\KeywordTok{mode}\NormalTok{(expr), }\DataTypeTok{expression =} \KeywordTok{lapply}\NormalTok{(expr, evalVis), }
+                  \DataTypeTok{call =}\NormalTok{ , }\DataTypeTok{name =} \KeywordTok{list}\NormalTok{(}\KeywordTok{evalVis}\NormalTok{(expr)), }\KeywordTok{stop}\NormalTok{(}\StringTok{"bad argument"}\NormalTok{))}
+    \ControlFlowTok{for}\NormalTok{ (item }\ControlFlowTok{in}\NormalTok{ tmp) }\ControlFlowTok{if}\NormalTok{ (item}\OperatorTok{$}\NormalTok{visible) }
+      \KeywordTok{print}\NormalTok{(item}\OperatorTok{$}\NormalTok{value)}
+\NormalTok{  \}}
+  \KeywordTok{on.exit}\NormalTok{()}
+  \KeywordTok{sink}\NormalTok{(}\DataTypeTok{type =}\NormalTok{ type, }\DataTypeTok{split =}\NormalTok{ split)}
+  \ControlFlowTok{if}\NormalTok{ (closeit) }
+    \KeywordTok{close}\NormalTok{(file)}
+  \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{is.null}\NormalTok{(rval)) }
+    \KeywordTok{invisible}\NormalTok{(}\OtherTok{NULL}\NormalTok{)}
+  \ControlFlowTok{else}\NormalTok{ rval}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{replacement-functions}{%
 \section*{6.8.4 Replacement functions}\label{replacement-functions}}
