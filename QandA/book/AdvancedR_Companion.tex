@@ -119,7 +119,7 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-05-06}
+\date{2020-05-10}
 
 \begin{document}
 \maketitle
@@ -313,7 +313,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1bb74cac0"
+## [1] "0x7f879319dc40"
 \end{verbatim}
 
 \begin{Shaded}
@@ -323,7 +323,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1bb74cac0"
+## [1] "0x7f879319dc40"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -335,7 +335,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1bd10f888"
+## [1] "0x7f87923cd7c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -345,8 +345,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fc1bd17fe00] <list> 
-## └─[2:0x7fc1bb74cac0] <dbl>
+## █ [1:0x7f879236ae60] <list> 
+## └─[2:0x7f879319dc40] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -356,7 +356,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1bd236e78"
+## [1] "0x7f879204e678"
 \end{verbatim}
 
 \begin{Shaded}
@@ -393,7 +393,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fc1bf838b98>"
+## [1] "<0x7f879423d2b8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -403,7 +403,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fc1bf838b98>
+## <0x7f879423d2b8>
 \end{verbatim}
 
 \begin{Shaded}
@@ -413,7 +413,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1bf838b98"
+## [1] "0x7f879423d2b8"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -462,7 +462,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1bc2c79c8"
+## [1] "0x7f8794217548"
 \end{verbatim}
 
 \begin{Shaded}
@@ -472,7 +472,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fc1bc2c79c8>"
+## [1] "<0x7f8794217548>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -482,7 +482,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fc1bc2c79c8 -> 0x7fc1bc2817c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7f8794217548 -> 0x7f878c01fec8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -578,7 +578,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1bb9767d8"
+## [1] "0x7f879427b5c8"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -591,7 +591,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1b9e6d838"
+## [1] "0x7f87931a25a8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -614,7 +614,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1b9e6d838"
+## [1] "0x7f87931a25a8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -624,7 +624,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1b9e6d838"
+## [1] "0x7f87931a25a8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -647,7 +647,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1b9e6d838"
+## [1] "0x7f87931a25a8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -657,7 +657,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1bbbf9ae8"
+## [1] "0x7f879254a1a8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -680,7 +680,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc1bd2b2be8"
+## [1] "0x7f879210f1e8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2204,7 +2204,9 @@ we can see that ifelse places the numbers in \texttt{1:10} based on their index 
 \section*{Complexity}\label{complexity}}
 \addcontentsline{toc}{section}{Complexity}
 
-We can use the package \texttt{cyclocomp} to look at the cyclomatic complexity of our functions. Looking at each function from the Chapter 5 presentation:
+Cyclomatic complexity is a software metric used to indicate the complexity of a program. It is computed using the control flow graph of the program: the nodes of the graph correspond to indivisible groups of commands of a program, and a directed edge connects two nodes if the second command might be executed immediately after the first command.
+
+We can use the package \texttt{cyclocomp} to look at the cyclomatic complexity of functions. Looking at each function from the Chapter 5 presentation:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2245,7 +2247,23 @@ As \href{https://engineering-shiny.org/successfulshinyapp.html}{Colin Fay states
 
 So if you are familiar with C can you just write a function in C \emph{in} R? What does that process look like? I think this is a bigger question of digging into the relationship between C and R.
 
-I think we cover this in Chapter 25!
+We can use RCPP!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Rcpp}\OperatorTok{::}\KeywordTok{cppFunction}\NormalTok{(}\StringTok{'#include<string>}
+\StringTok{  std::string IPA() \{}
+\StringTok{  std::string val = "IPAs suck";    }
+\StringTok{  return val;}
+\StringTok{  \}'}\NormalTok{)}
+\NormalTok{val <-}\StringTok{ }\KeywordTok{IPA}\NormalTok{()}
+\NormalTok{val}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "IPAs suck"
+\end{verbatim}
 
 \hypertarget{exercises-2}{%
 \section*{6.2.5.1 Exercises}\label{exercises-2}}
@@ -2281,13 +2299,174 @@ I think we cover this in Chapter 25!
 
 XXX
 
+\hypertarget{function-composition}{%
+\section*{6.3 Function composition}\label{function-composition}}
+\addcontentsline{toc}{section}{6.3 Function composition}
+
+When comparing nested, intermediate, and piping functions, it looks like Hadley flips the order of \texttt{f()} and \texttt{g()} between bullet points
+
+It does look like he does that!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(z) \{}
+  \KeywordTok{cat}\NormalTok{(}\StringTok{"g is:"}\NormalTok{, z)}
+\NormalTok{\}}
+
+\NormalTok{g <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  x }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{nested}{%
+\subsection{Nested}\label{nested}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{f}\NormalTok{(}\KeywordTok{g}\NormalTok{(}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## g is: 4
+\end{verbatim}
+
+\hypertarget{intermediate}{%
+\subsection{Intermediate}\label{intermediate}}
+
+This is written in the book as \texttt{y\ \textless{}-\ f(x);\ g(y)} but should be flipped to \texttt{y\ \textless{}-\ g(x);\ f(y)} if we are to follow the nested example
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y <-}\StringTok{ }\KeywordTok{g}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\KeywordTok{f}\NormalTok{(y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## g is: 4
+\end{verbatim}
+
+\hypertarget{piping}{%
+\subsection{Piping}\label{piping}}
+
+This also needs to be flipped from \texttt{x\ \%\textgreater{}\%\ f()\ \%\textgreater{}\%\ g()} to \texttt{x\ \%\textgreater{}\%\ g()\ \%\textgreater{}\%\ f()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{2} \OperatorTok{%>%}\StringTok{ }\KeywordTok{g}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }\KeywordTok{f}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## g is: 4
+\end{verbatim}
+
 \hypertarget{lexical-scoping}{%
 \section*{6.4 Lexical scoping}\label{lexical-scoping}}
 \addcontentsline{toc}{section}{6.4 Lexical scoping}
 
 ``The scoping rules use a parse-time, rather than a run-time structure''? What is ``parse-time'' and ``run-time''? How do they differ?
 
-The function is run at parse-time, meaning it is only run when it is called.
+parse-time is when the function gets defined: when the formals and body get set. run-time is when it actually gets called. This function doesn't get past parse-time because of the syntax error
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{get_state <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(in_df, state_name)\{}
+\NormalTok{  out_df % in_df[in_df}\OperatorTok{$}\NormalTok{state }\OperatorTok{==}\StringTok{ }\NormalTok{state_name, ]}
+  \KeywordTok{return}\NormalTok{(out_df)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+get_state <- function(in_df, state_name){
+  out_df % in_df[in_df$state == state_name, ]
+
+Error: unexpected input in:
+
+"get_state <- function(in_df, state_name){
+  out_df % in_df[in_df$state == state_name, ]"
+  return(out_df)
+
+Error: object 'out_df' not found
+}
+
+Error: unexpected '}' in "}"
+\end{verbatim}
+
+This function will get parsed successfully but could fail at run at run-time if the input data frame doesn't have a column named state:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{get_state <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(in_df, state_name)\{}
+\NormalTok{  out_df <-}\StringTok{ }\NormalTok{in_df[in_df}\OperatorTok{$}\NormalTok{state }\OperatorTok{==}\StringTok{ }\NormalTok{state_name, ]}
+  \KeywordTok{return}\NormalTok{(out_df)}
+\NormalTok{\}  }
+
+\KeywordTok{get_state}\NormalTok{(iris, }\StringTok{'setosa'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] Sepal.Length Sepal.Width  Petal.Length Petal.Width  Species     
+## <0 rows> (or 0-length row.names)
+\end{verbatim}
+
+At R's build-time, if you want to run a function from a package that isn't loaded it will not throw an error but at run-time it will if the required package is not loaded:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{func_}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(df, x) \{}
+  \KeywordTok{select}\NormalTok{(\{\{ df \}\}, \{\{ x \}\})}
+\NormalTok{\}}
+
+\NormalTok{test_tbl <-}\StringTok{ }\NormalTok{tibble}\OperatorTok{::}\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{x1 =} \KeywordTok{runif}\NormalTok{(}\DecValTok{5}\NormalTok{),}
+             \DataTypeTok{x2 =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{5}\NormalTok{),}
+             \DataTypeTok{x3 =} \KeywordTok{rpois}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DataTypeTok{lambda =} \DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Without \texttt{dplyr} this will fail
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{func_1}\NormalTok{(test_tbl, x1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Error in select({: could not find function "select"
+\end{verbatim}
+
+This will work:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dplyr)}
+\CommentTok{#> }
+\CommentTok{#> Attaching package: 'dplyr'}
+\CommentTok{#> The following objects are masked from 'package:stats':}
+\CommentTok{#> }
+\CommentTok{#>     filter, lag}
+\CommentTok{#> The following objects are masked from 'package:base':}
+\CommentTok{#> }
+\CommentTok{#>     intersect, setdiff, setequal, union}
+\KeywordTok{func_1}\NormalTok{(test_tbl, x1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 1
+##      x1
+##   <dbl>
+## 1 0.595
+## 2 0.526
+## 3 0.728
+## 4 0.470
+## 5 0.747
+\end{verbatim}
 
 \hypertarget{a-fresh-start}{%
 \section*{6.4.3 A fresh start}\label{a-fresh-start}}
@@ -2316,6 +2495,16 @@ How would we change this code so that the second call of \texttt{g11()} is 2?
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\NormalTok{g11 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+  \ControlFlowTok{if}\NormalTok{ (}\OperatorTok{!}\KeywordTok{exists}\NormalTok{(}\StringTok{"a"}\NormalTok{)) \{}
+\NormalTok{    a <-}\StringTok{ }\DecValTok{1}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{    a <-}\StringTok{ }\NormalTok{a }\OperatorTok{+}\StringTok{ }\DecValTok{1}
+\NormalTok{  \}}
+\NormalTok{  a <<-}\StringTok{ }\NormalTok{a}
+\NormalTok{  a}
+\NormalTok{\}}
+
 \KeywordTok{g11}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -2324,17 +2513,34 @@ How would we change this code so that the second call of \texttt{g11()} is 2?
 ## [1] 1
 \end{verbatim}
 
-XXX
-
 \hypertarget{lazy-evaluation}{%
 \section*{6.5 Lazy evaluation}\label{lazy-evaluation}}
 \addcontentsline{toc}{section}{6.5 Lazy evaluation}
 
 ``This allows you to do things like include potentially expensive computations in function arguments that will only be evaluated if needed''
 
-Does anyone have an example of this?
+Does anyone have an example of this? We discussed a function that will only perform expensive tasks given the context of the function perhaps?
 
-XXX
+Maybe a situation where we can give a function default arguments where \texttt{sample}is a stand in for longer expensive functions like different fancy modeling techniques? We can workshop this\ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mega_model <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(values, }\DataTypeTok{x =} \KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{100}\NormalTok{, }\DecValTok{10}\NormalTok{), }\DataTypeTok{y =} \KeywordTok{sample}\NormalTok{(}\DecValTok{200}\OperatorTok{:}\DecValTok{300}\NormalTok{, }\DecValTok{10}\NormalTok{), }\DataTypeTok{z =} \KeywordTok{sample}\NormalTok{(}\DecValTok{300}\OperatorTok{:}\DecValTok{400}\NormalTok{, }\DecValTok{10}\NormalTok{)}
+\NormalTok{) \{}
+\NormalTok{  dplyr}\OperatorTok{::}\KeywordTok{case_when}\NormalTok{(}
+    \KeywordTok{is.numeric}\NormalTok{(values) }\OperatorTok{~}\StringTok{ }\NormalTok{x,}
+    \KeywordTok{is.character}\NormalTok{(values) }\OperatorTok{~}\StringTok{ }\NormalTok{y,}
+    \OtherTok{TRUE} \OperatorTok{~}\StringTok{ }\NormalTok{z}
+\NormalTok{  )}
+\NormalTok{\}}
+
+\KeywordTok{mega_model}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\StringTok{"c"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 221 291 264 276 292 265 213 202 233 203
+\end{verbatim}
 
 \hypertarget{promises}{%
 \section*{6.5.1 Promises}\label{promises}}
@@ -2352,8 +2558,31 @@ Can we discuss the order that this happening in? Is it that \texttt{Calculating.
 \NormalTok{h03 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
   \KeywordTok{c}\NormalTok{(x, x)}
 \NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
 
-\KeywordTok{h03}\NormalTok{(}\KeywordTok{double}\NormalTok{(}\DecValTok{20}\NormalTok{))}
+Still need to work on explaining what's happening here and what that would look like graphically:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{double <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(y) \{}
+  \KeywordTok{message}\NormalTok{(}\StringTok{"Calculating..."}\NormalTok{)}
+  \KeywordTok{cat}\NormalTok{(}\StringTok{"double before}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \KeywordTok{print}\NormalTok{(pryr}\OperatorTok{::}\KeywordTok{promise_info}\NormalTok{(y))}
+  \KeywordTok{force}\NormalTok{(y)}
+  \KeywordTok{cat}\NormalTok{(}\StringTok{"double after}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \KeywordTok{print}\NormalTok{(pryr}\OperatorTok{::}\KeywordTok{promise_info}\NormalTok{(y))}
+\NormalTok{  y }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+\NormalTok{\}}
+\NormalTok{h03 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"h03 before}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+  \KeywordTok{print}\NormalTok{(pryr}\OperatorTok{::}\KeywordTok{promise_info}\NormalTok{(x))}
+  \KeywordTok{force}\NormalTok{(x)}
+  \KeywordTok{cat}\NormalTok{(}\StringTok{"h03 after}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \KeywordTok{print}\NormalTok{(pryr}\OperatorTok{::}\KeywordTok{promise_info}\NormalTok{(x))}
+  \KeywordTok{c}\NormalTok{(x, x)}
+\NormalTok{\}}
+\KeywordTok{double}\NormalTok{(}\KeywordTok{h03}\NormalTok{(}\DecValTok{20}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2362,10 +2591,113 @@ Can we discuss the order that this happening in? Is it that \texttt{Calculating.
 \end{verbatim}
 
 \begin{verbatim}
+## double before
+## $code
+## h03(20)
+## 
+## $env
+## <environment: R_GlobalEnv>
+## 
+## $evaled
+## [1] FALSE
+## 
+## $value
+## NULL
+## 
+## h03 before
+## $code
+## [1] 20
+## 
+## $env
+## <environment: R_GlobalEnv>
+## 
+## $evaled
+## [1] FALSE
+## 
+## $value
+## NULL
+## 
+## h03 after
+## $code
+## [1] 20
+## 
+## $env
+## NULL
+## 
+## $evaled
+## [1] TRUE
+## 
+## $value
+## [1] 20
+## 
+## double after
+## $code
+## h03(20)
+## 
+## $env
+## NULL
+## 
+## $evaled
+## [1] TRUE
+## 
+## $value
+## [1] 20 20
+\end{verbatim}
+
+\begin{verbatim}
 ## [1] 40 40
 \end{verbatim}
 
-XXX
+\begin{center}\includegraphics[width=20.22in]{images/promise} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plop <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(a, b) a }\OperatorTok{*}\StringTok{ }\DecValTok{10}
+\KeywordTok{plop}\NormalTok{(}\DecValTok{2}\NormalTok{, var_doesnt_exist)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20
+\end{verbatim}
+
+\texttt{var\_doesnt\_exist} is a promise within \texttt{g}, we use the promises within \texttt{g} when we call \texttt{f} but \texttt{f} never uses its second argument so this runs without a problem. When would we want to leverage this behavior?
+
+The unevaluated \texttt{var\_doesnt\_exist} doesn't exist , but we can use \texttt{substitute} to to get the expression out of a promise! If we modify our function we can play with the expression contained in b:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plop <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(a, b) \{}
+  \KeywordTok{cat}\NormalTok{(}\StringTok{"You entered"}\NormalTok{, }\KeywordTok{deparse}\NormalTok{(}\KeywordTok{substitute}\NormalTok{(b)), }\StringTok{"as `b` }\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{  a }\OperatorTok{*}\StringTok{ }\DecValTok{10}
+\NormalTok{\}}
+\KeywordTok{plop}\NormalTok{(}\DataTypeTok{a =} \DecValTok{2}\NormalTok{, }\DataTypeTok{b =}\NormalTok{ var_doesnt_exist)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## You entered var_doesnt_exist as `b`
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 20
+\end{verbatim}
+
+We can even evaluate \texttt{b} and use it to create a \texttt{dplyr} like \texttt{pull} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plop <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(a, b) \{}
+  \KeywordTok{eval}\NormalTok{(}\KeywordTok{substitute}\NormalTok{(b), }\DataTypeTok{envir =}\NormalTok{ a)}
+\NormalTok{\}}
+\KeywordTok{plop}\NormalTok{(iris, Species)[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] setosa setosa setosa setosa setosa setosa setosa setosa setosa setosa
+## Levels: setosa versicolor virginica
+\end{verbatim}
 
 \hypertarget{default-arguments}{%
 \section*{6.5.2 Default arguments}\label{default-arguments}}
@@ -2397,85 +2729,107 @@ I don't quite understand why \texttt{x\ =\ ls()} is different from \texttt{ls()}
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "answer"                "as_tb"                 "casewhen_func"        
-##  [4] "controlflow_functions" "custom_attr"           "df"                   
-##  [7] "df_coltypes"           "df_non_syntactic_name" "df_x"                 
-## [10] "double"                "example2223"           "f1"                   
-## [13] "f2"                    "f3"                    "for_func"             
-## [16] "g11"                   "h03"                   "h05"                  
-## [19] "i"                     "if_else_func"          "if_func"              
-## [22] "ifelse_func"           "l1"                    "l2"                   
-## [25] "means"                 "medians"               "my_factor"            
-## [28] "my_matrix"             "my_set"                "my_vector"            
-## [31] "mylist"                "new_address"           "new_y_address"        
-## [34] "no"                    "no_final"              "no_idx"               
-## [37] "old_address"           "out"                   "out_list"             
-## [40] "out_vector"            "repeat_func"           "subsetting_table"     
-## [43] "switch_func"           "test"                  "true_one"             
-## [46] "true_two"              "v"                     "v_address"            
-## [49] "var"                   "while_func"            "x"                    
-## [52] "x1"                    "x2"                    "x3"                   
-## [55] "x4"                    "x5"                    "y"                    
-## [58] "y_address"             "yes"                   "yes_final"            
-## [61] "yes_idx"
+##  [1] "a"                     "answer"                "as_tb"                
+##  [4] "casewhen_func"         "controlflow_functions" "custom_attr"          
+##  [7] "df"                    "df_coltypes"           "df_non_syntactic_name"
+## [10] "df_x"                  "double"                "example2223"          
+## [13] "f"                     "f1"                    "f2"                   
+## [16] "f3"                    "for_func"              "func_1"               
+## [19] "g"                     "g11"                   "get_state"            
+## [22] "h03"                   "h05"                   "i"                    
+## [25] "if_else_func"          "if_func"               "ifelse_func"          
+## [28] "IPA"                   "l1"                    "l2"                   
+## [31] "means"                 "medians"               "mega_model"           
+## [34] "my_factor"             "my_matrix"             "my_set"               
+## [37] "my_vector"             "mylist"                "new_address"          
+## [40] "new_y_address"         "no"                    "no_final"             
+## [43] "no_idx"                "old_address"           "out"                  
+## [46] "out_list"              "out_vector"            "plop"                 
+## [49] "repeat_func"           "subsetting_table"      "switch_func"          
+## [52] "test"                  "test_tbl"              "true_one"             
+## [55] "true_two"              "v"                     "v_address"            
+## [58] "val"                   "var"                   "while_func"           
+## [61] "x"                     "x1"                    "x2"                   
+## [64] "x3"                    "x4"                    "x5"                   
+## [67] "y"                     "y_address"             "yes"                  
+## [70] "yes_final"             "yes_idx"
 \end{verbatim}
 
-XXX
+The difference is where the promise is created. \texttt{ls()} is always evaluated inside \texttt{h05} when \texttt{x} is evaluated. The difference is the environment. When \texttt{ls()} is provided as an explicit parameter, \texttt{x} is a promise whose environment is the global environment. When \texttt{ls()} is a default parameter, it is evaluated in the local environment where it is used.
 
-\hypertarget{missing-arguments}{%
-\section*{6.5.3 Missing arguments}\label{missing-arguments}}
-\addcontentsline{toc}{section}{6.5.3 Missing arguments}
-
-Comparing the default sample function:
+Hypothesis: does nesting \texttt{ls()} in \texttt{h05} first evaluate \texttt{ls()} then evaluate \texttt{h05()} ?
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{sample <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{ (x, size, }\DataTypeTok{replace =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{prob =} \OtherTok{NULL}\NormalTok{) }
-\NormalTok{\{}
-    \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{length}\NormalTok{(x) }\OperatorTok{==}\StringTok{ }\NormalTok{1L }\OperatorTok{&&}\StringTok{ }\KeywordTok{is.numeric}\NormalTok{(x) }\OperatorTok{&&}\StringTok{ }\KeywordTok{is.finite}\NormalTok{(x) }\OperatorTok{&&}\StringTok{ }\NormalTok{x }\OperatorTok{>=}\StringTok{ }
-\StringTok{        }\DecValTok{1}\NormalTok{) \{}
-        \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{missing}\NormalTok{(size))}
-          \CommentTok{# if you don't supply the sample size}
-          \CommentTok{# you will just get random samples}
-          \CommentTok{# the length of the supplied vector}
-\NormalTok{            size <-}\StringTok{ }\NormalTok{x}
-        \KeywordTok{sample.int}\NormalTok{(x, size, replace, prob)}
-\NormalTok{    \}}
-    \ControlFlowTok{else}\NormalTok{ \{}
-        \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{missing}\NormalTok{(size)) }
-\NormalTok{            size <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
-\NormalTok{        x[}\KeywordTok{sample.int}\NormalTok{(}\KeywordTok{length}\NormalTok{(x), size, replace, prob)]}
-\NormalTok{    \}}
+\KeywordTok{library}\NormalTok{(magrittr)}
+\NormalTok{h05 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ \{y <-}\StringTok{ }\DecValTok{4}\NormalTok{;}\KeywordTok{ls}\NormalTok{()\}) \{}
+\NormalTok{   a <-}\StringTok{ }\DecValTok{1}
+\NormalTok{   x}
 \NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
 
-\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{)}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{h05}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  9  1  8 10  6  4  3  7  5  2
+[1] "a" "x" "y"
 \end{verbatim}
-
-To using Hadley's recommended \texttt{NULL} version:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{my_sample_null <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, }\DataTypeTok{size =} \OtherTok{NULL}\NormalTok{, }\DataTypeTok{replace =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{prob =} \OtherTok{NULL}\NormalTok{) \{}
-\NormalTok{  size <-}\StringTok{ }\NormalTok{size }\OperatorTok{%||%}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
-\NormalTok{  x[}\KeywordTok{sample.int}\NormalTok{(}\KeywordTok{length}\NormalTok{(x), size, }\DataTypeTok{replace =}\NormalTok{ replace, }\DataTypeTok{prob =}\NormalTok{ prob)]}
-\NormalTok{\}}
-
-\KeywordTok{my_sample_null}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{)}
+\KeywordTok{ls}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 10  8  9  3  7  5  4  6  2  1
+[1] "h05"
 \end{verbatim}
 
-The second function is obviously more concise, but why is Hadley recommending we we steer clear of \texttt{missing()}? Is this just for code read-ability or is there something inherent in the behavior of \texttt{missing} we need to consider that we don't when using \texttt{NULL}?
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\{y <-}\StringTok{ }\DecValTok{4}\NormalTok{;}\KeywordTok{ls}\NormalTok{()\} }\OperatorTok{%>%}\StringTok{ }\KeywordTok{h05}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-XXX
+\begin{verbatim}
+[1] "h05" "y"  
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ls}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "h05" "y" 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{h05}\NormalTok{(\{x <-}\StringTok{ }\DecValTok{5}\NormalTok{;}\KeywordTok{ls}\NormalTok{()\})}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "h05" "x"   "y" 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ls}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "h05" "x"   "y" 
+\end{verbatim}
+
+Notice in all of the latter calls, a is not returned - so it's not evaluating \texttt{ls()} inside of the function.
 
 \hypertarget{exercise-2}{%
 \section*{6.5.4.3 Exercise}\label{exercise-2}}
@@ -2497,6 +2851,70 @@ I understand this problem is showing us an example of name masking (the function
 ## [1] 2 1
 \end{verbatim}
 
+The curly brackets are an expression, which can be read as
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\{}
+\NormalTok{  y <-}\StringTok{ }\DecValTok{1}
+  \DecValTok{2}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+This is returning \texttt{2} and setting \texttt{1} to \texttt{y}. The colon can be read as a new line in the expression. \texttt{x} is called inside the function and overwrites the argument value of \texttt{y}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f1 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ \{y <-}\StringTok{ }\DecValTok{1}\NormalTok{; }\DecValTok{2}\NormalTok{\}, }\DataTypeTok{y =} \DecValTok{0}\NormalTok{) \{}
+  \CommentTok{# At this point, neither x nor y have been needed or evaluated. This is "lazy".}
+  \KeywordTok{cat}\NormalTok{(y) }
+  \CommentTok{# "Summon the current state of y". }
+  \CommentTok{# R looks first in the function env - is there a y there? No}
+  \CommentTok{# R then looks at the arguments - is there a y there? Yes, it's 0 -> print out zero }
+  \CommentTok{# If R had not found y in the arguments, then it would look in the parent environment of the function - the global env.}
+  \CommentTok{# That's where it would find y = NULL - but since it already found a default arg, it already stopped evaluating. }
+  \KeywordTok{cat}\NormalTok{(x)}
+  \CommentTok{# "Summon the current state of x"}
+  \CommentTok{# x is an expression that first sets y to equal 1 and then returns the number 2 -> print out 2}
+  \KeywordTok{c}\NormalTok{(x, }\CommentTok{# "Summon the current state of x" - x is still the expression that sets y to 1 and then x to 2}
+\NormalTok{    y) }\CommentTok{# "Summon the current state of y" - y was set to 1, so y is 1 here.}
+\NormalTok{\}}
+\KeywordTok{f1}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 02
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 2 1
+\end{verbatim}
+
+Compare to:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f1 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ \{y <-}\StringTok{ }\DecValTok{1}\NormalTok{; }\DecValTok{2}\NormalTok{\}, }\DataTypeTok{y =} \DecValTok{0}\NormalTok{) \{}
+  \KeywordTok{c}\NormalTok{(y, }\CommentTok{# "Summon the current state of y" - y has not yet been set to anything else, so it returns zero}
+\NormalTok{    x) }\CommentTok{# "Summon the current state of x" - x is still the expression that sets y to 1 and then x to 2}
+       \CommentTok{# However, y has already been returned - so even though y is now set to 1, it's called after the previous y and does not affect the previous y.}
+\NormalTok{\}}
+\NormalTok{x =}\StringTok{ }\OtherTok{NULL}
+\NormalTok{y =}\StringTok{ }\OtherTok{NULL}
+\KeywordTok{f1}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0 2
+\end{verbatim}
+
 \hypertarget{exercise-3}{%
 \section*{6.5.4.4 Exercise}\label{exercise-3}}
 \addcontentsline{toc}{section}{6.5.4.4 Exercise}
@@ -2512,21 +2930,97 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fc1b2d48bc8>
+## <bytecode: 0x7f878b9b0bc8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
 does not give me the actual contents of the actual function\ldots{}.
 
-XXX
+We need to access is using \texttt{hist.\textless{}method\textgreater{}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hist.default}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{dot-dot-dot}{%
 \section*{6.6 dot dot dot}\label{dot-dot-dot}}
 \addcontentsline{toc}{section}{6.6 dot dot dot}
 
-``(See also \texttt{rlang::list2()} to support splicing and to silently ignore trailing commas\ldots{}'' Can we come up with a simple use case for \texttt{list2} here?
+``(See also \texttt{rlang::list2()} to support splicing and to silently ignore trailing commas\ldots{}'' Can we come up with a simple use case for \texttt{list2} here? The docs use \texttt{list2(a\ =\ 1,\ a\ =\ 2,\ b\ =\ 3,\ b\ =\ 4,\ 5,\ 6)} but how is this different from \texttt{list}?
 
-XXX
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{identical}\NormalTok{(}
+\NormalTok{  rlang}\OperatorTok{::}\KeywordTok{list2}\NormalTok{(}\DataTypeTok{a =} \DecValTok{1}\NormalTok{, }\DataTypeTok{a =} \DecValTok{2}\NormalTok{, }\DataTypeTok{b =} \DecValTok{3}\NormalTok{, }\DataTypeTok{b =} \DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{) ,}
+  \KeywordTok{list}\NormalTok{(}\DataTypeTok{a =} \DecValTok{1}\NormalTok{, }\DataTypeTok{a =} \DecValTok{2}\NormalTok{, }\DataTypeTok{b =} \DecValTok{3}\NormalTok{, }\DataTypeTok{b =} \DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\texttt{list2} is most helpful when we need to force environment variables with ata variables. We can see this by crting a function that takes a variable number of arguments:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(rlang)}
+
+\NormalTok{numeric_list <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(...) \{}
+\NormalTok{  dots <-}\StringTok{ }\KeywordTok{list}\NormalTok{(...)}
+\NormalTok{  num <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(dots)}
+  \KeywordTok{set_names}\NormalTok{(num, }\KeywordTok{names}\NormalTok{(dots))}
+\NormalTok{\}}
+
+\NormalTok{numeric_list2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(...) \{}
+\NormalTok{  dots <-}\StringTok{ }\KeywordTok{list2}\NormalTok{(...)}
+\NormalTok{  num <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(dots)}
+  \KeywordTok{set_names}\NormalTok{(num, }\KeywordTok{names}\NormalTok{(dots))}
+\NormalTok{\}}
+
+\KeywordTok{numeric_list}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{numeric_list2}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2 3
+\end{verbatim}
+
+The main difference with list(\ldots{}) is that list2(\ldots{}) enables the \texttt{!!!} syntax to splice lists:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\KeywordTok{numeric_list2}\NormalTok{(}\DecValTok{1}\NormalTok{, }\OperatorTok{!!!}\StringTok{ }\NormalTok{x, }\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2 3 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{numeric_list}\NormalTok{(}\DecValTok{1}\NormalTok{, }\OperatorTok{!!!}\StringTok{ }\NormalTok{x, }\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Error in !x : invalid argument type
+\end{verbatim}
 
 ``\texttt{lapply()} uses \texttt{...} to pass \texttt{na.rm} on to \texttt{mean()}'' Um, how?
 
@@ -2543,7 +3037,7 @@ XXX
 ##  $ : num 5
 \end{verbatim}
 
-XXX
+An lapply takes on two main arguments: what you want to loop over and the function to apply to each element. By including \texttt{...} \texttt{lapply} allows you to supply additional arguments which will be passed to the function inside the \texttt{lapply}. In this case, \texttt{na.rm\ =\ TRUE} is being applied to mean every time it's being called in the loop.
 
 \hypertarget{exercise-4}{%
 \section*{6.6.1.2 Exercise}\label{exercise-4}}
@@ -2551,13 +3045,19 @@ XXX
 
 I tried running \texttt{browser(plot(1:10,\ col\ =\ "red"))} to peek under the hood but only got \texttt{Called\ from:\ top\ level} in the console. What am I missing?
 
-XXX
+We can use \texttt{debugonce}!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{debugonce}\NormalTok{(}\KeywordTok{plot}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{exit-handlers}{%
 \section*{6.7.4 Exit handlers}\label{exit-handlers}}
 \addcontentsline{toc}{section}{6.7.4 Exit handlers}
 
-``Always set \texttt{add\ =\ TRUE} when using \texttt{on.exit()} If you don't, each call to \texttt{on.exit()} will overwrite the previous exit handler.'' Can we come up with an example for not using \texttt{add\ =\ TRUE} and how it results in unwanted behavior?
+``Always set \texttt{add\ =\ TRUE} when using \texttt{on.exit()} If you don't, each call to \texttt{on.exit()} will overwrite the previous exit handler.'' What does this mean?
 
 \texttt{add\ =\ TRUE} is important when you have more than one \texttt{on.exit} function!
 
@@ -2589,13 +3089,11 @@ Can we go over this code? How does it not change your working directory after yo
   \KeywordTok{on.exit}\NormalTok{(}\KeywordTok{setwd}\NormalTok{(old_dir), }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{)}
   
 \NormalTok{  old_opt <-}\StringTok{ }\KeywordTok{options}\NormalTok{(}\DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{)}
-  \CommentTok{# what's happening here?}
   \KeywordTok{on.exit}\NormalTok{(}\KeywordTok{options}\NormalTok{(old_opt), }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{)}
 \NormalTok{\}}
 
-\CommentTok{# what is this output}
+
 \KeywordTok{cleanup}\NormalTok{(}\StringTok{"~"}\NormalTok{)}
-\CommentTok{# how is it different from this?}
 \KeywordTok{getwd}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -2604,7 +3102,25 @@ Can we go over this code? How does it not change your working directory after yo
 ## [1] "/Users/mayagans/Documents/bookclub-Advanced_R/QandA"
 \end{verbatim}
 
-XXX
+The behavior of \href{https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/getwd}{\texttt{setwd}} ``changing the working directory'' is actually a \textbf{side effect} of the function - it invisibly returns the previous working directory as the value of the function (potentially for the exact purpose demonstrated). We can use this within our \texttt{on.exit} function to change back to the prior working directory!
+
+If \texttt{on.exit} fails will it continue onto the next \texttt{on.exit} so long as \texttt{add\ ==\ TRUE}
+?``on.exit fails it'll caontinue onto the next one
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+  \KeywordTok{on.exit}\NormalTok{(}\KeywordTok{stop}\NormalTok{(}\StringTok{"Error"}\NormalTok{))}
+  \KeywordTok{on.exit}\NormalTok{(}\KeywordTok{message}\NormalTok{(}\StringTok{"yay, still called."}\NormalTok{), }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{\}}
+\KeywordTok{f}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Error in f() : Error
+yay, still called.
+\end{verbatim}
 
 \hypertarget{exercise-5}{%
 \section*{6.7.5.4 Exercise}\label{exercise-5}}
@@ -2615,14 +3131,16 @@ XXX
 \textbf{{Q}}: How does the \texttt{chdir} parameter of \texttt{source()} compare to \texttt{in\_dir()}? Why might you prefer one approach to the other?
 The \texttt{in\_dir()} approach was given in the book as
 
-```r
-in\_dir \textless{}- function(dir, code) \{
-old \textless{}- setwd(dir)
-on.exit(setwd(old))
-
-force(code)
-\}
-```
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    in_dir <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(dir, code) \{}
+\NormalTok{      old <-}\StringTok{ }\KeywordTok{setwd}\NormalTok{(dir)}
+      \KeywordTok{on.exit}\NormalTok{(}\KeywordTok{setwd}\NormalTok{(old))}
+      
+      \KeywordTok{force}\NormalTok{(code)}
+\NormalTok{    \}}
+\end{Highlighting}
+\end{Shaded}
 
 \textbf{{A}}: \texttt{in\_dir()} takes a path to a working directory as an argument. First the working directory is changed accordingly. \texttt{on.exit()} ensures that the modification to the working directory are reset to the initial value when the function exits.
 
@@ -2716,7 +3234,71 @@ Can we go over the source code of \texttt{capture.output} and \texttt{capture.ou
 
 The second function is more concise but what is it missing from the first? I'd like to go over the first one line by line.
 
-XXX
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{capture_output <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(..., }\DataTypeTok{file =} \OtherTok{NULL}\NormalTok{, append, }\DataTypeTok{type =} \StringTok{"output"}\NormalTok{, }\DataTypeTok{split =} \OtherTok{FALSE}\NormalTok{) \{}
+  \CommentTok{# create a list from the arguments}
+  \CommentTok{# but how does c("a", "b", "c") become the args?}
+\NormalTok{  args <-}\StringTok{ }\KeywordTok{substitute}\NormalTok{(}\KeywordTok{list}\NormalTok{(...))[}\OperatorTok{-}\NormalTok{1L]}
+  \CommentTok{# get type based on table of canditate values}
+  \CommentTok{# but this errors when I try to just run }
+  \CommentTok{# type = "output" ?}
+\NormalTok{  type <-}\StringTok{ }\KeywordTok{match.arg}\NormalTok{(type)}
+  \CommentTok{# Error in match.arg(type) : 'arg' must be of length 1}
+\NormalTok{  rval <-}\StringTok{ }\OtherTok{NULL}
+\NormalTok{  closeit <-}\StringTok{ }\OtherTok{TRUE}
+  \CommentTok{# we can save the output to a textConnection if no file is specified}
+  \CommentTok{# but what is a textConnection?}
+  \CommentTok{# otherwise the output is saved to a file (I think?)}
+  \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{is.null}\NormalTok{(file)) }
+    \CommentTok{# what is a text connection?}
+    \CommentTok{# I know this returns a character vector but what is this function}
+\NormalTok{    file <-}\StringTok{ }\KeywordTok{textConnection}\NormalTok{(}\StringTok{"rval"}\NormalTok{, }\StringTok{"w"}\NormalTok{, }\DataTypeTok{local =} \OtherTok{TRUE}\NormalTok{)}
+  \ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{is.character}\NormalTok{(file)) }
+    \CommentTok{# what is a character file? What's happening here?}
+\NormalTok{    file <-}\StringTok{ }\KeywordTok{file}\NormalTok{(file, }\ControlFlowTok{if}\NormalTok{ (append)  }\StringTok{"a"} \ControlFlowTok{else} \StringTok{"w"}\NormalTok{)}
+  \CommentTok{# this is similar to the character file but what is the difference?}
+  \CommentTok{# what does it mean to inherit "connection"}
+  \ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{inherits}\NormalTok{(file, }\StringTok{"connection"}\NormalTok{)) \{}
+    \ControlFlowTok{if}\NormalTok{ (}\OperatorTok{!}\KeywordTok{isOpen}\NormalTok{(file))}
+      \KeywordTok{open}\NormalTok{(file, }\ControlFlowTok{if}\NormalTok{ (append)  }\StringTok{"a"} \ControlFlowTok{else} \StringTok{"w"}\NormalTok{)}
+    \ControlFlowTok{else}\NormalTok{ closeit <-}\StringTok{ }\OtherTok{FALSE}
+\NormalTok{  \}}
+  \CommentTok{# what is sink?}
+  \CommentTok{# is this what happened when you create a bad file extension to save your output?}
+  \ControlFlowTok{else} \KeywordTok{stop}\NormalTok{(}\StringTok{"'file' must be NULL, a character string or a connection"}\NormalTok{)}
+  \KeywordTok{sink}\NormalTok{(file, }\DataTypeTok{type =}\NormalTok{ type, }\DataTypeTok{split =}\NormalTok{ split)}
+  \CommentTok{# we're using on.exit here! }
+  \CommentTok{# ...but what is it doing exactly?}
+  \KeywordTok{on.exit}\NormalTok{(\{}
+    \KeywordTok{sink}\NormalTok{(}\DataTypeTok{type =}\NormalTok{ type, }\DataTypeTok{split =}\NormalTok{ split)}
+    \ControlFlowTok{if}\NormalTok{ (closeit) }\KeywordTok{close}\NormalTok{(file)}
+\NormalTok{  \})}
+  \CommentTok{# this is some environment term}
+  \CommentTok{# maybe we can talk about this next week?}
+\NormalTok{  pf <-}\StringTok{ }\KeywordTok{parent.frame}\NormalTok{()}
+  \CommentTok{# print value AND if visible or not }
+\NormalTok{  evalVis <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(expr) }\KeywordTok{withVisible}\NormalTok{(}\KeywordTok{eval}\NormalTok{(expr, pf))}
+  \CommentTok{# THIS IS THE ACTUAL CAPTURE FUNCTION MEAT AND POTATOES!}
+  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \KeywordTok{seq_along}\NormalTok{(args)) \{}
+    \CommentTok{# I assume this should be for each "a" "b" "c"}
+    \CommentTok{# but I'm struggling to go one without it and being able to step through}
+\NormalTok{    expr <-}\StringTok{ }\NormalTok{args[[i]]}
+\NormalTok{    tmp <-}\StringTok{ }\ControlFlowTok{switch}\NormalTok{(}\KeywordTok{mode}\NormalTok{(expr), }\DataTypeTok{expression =} \KeywordTok{lapply}\NormalTok{(expr, evalVis), }
+                  \DataTypeTok{call =}\NormalTok{ , }\DataTypeTok{name =} \KeywordTok{list}\NormalTok{(}\KeywordTok{evalVis}\NormalTok{(expr)), }\KeywordTok{stop}\NormalTok{(}\StringTok{"bad argument"}\NormalTok{))}
+    \ControlFlowTok{for}\NormalTok{ (item }\ControlFlowTok{in}\NormalTok{ tmp) }\ControlFlowTok{if}\NormalTok{ (item}\OperatorTok{$}\NormalTok{visible) }
+      \KeywordTok{print}\NormalTok{(item}\OperatorTok{$}\NormalTok{value)}
+\NormalTok{  \}}
+  \KeywordTok{on.exit}\NormalTok{()}
+  \KeywordTok{sink}\NormalTok{(}\DataTypeTok{type =}\NormalTok{ type, }\DataTypeTok{split =}\NormalTok{ split)}
+  \ControlFlowTok{if}\NormalTok{ (closeit) }
+    \KeywordTok{close}\NormalTok{(file)}
+  \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{is.null}\NormalTok{(rval)) }
+    \KeywordTok{invisible}\NormalTok{(}\OtherTok{NULL}\NormalTok{)}
+  \ControlFlowTok{else}\NormalTok{ rval}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{replacement-functions}{%
 \section*{6.8.4 Replacement functions}\label{replacement-functions}}
@@ -2756,7 +3338,20 @@ Being equal to
 \end{Highlighting}
 \end{Shaded}
 
-XXX
+We can dig into the \href{https://github.com/wch/r-source/blob/2cdea4811caa2417e2cf32a0c7ad3be70325eec1/src/main/eval.c\#L2787}{source code}, but the jist is that in order to implement these complex assignments:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Copy \texttt{x} into a temporary variable \texttt{*temp*}
+\item
+  \texttt{{[}\textless{}-(names(*tmp*),\ 2,\ "two")} modifies the second element of the names of \texttt{*temp*},
+\item
+  \texttt{names\textless{}-}(\texttt{*tmp*} assigns step 2 to \texttt{*temp*} names
+\item
+  Clean up by removing the temp variable
+\end{enumerate}
 
 \hypertarget{exercise-7}{%
 \section*{6.8.6.3 Exercise}\label{exercise-7}}
@@ -2780,6 +3375,180 @@ x
 ```
 
 XXX
+
+\hypertarget{environments}{%
+\chapter{Environments}\label{environments}}
+
+\hypertarget{parents}{%
+\section*{7.2.3 Parents}\label{parents}}
+\addcontentsline{toc}{section}{7.2.3 Parents}
+
+What's the relationship between base, empty enviornment, and global enviornment?
+
+The global environment is your working enviornment, where all packages loaded are its parent. When you list the parents of the gloal environment the last environment is always \texttt{base} which is responsible for loading all other packages. The base's parent is the ``ultimate ancestor'', the empty enviornment.
+
+Clarification: the global environment's parent is all the packages loaded within the environment, not the empty environment, right? How do we check this? \texttt{parent.env(global)}?
+
+Each package becomes a parent to the global environment. We can inspect local enviornments using \texttt{search\_envs()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{search_envs}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [[1]] $ <env: global>
+##  [[2]] $ <env: package:openintro>
+##  [[3]] $ <env: package:rlang>
+##  [[4]] $ <env: package:cyclocomp>
+##  [[5]] $ <env: package:lobstr>
+##  [[6]] $ <env: package:kableExtra>
+##  [[7]] $ <env: package:forcats>
+##  [[8]] $ <env: package:stringr>
+##  [[9]] $ <env: package:dplyr>
+## [[10]] $ <env: package:purrr>
+## [[11]] $ <env: package:readr>
+## [[12]] $ <env: package:tidyr>
+## [[13]] $ <env: package:tibble>
+## [[14]] $ <env: package:ggplot2>
+## [[15]] $ <env: package:tidyverse>
+## [[16]] $ <env: package:stats>
+## [[17]] $ <env: package:graphics>
+## [[18]] $ <env: package:grDevices>
+## [[19]] $ <env: package:utils>
+## [[20]] $ <env: package:datasets>
+## ... and 3 more environments
+\end{verbatim}
+
+\hypertarget{getting-and-setting}{%
+\section*{7.2.5 Getting and setting}\label{getting-and-setting}}
+\addcontentsline{toc}{section}{7.2.5 Getting and setting}
+
+``But you can't use \texttt{{[}{[}} with numeric indices, and you can't use \texttt{{[}}:''
+
+It makes sense to me that you can't use numeric indexes because objects in an environment aren't ordered, but why can't you use \texttt{{[}}?
+
+The solutions manual states: "The second option would return two objects at the same time. What data structure would they be contained inside? But can we elaborate on what this means?
+
+\hypertarget{advanced-bindings}{%
+\section*{7.2.6 Advanced bindings}\label{advanced-bindings}}
+\addcontentsline{toc}{section}{7.2.6 Advanced bindings}
+
+Let's go over some source code that uses \texttt{env\_bind\_lazy()} - Hadley mentions its used when autoloading datasets with packages - can we find an example of this? How is this different from including \texttt{LazyData:\ true} in your description file?
+
+XXX
+
+\hypertarget{section-1}{%
+\section*{7.3.1.2}\label{section-1}}
+\addcontentsline{toc}{section}{7.3.1.2}
+
+I understood the recursion in the prior example, but what is inherits doing here? Can we go through this line for line and discuss what is happening in this function?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fget <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(name, }\DataTypeTok{env =} \KeywordTok{caller_env}\NormalTok{(), }\DataTypeTok{inherits =} \OtherTok{TRUE}\NormalTok{) \{}
+  \CommentTok{# Base case}
+  \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{env_has}\NormalTok{(env, name)) \{}
+\NormalTok{    obj <-}\StringTok{ }\KeywordTok{env_get}\NormalTok{(env, name)}
+
+    \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{is.function}\NormalTok{(obj)) \{}
+      \KeywordTok{return}\NormalTok{(obj)}
+\NormalTok{    \}}
+\NormalTok{  \}}
+
+  \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{identical}\NormalTok{(env, }\KeywordTok{emptyenv}\NormalTok{()) }\OperatorTok{||}\StringTok{ }\OperatorTok{!}\NormalTok{inherits) \{}
+    \KeywordTok{stop}\NormalTok{(}\StringTok{"Could not find function called }\CharTok{\textbackslash{}"}\StringTok{"}\NormalTok{, name, }\StringTok{"}\CharTok{\textbackslash{}"}\StringTok{"}\NormalTok{, }\DataTypeTok{call. =} \OtherTok{FALSE}\NormalTok{)}
+\NormalTok{  \}}
+
+  \CommentTok{# Recursive Case}
+  \KeywordTok{fget}\NormalTok{(name, }\KeywordTok{env_parent}\NormalTok{(env))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Test}
+\NormalTok{mean <-}\StringTok{ }\DecValTok{10}
+\KeywordTok{fget}\NormalTok{(}\StringTok{"mean"}\NormalTok{, }\DataTypeTok{inherits =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function (x, ...) 
+## UseMethod("mean")
+## <bytecode: 0x7f878ea769b0>
+## <environment: namespace:base>
+\end{verbatim}
+
+\hypertarget{function-enviornment}{%
+\section*{7.4.2 Function enviornment}\label{function-enviornment}}
+\addcontentsline{toc}{section}{7.4.2 Function enviornment}
+
+I found this section a little confusing. Can we go over the second figure in the section? Where does \texttt{x} live? \texttt{g} points to x but \texttt{x} is in the global enviornment? Can we come up with our own example for a function being bound to the global environment but accessing variables from its own enviornment? (I think this is what the second figure in the section is trying to display)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y <-}\StringTok{ }\DecValTok{1}
+\NormalTok{e <-}\StringTok{ }\KeywordTok{env}\NormalTok{()}
+\NormalTok{e}\OperatorTok{$}\NormalTok{g <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() }\DecValTok{1}
+\NormalTok{e}\OperatorTok{$}\NormalTok{g}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function() 1
+\end{verbatim}
+
+Is this example trying to display that if we change the function to return \texttt{y} this does not return \texttt{1} because \texttt{y} inside the function cannot access \texttt{y} at the global scope?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y <-}\StringTok{ }\DecValTok{1}
+\NormalTok{e <-}\StringTok{ }\KeywordTok{env}\NormalTok{()}
+\NormalTok{e}\OperatorTok{$}\NormalTok{g <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() y}
+\NormalTok{e}\OperatorTok{$}\NormalTok{g}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function() y
+\end{verbatim}
+
+\hypertarget{namespaces}{%
+\section*{7.4.3 Namespaces}\label{namespaces}}
+\addcontentsline{toc}{section}{7.4.3 Namespaces}
+
+``Every binding in the package environment is also found in the namespace environment; this ensures every function can use every other function in the package. But some bindings only occur in the namespace environment. These are known as internal or non-exported objects, which make it possible to hide internal implementation details from the user.''
+
+Can we find some simple-ish package source code as an example of this?
+
+XXX
+
+\hypertarget{data-structures}{%
+\section*{7.6 Data Structures}\label{data-structures}}
+\addcontentsline{toc}{section}{7.6 Data Structures}
+
+Can we build on this function to include \texttt{on.exit()}?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my_env <-}\StringTok{ }\KeywordTok{new.env}\NormalTok{(}\DataTypeTok{parent =} \KeywordTok{emptyenv}\NormalTok{())}
+\NormalTok{my_env}\OperatorTok{$}\NormalTok{a <-}\StringTok{ }\DecValTok{1}
+
+\NormalTok{get_a <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+\NormalTok{  my_env}\OperatorTok{$}\NormalTok{a}
+\NormalTok{\}}
+\NormalTok{set_a <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(value) \{}
+\NormalTok{  old <-}\StringTok{ }\NormalTok{my_env}\OperatorTok{$}\NormalTok{a}
+\NormalTok{  my_env}\OperatorTok{$}\NormalTok{a <-}\StringTok{ }\NormalTok{value}
+  \KeywordTok{invisible}\NormalTok{(old)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+The bullet point mentions hashmaps but I'm still really unclear on what that is. What are hash tables and are they related?
 
 \bibliography{book.bib,packages.bib}
 
