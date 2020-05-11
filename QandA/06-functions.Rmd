@@ -616,10 +616,116 @@ XXX
 
 :::question
 Can we go over the source code of `capture.output` and `capture.output2`? 
+:::
 
-```{r}
-body(capture.output)
+```{r, eval=FALSE}
+
+
+function (..., file = NULL, append = FALSE, type = c("output",
+                                                    "message"), split = FALSE)
+{
+  # Capture dots
+  # [-1L] removes the list()
+  args <- substitute(list(cat("a", "b", "c", sep = "\n")))[-1L]
+  
+  # match
+  type <- match.arg(type)
+  # set default return value
+  rval <- NULL
+  # set default closer
+  closeit <- TRUE
+  # if file is null, then
+  if (is.null(file))
+    # If file is null, then create a write-only text connection object which will
+    # save to the variable rval in the execution environment (local = TRUE).
+    # see https://biostatmatt.com/R/R-conn-ints.pdf for gritty info on connections (and sinks)
+    file <- textConnection("rval", "w", local = TRUE)
+  else if (is.character(file))
+    # if "file" is a character vector, then interpret it as a filename.  Open a
+    # file connection in either append or write mode, depending on the value of
+    # "append"
+    file <- file(file, if (append)
+      "a"
+      else "w")
+  else if (inherits(file, "connection")) {
+    # if "file" is already a connection object, check if it is open.  If not, open it
+    # in append mode, if specified, otherwise in write mode.
+    # inherits refers to the S3 class system.
+    #
+    # Browse[2]> class(file)
+    # [1] "textConnection" "connection"
+    if (!isOpen(file))
+      open(file, if (append)
+        "a"
+        else "w")
+    # if the connection is already open, don't close it in this function.
+    else closeit <- FALSE
+  }
+  # if you get here, then you misspecified "file"
+  else stop("'file' must be NULL, a character string or a connection")
+  # sink all output of type "type" into the connection "file".  If you would like
+  # the output to continue to its original source, then "split" it.
+  #
+  # by default, messages (messages, warnings, errors) go to stderr and
+  # everything else to stdout.
+  sink(file, type = type, split = split)
+  on.exit({
+    # on exit, call sink with the same arguments and without "file" being specified.
+    # this will cause the sink from the line before to terminate.
+    sink(type = type, split = split)
+    # Close the connection (always, unless "file" was provided as
+    # an already open connection)
+    if (closeit) close(file)
+  })
+  # store the calling environment in pf.  i.e. pf refers to the environment in
+  # which capture.output was called.
+  pf <- parent.frame()
+  # define a local function which will evaluate its sole argument (expr) in the
+  # parent frame.
+  evalVis <- function(expr) withVisible(eval(expr, pf))
+  # for each argument collected in the dot dot dot.
+  #
+  # use split = TRUE to help you debug at this point.  When you try to poke around
+  # with the sink applied, you are rightfully stymied because all output is going
+  # to the sink connection!
+  for (i in seq_along(args)) {
+    # store the argument in expr
+    expr <- args[[i]]
+    # based on the mode of the expr, evaluate it.
+    tmp <- switch(mode(expr),
+                  expression = lapply(expr, evalVis),
+                  call = ,
+                  name = list(evalVis(expr)),
+                  stop("bad argument"))
+    # print any visible values output during evaluation.
+    # This print will be collected by the sink we set up earlier and saved to
+    # the file connection.
+    for (item in tmp) if (item$visible)
+      print(item$value)
+  }
+  # calling on.exit with no arguments will clear the exit handler.
+  # we are doing this because the on.exit was designed to safeguard the sink
+  # and files being closed in the case of an exception when evaluating the
+  # passed in arguments.
+  on.exit()
+  # undo the sink
+  sink(type = type, split = split)
+  # close the file if necessary
+  if (closeit)
+    close(file)
+  # return the captured output or null invisibly otherwise.
+  if (is.null(rval))
+    invisible(NULL)
+  else rval
+}
 ```
+
+There were several new terms here to me when going over this function:
+
+* textConnection
+* sink
+* stderr
+* stdout
 
 ```{r}
 capture.output2 <- function(code) {
@@ -640,9 +746,6 @@ identical(
   capture.output2(cat("a", "b", "c", sep = "\n"))
 )
 ```
-
-The second function is more concise but what is it missing from the first? I'd like to go over the first one line by line.
-:::
 
 :::TODO
 ```{r}
