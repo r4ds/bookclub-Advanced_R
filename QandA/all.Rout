@@ -1,2 +1,3 @@
 In addition: Warning message:
-In sink() : no sink to remove
+In body(x) == body(function(x) (x - min(x))/(max(x) - min(x))) :
+  longer object length is not a multiple of shorter object length

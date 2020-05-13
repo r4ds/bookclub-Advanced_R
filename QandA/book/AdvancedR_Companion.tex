@@ -313,7 +313,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809ad1be70"
+## [1] "0x7feefbcbd038"
 \end{verbatim}
 
 \begin{Shaded}
@@ -323,7 +323,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809ad1be70"
+## [1] "0x7feefbcbd038"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -335,7 +335,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809a92c040"
+## [1] "0x7feefaa7a388"
 \end{verbatim}
 
 \begin{Shaded}
@@ -345,8 +345,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7f80977d3c90] <list> 
-## └─[2:0x7f809ad1be70] <dbl>
+## █ [1:0x7feefaa8aa80] <list> 
+## └─[2:0x7feefbcbd038] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -356,7 +356,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f80976da830"
+## [1] "0x7feefa9600e8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -393,7 +393,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7f809c4a9838>"
+## [1] "<0x7fef000efc38>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -403,7 +403,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7f809c4a9838>
+## <0x7fef000efc38>
 \end{verbatim}
 
 \begin{Shaded}
@@ -413,7 +413,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809c4a9838"
+## [1] "0x7fef000efc38"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -462,7 +462,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809a5803c8"
+## [1] "0x7feef87410c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -472,7 +472,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7f809a5803c8>"
+## [1] "<0x7feef87410c8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -482,7 +482,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7f809a5803c8 -> 0x7f809a55ccc8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7feef87410c8 -> 0x7feef980a708]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -578,7 +578,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809a533688"
+## [1] "0x7feefb0125f8"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -591,7 +591,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809c0c4128"
+## [1] "0x7feefb074c88"
 \end{verbatim}
 
 \begin{Shaded}
@@ -614,7 +614,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809c0c4128"
+## [1] "0x7feefb074c88"
 \end{verbatim}
 
 \begin{Shaded}
@@ -624,7 +624,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809c0c4128"
+## [1] "0x7feefb074c88"
 \end{verbatim}
 
 \begin{Shaded}
@@ -647,7 +647,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809c0c4128"
+## [1] "0x7feefb074c88"
 \end{verbatim}
 
 \begin{Shaded}
@@ -657,7 +657,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809abcfcc8"
+## [1] "0x7feef9aaa618"
 \end{verbatim}
 
 \begin{Shaded}
@@ -680,7 +680,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f80975288d8"
+## [1] "0x7feefaa4b728"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2297,7 +2297,57 @@ We can use RCPP!
 \end{Shaded}
 \end{enumerate}
 
-XXX
+There isn't a 1 to 1 mapping between functions and names in R. Multiple names may point to the same function as we see for \texttt{f1}, \texttt{f2}, and \texttt{f3}. Also, each function has its own environment so it's possible that two functions might have the same ``code'' but are not the same because they have different environments (or closures). Lastly, anonymous functions don't have names so we'd have no way to look these up.
+
+That said\ldots{}. we could find the names of our functions if they are all in the global environment:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{names}\NormalTok{(}\KeywordTok{which}\NormalTok{(}\KeywordTok{sapply}\NormalTok{(}\KeywordTok{mget}\NormalTok{(}\KeywordTok{lsf.str}\NormalTok{()), }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{body}\NormalTok{(x) }\OperatorTok{==}\StringTok{ }\KeywordTok{body}\NormalTok{(}\ControlFlowTok{function}\NormalTok{(x) (x }\OperatorTok{-}\StringTok{ }\KeywordTok{min}\NormalTok{(x)) }\OperatorTok{/}\StringTok{ }\NormalTok{(}\KeywordTok{max}\NormalTok{(x) }\OperatorTok{-}\StringTok{ }\KeywordTok{min}\NormalTok{(x))))))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in body(x) == body(function(x) (x - min(x))/(max(x) - min(x))): longer
+## object length is not a multiple of shorter object length
+
+## Warning in body(x) == body(function(x) (x - min(x))/(max(x) - min(x))): longer
+## object length is not a multiple of shorter object length
+
+## Warning in body(x) == body(function(x) (x - min(x))/(max(x) - min(x))): longer
+## object length is not a multiple of shorter object length
+
+## Warning in body(x) == body(function(x) (x - min(x))/(max(x) - min(x))): longer
+## object length is not a multiple of shorter object length
+
+## Warning in body(x) == body(function(x) (x - min(x))/(max(x) - min(x))): longer
+## object length is not a multiple of shorter object length
+
+## Warning in body(x) == body(function(x) (x - min(x))/(max(x) - min(x))): longer
+## object length is not a multiple of shorter object length
+
+## Warning in body(x) == body(function(x) (x - min(x))/(max(x) - min(x))): longer
+## object length is not a multiple of shorter object length
+
+## Warning in body(x) == body(function(x) (x - min(x))/(max(x) - min(x))): longer
+## object length is not a multiple of shorter object length
+
+## Warning in body(x) == body(function(x) (x - min(x))/(max(x) - min(x))): longer
+## object length is not a multiple of shorter object length
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "f1" "f2" "f3"
+\end{verbatim}
+
+But I don't think this scales when functions are outside of the global environment
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{e1 <-}\StringTok{ }\NormalTok{rlang}\OperatorTok{::}\KeywordTok{env}\NormalTok{(}\DataTypeTok{f1 =} \ControlFlowTok{function}\NormalTok{(x) (x }\OperatorTok{-}\StringTok{ }\KeywordTok{min}\NormalTok{(x)) }\OperatorTok{/}\StringTok{ }\NormalTok{(}\KeywordTok{max}\NormalTok{(x) }\OperatorTok{-}\StringTok{ }\KeywordTok{min}\NormalTok{(x))) }
+\NormalTok{e2 <-}\StringTok{ }\NormalTok{rlang}\OperatorTok{::}\KeywordTok{env}\NormalTok{(}\DataTypeTok{f2 =} \ControlFlowTok{function}\NormalTok{(x) (x }\OperatorTok{-}\StringTok{ }\KeywordTok{min}\NormalTok{(x)) }\OperatorTok{/}\StringTok{ }\NormalTok{(}\KeywordTok{max}\NormalTok{(x) }\OperatorTok{-}\StringTok{ }\KeywordTok{min}\NormalTok{(x)))}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{function-composition}{%
 \section*{6.3 Function composition}\label{function-composition}}
@@ -2461,11 +2511,11 @@ This will work:
 ## # A tibble: 5 x 1
 ##      x1
 ##   <dbl>
-## 1 0.763
-## 2 0.796
-## 3 0.166
-## 4 0.939
-## 5 0.988
+## 1 0.479
+## 2 0.204
+## 3 0.139
+## 4 0.904
+## 5 0.549
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2539,7 +2589,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 260 217 247 271 204 287 288 256 294 292
+##  [1] 300 260 275 278 204 233 297 213 257 291
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -2560,6 +2610,8 @@ Can we discuss the order that this happening in? Is it that \texttt{Calculating.
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
+
+Explain what's happeining here below in words, and restructure the promise image to make more sense
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2730,27 +2782,28 @@ I don't quite understand why \texttt{x\ =\ ls()} is different from \texttt{ls()}
 ##  [1] "a"                     "answer"                "as_tb"                
 ##  [4] "casewhen_func"         "controlflow_functions" "custom_attr"          
 ##  [7] "df"                    "df_coltypes"           "df_non_syntactic_name"
-## [10] "df_x"                  "double"                "example2223"          
-## [13] "f"                     "f1"                    "f2"                   
-## [16] "f3"                    "for_func"              "func_1"               
-## [19] "g"                     "g11"                   "get_state"            
-## [22] "h03"                   "h05"                   "i"                    
-## [25] "if_else_func"          "if_func"               "ifelse_func"          
-## [28] "IPA"                   "l1"                    "l2"                   
-## [31] "means"                 "medians"               "mega_model"           
-## [34] "my_factor"             "my_matrix"             "my_set"               
-## [37] "my_vector"             "mylist"                "new_address"          
-## [40] "new_y_address"         "no"                    "no_final"             
-## [43] "no_idx"                "old_address"           "out"                  
-## [46] "out_list"              "out_vector"            "plop"                 
-## [49] "repeat_func"           "subsetting_table"      "switch_func"          
-## [52] "test"                  "test_tbl"              "true_one"             
-## [55] "true_two"              "v"                     "v_address"            
-## [58] "val"                   "var"                   "while_func"           
-## [61] "x"                     "x1"                    "x2"                   
-## [64] "x3"                    "x4"                    "x5"                   
-## [67] "y"                     "y_address"             "yes"                  
-## [70] "yes_final"             "yes_idx"
+## [10] "df_x"                  "double"                "e1"                   
+## [13] "e2"                    "example2223"           "f"                    
+## [16] "f1"                    "f2"                    "f3"                   
+## [19] "for_func"              "func_1"                "g"                    
+## [22] "g11"                   "get_state"             "h03"                  
+## [25] "h05"                   "i"                     "if_else_func"         
+## [28] "if_func"               "ifelse_func"           "IPA"                  
+## [31] "l1"                    "l2"                    "means"                
+## [34] "medians"               "mega_model"            "my_factor"            
+## [37] "my_matrix"             "my_set"                "my_vector"            
+## [40] "mylist"                "new_address"           "new_y_address"        
+## [43] "no"                    "no_final"              "no_idx"               
+## [46] "old_address"           "out"                   "out_list"             
+## [49] "out_vector"            "plop"                  "repeat_func"          
+## [52] "subsetting_table"      "switch_func"           "test"                 
+## [55] "test_tbl"              "true_one"              "true_two"             
+## [58] "v"                     "v_address"             "val"                  
+## [61] "var"                   "while_func"            "x"                    
+## [64] "x1"                    "x2"                    "x3"                   
+## [67] "x4"                    "x5"                    "y"                    
+## [70] "y_address"             "yes"                   "yes_final"            
+## [73] "yes_idx"
 \end{verbatim}
 
 The difference is where the promise is created. \texttt{ls()} is always evaluated inside \texttt{h05} when \texttt{x} is evaluated. The difference is the environment. When \texttt{ls()} is provided as an explicit parameter, \texttt{x} is a promise whose environment is the global environment. When \texttt{ls()} is a default parameter, it is evaluated in the local environment where it is used.
@@ -2928,7 +2981,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7f80938c8180>
+## <bytecode: 0x7feef3e30f80>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3547,7 +3600,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7f809378ee90>
+## <bytecode: 0x7feef32f4290>
 ## <environment: namespace:base>
 \end{verbatim}
 
