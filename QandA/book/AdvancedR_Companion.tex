@@ -119,7 +119,7 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-05-10}
+\date{2020-05-12}
 
 \begin{document}
 \maketitle
@@ -313,7 +313,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f879319dc40"
+## [1] "0x7f809ad1be70"
 \end{verbatim}
 
 \begin{Shaded}
@@ -323,7 +323,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f879319dc40"
+## [1] "0x7f809ad1be70"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -335,7 +335,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f87923cd7c8"
+## [1] "0x7f809a92c040"
 \end{verbatim}
 
 \begin{Shaded}
@@ -345,8 +345,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7f879236ae60] <list> 
-## └─[2:0x7f879319dc40] <dbl>
+## █ [1:0x7f80977d3c90] <list> 
+## └─[2:0x7f809ad1be70] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -356,7 +356,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f879204e678"
+## [1] "0x7f80976da830"
 \end{verbatim}
 
 \begin{Shaded}
@@ -393,7 +393,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7f879423d2b8>"
+## [1] "<0x7f809c4a9838>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -403,7 +403,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7f879423d2b8>
+## <0x7f809c4a9838>
 \end{verbatim}
 
 \begin{Shaded}
@@ -413,7 +413,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f879423d2b8"
+## [1] "0x7f809c4a9838"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -462,7 +462,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8794217548"
+## [1] "0x7f809a5803c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -472,7 +472,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7f8794217548>"
+## [1] "<0x7f809a5803c8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -482,7 +482,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7f8794217548 -> 0x7f878c01fec8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7f809a5803c8 -> 0x7f809a55ccc8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -578,7 +578,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f879427b5c8"
+## [1] "0x7f809a533688"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -591,7 +591,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f87931a25a8"
+## [1] "0x7f809c0c4128"
 \end{verbatim}
 
 \begin{Shaded}
@@ -614,7 +614,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f87931a25a8"
+## [1] "0x7f809c0c4128"
 \end{verbatim}
 
 \begin{Shaded}
@@ -624,7 +624,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f87931a25a8"
+## [1] "0x7f809c0c4128"
 \end{verbatim}
 
 \begin{Shaded}
@@ -647,7 +647,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f87931a25a8"
+## [1] "0x7f809c0c4128"
 \end{verbatim}
 
 \begin{Shaded}
@@ -657,7 +657,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f879254a1a8"
+## [1] "0x7f809abcfcc8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -680,7 +680,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f879210f1e8"
+## [1] "0x7f80975288d8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2461,11 +2461,11 @@ This will work:
 ## # A tibble: 5 x 1
 ##      x1
 ##   <dbl>
-## 1 0.595
-## 2 0.526
-## 3 0.728
-## 4 0.470
-## 5 0.747
+## 1 0.763
+## 2 0.796
+## 3 0.166
+## 4 0.939
+## 5 0.988
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2539,7 +2539,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 221 291 264 276 292 265 213 202 233 203
+##  [1] 260 217 247 271 204 287 288 256 294 292
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -2560,8 +2560,6 @@ Can we discuss the order that this happening in? Is it that \texttt{Calculating.
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
-
-Still need to work on explaining what's happening here and what that would look like graphically:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2930,7 +2928,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7f878b9b0bc8>
+## <bytecode: 0x7f80938c8180>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -2963,7 +2961,7 @@ We need to access is using \texttt{hist.\textless{}method\textgreater{}}
 ## [1] TRUE
 \end{verbatim}
 
-\texttt{list2} is most helpful when we need to force environment variables with ata variables. We can see this by crting a function that takes a variable number of arguments:
+\texttt{list2} is most helpful when we need to force environment variables with data variables. We can see this by creating a function that takes a variable number of arguments:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3105,7 +3103,7 @@ Can we go over this code? How does it not change your working directory after yo
 The behavior of \href{https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/getwd}{\texttt{setwd}} ``changing the working directory'' is actually a \textbf{side effect} of the function - it invisibly returns the previous working directory as the value of the function (potentially for the exact purpose demonstrated). We can use this within our \texttt{on.exit} function to change back to the prior working directory!
 
 If \texttt{on.exit} fails will it continue onto the next \texttt{on.exit} so long as \texttt{add\ ==\ TRUE}
-?``on.exit fails it'll caontinue onto the next one
+?``on.exit fails it'll continue onto the next one
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3154,55 +3152,205 @@ XXX
 
 Can we go over the source code of \texttt{capture.output} and \texttt{capture.output2}?
 
+There were several new terms here to me when going over this function:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{stderr} error output
+\item
+  \texttt{stdout} normal output
+\end{itemize}
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{body}\NormalTok{(capture.output)}
+\CommentTok{#!/usr/bin/env Rscript}
+\CommentTok{# redirect.r -- experiments with warning and error messages}
+
+\CommentTok{# Get any arguments (and ignore them)}
+\NormalTok{arguments <-}\StringTok{ }\KeywordTok{commandArgs}\NormalTok{(}\DataTypeTok{trailingOnly=}\OtherTok{TRUE}\NormalTok{)}
+
+\CommentTok{# Default}
+\KeywordTok{write}\NormalTok{(}\StringTok{"1) write() to stderr"}\NormalTok{, }\KeywordTok{stderr}\NormalTok{())}
+\KeywordTok{write}\NormalTok{(}\StringTok{"1) write() to stdout"}\NormalTok{, }\KeywordTok{stdout}\NormalTok{())}
+\KeywordTok{warning}\NormalTok{(}\StringTok{"1) warning()"}\NormalTok{)}
+
+\CommentTok{# Ignore all warnings}
+\KeywordTok{options}\NormalTok{(}\DataTypeTok{warn =} \DecValTok{-1}\NormalTok{)}
+\KeywordTok{write}\NormalTok{(}\StringTok{"2) write() to stderr"}\NormalTok{, }\KeywordTok{stderr}\NormalTok{())}
+\KeywordTok{write}\NormalTok{(}\StringTok{"2) write() to stdout"}\NormalTok{, }\KeywordTok{stdout}\NormalTok{())}
+\KeywordTok{warning}\NormalTok{(}\StringTok{"2) warning()"}\NormalTok{)}
+
+\CommentTok{# Send all STDERR to STDOUT using sink()}
+\KeywordTok{options}\NormalTok{(}\DataTypeTok{warn =} \DecValTok{0}\NormalTok{) }\CommentTok{# default setting}
+\KeywordTok{sink}\NormalTok{(}\KeywordTok{stdout}\NormalTok{(), }\DataTypeTok{type=}\StringTok{"message"}\NormalTok{)}
+\KeywordTok{write}\NormalTok{(}\StringTok{"3) write() to stderr"}\NormalTok{, }\KeywordTok{stderr}\NormalTok{())}
+\KeywordTok{write}\NormalTok{(}\StringTok{"3) write() to stdout"}\NormalTok{, }\KeywordTok{stdout}\NormalTok{())}
+\KeywordTok{warning}\NormalTok{(}\StringTok{"3) warning()"}\NormalTok{)}
+
+\CommentTok{# Send all STDOUT to STDERR using sink()}
+\KeywordTok{sink}\NormalTok{(}\OtherTok{NULL}\NormalTok{, }\DataTypeTok{type=}\StringTok{"message"}\NormalTok{) }\CommentTok{# default setting}
+\KeywordTok{sink}\NormalTok{(}\KeywordTok{stderr}\NormalTok{(), }\DataTypeTok{type=}\StringTok{"output"}\NormalTok{)}
+\KeywordTok{write}\NormalTok{(}\StringTok{"4) write() to stderr"}\NormalTok{, }\KeywordTok{stderr}\NormalTok{())}
+\KeywordTok{write}\NormalTok{(}\StringTok{"4) write() to stdout"}\NormalTok{, }\KeywordTok{stdout}\NormalTok{())}
+\KeywordTok{warning}\NormalTok{(}\StringTok{"4) warning()"}\NormalTok{)}
+
+\CommentTok{# Send messages and output to separate files}
+\NormalTok{msg <-}\StringTok{ }\KeywordTok{file}\NormalTok{(}\StringTok{"message.Rout"}\NormalTok{, }\DataTypeTok{open=}\StringTok{"wt"}\NormalTok{)}
+\NormalTok{out <-}\StringTok{ }\KeywordTok{file}\NormalTok{(}\StringTok{"output.Rout"}\NormalTok{, }\DataTypeTok{open=}\StringTok{"wt"}\NormalTok{)}
+\KeywordTok{sink}\NormalTok{(msg, }\DataTypeTok{type=}\StringTok{"message"}\NormalTok{)}
+\KeywordTok{sink}\NormalTok{(out, }\DataTypeTok{type=}\StringTok{"output"}\NormalTok{)}
+\KeywordTok{write}\NormalTok{(}\StringTok{"5) write() to stderr"}\NormalTok{, }\KeywordTok{stderr}\NormalTok{())}
+\KeywordTok{write}\NormalTok{(}\StringTok{"5) write() to stdout"}\NormalTok{, }\KeywordTok{stdout}\NormalTok{())}
+\KeywordTok{warning}\NormalTok{(}\StringTok{"5) warning()"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{sink} diverts R output to a connection.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{zz <-}\StringTok{ }\KeywordTok{file}\NormalTok{(}\StringTok{"all.Rout"}\NormalTok{, }\DataTypeTok{open =} \StringTok{"wt"}\NormalTok{)}
+\KeywordTok{sink}\NormalTok{(zz)}
+\KeywordTok{sink}\NormalTok{(zz, }\DataTypeTok{type =} \StringTok{"message"}\NormalTok{)}
+\KeywordTok{try}\NormalTok{(}\KeywordTok{log}\NormalTok{(}\StringTok{"a"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## {
-##     args <- substitute(list(...))[-1L]
-##     type <- match.arg(type)
-##     rval <- NULL
-##     closeit <- TRUE
-##     if (is.null(file)) 
-##         file <- textConnection("rval", "w", local = TRUE)
-##     else if (is.character(file)) 
-##         file <- file(file, if (append) 
-##             "a"
-##         else "w")
-##     else if (inherits(file, "connection")) {
-##         if (!isOpen(file)) 
-##             open(file, if (append) 
-##                 "a"
-##             else "w")
-##         else closeit <- FALSE
-##     }
-##     else stop("'file' must be NULL, a character string or a connection")
-##     sink(file, type = type, split = split)
-##     on.exit({
-##         sink(type = type, split = split)
-##         if (closeit) close(file)
-##     })
-##     pf <- parent.frame()
-##     evalVis <- function(expr) withVisible(eval(expr, pf))
-##     for (i in seq_along(args)) {
-##         expr <- args[[i]]
-##         tmp <- switch(mode(expr), expression = lapply(expr, evalVis), 
-##             call = , name = list(evalVis(expr)), stop("bad argument"))
-##         for (item in tmp) if (item$visible) 
-##             print(item$value)
-##     }
-##     on.exit()
-##     sink(type = type, split = split)
-##     if (closeit) 
-##         close(file)
-##     if (is.null(rval)) 
-##         invisible(NULL)
-##     else rval
-## }
+## Error in log("a") : non-numeric argument to mathematical function
 \end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## revert output back to the console -- only then access the file!}
+\KeywordTok{sink}\NormalTok{(}\DataTypeTok{type =} \StringTok{"message"}\NormalTok{)}
+\KeywordTok{sink}\NormalTok{()}
+\KeywordTok{file.show}\NormalTok{(}\StringTok{"all.Rout"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{textConnection} allows R character vectors to be read as if they were being read from a text file.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    They can capture R output to a character vector
+  \item
+    They can be used to create a new character object or append to an existing one in the user's workspace.
+  \item
+    At all times the complete lines output to the connection are available in the R object. Closing the connection writes any remaining output to a final element of the character vector.
+  \end{itemize}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{function}\NormalTok{ (..., }\DataTypeTok{file =} \OtherTok{NULL}\NormalTok{, }\DataTypeTok{append =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{type =} \KeywordTok{c}\NormalTok{(}\StringTok{"output"}\NormalTok{,}
+                                                    \StringTok{"message"}\NormalTok{), }\DataTypeTok{split =} \OtherTok{FALSE}\NormalTok{)}
+\NormalTok{\{}
+  \CommentTok{# Capture dots}
+  \CommentTok{# [-1L] removes the list()}
+\NormalTok{  args <-}\StringTok{ }\KeywordTok{substitute}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\KeywordTok{cat}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\StringTok{"c"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)))[}\OperatorTok{-}\NormalTok{1L]}
+  
+  \CommentTok{# match}
+\NormalTok{  type <-}\StringTok{ }\KeywordTok{match.arg}\NormalTok{(type)}
+  \CommentTok{# set default return value}
+\NormalTok{  rval <-}\StringTok{ }\OtherTok{NULL}
+  \CommentTok{# set default closer}
+\NormalTok{  closeit <-}\StringTok{ }\OtherTok{TRUE}
+  \CommentTok{# if file is null, then}
+  \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{is.null}\NormalTok{(file))}
+    \CommentTok{# If file is null, then create a write-only text connection object which will}
+    \CommentTok{# save to the variable rval in the execution environment (local = TRUE).}
+    \CommentTok{# see https://biostatmatt.com/R/R-conn-ints.pdf for gritty info on connections (and sinks)}
+\NormalTok{    file <-}\StringTok{ }\KeywordTok{textConnection}\NormalTok{(}\StringTok{"rval"}\NormalTok{, }\StringTok{"w"}\NormalTok{, }\DataTypeTok{local =} \OtherTok{TRUE}\NormalTok{)}
+  \ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{is.character}\NormalTok{(file))}
+    \CommentTok{# if "file" is a character vector, then interpret it as a filename.  Open a}
+    \CommentTok{# file connection in either append or write mode, depending on the value of}
+    \CommentTok{# "append"}
+\NormalTok{    file <-}\StringTok{ }\KeywordTok{file}\NormalTok{(file, }\ControlFlowTok{if}\NormalTok{ (append)}
+      \StringTok{"a"}
+      \ControlFlowTok{else} \StringTok{"w"}\NormalTok{)}
+  \ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{inherits}\NormalTok{(file, }\StringTok{"connection"}\NormalTok{)) \{}
+    \CommentTok{# if "file" is already a connection object, check if it is open.  If not, open it}
+    \CommentTok{# in append mode, if specified, otherwise in write mode.}
+    \CommentTok{# inherits refers to the S3 class system.}
+    \CommentTok{#}
+    \CommentTok{# Browse[2]> class(file)}
+    \CommentTok{# [1] "textConnection" "connection"}
+    \ControlFlowTok{if}\NormalTok{ (}\OperatorTok{!}\KeywordTok{isOpen}\NormalTok{(file))}
+      \KeywordTok{open}\NormalTok{(file, }\ControlFlowTok{if}\NormalTok{ (append)}
+        \StringTok{"a"}
+        \ControlFlowTok{else} \StringTok{"w"}\NormalTok{)}
+    \CommentTok{# if the connection is already open, don't close it in this function.}
+    \ControlFlowTok{else}\NormalTok{ closeit <-}\StringTok{ }\OtherTok{FALSE}
+\NormalTok{  \}}
+  \CommentTok{# if you get here, then you misspecified "file"}
+  \ControlFlowTok{else} \KeywordTok{stop}\NormalTok{(}\StringTok{"'file' must be NULL, a character string or a connection"}\NormalTok{)}
+  \CommentTok{# sink all output of type "type" into the connection "file".  If you would like}
+  \CommentTok{# the output to continue to its original source, then "split" it.}
+  \CommentTok{#}
+  \CommentTok{# by default, messages (messages, warnings, errors) go to stderr and}
+  \CommentTok{# everything else to stdout.}
+  \KeywordTok{sink}\NormalTok{(file, }\DataTypeTok{type =}\NormalTok{ type, }\DataTypeTok{split =}\NormalTok{ split)}
+  \KeywordTok{on.exit}\NormalTok{(\{}
+    \CommentTok{# on exit, call sink with the same arguments and without "file" being specified.}
+    \CommentTok{# this will cause the sink from the line before to terminate.}
+    \KeywordTok{sink}\NormalTok{(}\DataTypeTok{type =}\NormalTok{ type, }\DataTypeTok{split =}\NormalTok{ split)}
+    \CommentTok{# Close the connection (always, unless "file" was provided as}
+    \CommentTok{# an already open connection)}
+    \ControlFlowTok{if}\NormalTok{ (closeit) }\KeywordTok{close}\NormalTok{(file)}
+\NormalTok{  \})}
+  \CommentTok{# store the calling environment in pf.  i.e. pf refers to the environment in}
+  \CommentTok{# which capture.output was called.}
+\NormalTok{  pf <-}\StringTok{ }\KeywordTok{parent.frame}\NormalTok{()}
+  \CommentTok{# define a local function which will evaluate its sole argument (expr) in the}
+  \CommentTok{# parent frame.}
+\NormalTok{  evalVis <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(expr) }\KeywordTok{withVisible}\NormalTok{(}\KeywordTok{eval}\NormalTok{(expr, pf))}
+  \CommentTok{# for each argument collected in the dot dot dot.}
+  \CommentTok{#}
+  \CommentTok{# use split = TRUE to help you debug at this point.  When you try to poke around}
+  \CommentTok{# with the sink applied, you are rightfully stymied because all output is going}
+  \CommentTok{# to the sink connection!}
+  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \KeywordTok{seq_along}\NormalTok{(args)) \{}
+    \CommentTok{# store the argument in expr}
+\NormalTok{    expr <-}\StringTok{ }\NormalTok{args[[i]]}
+    \CommentTok{# based on the mode of the expr, evaluate it.}
+\NormalTok{    tmp <-}\StringTok{ }\ControlFlowTok{switch}\NormalTok{(}\KeywordTok{mode}\NormalTok{(expr),}
+                  \DataTypeTok{expression =} \KeywordTok{lapply}\NormalTok{(expr, evalVis),}
+                  \DataTypeTok{call =}\NormalTok{ ,}
+                  \DataTypeTok{name =} \KeywordTok{list}\NormalTok{(}\KeywordTok{evalVis}\NormalTok{(expr)),}
+                  \KeywordTok{stop}\NormalTok{(}\StringTok{"bad argument"}\NormalTok{))}
+    \CommentTok{# print any visible values output during evaluation.}
+    \CommentTok{# This print will be collected by the sink we set up earlier and saved to}
+    \CommentTok{# the file connection.}
+    \ControlFlowTok{for}\NormalTok{ (item }\ControlFlowTok{in}\NormalTok{ tmp) }\ControlFlowTok{if}\NormalTok{ (item}\OperatorTok{$}\NormalTok{visible)}
+      \KeywordTok{print}\NormalTok{(item}\OperatorTok{$}\NormalTok{value)}
+\NormalTok{  \}}
+  \CommentTok{# calling on.exit with no arguments will clear the exit handler.}
+  \CommentTok{# we are doing this because the on.exit was designed to safeguard the sink}
+  \CommentTok{# and files being closed in the case of an exception when evaluating the}
+  \CommentTok{# passed in arguments.}
+  \KeywordTok{on.exit}\NormalTok{()}
+  \CommentTok{# undo the sink}
+  \KeywordTok{sink}\NormalTok{(}\DataTypeTok{type =}\NormalTok{ type, }\DataTypeTok{split =}\NormalTok{ split)}
+  \CommentTok{# close the file if necessary}
+  \ControlFlowTok{if}\NormalTok{ (closeit)}
+    \KeywordTok{close}\NormalTok{(file)}
+  \CommentTok{# return the captured output or null invisibly otherwise.}
+  \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{is.null}\NormalTok{(rval))}
+    \KeywordTok{invisible}\NormalTok{(}\OtherTok{NULL}\NormalTok{)}
+  \ControlFlowTok{else}\NormalTok{ rval}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3219,86 +3367,7 @@ Can we go over the source code of \texttt{capture.output} and \texttt{capture.ou
 \end{Highlighting}
 \end{Shaded}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{identical}\NormalTok{(}
-  \KeywordTok{capture.output}\NormalTok{(}\KeywordTok{cat}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\StringTok{"c"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)),}
-  \KeywordTok{capture.output2}\NormalTok{(}\KeywordTok{cat}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\StringTok{"c"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] TRUE
-\end{verbatim}
-
-The second function is more concise but what is it missing from the first? I'd like to go over the first one line by line.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{capture_output <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(..., }\DataTypeTok{file =} \OtherTok{NULL}\NormalTok{, append, }\DataTypeTok{type =} \StringTok{"output"}\NormalTok{, }\DataTypeTok{split =} \OtherTok{FALSE}\NormalTok{) \{}
-  \CommentTok{# create a list from the arguments}
-  \CommentTok{# but how does c("a", "b", "c") become the args?}
-\NormalTok{  args <-}\StringTok{ }\KeywordTok{substitute}\NormalTok{(}\KeywordTok{list}\NormalTok{(...))[}\OperatorTok{-}\NormalTok{1L]}
-  \CommentTok{# get type based on table of canditate values}
-  \CommentTok{# but this errors when I try to just run }
-  \CommentTok{# type = "output" ?}
-\NormalTok{  type <-}\StringTok{ }\KeywordTok{match.arg}\NormalTok{(type)}
-  \CommentTok{# Error in match.arg(type) : 'arg' must be of length 1}
-\NormalTok{  rval <-}\StringTok{ }\OtherTok{NULL}
-\NormalTok{  closeit <-}\StringTok{ }\OtherTok{TRUE}
-  \CommentTok{# we can save the output to a textConnection if no file is specified}
-  \CommentTok{# but what is a textConnection?}
-  \CommentTok{# otherwise the output is saved to a file (I think?)}
-  \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{is.null}\NormalTok{(file)) }
-    \CommentTok{# what is a text connection?}
-    \CommentTok{# I know this returns a character vector but what is this function}
-\NormalTok{    file <-}\StringTok{ }\KeywordTok{textConnection}\NormalTok{(}\StringTok{"rval"}\NormalTok{, }\StringTok{"w"}\NormalTok{, }\DataTypeTok{local =} \OtherTok{TRUE}\NormalTok{)}
-  \ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{is.character}\NormalTok{(file)) }
-    \CommentTok{# what is a character file? What's happening here?}
-\NormalTok{    file <-}\StringTok{ }\KeywordTok{file}\NormalTok{(file, }\ControlFlowTok{if}\NormalTok{ (append)  }\StringTok{"a"} \ControlFlowTok{else} \StringTok{"w"}\NormalTok{)}
-  \CommentTok{# this is similar to the character file but what is the difference?}
-  \CommentTok{# what does it mean to inherit "connection"}
-  \ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{inherits}\NormalTok{(file, }\StringTok{"connection"}\NormalTok{)) \{}
-    \ControlFlowTok{if}\NormalTok{ (}\OperatorTok{!}\KeywordTok{isOpen}\NormalTok{(file))}
-      \KeywordTok{open}\NormalTok{(file, }\ControlFlowTok{if}\NormalTok{ (append)  }\StringTok{"a"} \ControlFlowTok{else} \StringTok{"w"}\NormalTok{)}
-    \ControlFlowTok{else}\NormalTok{ closeit <-}\StringTok{ }\OtherTok{FALSE}
-\NormalTok{  \}}
-  \CommentTok{# what is sink?}
-  \CommentTok{# is this what happened when you create a bad file extension to save your output?}
-  \ControlFlowTok{else} \KeywordTok{stop}\NormalTok{(}\StringTok{"'file' must be NULL, a character string or a connection"}\NormalTok{)}
-  \KeywordTok{sink}\NormalTok{(file, }\DataTypeTok{type =}\NormalTok{ type, }\DataTypeTok{split =}\NormalTok{ split)}
-  \CommentTok{# we're using on.exit here! }
-  \CommentTok{# ...but what is it doing exactly?}
-  \KeywordTok{on.exit}\NormalTok{(\{}
-    \KeywordTok{sink}\NormalTok{(}\DataTypeTok{type =}\NormalTok{ type, }\DataTypeTok{split =}\NormalTok{ split)}
-    \ControlFlowTok{if}\NormalTok{ (closeit) }\KeywordTok{close}\NormalTok{(file)}
-\NormalTok{  \})}
-  \CommentTok{# this is some environment term}
-  \CommentTok{# maybe we can talk about this next week?}
-\NormalTok{  pf <-}\StringTok{ }\KeywordTok{parent.frame}\NormalTok{()}
-  \CommentTok{# print value AND if visible or not }
-\NormalTok{  evalVis <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(expr) }\KeywordTok{withVisible}\NormalTok{(}\KeywordTok{eval}\NormalTok{(expr, pf))}
-  \CommentTok{# THIS IS THE ACTUAL CAPTURE FUNCTION MEAT AND POTATOES!}
-  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \KeywordTok{seq_along}\NormalTok{(args)) \{}
-    \CommentTok{# I assume this should be for each "a" "b" "c"}
-    \CommentTok{# but I'm struggling to go one without it and being able to step through}
-\NormalTok{    expr <-}\StringTok{ }\NormalTok{args[[i]]}
-\NormalTok{    tmp <-}\StringTok{ }\ControlFlowTok{switch}\NormalTok{(}\KeywordTok{mode}\NormalTok{(expr), }\DataTypeTok{expression =} \KeywordTok{lapply}\NormalTok{(expr, evalVis), }
-                  \DataTypeTok{call =}\NormalTok{ , }\DataTypeTok{name =} \KeywordTok{list}\NormalTok{(}\KeywordTok{evalVis}\NormalTok{(expr)), }\KeywordTok{stop}\NormalTok{(}\StringTok{"bad argument"}\NormalTok{))}
-    \ControlFlowTok{for}\NormalTok{ (item }\ControlFlowTok{in}\NormalTok{ tmp) }\ControlFlowTok{if}\NormalTok{ (item}\OperatorTok{$}\NormalTok{visible) }
-      \KeywordTok{print}\NormalTok{(item}\OperatorTok{$}\NormalTok{value)}
-\NormalTok{  \}}
-  \KeywordTok{on.exit}\NormalTok{()}
-  \KeywordTok{sink}\NormalTok{(}\DataTypeTok{type =}\NormalTok{ type, }\DataTypeTok{split =}\NormalTok{ split)}
-  \ControlFlowTok{if}\NormalTok{ (closeit) }
-    \KeywordTok{close}\NormalTok{(file)}
-  \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{is.null}\NormalTok{(rval)) }
-    \KeywordTok{invisible}\NormalTok{(}\OtherTok{NULL}\NormalTok{)}
-  \ControlFlowTok{else}\NormalTok{ rval}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
+The second function will always sink output to a temporary file, and then return the results by reading the file back in (and returning a character vector). It uses two exit handlers, one to clean up the temporary file, and one to remove the sink.
 
 \hypertarget{replacement-functions}{%
 \section*{6.8.4 Replacement functions}\label{replacement-functions}}
@@ -3478,7 +3547,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7f878ea769b0>
+## <bytecode: 0x7f809378ee90>
 ## <environment: namespace:base>
 \end{verbatim}
 
