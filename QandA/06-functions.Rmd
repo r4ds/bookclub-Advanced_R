@@ -244,6 +244,10 @@ h03 <- function(x) {
 ```
 :::
 
+:::TODO
+Explain what's happeining here below in words, and restructure the promise image to make more sense
+:::
+
 
 ```{r}
 double <- function(y) {
