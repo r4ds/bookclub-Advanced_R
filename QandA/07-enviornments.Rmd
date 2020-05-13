@@ -50,7 +50,7 @@ Let's go over some source code that uses `env_bind_lazy()` - Hadley mentions its
 XXX
 :::
 
-## 7.3.1.2 {-}
+## 7.3.1.2 Exercises {-}
 
 :::question
 I understood the recursion in the prior example, but what is inherits doing here? Can we go through this line for line and discuss what is happening in this function?
@@ -80,6 +80,10 @@ fget <- function(name, env = caller_env(), inherits = TRUE) {
 mean <- 10
 fget("mean", inherits = TRUE)
 ```
+:::
+
+:::TODO
+XXX
 :::
 
 ## 7.4.2 Function enviornment {-}
@@ -141,10 +145,15 @@ set_a <- function(value) {
 ```
 :::
 
+:::TODO
+XXX
+:::
+
 :::question
 The bullet point mentions hashmaps but I'm still really unclear on what that is. What are hash tables and are they related?
 :::
 
 :::TODO
+XXX
 :::
 

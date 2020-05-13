@@ -1,3 +1,20 @@
-In addition: Warning message:
-In body(x) == body(function(x) (x - min(x))/(max(x) - min(x))) :
+In addition: Warning messages:
+1: In sink() : no sink to remove
+2: In body(x) == body(function(x) (x - min(x))/(max(x) - min(x))) :
+  longer object length is not a multiple of shorter object length
+3: In body(x) == body(function(x) (x - min(x))/(max(x) - min(x))) :
+  longer object length is not a multiple of shorter object length
+4: In body(x) == body(function(x) (x - min(x))/(max(x) - min(x))) :
+  longer object length is not a multiple of shorter object length
+5: In body(x) == body(function(x) (x - min(x))/(max(x) - min(x))) :
+  longer object length is not a multiple of shorter object length
+6: In body(x) == body(function(x) (x - min(x))/(max(x) - min(x))) :
+  longer object length is not a multiple of shorter object length
+7: In body(x) == body(function(x) (x - min(x))/(max(x) - min(x))) :
+  longer object length is not a multiple of shorter object length
+8: In body(x) == body(function(x) (x - min(x))/(max(x) - min(x))) :
+  longer object length is not a multiple of shorter object length
+9: In body(x) == body(function(x) (x - min(x))/(max(x) - min(x))) :
+  longer object length is not a multiple of shorter object length
+10: In body(x) == body(function(x) (x - min(x))/(max(x) - min(x))) :
   longer object length is not a multiple of shorter object length

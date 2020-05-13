@@ -51,7 +51,7 @@ That said.... we could find the names of our functions if they are all in the gl
 names(which(sapply(mget(lsf.str()), function(x) body(x) == body(function(x) (x - min(x)) / (max(x) - min(x))))))
 ```
 
-But I don't think this scales when functions are outside of the global environment
+But I don't think this scales when functions are outside of the global environment..
 
 ```{r, eval=FALSE}
 e1 <- rlang::env(f1 = function(x) (x - min(x)) / (max(x) - min(x))) 
@@ -616,12 +616,8 @@ __[Q]{.Q}__: How does the `chdir` parameter of `source()` compare to `in_dir()`?
 ```
     
    __[A]{.started}__: `in_dir()` takes a path to a working directory as an argument. First the working directory is changed accordingly. `on.exit()` ensures that the modification to the working directory are reset to the initial value when the function exits.
-    
-   In `source()` the `chdir` argument specifies if the working directory should be changed during the evaluation of the `file` argument (which in this case has to be a path name). 
 
-:::TODO
-XXX
-:::
+`in_dir` gives you the flexibility to change the path to wherever you want (maybe a parent-level folder) whereas `source(chdir=TRUE)` changes the path to "where that file lives specifically". 
 
 ## 6.7.5.5 Exercise {-}
 
