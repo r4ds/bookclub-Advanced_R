@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-05-10" />
+<meta name="date" content="2020-05-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -365,11 +365,11 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <pre><code>## # A tibble: 5 x 1
 ##      x1
 ##   &lt;dbl&gt;
-## 1 0.499
-## 2 0.582
-## 3 0.869
-## 4 0.380
-## 5 0.209</code></pre>
+## 1 0.806
+## 2 0.340
+## 3 0.367
+## 4 0.362
+## 5 0.855</code></pre>
 </div>
 <div id="a-fresh-start" class="section level2 unnumbered">
 <h2>6.4.3 A fresh start</h2>
@@ -417,7 +417,7 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <a class="sourceLine" id="cb245-8" data-line-number="8">}</a>
 <a class="sourceLine" id="cb245-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb245-10" data-line-number="10"><span class="kw">mega_model</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))</a></code></pre></div>
-<pre><code>##  [1] 237 251 224 286 244 243 242 290 234 276</code></pre>
+<pre><code>##  [1] 281 291 255 252 211 242 259 258 247 213</code></pre>
 </div>
 <div id="promises" class="section level2 unnumbered">
 <h2>6.5.1 Promises</h2>
@@ -432,8 +432,6 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <a class="sourceLine" id="cb247-7" data-line-number="7">  <span class="kw">c</span>(x, x)</a>
 <a class="sourceLine" id="cb247-8" data-line-number="8">}</a></code></pre></div>
 </div>
-<div class="TODO">
-<p>Still need to work on explaining what’s happening here and what that would look like graphically:</p>
 <div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb248-1" data-line-number="1">double &lt;-<span class="st"> </span><span class="cf">function</span>(y) {</a>
 <a class="sourceLine" id="cb248-2" data-line-number="2">  <span class="kw">message</span>(<span class="st">&quot;Calculating...&quot;</span>)</a>
 <a class="sourceLine" id="cb248-3" data-line-number="3">  <span class="kw">cat</span>(<span class="st">&quot;double before</span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
@@ -509,7 +507,6 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 ## [1] 20 20</code></pre>
 <pre><code>## [1] 40 40</code></pre>
 <p><img src="images/promise.png" width="728" style="display: block; margin: auto;" /></p>
-</div>
 <div class="question">
 <div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb254-1" data-line-number="1">plop &lt;-<span class="st"> </span><span class="cf">function</span>(a, b) a <span class="op">*</span><span class="st"> </span><span class="dv">10</span></a>
 <a class="sourceLine" id="cb254-2" data-line-number="2"><span class="kw">plop</span>(<span class="dv">2</span>, var_doesnt_exist)</a></code></pre></div>
@@ -645,7 +642,7 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb287-1" data-line-number="1">hist</a></code></pre></div>
 <pre><code>## function (x, ...) 
 ## UseMethod(&quot;hist&quot;)
-## &lt;bytecode: 0x7f878b9b0bc8&gt;
+## &lt;bytecode: 0x7f80938c8180&gt;
 ## &lt;environment: namespace:graphics&gt;</code></pre>
 <p>does not give me the actual contents of the actual function….</p>
 </div>
@@ -662,7 +659,7 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <a class="sourceLine" id="cb290-4" data-line-number="4">)</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 </div>
-<p><code>list2</code> is most helpful when we need to force environment variables with ata variables. We can see this by crting a function that takes a variable number of arguments:</p>
+<p><code>list2</code> is most helpful when we need to force environment variables with data variables. We can see this by creating a function that takes a variable number of arguments:</p>
 <div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb292-1" data-line-number="1"><span class="kw">library</span>(rlang)</a>
 <a class="sourceLine" id="cb292-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb292-3" data-line-number="3">numeric_list &lt;-<span class="st"> </span><span class="cf">function</span>(...) {</a>
@@ -737,7 +734,7 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <p>The behavior of <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/getwd"><code>setwd</code></a> “changing the working directory” is actually a <strong>side effect</strong> of the function - it invisibly returns the previous working directory as the value of the function (potentially for the exact purpose demonstrated). We can use this within our <code>on.exit</code> function to change back to the prior working directory!</p>
 <div class="question">
 <p>If <code>on.exit</code> fails will it continue onto the next <code>on.exit</code> so long as <code>add == TRUE</code>
-?``on.exit fails it’ll caontinue onto the next one</p>
+?``on.exit fails it’ll continue onto the next one</p>
 </div>
 <div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb308-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
 <a class="sourceLine" id="cb308-2" data-line-number="2">  <span class="kw">on.exit</span>(<span class="kw">stop</span>(<span class="st">&quot;Error&quot;</span>))</a>
@@ -770,128 +767,179 @@ The <code>in_dir()</code> approach was given in the book as</p>
 <h2>6.7.5.5 Exercise</h2>
 <div class="question">
 <p>Can we go over the source code of <code>capture.output</code> and <code>capture.output2</code>?</p>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb311-1" data-line-number="1"><span class="kw">body</span>(capture.output)</a></code></pre></div>
-<pre><code>## {
-##     args &lt;- substitute(list(...))[-1L]
-##     type &lt;- match.arg(type)
-##     rval &lt;- NULL
-##     closeit &lt;- TRUE
-##     if (is.null(file)) 
-##         file &lt;- textConnection(&quot;rval&quot;, &quot;w&quot;, local = TRUE)
-##     else if (is.character(file)) 
-##         file &lt;- file(file, if (append) 
-##             &quot;a&quot;
-##         else &quot;w&quot;)
-##     else if (inherits(file, &quot;connection&quot;)) {
-##         if (!isOpen(file)) 
-##             open(file, if (append) 
-##                 &quot;a&quot;
-##             else &quot;w&quot;)
-##         else closeit &lt;- FALSE
-##     }
-##     else stop(&quot;&#39;file&#39; must be NULL, a character string or a connection&quot;)
-##     sink(file, type = type, split = split)
-##     on.exit({
-##         sink(type = type, split = split)
-##         if (closeit) close(file)
-##     })
-##     pf &lt;- parent.frame()
-##     evalVis &lt;- function(expr) withVisible(eval(expr, pf))
-##     for (i in seq_along(args)) {
-##         expr &lt;- args[[i]]
-##         tmp &lt;- switch(mode(expr), expression = lapply(expr, evalVis), 
-##             call = , name = list(evalVis(expr)), stop(&quot;bad argument&quot;))
-##         for (item in tmp) if (item$visible) 
-##             print(item$value)
-##     }
-##     on.exit()
-##     sink(type = type, split = split)
-##     if (closeit) 
-##         close(file)
-##     if (is.null(rval)) 
-##         invisible(NULL)
-##     else rval
-## }</code></pre>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb313-1" data-line-number="1">capture.output2 &lt;-<span class="st"> </span><span class="cf">function</span>(code) {</a>
-<a class="sourceLine" id="cb313-2" data-line-number="2">  temp &lt;-<span class="st"> </span><span class="kw">tempfile</span>()</a>
-<a class="sourceLine" id="cb313-3" data-line-number="3">  <span class="kw">on.exit</span>(<span class="kw">file.remove</span>(temp), <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb313-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb313-5" data-line-number="5">  <span class="kw">sink</span>(temp)</a>
-<a class="sourceLine" id="cb313-6" data-line-number="6">  <span class="kw">on.exit</span>(<span class="kw">sink</span>(), <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb313-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb313-8" data-line-number="8">  <span class="kw">force</span>(code)</a>
-<a class="sourceLine" id="cb313-9" data-line-number="9">  <span class="kw">readLines</span>(temp)</a>
-<a class="sourceLine" id="cb313-10" data-line-number="10">}</a></code></pre></div>
-<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb314-1" data-line-number="1"><span class="kw">identical</span>(</a>
-<a class="sourceLine" id="cb314-2" data-line-number="2">  <span class="kw">capture.output</span>(<span class="kw">cat</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)),</a>
-<a class="sourceLine" id="cb314-3" data-line-number="3">  <span class="kw">capture.output2</span>(<span class="kw">cat</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>))</a>
-<a class="sourceLine" id="cb314-4" data-line-number="4">)</a></code></pre></div>
-<pre><code>## [1] TRUE</code></pre>
-<p>The second function is more concise but what is it missing from the first? I’d like to go over the first one line by line.</p>
 </div>
-<div class="TODO">
-<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb316-1" data-line-number="1">capture_output &lt;-<span class="st"> </span><span class="cf">function</span>(..., <span class="dt">file =</span> <span class="ot">NULL</span>, append, <span class="dt">type =</span> <span class="st">&quot;output&quot;</span>, <span class="dt">split =</span> <span class="ot">FALSE</span>) {</a>
-<a class="sourceLine" id="cb316-2" data-line-number="2">  <span class="co"># create a list from the arguments</span></a>
-<a class="sourceLine" id="cb316-3" data-line-number="3">  <span class="co"># but how does c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;) become the args?</span></a>
-<a class="sourceLine" id="cb316-4" data-line-number="4">  args &lt;-<span class="st"> </span><span class="kw">substitute</span>(<span class="kw">list</span>(...))[<span class="op">-</span>1L]</a>
-<a class="sourceLine" id="cb316-5" data-line-number="5">  <span class="co"># get type based on table of canditate values</span></a>
-<a class="sourceLine" id="cb316-6" data-line-number="6">  <span class="co"># but this errors when I try to just run </span></a>
-<a class="sourceLine" id="cb316-7" data-line-number="7">  <span class="co"># type = &quot;output&quot; ?</span></a>
-<a class="sourceLine" id="cb316-8" data-line-number="8">  type &lt;-<span class="st"> </span><span class="kw">match.arg</span>(type)</a>
-<a class="sourceLine" id="cb316-9" data-line-number="9">  <span class="co"># Error in match.arg(type) : &#39;arg&#39; must be of length 1</span></a>
-<a class="sourceLine" id="cb316-10" data-line-number="10">  rval &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb316-11" data-line-number="11">  closeit &lt;-<span class="st"> </span><span class="ot">TRUE</span></a>
-<a class="sourceLine" id="cb316-12" data-line-number="12">  <span class="co"># we can save the output to a textConnection if no file is specified</span></a>
-<a class="sourceLine" id="cb316-13" data-line-number="13">  <span class="co"># but what is a textConnection?</span></a>
-<a class="sourceLine" id="cb316-14" data-line-number="14">  <span class="co"># otherwise the output is saved to a file (I think?)</span></a>
-<a class="sourceLine" id="cb316-15" data-line-number="15">  <span class="cf">if</span> (<span class="kw">is.null</span>(file)) </a>
-<a class="sourceLine" id="cb316-16" data-line-number="16">    <span class="co"># what is a text connection?</span></a>
-<a class="sourceLine" id="cb316-17" data-line-number="17">    <span class="co"># I know this returns a character vector but what is this function</span></a>
-<a class="sourceLine" id="cb316-18" data-line-number="18">    file &lt;-<span class="st"> </span><span class="kw">textConnection</span>(<span class="st">&quot;rval&quot;</span>, <span class="st">&quot;w&quot;</span>, <span class="dt">local =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb316-19" data-line-number="19">  <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">is.character</span>(file)) </a>
-<a class="sourceLine" id="cb316-20" data-line-number="20">    <span class="co"># what is a character file? What&#39;s happening here?</span></a>
-<a class="sourceLine" id="cb316-21" data-line-number="21">    file &lt;-<span class="st"> </span><span class="kw">file</span>(file, <span class="cf">if</span> (append)  <span class="st">&quot;a&quot;</span> <span class="cf">else</span> <span class="st">&quot;w&quot;</span>)</a>
-<a class="sourceLine" id="cb316-22" data-line-number="22">  <span class="co"># this is similar to the character file but what is the difference?</span></a>
-<a class="sourceLine" id="cb316-23" data-line-number="23">  <span class="co"># what does it mean to inherit &quot;connection&quot;</span></a>
-<a class="sourceLine" id="cb316-24" data-line-number="24">  <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">inherits</span>(file, <span class="st">&quot;connection&quot;</span>)) {</a>
-<a class="sourceLine" id="cb316-25" data-line-number="25">    <span class="cf">if</span> (<span class="op">!</span><span class="kw">isOpen</span>(file))</a>
-<a class="sourceLine" id="cb316-26" data-line-number="26">      <span class="kw">open</span>(file, <span class="cf">if</span> (append)  <span class="st">&quot;a&quot;</span> <span class="cf">else</span> <span class="st">&quot;w&quot;</span>)</a>
-<a class="sourceLine" id="cb316-27" data-line-number="27">    <span class="cf">else</span> closeit &lt;-<span class="st"> </span><span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb316-28" data-line-number="28">  }</a>
-<a class="sourceLine" id="cb316-29" data-line-number="29">  <span class="co"># what is sink?</span></a>
-<a class="sourceLine" id="cb316-30" data-line-number="30">  <span class="co"># is this what happened when you create a bad file extension to save your output?</span></a>
-<a class="sourceLine" id="cb316-31" data-line-number="31">  <span class="cf">else</span> <span class="kw">stop</span>(<span class="st">&quot;&#39;file&#39; must be NULL, a character string or a connection&quot;</span>)</a>
-<a class="sourceLine" id="cb316-32" data-line-number="32">  <span class="kw">sink</span>(file, <span class="dt">type =</span> type, <span class="dt">split =</span> split)</a>
-<a class="sourceLine" id="cb316-33" data-line-number="33">  <span class="co"># we&#39;re using on.exit here! </span></a>
-<a class="sourceLine" id="cb316-34" data-line-number="34">  <span class="co"># ...but what is it doing exactly?</span></a>
-<a class="sourceLine" id="cb316-35" data-line-number="35">  <span class="kw">on.exit</span>({</a>
-<a class="sourceLine" id="cb316-36" data-line-number="36">    <span class="kw">sink</span>(<span class="dt">type =</span> type, <span class="dt">split =</span> split)</a>
-<a class="sourceLine" id="cb316-37" data-line-number="37">    <span class="cf">if</span> (closeit) <span class="kw">close</span>(file)</a>
-<a class="sourceLine" id="cb316-38" data-line-number="38">  })</a>
-<a class="sourceLine" id="cb316-39" data-line-number="39">  <span class="co"># this is some environment term</span></a>
-<a class="sourceLine" id="cb316-40" data-line-number="40">  <span class="co"># maybe we can talk about this next week?</span></a>
-<a class="sourceLine" id="cb316-41" data-line-number="41">  pf &lt;-<span class="st"> </span><span class="kw">parent.frame</span>()</a>
-<a class="sourceLine" id="cb316-42" data-line-number="42">  <span class="co"># print value AND if visible or not </span></a>
-<a class="sourceLine" id="cb316-43" data-line-number="43">  evalVis &lt;-<span class="st"> </span><span class="cf">function</span>(expr) <span class="kw">withVisible</span>(<span class="kw">eval</span>(expr, pf))</a>
-<a class="sourceLine" id="cb316-44" data-line-number="44">  <span class="co"># THIS IS THE ACTUAL CAPTURE FUNCTION MEAT AND POTATOES!</span></a>
-<a class="sourceLine" id="cb316-45" data-line-number="45">  <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_along</span>(args)) {</a>
-<a class="sourceLine" id="cb316-46" data-line-number="46">    <span class="co"># I assume this should be for each &quot;a&quot; &quot;b&quot; &quot;c&quot;</span></a>
-<a class="sourceLine" id="cb316-47" data-line-number="47">    <span class="co"># but I&#39;m struggling to go one without it and being able to step through</span></a>
-<a class="sourceLine" id="cb316-48" data-line-number="48">    expr &lt;-<span class="st"> </span>args[[i]]</a>
-<a class="sourceLine" id="cb316-49" data-line-number="49">    tmp &lt;-<span class="st"> </span><span class="cf">switch</span>(<span class="kw">mode</span>(expr), <span class="dt">expression =</span> <span class="kw">lapply</span>(expr, evalVis), </a>
-<a class="sourceLine" id="cb316-50" data-line-number="50">                  <span class="dt">call =</span> , <span class="dt">name =</span> <span class="kw">list</span>(<span class="kw">evalVis</span>(expr)), <span class="kw">stop</span>(<span class="st">&quot;bad argument&quot;</span>))</a>
-<a class="sourceLine" id="cb316-51" data-line-number="51">    <span class="cf">for</span> (item <span class="cf">in</span> tmp) <span class="cf">if</span> (item<span class="op">$</span>visible) </a>
-<a class="sourceLine" id="cb316-52" data-line-number="52">      <span class="kw">print</span>(item<span class="op">$</span>value)</a>
-<a class="sourceLine" id="cb316-53" data-line-number="53">  }</a>
-<a class="sourceLine" id="cb316-54" data-line-number="54">  <span class="kw">on.exit</span>()</a>
-<a class="sourceLine" id="cb316-55" data-line-number="55">  <span class="kw">sink</span>(<span class="dt">type =</span> type, <span class="dt">split =</span> split)</a>
-<a class="sourceLine" id="cb316-56" data-line-number="56">  <span class="cf">if</span> (closeit) </a>
-<a class="sourceLine" id="cb316-57" data-line-number="57">    <span class="kw">close</span>(file)</a>
-<a class="sourceLine" id="cb316-58" data-line-number="58">  <span class="cf">if</span> (<span class="kw">is.null</span>(rval)) </a>
-<a class="sourceLine" id="cb316-59" data-line-number="59">    <span class="kw">invisible</span>(<span class="ot">NULL</span>)</a>
-<a class="sourceLine" id="cb316-60" data-line-number="60">  <span class="cf">else</span> rval</a>
-<a class="sourceLine" id="cb316-61" data-line-number="61">}</a></code></pre></div>
-</div>
+<p>There were several new terms here to me when going over this function:</p>
+<ul>
+<li><code>stderr</code> error output</li>
+<li><code>stdout</code> normal output</li>
+</ul>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb311-1" data-line-number="1"><span class="co">#!/usr/bin/env Rscript</span></a>
+<a class="sourceLine" id="cb311-2" data-line-number="2"><span class="co"># redirect.r -- experiments with warning and error messages</span></a>
+<a class="sourceLine" id="cb311-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb311-4" data-line-number="4"><span class="co"># Get any arguments (and ignore them)</span></a>
+<a class="sourceLine" id="cb311-5" data-line-number="5">arguments &lt;-<span class="st"> </span><span class="kw">commandArgs</span>(<span class="dt">trailingOnly=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb311-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb311-7" data-line-number="7"><span class="co"># Default</span></a>
+<a class="sourceLine" id="cb311-8" data-line-number="8"><span class="kw">write</span>(<span class="st">&quot;1) write() to stderr&quot;</span>, <span class="kw">stderr</span>())</a>
+<a class="sourceLine" id="cb311-9" data-line-number="9"><span class="kw">write</span>(<span class="st">&quot;1) write() to stdout&quot;</span>, <span class="kw">stdout</span>())</a>
+<a class="sourceLine" id="cb311-10" data-line-number="10"><span class="kw">warning</span>(<span class="st">&quot;1) warning()&quot;</span>)</a>
+<a class="sourceLine" id="cb311-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb311-12" data-line-number="12"><span class="co"># Ignore all warnings</span></a>
+<a class="sourceLine" id="cb311-13" data-line-number="13"><span class="kw">options</span>(<span class="dt">warn =</span> <span class="dv">-1</span>)</a>
+<a class="sourceLine" id="cb311-14" data-line-number="14"><span class="kw">write</span>(<span class="st">&quot;2) write() to stderr&quot;</span>, <span class="kw">stderr</span>())</a>
+<a class="sourceLine" id="cb311-15" data-line-number="15"><span class="kw">write</span>(<span class="st">&quot;2) write() to stdout&quot;</span>, <span class="kw">stdout</span>())</a>
+<a class="sourceLine" id="cb311-16" data-line-number="16"><span class="kw">warning</span>(<span class="st">&quot;2) warning()&quot;</span>)</a>
+<a class="sourceLine" id="cb311-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb311-18" data-line-number="18"><span class="co"># Send all STDERR to STDOUT using sink()</span></a>
+<a class="sourceLine" id="cb311-19" data-line-number="19"><span class="kw">options</span>(<span class="dt">warn =</span> <span class="dv">0</span>) <span class="co"># default setting</span></a>
+<a class="sourceLine" id="cb311-20" data-line-number="20"><span class="kw">sink</span>(<span class="kw">stdout</span>(), <span class="dt">type=</span><span class="st">&quot;message&quot;</span>)</a>
+<a class="sourceLine" id="cb311-21" data-line-number="21"><span class="kw">write</span>(<span class="st">&quot;3) write() to stderr&quot;</span>, <span class="kw">stderr</span>())</a>
+<a class="sourceLine" id="cb311-22" data-line-number="22"><span class="kw">write</span>(<span class="st">&quot;3) write() to stdout&quot;</span>, <span class="kw">stdout</span>())</a>
+<a class="sourceLine" id="cb311-23" data-line-number="23"><span class="kw">warning</span>(<span class="st">&quot;3) warning()&quot;</span>)</a>
+<a class="sourceLine" id="cb311-24" data-line-number="24"></a>
+<a class="sourceLine" id="cb311-25" data-line-number="25"><span class="co"># Send all STDOUT to STDERR using sink()</span></a>
+<a class="sourceLine" id="cb311-26" data-line-number="26"><span class="kw">sink</span>(<span class="ot">NULL</span>, <span class="dt">type=</span><span class="st">&quot;message&quot;</span>) <span class="co"># default setting</span></a>
+<a class="sourceLine" id="cb311-27" data-line-number="27"><span class="kw">sink</span>(<span class="kw">stderr</span>(), <span class="dt">type=</span><span class="st">&quot;output&quot;</span>)</a>
+<a class="sourceLine" id="cb311-28" data-line-number="28"><span class="kw">write</span>(<span class="st">&quot;4) write() to stderr&quot;</span>, <span class="kw">stderr</span>())</a>
+<a class="sourceLine" id="cb311-29" data-line-number="29"><span class="kw">write</span>(<span class="st">&quot;4) write() to stdout&quot;</span>, <span class="kw">stdout</span>())</a>
+<a class="sourceLine" id="cb311-30" data-line-number="30"><span class="kw">warning</span>(<span class="st">&quot;4) warning()&quot;</span>)</a>
+<a class="sourceLine" id="cb311-31" data-line-number="31"></a>
+<a class="sourceLine" id="cb311-32" data-line-number="32"><span class="co"># Send messages and output to separate files</span></a>
+<a class="sourceLine" id="cb311-33" data-line-number="33">msg &lt;-<span class="st"> </span><span class="kw">file</span>(<span class="st">&quot;message.Rout&quot;</span>, <span class="dt">open=</span><span class="st">&quot;wt&quot;</span>)</a>
+<a class="sourceLine" id="cb311-34" data-line-number="34">out &lt;-<span class="st"> </span><span class="kw">file</span>(<span class="st">&quot;output.Rout&quot;</span>, <span class="dt">open=</span><span class="st">&quot;wt&quot;</span>)</a>
+<a class="sourceLine" id="cb311-35" data-line-number="35"><span class="kw">sink</span>(msg, <span class="dt">type=</span><span class="st">&quot;message&quot;</span>)</a>
+<a class="sourceLine" id="cb311-36" data-line-number="36"><span class="kw">sink</span>(out, <span class="dt">type=</span><span class="st">&quot;output&quot;</span>)</a>
+<a class="sourceLine" id="cb311-37" data-line-number="37"><span class="kw">write</span>(<span class="st">&quot;5) write() to stderr&quot;</span>, <span class="kw">stderr</span>())</a>
+<a class="sourceLine" id="cb311-38" data-line-number="38"><span class="kw">write</span>(<span class="st">&quot;5) write() to stdout&quot;</span>, <span class="kw">stdout</span>())</a>
+<a class="sourceLine" id="cb311-39" data-line-number="39"><span class="kw">warning</span>(<span class="st">&quot;5) warning()&quot;</span>)</a></code></pre></div>
+<ul>
+<li><code>sink</code> diverts R output to a connection.</li>
+</ul>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb312-1" data-line-number="1">zz &lt;-<span class="st"> </span><span class="kw">file</span>(<span class="st">&quot;all.Rout&quot;</span>, <span class="dt">open =</span> <span class="st">&quot;wt&quot;</span>)</a>
+<a class="sourceLine" id="cb312-2" data-line-number="2"><span class="kw">sink</span>(zz)</a>
+<a class="sourceLine" id="cb312-3" data-line-number="3"><span class="kw">sink</span>(zz, <span class="dt">type =</span> <span class="st">&quot;message&quot;</span>)</a>
+<a class="sourceLine" id="cb312-4" data-line-number="4"><span class="kw">try</span>(<span class="kw">log</span>(<span class="st">&quot;a&quot;</span>))</a></code></pre></div>
+<pre><code>## Error in log(&quot;a&quot;) : non-numeric argument to mathematical function</code></pre>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb314-1" data-line-number="1"><span class="co">## revert output back to the console -- only then access the file!</span></a>
+<a class="sourceLine" id="cb314-2" data-line-number="2"><span class="kw">sink</span>(<span class="dt">type =</span> <span class="st">&quot;message&quot;</span>)</a>
+<a class="sourceLine" id="cb314-3" data-line-number="3"><span class="kw">sink</span>()</a>
+<a class="sourceLine" id="cb314-4" data-line-number="4"><span class="kw">file.show</span>(<span class="st">&quot;all.Rout&quot;</span>)</a></code></pre></div>
+<ul>
+<li><code>textConnection</code> allows R character vectors to be read as if they were being read from a text file.
+<ul>
+<li>They can capture R output to a character vector</li>
+<li>They can be used to create a new character object or append to an existing one in the user’s workspace.</li>
+<li>At all times the complete lines output to the connection are available in the R object. Closing the connection writes any remaining output to a final element of the character vector.</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb315-1" data-line-number="1"><span class="cf">function</span> (..., <span class="dt">file =</span> <span class="ot">NULL</span>, <span class="dt">append =</span> <span class="ot">FALSE</span>, <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;output&quot;</span>,</a>
+<a class="sourceLine" id="cb315-2" data-line-number="2">                                                    <span class="st">&quot;message&quot;</span>), <span class="dt">split =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb315-3" data-line-number="3">{</a>
+<a class="sourceLine" id="cb315-4" data-line-number="4">  <span class="co"># Capture dots</span></a>
+<a class="sourceLine" id="cb315-5" data-line-number="5">  <span class="co"># [-1L] removes the list()</span></a>
+<a class="sourceLine" id="cb315-6" data-line-number="6">  args &lt;-<span class="st"> </span><span class="kw">substitute</span>(<span class="kw">list</span>(<span class="kw">cat</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)))[<span class="op">-</span>1L]</a>
+<a class="sourceLine" id="cb315-7" data-line-number="7">  </a>
+<a class="sourceLine" id="cb315-8" data-line-number="8">  <span class="co"># match</span></a>
+<a class="sourceLine" id="cb315-9" data-line-number="9">  type &lt;-<span class="st"> </span><span class="kw">match.arg</span>(type)</a>
+<a class="sourceLine" id="cb315-10" data-line-number="10">  <span class="co"># set default return value</span></a>
+<a class="sourceLine" id="cb315-11" data-line-number="11">  rval &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb315-12" data-line-number="12">  <span class="co"># set default closer</span></a>
+<a class="sourceLine" id="cb315-13" data-line-number="13">  closeit &lt;-<span class="st"> </span><span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb315-14" data-line-number="14">  <span class="co"># if file is null, then</span></a>
+<a class="sourceLine" id="cb315-15" data-line-number="15">  <span class="cf">if</span> (<span class="kw">is.null</span>(file))</a>
+<a class="sourceLine" id="cb315-16" data-line-number="16">    <span class="co"># If file is null, then create a write-only text connection object which will</span></a>
+<a class="sourceLine" id="cb315-17" data-line-number="17">    <span class="co"># save to the variable rval in the execution environment (local = TRUE).</span></a>
+<a class="sourceLine" id="cb315-18" data-line-number="18">    <span class="co"># see https://biostatmatt.com/R/R-conn-ints.pdf for gritty info on connections (and sinks)</span></a>
+<a class="sourceLine" id="cb315-19" data-line-number="19">    file &lt;-<span class="st"> </span><span class="kw">textConnection</span>(<span class="st">&quot;rval&quot;</span>, <span class="st">&quot;w&quot;</span>, <span class="dt">local =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb315-20" data-line-number="20">  <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">is.character</span>(file))</a>
+<a class="sourceLine" id="cb315-21" data-line-number="21">    <span class="co"># if &quot;file&quot; is a character vector, then interpret it as a filename.  Open a</span></a>
+<a class="sourceLine" id="cb315-22" data-line-number="22">    <span class="co"># file connection in either append or write mode, depending on the value of</span></a>
+<a class="sourceLine" id="cb315-23" data-line-number="23">    <span class="co"># &quot;append&quot;</span></a>
+<a class="sourceLine" id="cb315-24" data-line-number="24">    file &lt;-<span class="st"> </span><span class="kw">file</span>(file, <span class="cf">if</span> (append)</a>
+<a class="sourceLine" id="cb315-25" data-line-number="25">      <span class="st">&quot;a&quot;</span></a>
+<a class="sourceLine" id="cb315-26" data-line-number="26">      <span class="cf">else</span> <span class="st">&quot;w&quot;</span>)</a>
+<a class="sourceLine" id="cb315-27" data-line-number="27">  <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">inherits</span>(file, <span class="st">&quot;connection&quot;</span>)) {</a>
+<a class="sourceLine" id="cb315-28" data-line-number="28">    <span class="co"># if &quot;file&quot; is already a connection object, check if it is open.  If not, open it</span></a>
+<a class="sourceLine" id="cb315-29" data-line-number="29">    <span class="co"># in append mode, if specified, otherwise in write mode.</span></a>
+<a class="sourceLine" id="cb315-30" data-line-number="30">    <span class="co"># inherits refers to the S3 class system.</span></a>
+<a class="sourceLine" id="cb315-31" data-line-number="31">    <span class="co">#</span></a>
+<a class="sourceLine" id="cb315-32" data-line-number="32">    <span class="co"># Browse[2]&gt; class(file)</span></a>
+<a class="sourceLine" id="cb315-33" data-line-number="33">    <span class="co"># [1] &quot;textConnection&quot; &quot;connection&quot;</span></a>
+<a class="sourceLine" id="cb315-34" data-line-number="34">    <span class="cf">if</span> (<span class="op">!</span><span class="kw">isOpen</span>(file))</a>
+<a class="sourceLine" id="cb315-35" data-line-number="35">      <span class="kw">open</span>(file, <span class="cf">if</span> (append)</a>
+<a class="sourceLine" id="cb315-36" data-line-number="36">        <span class="st">&quot;a&quot;</span></a>
+<a class="sourceLine" id="cb315-37" data-line-number="37">        <span class="cf">else</span> <span class="st">&quot;w&quot;</span>)</a>
+<a class="sourceLine" id="cb315-38" data-line-number="38">    <span class="co"># if the connection is already open, don&#39;t close it in this function.</span></a>
+<a class="sourceLine" id="cb315-39" data-line-number="39">    <span class="cf">else</span> closeit &lt;-<span class="st"> </span><span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb315-40" data-line-number="40">  }</a>
+<a class="sourceLine" id="cb315-41" data-line-number="41">  <span class="co"># if you get here, then you misspecified &quot;file&quot;</span></a>
+<a class="sourceLine" id="cb315-42" data-line-number="42">  <span class="cf">else</span> <span class="kw">stop</span>(<span class="st">&quot;&#39;file&#39; must be NULL, a character string or a connection&quot;</span>)</a>
+<a class="sourceLine" id="cb315-43" data-line-number="43">  <span class="co"># sink all output of type &quot;type&quot; into the connection &quot;file&quot;.  If you would like</span></a>
+<a class="sourceLine" id="cb315-44" data-line-number="44">  <span class="co"># the output to continue to its original source, then &quot;split&quot; it.</span></a>
+<a class="sourceLine" id="cb315-45" data-line-number="45">  <span class="co">#</span></a>
+<a class="sourceLine" id="cb315-46" data-line-number="46">  <span class="co"># by default, messages (messages, warnings, errors) go to stderr and</span></a>
+<a class="sourceLine" id="cb315-47" data-line-number="47">  <span class="co"># everything else to stdout.</span></a>
+<a class="sourceLine" id="cb315-48" data-line-number="48">  <span class="kw">sink</span>(file, <span class="dt">type =</span> type, <span class="dt">split =</span> split)</a>
+<a class="sourceLine" id="cb315-49" data-line-number="49">  <span class="kw">on.exit</span>({</a>
+<a class="sourceLine" id="cb315-50" data-line-number="50">    <span class="co"># on exit, call sink with the same arguments and without &quot;file&quot; being specified.</span></a>
+<a class="sourceLine" id="cb315-51" data-line-number="51">    <span class="co"># this will cause the sink from the line before to terminate.</span></a>
+<a class="sourceLine" id="cb315-52" data-line-number="52">    <span class="kw">sink</span>(<span class="dt">type =</span> type, <span class="dt">split =</span> split)</a>
+<a class="sourceLine" id="cb315-53" data-line-number="53">    <span class="co"># Close the connection (always, unless &quot;file&quot; was provided as</span></a>
+<a class="sourceLine" id="cb315-54" data-line-number="54">    <span class="co"># an already open connection)</span></a>
+<a class="sourceLine" id="cb315-55" data-line-number="55">    <span class="cf">if</span> (closeit) <span class="kw">close</span>(file)</a>
+<a class="sourceLine" id="cb315-56" data-line-number="56">  })</a>
+<a class="sourceLine" id="cb315-57" data-line-number="57">  <span class="co"># store the calling environment in pf.  i.e. pf refers to the environment in</span></a>
+<a class="sourceLine" id="cb315-58" data-line-number="58">  <span class="co"># which capture.output was called.</span></a>
+<a class="sourceLine" id="cb315-59" data-line-number="59">  pf &lt;-<span class="st"> </span><span class="kw">parent.frame</span>()</a>
+<a class="sourceLine" id="cb315-60" data-line-number="60">  <span class="co"># define a local function which will evaluate its sole argument (expr) in the</span></a>
+<a class="sourceLine" id="cb315-61" data-line-number="61">  <span class="co"># parent frame.</span></a>
+<a class="sourceLine" id="cb315-62" data-line-number="62">  evalVis &lt;-<span class="st"> </span><span class="cf">function</span>(expr) <span class="kw">withVisible</span>(<span class="kw">eval</span>(expr, pf))</a>
+<a class="sourceLine" id="cb315-63" data-line-number="63">  <span class="co"># for each argument collected in the dot dot dot.</span></a>
+<a class="sourceLine" id="cb315-64" data-line-number="64">  <span class="co">#</span></a>
+<a class="sourceLine" id="cb315-65" data-line-number="65">  <span class="co"># use split = TRUE to help you debug at this point.  When you try to poke around</span></a>
+<a class="sourceLine" id="cb315-66" data-line-number="66">  <span class="co"># with the sink applied, you are rightfully stymied because all output is going</span></a>
+<a class="sourceLine" id="cb315-67" data-line-number="67">  <span class="co"># to the sink connection!</span></a>
+<a class="sourceLine" id="cb315-68" data-line-number="68">  <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_along</span>(args)) {</a>
+<a class="sourceLine" id="cb315-69" data-line-number="69">    <span class="co"># store the argument in expr</span></a>
+<a class="sourceLine" id="cb315-70" data-line-number="70">    expr &lt;-<span class="st"> </span>args[[i]]</a>
+<a class="sourceLine" id="cb315-71" data-line-number="71">    <span class="co"># based on the mode of the expr, evaluate it.</span></a>
+<a class="sourceLine" id="cb315-72" data-line-number="72">    tmp &lt;-<span class="st"> </span><span class="cf">switch</span>(<span class="kw">mode</span>(expr),</a>
+<a class="sourceLine" id="cb315-73" data-line-number="73">                  <span class="dt">expression =</span> <span class="kw">lapply</span>(expr, evalVis),</a>
+<a class="sourceLine" id="cb315-74" data-line-number="74">                  <span class="dt">call =</span> ,</a>
+<a class="sourceLine" id="cb315-75" data-line-number="75">                  <span class="dt">name =</span> <span class="kw">list</span>(<span class="kw">evalVis</span>(expr)),</a>
+<a class="sourceLine" id="cb315-76" data-line-number="76">                  <span class="kw">stop</span>(<span class="st">&quot;bad argument&quot;</span>))</a>
+<a class="sourceLine" id="cb315-77" data-line-number="77">    <span class="co"># print any visible values output during evaluation.</span></a>
+<a class="sourceLine" id="cb315-78" data-line-number="78">    <span class="co"># This print will be collected by the sink we set up earlier and saved to</span></a>
+<a class="sourceLine" id="cb315-79" data-line-number="79">    <span class="co"># the file connection.</span></a>
+<a class="sourceLine" id="cb315-80" data-line-number="80">    <span class="cf">for</span> (item <span class="cf">in</span> tmp) <span class="cf">if</span> (item<span class="op">$</span>visible)</a>
+<a class="sourceLine" id="cb315-81" data-line-number="81">      <span class="kw">print</span>(item<span class="op">$</span>value)</a>
+<a class="sourceLine" id="cb315-82" data-line-number="82">  }</a>
+<a class="sourceLine" id="cb315-83" data-line-number="83">  <span class="co"># calling on.exit with no arguments will clear the exit handler.</span></a>
+<a class="sourceLine" id="cb315-84" data-line-number="84">  <span class="co"># we are doing this because the on.exit was designed to safeguard the sink</span></a>
+<a class="sourceLine" id="cb315-85" data-line-number="85">  <span class="co"># and files being closed in the case of an exception when evaluating the</span></a>
+<a class="sourceLine" id="cb315-86" data-line-number="86">  <span class="co"># passed in arguments.</span></a>
+<a class="sourceLine" id="cb315-87" data-line-number="87">  <span class="kw">on.exit</span>()</a>
+<a class="sourceLine" id="cb315-88" data-line-number="88">  <span class="co"># undo the sink</span></a>
+<a class="sourceLine" id="cb315-89" data-line-number="89">  <span class="kw">sink</span>(<span class="dt">type =</span> type, <span class="dt">split =</span> split)</a>
+<a class="sourceLine" id="cb315-90" data-line-number="90">  <span class="co"># close the file if necessary</span></a>
+<a class="sourceLine" id="cb315-91" data-line-number="91">  <span class="cf">if</span> (closeit)</a>
+<a class="sourceLine" id="cb315-92" data-line-number="92">    <span class="kw">close</span>(file)</a>
+<a class="sourceLine" id="cb315-93" data-line-number="93">  <span class="co"># return the captured output or null invisibly otherwise.</span></a>
+<a class="sourceLine" id="cb315-94" data-line-number="94">  <span class="cf">if</span> (<span class="kw">is.null</span>(rval))</a>
+<a class="sourceLine" id="cb315-95" data-line-number="95">    <span class="kw">invisible</span>(<span class="ot">NULL</span>)</a>
+<a class="sourceLine" id="cb315-96" data-line-number="96">  <span class="cf">else</span> rval</a>
+<a class="sourceLine" id="cb315-97" data-line-number="97">}</a></code></pre></div>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb316-1" data-line-number="1">capture.output2 &lt;-<span class="st"> </span><span class="cf">function</span>(code) {</a>
+<a class="sourceLine" id="cb316-2" data-line-number="2">  temp &lt;-<span class="st"> </span><span class="kw">tempfile</span>()</a>
+<a class="sourceLine" id="cb316-3" data-line-number="3">  <span class="kw">on.exit</span>(<span class="kw">file.remove</span>(temp), <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb316-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb316-5" data-line-number="5">  <span class="kw">sink</span>(temp)</a>
+<a class="sourceLine" id="cb316-6" data-line-number="6">  <span class="kw">on.exit</span>(<span class="kw">sink</span>(), <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb316-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb316-8" data-line-number="8">  <span class="kw">force</span>(code)</a>
+<a class="sourceLine" id="cb316-9" data-line-number="9">  <span class="kw">readLines</span>(temp)</a>
+<a class="sourceLine" id="cb316-10" data-line-number="10">}</a></code></pre></div>
+<p>The second function will always sink output to a temporary file, and then return the results by reading the file back in (and returning a character vector). It uses two exit handlers, one to clean up the temporary file, and one to remove the sink.</p>
 </div>
 <div id="replacement-functions" class="section level2 unnumbered">
 <h2>6.8.4 Replacement functions</h2>
