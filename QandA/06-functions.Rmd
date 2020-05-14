@@ -45,18 +45,19 @@ val
 
 There isn't a 1 to 1 mapping between functions and names in R. Multiple names may point to the same function as we see for `f1`, `f2`, and `f3`. Also, each function has its own environment so it's possible that two functions might have the same "code" but are not the same because they have different environments (or closures). Lastly, anonymous functions don't have names so we'd have no way to look these up. 
 
-That said.... we could find the names of our functions if they are all in the global environment:
+We could find the names of our functions if they are all in the global environment using `body(x) == body(y)`
 
-```{r, warning=FALSE}
+```{r, eval=FALSE}
 names(which(sapply(mget(lsf.str()), function(x) body(x) == body(function(x) (x - min(x)) / (max(x) - min(x))))))
 ```
 
-But I don't think this scales when functions are outside of the global environment..
-
-```{r, eval=FALSE}
-e1 <- rlang::env(f1 = function(x) (x - min(x)) / (max(x) - min(x))) 
-e2 <- rlang::env(f2 = function(x) (x - min(x)) / (max(x) - min(x)))
 ```
+[1] f1  f2  f3
+```
+
+But that's just deparsing the body into a string and comparing the values. So if you want to think of two functions as being equal if their deparsed body strings as the same, then that's technically possible but that is just like searching for every variable that has the value of 5 [possible but not efficient].
+
+The main point is that `name -> object` is a one way (non-unique) look up in R. There's no efficient way to go backwards. This is true for all values, not just functions.
 
 
 ## 6.3 Function composition {-}
@@ -603,8 +604,8 @@ yay, still called.
 [This question is flagged as "started" let's try to complete it!](https://github.com/Tazinho/Advanced-R-Solutions/blob/5043d9b06c7469a010c568ecb85e12bedca75207/2-06-Functions.Rmd#L350) Hadley comments in the repo: "I think I'm more interested in supplying a path vs. a logical value here".
 :::
 
-__[Q]{.Q}__: How does the `chdir` parameter of `source()` compare to `in_dir()`? Why might you prefer one approach to the other?
-   The `in_dir()` approach was given in the book as
+__[Q]{.Q}__: How does the `chdir` parameter of `source()` compare to `with_dir()`? Why might you prefer one approach to the other?
+   The `with_dir()` approach was given in the book as
        
 ```{r, eval = FALSE}
     in_dir <- function(dir, code) {
@@ -615,9 +616,37 @@ __[Q]{.Q}__: How does the `chdir` parameter of `source()` compare to `in_dir()`?
     }
 ```
     
-   __[A]{.started}__: `in_dir()` takes a path to a working directory as an argument. First the working directory is changed accordingly. `on.exit()` ensures that the modification to the working directory are reset to the initial value when the function exits.
+   __[A]{.started}__: `with_dir()` takes a path to a working directory as an argument. First the working directory is changed accordingly. `on.exit()` ensures that the modification to the working directory are reset to the initial value when the function exits.
 
-`in_dir` gives you the flexibility to change the path to wherever you want (maybe a parent-level folder) whereas `source(chdir=TRUE)` changes the path to "where that file lives specifically". 
+`with_dir` gives you the flexibility to change the path to wherever you want (maybe a parent-level folder) whereas `source(chdir=TRUE)` changes the path to "where that file lives specifically". 
+
+Given the following file structure:
+
+```{r, echo=FALSE, fig.align='center'}
+knitr::include_graphics("images/filetree.png")
+```
+
+
+Imagine I want to run `import_data.R`, but it needs to reference `images/controlflow.png`. we can do this by setting the `wd` to `advRbookclub`:
+
+```{r, eval=FALSE}
+with_dir("/advRbookclub/data/import_data.R","/advRbookclub")
+```
+
+Or we can use:
+
+```{r, eval=FALSE}
+source("/advRbookclub/data/import_data.R", chdir=TRUE)
+```
+
+but then, we'd need to include something like `setwd(here::here())` in `import_data.R` so that it goes back to `AdvancedR.Rproj` and sets the working directory there. 
+
+In conclusion: 
+
+- `source` is a base R function so reduces dependencies. Once set, you could use `setwd("..")`assuming you can have some confidence that it's part of a repository or something?
+
+- `with_dir` is exported from the `withr` package but is a more fine-tuned control by passing the specific folder name as opposed to a boolean `TRUE` | `FALSE`. 
+
 
 ## 6.7.5.5 Exercise {-}
 
@@ -848,18 +877,32 @@ __[Q]{.Q}__: Explain why the following code fails:
     #> Error: target of assignment expands to non-language object
     ```
     
-   __[A]{.started}__: First, let's define `x` and recall the definition of `modify()` from the textbook:
-    
-    ```{r}
+__[A]{.started}__: First, let's define `x` and recall the definition of `modify()` from the textbook:
+   
+```{r}
     x <- 1:3
     
     `modify<-` <- function(x, position, value) {
       x[position] <- value
       x
     }
-    ```
+```
 
+R internally transforms the code and the transformed code reproduces the error above.
+    
+```{r, eval = FALSE}
+get("x") <- `modify<-`(get("x"), 1, 10)
+#> Error in get("x") <- `modify<-`(get("x"), 1, 10) : 
+#> target of assignment expands to non-language object
+```
+    
+The error occurs during the assignment, because no corresponding replacement function, i.e. `get<-` exists for `get()`. To confirm this we can reproduce the error via the following simple example.
+    
+```{r, eval = FALSE}
+get("x") <- 2
+#> Error in get("x") <- 2 : target of assignment expands to non-language object
+```
 
 :::TODO
-XXX
+I don't really see why this needs to be expanded upon....
 :::
