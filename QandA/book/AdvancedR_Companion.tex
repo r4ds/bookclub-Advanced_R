@@ -119,7 +119,7 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-05-12}
+\date{2020-05-13}
 
 \begin{document}
 \maketitle
@@ -313,7 +313,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809ad1be70"
+## [1] "0x7fc14f1d8d58"
 \end{verbatim}
 
 \begin{Shaded}
@@ -323,7 +323,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809ad1be70"
+## [1] "0x7fc14f1d8d58"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -335,7 +335,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809a92c040"
+## [1] "0x7fc1522e49c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -345,8 +345,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7f80977d3c90] <list> 
-## └─[2:0x7f809ad1be70] <dbl>
+## █ [1:0x7fc14f685538] <list> 
+## └─[2:0x7fc14f1d8d58] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -356,7 +356,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f80976da830"
+## [1] "0x7fc14f7610a8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -393,7 +393,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7f809c4a9838>"
+## [1] "<0x7fc151166d68>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -403,7 +403,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7f809c4a9838>
+## <0x7fc151166d68>
 \end{verbatim}
 
 \begin{Shaded}
@@ -413,7 +413,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809c4a9838"
+## [1] "0x7fc151166d68"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -462,7 +462,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809a5803c8"
+## [1] "0x7fc156785b48"
 \end{verbatim}
 
 \begin{Shaded}
@@ -472,7 +472,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7f809a5803c8>"
+## [1] "<0x7fc156785b48>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -482,7 +482,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7f809a5803c8 -> 0x7f809a55ccc8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fc156785b48 -> 0x7fc1523d2408]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -578,7 +578,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809a533688"
+## [1] "0x7fc152cdb208"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -591,7 +591,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809c0c4128"
+## [1] "0x7fc151165af8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -614,7 +614,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809c0c4128"
+## [1] "0x7fc151165af8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -624,7 +624,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809c0c4128"
+## [1] "0x7fc151165af8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -647,7 +647,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809c0c4128"
+## [1] "0x7fc151165af8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -657,7 +657,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f809abcfcc8"
+## [1] "0x7fc14ea3a308"
 \end{verbatim}
 
 \begin{Shaded}
@@ -680,7 +680,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f80975288d8"
+## [1] "0x7fc150026318"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2297,7 +2297,23 @@ We can use RCPP!
 \end{Shaded}
 \end{enumerate}
 
-XXX
+There isn't a 1 to 1 mapping between functions and names in R. Multiple names may point to the same function as we see for \texttt{f1}, \texttt{f2}, and \texttt{f3}. Also, each function has its own environment so it's possible that two functions might have the same ``code'' but are not the same because they have different environments (or closures). Lastly, anonymous functions don't have names so we'd have no way to look these up.
+
+We could find the names of our functions if they are all in the global environment using \texttt{body(x)\ ==\ body(y)}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{names}\NormalTok{(}\KeywordTok{which}\NormalTok{(}\KeywordTok{sapply}\NormalTok{(}\KeywordTok{mget}\NormalTok{(}\KeywordTok{lsf.str}\NormalTok{()), }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{body}\NormalTok{(x) }\OperatorTok{==}\StringTok{ }\KeywordTok{body}\NormalTok{(}\ControlFlowTok{function}\NormalTok{(x) (x }\OperatorTok{-}\StringTok{ }\KeywordTok{min}\NormalTok{(x)) }\OperatorTok{/}\StringTok{ }\NormalTok{(}\KeywordTok{max}\NormalTok{(x) }\OperatorTok{-}\StringTok{ }\KeywordTok{min}\NormalTok{(x))))))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] f1  f2  f3
+\end{verbatim}
+
+But that's just deparsing the body into a string and comparing the values. So if you want to think of two functions as being equal if their deparsed body strings as the same, then that's technically possible but that is just like searching for every variable that has the value of 5 {[}possible but not efficient{]}.
+
+The main point is that \texttt{name\ -\textgreater{}\ object} is a one way (non-unique) look up in R. There's no efficient way to go backwards. This is true for all values, not just functions.
 
 \hypertarget{function-composition}{%
 \section*{6.3 Function composition}\label{function-composition}}
@@ -2459,13 +2475,13 @@ This will work:
 
 \begin{verbatim}
 ## # A tibble: 5 x 1
-##      x1
-##   <dbl>
-## 1 0.763
-## 2 0.796
-## 3 0.166
-## 4 0.939
-## 5 0.988
+##       x1
+##    <dbl>
+## 1 0.128 
+## 2 0.330 
+## 3 0.470 
+## 4 0.0452
+## 5 0.0630
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2539,7 +2555,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 260 217 247 271 204 287 288 256 294 292
+##  [1] 237 272 289 262 250 241 297 294 240 234
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -2560,6 +2576,8 @@ Can we discuss the order that this happening in? Is it that \texttt{Calculating.
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
+
+Explain what's happeining here below in words, and restructure the promise image to make more sense
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2928,7 +2946,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7f80938c8180>
+## <bytecode: 0x7fc1488d5b80>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3126,8 +3144,8 @@ yay, still called.
 
 \href{https://github.com/Tazinho/Advanced-R-Solutions/blob/5043d9b06c7469a010c568ecb85e12bedca75207/2-06-Functions.Rmd\#L350}{This question is flagged as ``started'' let's try to complete it!} Hadley comments in the repo: ``I think I'm more interested in supplying a path vs.~a logical value here''.
 
-\textbf{{Q}}: How does the \texttt{chdir} parameter of \texttt{source()} compare to \texttt{in\_dir()}? Why might you prefer one approach to the other?
-The \texttt{in\_dir()} approach was given in the book as
+\textbf{{Q}}: How does the \texttt{chdir} parameter of \texttt{source()} compare to \texttt{with\_dir()}? Why might you prefer one approach to the other?
+The \texttt{with\_dir()} approach was given in the book as
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3140,11 +3158,40 @@ The \texttt{in\_dir()} approach was given in the book as
 \end{Highlighting}
 \end{Shaded}
 
-\textbf{{A}}: \texttt{in\_dir()} takes a path to a working directory as an argument. First the working directory is changed accordingly. \texttt{on.exit()} ensures that the modification to the working directory are reset to the initial value when the function exits.
+\textbf{{A}}: \texttt{with\_dir()} takes a path to a working directory as an argument. First the working directory is changed accordingly. \texttt{on.exit()} ensures that the modification to the working directory are reset to the initial value when the function exits.
 
-In \texttt{source()} the \texttt{chdir} argument specifies if the working directory should be changed during the evaluation of the \texttt{file} argument (which in this case has to be a path name).
+\texttt{with\_dir} gives you the flexibility to change the path to wherever you want (maybe a parent-level folder) whereas \texttt{source(chdir=TRUE)} changes the path to ``where that file lives specifically''.
 
-XXX
+Given the following file structure:
+
+\begin{center}\includegraphics[width=12.11in]{images/filetree} \end{center}
+
+Imagine I want to run \texttt{import\_data.R}, but it needs to reference \texttt{images/controlflow.png}. we can do this by setting the \texttt{wd} to \texttt{advRbookclub}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{with_dir}\NormalTok{(}\StringTok{"/advRbookclub/data/import_data.R"}\NormalTok{,}\StringTok{"/advRbookclub"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Or we can use:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{source}\NormalTok{(}\StringTok{"/advRbookclub/data/import_data.R"}\NormalTok{, }\DataTypeTok{chdir=}\OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+but then, we'd need to include something like \texttt{setwd(here::here())} in \texttt{import\_data.R} so that it goes back to \texttt{AdvancedR.Rproj} and sets the working directory there.
+
+In conclusion:
+
+\begin{itemize}
+\item
+  \texttt{source} is a base R function so reduces dependencies. Once set, you could use \texttt{setwd("..")}assuming you can have some confidence that it's part of a repository or something?
+\item
+  \texttt{with\_dir} is exported from the \texttt{withr} package but is a more fine-tuned control by passing the specific folder name as opposed to a boolean \texttt{TRUE} \textbar{} \texttt{FALSE}.
+\end{itemize}
 
 \hypertarget{exercise-6}{%
 \section*{6.7.5.5 Exercise}\label{exercise-6}}
@@ -3434,16 +3481,37 @@ We can dig into the \href{https://github.com/wch/r-source/blob/2cdea4811caa2417e
 
 \textbf{{A}}: First, let's define \texttt{x} and recall the definition of \texttt{modify()} from the textbook:
 
-```r
-x \textless{}- 1:3
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    x <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{3}
+    
+    \StringTok{`}\DataTypeTok{modify<-}\StringTok{`}\NormalTok{ <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, position, value) \{}
+\NormalTok{      x[position] <-}\StringTok{ }\NormalTok{value}
+\NormalTok{      x}
+\NormalTok{    \}}
+\end{Highlighting}
+\end{Shaded}
 
-\texttt{modify\textless{}-} \textless{}- function(x, position, value) \{
-x{[}position{]} \textless{}- value
-x
-\}
-```
+R internally transforms the code and the transformed code reproduces the error above.
 
-XXX
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{get}\NormalTok{(}\StringTok{"x"}\NormalTok{) <-}\StringTok{ `}\DataTypeTok{modify<-}\StringTok{`}\NormalTok{(}\KeywordTok{get}\NormalTok{(}\StringTok{"x"}\NormalTok{), }\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{)}
+\CommentTok{#> Error in get("x") <- `modify<-`(get("x"), 1, 10) : }
+\CommentTok{#> target of assignment expands to non-language object}
+\end{Highlighting}
+\end{Shaded}
+
+The error occurs during the assignment, because no corresponding replacement function, i.e. \texttt{get\textless{}-} exists for \texttt{get()}. To confirm this we can reproduce the error via the following simple example.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{get}\NormalTok{(}\StringTok{"x"}\NormalTok{) <-}\StringTok{ }\DecValTok{2}
+\CommentTok{#> Error in get("x") <- 2 : target of assignment expands to non-language object}
+\end{Highlighting}
+\end{Shaded}
+
+I don't really see why this needs to be expanded upon\ldots{}.
 
 \hypertarget{environments}{%
 \chapter{Environments}\label{environments}}
@@ -3508,9 +3576,9 @@ Let's go over some source code that uses \texttt{env\_bind\_lazy()} - Hadley men
 
 XXX
 
-\hypertarget{section-1}{%
-\section*{7.3.1.2}\label{section-1}}
-\addcontentsline{toc}{section}{7.3.1.2}
+\hypertarget{exercises-3}{%
+\section*{7.3.1.2 Exercises}\label{exercises-3}}
+\addcontentsline{toc}{section}{7.3.1.2 Exercises}
 
 I understood the recursion in the prior example, but what is inherits doing here? Can we go through this line for line and discuss what is happening in this function?
 
@@ -3547,9 +3615,11 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7f809378ee90>
+## <bytecode: 0x7fc1493e3a90>
 ## <environment: namespace:base>
 \end{verbatim}
+
+XXX
 
 \hypertarget{function-enviornment}{%
 \section*{7.4.2 Function enviornment}\label{function-enviornment}}
@@ -3617,7 +3687,11 @@ Can we build on this function to include \texttt{on.exit()}?
 \end{Highlighting}
 \end{Shaded}
 
+XXX
+
 The bullet point mentions hashmaps but I'm still really unclear on what that is. What are hash tables and are they related?
+
+XXX
 
 \bibliography{book.bib,packages.bib}
 
