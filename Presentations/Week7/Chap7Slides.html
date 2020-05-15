@@ -117,7 +117,7 @@ env_print(beer_env)
 ```
 
 ```
-## &lt;environment: 0x7fad7e9175b8&gt;
+## &lt;environment: 0x7fe5304231b8&gt;
 ## parent: &lt;environment: global&gt;
 ## bindings:
 ##  * brewing_materials: &lt;tibble&gt;
@@ -160,7 +160,7 @@ identical(global_env(), current_env())
 
 Every environment has a parent:
 
-![](Environment_files/Screen Shot 2020-05-13 at 2.49.17 PM.png)
+![](images/Screen Shot 2020-05-13 at 2.49.17 PM.png)
   
   * this is where R looks next to find names that are not bound in the current environment 
   
@@ -184,7 +184,7 @@ env_parent(beer_env2)
 ```
 
 ```
-## &lt;environment: 0x7fad7e9175b8&gt;
+## &lt;environment: 0x7fe5304231b8&gt;
 ```
 
 ```r
@@ -192,7 +192,7 @@ parent.env(beer_env2)
 ```
 
 ```
-## &lt;environment: 0x7fad7e9175b8&gt;
+## &lt;environment: 0x7fe5304231b8&gt;
 ```
 
 
@@ -207,7 +207,7 @@ env_parents(beer_env2)
 ```
 
 ```
-## [[1]]   &lt;env: 0x7fad7e9175b8&gt;
+## [[1]]   &lt;env: 0x7fe5304231b8&gt;
 ## [[2]] $ &lt;env: global&gt;
 ```
 
@@ -219,7 +219,7 @@ env_parents(beer_env2, last = empty_env())
 ```
 
 ```
-##  [[1]]   &lt;env: 0x7fad7e9175b8&gt;
+##  [[1]]   &lt;env: 0x7fe5304231b8&gt;
 ##  [[2]] $ &lt;env: global&gt;
 ##  [[3]] $ &lt;env: package:rlang&gt;
 ##  [[4]] $ &lt;env: package:xaringanthemer&gt;
@@ -324,7 +324,7 @@ system.time(print(b))
 
 ```
 ##    user  system elapsed 
-##   0.000   0.000   1.004
+##   0.000   0.000   1.001
 ```
 
 ```r
@@ -355,7 +355,7 @@ z1
 ```
 
 ```
-## [1] 0.4348137
+## [1] 0.2634588
 ```
 
 ```r
@@ -363,7 +363,7 @@ z1
 ```
 
 ```
-## [1] 0.6824723
+## [1] 0.9978509
 ```
 
 Each output triggers a call to `runif`
@@ -436,7 +436,7 @@ where2 &lt;- function(in_name, env = caller_env()) {
   
   
 
-![](Environment_Files/ancestor_sequence.png)
+![](images/ancestor_sequence.png)
 
 
 
@@ -510,7 +510,7 @@ Longer answer: Each package has two environments:
 
 Consider `sd`:
 
-![](Environment_files/namespace_ancestors_full.png)
+![](images/namespace_ancestors_full.png)
 
 **User calls the function via the name in the package environment but the function uses the names defined in the namespace environment.**
 
@@ -593,7 +593,7 @@ plus_one
 
 ```
 ## function(y) x + y
-## &lt;environment: 0x7fad7f448168&gt;
+## &lt;environment: 0x7fe52f77c168&gt;
 ```
 
 

@@ -166,7 +166,7 @@ identical(global_env(), current_env())
 
 Every environment has a parent:
 
-![](Environment_files/Screen Shot 2020-05-13 at 2.49.17 PM.png)
+![](images/Screen Shot 2020-05-13 at 2.49.17 PM.png)
   
   * this is where R looks next to find names that are not bound in the current environment 
   
@@ -370,7 +370,7 @@ where2 <- function(in_name, env = caller_env()) {
   
   
 
-![](Environment_Files/ancestor_sequence.png)
+![](images/ancestor_sequence.png)
 
 
 
@@ -431,7 +431,7 @@ Longer answer: Each package has two environments:
 
 Consider `sd`:
 
-![](Environment_files/namespace_ancestors_full.png)
+![](images/namespace_ancestors_full.png)
 
 **User calls the function via the name in the package environment but the function uses the names defined in the namespace environment.**
 
