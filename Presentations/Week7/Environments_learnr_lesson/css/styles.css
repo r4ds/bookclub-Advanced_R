@@ -1,0 +1,54 @@
+body{
+  font-family: 'Oxygen', sans-serif;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+h1,h2 {
+  font-family: 'Raleway', sans-serif;
+  color: royalblue;
+}
+
+h3,h4 {
+  font-family: 'Raleway', sans-serif;
+  color: purple;
+}
+
+
+g-table-intro h4 {
+  text-indent: 0px;
+}
+
+
+@media screen and (max-width: 1000px) {
+  .topics {
+    width: 99%;
+  }
+
+  .topics .tutorialTitle {
+    display: block;
+    cursor: pointer;
+  }
+
+  .topicsContainer {
+    width: 1%;
+    min-width: 1px;
+    margin-right: 0;
+  }
+
+  .topicsList {
+    padding: 0px 10px 20px 1%;
+    background-color: rgba(255, 255, 255, 0.98);
+
+    box-shadow: 0 5px 25px 0px rgba(0, 0, 0, 0.15);
+    -webkit-box-shadow: 0 5px 25px 0px rgba(0, 0, 0, 0.15);
+  }
+
+  .topicsList.hideFloating {
+    display: none;
+  }
+
+  .paneCloser {
+    display: inline-block;
+  }
+}
