@@ -8,7 +8,7 @@
 So if you are familiar with C can you just write a function in C *in* R? What does that process look like? I think this is a bigger question of digging into the relationship between C and R.
 :::
 
-I think we cover this in Chapter 25!
+Primitives are part of R core, and can only be written by the R-core team. At its heart, R *is* the set of primitive C functions underneath it.
 
 ## 6.2.5.1 Exercises {-}
 
