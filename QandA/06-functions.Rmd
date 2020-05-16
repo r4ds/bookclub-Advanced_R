@@ -25,6 +25,14 @@ val <- IPA()
 val
 ```
 
+:::question
+Are there any non-base primitives? If so how is that possible!
+:::
+
+:::TODO
+XXX
+:::
+
 ## 6.2.5.1 Exercises {-}
 
 :::question
@@ -451,6 +459,13 @@ x = NULL
 y = NULL
 f1()
 ```
+
+What is happening here:
+- The default value of `x` is "assign 1 to y then return 2 implicitly."
+- The default value of `y` is `0`.
+- `x` and `y` aren't their defaults until they're referenced and there isn't a value, so when you invoke the question `x` is the default, but `y` is never the default.
+- When you get to `c(x`, `x` is evaluated. Now the value of  `y` is `1` instead of its default value!
+- When you get to `c(x, y)`, `y` is now `1`, so the return is `2` `1`
 
 ## 6.5.4.4 Exercise {-}
 

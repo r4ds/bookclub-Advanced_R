@@ -1,0 +1,108 @@
+# Conditions
+
+
+## 8.3 Ignoring conditions {-}
+
+:::question
+When would you actually use `suppressWarning` and `suppressMessage`? I think as debugging techniques and not so much when developing functions?
+:::
+
+:::TODO
+XXX
+:::
+
+## 8.4.3 Calling handlers {-}
+
+:::question
+Can we make up our own bubbling and muffled `withCallingHandlers` examples? The example code was a little unclear to me.
+:::
+
+:::TODO
+XXX
+:::
+
+## 8.4.5.2 Exercises {-}
+
+:::question
+In the example 
+
+```{r}
+show_condition <- function(code) {
+  tryCatch(
+    error = function(cnd) "error",
+    warning = function(cnd) "warning",
+    message = function(cnd) "message",
+    {
+      code
+      NULL
+    }
+  )
+}
+```
+
+The first three calls to `show_condition` make sense to me, and I even understand that the first time the code is evaluated inside a `tryCatch` it exists (that's why it returns `message`) but how are you suppling `3` arguments to a function that just takes on one argument, `code`? Is that what the `{}` are for?
+
+```{r}
+show_condition({
+  10
+  message("?")
+  warning("?!")
+})
+```
+:::
+
+:::TODO
+XXX
+:::
+
+## Custom conditions {-}
+
+:::question
+It's cool you can attach metadata to errors but what is a real-world use case where this is useful?
+:::
+
+:::TODO
+XXX
+:::
+
+:::question
+Let's revist my example from the talk: can we build on this to use tidyeval so that the user can write `beer_states %>% beer_mean(state)` [I think we need to use `.data` and note how state is given as an object so we need to use tidyeval to suppress it's evaluation...]
+:::
+
+```{r, eval=FALSE}
+beer_mean <- function(.data, x) {
+  
+  column_name <- deparse(substitute(x))
+
+  msg <- glue::glue("Can't calculate mean, {column_name} is not numeric")
+  
+  if (!is.numeric(.data[[column_name]])) {
+    abort(
+      message = msg,
+      arg = column_name,
+      data = .data
+    )
+  } else {
+    mean(.data[[column_name]])
+  }
+}
+
+beer_states %>% beer_mean(state)
+```
+
+```
+Error: Can't calculate mean, state is not numeric
+   12. stop(fallback)
+   11. signal_abort(cnd)
+   10. abort(message = msg, arg = column_name, data = .data)
+   9. beer_mean(., state)
+   8. function_list[[k]](value)
+   7. withVisible(function_list[[k]](value))
+   6. freduce(value, `_function_list`)
+   5. `_fseq`(`_lhs`)
+   4. eval(quote(`_fseq`(`_lhs`)), env, env)
+   3. eval(quote(`_fseq`(`_lhs`)), env, env)
+   2. withVisible(eval(quote(`_fseq`(`_lhs`)), env, env))
+   1. beer_states %>% beer_mean(state)
+```
+

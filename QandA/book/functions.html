@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-05-14" />
+<meta name="date" content="2020-05-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -215,12 +215,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7" data-path="environments.html"><a href="environments.html"><i class="fa fa-check"></i><b>7</b> Environments</a><ul>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#parents"><i class="fa fa-check"></i>7.2.3 Parents</a></li>
+<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#super-assignment"><i class="fa fa-check"></i>7.2.4 Super assignment</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#getting-and-setting"><i class="fa fa-check"></i>7.2.5 Getting and setting</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#advanced-bindings"><i class="fa fa-check"></i>7.2.6 Advanced bindings</a></li>
+<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#recursing-over-environments"><i class="fa fa-check"></i>7.3 Recursing over environments</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#exercises-3"><i class="fa fa-check"></i>7.3.1.2 Exercises</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#function-enviornment"><i class="fa fa-check"></i>7.4.2 Function enviornment</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#namespaces"><i class="fa fa-check"></i>7.4.3 Namespaces</a></li>
+<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#call-stacks"><i class="fa fa-check"></i>7.5 Call stacks</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#data-structures"><i class="fa fa-check"></i>7.6 Data Structures</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="conditions.html"><a href="conditions.html"><i class="fa fa-check"></i><b>8</b> Conditions</a><ul>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#ignoring-conditions"><i class="fa fa-check"></i>8.3 Ignoring conditions</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#calling-handlers"><i class="fa fa-check"></i>8.4.3 Calling handlers</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-4"><i class="fa fa-check"></i>8.4.5.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#custom-conditions"><i class="fa fa-check"></i>Custom conditions</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -258,6 +267,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb222-6" data-line-number="6">val &lt;-<span class="st"> </span><span class="kw">IPA</span>()</a>
 <a class="sourceLine" id="cb222-7" data-line-number="7">val</a></code></pre></div>
 <pre><code>## [1] &quot;IPAs suck&quot;</code></pre>
+<div class="question">
+<p>Are there any non-base primitives? If so how is that possible!</p>
+</div>
+<div class="TODO">
+<p>XXX</p>
+</div>
 </div>
 <div id="exercises-2" class="section level2 unnumbered">
 <h2>6.2.5.1 Exercises</h2>
@@ -369,11 +384,11 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <pre><code>## # A tibble: 5 x 1
 ##      x1
 ##   &lt;dbl&gt;
-## 1 0.440
-## 2 0.440
-## 3 0.752
-## 4 0.911
-## 5 0.312</code></pre>
+## 1 0.902
+## 2 0.226
+## 3 0.581
+## 4 0.156
+## 5 0.492</code></pre>
 </div>
 <div id="a-fresh-start" class="section level2 unnumbered">
 <h2>6.4.3 A fresh start</h2>
@@ -421,7 +436,7 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <a class="sourceLine" id="cb249-8" data-line-number="8">}</a>
 <a class="sourceLine" id="cb249-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb249-10" data-line-number="10"><span class="kw">mega_model</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))</a></code></pre></div>
-<pre><code>##  [1] 208 278 201 237 280 231 298 268 257 238</code></pre>
+<pre><code>##  [1] 268 226 265 272 246 243 230 228 233 211</code></pre>
 </div>
 <div id="promises" class="section level2 unnumbered">
 <h2>6.5.1 Promises</h2>
@@ -641,6 +656,12 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <a class="sourceLine" id="cb289-7" data-line-number="7">y =<span class="st"> </span><span class="ot">NULL</span></a>
 <a class="sourceLine" id="cb289-8" data-line-number="8"><span class="kw">f1</span>()</a></code></pre></div>
 <pre><code>## [1] 0 2</code></pre>
+<p>What is happening here:
+- The default value of <code>x</code> is “assign 1 to y then return 2 implicitly.”
+- The default value of <code>y</code> is <code>0</code>.
+- <code>x</code> and <code>y</code> aren’t their defaults until they’re referenced and there isn’t a value, so when you invoke the question <code>x</code> is the default, but <code>y</code> is never the default.
+- When you get to <code>c(x</code>, <code>x</code> is evaluated. Now the value of <code>y</code> is <code>1</code> instead of its default value!
+- When you get to <code>c(x, y)</code>, <code>y</code> is now <code>1</code>, so the return is <code>2</code> <code>1</code></p>
 </div>
 <div id="exercise-3" class="section level2 unnumbered">
 <h2>6.5.4.4 Exercise</h2>
@@ -649,7 +670,7 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb291-1" data-line-number="1">hist</a></code></pre></div>
 <pre><code>## function (x, ...) 
 ## UseMethod(&quot;hist&quot;)
-## &lt;bytecode: 0x7f9081963180&gt;
+## &lt;bytecode: 0x7f8e9edc7fc8&gt;
 ## &lt;environment: namespace:graphics&gt;</code></pre>
 <p>does not give me the actual contents of the actual function….</p>
 </div>

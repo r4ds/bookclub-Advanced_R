@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Advanced R Companion</title>
+  <title>Chapter 8 Conditions | Advanced R Companion</title>
   <meta name="description" content="This is a companion to Advanced R and supplement to Advanced R Solutions." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Advanced R Companion" />
+  <meta property="og:title" content="Chapter 8 Conditions | Advanced R Companion" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Advanced R Companion" />
+  <meta name="twitter:title" content="Chapter 8 Conditions | Advanced R Companion" />
   
   <meta name="twitter:description" content="This is a companion to Advanced R and supplement to Advanced R Solutions." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="environments.html"/>
 
-<link rel="next" href="names-and-values.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -251,24 +251,106 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Advanced R Companion</h1>
-<p class="author"><em>R4DS Reading Group</em></p>
-<p class="date"><em>2020-05-15</em></p>
+<div id="conditions" class="section level1">
+<h1><span class="header-section-number">Chapter 8</span> Conditions</h1>
+<div id="ignoring-conditions" class="section level2 unnumbered">
+<h2>8.3 Ignoring conditions</h2>
+<div class="question">
+<p>When would you actually use <code>suppressWarning</code> and <code>suppressMessage</code>? I think as debugging techniques and not so much when developing functions?</p>
 </div>
-<div id="welcome" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Welcome</h1>
-<p>A companion to <a href="https://adv-r.hadley.nz/rcpp.html#acknowledgments">Advanced R</a> and supplement to <a href="https://advanced-r-solutions.rbind.io/names-and-values.html#copy-on-modify">Advanced R Solutions</a></p>
-<p>Recordings for the accompanied presentation for each chapter can be seen <a href="https://www.youtube.com/watch?v=pQ-xDAPEQaw&amp;list=PL3x6DOfs2NGi9lH7q-phZlPrl6HKXYDbn">here</a>.</p>
+<div class="TODO">
+<p>XXX</p>
+</div>
+</div>
+<div id="calling-handlers" class="section level2 unnumbered">
+<h2>8.4.3 Calling handlers</h2>
+<div class="question">
+<p>Can we make up our own bubbling and muffled <code>withCallingHandlers</code> examples? The example code was a little unclear to me.</p>
+</div>
+<div class="TODO">
+<p>XXX</p>
+</div>
+</div>
+<div id="exercises-4" class="section level2 unnumbered">
+<h2>8.4.5.2 Exercises</h2>
+<div class="question">
+<p>In the example</p>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb366-1" data-line-number="1">show_condition &lt;-<span class="st"> </span><span class="cf">function</span>(code) {</a>
+<a class="sourceLine" id="cb366-2" data-line-number="2">  <span class="kw">tryCatch</span>(</a>
+<a class="sourceLine" id="cb366-3" data-line-number="3">    <span class="dt">error =</span> <span class="cf">function</span>(cnd) <span class="st">&quot;error&quot;</span>,</a>
+<a class="sourceLine" id="cb366-4" data-line-number="4">    <span class="dt">warning =</span> <span class="cf">function</span>(cnd) <span class="st">&quot;warning&quot;</span>,</a>
+<a class="sourceLine" id="cb366-5" data-line-number="5">    <span class="dt">message =</span> <span class="cf">function</span>(cnd) <span class="st">&quot;message&quot;</span>,</a>
+<a class="sourceLine" id="cb366-6" data-line-number="6">    {</a>
+<a class="sourceLine" id="cb366-7" data-line-number="7">      code</a>
+<a class="sourceLine" id="cb366-8" data-line-number="8">      <span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb366-9" data-line-number="9">    }</a>
+<a class="sourceLine" id="cb366-10" data-line-number="10">  )</a>
+<a class="sourceLine" id="cb366-11" data-line-number="11">}</a></code></pre></div>
+<p>The first three calls to <code>show_condition</code> make sense to me, and I even understand that the first time the code is evaluated inside a <code>tryCatch</code> it exists (that’s why it returns <code>message</code>) but how are you suppling <code>3</code> arguments to a function that just takes on one argument, <code>code</code>? Is that what the <code>{}</code> are for?</p>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb367-1" data-line-number="1"><span class="kw">show_condition</span>({</a>
+<a class="sourceLine" id="cb367-2" data-line-number="2">  <span class="dv">10</span></a>
+<a class="sourceLine" id="cb367-3" data-line-number="3">  <span class="kw">message</span>(<span class="st">&quot;?&quot;</span>)</a>
+<a class="sourceLine" id="cb367-4" data-line-number="4">  <span class="kw">warning</span>(<span class="st">&quot;?!&quot;</span>)</a>
+<a class="sourceLine" id="cb367-5" data-line-number="5">})</a></code></pre></div>
+<pre><code>## [1] &quot;message&quot;</code></pre>
+</div>
+<div class="TODO">
+<p>XXX</p>
+</div>
+</div>
+<div id="custom-conditions" class="section level2 unnumbered">
+<h2>Custom conditions</h2>
+<div class="question">
+<p>It’s cool you can attach metadata to errors but what is a real-world use case where this is useful?</p>
+</div>
+<div class="TODO">
+<p>XXX</p>
+</div>
+<div class="question">
+<p>Let’s revist my example from the talk: can we build on this to use tidyeval so that the user can write <code>beer_states %&gt;% beer_mean(state)</code> [I think we need to use <code>.data</code> and note how state is given as an object so we need to use tidyeval to suppress it’s evaluation…]</p>
+</div>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb369-1" data-line-number="1">beer_mean &lt;-<span class="st"> </span><span class="cf">function</span>(.data, x) {</a>
+<a class="sourceLine" id="cb369-2" data-line-number="2">  </a>
+<a class="sourceLine" id="cb369-3" data-line-number="3">  column_name &lt;-<span class="st"> </span><span class="kw">deparse</span>(<span class="kw">substitute</span>(x))</a>
+<a class="sourceLine" id="cb369-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb369-5" data-line-number="5">  msg &lt;-<span class="st"> </span>glue<span class="op">::</span><span class="kw">glue</span>(<span class="st">&quot;Can&#39;t calculate mean, {column_name} is not numeric&quot;</span>)</a>
+<a class="sourceLine" id="cb369-6" data-line-number="6">  </a>
+<a class="sourceLine" id="cb369-7" data-line-number="7">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.numeric</span>(.data[[column_name]])) {</a>
+<a class="sourceLine" id="cb369-8" data-line-number="8">    <span class="kw">abort</span>(</a>
+<a class="sourceLine" id="cb369-9" data-line-number="9">      <span class="dt">message =</span> msg,</a>
+<a class="sourceLine" id="cb369-10" data-line-number="10">      <span class="dt">arg =</span> column_name,</a>
+<a class="sourceLine" id="cb369-11" data-line-number="11">      <span class="dt">data =</span> .data</a>
+<a class="sourceLine" id="cb369-12" data-line-number="12">    )</a>
+<a class="sourceLine" id="cb369-13" data-line-number="13">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb369-14" data-line-number="14">    <span class="kw">mean</span>(.data[[column_name]])</a>
+<a class="sourceLine" id="cb369-15" data-line-number="15">  }</a>
+<a class="sourceLine" id="cb369-16" data-line-number="16">}</a>
+<a class="sourceLine" id="cb369-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb369-18" data-line-number="18">beer_states <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">beer_mean</span>(state)</a></code></pre></div>
+<pre><code>Error: Can&#39;t calculate mean, state is not numeric
+   12. stop(fallback)
+   11. signal_abort(cnd)
+   10. abort(message = msg, arg = column_name, data = .data)
+   9. beer_mean(., state)
+   8. function_list[[k]](value)
+   7. withVisible(function_list[[k]](value))
+   6. freduce(value, `_function_list`)
+   5. `_fseq`(`_lhs`)
+   4. eval(quote(`_fseq`(`_lhs`)), env, env)
+   3. eval(quote(`_fseq`(`_lhs`)), env, env)
+   2. withVisible(eval(quote(`_fseq`(`_lhs`)), env, env))
+   1. beer_states %&gt;% beer_mean(state)</code></pre>
 
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
+<a href="environments.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="names-and-values.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -299,7 +381,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/01-preface.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/08-conditions.Rmd",
 "text": "Edit"
 },
 "history": {

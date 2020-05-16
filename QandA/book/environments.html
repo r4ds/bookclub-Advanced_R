@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-05-14" />
+<meta name="date" content="2020-05-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="functions.html"/>
-
+<link rel="next" href="conditions.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -215,12 +215,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7" data-path="environments.html"><a href="environments.html"><i class="fa fa-check"></i><b>7</b> Environments</a><ul>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#parents"><i class="fa fa-check"></i>7.2.3 Parents</a></li>
+<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#super-assignment"><i class="fa fa-check"></i>7.2.4 Super assignment</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#getting-and-setting"><i class="fa fa-check"></i>7.2.5 Getting and setting</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#advanced-bindings"><i class="fa fa-check"></i>7.2.6 Advanced bindings</a></li>
+<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#recursing-over-environments"><i class="fa fa-check"></i>7.3 Recursing over environments</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#exercises-3"><i class="fa fa-check"></i>7.3.1.2 Exercises</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#function-enviornment"><i class="fa fa-check"></i>7.4.2 Function enviornment</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#namespaces"><i class="fa fa-check"></i>7.4.3 Namespaces</a></li>
+<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#call-stacks"><i class="fa fa-check"></i>7.5 Call stacks</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#data-structures"><i class="fa fa-check"></i>7.6 Data Structures</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="conditions.html"><a href="conditions.html"><i class="fa fa-check"></i><b>8</b> Conditions</a><ul>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#ignoring-conditions"><i class="fa fa-check"></i>8.3 Ignoring conditions</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#calling-handlers"><i class="fa fa-check"></i>8.4.3 Calling handlers</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-4"><i class="fa fa-check"></i>8.4.5.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#custom-conditions"><i class="fa fa-check"></i>Custom conditions</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -277,113 +286,303 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [[20]] $ &lt;env: package:datasets&gt;
 ## ... and 3 more environments</code></pre>
 </div>
+<div id="super-assignment" class="section level2 unnumbered">
+<h2>7.2.4 Super assignment</h2>
+<div class="question">
+<p>Let’s expand on the concept of super assignment</p>
+</div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb333-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb333-2" data-line-number="2">f &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb333-3" data-line-number="3">  x &lt;-<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb333-4" data-line-number="4">  x &lt;&lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb333-5" data-line-number="5">  x</a>
+<a class="sourceLine" id="cb333-6" data-line-number="6">}</a>
+<a class="sourceLine" id="cb333-7" data-line-number="7"><span class="kw">f</span>()</a></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb335-1" data-line-number="1">x</a></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<p>Note that the assignment inside <code>f</code> is local, but super assignment “never creates a variable in the current environment” so it modifies the global <code>x</code> and not the local <code>x</code>.</p>
+<p>If you want to break your brain a bit, check out:</p>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb337-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb337-2" data-line-number="2">f &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb337-3" data-line-number="3">  x &lt;-<span class="st"> </span>x</a>
+<a class="sourceLine" id="cb337-4" data-line-number="4">  x &lt;&lt;-<span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb337-5" data-line-number="5">  x</a>
+<a class="sourceLine" id="cb337-6" data-line-number="6">}</a>
+<a class="sourceLine" id="cb337-7" data-line-number="7"><span class="kw">f</span>()</a></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb339-1" data-line-number="1">x</a></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb341-1" data-line-number="1"><span class="kw">f</span>()</a></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb343-1" data-line-number="1">x</a></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb345-1" data-line-number="1"><span class="kw">f</span>()</a></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb347-1" data-line-number="1">x</a></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+</div>
 <div id="getting-and-setting" class="section level2 unnumbered">
 <h2>7.2.5 Getting and setting</h2>
 <div class="question">
 <p>“But you can’t use <code>[[</code> with numeric indices, and you can’t use <code>[</code>:”</p>
-<p>It makes sense to me that you can’t use numeric indexes because objects in an environment aren’t ordered, but why can’t you use <code>[</code>?</p>
+<p>It makes sense to me that you can’t use numeric indexes because objects in an environment aren’t ordered, but why can’t you use <code>[</code>? <em>The solutions manual states: &quot;The second option would return two objects at the same time. What data structure would they be contained inside?</em></p>
 </div>
-<div class="TODO">
-<p>The solutions manual states: &quot;The second option would return two objects at the same time. What data structure would they be contained inside? But can we elaborate on what this means?</p>
-</div>
+<p><code>[</code> returns an object of the same type, if we were to apply this to environments we’d have an environment returning an environment.</p>
 </div>
 <div id="advanced-bindings" class="section level2 unnumbered">
 <h2>7.2.6 Advanced bindings</h2>
 <div class="question">
-<p>Let’s go over some source code that uses <code>env_bind_lazy()</code> - Hadley mentions its used when autoloading datasets with packages - can we find an example of this? How is this different from including <code>LazyData: true</code> in your description file?</p>
+<p>Hadley mentions delayed bindings are used when autoloading datasets with packages - can we find an example of this? How is this different from including <code>LazyData: true</code> in your description file?</p>
 </div>
-<div class="TODO">
-<p>XXX</p>
+<p>The <code>LazyData: true</code> entry in <code>DESCRIPTION</code> just informs that delayed binding should be used. <code>autoload</code> <strong>does</strong> use delayed bindings [from source code: <code>do.call(&quot;delayedAssign&quot;, list(name, newcall, .GlobalEnv, .AutoloadEnv))</code>] but lazydata that gets used by packages is ultimately implemented as an internal function. If you scan through <code>View(loadNamespace)</code>:</p>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb349-1" data-line-number="1"><span class="cf">if</span> (<span class="kw">file.exists</span>(<span class="kw">paste0</span>(dbbase, <span class="st">&quot;.rdb&quot;</span>))) </a>
+<a class="sourceLine" id="cb349-2" data-line-number="2">      <span class="kw">lazyLoad</span>(dbbase, env)</a>
+<a class="sourceLine" id="cb349-3" data-line-number="3">    dbbase &lt;-<span class="st"> </span><span class="kw">file.path</span>(pkgpath, <span class="st">&quot;data&quot;</span>, <span class="st">&quot;Rdata&quot;</span>)</a>
+<a class="sourceLine" id="cb349-4" data-line-number="4">    <span class="cf">if</span> (<span class="kw">file.exists</span>(<span class="kw">paste0</span>(dbbase, <span class="st">&quot;.rdb&quot;</span>))) </a>
+<a class="sourceLine" id="cb349-5" data-line-number="5">      <span class="kw">lazyLoad</span>(dbbase, <span class="kw">.getNamespaceInfo</span>(env, <span class="st">&quot;lazydata&quot;</span>))</a></code></pre></div>
+<p>and <code>lazyLoad</code> eventually calls <code>.Internal(makeLazy(vars, vals, expr, db, envir))</code> which leads you to <a href="https://github.com/wch/r-source/blob/726bce63825844715860d35fdf76539445529f52/src/main/builtin.c#L103" class="uri">https://github.com/wch/r-source/blob/726bce63825844715860d35fdf76539445529f52/src/main/builtin.c#L103</a>
+and ultimately the delayed binding is realized as a promise with <code>defineVar(name, mkPROMISE(expr0, eenv), aenv);</code>.</p>
 </div>
+<div id="recursing-over-environments" class="section level2 unnumbered">
+<h2>7.3 Recursing over environments</h2>
+<div class="question">
+<p>How can we re-write <code>where</code> so that it returns all functions with the same name?</p>
+</div>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb350-1" data-line-number="1">where2 &lt;-<span class="st"> </span><span class="cf">function</span>(in_name, <span class="dt">env =</span> <span class="kw">caller_env</span>()) {</a>
+<a class="sourceLine" id="cb350-2" data-line-number="2">  </a>
+<a class="sourceLine" id="cb350-3" data-line-number="3">  all_functions &lt;-<span class="st"> &quot;&quot;</span></a>
+<a class="sourceLine" id="cb350-4" data-line-number="4">  index &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb350-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb350-6" data-line-number="6">  <span class="cf">while</span> (<span class="op">!</span><span class="kw">identical</span>(env, <span class="kw">empty_env</span>())) {</a>
+<a class="sourceLine" id="cb350-7" data-line-number="7">    <span class="co"># if success</span></a>
+<a class="sourceLine" id="cb350-8" data-line-number="8">    <span class="cf">if</span> (<span class="kw">env_has</span>(env, in_name)) {</a>
+<a class="sourceLine" id="cb350-9" data-line-number="9">      all_functions[index] &lt;-<span class="st"> </span><span class="kw">env_name</span>(env)</a>
+<a class="sourceLine" id="cb350-10" data-line-number="10">      index &lt;-<span class="st"> </span>index <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb350-11" data-line-number="11">      <span class="co">#return()</span></a>
+<a class="sourceLine" id="cb350-12" data-line-number="12">    }</a>
+<a class="sourceLine" id="cb350-13" data-line-number="13">    <span class="co"># inspect parent</span></a>
+<a class="sourceLine" id="cb350-14" data-line-number="14">    env &lt;-<span class="st"> </span><span class="kw">env_parent</span>(env)</a>
+<a class="sourceLine" id="cb350-15" data-line-number="15">  }</a>
+<a class="sourceLine" id="cb350-16" data-line-number="16">  <span class="co"># base case - I&#39;m missing this I think</span></a>
+<a class="sourceLine" id="cb350-17" data-line-number="17">  <span class="kw">return</span>(all_functions)</a>
+<a class="sourceLine" id="cb350-18" data-line-number="18">}</a>
+<a class="sourceLine" id="cb350-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb350-20" data-line-number="20"><span class="co"># load dplyr so you have two filters</span></a>
+<a class="sourceLine" id="cb350-21" data-line-number="21"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb350-22" data-line-number="22"><span class="kw">where2</span>(<span class="st">&quot;filter&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;package:dplyr&quot; &quot;package:stats&quot;</code></pre>
+<p>We can also create a function that emulates <code>pryr</code>’s where:</p>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb352-1" data-line-number="1">where3 &lt;-<span class="st"> </span><span class="cf">function</span>(name, <span class="dt">env =</span> <span class="kw">parent.frame</span>(), <span class="dt">found =</span> <span class="kw">character</span>()) {</a>
+<a class="sourceLine" id="cb352-2" data-line-number="2">  <span class="cf">if</span> (<span class="kw">identical</span>(env, <span class="kw">emptyenv</span>()))</a>
+<a class="sourceLine" id="cb352-3" data-line-number="3">    <span class="kw">return</span>(found)</a>
+<a class="sourceLine" id="cb352-4" data-line-number="4">  <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">exists</span>(name, env, <span class="dt">inherits =</span> <span class="ot">FALSE</span>)) {</a>
+<a class="sourceLine" id="cb352-5" data-line-number="5">    <span class="kw">Recall</span>(name, <span class="kw">parent.env</span>(env), <span class="kw">c</span>(found, <span class="kw">environmentName</span>(env)))</a>
+<a class="sourceLine" id="cb352-6" data-line-number="6">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb352-7" data-line-number="7">    <span class="kw">Recall</span>(name, <span class="kw">parent.env</span>(env), found)</a>
+<a class="sourceLine" id="cb352-8" data-line-number="8">  }</a>
+<a class="sourceLine" id="cb352-9" data-line-number="9">}</a>
+<a class="sourceLine" id="cb352-10" data-line-number="10">  </a>
+<a class="sourceLine" id="cb352-11" data-line-number="11"><span class="kw">where3</span>(<span class="st">&quot;filter&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;package:dplyr&quot; &quot;package:stats&quot;</code></pre>
 </div>
 <div id="exercises-3" class="section level2 unnumbered">
 <h2>7.3.1.2 Exercises</h2>
 <div class="question">
 <p>I understood the recursion in the prior example, but what is inherits doing here? Can we go through this line for line and discuss what is happening in this function?</p>
-<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb333-1" data-line-number="1">fget &lt;-<span class="st"> </span><span class="cf">function</span>(name, <span class="dt">env =</span> <span class="kw">caller_env</span>(), <span class="dt">inherits =</span> <span class="ot">TRUE</span>) {</a>
-<a class="sourceLine" id="cb333-2" data-line-number="2">  <span class="co"># Base case</span></a>
-<a class="sourceLine" id="cb333-3" data-line-number="3">  <span class="cf">if</span> (<span class="kw">env_has</span>(env, name)) {</a>
-<a class="sourceLine" id="cb333-4" data-line-number="4">    obj &lt;-<span class="st"> </span><span class="kw">env_get</span>(env, name)</a>
-<a class="sourceLine" id="cb333-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb333-6" data-line-number="6">    <span class="cf">if</span> (<span class="kw">is.function</span>(obj)) {</a>
-<a class="sourceLine" id="cb333-7" data-line-number="7">      <span class="kw">return</span>(obj)</a>
-<a class="sourceLine" id="cb333-8" data-line-number="8">    }</a>
-<a class="sourceLine" id="cb333-9" data-line-number="9">  }</a>
-<a class="sourceLine" id="cb333-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb333-11" data-line-number="11">  <span class="cf">if</span> (<span class="kw">identical</span>(env, <span class="kw">emptyenv</span>()) <span class="op">||</span><span class="st"> </span><span class="op">!</span>inherits) {</a>
-<a class="sourceLine" id="cb333-12" data-line-number="12">    <span class="kw">stop</span>(<span class="st">&quot;Could not find function called </span><span class="ch">\&quot;</span><span class="st">&quot;</span>, name, <span class="st">&quot;</span><span class="ch">\&quot;</span><span class="st">&quot;</span>, <span class="dt">call. =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb333-13" data-line-number="13">  }</a>
-<a class="sourceLine" id="cb333-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb333-15" data-line-number="15">  <span class="co"># Recursive Case</span></a>
-<a class="sourceLine" id="cb333-16" data-line-number="16">  <span class="kw">fget</span>(name, <span class="kw">env_parent</span>(env))</a>
-<a class="sourceLine" id="cb333-17" data-line-number="17">}</a></code></pre></div>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb334-1" data-line-number="1"><span class="co"># Test</span></a>
-<a class="sourceLine" id="cb334-2" data-line-number="2">mean &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb334-3" data-line-number="3"><span class="kw">fget</span>(<span class="st">&quot;mean&quot;</span>, <span class="dt">inherits =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb354-1" data-line-number="1">fget &lt;-<span class="st"> </span><span class="cf">function</span>(name, <span class="dt">env =</span> <span class="kw">caller_env</span>(), <span class="dt">inherits =</span> <span class="ot">TRUE</span>) {</a>
+<a class="sourceLine" id="cb354-2" data-line-number="2">  <span class="co"># Base case</span></a>
+<a class="sourceLine" id="cb354-3" data-line-number="3">  <span class="cf">if</span> (<span class="kw">env_has</span>(env, name)) {</a>
+<a class="sourceLine" id="cb354-4" data-line-number="4">    obj &lt;-<span class="st"> </span><span class="kw">env_get</span>(env, name)</a>
+<a class="sourceLine" id="cb354-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb354-6" data-line-number="6">    <span class="cf">if</span> (<span class="kw">is.function</span>(obj)) {</a>
+<a class="sourceLine" id="cb354-7" data-line-number="7">      <span class="kw">return</span>(obj)</a>
+<a class="sourceLine" id="cb354-8" data-line-number="8">    }</a>
+<a class="sourceLine" id="cb354-9" data-line-number="9">  }</a>
+<a class="sourceLine" id="cb354-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb354-11" data-line-number="11">  <span class="cf">if</span> (<span class="kw">identical</span>(env, <span class="kw">emptyenv</span>()) <span class="op">||</span><span class="st"> </span><span class="op">!</span>inherits) {</a>
+<a class="sourceLine" id="cb354-12" data-line-number="12">    <span class="kw">stop</span>(<span class="st">&quot;Could not find function called </span><span class="ch">\&quot;</span><span class="st">&quot;</span>, name, <span class="st">&quot;</span><span class="ch">\&quot;</span><span class="st">&quot;</span>, <span class="dt">call. =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb354-13" data-line-number="13">  }</a>
+<a class="sourceLine" id="cb354-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb354-15" data-line-number="15">  <span class="co"># Recursive Case</span></a>
+<a class="sourceLine" id="cb354-16" data-line-number="16">  <span class="kw">fget</span>(name, <span class="kw">env_parent</span>(env))</a>
+<a class="sourceLine" id="cb354-17" data-line-number="17">}</a></code></pre></div>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb355-1" data-line-number="1"><span class="co"># Test</span></a>
+<a class="sourceLine" id="cb355-2" data-line-number="2">mean &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb355-3" data-line-number="3"><span class="kw">fget</span>(<span class="st">&quot;mean&quot;</span>, <span class="dt">inherits =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## function (x, ...) 
 ## UseMethod(&quot;mean&quot;)
-## &lt;bytecode: 0x7f90804ac690&gt;
+## &lt;bytecode: 0x7f8e9e324db0&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 </div>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<p>Inherits is an argument that stops the function from performing the recursive action of looking into the parent environment for the name. Inherits is acting like a valve. If false, and the name wasnt found in the current environment, then stop because the next expression searches the parent of env. In the case environment is the empty environment then stop because the empty environment doesnt have a parent.</p>
 </div>
 <div id="function-enviornment" class="section level2 unnumbered">
 <h2>7.4.2 Function enviornment</h2>
 <div class="question">
 <p>I found this section a little confusing. Can we go over the second figure in the section? Where does <code>x</code> live? <code>g</code> points to x but <code>x</code> is in the global enviornment? Can we come up with our own example for a function being bound to the global environment but accessing variables from its own enviornment? (I think this is what the second figure in the section is trying to display)</p>
-<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb336-1" data-line-number="1">y &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb336-2" data-line-number="2">e &lt;-<span class="st"> </span><span class="kw">env</span>()</a>
-<a class="sourceLine" id="cb336-3" data-line-number="3">e<span class="op">$</span>g &lt;-<span class="st"> </span><span class="cf">function</span>() <span class="dv">1</span></a>
-<a class="sourceLine" id="cb336-4" data-line-number="4">e<span class="op">$</span>g</a></code></pre></div>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb357-1" data-line-number="1">y &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb357-2" data-line-number="2">e &lt;-<span class="st"> </span><span class="kw">env</span>()</a>
+<a class="sourceLine" id="cb357-3" data-line-number="3">e<span class="op">$</span>g &lt;-<span class="st"> </span><span class="cf">function</span>() <span class="dv">1</span></a>
+<a class="sourceLine" id="cb357-4" data-line-number="4">e<span class="op">$</span>g</a></code></pre></div>
 <pre><code>## function() 1</code></pre>
 </div>
 <div class="TODO">
+<p>Daryn explanation</p>
+</div>
+<div class="question">
 <p>Is this example trying to display that if we change the function to return <code>y</code> this does not return <code>1</code> because <code>y</code> inside the function cannot access <code>y</code> at the global scope?</p>
-<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb338-1" data-line-number="1">y &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb338-2" data-line-number="2">e &lt;-<span class="st"> </span><span class="kw">env</span>()</a>
-<a class="sourceLine" id="cb338-3" data-line-number="3">e<span class="op">$</span>g &lt;-<span class="st"> </span><span class="cf">function</span>() y</a>
-<a class="sourceLine" id="cb338-4" data-line-number="4">e<span class="op">$</span>g</a></code></pre></div>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb359-1" data-line-number="1">y &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb359-2" data-line-number="2">e &lt;-<span class="st"> </span><span class="kw">env</span>()</a>
+<a class="sourceLine" id="cb359-3" data-line-number="3">e<span class="op">$</span>g &lt;-<span class="st"> </span><span class="cf">function</span>() y</a>
+<a class="sourceLine" id="cb359-4" data-line-number="4">e<span class="op">$</span>g</a></code></pre></div>
 <pre><code>## function() y</code></pre>
+</div>
+<div class="TODO">
+<p>Daryn explanation</p>
 </div>
 </div>
 <div id="namespaces" class="section level2 unnumbered">
 <h2>7.4.3 Namespaces</h2>
 <div class="question">
 <p>“Every binding in the package environment is also found in the namespace environment; this ensures every function can use every other function in the package. But some bindings only occur in the namespace environment. These are known as internal or non-exported objects, which make it possible to hide internal implementation details from the user.”</p>
-<p>Can we find some simple-ish package source code as an example of this?</p>
+<p>When you’re developing a package does the namespace environment just come with your package for free when you build it or you need to create both your package and its namespace env?</p>
+<p>How do you create functions that exist only in the namespace environment?</p>
 </div>
-<div class="TODO">
-<p>XXX</p>
+<p>When you are building the package, everything in the NAMESPACE file gets generated by <code>roxygen2</code>. Attaching a package puts the package in the search path of namespaces. So when you run <code>library(package)</code> or <code>require(package)</code> it creates the namespace environment. Package developers control what names are available by exporting to namespace (and otherwise you can call non-exported with <code>:::</code>).</p>
+<p>For example let’s say you want to extend <code>forcats</code> to use ordered factors to lump the tails. In order to get it to work, we need to use some forcats helper functions. We could just copy the code for the functions and added them to our scripts, but for prototyping it’s easy enough to just use <code>:::</code></p>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb361-1" data-line-number="1">fct_lump_ordered &lt;-<span class="st"> </span><span class="cf">function</span>(f, n, prop, q, <span class="dt">w =</span> <span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb361-2" data-line-number="2">                             <span class="dt">other_level_low =</span> <span class="st">&quot;Other Low&quot;</span>,</a>
+<a class="sourceLine" id="cb361-3" data-line-number="3">                             <span class="dt">other_level_high =</span> <span class="st">&quot;Other High&quot;</span>,</a>
+<a class="sourceLine" id="cb361-4" data-line-number="4">                             <span class="dt">ties.method =</span> <span class="kw">c</span>(<span class="st">&quot;min&quot;</span>, <span class="st">&quot;average&quot;</span>, <span class="st">&quot;first&quot;</span>, <span class="st">&quot;last&quot;</span>, <span class="st">&quot;random&quot;</span>, <span class="st">&quot;max&quot;</span>)) {</a>
+<a class="sourceLine" id="cb361-5" data-line-number="5">  f &lt;-<span class="st"> </span><span class="kw">check_ordered</span>(f)</a>
+<a class="sourceLine" id="cb361-6" data-line-number="6">  w &lt;-<span class="st"> </span>forcats<span class="op">:::</span><span class="kw">check_weights</span>(w, <span class="kw">length</span>(f))</a>
+<a class="sourceLine" id="cb361-7" data-line-number="7">  ties.method &lt;-<span class="st"> </span><span class="kw">match.arg</span>(ties.method)</a>
+<a class="sourceLine" id="cb361-8" data-line-number="8">  levels &lt;-<span class="st"> </span><span class="kw">levels</span>(f)</a>
+<a class="sourceLine" id="cb361-9" data-line-number="9">  <span class="cf">if</span> (<span class="kw">is.null</span>(w)) {</a>
+<a class="sourceLine" id="cb361-10" data-line-number="10">    count &lt;-<span class="st"> </span><span class="kw">as.vector</span>(<span class="kw">table</span>(f))</a>
+<a class="sourceLine" id="cb361-11" data-line-number="11">    total &lt;-<span class="st"> </span><span class="kw">length</span>(f)</a>
+<a class="sourceLine" id="cb361-12" data-line-number="12">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb361-13" data-line-number="13">    count &lt;-<span class="st"> </span><span class="kw">as.vector</span>(<span class="kw">tapply</span>(w, f, <span class="dt">FUN =</span> sum))</a>
+<a class="sourceLine" id="cb361-14" data-line-number="14">    total &lt;-<span class="st"> </span><span class="kw">sum</span>(w)</a>
+<a class="sourceLine" id="cb361-15" data-line-number="15">  }</a>
+<a class="sourceLine" id="cb361-16" data-line-number="16">  <span class="cf">if</span> (<span class="kw">all</span>(<span class="kw">missing</span>(n), <span class="kw">missing</span>(prop), <span class="kw">missing</span>(q))) {</a>
+<a class="sourceLine" id="cb361-17" data-line-number="17">    lump &lt;-<span class="st"> </span>forcats<span class="op">:::</span><span class="kw">in_smallest</span>(count)</a>
+<a class="sourceLine" id="cb361-18" data-line-number="18">    lump &lt;-<span class="st"> </span><span class="kw">lump_range</span>(<span class="op">!</span>lump)</a>
+<a class="sourceLine" id="cb361-19" data-line-number="19">    new_levels &lt;-<span class="st"> </span><span class="kw">ifelse</span>(lump <span class="op">==</span><span class="st"> </span><span class="op">-</span>1L,other_level_low, <span class="kw">ifelse</span>(lump <span class="op">==</span><span class="st"> </span>1L, other_level_high, levels))</a>
+<a class="sourceLine" id="cb361-20" data-line-number="20">  } <span class="cf">else</span> <span class="cf">if</span> (<span class="op">!</span><span class="kw">missing</span>(n) ) {</a>
+<a class="sourceLine" id="cb361-21" data-line-number="21">    <span class="cf">if</span> (n <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb361-22" data-line-number="22">      rank &lt;-<span class="st"> </span><span class="kw">rank</span>(count, <span class="dt">ties =</span> ties.method)</a>
+<a class="sourceLine" id="cb361-23" data-line-number="23">      n &lt;-<span class="st"> </span><span class="op">-</span>n</a>
+<a class="sourceLine" id="cb361-24" data-line-number="24">    } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb361-25" data-line-number="25">      rank &lt;-<span class="st"> </span><span class="kw">rank</span>(<span class="op">-</span>count, <span class="dt">ties =</span> ties.method)</a>
+<a class="sourceLine" id="cb361-26" data-line-number="26">    }</a>
+<a class="sourceLine" id="cb361-27" data-line-number="27">    <span class="cf">if</span> (<span class="kw">sum</span>(rank <span class="op">&gt;</span><span class="st"> </span>n) <span class="op">&lt;=</span><span class="st"> </span><span class="dv">1</span>) {</a>
+<a class="sourceLine" id="cb361-28" data-line-number="28">      <span class="kw">return</span>(f)</a>
+<a class="sourceLine" id="cb361-29" data-line-number="29">    }</a>
+<a class="sourceLine" id="cb361-30" data-line-number="30">    lump &lt;-<span class="st"> </span><span class="kw">lump_range</span>(rank <span class="op">&lt;=</span><span class="st"> </span>n)</a>
+<a class="sourceLine" id="cb361-31" data-line-number="31">    new_levels &lt;-<span class="st"> </span><span class="kw">ifelse</span>(lump <span class="op">==</span><span class="st"> </span><span class="op">-</span>1L, other_level_low, <span class="kw">ifelse</span>(lump <span class="op">==</span><span class="st"> </span>1L, other_level_high, levels))</a>
+<a class="sourceLine" id="cb361-32" data-line-number="32">  } <span class="cf">else</span> <span class="cf">if</span> (<span class="op">!</span><span class="kw">missing</span>(prop)) {</a>
+<a class="sourceLine" id="cb361-33" data-line-number="33">    prop_n &lt;-<span class="st"> </span>count<span class="op">/</span>total</a>
+<a class="sourceLine" id="cb361-34" data-line-number="34">    <span class="cf">if</span>(prop <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb361-35" data-line-number="35">      lump &lt;-<span class="st"> </span><span class="kw">lump_range</span>(prop_n <span class="op">&lt;=</span><span class="st"> </span><span class="op">-</span>prop)</a>
+<a class="sourceLine" id="cb361-36" data-line-number="36">      new_levels &lt;-<span class="st"> </span><span class="kw">ifelse</span>(lump <span class="op">==</span><span class="st"> </span><span class="op">-</span>1L, other_level_low, <span class="kw">ifelse</span>(lump <span class="op">==</span><span class="st"> </span>1L, other_level_high, levels))</a>
+<a class="sourceLine" id="cb361-37" data-line-number="37">    } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb361-38" data-line-number="38">      <span class="cf">if</span> (<span class="kw">sum</span>(prop_n <span class="op">&lt;=</span><span class="st"> </span>prop) <span class="op">&lt;=</span><span class="st"> </span><span class="dv">1</span>) {</a>
+<a class="sourceLine" id="cb361-39" data-line-number="39">        <span class="kw">return</span>(f)</a>
+<a class="sourceLine" id="cb361-40" data-line-number="40">      }</a>
+<a class="sourceLine" id="cb361-41" data-line-number="41">      lump &lt;-<span class="st"> </span><span class="kw">lump_range</span>(prop_n <span class="op">&gt;=</span><span class="st"> </span>prop)</a>
+<a class="sourceLine" id="cb361-42" data-line-number="42">      new_levels &lt;-<span class="st"> </span><span class="kw">ifelse</span>(lump <span class="op">==</span><span class="st"> </span><span class="op">-</span>1L, other_level_low, <span class="kw">ifelse</span>(lump <span class="op">==</span><span class="st"> </span>1L, other_level_high, levels))</a>
+<a class="sourceLine" id="cb361-43" data-line-number="43">    }</a>
+<a class="sourceLine" id="cb361-44" data-line-number="44">  } <span class="cf">else</span> <span class="cf">if</span> (<span class="op">!</span><span class="kw">missing</span>(q)) {</a>
+<a class="sourceLine" id="cb361-45" data-line-number="45">    cdf &lt;-<span class="st"> </span><span class="kw">cumsum</span>(count)<span class="op">/</span><span class="kw">sum</span>(count)</a>
+<a class="sourceLine" id="cb361-46" data-line-number="46">    lump &lt;-<span class="st"> </span><span class="kw">lump_range</span>(cdf <span class="op">&gt;=</span><span class="st"> </span>q[<span class="dv">1</span>] <span class="op">&amp;</span><span class="st"> </span>cdf <span class="op">&lt;=</span><span class="st"> </span>q[<span class="dv">2</span>])</a>
+<a class="sourceLine" id="cb361-47" data-line-number="47">    new_levels &lt;-<span class="st"> </span><span class="kw">ifelse</span>(lump <span class="op">==</span><span class="st"> </span><span class="op">-</span>1L, other_level_low, <span class="kw">ifelse</span>(lump <span class="op">==</span><span class="st"> </span>1L, other_level_high, levels))</a>
+<a class="sourceLine" id="cb361-48" data-line-number="48">  }</a>
+<a class="sourceLine" id="cb361-49" data-line-number="49">  <span class="cf">if</span> (other_level_low <span class="op">%in%</span><span class="st"> </span>new_levels <span class="op">&amp;&amp;</span><span class="st"> </span>other_level_high <span class="op">%in%</span><span class="st"> </span>new_levels) {</a>
+<a class="sourceLine" id="cb361-50" data-line-number="50">    f &lt;-<span class="st"> </span>forcats<span class="op">::</span><span class="kw">lvls_revalue</span>(f, new_levels)</a>
+<a class="sourceLine" id="cb361-51" data-line-number="51">    forcats<span class="op">::</span><span class="kw">fct_relevel</span>(f, other_level_low)</a>
+<a class="sourceLine" id="cb361-52" data-line-number="52">    forcats<span class="op">::</span><span class="kw">fct_relevel</span>(f, other_level_high, <span class="dt">after =</span> <span class="ot">Inf</span>)</a>
+<a class="sourceLine" id="cb361-53" data-line-number="53">  } <span class="cf">else</span> <span class="cf">if</span> (other_level_low <span class="op">%in%</span><span class="st"> </span>new_levels) {</a>
+<a class="sourceLine" id="cb361-54" data-line-number="54">    f &lt;-<span class="st"> </span>forcats<span class="op">::</span><span class="kw">lvls_revalue</span>(f, new_levels)</a>
+<a class="sourceLine" id="cb361-55" data-line-number="55">    forcats<span class="op">::</span><span class="kw">fct_relevel</span>(f, other_level_low)</a>
+<a class="sourceLine" id="cb361-56" data-line-number="56">  } <span class="cf">else</span> <span class="cf">if</span> (other_level_high <span class="op">%in%</span><span class="st"> </span>new_levels) {</a>
+<a class="sourceLine" id="cb361-57" data-line-number="57">    f &lt;-<span class="st"> </span>forcats<span class="op">::</span><span class="kw">lvls_revalue</span>(f, new_levels)</a>
+<a class="sourceLine" id="cb361-58" data-line-number="58">    forcats<span class="op">::</span><span class="kw">fct_relevel</span>(f, other_level_high, <span class="dt">after =</span> <span class="ot">Inf</span>)</a>
+<a class="sourceLine" id="cb361-59" data-line-number="59">  }</a>
+<a class="sourceLine" id="cb361-60" data-line-number="60">  <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb361-61" data-line-number="61">    f</a>
+<a class="sourceLine" id="cb361-62" data-line-number="62">  }</a></code></pre></div>
+<div class="question">
+<p>How do conflicted packages identify duplicate function names and print them out</p>
 </div>
+<p>We can use <code>conflict_scout</code>!</p>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb362-1" data-line-number="1">conflicted<span class="op">::</span>conflict_scout</a></code></pre></div>
+<pre><code>## function (pkgs = NULL) 
+## {
+##     pkgs &lt;- pkgs %||% pkgs_attached()
+##     objs &lt;- lapply(pkgs, pkg_ls)
+##     names(objs) &lt;- pkgs
+##     index &lt;- invert(objs)
+##     potential &lt;- Filter(function(x) length(x) &gt; 1, index)
+##     unique &lt;- Map(unique_obj, names(potential), potential)
+##     conflicts &lt;- Filter(function(x) length(x) &gt; 1, unique)
+##     conflicts &lt;- map2(names(conflicts), conflicts, superset_principle)
+##     conflicts &lt;- map2(names(conflicts), conflicts, drop_moved)
+##     for (fun in ls(prefs)) {
+##         if (!has_name(conflicts, fun)) 
+##             next
+##         conflicts[[fun]] &lt;- prefs_resolve(fun, conflicts[[fun]])
+##     }
+##     conflicts &lt;- compact(conflicts)
+##     new_conflict_report(conflicts)
+## }
+## &lt;bytecode: 0x7f8ea4b6eff0&gt;
+## &lt;environment: namespace:conflicted&gt;</code></pre>
+</div>
+<div id="call-stacks" class="section level2 unnumbered">
+<h2>7.5 Call stacks</h2>
+<div class="question">
+<p>What exactly is a frame?</p>
+</div>
+<p>A frame is a singular step within the CST - in thr following example, <code>f</code>, <code>g</code>, and <code>h</code> are each frames</p>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb364-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb364-2" data-line-number="2">  <span class="kw">g</span>(<span class="dt">x =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb364-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb364-4" data-line-number="4">g &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb364-5" data-line-number="5">  <span class="kw">h</span>(<span class="dt">x =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb364-6" data-line-number="6">}</a>
+<a class="sourceLine" id="cb364-7" data-line-number="7">h &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb364-8" data-line-number="8">  <span class="kw">stop</span>()</a>
+<a class="sourceLine" id="cb364-9" data-line-number="9">}</a></code></pre></div>
 </div>
 <div id="data-structures" class="section level2 unnumbered">
 <h2>7.6 Data Structures</h2>
 <div class="question">
-<p>Can we build on this function to include <code>on.exit()</code>?</p>
-<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb340-1" data-line-number="1">my_env &lt;-<span class="st"> </span><span class="kw">new.env</span>(<span class="dt">parent =</span> <span class="kw">emptyenv</span>())</a>
-<a class="sourceLine" id="cb340-2" data-line-number="2">my_env<span class="op">$</span>a &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb340-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb340-4" data-line-number="4">get_a &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb340-5" data-line-number="5">  my_env<span class="op">$</span>a</a>
-<a class="sourceLine" id="cb340-6" data-line-number="6">}</a>
-<a class="sourceLine" id="cb340-7" data-line-number="7">set_a &lt;-<span class="st"> </span><span class="cf">function</span>(value) {</a>
-<a class="sourceLine" id="cb340-8" data-line-number="8">  old &lt;-<span class="st"> </span>my_env<span class="op">$</span>a</a>
-<a class="sourceLine" id="cb340-9" data-line-number="9">  my_env<span class="op">$</span>a &lt;-<span class="st"> </span>value</a>
-<a class="sourceLine" id="cb340-10" data-line-number="10">  <span class="kw">invisible</span>(old)</a>
-<a class="sourceLine" id="cb340-11" data-line-number="11">}</a></code></pre></div>
+<p>Can we discuss what’s happening in this function? Since it’s similar to the <code>setwd</code> function from last week could we build on this function to include <code>on.exit()</code>?</p>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb365-1" data-line-number="1">my_env &lt;-<span class="st"> </span><span class="kw">new.env</span>(<span class="dt">parent =</span> <span class="kw">emptyenv</span>())</a>
+<a class="sourceLine" id="cb365-2" data-line-number="2">my_env<span class="op">$</span>a &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb365-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb365-4" data-line-number="4">get_a &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb365-5" data-line-number="5">  my_env<span class="op">$</span>a</a>
+<a class="sourceLine" id="cb365-6" data-line-number="6">}</a>
+<a class="sourceLine" id="cb365-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb365-8" data-line-number="8">set_a &lt;-<span class="st"> </span><span class="cf">function</span>(value) {</a>
+<a class="sourceLine" id="cb365-9" data-line-number="9">  old &lt;-<span class="st"> </span>my_env<span class="op">$</span>a</a>
+<a class="sourceLine" id="cb365-10" data-line-number="10">  my_env<span class="op">$</span>a &lt;-<span class="st"> </span>value</a>
+<a class="sourceLine" id="cb365-11" data-line-number="11">  <span class="kw">invisible</span>(old)</a>
+<a class="sourceLine" id="cb365-12" data-line-number="12">}</a></code></pre></div>
 </div>
 <div class="TODO">
-<p>XXX</p>
+<p>Tan’s answer</p>
 </div>
 <div class="question">
 <p>The bullet point mentions hashmaps but I’m still really unclear on what that is. What are hash tables and are they related?</p>
 </div>
-<div class="TODO">
-<p>XXX</p>
-</div>
-
+<p>They are sort of like fast look-up tables! It may be impossible to show with a small example. To demonstrate that the lookup is fast you’d need to store a lot of stuff in it first. You’d also probably need an alternative implementation of a lookup table to compare it to. We could probably implement a hash table relatively easily* using environments. Demonstrating that using environments is a good way to do it seems difficult.</p>
+<ul>
+<li>looking at a data structures textbook (Cormen, Lieserson &amp; Rivest), a hash table is expected to provide users with fast functions for insert, search, and delete.</li>
+</ul>
 
 </div>
 </div>
@@ -392,8 +591,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="functions.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="functions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="conditions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

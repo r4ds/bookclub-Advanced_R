@@ -28,27 +28,118 @@ Each package becomes a parent to the global environment. We can inspect local en
 search_envs()
 ```
 
+## 7.2.4 Super assignment {-}
+
+:::question
+Let's expand on the concept of super assignment
+:::
+
+```{r}
+x <- 0
+f <- function() {
+  x <- 2
+  x <<- 1
+  x
+}
+f()
+x
+```
+
+Note that the assignment inside `f` is local, but super assignment "never creates a variable in the current environment" so it modifies the global `x` and not the local `x`. 
+
+If you want to break your brain a bit, check out:
+
+```{r}
+x <- 0
+f <- function() {
+  x <- x
+  x <<- x + 1
+  x
+}
+f()
+x
+f()
+x
+f()
+x
+```
 ## 7.2.5 Getting and setting {-}
 
 :::question
 "But you can’t use `[[` with numeric indices, and you can’t use `[`:"
 
-It makes sense to me that you can't use numeric indexes because objects in an environment aren't ordered, but why can't you use `[`?
+It makes sense to me that you can't use numeric indexes because objects in an environment aren't ordered, but why can't you use `[`? _The solutions manual states: "The second option would return two objects at the same time. What data structure would they be contained inside?_
 :::
 
-:::TODO
-The solutions manual states: "The second option would return two objects at the same time. What data structure would they be contained inside? But can we elaborate on what this means?
-:::
+`[` returns an object of the same type, if we were to apply this to environments we'd have an environment returning an environment.
 
 ## 7.2.6 Advanced bindings {-}
 
 :::question
-Let's go over some source code that uses `env_bind_lazy()` - Hadley mentions its used when autoloading datasets with packages - can we find an example of this? How is this different from including `LazyData: true` in your description file?
+Hadley mentions delayed bindings are used when autoloading datasets with packages - can we find an example of this? How is this different from including `LazyData: true` in your description file?
 :::
 
-:::TODO
-XXX
+The `LazyData: true` entry in `DESCRIPTION` just informs that delayed binding should be used. `autoload` **does** use delayed bindings [from source code: `do.call("delayedAssign", list(name, newcall, .GlobalEnv, .AutoloadEnv))`] but lazydata that gets used by packages is ultimately implemented as an internal function. If you scan through `View(loadNamespace)`:
+
+```{r, eval=FALSE}
+if (file.exists(paste0(dbbase, ".rdb"))) 
+      lazyLoad(dbbase, env)
+    dbbase <- file.path(pkgpath, "data", "Rdata")
+    if (file.exists(paste0(dbbase, ".rdb"))) 
+      lazyLoad(dbbase, .getNamespaceInfo(env, "lazydata"))
+```
+
+and `lazyLoad` eventually calls `.Internal(makeLazy(vars, vals, expr, db, envir))` which leads you to https://github.com/wch/r-source/blob/726bce63825844715860d35fdf76539445529f52/src/main/builtin.c#L103
+and ultimately the delayed binding is realized as a promise with `defineVar(name, mkPROMISE(expr0, eenv), aenv);`.
+
+
+## 7.3 Recursing over environments {-}
+
+:::question
+How can we re-write `where` so that it returns all functions with the same name?
 :::
+
+```{r}
+where2 <- function(in_name, env = caller_env()) {
+  
+  all_functions <- ""
+  index <- 1
+
+  while (!identical(env, empty_env())) {
+    # if success
+    if (env_has(env, in_name)) {
+      all_functions[index] <- env_name(env)
+      index <- index + 1
+      #return()
+    }
+    # inspect parent
+    env <- env_parent(env)
+  }
+  # base case - I'm missing this I think
+  return(all_functions)
+}
+
+# load dplyr so you have two filters
+library(dplyr)
+where2("filter")
+```
+
+We can also create a function that emulates `pryr`'s where:
+
+```{r}
+where3 <- function(name, env = parent.frame(), found = character()) {
+  if (identical(env, emptyenv()))
+    return(found)
+  else if (exists(name, env, inherits = FALSE)) {
+    Recall(name, parent.env(env), c(found, environmentName(env)))
+  } else {
+    Recall(name, parent.env(env), found)
+  }
+}
+  
+where3("filter")
+```
+
 
 ## 7.3.1.2 Exercises {-}
 
@@ -82,9 +173,7 @@ fget("mean", inherits = TRUE)
 ```
 :::
 
-:::TODO
-XXX
-:::
+Inherits is an argument that stops the function from performing the recursive action of looking into the parent environment for the name. Inherits is acting like a valve. If false, and the name wasnt found in the current environment, then stop because the next expression searches the parent of env. In the case environment is the empty environment then stop because the empty environment doesnt have a parent.
 
 ## 7.4.2 Function enviornment {-}
 
@@ -99,36 +188,122 @@ e$g
 ```
 :::
 
-
-:::TODO
-
-Is this example trying to display that if we change the function to return `y` this does not return `1` because `y` inside the function cannot access `y` at the global scope?
-
-```{r}
-y <- 1
-e <- env()
-e$g <- function() y
-e$g
-```
-:::
+This can be seen in our `where2` example in the recursion section!
 
 ## 7.4.3 Namespaces {-}
 
 :::question
 "Every binding in the package environment is also found in the namespace environment; this ensures every function can use every other function in the package. But some bindings only occur in the namespace environment. These are known as internal or non-exported objects, which make it possible to hide internal implementation details from the user."
 
-Can we find some simple-ish package source code as an example of this? 
+When you’re developing a package does the namespace environment just come with your package for free when you build it or you need to create both your package and its namespace env? 
+
+How do you create functions that exist only in the namespace environment?
 :::
 
-:::TODO
-XXX
+When you are building the package, everything in the NAMESPACE file gets generated by `roxygen2`. Attaching a package puts the package in the search path of namespaces. So when you run `library(package)` or `require(package)` it creates the namespace environment. Package developers control what names are available by exporting to namespace (and otherwise you can call non-exported with `:::`).
+
+For example let's say you want to extend `forcats` to use ordered factors to lump the tails.  In order to get it to work, we need to use some forcats helper functions. We could just copy the code for the functions and added them to our scripts, but for prototyping it's easy enough to just use `:::`
+
+```{r, eval=FALSE}
+fct_lump_ordered <- function(f, n, prop, q, w = NULL,
+                             other_level_low = "Other Low",
+                             other_level_high = "Other High",
+                             ties.method = c("min", "average", "first", "last", "random", "max")) {
+  f <- check_ordered(f)
+  w <- forcats:::check_weights(w, length(f))
+  ties.method <- match.arg(ties.method)
+  levels <- levels(f)
+  if (is.null(w)) {
+    count <- as.vector(table(f))
+    total <- length(f)
+  } else {
+    count <- as.vector(tapply(w, f, FUN = sum))
+    total <- sum(w)
+  }
+  if (all(missing(n), missing(prop), missing(q))) {
+    lump <- forcats:::in_smallest(count)
+    lump <- lump_range(!lump)
+    new_levels <- ifelse(lump == -1L,other_level_low, ifelse(lump == 1L, other_level_high, levels))
+  } else if (!missing(n) ) {
+    if (n < 0) {
+      rank <- rank(count, ties = ties.method)
+      n <- -n
+    } else {
+      rank <- rank(-count, ties = ties.method)
+    }
+    if (sum(rank > n) <= 1) {
+      return(f)
+    }
+    lump <- lump_range(rank <= n)
+    new_levels <- ifelse(lump == -1L, other_level_low, ifelse(lump == 1L, other_level_high, levels))
+  } else if (!missing(prop)) {
+    prop_n <- count/total
+    if(prop < 0) {
+      lump <- lump_range(prop_n <= -prop)
+      new_levels <- ifelse(lump == -1L, other_level_low, ifelse(lump == 1L, other_level_high, levels))
+    } else {
+      if (sum(prop_n <= prop) <= 1) {
+        return(f)
+      }
+      lump <- lump_range(prop_n >= prop)
+      new_levels <- ifelse(lump == -1L, other_level_low, ifelse(lump == 1L, other_level_high, levels))
+    }
+  } else if (!missing(q)) {
+    cdf <- cumsum(count)/sum(count)
+    lump <- lump_range(cdf >= q[1] & cdf <= q[2])
+    new_levels <- ifelse(lump == -1L, other_level_low, ifelse(lump == 1L, other_level_high, levels))
+  }
+  if (other_level_low %in% new_levels && other_level_high %in% new_levels) {
+    f <- forcats::lvls_revalue(f, new_levels)
+    forcats::fct_relevel(f, other_level_low)
+    forcats::fct_relevel(f, other_level_high, after = Inf)
+  } else if (other_level_low %in% new_levels) {
+    f <- forcats::lvls_revalue(f, new_levels)
+    forcats::fct_relevel(f, other_level_low)
+  } else if (other_level_high %in% new_levels) {
+    f <- forcats::lvls_revalue(f, new_levels)
+    forcats::fct_relevel(f, other_level_high, after = Inf)
+  }
+  else {
+    f
+  }
+```
+
+:::question
+How do conflicted packages identify duplicate function names and print them out
 :::
 
+We can use `conflict_scout`!
+
+```{r}
+conflicted::conflict_scout
+```
+
+
+## 7.5 Call stacks {-}
+
+:::question
+What exactly is a frame?
+:::
+
+A frame is a singular step within the CST - in thr following example, `f`, `g`, and `h` are each frames
+
+```{r, eval=FALSE}
+f <- function(x) {
+  g(x = 2)
+}
+g <- function(x) {
+  h(x = 3)
+}
+h <- function(x) {
+  stop()
+}
+```
 
 ## 7.6 Data Structures {-}
 
 :::question
-Can we build on this function to include `on.exit()`?
+Can we discuss what's happening in this function? Since it's similar to the `setwd` function from last week could we build on this function to include `on.exit()`?
 
 ```{r}
 my_env <- new.env(parent = emptyenv())
@@ -137,6 +312,7 @@ my_env$a <- 1
 get_a <- function() {
   my_env$a
 }
+
 set_a <- function(value) {
   old <- my_env$a
   my_env$a <- value
@@ -146,14 +322,13 @@ set_a <- function(value) {
 :::
 
 :::TODO
-XXX
+Tan's answer
 :::
 
 :::question
 The bullet point mentions hashmaps but I'm still really unclear on what that is. What are hash tables and are they related?
 :::
 
-:::TODO
-XXX
-:::
+They are sort of like fast look-up tables! It may be impossible to show with a small example. To demonstrate that the lookup is fast you'd need to store a lot of stuff in it first. You'd also probably need an alternative implementation of a lookup table to compare it to. We could probably implement a hash table relatively easily* using environments. Demonstrating that using environments is a good way to do it seems difficult.
 
+* looking at a data structures textbook (Cormen, Lieserson & Rivest), a hash table is expected to provide users with fast functions for insert, search, and delete.
