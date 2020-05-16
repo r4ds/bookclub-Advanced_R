@@ -15,7 +15,7 @@ library(openintro)
 What's the relationship between base, empty enviornment, and global enviornment?
 :::
 
-The global environment is your working enviornment, where all packages loaded are its parent. When you list the parents of the gloal environment the last environment is always `base` which is responsible for loading all other packages. The base's parent is the "ultimate ancestor", the empty enviornment.
+The working environment is the environment whose names would currently mask names in any other environment. Note that in the book, the term current environment is used not working environment. At any given time there is an environment that is most immediately-visible i.e. its names will mask the same names in any other environment. This is the current environment. The identity of the current environment can change e.g. when entering a function. It is often the case that the current environment is the global environment i.e. typically when working interactively.
 
 
 :::question
