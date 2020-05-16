@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-05-13" />
+<meta name="date" content="2020-05-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -221,6 +221,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#namespaces"><i class="fa fa-check"></i>7.4.3 Namespaces</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#data-structures"><i class="fa fa-check"></i>7.6 Data Structures</a></li>
 </ul></li>
+<li class="chapter" data-level="8" data-path="conditions.html"><a href="conditions.html"><i class="fa fa-check"></i><b>8</b> Conditions</a><ul>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#ignoring-conditions"><i class="fa fa-check"></i>8.3 Ignoring conditions</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#calling-handlers"><i class="fa fa-check"></i>8.4.3 Calling handlers</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-4"><i class="fa fa-check"></i>8.4.5.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#custom-conditions"><i class="fa fa-check"></i>Custom conditions</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -248,7 +254,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="question">
 <p>So if you are familiar with C can you just write a function in C <em>in</em> R? What does that process look like? I think this is a bigger question of digging into the relationship between C and R.</p>
 </div>
-<p>We can use RCPP!</p>
+<p>Primitives are part of R core, and can only be written by the R-core team. At its heart, R <em>is</em> the set of primitive C functions underneath it.</p>
+<p>You can use Rcpp to include C++ code in your R code, but these aren’t Primitives. There are also other techniques which we’ll likely see covered in later chapters. Here’s an example using Rcpp.</p>
 <div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb220-1" data-line-number="1">Rcpp<span class="op">::</span><span class="kw">cppFunction</span>(<span class="st">&#39;#include&lt;string&gt;</span></a>
 <a class="sourceLine" id="cb220-2" data-line-number="2"><span class="st">  std::string IPA() {</span></a>
 <a class="sourceLine" id="cb220-3" data-line-number="3"><span class="st">  std::string val = &quot;IPAs suck&quot;;    </span></a>
@@ -366,13 +373,13 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <a class="sourceLine" id="cb241-9" data-line-number="9"><span class="co">#&gt;     intersect, setdiff, setequal, union</span></a>
 <a class="sourceLine" id="cb241-10" data-line-number="10"><span class="kw">func_1</span>(test_tbl, x1)</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 1
-##      x1
-##   &lt;dbl&gt;
-## 1 0.384
-## 2 0.836
-## 3 0.211
-## 4 0.172
-## 5 0.828</code></pre>
+##       x1
+##    &lt;dbl&gt;
+## 1 0.632 
+## 2 0.337 
+## 3 0.793 
+## 4 0.0919
+## 5 0.901</code></pre>
 </div>
 <div id="a-fresh-start" class="section level2 unnumbered">
 <h2>6.4.3 A fresh start</h2>
@@ -420,7 +427,7 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <a class="sourceLine" id="cb247-8" data-line-number="8">}</a>
 <a class="sourceLine" id="cb247-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb247-10" data-line-number="10"><span class="kw">mega_model</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))</a></code></pre></div>
-<pre><code>##  [1] 284 240 216 244 235 213 214 226 257 201</code></pre>
+<pre><code>##  [1] 230 215 224 297 214 229 203 255 232 286</code></pre>
 </div>
 <div id="promises" class="section level2 unnumbered">
 <h2>6.5.1 Promises</h2>
@@ -648,7 +655,7 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb289-1" data-line-number="1">hist</a></code></pre></div>
 <pre><code>## function (x, ...) 
 ## UseMethod(&quot;hist&quot;)
-## &lt;bytecode: 0x7fc1488d5b80&gt;
+## &lt;bytecode: 0x7fdd0c7bdfc8&gt;
 ## &lt;environment: namespace:graphics&gt;</code></pre>
 <p>does not give me the actual contents of the actual function….</p>
 </div>
