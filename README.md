@@ -19,7 +19,7 @@ All Meetings Scheduled for 8:00 PM Eastern unless otherwise noted
 - 2020-04-23 Chapter 4 - Subsetting: [Scott Nestler](https://twitter.com/ScottNestler) ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week4/Chap4slides.html#1) | [Zoom Recording](https://www.youtube.com/watch?v=eLMpCc0t1cg))
 - 2020-04-30 Chapter 5 - Control flow: [Maya Gans](https://maya.rbind.io) ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week5/Chapter5.html#1) | [Zoom Recording](https://www.youtube.com/watch?v=96eY6YS_3hU&feature=youtu.be))
 - 2020-05-07 Chapter 6 - Functions: [Asmae Toumi](https://twitter.com/asmae_toumi) ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week6/Chap6slides.html) | [Zoom Recording](https://youtu.be/UwzGhMndWzs))
-- 2020-05-14 Chapter 7 - Environments: [Daryn Ramsden](https://twitter.com/thisisdaryn)
+- 2020-05-14 Chapter 7 - Environments: [Daryn Ramsden](https://twitter.com/thisisdaryn) ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week7/Chap7Slides.html) | [Zoom Recording](https://www.youtube.com/watch?v=mk7iu1-P8ZU&feature=youtu.be))
 - 2020-05-21 Chapter 8 - Conditions:
 - 2020-05-28 Chapter 9 - Functionals: [Tan Ho](https://twitter.com/_tanho)
 - 2020-06-04 Chapter 10 - [Function factories](https://cran.r-project.org/package=factory): [Jon Harmon](https://twitter.com/jonthegeek)
