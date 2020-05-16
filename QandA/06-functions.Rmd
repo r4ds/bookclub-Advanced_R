@@ -13,7 +13,9 @@ library(rlang)
 So if you are familiar with C can you just write a function in C *in* R? What does that process look like? I think this is a bigger question of digging into the relationship between C and R.
 :::
 
-We can use RCPP!
+Primitives are part of R core, and can only be written by the R-core team. At its heart, R *is* the set of primitive C functions underneath it.
+
+You can use Rcpp to include C++ code in your R code, but these aren't Primitives. There are also other techniques which we'll likely see covered in later chapters. Here's an example using Rcpp.
 
 ```{r}
 Rcpp::cppFunction('#include<string>
