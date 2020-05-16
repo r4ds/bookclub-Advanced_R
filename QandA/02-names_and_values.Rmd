@@ -6,6 +6,41 @@ library(kableExtra)
 library(lobstr)
 ```
 
+## 2.2 Binding basics {-}
+
+:::question
+Should we care about R internals?
+:::
+
+Guided by [this blogpost](https://www.brodieg.com/2019/02/18/an-unofficial-reference-for-internal-inspect/), we can use the `.Internal` function to inspect metadata associated with our objects:
+
+```{r, eval=FALSE}
+ x <- list(1:5)
+.Internal(inspect(x))
+# > @0x000001b6a4af9fc8 19 VECSXP g0c1 [NAM(7)] (len=1, tl=0)
+# > @0x000001b6a3321d90 13 INTSXP g0c0 [NAM(7)]  1 : 5 (compact)
+```
+
+* `@0x000001b6a4af9fc8` -- address (memory location)
+* `19 VECSXP` -- type ([full list here](https://cran.r-project.org/doc/manuals/r-release/R-ints.html#SEXPTYPEs))
+* `g0` -- garbage collector info token 
+* `c1` -- size of object (small vector)
+* `NAM(7)` -- named value of the object (if greater than one copy on modify)
+* `len=1` -- length of object
+* `tl` -- true length of object
+* small snippet of the data
+
+```{r, eval=FALSE}
+{
+  x <- list(1:5)
+  .Internal(inspect(x))
+}
+# < @0x000001b6a4b4a3a0 19 VECSXP g0c1 [NAM(1)] (len=1, tl=0)
+# < @0x000001b6a3a814d0 13 INTSXP g0c0 [NAM(7)]  1 : 5 (compact)
+```
+
+It is of note here that without curly brackets we have to use copy-on-modify, but within curly brackes we can use copy-in-place because `NAM(1)`
+
 ## 2.3 Copy-on-modify {-}
 
 :::question
