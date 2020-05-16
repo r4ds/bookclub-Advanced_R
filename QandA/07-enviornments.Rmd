@@ -321,14 +321,19 @@ set_a <- function(value) {
 ```
 :::
 
-We can use those two functions like we did getting and setting the work directory inside another function - using the old value within `on.exit` to reset `my_env$a` outside of the function
+We can use those two functions like we did getting and setting the work directory inside another function - using the old value within `on.exit` to reset `my_env$a` outside of the function: Hadley suggests returning invisible old so that you don't need to explicitly call `get_a`, you can just assign the output of `set_a`
 
 ```{r, eval=FALSE}
-cleanup(value) {
-  my_env_a <- get_a()
-  set_a(value) 
-  # now we can do stuff with the new my_env$a value
-  on.exit(set_a(my_env_a), add=TRUE)
+set_a <- function(value) {
+  old <- my_env$a
+  my_env$a <- value
+  invisible(old)
+}
+
+do_thing_where_env_a_is_value(value, code) {
+  myoldenv <- set_a(value) # sets a to the NEW value and returns the OLD value for storage
+  on.exit(set_a(myoldenv), add=TRUE)
+  force(code)
 } 
 ```
 
