@@ -258,11 +258,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="question">
 <p>What’s the relationship between base, empty enviornment, and global enviornment?</p>
 </div>
-<<<<<<< HEAD
-<p>The working environment as the environment whose names would currently mask names in any other environment. Note that in the book, the term current environment is used not working environment. At any given time there is an environment that is most immediately-visible i.e. its names will mask the same names in any other environment. This is the current environment.The identity of the current environment can change e.g. when entering a function. It is often the case that the current environment is the global environment i.e. typically when working interactively.</p>
-=======
 <p>The working environment is the environment whose names would currently mask names in any other environment. Note that in the book, the term current environment is used not working environment. At any given time there is an environment that is most immediately-visible i.e. its names will mask the same names in any other environment. This is the current environment. The identity of the current environment can change e.g. when entering a function. It is often the case that the current environment is the global environment i.e. typically when working interactively.</p>
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+<div class="question">
+<p>Are functions the only mechanism for changing the current environment? (I believe the answer is yes.)</p>
+</div>
+<p>Consider the following from the book:</p>
+<blockquote>
+<p>The current environment, or <code>current_env()</code> is the environment in which code is currently executing. When you’re experimenting interactively, that’s usually the global environment, or <code>global_env()</code>.</p>
+</blockquote>
+<p>The use of the word “usually” in this sentence raises the possibility that there’s an exception. That exception could possibly mean</p>
+<ol style="list-style-type: decimal">
+<li>There’s a way to change the environment in interactive mode without going into a function</li>
+<li>You can experiment interactively within a function or</li>
+<li>Something I’m ignorant of.</li>
+</ol>
+<p>I know that you can step-through a function in the debug browser so maybe that’s what he means?</p>
+<p>But then the very next line in the text says:</p>
+<blockquote>
+<p>The global environment is sometimes called your “workspace”, as it’s where all interactive (i.e. outside of a function) computation takes place.</p>
+</blockquote>
+<p>It both i) defines interactive specifically to exclude the inside of a function and ii) makes a stronger claim, “all interactive computation” vs “usually”.</p>
+<p>If you put a breakpoint or <code>browser()</code> call inside a function, then you would be working interactively in a function environment.</p>
+<div class="question">
+<p>Does hierarchy of environments have a computer science name (linked list?)?</p>
+</div>
+<p>The hierarchy of environments is not a linked list, it is a directed graph.</p>
 <div class="question">
 <p>Clarification: the global environment’s parent is all the packages loaded within the environment, not the empty environment, right? How do we check this? <code>parent.env(global)</code>?</p>
 </div>
@@ -416,11 +436,7 @@ and ultimately the delayed binding is realized as a promise with <code>defineVar
 <a class="sourceLine" id="cb360-3" data-line-number="3"><span class="kw">fget</span>(<span class="st">&quot;mean&quot;</span>, <span class="dt">inherits =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## function (x, ...) 
 ## UseMethod(&quot;mean&quot;)
-<<<<<<< HEAD
-## &lt;bytecode: 0x7fdd0b88e7b0&gt;
-=======
-## &lt;bytecode: 0x7fe028c7a5b0&gt;
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## &lt;bytecode: 0x7f87d3304db0&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 </div>
 <p>Inherits is an argument that stops the function from performing the recursive action of looking into the parent environment for the name. Inherits is acting like a valve. If false, and the name wasnt found in the current environment, then stop because the next expression searches the parent of env. In the case environment is the empty environment then stop because the empty environment doesnt have a parent.</p>
@@ -532,7 +548,7 @@ and ultimately the delayed binding is realized as a promise with <code>defineVar
 ##     conflicts &lt;- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## &lt;bytecode: 0x7fe02a92f318&gt;
+## &lt;bytecode: 0x7f87d39171b0&gt;
 ## &lt;environment: namespace:conflicted&gt;</code></pre>
 </div>
 <div id="call-stacks" class="section level2 unnumbered">

@@ -18,6 +18,36 @@ What's the relationship between base, empty enviornment, and global enviornment?
 The working environment is the environment whose names would currently mask names in any other environment. Note that in the book, the term current environment is used not working environment. At any given time there is an environment that is most immediately-visible i.e. its names will mask the same names in any other environment. This is the current environment. The identity of the current environment can change e.g. when entering a function. It is often the case that the current environment is the global environment i.e. typically when working interactively.
 
 :::question
+Are functions the only mechanism for changing the current environment? (I believe the answer is yes.)
+:::
+
+Consider the following from the book:
+
+> The current environment, or `current_env()` is the environment in which code is currently executing. When you're experimenting interactively, that's usually the global environment, or `global_env()`. 
+
+The use of the word "usually" in this sentence raises the possibility that there's an exception. That exception could possibly mean 
+
+1. There's a way to change the environment in interactive mode without going into a function
+2. You can experiment interactively within a function or 
+3. Something I'm ignorant of. 
+
+I know that you can step-through a function in the debug browser so maybe that's what he means?
+
+But then the very next line in the text says:
+
+> The global environment is sometimes called your "workspace", as it's where all interactive (i.e. outside of a function) computation takes place. 
+
+It both i) defines interactive specifically to exclude the inside of a function and ii) makes a stronger claim, "all interactive computation" vs "usually".
+
+If you put a breakpoint or `browser()` call inside a function, then you would be working interactively in a function environment.
+
+:::question
+Does hierarchy of environments have a computer science name (linked list?)?
+:::
+
+The hierarchy of environments is not a linked list, it is a directed graph.
+
+:::question
 Clarification: the global environment's parent is all the packages loaded within the environment, not the empty environment, right? How do we check this? `parent.env(global)`?
 :::
 

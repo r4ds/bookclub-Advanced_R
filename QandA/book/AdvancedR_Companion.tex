@@ -363,11 +363,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-<<<<<<< HEAD
-## [1] "0x7fdd16448bd0"
-=======
-## [1] "0x7fe02e928ee8"
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## [1] "0x7f87e00d0b20"
 \end{verbatim}
 
 \begin{Shaded}
@@ -377,11 +373,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-<<<<<<< HEAD
-## [1] "0x7fdd16448bd0"
-=======
-## [1] "0x7fe02e928ee8"
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## [1] "0x7f87e00d0b20"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -393,11 +385,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-<<<<<<< HEAD
-## [1] "0x7fdd0f21bbb8"
-=======
-## [1] "0x7fe02eef91c8"
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## [1] "0x7f87da255138"
 \end{verbatim}
 
 \begin{Shaded}
@@ -407,13 +395,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-<<<<<<< HEAD
-## █ [1:0x7fdd10ac2a68] <list> 
-## └─[2:0x7fdd16448bd0] <dbl>
-=======
-## █ [1:0x7fe02ef552e0] <list> 
-## └─[2:0x7fe02e928ee8] <dbl>
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## █ [1:0x7f87da20a5c8] <list> 
+## └─[2:0x7f87e00d0b20] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -423,11 +406,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-<<<<<<< HEAD
-## [1] "0x7fdd19fdb2e8"
-=======
-## [1] "0x7fe02eff2668"
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## [1] "0x7f87da162600"
 \end{verbatim}
 
 \begin{Shaded}
@@ -464,11 +443,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-<<<<<<< HEAD
-## [1] "<0x7fdd163380a8>"
-=======
-## [1] "<0x7fe031734be8>"
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## [1] "<0x7f87de219d68>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -478,11 +453,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-<<<<<<< HEAD
-## <0x7fdd163380a8>
-=======
-## <0x7fe031734be8>
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## <0x7f87de219d68>
 \end{verbatim}
 
 \begin{Shaded}
@@ -492,11 +463,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-<<<<<<< HEAD
-## [1] "0x7fdd163380a8"
-=======
-## [1] "0x7fe031734be8"
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## [1] "0x7f87de219d68"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -545,11 +512,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-<<<<<<< HEAD
-## [1] "0x7fdd11ba4c48"
-=======
-## [1] "0x7fe031e620c8"
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## [1] "0x7f87dc955a08"
 \end{verbatim}
 
 \begin{Shaded}
@@ -559,11 +522,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-<<<<<<< HEAD
-## [1] "<0x7fdd11ba4c48>"
-=======
-## [1] "<0x7fe031e620c8>"
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## [1] "<0x7f87dc955a08>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -573,11 +532,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-<<<<<<< HEAD
-## tracemem[0x7fdd11ba4c48 -> 0x7fdd0df25dc8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
-=======
-## tracemem[0x7fe031e620c8 -> 0x7fe031e80388]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## tracemem[0x7f87dc955a08 -> 0x7f87dca88b08]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -673,11 +628,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-<<<<<<< HEAD
-## [1] "0x7fdd164534d8"
-=======
-## [1] "0x7fe02efb4f88"
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## [1] "0x7f87dcad72c8"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -690,11 +641,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-<<<<<<< HEAD
-## [1] "0x7fdd159c1598"
-=======
-## [1] "0x7fe031f23518"
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## [1] "0x7f87da48ed08"
 \end{verbatim}
 
 \begin{Shaded}
@@ -717,11 +664,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-<<<<<<< HEAD
-## [1] "0x7fdd159c1598"
-=======
-## [1] "0x7fe031f23518"
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## [1] "0x7f87da48ed08"
 \end{verbatim}
 
 \begin{Shaded}
@@ -731,11 +674,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-<<<<<<< HEAD
-## [1] "0x7fdd159c1598"
-=======
-## [1] "0x7fe031f23518"
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## [1] "0x7f87da48ed08"
 \end{verbatim}
 
 \begin{Shaded}
@@ -758,11 +697,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-<<<<<<< HEAD
-## [1] "0x7fdd159c1598"
-=======
-## [1] "0x7fe031f23518"
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## [1] "0x7f87da48ed08"
 \end{verbatim}
 
 \begin{Shaded}
@@ -772,11 +707,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-<<<<<<< HEAD
-## [1] "0x7fdd14bd67d8"
-=======
-## [1] "0x7fe02cc94868"
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## [1] "0x7f87de20bae8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -799,11 +730,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-<<<<<<< HEAD
-## [1] "0x7fdd14d116f8"
-=======
-## [1] "0x7fe02db11098"
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## [1] "0x7f87de0a7178"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2606,19 +2533,11 @@ This will work:
 ## # A tibble: 5 x 1
 ##      x1
 ##   <dbl>
-<<<<<<< HEAD
-## 1 0.236
-## 2 0.276
-## 3 0.419
-## 4 0.238
-## 5 0.215
-=======
-## 1 0.755
-## 2 0.972
-## 3 0.671
-## 4 0.437
-## 5 0.983
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## 1 0.742
+## 2 0.381
+## 3 0.551
+## 4 0.263
+## 5 0.444
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2692,11 +2611,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-<<<<<<< HEAD
-##  [1] 243 300 276 255 290 213 253 267 244 222
-=======
-##  [1] 223 274 206 238 273 245 203 300 243 210
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+##  [1] 227 299 271 205 221 218 275 252 295 277
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3133,11 +3048,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-<<<<<<< HEAD
-## <bytecode: 0x7fdd0c7bdfc8>
-=======
-## <bytecode: 0x7fe025aaffc8>
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## <bytecode: 0x7f87d422e9c8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3713,11 +3624,44 @@ I don't really see why this needs to be expanded upon\ldots{}.
 
 What's the relationship between base, empty enviornment, and global enviornment?
 
-<<<<<<< HEAD
-The working environment as the environment whose names would currently mask names in any other environment. Note that in the book, the term current environment is used not working environment. At any given time there is an environment that is most immediately-visible i.e.~its names will mask the same names in any other environment. This is the current environment.The identity of the current environment can change e.g.~when entering a function. It is often the case that the current environment is the global environment i.e.~typically when working interactively.
-=======
 The working environment is the environment whose names would currently mask names in any other environment. Note that in the book, the term current environment is used not working environment. At any given time there is an environment that is most immediately-visible i.e.~its names will mask the same names in any other environment. This is the current environment. The identity of the current environment can change e.g.~when entering a function. It is often the case that the current environment is the global environment i.e.~typically when working interactively.
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+
+Are functions the only mechanism for changing the current environment? (I believe the answer is yes.)
+
+Consider the following from the book:
+
+\begin{quote}
+The current environment, or \texttt{current\_env()} is the environment in which code is currently executing. When you're experimenting interactively, that's usually the global environment, or \texttt{global\_env()}.
+\end{quote}
+
+The use of the word ``usually'' in this sentence raises the possibility that there's an exception. That exception could possibly mean
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  There's a way to change the environment in interactive mode without going into a function
+\item
+  You can experiment interactively within a function or
+\item
+  Something I'm ignorant of.
+\end{enumerate}
+
+I know that you can step-through a function in the debug browser so maybe that's what he means?
+
+But then the very next line in the text says:
+
+\begin{quote}
+The global environment is sometimes called your ``workspace'', as it's where all interactive (i.e.~outside of a function) computation takes place.
+\end{quote}
+
+It both i) defines interactive specifically to exclude the inside of a function and ii) makes a stronger claim, ``all interactive computation'' vs ``usually''.
+
+If you put a breakpoint or \texttt{browser()} call inside a function, then you would be working interactively in a function environment.
+
+Does hierarchy of environments have a computer science name (linked list?)?
+
+The hierarchy of environments is not a linked list, it is a directed graph.
 
 Clarification: the global environment's parent is all the packages loaded within the environment, not the empty environment, right? How do we check this? \texttt{parent.env(global)}?
 
@@ -3984,11 +3928,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-<<<<<<< HEAD
-## <bytecode: 0x7fdd0b88e7b0>
-=======
-## <bytecode: 0x7fe028c7a5b0>
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## <bytecode: 0x7f87d3304db0>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4126,7 +4066,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7fe02a92f318>
+## <bytecode: 0x7f87d39171b0>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 

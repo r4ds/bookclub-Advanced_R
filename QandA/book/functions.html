@@ -260,15 +260,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>Primitives are part of R core, and can only be written by the R-core team. At its heart, R <em>is</em> the set of primitive C functions underneath it.</p>
 <p>You can use Rcpp to include C++ code in your R code, but these aren’t Primitives. There are also other techniques which we’ll likely see covered in later chapters. Here’s an example using Rcpp.</p>
-<<<<<<< HEAD
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb220-1" data-line-number="1">Rcpp<span class="op">::</span><span class="kw">cppFunction</span>(<span class="st">&#39;#include&lt;string&gt;</span></a>
-<a class="sourceLine" id="cb220-2" data-line-number="2"><span class="st">  std::string IPA() {</span></a>
-<a class="sourceLine" id="cb220-3" data-line-number="3"><span class="st">  std::string val = &quot;IPAs suck&quot;;    </span></a>
-<a class="sourceLine" id="cb220-4" data-line-number="4"><span class="st">  return val;</span></a>
-<a class="sourceLine" id="cb220-5" data-line-number="5"><span class="st">  }&#39;</span>)</a>
-<a class="sourceLine" id="cb220-6" data-line-number="6">val &lt;-<span class="st"> </span><span class="kw">IPA</span>()</a>
-<a class="sourceLine" id="cb220-7" data-line-number="7">val</a></code></pre></div>
-=======
 <div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb222-1" data-line-number="1">Rcpp<span class="op">::</span><span class="kw">cppFunction</span>(<span class="st">&#39;#include&lt;string&gt;</span></a>
 <a class="sourceLine" id="cb222-2" data-line-number="2"><span class="st">  std::string IPA() {</span></a>
 <a class="sourceLine" id="cb222-3" data-line-number="3"><span class="st">  std::string val = &quot;IPAs suck&quot;;    </span></a>
@@ -276,7 +267,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb222-5" data-line-number="5"><span class="st">  }&#39;</span>)</a>
 <a class="sourceLine" id="cb222-6" data-line-number="6">val &lt;-<span class="st"> </span><span class="kw">IPA</span>()</a>
 <a class="sourceLine" id="cb222-7" data-line-number="7">val</a></code></pre></div>
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
 <pre><code>## [1] &quot;IPAs suck&quot;</code></pre>
 <div class="question">
 <p>Are there any non-base primitives? If so how is that possible!</p>
@@ -393,23 +383,13 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <a class="sourceLine" id="cb243-9" data-line-number="9"><span class="co">#&gt;     intersect, setdiff, setequal, union</span></a>
 <a class="sourceLine" id="cb243-10" data-line-number="10"><span class="kw">func_1</span>(test_tbl, x1)</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 1
-<<<<<<< HEAD
-##       x1
-##    &lt;dbl&gt;
-## 1 0.632 
-## 2 0.337 
-## 3 0.793 
-## 4 0.0919
-## 5 0.901</code></pre>
-=======
 ##      x1
 ##   &lt;dbl&gt;
-## 1 0.350
-## 2 0.971
-## 3 0.686
-## 4 0.408
-## 5 0.816</code></pre>
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## 1 0.924
+## 2 0.985
+## 3 0.943
+## 4 0.667
+## 5 0.464</code></pre>
 </div>
 <div id="a-fresh-start" class="section level2 unnumbered">
 <h2>6.4.3 A fresh start</h2>
@@ -447,19 +427,6 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <p>Does anyone have an example of this? We discussed a function that will only perform expensive tasks given the context of the function perhaps?</p>
 </div>
 <p>Maybe a situation where we can give a function default arguments where <code>sample</code>is a stand in for longer expensive functions like different fancy modeling techniques? We can workshop this…</p>
-<<<<<<< HEAD
-<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb247-1" data-line-number="1">mega_model &lt;-<span class="st"> </span><span class="cf">function</span>(values, <span class="dt">x =</span> <span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dv">10</span>), <span class="dt">y =</span> <span class="kw">sample</span>(<span class="dv">200</span><span class="op">:</span><span class="dv">300</span>, <span class="dv">10</span>), <span class="dt">z =</span> <span class="kw">sample</span>(<span class="dv">300</span><span class="op">:</span><span class="dv">400</span>, <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb247-2" data-line-number="2">) {</a>
-<a class="sourceLine" id="cb247-3" data-line-number="3">  dplyr<span class="op">::</span><span class="kw">case_when</span>(</a>
-<a class="sourceLine" id="cb247-4" data-line-number="4">    <span class="kw">is.numeric</span>(values) <span class="op">~</span><span class="st"> </span>x,</a>
-<a class="sourceLine" id="cb247-5" data-line-number="5">    <span class="kw">is.character</span>(values) <span class="op">~</span><span class="st"> </span>y,</a>
-<a class="sourceLine" id="cb247-6" data-line-number="6">    <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span>z</a>
-<a class="sourceLine" id="cb247-7" data-line-number="7">  )</a>
-<a class="sourceLine" id="cb247-8" data-line-number="8">}</a>
-<a class="sourceLine" id="cb247-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb247-10" data-line-number="10"><span class="kw">mega_model</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))</a></code></pre></div>
-<pre><code>##  [1] 230 215 224 297 214 229 203 255 232 286</code></pre>
-=======
 <div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb249-1" data-line-number="1">mega_model &lt;-<span class="st"> </span><span class="cf">function</span>(values, <span class="dt">x =</span> <span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dv">10</span>), <span class="dt">y =</span> <span class="kw">sample</span>(<span class="dv">200</span><span class="op">:</span><span class="dv">300</span>, <span class="dv">10</span>), <span class="dt">z =</span> <span class="kw">sample</span>(<span class="dv">300</span><span class="op">:</span><span class="dv">400</span>, <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb249-2" data-line-number="2">) {</a>
 <a class="sourceLine" id="cb249-3" data-line-number="3">  dplyr<span class="op">::</span><span class="kw">case_when</span>(</a>
@@ -470,8 +437,7 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <a class="sourceLine" id="cb249-8" data-line-number="8">}</a>
 <a class="sourceLine" id="cb249-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb249-10" data-line-number="10"><span class="kw">mega_model</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))</a></code></pre></div>
-<pre><code>##  [1] 201 250 262 237 286 278 228 246 206 266</code></pre>
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+<pre><code>##  [1] 277 232 267 210 233 264 294 259 276 287</code></pre>
 </div>
 <div id="promises" class="section level2 unnumbered">
 <h2>6.5.1 Promises</h2>
@@ -718,11 +684,7 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb296-1" data-line-number="1">hist</a></code></pre></div>
 <pre><code>## function (x, ...) 
 ## UseMethod(&quot;hist&quot;)
-<<<<<<< HEAD
-## &lt;bytecode: 0x7fdd0c7bdfc8&gt;
-=======
-## &lt;bytecode: 0x7fe025aaffc8&gt;
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+## &lt;bytecode: 0x7f87d422e9c8&gt;
 ## &lt;environment: namespace:graphics&gt;</code></pre>
 <p>does not give me the actual contents of the actual function….</p>
 </div>

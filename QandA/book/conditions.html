@@ -24,11 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<<<<<<< HEAD
 <meta name="date" content="2020-05-16" />
-=======
-<meta name="date" content="2020-05-15" />
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -137,10 +133,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="welcome.html"><a href="welcome.html"><i class="fa fa-check"></i><b>1</b> Welcome</a></li>
 <li class="chapter" data-level="2" data-path="names-and-values.html"><a href="names-and-values.html"><i class="fa fa-check"></i><b>2</b> Names and Values</a><ul>
-<<<<<<< HEAD
-=======
 <li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#binding-basics"><i class="fa fa-check"></i>2.2 Binding basics</a></li>
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
 <li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#copy-on-modify"><i class="fa fa-check"></i>2.3 Copy-on-modify</a></li>
 <li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>2.2.2 Exercises</a></li>
 <li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#function-calls"><i class="fa fa-check"></i>2.3.2 Function calls</a></li>
@@ -222,13 +215,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7" data-path="environments.html"><a href="environments.html"><i class="fa fa-check"></i><b>7</b> Environments</a><ul>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#parents"><i class="fa fa-check"></i>7.2.3 Parents</a></li>
-<<<<<<< HEAD
-<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#getting-and-setting"><i class="fa fa-check"></i>7.2.5 Getting and setting</a></li>
-<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#advanced-bindings"><i class="fa fa-check"></i>7.2.6 Advanced bindings</a></li>
-<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#exercises-3"><i class="fa fa-check"></i>7.3.1.2 Exercises</a></li>
-<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#function-enviornment"><i class="fa fa-check"></i>7.4.2 Function enviornment</a></li>
-<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#namespaces"><i class="fa fa-check"></i>7.4.3 Namespaces</a></li>
-=======
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#super-assignment"><i class="fa fa-check"></i>7.2.4 Super assignment</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#getting-and-setting"><i class="fa fa-check"></i>7.2.5 Getting and setting</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#advanced-bindings"><i class="fa fa-check"></i>7.2.6 Advanced bindings</a></li>
@@ -237,7 +223,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#function-enviornment"><i class="fa fa-check"></i>7.4.2 Function enviornment</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#namespaces"><i class="fa fa-check"></i>7.4.3 Namespaces</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#call-stacks"><i class="fa fa-check"></i>7.5 Call stacks</a></li>
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#data-structures"><i class="fa fa-check"></i>7.6 Data Structures</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="conditions.html"><a href="conditions.html"><i class="fa fa-check"></i><b>8</b> Conditions</a><ul>
@@ -290,43 +275,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>8.4.5.2 Exercises</h2>
 <div class="question">
 <p>In the example</p>
-<<<<<<< HEAD
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb339-1" data-line-number="1">show_condition &lt;-<span class="st"> </span><span class="cf">function</span>(code) {</a>
-<a class="sourceLine" id="cb339-2" data-line-number="2">  <span class="kw">tryCatch</span>(</a>
-<a class="sourceLine" id="cb339-3" data-line-number="3">    <span class="dt">error =</span> <span class="cf">function</span>(cnd) <span class="st">&quot;error&quot;</span>,</a>
-<a class="sourceLine" id="cb339-4" data-line-number="4">    <span class="dt">warning =</span> <span class="cf">function</span>(cnd) <span class="st">&quot;warning&quot;</span>,</a>
-<a class="sourceLine" id="cb339-5" data-line-number="5">    <span class="dt">message =</span> <span class="cf">function</span>(cnd) <span class="st">&quot;message&quot;</span>,</a>
-<a class="sourceLine" id="cb339-6" data-line-number="6">    {</a>
-<a class="sourceLine" id="cb339-7" data-line-number="7">      code</a>
-<a class="sourceLine" id="cb339-8" data-line-number="8">      <span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb339-9" data-line-number="9">    }</a>
-<a class="sourceLine" id="cb339-10" data-line-number="10">  )</a>
-<a class="sourceLine" id="cb339-11" data-line-number="11">}</a></code></pre></div>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb370-1" data-line-number="1">show_condition &lt;-<span class="st"> </span><span class="cf">function</span>(code) {</a>
+<a class="sourceLine" id="cb370-2" data-line-number="2">  <span class="kw">tryCatch</span>(</a>
+<a class="sourceLine" id="cb370-3" data-line-number="3">    <span class="dt">error =</span> <span class="cf">function</span>(cnd) <span class="st">&quot;error&quot;</span>,</a>
+<a class="sourceLine" id="cb370-4" data-line-number="4">    <span class="dt">warning =</span> <span class="cf">function</span>(cnd) <span class="st">&quot;warning&quot;</span>,</a>
+<a class="sourceLine" id="cb370-5" data-line-number="5">    <span class="dt">message =</span> <span class="cf">function</span>(cnd) <span class="st">&quot;message&quot;</span>,</a>
+<a class="sourceLine" id="cb370-6" data-line-number="6">    {</a>
+<a class="sourceLine" id="cb370-7" data-line-number="7">      code</a>
+<a class="sourceLine" id="cb370-8" data-line-number="8">      <span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb370-9" data-line-number="9">    }</a>
+<a class="sourceLine" id="cb370-10" data-line-number="10">  )</a>
+<a class="sourceLine" id="cb370-11" data-line-number="11">}</a></code></pre></div>
 <p>The first three calls to <code>show_condition</code> make sense to me, and I even understand that the first time the code is evaluated inside a <code>tryCatch</code> it exists (that’s why it returns <code>message</code>) but how are you suppling <code>3</code> arguments to a function that just takes on one argument, <code>code</code>? Is that what the <code>{}</code> are for?</p>
-<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb340-1" data-line-number="1"><span class="kw">show_condition</span>({</a>
-<a class="sourceLine" id="cb340-2" data-line-number="2">  <span class="dv">10</span></a>
-<a class="sourceLine" id="cb340-3" data-line-number="3">  <span class="kw">message</span>(<span class="st">&quot;?&quot;</span>)</a>
-<a class="sourceLine" id="cb340-4" data-line-number="4">  <span class="kw">warning</span>(<span class="st">&quot;?!&quot;</span>)</a>
-<a class="sourceLine" id="cb340-5" data-line-number="5">})</a></code></pre></div>
-=======
-<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb366-1" data-line-number="1">show_condition &lt;-<span class="st"> </span><span class="cf">function</span>(code) {</a>
-<a class="sourceLine" id="cb366-2" data-line-number="2">  <span class="kw">tryCatch</span>(</a>
-<a class="sourceLine" id="cb366-3" data-line-number="3">    <span class="dt">error =</span> <span class="cf">function</span>(cnd) <span class="st">&quot;error&quot;</span>,</a>
-<a class="sourceLine" id="cb366-4" data-line-number="4">    <span class="dt">warning =</span> <span class="cf">function</span>(cnd) <span class="st">&quot;warning&quot;</span>,</a>
-<a class="sourceLine" id="cb366-5" data-line-number="5">    <span class="dt">message =</span> <span class="cf">function</span>(cnd) <span class="st">&quot;message&quot;</span>,</a>
-<a class="sourceLine" id="cb366-6" data-line-number="6">    {</a>
-<a class="sourceLine" id="cb366-7" data-line-number="7">      code</a>
-<a class="sourceLine" id="cb366-8" data-line-number="8">      <span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb366-9" data-line-number="9">    }</a>
-<a class="sourceLine" id="cb366-10" data-line-number="10">  )</a>
-<a class="sourceLine" id="cb366-11" data-line-number="11">}</a></code></pre></div>
-<p>The first three calls to <code>show_condition</code> make sense to me, and I even understand that the first time the code is evaluated inside a <code>tryCatch</code> it exists (that’s why it returns <code>message</code>) but how are you suppling <code>3</code> arguments to a function that just takes on one argument, <code>code</code>? Is that what the <code>{}</code> are for?</p>
-<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb367-1" data-line-number="1"><span class="kw">show_condition</span>({</a>
-<a class="sourceLine" id="cb367-2" data-line-number="2">  <span class="dv">10</span></a>
-<a class="sourceLine" id="cb367-3" data-line-number="3">  <span class="kw">message</span>(<span class="st">&quot;?&quot;</span>)</a>
-<a class="sourceLine" id="cb367-4" data-line-number="4">  <span class="kw">warning</span>(<span class="st">&quot;?!&quot;</span>)</a>
-<a class="sourceLine" id="cb367-5" data-line-number="5">})</a></code></pre></div>
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb371-1" data-line-number="1"><span class="kw">show_condition</span>({</a>
+<a class="sourceLine" id="cb371-2" data-line-number="2">  <span class="dv">10</span></a>
+<a class="sourceLine" id="cb371-3" data-line-number="3">  <span class="kw">message</span>(<span class="st">&quot;?&quot;</span>)</a>
+<a class="sourceLine" id="cb371-4" data-line-number="4">  <span class="kw">warning</span>(<span class="st">&quot;?!&quot;</span>)</a>
+<a class="sourceLine" id="cb371-5" data-line-number="5">})</a></code></pre></div>
 <pre><code>## [1] &quot;message&quot;</code></pre>
 </div>
 <div class="TODO">
@@ -344,45 +309,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="question">
 <p>Let’s revist my example from the talk: can we build on this to use tidyeval so that the user can write <code>beer_states %&gt;% beer_mean(state)</code> [I think we need to use <code>.data</code> and note how state is given as an object so we need to use tidyeval to suppress it’s evaluation…]</p>
 </div>
-<<<<<<< HEAD
-<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb342-1" data-line-number="1">beer_mean &lt;-<span class="st"> </span><span class="cf">function</span>(.data, x) {</a>
-<a class="sourceLine" id="cb342-2" data-line-number="2">  </a>
-<a class="sourceLine" id="cb342-3" data-line-number="3">  column_name &lt;-<span class="st"> </span><span class="kw">deparse</span>(<span class="kw">substitute</span>(x))</a>
-<a class="sourceLine" id="cb342-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb342-5" data-line-number="5">  msg &lt;-<span class="st"> </span>glue<span class="op">::</span><span class="kw">glue</span>(<span class="st">&quot;Can&#39;t calculate mean, {column_name} is not numeric&quot;</span>)</a>
-<a class="sourceLine" id="cb342-6" data-line-number="6">  </a>
-<a class="sourceLine" id="cb342-7" data-line-number="7">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.numeric</span>(.data[[column_name]])) {</a>
-<a class="sourceLine" id="cb342-8" data-line-number="8">    <span class="kw">abort</span>(</a>
-<a class="sourceLine" id="cb342-9" data-line-number="9">      <span class="dt">message =</span> msg,</a>
-<a class="sourceLine" id="cb342-10" data-line-number="10">      <span class="dt">arg =</span> column_name,</a>
-<a class="sourceLine" id="cb342-11" data-line-number="11">      <span class="dt">data =</span> .data</a>
-<a class="sourceLine" id="cb342-12" data-line-number="12">    )</a>
-<a class="sourceLine" id="cb342-13" data-line-number="13">  } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb342-14" data-line-number="14">    <span class="kw">mean</span>(.data[[column_name]])</a>
-<a class="sourceLine" id="cb342-15" data-line-number="15">  }</a>
-<a class="sourceLine" id="cb342-16" data-line-number="16">}</a>
-<a class="sourceLine" id="cb342-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb342-18" data-line-number="18">beer_states <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">beer_mean</span>(state)</a></code></pre></div>
-=======
-<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb369-1" data-line-number="1">beer_mean &lt;-<span class="st"> </span><span class="cf">function</span>(.data, x) {</a>
-<a class="sourceLine" id="cb369-2" data-line-number="2">  </a>
-<a class="sourceLine" id="cb369-3" data-line-number="3">  column_name &lt;-<span class="st"> </span><span class="kw">deparse</span>(<span class="kw">substitute</span>(x))</a>
-<a class="sourceLine" id="cb369-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb369-5" data-line-number="5">  msg &lt;-<span class="st"> </span>glue<span class="op">::</span><span class="kw">glue</span>(<span class="st">&quot;Can&#39;t calculate mean, {column_name} is not numeric&quot;</span>)</a>
-<a class="sourceLine" id="cb369-6" data-line-number="6">  </a>
-<a class="sourceLine" id="cb369-7" data-line-number="7">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.numeric</span>(.data[[column_name]])) {</a>
-<a class="sourceLine" id="cb369-8" data-line-number="8">    <span class="kw">abort</span>(</a>
-<a class="sourceLine" id="cb369-9" data-line-number="9">      <span class="dt">message =</span> msg,</a>
-<a class="sourceLine" id="cb369-10" data-line-number="10">      <span class="dt">arg =</span> column_name,</a>
-<a class="sourceLine" id="cb369-11" data-line-number="11">      <span class="dt">data =</span> .data</a>
-<a class="sourceLine" id="cb369-12" data-line-number="12">    )</a>
-<a class="sourceLine" id="cb369-13" data-line-number="13">  } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb369-14" data-line-number="14">    <span class="kw">mean</span>(.data[[column_name]])</a>
-<a class="sourceLine" id="cb369-15" data-line-number="15">  }</a>
-<a class="sourceLine" id="cb369-16" data-line-number="16">}</a>
-<a class="sourceLine" id="cb369-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb369-18" data-line-number="18">beer_states <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">beer_mean</span>(state)</a></code></pre></div>
->>>>>>> 1cd507e0a5adf901b011643153748c8bd9775105
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb373-1" data-line-number="1">beer_mean &lt;-<span class="st"> </span><span class="cf">function</span>(.data, x) {</a>
+<a class="sourceLine" id="cb373-2" data-line-number="2">  </a>
+<a class="sourceLine" id="cb373-3" data-line-number="3">  column_name &lt;-<span class="st"> </span><span class="kw">deparse</span>(<span class="kw">substitute</span>(x))</a>
+<a class="sourceLine" id="cb373-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb373-5" data-line-number="5">  msg &lt;-<span class="st"> </span>glue<span class="op">::</span><span class="kw">glue</span>(<span class="st">&quot;Can&#39;t calculate mean, {column_name} is not numeric&quot;</span>)</a>
+<a class="sourceLine" id="cb373-6" data-line-number="6">  </a>
+<a class="sourceLine" id="cb373-7" data-line-number="7">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.numeric</span>(.data[[column_name]])) {</a>
+<a class="sourceLine" id="cb373-8" data-line-number="8">    <span class="kw">abort</span>(</a>
+<a class="sourceLine" id="cb373-9" data-line-number="9">      <span class="dt">message =</span> msg,</a>
+<a class="sourceLine" id="cb373-10" data-line-number="10">      <span class="dt">arg =</span> column_name,</a>
+<a class="sourceLine" id="cb373-11" data-line-number="11">      <span class="dt">data =</span> .data</a>
+<a class="sourceLine" id="cb373-12" data-line-number="12">    )</a>
+<a class="sourceLine" id="cb373-13" data-line-number="13">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb373-14" data-line-number="14">    <span class="kw">mean</span>(.data[[column_name]])</a>
+<a class="sourceLine" id="cb373-15" data-line-number="15">  }</a>
+<a class="sourceLine" id="cb373-16" data-line-number="16">}</a>
+<a class="sourceLine" id="cb373-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb373-18" data-line-number="18">beer_states <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">beer_mean</span>(state)</a></code></pre></div>
 <pre><code>Error: Can&#39;t calculate mean, state is not numeric
    12. stop(fallback)
    11. signal_abort(cnd)
