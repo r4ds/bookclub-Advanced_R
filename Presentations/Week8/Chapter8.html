@@ -33,8 +33,6 @@ class: center, middle, inverse, title-slide
 - Handling conditions
  - tryCatch
  - withCallingHandlers
-- Custom conditions
-
 
 
 ```r
@@ -72,16 +70,16 @@ https://style.tidyverse.org/error-messages.html
 
 
 ```r
-beer_mean &lt;- function(x) {
+beer_mean_error &lt;- function(x) {
   if (!is.numeric(x)) {
 *   stop("Need numeric column", call.=FALSE)
-    mean(data[[x]])
+    mean(which(!is.na(x)[x]))
   } else{
-    mean(x)
+    mean(which(!is.na(x)[x]))
   }
 }
 
-beer_mean(beer_states$state)
+beer_mean_error(beer_states$states)
 ```
 
 ```
@@ -92,23 +90,23 @@ Error: Need numeric column
 
 ---
 
-## abort
+## `rlang::abort`
 
 
 ```r
-beer_mean &lt;- function(x) {
+beer_mean_abort &lt;- function(x) {
   if (!is.numeric(x)) {
 *   abort(
 *     message = "Need numeric column",
 *     arg = x
 *     )
-    mean(data[[x]])
+    mean(which(!is.na(x)[x]))
   } else{
-    mean(x)
+    mean(which(!is.na(x)[x]))
   }
 }
 
-beer_mean(beer_states$state)
+beer_mean_abort(beer_states$state)
 ```
 
 ```
@@ -125,7 +123,7 @@ Error: Need numeric column
 
 
 ```r
-beer_mean &lt;- function(data, x) {
+beer_mean_abort &lt;- function(data, x) {
   
   column_name &lt;- deparse(substitute(x))
   
@@ -137,16 +135,16 @@ beer_mean &lt;- function(data, x) {
 *     arg = column_name,
 *     data = data
     )
-    mean(data[[x]])
+    mean(which(!is.na(data[[x]])[data[[x]]]))
   } else {
-    mean(data[[x]])
+    mean(which(!is.na(data[[x]])[data[[x]]]))
   }
 }
 ```
 
 
 ```r
-beer_mean(beer_states, "state")
+beer_mean_abort(beer_states, "state")
 ```
 
 
@@ -165,7 +163,7 @@ Run `rlang::last_error()` to see where the error occurred.
 
 
 ```r
-str(catch_cnd(beer_mean(beer_states, "state")))
+str(catch_cnd(beer_mean_abort(beer_states, "state")))
 ```
 
 
@@ -198,21 +196,19 @@ List of 5
 
 &gt; Warnings occupy a somewhat challenging place between messages (“you should know about this”) and errors (“you must fix this!”)
 
-_Not shown: mutating the year column to a date type, creating an `is.Date` function to check for date types. See .Rmd for code_
-
 
 
 
 ```r
-beer_mean &lt;- function(data, x) {
+beer_mean_warning &lt;- function(data, x) {
   
   column_name &lt;- deparse(substitute(x))
   
   if (is.Date(data[[x]])) {
 *   warning(glue::glue("Are you sure you wanna calculate the mean? {column_name} is of type date"))
-    mean(data[[x]])
+    mean(which(!is.na(data[[x]])[data[[x]]]))
   } else {
-    mean(data[[x]])
+    mean(which(!is.na(data[[x]])[data[[x]]]))
   }
 }
 
@@ -226,6 +222,10 @@ In beer_mean(beer_states, "year") :
   Are you sure you wanna calculate the mean? "year" is of type date
 ```
 
+.footnote[
+_Not shown: (1) mutating the year column to a date type, (2) creating an `is.Date` function to check for date types. See .Rmd for code_
+]
+
 ---
 
 # Messages
@@ -236,22 +236,21 @@ In beer_mean(beer_states, "year") :
 ```r
 basic_summary_stats &lt;- function(data, x, round_n = NULL, quiet = FALSE) {
   
-  column_name &lt;- deparse(substitute(x))
-  
+  if (!is.numeric(data[[x]])) abort(glue::glue("Need numeric value to calculate stats and {x} is categorical"))
   if (is.null(round_n)) {
     
 *   if (isFALSE(quiet)) message("round_n argument null, rounding to 2 digits by default")
     
     data %&gt;% 
       summarise(
-        missing = sum(is.na(data[[column_name]])),
-        mean = round(mean(!is.na(data[[column_name]])), 2), 
+        missing = sum(is.na( data[[x]] )),
+        mean = round(mean(which(!is.na(data[[x]])[data[[x]]])), 2)
        )
   } else {
     data %&gt;% 
       summarise(
-        missing = sum(is.na(data[[column_name]])),
-        mean = round(mean(!is.na(data[[column_name]])), round_n), 
+        missing = sum(is.na( data[[x]] )),
+        mean = round(mean(which(!is.na(data[[x]])[data[[x]]])), round_n)
        )
   }
 }
@@ -260,7 +259,7 @@ basic_summary_stats &lt;- function(data, x, round_n = NULL, quiet = FALSE) {
 .pull-left[
 
 ```r
-beer_states %&gt;% basic_summary_stats(barrels)
+basic_summary_stats(beer_states, "barrels")
 ```
 
 ```
@@ -271,22 +270,21 @@ beer_states %&gt;% basic_summary_stats(barrels)
 ## # A tibble: 1 x 2
 ##   missing  mean
 ##     &lt;int&gt; &lt;dbl&gt;
-## 1      19  0.99
+## 1      19  806.
 ```
 ]
 
 .pull-right[
 
 ```r
-beer_states %&gt;% 
-  basic_summary_stats(barrels, quiet = TRUE)
+basic_summary_stats(beer_states, "barrels", quiet = TRUE)
 ```
 
 ```
 ## # A tibble: 1 x 2
 ##   missing  mean
 ##     &lt;int&gt; &lt;dbl&gt;
-## 1      19  0.99
+## 1      19  806.
 ```
 ]
 
@@ -295,34 +293,251 @@ beer_states %&gt;%
 class: inverse, hide-logo
 # Ignoring Conditions
 
+- try
+- suppressMessage
+
 ---
 
 # try
 
+
+```r
+beer_mean_try &lt;- function(data, x) {
+* try(data[[x]])
+  NA
+}
+
+beer_mean_try(beer_states, "states")
+```
+
+```
+[1] NA
+```
+
 ---
 
-# suppress
+# suppressMessages
+
+
+```r
+testthat::test_that("beer mean function works", {
+  
+  # calculate mean using base and round to two digits
+  base_mean &lt;- round(mean(which(!is.na(beer_states$barrels)[beer_states$barrels])), 2)
+  
+  # use our function and suppress warning since we're not supplying a rounding argument
+* suppressMessages(
+*   our_function &lt;- basic_summary_stats(beer_states, "barrels") %&gt;% pull(mean)
+* )
+  
+  # test that they are equal
+  testthat::expect_equal(base_mean, our_function)
+  # test that our function will produce a message
+  testthat::expect_message(basic_summary_stats(beer_states, "barrels") %&gt;% pull(mean))
+})
+```
+
+.footnote[
+_My thoughts behind this were that we don't want to clutter the output log when we run all our tests, but is this really best practice?_
+]
 
 ---
 
 class: inverse, hide-logo
 # Handling Conditions 
 
+- tryCatch
+- withCallingHandlers
+
 ---
 
 # tryCatch
+
+
+```r
+beer_mean_tryCatch &lt;- function(expr) {
+  tryCatch(
+*   error = function(cnd) NA,
+    {
+      glue::glue(
+*       "Average Beer Barrels Produced: {round(expr,2)}"
+      )
+    },
+*   finally = { print("Thank God for Beer!") }
+  )
+}
+```
+
+.pull-left[
+
+```r
+beer_mean_tryCatch(beer_mean_abort(beer_states, "state"))
+```
+
+```
+[1] "Thank God for Beer!"
+[1] NA
+```
+
+]
+
+.pull-right[
+
+```r
+beer_mean_tryCatch(beer_mean_abort(beer_states, "barrels"))
+```
+
+```
+[1] "Thank God for Beer!"
+Average Beer Barrels Produced: 806.46
+```
+
+]
+
+.footnote[
+_I find it interesting that the `finally` statement is printed **before** the code inside the tryCatch. Can anyone explain why?_
+]
+
+---
+
+# tryCatch
+
+_We can use tryCatch within the for loop to catch errors without breaking the loop_
+
+
+```r
+for (indx in 1:ncol(beer_states)) {
+    tryCatch(
+        expr = {
+            basic_summary_stats(beer_states, names(beer_states[indx]))
+            message("Iteration ", indx, " successful.")
+        },
+        error = function(e){
+            message("* Caught an error on itertion ", indx)
+            print(e)
+        }
+    )
+}
+```
+
+```
+* Caught an error on itertion 1
+&lt;error/rlang_error&gt;
+Need numeric value to calculate stats and state is categorical
+Backtrace:
+ 1. base::tryCatch(...)
+ 5. global::basic_summary_stats(beer_states, names(beer_states[indx]))
+* Caught an error on itertion 2
+&lt;error/rlang_error&gt;
+Need numeric value to calculate stats and year is categorical
+Backtrace:
+ 1. base::tryCatch(...)
+ 5. global::basic_summary_stats(beer_states, names(beer_states[indx]))
+round_n argument null, rounding to 2 digits by default
+* Iteration 3 successful.
+* Caught an error on itertion 4
+&lt;error/rlang_error&gt;
+Need numeric value to calculate stats and type is categorical
+Backtrace:
+ 1. base::tryCatch(...)
+ 5. global::basic_summary_stats(beer_states, names(beer_states[indx]))
+```
 
 ---
 
 # withCallingHandlers
 
+A story in three functions. 
+
+#### Function 1
+
+
+```r
+# calculate the mean of columns
+simple_mean &lt;- function(x){
+  if(!is.numeric(x)){
+    #construct an error
+    categorical_column &lt;- structure(
+      class = c("categorical_column","error", "condition"),
+      list(message = "Not sure what to do with categorical column",
+           call = sys.call(),
+           # and include the offending parameter in the error object
+           x=x))
+    # raise the error
+    stop(categorical_column)
+  }
+  cat("Returning from simple_mean()\n")
+  return(mean(!is.na(x)))
+}
+```
+
 ---
+
+# withCallingHandlers
+### Function 2
+
+
+```r
+# use restart to just get the length of categorical columns
+mean_count &lt;- function(y) {
+  as_count &lt;- withRestarts(simple_mean(y),
+                        # establish a restart called 'categorical_column'
+                        # which returns the negative of it's argument
+                        categorical_column_restart = function (z) { length(z) } )
+  cat("Returning from mean_count()\n")
+  return(as_count)
+}
+```
+
+---
+
+# withCallingHandlers
+### Function 3
+
+
+```r
+mean_or_count &lt;- function(z){
+  as_mean_or_count &lt;- withCallingHandlers(
+    # call mean or count function
+    mean_count(z),
+    # and if an `error` occurrs
+    error = function(err) {
+      # and the `error` is a `categorical_column` error
+      if(inherits(err,"cateogircal_column")) {
+        # invoke the restart called 'categorical_column_restart'
+        invokeRestart('categorical_column_restart',
+                      # and invoke it with this parameter
+                      err$x)
+      } else {
+        # otherwise re-raise the error
+        stop(err)
+      }
+    })
+  cat("Returning from mean_or_count()\n")
+  return(as_mean_or_count)
+}
+```
+
+---
+
+# Applications 
+
+- Failure value
+- Success and failure value
+- Resignal
+- Record
+- No default behavior
 
 
 &lt;style&gt;
 pre {
   font-size: 11px;
 }
+
+.footnote {
+  color: #800020;
+}
+
 &lt;/style&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>

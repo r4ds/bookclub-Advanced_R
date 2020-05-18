@@ -119,7 +119,7 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-05-16}
+\date{2020-05-18}
 
 \begin{document}
 \maketitle
@@ -363,7 +363,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdcab10c8e8"
+## [1] "0x7f8195bbdf28"
 \end{verbatim}
 
 \begin{Shaded}
@@ -373,7 +373,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdcab10c8e8"
+## [1] "0x7f8195bbdf28"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -385,7 +385,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdca5bf62e8"
+## [1] "0x7f819a33f008"
 \end{verbatim}
 
 \begin{Shaded}
@@ -395,8 +395,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fdca83248c8] <list> 
-## └─[2:0x7fdcab10c8e8] <dbl>
+## █ [1:0x7f81989ffab8] <list> 
+## └─[2:0x7f8195bbdf28] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -406,7 +406,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdca8284510"
+## [1] "0x7f8198a03738"
 \end{verbatim}
 
 \begin{Shaded}
@@ -443,7 +443,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fdca5b48388>"
+## [1] "<0x7f8191767a08>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -453,7 +453,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fdca5b48388>
+## <0x7f8191767a08>
 \end{verbatim}
 
 \begin{Shaded}
@@ -463,7 +463,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdca5b48388"
+## [1] "0x7f8191767a08"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -512,7 +512,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdca960d908"
+## [1] "0x7f819630fd88"
 \end{verbatim}
 
 \begin{Shaded}
@@ -522,7 +522,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fdca960d908>"
+## [1] "<0x7f819630fd88>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -532,7 +532,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fdca960d908 -> 0x7fdca8b5b2c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7f819630fd88 -> 0x7f8193c0ff48]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -628,7 +628,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdca8c75bb8"
+## [1] "0x7f81913cc318"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -641,7 +641,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdca2081408"
+## [1] "0x7f819a488608"
 \end{verbatim}
 
 \begin{Shaded}
@@ -664,7 +664,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdca2081408"
+## [1] "0x7f819a488608"
 \end{verbatim}
 
 \begin{Shaded}
@@ -674,7 +674,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdca2081408"
+## [1] "0x7f819a488608"
 \end{verbatim}
 
 \begin{Shaded}
@@ -697,7 +697,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdca2081408"
+## [1] "0x7f819a488608"
 \end{verbatim}
 
 \begin{Shaded}
@@ -707,7 +707,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdca5b49788"
+## [1] "0x7f81969aa8c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -730,7 +730,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdca5c4de58"
+## [1] "0x7f81916fbec8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2531,13 +2531,13 @@ This will work:
 
 \begin{verbatim}
 ## # A tibble: 5 x 1
-##       x1
-##    <dbl>
-## 1 0.759 
-## 2 0.643 
-## 3 0.0145
-## 4 0.215 
-## 5 0.912
+##      x1
+##   <dbl>
+## 1 0.275
+## 2 0.101
+## 3 0.455
+## 4 0.451
+## 5 0.711
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2611,7 +2611,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 227 292 220 214 212 270 298 245 265 207
+##  [1] 225 290 281 244 286 237 201 206 294 240
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3048,7 +3048,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fdca03c8dc8>
+## <bytecode: 0x7f8190b0cfc8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3919,7 +3919,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7fdca56575b0>
+## <bytecode: 0x7f81921ba1b0>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4057,7 +4057,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7fdca88767e8>
+## <bytecode: 0x7f8193fea060>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4141,7 +4141,38 @@ They are sort of like fast look-up tables! It may be impossible to show with a s
 \section*{8.3 Ignoring conditions}\label{ignoring-conditions}}
 \addcontentsline{toc}{section}{8.3 Ignoring conditions}
 
-When would you actually use \texttt{suppressWarning} and \texttt{suppressMessage}? I think as debugging techniques and not so much when developing functions?
+I can't quite think of a time where \texttt{try} is more appropraite than \texttt{tryCatch} - does anyone have an example?
+
+XXX
+
+When would you actually use \texttt{suppressWarning}? Maybe when loading libraries? I created an example for \texttt{suppressMessages}, but does someone have a better, practical use case?
+
+XXX
+
+\hypertarget{exiting-handlers}{%
+\section*{8.4.2 Exiting handlers}\label{exiting-handlers}}
+\addcontentsline{toc}{section}{8.4.2 Exiting handlers}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tryCatch}\NormalTok{(}
+  \DataTypeTok{message =} \ControlFlowTok{function}\NormalTok{(cnd) }\StringTok{"There"}\NormalTok{,}
+\NormalTok{  \{}
+    \KeywordTok{message}\NormalTok{(}\StringTok{"Here"}\NormalTok{)}
+    \KeywordTok{stop}\NormalTok{(}\StringTok{"This code is never run!"}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{)}
+\CommentTok{#> [1] "There"}
+\end{Highlighting}
+\end{Shaded}
+
+The protected code is evaluated in the environment of \texttt{tryCatch()}, but the handler code is not, because the handlers are functions.
+
+Clarifcation question what is the ``handler code'' and ``protected code''?
+
+The protected code is \texttt{message\ =\ function(cnd)\ "There"} and the handler inside the \texttt{\{\}}
+
+In the tryCatch example where we have \texttt{finally} print ``Thank God for Beer'' I find it interesting that this is printed \textbf{before} the code inside the tryCatch. Can anyone explain why?
 
 XXX
 
@@ -4150,6 +4181,41 @@ XXX
 \addcontentsline{toc}{section}{8.4.3 Calling handlers}
 
 Can we make up our own bubbling and muffled \texttt{withCallingHandlers} examples? The example code was a little unclear to me.
+
+Bubbling is the phenomenon where all the handler statements will be evaluated, all the way up, prior to the body code and muffling allows us to stop this? Not sure if this is true and it doesn't really explain the muffling examples.
+
+Why is this message executed once per message in the function?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{withCallingHandlers}\NormalTok{(}
+  \DataTypeTok{message =} \ControlFlowTok{function}\NormalTok{(cnd) }\KeywordTok{cat}\NormalTok{(}\StringTok{"Caught a message!}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{), }
+\NormalTok{  \{}
+    \KeywordTok{message}\NormalTok{(}\StringTok{"Someone there?"}\NormalTok{)}
+    \KeywordTok{message}\NormalTok{(}\StringTok{"Why, yes!"}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> Caught a message!
+#> Someone there?
+#> Caught a message!
+#> Why, yes!
+\end{verbatim}
+
+XXX
+
+\begin{quote}
+The return value of a calling handler is ignored because the code continues to execute after the handler completes; where would the return value go? That means that calling handlers are only useful for their side-effects.
+\end{quote}
+
+Can we come up with an example for this masking? I think seeing it will help me understand\ldots{}
+
+XXX
+
+How does muffling differ from \texttt{suppressWarnings}?
 
 XXX
 
@@ -4187,9 +4253,25 @@ The first three calls to \texttt{show\_condition} make sense to me, and I even u
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## [1] "message"
-\end{verbatim}
+XXX
+
+\hypertarget{exercises-5}{%
+\section*{8.4.5.3 Exercises}\label{exercises-5}}
+\addcontentsline{toc}{section}{8.4.5.3 Exercises}
+
+I couldn't follow the manual's answer for what's happening here, can we come up with our own answer for what's happening here in words?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{withCallingHandlers}\NormalTok{(}
+  \DataTypeTok{message =} \ControlFlowTok{function}\NormalTok{(cnd) }\KeywordTok{message}\NormalTok{(}\StringTok{"b"}\NormalTok{),}
+  \KeywordTok{withCallingHandlers}\NormalTok{(}
+    \DataTypeTok{message =} \ControlFlowTok{function}\NormalTok{(cnd) }\KeywordTok{message}\NormalTok{(}\StringTok{"a"}\NormalTok{),}
+    \KeywordTok{message}\NormalTok{(}\StringTok{"c"}\NormalTok{)}
+\NormalTok{  )}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 XXX
 
@@ -4197,14 +4279,179 @@ XXX
 \section*{Custom conditions}\label{custom-conditions}}
 \addcontentsline{toc}{section}{Custom conditions}
 
-It's cool you can attach metadata to errors but what is a real-world use case where this is useful?
+We saw how we can use metadata and \texttt{Restarts} in the presentation, can we transform the base code to use \texttt{rlang::abort}?
 
 XXX
+
+\hypertarget{exercises-6}{%
+\section*{8.5.4.2 Exercises}\label{exercises-6}}
+\addcontentsline{toc}{section}{8.5.4.2 Exercises}
+
+Q: Inside a package you often need to stop with an error when something is not right. Other packages that depend on your package might be tempted to check these errors in their unit tests. How could you help these packages to avoid relying on the error message which is part of the user interface rather than the API and might change without notice?
+
+A: Instead returning an error it might be preferable to throw a customized condition and place a standardized error message inside the metadata. Then the downstream package could check for the class of the condition, rather than inspecting the message.
+
+Can we come up with something concrete for this?
+
+XXX
+
+\hypertarget{resignal}{%
+\section*{8.6.3 Resignal}\label{resignal}}
+\addcontentsline{toc}{section}{8.6.3 Resignal}
+
+Can we go over what is happening here?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{warning2error <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(expr) \{}
+  \KeywordTok{withCallingHandlers}\NormalTok{(}
+    \DataTypeTok{warning =} \ControlFlowTok{function}\NormalTok{(cnd) }\KeywordTok{abort}\NormalTok{(}\KeywordTok{conditionMessage}\NormalTok{(cnd)),}
+\NormalTok{    expr}
+\NormalTok{  )}
+\NormalTok{\}}
+
+\KeywordTok{warning2error}\NormalTok{(\{}
+\NormalTok{  x <-}\StringTok{ }\DecValTok{2} \OperatorTok{^}\StringTok{ }\DecValTok{4}
+  \KeywordTok{warn}\NormalTok{(}\StringTok{"Hello"}\NormalTok{)}
+\NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Error: Hello
+\end{verbatim}
+
+We are passing \texttt{warn("Hello")} as handler code but since it's an \texttt{abort} the protected code \texttt{x} never gets evaluated? That seems wrong.
+
+\hypertarget{record}{%
+\section*{8.6.4 Record}\label{record}}
+\addcontentsline{toc}{section}{8.6.4 Record}
+
+Why are we using \texttt{cnd\_muffle} here?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{catch_cnds <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(expr) \{}
+\NormalTok{  conds <-}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\NormalTok{  add_cond <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(cnd) \{}
+\NormalTok{    conds <<-}\StringTok{ }\KeywordTok{append}\NormalTok{(conds, }\KeywordTok{list}\NormalTok{(cnd))}
+    \KeywordTok{cnd_muffle}\NormalTok{(cnd)}
+\NormalTok{  \}}
+  
+  \KeywordTok{withCallingHandlers}\NormalTok{(}
+    \DataTypeTok{message =}\NormalTok{ add_cond,}
+    \DataTypeTok{warning =}\NormalTok{ add_cond,}
+\NormalTok{    expr}
+\NormalTok{  )}
+  
+\NormalTok{  conds}
+\NormalTok{\}}
+
+\KeywordTok{catch_cnds}\NormalTok{(\{}
+  \KeywordTok{inform}\NormalTok{(}\StringTok{"a"}\NormalTok{)}
+  \KeywordTok{warn}\NormalTok{(}\StringTok{"b"}\NormalTok{)}
+  \KeywordTok{inform}\NormalTok{(}\StringTok{"c"}\NormalTok{)}
+\NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
+
+If we remove \texttt{cnd\_muffle} we see that \texttt{a}, \texttt{b}, and \texttt{c} are printed to the console prior to getting the \texttt{conds} output.
+
+Would it be possible in the second Record example to create a function that doesn't require us to put the \texttt{abort} statement at the end, just ignoring it? Or because \texttt{abort} is an exiting handler it needs to be last?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{catch_cnds <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(expr) \{}
+\NormalTok{  conds <-}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\NormalTok{  add_cond <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(cnd) \{}
+\NormalTok{    conds <<-}\StringTok{ }\KeywordTok{append}\NormalTok{(conds, }\KeywordTok{list}\NormalTok{(cnd))}
+    \KeywordTok{cnd_muffle}\NormalTok{(cnd)}
+\NormalTok{  \}}
+  
+  \KeywordTok{tryCatch}\NormalTok{(}
+    \DataTypeTok{error =} \ControlFlowTok{function}\NormalTok{(cnd) \{}
+\NormalTok{      conds <<-}\StringTok{ }\KeywordTok{append}\NormalTok{(conds, }\KeywordTok{list}\NormalTok{(cnd))}
+\NormalTok{    \},}
+    \KeywordTok{withCallingHandlers}\NormalTok{(}
+      \DataTypeTok{message =}\NormalTok{ add_cond,}
+      \DataTypeTok{warning =}\NormalTok{ add_cond,}
+\NormalTok{      expr}
+\NormalTok{    )}
+\NormalTok{  )}
+  
+\NormalTok{  conds}
+\NormalTok{\}}
+
+\KeywordTok{catch_cnds}\NormalTok{(\{}
+  \KeywordTok{abort}\NormalTok{(}\StringTok{"a"}\NormalTok{)}
+  \KeywordTok{inform}\NormalTok{(}\StringTok{"b"}\NormalTok{)}
+  \KeywordTok{warn}\NormalTok{(}\StringTok{"c"}\NormalTok{)}
+\NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
+
+XXX
+
+What is \texttt{signal} and what is it doing here?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{log <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(message, }\DataTypeTok{level =} \KeywordTok{c}\NormalTok{(}\StringTok{"info"}\NormalTok{, }\StringTok{"error"}\NormalTok{, }\StringTok{"fatal"}\NormalTok{)) \{}
+  \CommentTok{# if we remove match.arg and just use level}
+  \CommentTok{# the signal returns infoerrorfatal as a single string}
+  \CommentTok{# we need match.arg to find the selected level}
+  \CommentTok{# and it defaults to the first if none are selected}
+\NormalTok{  level <-}\StringTok{ }\KeywordTok{match.arg}\NormalTok{(level)}
+  \KeywordTok{signal}\NormalTok{(message, }\StringTok{"log"}\NormalTok{, }\DataTypeTok{level =}\NormalTok{ level)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+XXX
+
+\begin{quote}
+If you create a condition object by hand, and signal it with signalCondition(), cnd\_muffle() will not work. Instead you need to call it with a muffle restart defined, like this: \texttt{withRestarts(signalCondition(cond),\ muffle\ =\ function()\ NULL)}
+\end{quote}
+
+Where does this code go given the prior example?
+
+XXX
+
+\hypertarget{exercises-7}{%
+\section*{8.6.6.2 Exercises}\label{exercises-7}}
+\addcontentsline{toc}{section}{8.6.6.2 Exercises}
+
+\begin{quote}
+Calling handlers are called in the context of the call that signalled the condition. Exiting handlers are called in the context of the call to tryCatch().
+\end{quote}
+
+What exactly does this mean? tryCatch evaluates what we were calling the protected code first and calling handlers execute the handling code first?
+
+XXX
+
+\hypertarget{exercises-8}{%
+\section*{8.6.6.4 Exercises}\label{exercises-8}}
+\addcontentsline{toc}{section}{8.6.6.4 Exercises}
+
+\begin{quote}
+There's no way to break out of the function because we're capturing the interrupt that you'd usually use!
+\end{quote}
+
+What does this mean? You can't stop the function if you set an \texttt{interrupt} argument inside a \texttt{tryCatch}
+
+XXX
+
+\hypertarget{slides}{%
+\section*{Slides}\label{slides}}
+\addcontentsline{toc}{section}{Slides}
 
 Let's revist my example from the talk: can we build on this to use tidyeval so that the user can write \texttt{beer\_states\ \%\textgreater{}\%\ beer\_mean(state)} {[}I think we need to use \texttt{.data} and note how state is given as an object so we need to use tidyeval to suppress it's evaluation\ldots{}{]}
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\NormalTok{beer_states <-}\StringTok{ }\NormalTok{readr}\OperatorTok{::}\KeywordTok{read_csv}\NormalTok{(}
+  \StringTok{'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/beer_states.csv'}\NormalTok{)}
+
 \NormalTok{beer_mean <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(.data, x) \{}
   
 \NormalTok{  column_name <-}\StringTok{ }\KeywordTok{deparse}\NormalTok{(}\KeywordTok{substitute}\NormalTok{(x))}
@@ -4218,28 +4465,16 @@ Let's revist my example from the talk: can we build on this to use tidyeval so t
       \DataTypeTok{data =}\NormalTok{ .data}
 \NormalTok{    )}
 \NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
-    \KeywordTok{mean}\NormalTok{(.data[[column_name]])}
+    \KeywordTok{mean}\NormalTok{(}\KeywordTok{which}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(.data[[column_name]])[.data[[column_name]]]))}
 \NormalTok{  \}}
 \NormalTok{\}}
 
-\NormalTok{beer_states }\OperatorTok{%>%}\StringTok{ }\KeywordTok{beer_mean}\NormalTok{(state)}
+\NormalTok{beer_states }\OperatorTok{%>%}\StringTok{ }\KeywordTok{beer_mean}\NormalTok{(barrels)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-Error: Can't calculate mean, state is not numeric
-   12. stop(fallback)
-   11. signal_abort(cnd)
-   10. abort(message = msg, arg = column_name, data = .data)
-   9. beer_mean(., state)
-   8. function_list[[k]](value)
-   7. withVisible(function_list[[k]](value))
-   6. freduce(value, `_function_list`)
-   5. `_fseq`(`_lhs`)
-   4. eval(quote(`_fseq`(`_lhs`)), env, env)
-   3. eval(quote(`_fseq`(`_lhs`)), env, env)
-   2. withVisible(eval(quote(`_fseq`(`_lhs`)), env, env))
-   1. beer_states %>% beer_mean(state)
+[1] 806.4551
 \end{verbatim}
 
 \bibliography{book.bib,packages.bib}

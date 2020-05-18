@@ -1,10 +1,53 @@
 # Conditions
 
+```{r, include=FALSE}
+library(tidyverse)
+library(rlang)
+```
 
 ## 8.3 Ignoring conditions {-}
 
 :::question
-When would you actually use `suppressWarning` and `suppressMessage`? I think as debugging techniques and not so much when developing functions?
+I can't quite think of a time where `try` is more appropraite than `tryCatch` - does anyone have an example?
+:::
+
+:::TODO
+XXX
+:::
+
+:::question
+When would you actually use `suppressWarning`? Maybe when loading libraries? I created an example for `suppressMessages`, but does someone have a better, practical use case?
+:::
+
+:::TODO
+XXX
+:::
+
+## 8.4.2 Exiting handlers {-}
+
+:::question
+```{r, eval=FALSE}
+tryCatch(
+  message = function(cnd) "There",
+  {
+    message("Here")
+    stop("This code is never run!")
+  }
+)
+#> [1] "There"
+```
+
+The protected code is evaluated in the environment of `tryCatch()`, but the handler code is not, because the handlers are functions.
+
+Clarifcation question what is the "handler code" and "protected code"?
+:::
+
+:::TODO
+The protected code is `message = function(cnd) "There"` and the handler inside the `{}`
+:::
+
+:::question
+In the tryCatch example where we have `finally` print "Thank God for Beer" I find it interesting that this is printed **before** the code inside the tryCatch. Can anyone explain why?
 :::
 
 :::TODO
@@ -18,6 +61,49 @@ Can we make up our own bubbling and muffled `withCallingHandlers` examples? The 
 :::
 
 :::TODO
+Bubbling is the phenomenon where all the handler statements will be evaluated, all the way up, prior to the body code and muffling allows us to stop this? Not sure if this is true and it doesn't really explain the muffling examples.
+:::
+
+:::question
+Why is this message executed once per message in the function?
+
+```{r, eval=FALSE}
+withCallingHandlers(
+  message = function(cnd) cat("Caught a message!\n"), 
+  {
+    message("Someone there?")
+    message("Why, yes!")
+  }
+)
+```
+
+```
+#> Caught a message!
+#> Someone there?
+#> Caught a message!
+#> Why, yes!
+```
+:::
+
+:::TODO
+XXX
+:::
+
+:::question
+> The return value of a calling handler is ignored because the code continues to execute after the handler completes; where would the return value go? That means that calling handlers are only useful for their side-effects.
+
+Can we come up with an example for this masking? I think seeing it will help me understand...
+:::
+
+:::TODO
+XXX
+:::
+
+:::question
+How does muffling differ from `suppressWarnings`?
+:::
+
+:::TODO
 XXX
 :::
 
@@ -26,7 +112,7 @@ XXX
 :::question
 In the example 
 
-```{r}
+```{r, eval=FALSE}
 show_condition <- function(code) {
   tryCatch(
     error = function(cnd) "error",
@@ -42,7 +128,7 @@ show_condition <- function(code) {
 
 The first three calls to `show_condition` make sense to me, and I even understand that the first time the code is evaluated inside a `tryCatch` it exists (that's why it returns `message`) but how are you suppling `3` arguments to a function that just takes on one argument, `code`? Is that what the `{}` are for?
 
-```{r}
+```{r, eval=FALSE}
 show_condition({
   10
   message("?")
@@ -55,10 +141,161 @@ show_condition({
 XXX
 :::
 
+## 8.4.5.3 Exercises {-}
+
+:::question
+I couldn't follow the manual's answer for what's happening here, can we come up with our own answer for what's happening here in words?
+:::
+
+```{r, eval=FALSE}
+withCallingHandlers(
+  message = function(cnd) message("b"),
+  withCallingHandlers(
+    message = function(cnd) message("a"),
+    message("c")
+  )
+)
+```
+
+
+:::TODO
+XXX
+:::
+
 ## Custom conditions {-}
 
 :::question
-It's cool you can attach metadata to errors but what is a real-world use case where this is useful?
+We saw how we can use metadata and `Restarts` in the presentation, can we transform the base code to use `rlang::abort`?
+:::
+
+:::TODO
+XXX
+:::
+
+## 8.5.4.2 Exercises {-}
+
+:::question
+Q: Inside a package you often need to stop with an error when something is not right. Other packages that depend on your package might be tempted to check these errors in their unit tests. How could you help these packages to avoid relying on the error message which is part of the user interface rather than the API and might change without notice?
+
+A: Instead returning an error it might be preferable to throw a customized condition and place a standardized error message inside the metadata. Then the downstream package could check for the class of the condition, rather than inspecting the message.
+
+Can we come up with something concrete for this?
+:::
+
+:::TODO
+XXX
+:::
+
+## 8.6.3 Resignal {-}
+
+:::question
+Can we go over what is happening here?
+
+```{r, eval=FALSE}
+warning2error <- function(expr) {
+  withCallingHandlers(
+    warning = function(cnd) abort(conditionMessage(cnd)),
+    expr
+  )
+}
+
+warning2error({
+  x <- 2 ^ 4
+  warn("Hello")
+})
+```
+
+```
+Error: Hello
+```
+:::
+
+:::TODO
+We are passing `warn("Hello")` as handler code but since it's an `abort` the protected code `x` never gets evaluated? That seems wrong. 
+:::
+
+## 8.6.4 Record {-}
+
+:::question
+Why are we using `cnd_muffle` here?
+
+```{r, eval=FALSE}
+catch_cnds <- function(expr) {
+  conds <- list()
+  add_cond <- function(cnd) {
+    conds <<- append(conds, list(cnd))
+    cnd_muffle(cnd)
+  }
+  
+  withCallingHandlers(
+    message = add_cond,
+    warning = add_cond,
+    expr
+  )
+  
+  conds
+}
+
+catch_cnds({
+  inform("a")
+  warn("b")
+  inform("c")
+})
+```
+:::
+
+If we remove `cnd_muffle` we see that `a`, `b`, and `c` are printed to the console prior to getting the `conds` output. 
+
+:::question
+Would it be possible in the second Record example to create a function that doesn't require us to put the `abort` statement at the end, just ignoring it? Or because `abort` is an exiting handler it needs to be last?
+:::
+
+```{r, eval=FALSE}
+catch_cnds <- function(expr) {
+  conds <- list()
+  add_cond <- function(cnd) {
+    conds <<- append(conds, list(cnd))
+    cnd_muffle(cnd)
+  }
+  
+  tryCatch(
+    error = function(cnd) {
+      conds <<- append(conds, list(cnd))
+    },
+    withCallingHandlers(
+      message = add_cond,
+      warning = add_cond,
+      expr
+    )
+  )
+  
+  conds
+}
+
+catch_cnds({
+  abort("a")
+  inform("b")
+  warn("c")
+})
+```
+
+:::TODO
+XXX
+:::
+
+:::question
+What is `signal` and what is it doing here?
+
+```{r, eval=FALSE}
+log <- function(message, level = c("info", "error", "fatal")) {
+  # if we remove match.arg and just use level
+  # the signal returns infoerrorfatal as a single string
+  # we need match.arg to find the selected level
+  # and it defaults to the first if none are selected
+  level <- match.arg(level)
+  signal(message, "log", level = level)
+}
+```
 :::
 
 :::TODO
@@ -66,10 +303,49 @@ XXX
 :::
 
 :::question
+> If you create a condition object by hand, and signal it with signalCondition(), cnd_muffle() will not work. Instead you need to call it with a muffle restart defined, like this: `withRestarts(signalCondition(cond), muffle = function() NULL)`
+
+Where does this code go given the prior example? 
+:::
+
+:::TODO
+XXX
+:::
+
+## 8.6.6.2 Exercises {-}
+
+:::question
+> Calling handlers are called in the context of the call that signalled the condition. Exiting handlers are called in the context of the call to tryCatch().
+
+What exactly does this mean? tryCatch evaluates what we were calling the protected code first and calling handlers execute the handling code first?
+:::
+
+:::TODO
+XXX
+:::
+
+## 8.6.6.4 Exercises {-}
+
+:::question
+> There’s no way to break out of the function because we’re capturing the interrupt that you’d usually use!
+
+What does this mean? You can't stop the function if you set an `interrupt` argument inside a `tryCatch`
+:::
+
+:::TODO
+XXX
+:::
+
+## Slides {-}
+
+:::question
 Let's revist my example from the talk: can we build on this to use tidyeval so that the user can write `beer_states %>% beer_mean(state)` [I think we need to use `.data` and note how state is given as an object so we need to use tidyeval to suppress it's evaluation...]
 :::
 
 ```{r, eval=FALSE}
+beer_states <- readr::read_csv(
+  'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/beer_states.csv')
+
 beer_mean <- function(.data, x) {
   
   column_name <- deparse(substitute(x))
@@ -83,26 +359,13 @@ beer_mean <- function(.data, x) {
       data = .data
     )
   } else {
-    mean(.data[[column_name]])
+    mean(which(!is.na(.data[[column_name]])[.data[[column_name]]]))
   }
 }
 
-beer_states %>% beer_mean(state)
+beer_states %>% beer_mean(barrels)
 ```
 
 ```
-Error: Can't calculate mean, state is not numeric
-   12. stop(fallback)
-   11. signal_abort(cnd)
-   10. abort(message = msg, arg = column_name, data = .data)
-   9. beer_mean(., state)
-   8. function_list[[k]](value)
-   7. withVisible(function_list[[k]](value))
-   6. freduce(value, `_function_list`)
-   5. `_fseq`(`_lhs`)
-   4. eval(quote(`_fseq`(`_lhs`)), env, env)
-   3. eval(quote(`_fseq`(`_lhs`)), env, env)
-   2. withVisible(eval(quote(`_fseq`(`_lhs`)), env, env))
-   1. beer_states %>% beer_mean(state)
+[1] 806.4551
 ```
-
