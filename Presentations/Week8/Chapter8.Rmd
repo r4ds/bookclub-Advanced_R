@@ -17,6 +17,7 @@ output:
 library(xaringanthemer)
 library(tidyverse)
 library(rlang)
+library(gt)
 mono_light(
   base_color = "#3092FF",
   header_font_google = google_font("Josefin Slab"),
@@ -423,33 +424,56 @@ Backtrace:
 
 ---
 
-# withCallingHandlers
+class: inverse, hide-logo
 
+# withCallingHandlers
 A story in three functions. 
 
-#### Function 1
+---
+
+# withCallingHandlers
+### Function 1
 
 ```{r, eval=FALSE}
-# calculate the mean of columns
-simple_mean <- function(x){
-  if(!is.numeric(x)){
-    #construct an error
-    categorical_column <- structure(
-      class = c("categorical_column","error", "condition"),
-      list(message = "Not sure what to do with categorical column",
-           call = sys.call(),
-           # and include the offending parameter in the error object
-           x=x))
-    # raise the error
-    stop(categorical_column)
+simple_mean <- function(x) {
+  if(!is.numeric(x)) {
+    
+    abort(
+      "categorical_column",
+      message = "Not sure what to do with categorical column",
+      x = x
+    )
+    
   }
-  cat("Returning from simple_mean()\n")
-  return(mean(!is.na(x)))
+  cat("Returning from simple_mean() \n")
+  return(mean(x[which(!is.na(x))]))
 }
 ```
 
-.footnote[
-_In the QandA I ask if we can convert this using `rlang::abort` and move away from `structure` and base R_
+
+.pull-left[
+#### Success
+
+```{r, eval=FALSE}
+simple_mean(beer_states$barrels)
+```
+
+```
+Returning from simple_mean()
+[1] 2286370
+```
+]
+
+.pull-right[
+#### Failure
+
+```{r, eval=FALSE}
+simple_mean(beer_states$states)
+```
+```
+Error in simple_mean(beer_states$states) : 
+  Not sure what to do with categorical column
+```
 ]
 
 ---
@@ -464,10 +488,36 @@ mean_count <- function(y) {
                         # establish a restart called 'categorical_column'
                         # which returns the negative of it's argument
                         categorical_column_restart = function (z) { length(z) } )
-  cat("Returning from mean_count()\n")
+  cat("Returning from mean_count() \n")
   return(as_count)
 }
 ```
+
+.pull-left[
+#### Success
+
+```{r, eval=FALSE}
+mean_count(beer_states$barrels)
+```
+
+```
+Returning from simple_mean()
+Returning from mean_count()
+[1] 2286370
+```
+]
+
+.pull-right[
+#### Failure
+
+```{r, eval=FALSE}
+mean_count(beer_states$states)
+```
+```
+Error in simple_mean(beer_states$states) : 
+  Not sure what to do with categorical column
+```
+]
 
 ---
 
@@ -497,20 +547,92 @@ mean_or_count <- function(z){
 }
 ```
 
+.pull-left[
+#### Success
+
+```{r, eval=FALSE}
+mean_or_count(beer_states$barrels)
+```
+
+```
+Returning from simple_mean()
+Returning from mean_count()
+Returning from mean_or_count()
+[1] 2286370
+```
+]
+
+.pull-right[
+#### Failure
+
+```{r, eval=FALSE}
+mean_or_count(beer_states$states)
+```
+```
+Error in simple_mean(beer_states$states) : 
+  Not sure what to do with categorical column
+```
+]
+
 ---
 
-# Applications 
+```{r, echo=FALSE}
+tibble(
+  Function = c(
+    "signalCondition",
+    "simpleCondition",
+    "simpleError",
+    "simpleWarning",
+    "simpleMessage",
+    "errorCondition",
+    "warningCondition",
+    "conditionCall",
+    "conditionMessage",
+    "withRestarts",
+    "computeRestarts",
+    "findRestart",
+    "invokeRestart",
+    "invokeRestartInteractively",
+    "isRestart",
+    "restartDescription",
+    "restartFormals",
+    "suspendInterrupts",
+    "allowInterrupts"
+  ),
+  Definition = c(
+    "", "", "", "", "", "", "",
+    "return sthe message of a condition",
+    "returns the call of a condition",
+    "establishes recovery protocols",
+    "returns a list of all restarts",
+    "returns the most recently established restart of the specified name",
+     "", "", "", "", "", "", "")
+) %>%
+  gt() %>%
+  tab_options(table.font.size = 9, row.striping.background_color = "red") %>%
+    cols_width(
+    vars(Function) ~ px(150),
+    vars(Definition) ~px(500)
+  ) %>%
+  cols_align(
+    align = "right",
+    columns = vars(Function)
+  ) %>%
+  tab_header(
+    title = md("Other [base] Condition Functions"),
+    subtitle = md("R Documentation")
+    )
+```
 
-- Failure value
-- Success and failure value
-- Resignal
-- Record
-- No default behavior
 
 
 <style>
 pre {
   font-size: 11px;
+}
+
+.small-font {
+  font-size: 13px;
 }
 
 .footnote {
