@@ -46,6 +46,10 @@ brewer_size <- readr::read_csv('https://raw.githubusercontent.com/rfordatascienc
 beer_states <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/beer_states.csv')
 ```
 
+The condition system splits the responsibilities into three parts–signaling:
+ 1. a condition
+ 2. handling it
+ 3. restarting
 
 ---
 
@@ -424,207 +428,158 @@ Backtrace:
 
 ---
 
-class: inverse, hide-logo
-
 # withCallingHandlers
-A story in three functions. 
+
+> R’s error handling system lets you separate the code that actually recovers from an error from the code that decides how to recover. Thus, you can put recovery code in low-level functions without committing to actually using any particular recovery strategy, leaving that decision to code in high-level functions.
 
 ---
 
-# withCallingHandlers
-### Function 1
-
-```{r, eval=FALSE}
-simple_mean <- function(x) {
-  if(!is.numeric(x)) {
-    
-    abort(
-      "categorical_column",
-      message = "Not sure what to do with categorical column",
-      x = x
-    )
-    
-  }
-  cat("Returning from simple_mean() \n")
-  return(mean(x[which(!is.na(x))]))
+```{r}
+expensive_function <- function(x, 
+                               # warning print the warning and send us to browser
+                               warning = function(w) { print(paste('warning:', w ));  browser() },
+                               # error print the error and send us to browser
+                               error=function(e) { print(paste('e:',e )); browser()} ) {
+  
+  print(paste("big expensive step we don't want to repeat for x:",x))
+  
+  z <- x  # the "expensive operation"
+  
+  # second function on z that isn't expensive but could potentially error
+  repeat
+  # put code in here that actually handles the errors
+  withRestarts(
+    withRestarts(
+      withCallingHandlers(
+        {
+          print(paste("attempt cheap operation for z:",z))
+          return(log(z))
+        },
+        warning = warning,
+        error = error
+      ),
+      # action restart will take
+      # if the function fails this will take us to the browser
+      # and findRestart will find this name
+      force_positive = function() {z <<- -z} 
+    ),
+    # or we can use this is the browser
+    set_to_one = function() {z <<- 1}
+  )
 }
 ```
 
+.footnote[
+http://www.win-vector.com/blog/2012/10/error-handling-in-r/?utm_source=rss&utm_medium=rss&utm_campaign=error-handling-in-r
+]
+
+---
+
+# Using `browser` 
+
+#### Success
+```{r, eval=FALSE}
+expensive_function(2)
+```
+
+```
+[1] "big expensive step we don't want to repeat for x: 2"
+[1] "attempt cheap operation for z: 2"
+[1] 0.6931472
+```
 
 .pull-left[
-#### Success
+#### Fail numeric
 
 ```{r, eval=FALSE}
-simple_mean(beer_states$barrels)
+expensive_function(-2)
 ```
 
 ```
-Returning from simple_mean()
-[1] 2286370
+[1] "big expensive step we don't want to repeat for x: -2"
+[1] "attempt cheap operation for z: -2"
+[1] "warning: simpleWarning in log(z): NaNs produced\n"
+Called from: (function(w) { print(paste('warning:', w ));  
+    browser() })(list(
+    message = "NaNs produced", call = log(z)))
+```
+
+```{r, eval=FALSE}
+Browse[1]> invokeRestart("force_positive")
+```
+
+```
+[1] "attempt cheap operation for z: 2"
+[1] 0.6931472
 ```
 ]
 
 .pull-right[
-#### Failure
+#### Fail character
 
 ```{r, eval=FALSE}
-simple_mean(beer_states$states)
+expensive_function('a')
 ```
+
 ```
-Error in simple_mean(beer_states$states) : 
-  Not sure what to do with categorical column
+expensive_function('a')
+[1] "big expensive step we don't want to repeat for x: a"
+[1] "attempt cheap operation for z: a"
+[1] "e: Error in log(z): non-numeric 
+  argument to mathematical function\n"
+  Called from: h(simpleError(msg, call))
+```
+
+```{r, eval=FALSE}
+Browse[1]> invokeRestart("set_to_one")
+```
+
+```
+[1] "attempt cheap operation for z: 1"
+[1] 0
 ```
 ]
 
 ---
 
-# withCallingHandlers
-#### Function 2
+# Without `browser`
 
-```{r, eval=FALSE}
-# use restart to just get the length of categorical columns
-mean_count <- function(y) {
-  as_count <- withRestarts(simple_mean(y),
-                        # establish a restart called 'categorical_column'
-                        # which returns the negative of it's argument
-                        categorical_column_restart = function (z) { length(z) } )
-  cat("Returning from mean_count() \n")
-  return(as_count)
+Get the handler functions to invoke the restart (rather than print error as in example above)
+
+```{r}
+force_positive <- function(w) {invokeRestart("force_positive")}
+set_to_one <- function(e) {invokeRestart("set_to_one")}
+
+auto_expensive_function = function(x) {
+  expensive_function(x, warning=force_positive, error=set_to_one)
 }
 ```
 
-.pull-left[
-#### Success
+---
 
-```{r, eval=FALSE}
-mean_count(beer_states$barrels)
+
+```{r}
+auto_expensive_function(2)
 ```
 
-```
-Returning from simple_mean()
-Returning from mean_count()
-[1] 2286370
-```
-]
 
-.pull-right[
-#### Failure
+```{r}
+auto_expensive_function(-2)
+```
 
-```{r, eval=FALSE}
-mean_count(beer_states$states)
+```{r}
+auto_expensive_function('a')
 ```
-```
-Error in simple_mean(beer_states$states) : 
-  Not sure what to do with categorical column
-```
-]
 
 ---
 
-# withCallingHandlers
-#### Function 3
+> We can use the condition system to allow a low-level function to detect a problem while parsing a log file and signal an error, to allow mid-level code to provide several possible ways of recovering from such an error, and to allow code at the highest level of the application to define a policy for choosing which recovery strategy to use.
 
-```{r, eval=FALSE}
-mean_or_count <- function(z){
-  as_mean_or_count <- withCallingHandlers(
-    # call mean or count function
-    mean_count(z),
-    # and if an `error` occurrs
-    error = function(err) {
-      # and the `error` is a `categorical_column` error
-      if(inherits(err,"cateogircal_column")) {
-        # invoke the restart called 'categorical_column_restart'
-        invokeRestart('categorical_column_restart',
-                      # and invoke it with this parameter
-                      err$x)
-      } else {
-        # otherwise re-raise the error
-        stop(err)
-      }
-    })
-  cat("Returning from mean_or_count()\n")
-  return(as_mean_or_count)
-}
-```
 
-.pull-left[
-#### Success
 
-```{r, eval=FALSE}
-mean_or_count(beer_states$barrels)
-```
-
-```
-Returning from simple_mean()
-Returning from mean_count()
-Returning from mean_or_count()
-[1] 2286370
-```
+.footnote[
+http://adv-r.had.co.nz/beyond-exception-handling.html
 ]
-
-.pull-right[
-#### Failure
-
-```{r, eval=FALSE}
-mean_or_count(beer_states$states)
-```
-```
-Error in simple_mean(beer_states$states) : 
-  Not sure what to do with categorical column
-```
-]
-
----
-
-```{r, echo=FALSE}
-tibble(
-  Function = c(
-    "signalCondition",
-    "simpleCondition",
-    "simpleError",
-    "simpleWarning",
-    "simpleMessage",
-    "errorCondition",
-    "warningCondition",
-    "conditionCall",
-    "conditionMessage",
-    "withRestarts",
-    "computeRestarts",
-    "findRestart",
-    "invokeRestart",
-    "invokeRestartInteractively",
-    "isRestart",
-    "restartDescription",
-    "restartFormals",
-    "suspendInterrupts",
-    "allowInterrupts"
-  ),
-  Definition = c(
-    "", "", "", "", "", "", "",
-    "return sthe message of a condition",
-    "returns the call of a condition",
-    "establishes recovery protocols",
-    "returns a list of all restarts",
-    "returns the most recently established restart of the specified name",
-     "", "", "", "", "", "", "")
-) %>%
-  gt() %>%
-  tab_options(table.font.size = 9, row.striping.background_color = "red") %>%
-    cols_width(
-    vars(Function) ~ px(150),
-    vars(Definition) ~px(500)
-  ) %>%
-  cols_align(
-    align = "right",
-    columns = vars(Function)
-  ) %>%
-  tab_header(
-    title = md("Other [base] Condition Functions"),
-    subtitle = md("R Documentation")
-    )
-```
-
-
 
 <style>
 pre {
@@ -637,6 +592,7 @@ pre {
 
 .footnote {
   color: #800020;
+  font-size: 9px;
 }
 
 </style>
