@@ -46,11 +46,6 @@ brewer_size <- readr::read_csv('https://raw.githubusercontent.com/rfordatascienc
 beer_states <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/beer_states.csv')
 ```
 
-The condition system splits the responsibilities into three parts–signaling:
- 1. a condition
- 2. handling it
- 3. restarting
-
 ---
 
 class: inverse, hide-logo
@@ -76,7 +71,7 @@ https://style.tidyverse.org/error-messages.html
 
 ## stop
 
-```{r, eval=FALSE}
+```{r}
 beer_mean_error <- function(x) {
   if (!is.numeric(x)) {
     stop("Need numeric column", call.=FALSE) #<<
@@ -85,7 +80,18 @@ beer_mean_error <- function(x) {
     mean(which(!is.na(x)[x]))
   }
 }
+```
 
+.pull-left[
+#### success
+```{r}
+beer_mean_error(beer_states$barrels)
+```
+]
+
+.pull-right[
+#### fail
+```{r, eval=FALSE}
 beer_mean_error(beer_states$states)
 ```
 
@@ -94,27 +100,37 @@ Error: Need numeric column
    2. stop("Need numeric column", call. = FALSE)
    1. beer_mean(beer_states$state)
 ```
-
+]
 ---
 
 ## `rlang::abort`
 
-```{r, eval=FALSE}
+```{r}
 beer_mean_abort <- function(x) {
   if (!is.numeric(x)) {
     abort( #<<
       message = "Need numeric column", #<<
       arg = x #<<
       ) #<<
-    mean(which(!is.na(x)[x]))
   } else{
     mean(which(!is.na(x)[x]))
   }
 }
-
-beer_mean_abort(beer_states$state)
 ```
 
+
+.pull-left[
+#### success
+```{r}
+beer_mean_abort(beer_states$barrels)
+```
+]
+
+.pull-right[
+#### fail
+```{r, eval=FALSE}
+beer_mean_abort(beer_states$state)
+```
 ```
 Error: Need numeric column
    4. stop(fallback)
@@ -122,15 +138,16 @@ Error: Need numeric column
    2. abort(message = "Need numeric column", arg = x)
    1. beer_mean(beer_states$state)
 ```
+]
 
 ---
 
 ## abort + glue
 
 ```{r}
-beer_mean_abort <- function(data, x) {
+beer_mean_abort_glue <- function(data, x) {
   
-  column_name <- deparse(substitute(x))
+  column_name <- x
   
   msg <- glue::glue("Can't calculate mean, {column_name} is not numeric")
   
@@ -147,10 +164,19 @@ beer_mean_abort <- function(data, x) {
 }
 ```
 
-```{r, eval=FALSE}
-beer_mean_abort(beer_states, "state")
-```
 
+.pull-left[
+#### success
+```{r}
+beer_mean_abort_glue(beer_states, "barrels")
+```
+]
+
+.pull-right[
+#### fail
+```{r, eval=FALSE}
+beer_mean_abort_glue(beer_states, "state")
+```
 
 ```
 Error: Can't calculate mean, "state" is not numeric
@@ -160,6 +186,7 @@ Run `rlang::last_error()` to see where the error occurred.
    2. abort(message = msg, arg = column_name, data = data) 
    1. beer_mean(beer_states, "state") 
 ```
+]
 
 ---
 
@@ -208,27 +235,20 @@ is.Date <- function(x) {
 }
 ```
 
-```{r, eval=FALSE}
+```{r}
 beer_mean_warning <- function(data, x) {
   
   column_name <- deparse(substitute(x))
   
   if (is.Date(data[[x]])) {
-    warning(glue::glue("Are you sure you wanna calculate the mean? {column_name} is of type date")) #<<
-    mean(which(!is.na(data[[x]])[data[[x]]]))
+    warning(glue::glue("Are you sure you wanna calculate the mean? {x} is of type date")) #<<
+    mean(data[[x]][which(!is.na(data[[x]]))])
   } else {
-    mean(which(!is.na(data[[x]])[data[[x]]]))
+    mean(data[[x]][which(!is.na(data[[x]]))])
   }
 }
 
-beer_mean(beer_states, "year")
-```
-
-```
-[1] "2013-07-02"
-Warning message:
-In beer_mean(beer_states, "year") :
-  Are you sure you wanna calculate the mean? "year" is of type date
+beer_mean_warning(beer_states, "year")
 ```
 
 .footnote[
@@ -289,24 +309,31 @@ class: inverse, hide-logo
 
 # try
 
-```{r, eval=FALSE}
-beer_mean_try <- function(data, x) {
-  try(data[[x]]) #<<
-  NA
+```{r}
+beer_mean_try <- function(x) {
+  try(beer_mean_abort(x), silent = TRUE) #<<
 }
-
-beer_mean_try(beer_states, "states")
 ```
 
+.pull-left[
+#### success
+```{r}
+beer_mean_try(beer_states$barrels)
 ```
-[1] NA
+]
+
+.pull-right[
+#### failure
+```{r}
+beer_mean_try(beer_states$state)
 ```
+]
 
 ---
 
 # suppressMessages
 
-```{r, eval=FALSE}
+```{r}
 testthat::test_that("beer mean function works", {
   
   # calculate mean using base and round to two digits
@@ -336,11 +363,16 @@ class: inverse, hide-logo
 - tryCatch
 - withCallingHandlers
 
+The condition system splits the responsibilities into three parts–signaling:
+ 1. a condition
+ 2. handling it
+ 3. restarting
+
 ---
 
 # tryCatch
 
-```{r, eval=FALSE}
+```{r}
 beer_mean_tryCatch <- function(expr) {
   tryCatch(
     error = function(cnd) NA, #<<
@@ -355,27 +387,19 @@ beer_mean_tryCatch <- function(expr) {
 ```
 
 .pull-left[
-```{r, eval=FALSE}
-beer_mean_tryCatch(beer_mean_abort(beer_states, "state"))
-```
+#### success
 
+```{r}
+beer_mean_tryCatch(beer_mean_abort(beer_states$barrels))
 ```
-[1] "Thank God for Beer!"
-[1] NA
-```
-
 ]
 
 .pull-right[
-```{r, eval=FALSE}
-beer_mean_tryCatch(beer_mean_abort(beer_states, "barrels"))
-```
+#### failure
 
+```{r}
+beer_mean_tryCatch(beer_mean_abort(beer_states$state))
 ```
-[1] "Thank God for Beer!"
-Average Beer Barrels Produced: 806.46
-```
-
 ]
 
 .footnote[
@@ -573,21 +597,225 @@ auto_expensive_function('a')
 
 ---
 
-> We can use the condition system to allow a low-level function to detect a problem while parsing a log file and signal an error, to allow mid-level code to provide several possible ways of recovering from such an error, and to allow code at the highest level of the application to define a policy for choosing which recovery strategy to use.
+> We can use the condition system to allow a low-level function to detect a problem and signal an error, to allow mid-level code to provide several possible ways of recovering from such an error, and to allow code at the highest level of the application to define a policy for choosing which recovery strategy to use.
 
-
+- `simple_mean`
+- `mean_count`
+- `mean_or_count`
 
 .footnote[
 http://adv-r.had.co.nz/beyond-exception-handling.html
 ]
+
+---
+
+# Low level function
+
+```{r}
+simple_mean <- function(x) { 
+  #detecting of a problem
+  if(!is.numeric(x)){ #if x is not numeric
+    #create condition
+    rlang::abort( 
+      "categorical_column",  #class of condition
+      message = "Not sure what to do with categorical column", #message to signal error
+      x = x  #metadata
+    )
+  }
+  cat("Returning from simple mean()\n")
+  return(mean(x[which(!is.na(x))]))
+}
+```
+
+.pull-left[
+#### success
+```{r, eval=FALSE}
+simple_mean(beer_states$barrels)
+```
+
+```
+Returning from simple mean()
+[1] 2286370
+```
+]
+
+.pull-right[
+#### fail
+```{r, eval=FALSE}
+simple_mean(beer_states$state)
+```
+
+```
+Error: Not sure what to do with categorical column
+```
+]
+
+---
+
+
+# Medium - work around error
+
+```{r}
+mean_count <- function(y){
+  
+  as_count <- withRestarts( #establish restart
+    simple_mean(y) , 
+    #create code that recovers from errors in restart categorical_column_restart
+    #restart name describes its action
+    categorical_column_restart = function(z) { 
+      plyr::count(z)
+    } 
+    #choosing this restart later in condition handler, will invoke it automatically
+    #here you can define various restarts for other recoveries for 
+    #condition handler to choose from
+  )
+  cat("Returning from mean_count()\n")
+  return(as_count)
+}
+```
+
+.pull-left[
+#### success
+```{r}
+mean_count(beer_states$barrels)
+```
+]
+
+
+.pull-right[
+#### fail
+```{r, eval=FALSE}
+mean_count(beer_states$state)
+```
+
+```
+Error: Not sure what to do with categorical column
+```
+]
+
+---
+
+# High level function
+
+.small-font[
+```{r}
+mean_or_count <- function(z){
+  as_mean_or_count <- withCallingHandlers(
+    #call mean or count function 
+    mean_count(z), 
+    
+    # if error occurs function that invokes restart 
+    error = function(err){
+      
+      # if the error is a 'categorical column error'
+      if (inherits(err, "categorical_column")) { 
+        #if object err's class atrribute inherits from class of condition "categorical_column"
+        #invoke the restarts called categorical_column_restart
+        invokeRestart("categorical_column_restart",
+                      #finds restart and invoke it with parameter
+                      err$x #argument to pass to restart
+        )
+      } else {
+        #otherwise re-raise the error
+        stop(err)
+      }
+    }
+  )
+  cat("Returning from mean_or_count()\n")
+  return(as_mean_or_count)
+}
+```
+]
+
+.pull-left[
+#### success
+```{r}
+mean_or_count(beer_states$barrels)
+```
+]
+
+.pull-right[
+#### fail 
+```{r}
+head(mean_or_count(beer_states$state))
+```
+]
+
+---
+
+```{r, echo=FALSE}	
+tibble(	
+  Function = c(	
+    "signalCondition",	
+    "simpleCondition",	
+    "simpleError",	
+    "simpleWarning",	
+    "simpleMessage",	
+    "errorCondition",	
+    "warningCondition",	
+    "conditionCall",	
+    "conditionMessage",	
+    "withRestarts",	
+    "computeRestarts",	
+    "findRestart",	
+    "invokeRestart",	
+    "invokeRestartInteractively",	
+    "isRestart",	
+    "restartDescription",	
+    "restartFormals",	
+    "suspendInterrupts",	
+    "allowInterrupts"	
+  ),	
+  Definition = c(	
+    "TODO", 
+    "default condition class", 
+    "default error class", 
+    "default warning class", 
+    "default message class",
+    "TODO", 
+    "TODO",	
+    "return sthe message of a condition",	
+    "returns the call of a condition",	
+    "establishes recovery protocols",	
+    "returns a list of all restarts",	
+    "returns the most recently established restart of the specified name",	
+    "a way to specify how to handle errors and warnings", 
+    "TODO", 
+    "TODO: check if object is a restart function",
+    "TODO", 
+    "TODO", 
+    "TODO",
+    "TODO")	
+) %>%	
+  gt() %>%	
+  tab_options(table.font.size = 9, row.striping.background_color = "red") %>%	
+    cols_width(	
+    vars(Function) ~ px(150),	
+    vars(Definition) ~px(500)	
+  ) %>%	
+  cols_align(	
+    align = "right",	
+    columns = vars(Function)	
+  ) %>%	
+  tab_header(	
+    title = md("Other [base] Condition Functions"),	
+    subtitle = md("R Documentation")	
+    )	
+```
+
 
 <style>
 pre {
   font-size: 11px;
 }
 
+
 .small-font {
   font-size: 13px;
+}
+
+.small-font pre{
+  font-size: 9px;
 }
 
 .footnote {
