@@ -119,7 +119,7 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-05-18}
+\date{2020-05-20}
 
 \begin{document}
 \maketitle
@@ -363,7 +363,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8195bbdf28"
+## [1] "0x7fa94c600850"
 \end{verbatim}
 
 \begin{Shaded}
@@ -373,7 +373,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8195bbdf28"
+## [1] "0x7fa94c600850"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -385,7 +385,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f819a33f008"
+## [1] "0x7fa94d0e5d80"
 \end{verbatim}
 
 \begin{Shaded}
@@ -395,8 +395,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7f81989ffab8] <list> 
-## └─[2:0x7f8195bbdf28] <dbl>
+## █ [1:0x7fa94c7b5e78] <list> 
+## └─[2:0x7fa94c600850] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -406,7 +406,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8198a03738"
+## [1] "0x7fa94e06fa10"
 \end{verbatim}
 
 \begin{Shaded}
@@ -443,7 +443,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7f8191767a08>"
+## [1] "<0x7fa94fccfb48>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -453,7 +453,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7f8191767a08>
+## <0x7fa94fccfb48>
 \end{verbatim}
 
 \begin{Shaded}
@@ -463,7 +463,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8191767a08"
+## [1] "0x7fa94fccfb48"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -512,7 +512,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f819630fd88"
+## [1] "0x7fa950d89cc8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -522,7 +522,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7f819630fd88>"
+## [1] "<0x7fa950d89cc8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -532,7 +532,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7f819630fd88 -> 0x7f8193c0ff48]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fa950d89cc8 -> 0x7fa950da5f88]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -628,7 +628,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f81913cc318"
+## [1] "0x7fa94b4db9a8"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -641,7 +641,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f819a488608"
+## [1] "0x7fa94befb7f8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -664,7 +664,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f819a488608"
+## [1] "0x7fa94befb7f8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -674,7 +674,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f819a488608"
+## [1] "0x7fa94befb7f8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -697,7 +697,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f819a488608"
+## [1] "0x7fa94befb7f8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -707,7 +707,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f81969aa8c8"
+## [1] "0x7fa94c657898"
 \end{verbatim}
 
 \begin{Shaded}
@@ -730,7 +730,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f81916fbec8"
+## [1] "0x7fa94d23bb88"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2531,13 +2531,13 @@ This will work:
 
 \begin{verbatim}
 ## # A tibble: 5 x 1
-##      x1
-##   <dbl>
-## 1 0.275
-## 2 0.101
-## 3 0.455
-## 4 0.451
-## 5 0.711
+##       x1
+##    <dbl>
+## 1 0.238 
+## 2 0.271 
+## 3 0.0650
+## 4 0.248 
+## 5 0.643
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2611,7 +2611,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 225 290 281 244 286 237 201 206 294 240
+##  [1] 219 242 239 251 256 246 202 218 210 265
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3048,7 +3048,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7f8190b0cfc8>
+## <bytecode: 0x7fa943677bc8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3919,7 +3919,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7f81921ba1b0>
+## <bytecode: 0x7fa94433cdb0>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4057,7 +4057,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7f8193fea060>
+## <bytecode: 0x7fa94c23ba80>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4166,7 +4166,9 @@ XXX
 \end{Highlighting}
 \end{Shaded}
 
+\begin{quote}
 The protected code is evaluated in the environment of \texttt{tryCatch()}, but the handler code is not, because the handlers are functions.
+\end{quote}
 
 Clarifcation question what is the ``handler code'' and ``protected code''?
 
@@ -4272,14 +4274,6 @@ I couldn't follow the manual's answer for what's happening here, can we come up 
 \NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-XXX
-
-\hypertarget{custom-conditions}{%
-\section*{Custom conditions}\label{custom-conditions}}
-\addcontentsline{toc}{section}{Custom conditions}
-
-We saw how we can use metadata and \texttt{Restarts} in the presentation, can we transform the base code to use \texttt{rlang::abort}?
 
 XXX
 
@@ -4425,7 +4419,7 @@ XXX
 Calling handlers are called in the context of the call that signalled the condition. Exiting handlers are called in the context of the call to tryCatch().
 \end{quote}
 
-What exactly does this mean? tryCatch evaluates what we were calling the protected code first and calling handlers execute the handling code first?
+What exactly does this mean? tryCatch evaluates what we were calling the protected code first and calling handlers execute the handling code first? Can we make a simple example?
 
 XXX
 
@@ -4437,7 +4431,7 @@ XXX
 There's no way to break out of the function because we're capturing the interrupt that you'd usually use!
 \end{quote}
 
-What does this mean? You can't stop the function if you set an \texttt{interrupt} argument inside a \texttt{tryCatch}
+What does this mean? You can't stop the function if you set an \texttt{interrupt} argument inside a \texttt{tryCatch}?
 
 XXX
 

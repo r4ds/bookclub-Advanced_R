@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-05-18" />
+<meta name="date" content="2020-05-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -231,7 +231,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#calling-handlers"><i class="fa fa-check"></i>8.4.3 Calling handlers</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-4"><i class="fa fa-check"></i>8.4.5.2 Exercises</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-5"><i class="fa fa-check"></i>8.4.5.3 Exercises</a></li>
-<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#custom-conditions"><i class="fa fa-check"></i>Custom conditions</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-6"><i class="fa fa-check"></i>8.5.4.2 Exercises</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#resignal"><i class="fa fa-check"></i>8.6.3 Resignal</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#record"><i class="fa fa-check"></i>8.6.4 Record</a></li>
@@ -287,7 +286,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb368-6" data-line-number="6">  }</a>
 <a class="sourceLine" id="cb368-7" data-line-number="7">)</a>
 <a class="sourceLine" id="cb368-8" data-line-number="8"><span class="co">#&gt; [1] &quot;There&quot;</span></a></code></pre></div>
+<blockquote>
 <p>The protected code is evaluated in the environment of <code>tryCatch()</code>, but the handler code is not, because the handlers are functions.</p>
+</blockquote>
 <p>Clarifcation question what is the “handler code” and “protected code”?</p>
 </div>
 <div class="TODO">
@@ -379,15 +380,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb373-5" data-line-number="5">    <span class="kw">message</span>(<span class="st">&quot;c&quot;</span>)</a>
 <a class="sourceLine" id="cb373-6" data-line-number="6">  )</a>
 <a class="sourceLine" id="cb373-7" data-line-number="7">)</a></code></pre></div>
-<div class="TODO">
-<p>XXX</p>
-</div>
-</div>
-<div id="custom-conditions" class="section level2 unnumbered">
-<h2>Custom conditions</h2>
-<div class="question">
-<p>We saw how we can use metadata and <code>Restarts</code> in the presentation, can we transform the base code to use <code>rlang::abort</code>?</p>
-</div>
 <div class="TODO">
 <p>XXX</p>
 </div>
@@ -513,7 +505,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <blockquote>
 <p>Calling handlers are called in the context of the call that signalled the condition. Exiting handlers are called in the context of the call to tryCatch().</p>
 </blockquote>
-<p>What exactly does this mean? tryCatch evaluates what we were calling the protected code first and calling handlers execute the handling code first?</p>
+<p>What exactly does this mean? tryCatch evaluates what we were calling the protected code first and calling handlers execute the handling code first? Can we make a simple example?</p>
 </div>
 <div class="TODO">
 <p>XXX</p>
@@ -525,7 +517,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <blockquote>
 <p>There’s no way to break out of the function because we’re capturing the interrupt that you’d usually use!</p>
 </blockquote>
-<p>What does this mean? You can’t stop the function if you set an <code>interrupt</code> argument inside a <code>tryCatch</code></p>
+<p>What does this mean? You can’t stop the function if you set an <code>interrupt</code> argument inside a <code>tryCatch</code>?</p>
 </div>
 <div class="TODO">
 <p>XXX</p>

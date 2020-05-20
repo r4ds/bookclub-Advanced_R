@@ -37,7 +37,7 @@ tryCatch(
 #> [1] "There"
 ```
 
-The protected code is evaluated in the environment of `tryCatch()`, but the handler code is not, because the handlers are functions.
+> The protected code is evaluated in the environment of `tryCatch()`, but the handler code is not, because the handlers are functions.
 
 Clarifcation question what is the "handler code" and "protected code"?
 :::
@@ -157,16 +157,6 @@ withCallingHandlers(
 )
 ```
 
-
-:::TODO
-XXX
-:::
-
-## Custom conditions {-}
-
-:::question
-We saw how we can use metadata and `Restarts` in the presentation, can we transform the base code to use `rlang::abort`?
-:::
 
 :::TODO
 XXX
@@ -317,7 +307,7 @@ XXX
 :::question
 > Calling handlers are called in the context of the call that signalled the condition. Exiting handlers are called in the context of the call to tryCatch().
 
-What exactly does this mean? tryCatch evaluates what we were calling the protected code first and calling handlers execute the handling code first?
+What exactly does this mean? tryCatch evaluates what we were calling the protected code first and calling handlers execute the handling code first? Can we make a simple example?
 :::
 
 :::TODO
@@ -329,7 +319,7 @@ XXX
 :::question
 > There’s no way to break out of the function because we’re capturing the interrupt that you’d usually use!
 
-What does this mean? You can't stop the function if you set an `interrupt` argument inside a `tryCatch`
+What does this mean? You can't stop the function if you set an `interrupt` argument inside a `tryCatch`?
 :::
 
 :::TODO

@@ -767,7 +767,7 @@ tibble(
     "allowInterrupts"	
   ),	
   Definition = c(	
-    "TODO", 
+    "Implements the mechanism of searching for an applicable condition handler and invoking its handler function", 
     "default condition class", 
     "default error class", 
     "default warning class", 
