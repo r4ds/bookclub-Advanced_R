@@ -23,7 +23,7 @@ All Meetings Scheduled for 8:00 PM Eastern unless otherwise noted
 - 2020-05-21 Chapter 8 - Conditions: [Maya Gans](https://maya.rbind.io) ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week8/Chapter8.html#1) | [Zoom Recording](TODO))
 - 2020-05-28 Chapter 9 - Functionals: [Tan Ho](https://twitter.com/_tanho)
 - 2020-06-04 Chapter 10 - [Function factories](https://cran.r-project.org/package=factory): [Jon Harmon](https://twitter.com/jonthegeek)
-- 2020-06-11 Chapter 11 - Function operators:
+- 2020-06-11 Chapter 11 - Function operators: [Tony ElHabr](https://twitter.com/TonyElHabr)
 - 2020-06-18 Chapter 12 - OOP base types:
 - 2020-06-25 Chapter 13 - S3:
 - 2020-07-02 Chapter 14 - R6:
