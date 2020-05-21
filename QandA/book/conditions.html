@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-05-15" />
+<meta name="date" content="2020-05-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -227,9 +227,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8" data-path="conditions.html"><a href="conditions.html"><i class="fa fa-check"></i><b>8</b> Conditions</a><ul>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#ignoring-conditions"><i class="fa fa-check"></i>8.3 Ignoring conditions</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exiting-handlers"><i class="fa fa-check"></i>8.4.2 Exiting handlers</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#calling-handlers"><i class="fa fa-check"></i>8.4.3 Calling handlers</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-4"><i class="fa fa-check"></i>8.4.5.2 Exercises</a></li>
-<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#custom-conditions"><i class="fa fa-check"></i>Custom conditions</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-5"><i class="fa fa-check"></i>8.4.5.3 Exercises</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-6"><i class="fa fa-check"></i>8.5.4.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#resignal"><i class="fa fa-check"></i>8.6.3 Resignal</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#record"><i class="fa fa-check"></i>8.6.4 Record</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-7"><i class="fa fa-check"></i>8.6.6.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-8"><i class="fa fa-check"></i>8.6.6.4 Exercises</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#slides"><i class="fa fa-check"></i>Slides</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -256,7 +263,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="ignoring-conditions" class="section level2 unnumbered">
 <h2>8.3 Ignoring conditions</h2>
 <div class="question">
-<p>When would you actually use <code>suppressWarning</code> and <code>suppressMessage</code>? I think as debugging techniques and not so much when developing functions?</p>
+<p>I can’t quite think of a time where <code>try</code> is more appropraite than <code>tryCatch</code> - does anyone have an example?</p>
+</div>
+<div class="TODO">
+<p>XXX</p>
+</div>
+<div class="question">
+<p>When would you actually use <code>suppressWarning</code>? Maybe when loading libraries? I created an example for <code>suppressMessages</code>, but does someone have a better, practical use case?</p>
+</div>
+<div class="TODO">
+<p>XXX</p>
+</div>
+</div>
+<div id="exiting-handlers" class="section level2 unnumbered">
+<h2>8.4.2 Exiting handlers</h2>
+<div class="question">
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb368-1" data-line-number="1"><span class="kw">tryCatch</span>(</a>
+<a class="sourceLine" id="cb368-2" data-line-number="2">  <span class="dt">message =</span> <span class="cf">function</span>(cnd) <span class="st">&quot;There&quot;</span>,</a>
+<a class="sourceLine" id="cb368-3" data-line-number="3">  {</a>
+<a class="sourceLine" id="cb368-4" data-line-number="4">    <span class="kw">message</span>(<span class="st">&quot;Here&quot;</span>)</a>
+<a class="sourceLine" id="cb368-5" data-line-number="5">    <span class="kw">stop</span>(<span class="st">&quot;This code is never run!&quot;</span>)</a>
+<a class="sourceLine" id="cb368-6" data-line-number="6">  }</a>
+<a class="sourceLine" id="cb368-7" data-line-number="7">)</a>
+<a class="sourceLine" id="cb368-8" data-line-number="8"><span class="co">#&gt; [1] &quot;There&quot;</span></a></code></pre></div>
+<blockquote>
+<p>The protected code is evaluated in the environment of <code>tryCatch()</code>, but the handler code is not, because the handlers are functions.</p>
+</blockquote>
+<p>Clarifcation question what is the “handler code” and “protected code”?</p>
+</div>
+<div class="TODO">
+<p>The protected code is <code>message = function(cnd) &quot;There&quot;</code> and the handler inside the <code>{}</code></p>
+</div>
+<div class="question">
+<p>In the tryCatch example where we have <code>finally</code> print “Thank God for Beer” I find it interesting that this is printed <strong>before</strong> the code inside the tryCatch. Can anyone explain why?</p>
 </div>
 <div class="TODO">
 <p>XXX</p>
@@ -268,6 +307,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Can we make up our own bubbling and muffled <code>withCallingHandlers</code> examples? The example code was a little unclear to me.</p>
 </div>
 <div class="TODO">
+<p>Bubbling is the phenomenon where all the handler statements will be evaluated, all the way up, prior to the body code and muffling allows us to stop this? Not sure if this is true and it doesn’t really explain the muffling examples.</p>
+</div>
+<div class="question">
+<p>Why is this message executed once per message in the function?</p>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb369-1" data-line-number="1"><span class="kw">withCallingHandlers</span>(</a>
+<a class="sourceLine" id="cb369-2" data-line-number="2">  <span class="dt">message =</span> <span class="cf">function</span>(cnd) <span class="kw">cat</span>(<span class="st">&quot;Caught a message!</span><span class="ch">\n</span><span class="st">&quot;</span>), </a>
+<a class="sourceLine" id="cb369-3" data-line-number="3">  {</a>
+<a class="sourceLine" id="cb369-4" data-line-number="4">    <span class="kw">message</span>(<span class="st">&quot;Someone there?&quot;</span>)</a>
+<a class="sourceLine" id="cb369-5" data-line-number="5">    <span class="kw">message</span>(<span class="st">&quot;Why, yes!&quot;</span>)</a>
+<a class="sourceLine" id="cb369-6" data-line-number="6">  }</a>
+<a class="sourceLine" id="cb369-7" data-line-number="7">)</a></code></pre></div>
+<pre><code>#&gt; Caught a message!
+#&gt; Someone there?
+#&gt; Caught a message!
+#&gt; Why, yes!</code></pre>
+</div>
+<div class="TODO">
+<p>XXX</p>
+</div>
+<div class="question">
+<blockquote>
+<p>The return value of a calling handler is ignored because the code continues to execute after the handler completes; where would the return value go? That means that calling handlers are only useful for their side-effects.</p>
+</blockquote>
+<p>Can we come up with an example for this masking? I think seeing it will help me understand…</p>
+</div>
+<div class="TODO">
+<p>XXX</p>
+</div>
+<div class="question">
+<p>How does muffling differ from <code>suppressWarnings</code>?</p>
+</div>
+<div class="TODO">
 <p>XXX</p>
 </div>
 </div>
@@ -275,71 +346,210 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>8.4.5.2 Exercises</h2>
 <div class="question">
 <p>In the example</p>
-<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb366-1" data-line-number="1">show_condition &lt;-<span class="st"> </span><span class="cf">function</span>(code) {</a>
-<a class="sourceLine" id="cb366-2" data-line-number="2">  <span class="kw">tryCatch</span>(</a>
-<a class="sourceLine" id="cb366-3" data-line-number="3">    <span class="dt">error =</span> <span class="cf">function</span>(cnd) <span class="st">&quot;error&quot;</span>,</a>
-<a class="sourceLine" id="cb366-4" data-line-number="4">    <span class="dt">warning =</span> <span class="cf">function</span>(cnd) <span class="st">&quot;warning&quot;</span>,</a>
-<a class="sourceLine" id="cb366-5" data-line-number="5">    <span class="dt">message =</span> <span class="cf">function</span>(cnd) <span class="st">&quot;message&quot;</span>,</a>
-<a class="sourceLine" id="cb366-6" data-line-number="6">    {</a>
-<a class="sourceLine" id="cb366-7" data-line-number="7">      code</a>
-<a class="sourceLine" id="cb366-8" data-line-number="8">      <span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb366-9" data-line-number="9">    }</a>
-<a class="sourceLine" id="cb366-10" data-line-number="10">  )</a>
-<a class="sourceLine" id="cb366-11" data-line-number="11">}</a></code></pre></div>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb371-1" data-line-number="1">show_condition &lt;-<span class="st"> </span><span class="cf">function</span>(code) {</a>
+<a class="sourceLine" id="cb371-2" data-line-number="2">  <span class="kw">tryCatch</span>(</a>
+<a class="sourceLine" id="cb371-3" data-line-number="3">    <span class="dt">error =</span> <span class="cf">function</span>(cnd) <span class="st">&quot;error&quot;</span>,</a>
+<a class="sourceLine" id="cb371-4" data-line-number="4">    <span class="dt">warning =</span> <span class="cf">function</span>(cnd) <span class="st">&quot;warning&quot;</span>,</a>
+<a class="sourceLine" id="cb371-5" data-line-number="5">    <span class="dt">message =</span> <span class="cf">function</span>(cnd) <span class="st">&quot;message&quot;</span>,</a>
+<a class="sourceLine" id="cb371-6" data-line-number="6">    {</a>
+<a class="sourceLine" id="cb371-7" data-line-number="7">      code</a>
+<a class="sourceLine" id="cb371-8" data-line-number="8">      <span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb371-9" data-line-number="9">    }</a>
+<a class="sourceLine" id="cb371-10" data-line-number="10">  )</a>
+<a class="sourceLine" id="cb371-11" data-line-number="11">}</a></code></pre></div>
 <p>The first three calls to <code>show_condition</code> make sense to me, and I even understand that the first time the code is evaluated inside a <code>tryCatch</code> it exists (that’s why it returns <code>message</code>) but how are you suppling <code>3</code> arguments to a function that just takes on one argument, <code>code</code>? Is that what the <code>{}</code> are for?</p>
-<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb367-1" data-line-number="1"><span class="kw">show_condition</span>({</a>
-<a class="sourceLine" id="cb367-2" data-line-number="2">  <span class="dv">10</span></a>
-<a class="sourceLine" id="cb367-3" data-line-number="3">  <span class="kw">message</span>(<span class="st">&quot;?&quot;</span>)</a>
-<a class="sourceLine" id="cb367-4" data-line-number="4">  <span class="kw">warning</span>(<span class="st">&quot;?!&quot;</span>)</a>
-<a class="sourceLine" id="cb367-5" data-line-number="5">})</a></code></pre></div>
-<pre><code>## [1] &quot;message&quot;</code></pre>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb372-1" data-line-number="1"><span class="kw">show_condition</span>({</a>
+<a class="sourceLine" id="cb372-2" data-line-number="2">  <span class="dv">10</span></a>
+<a class="sourceLine" id="cb372-3" data-line-number="3">  <span class="kw">message</span>(<span class="st">&quot;?&quot;</span>)</a>
+<a class="sourceLine" id="cb372-4" data-line-number="4">  <span class="kw">warning</span>(<span class="st">&quot;?!&quot;</span>)</a>
+<a class="sourceLine" id="cb372-5" data-line-number="5">})</a></code></pre></div>
 </div>
 <div class="TODO">
 <p>XXX</p>
 </div>
 </div>
-<div id="custom-conditions" class="section level2 unnumbered">
-<h2>Custom conditions</h2>
+<div id="exercises-5" class="section level2 unnumbered">
+<h2>8.4.5.3 Exercises</h2>
 <div class="question">
-<p>It’s cool you can attach metadata to errors but what is a real-world use case where this is useful?</p>
+<p>I couldn’t follow the manual’s answer for what’s happening here, can we come up with our own answer for what’s happening here in words?</p>
+</div>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb373-1" data-line-number="1"><span class="kw">withCallingHandlers</span>(</a>
+<a class="sourceLine" id="cb373-2" data-line-number="2">  <span class="dt">message =</span> <span class="cf">function</span>(cnd) <span class="kw">message</span>(<span class="st">&quot;b&quot;</span>),</a>
+<a class="sourceLine" id="cb373-3" data-line-number="3">  <span class="kw">withCallingHandlers</span>(</a>
+<a class="sourceLine" id="cb373-4" data-line-number="4">    <span class="dt">message =</span> <span class="cf">function</span>(cnd) <span class="kw">message</span>(<span class="st">&quot;a&quot;</span>),</a>
+<a class="sourceLine" id="cb373-5" data-line-number="5">    <span class="kw">message</span>(<span class="st">&quot;c&quot;</span>)</a>
+<a class="sourceLine" id="cb373-6" data-line-number="6">  )</a>
+<a class="sourceLine" id="cb373-7" data-line-number="7">)</a></code></pre></div>
+<div class="TODO">
+<p>XXX</p>
+</div>
+</div>
+<div id="exercises-6" class="section level2 unnumbered">
+<h2>8.5.4.2 Exercises</h2>
+<div class="question">
+<p>Q: Inside a package you often need to stop with an error when something is not right. Other packages that depend on your package might be tempted to check these errors in their unit tests. How could you help these packages to avoid relying on the error message which is part of the user interface rather than the API and might change without notice?</p>
+<p>A: Instead returning an error it might be preferable to throw a customized condition and place a standardized error message inside the metadata. Then the downstream package could check for the class of the condition, rather than inspecting the message.</p>
+<p>Can we come up with something concrete for this?</p>
 </div>
 <div class="TODO">
 <p>XXX</p>
 </div>
+</div>
+<div id="resignal" class="section level2 unnumbered">
+<h2>8.6.3 Resignal</h2>
+<div class="question">
+<p>Can we go over what is happening here?</p>
+<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb374-1" data-line-number="1">warning2error &lt;-<span class="st"> </span><span class="cf">function</span>(expr) {</a>
+<a class="sourceLine" id="cb374-2" data-line-number="2">  <span class="kw">withCallingHandlers</span>(</a>
+<a class="sourceLine" id="cb374-3" data-line-number="3">    <span class="dt">warning =</span> <span class="cf">function</span>(cnd) <span class="kw">abort</span>(<span class="kw">conditionMessage</span>(cnd)),</a>
+<a class="sourceLine" id="cb374-4" data-line-number="4">    expr</a>
+<a class="sourceLine" id="cb374-5" data-line-number="5">  )</a>
+<a class="sourceLine" id="cb374-6" data-line-number="6">}</a>
+<a class="sourceLine" id="cb374-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb374-8" data-line-number="8"><span class="kw">warning2error</span>({</a>
+<a class="sourceLine" id="cb374-9" data-line-number="9">  x &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">^</span><span class="st"> </span><span class="dv">4</span></a>
+<a class="sourceLine" id="cb374-10" data-line-number="10">  <span class="kw">warn</span>(<span class="st">&quot;Hello&quot;</span>)</a>
+<a class="sourceLine" id="cb374-11" data-line-number="11">})</a></code></pre></div>
+<pre><code>Error: Hello</code></pre>
+</div>
+<div class="TODO">
+<p>We are passing <code>warn(&quot;Hello&quot;)</code> as handler code but since it’s an <code>abort</code> the protected code <code>x</code> never gets evaluated? That seems wrong.</p>
+</div>
+</div>
+<div id="record" class="section level2 unnumbered">
+<h2>8.6.4 Record</h2>
+<div class="question">
+<p>Why are we using <code>cnd_muffle</code> here?</p>
+<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb376-1" data-line-number="1">catch_cnds &lt;-<span class="st"> </span><span class="cf">function</span>(expr) {</a>
+<a class="sourceLine" id="cb376-2" data-line-number="2">  conds &lt;-<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb376-3" data-line-number="3">  add_cond &lt;-<span class="st"> </span><span class="cf">function</span>(cnd) {</a>
+<a class="sourceLine" id="cb376-4" data-line-number="4">    conds &lt;&lt;-<span class="st"> </span><span class="kw">append</span>(conds, <span class="kw">list</span>(cnd))</a>
+<a class="sourceLine" id="cb376-5" data-line-number="5">    <span class="kw">cnd_muffle</span>(cnd)</a>
+<a class="sourceLine" id="cb376-6" data-line-number="6">  }</a>
+<a class="sourceLine" id="cb376-7" data-line-number="7">  </a>
+<a class="sourceLine" id="cb376-8" data-line-number="8">  <span class="kw">withCallingHandlers</span>(</a>
+<a class="sourceLine" id="cb376-9" data-line-number="9">    <span class="dt">message =</span> add_cond,</a>
+<a class="sourceLine" id="cb376-10" data-line-number="10">    <span class="dt">warning =</span> add_cond,</a>
+<a class="sourceLine" id="cb376-11" data-line-number="11">    expr</a>
+<a class="sourceLine" id="cb376-12" data-line-number="12">  )</a>
+<a class="sourceLine" id="cb376-13" data-line-number="13">  </a>
+<a class="sourceLine" id="cb376-14" data-line-number="14">  conds</a>
+<a class="sourceLine" id="cb376-15" data-line-number="15">}</a>
+<a class="sourceLine" id="cb376-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb376-17" data-line-number="17"><span class="kw">catch_cnds</span>({</a>
+<a class="sourceLine" id="cb376-18" data-line-number="18">  <span class="kw">inform</span>(<span class="st">&quot;a&quot;</span>)</a>
+<a class="sourceLine" id="cb376-19" data-line-number="19">  <span class="kw">warn</span>(<span class="st">&quot;b&quot;</span>)</a>
+<a class="sourceLine" id="cb376-20" data-line-number="20">  <span class="kw">inform</span>(<span class="st">&quot;c&quot;</span>)</a>
+<a class="sourceLine" id="cb376-21" data-line-number="21">})</a></code></pre></div>
+</div>
+<p>If we remove <code>cnd_muffle</code> we see that <code>a</code>, <code>b</code>, and <code>c</code> are printed to the console prior to getting the <code>conds</code> output.</p>
+<div class="question">
+<p>Would it be possible in the second Record example to create a function that doesn’t require us to put the <code>abort</code> statement at the end, just ignoring it? Or because <code>abort</code> is an exiting handler it needs to be last?</p>
+</div>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb377-1" data-line-number="1">catch_cnds &lt;-<span class="st"> </span><span class="cf">function</span>(expr) {</a>
+<a class="sourceLine" id="cb377-2" data-line-number="2">  conds &lt;-<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb377-3" data-line-number="3">  add_cond &lt;-<span class="st"> </span><span class="cf">function</span>(cnd) {</a>
+<a class="sourceLine" id="cb377-4" data-line-number="4">    conds &lt;&lt;-<span class="st"> </span><span class="kw">append</span>(conds, <span class="kw">list</span>(cnd))</a>
+<a class="sourceLine" id="cb377-5" data-line-number="5">    <span class="kw">cnd_muffle</span>(cnd)</a>
+<a class="sourceLine" id="cb377-6" data-line-number="6">  }</a>
+<a class="sourceLine" id="cb377-7" data-line-number="7">  </a>
+<a class="sourceLine" id="cb377-8" data-line-number="8">  <span class="kw">tryCatch</span>(</a>
+<a class="sourceLine" id="cb377-9" data-line-number="9">    <span class="dt">error =</span> <span class="cf">function</span>(cnd) {</a>
+<a class="sourceLine" id="cb377-10" data-line-number="10">      conds &lt;&lt;-<span class="st"> </span><span class="kw">append</span>(conds, <span class="kw">list</span>(cnd))</a>
+<a class="sourceLine" id="cb377-11" data-line-number="11">    },</a>
+<a class="sourceLine" id="cb377-12" data-line-number="12">    <span class="kw">withCallingHandlers</span>(</a>
+<a class="sourceLine" id="cb377-13" data-line-number="13">      <span class="dt">message =</span> add_cond,</a>
+<a class="sourceLine" id="cb377-14" data-line-number="14">      <span class="dt">warning =</span> add_cond,</a>
+<a class="sourceLine" id="cb377-15" data-line-number="15">      expr</a>
+<a class="sourceLine" id="cb377-16" data-line-number="16">    )</a>
+<a class="sourceLine" id="cb377-17" data-line-number="17">  )</a>
+<a class="sourceLine" id="cb377-18" data-line-number="18">  </a>
+<a class="sourceLine" id="cb377-19" data-line-number="19">  conds</a>
+<a class="sourceLine" id="cb377-20" data-line-number="20">}</a>
+<a class="sourceLine" id="cb377-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb377-22" data-line-number="22"><span class="kw">catch_cnds</span>({</a>
+<a class="sourceLine" id="cb377-23" data-line-number="23">  <span class="kw">abort</span>(<span class="st">&quot;a&quot;</span>)</a>
+<a class="sourceLine" id="cb377-24" data-line-number="24">  <span class="kw">inform</span>(<span class="st">&quot;b&quot;</span>)</a>
+<a class="sourceLine" id="cb377-25" data-line-number="25">  <span class="kw">warn</span>(<span class="st">&quot;c&quot;</span>)</a>
+<a class="sourceLine" id="cb377-26" data-line-number="26">})</a></code></pre></div>
+<div class="TODO">
+<p>XXX</p>
+</div>
+<div class="question">
+<p>What is <code>signal</code> and what is it doing here?</p>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb378-1" data-line-number="1">log &lt;-<span class="st"> </span><span class="cf">function</span>(message, <span class="dt">level =</span> <span class="kw">c</span>(<span class="st">&quot;info&quot;</span>, <span class="st">&quot;error&quot;</span>, <span class="st">&quot;fatal&quot;</span>)) {</a>
+<a class="sourceLine" id="cb378-2" data-line-number="2">  <span class="co"># if we remove match.arg and just use level</span></a>
+<a class="sourceLine" id="cb378-3" data-line-number="3">  <span class="co"># the signal returns infoerrorfatal as a single string</span></a>
+<a class="sourceLine" id="cb378-4" data-line-number="4">  <span class="co"># we need match.arg to find the selected level</span></a>
+<a class="sourceLine" id="cb378-5" data-line-number="5">  <span class="co"># and it defaults to the first if none are selected</span></a>
+<a class="sourceLine" id="cb378-6" data-line-number="6">  level &lt;-<span class="st"> </span><span class="kw">match.arg</span>(level)</a>
+<a class="sourceLine" id="cb378-7" data-line-number="7">  <span class="kw">signal</span>(message, <span class="st">&quot;log&quot;</span>, <span class="dt">level =</span> level)</a>
+<a class="sourceLine" id="cb378-8" data-line-number="8">}</a></code></pre></div>
+</div>
+<div class="TODO">
+<p>XXX</p>
+</div>
+<div class="question">
+<blockquote>
+<p>If you create a condition object by hand, and signal it with signalCondition(), cnd_muffle() will not work. Instead you need to call it with a muffle restart defined, like this: <code>withRestarts(signalCondition(cond), muffle = function() NULL)</code></p>
+</blockquote>
+<p>Where does this code go given the prior example?</p>
+</div>
+<div class="TODO">
+<p>XXX</p>
+</div>
+</div>
+<div id="exercises-7" class="section level2 unnumbered">
+<h2>8.6.6.2 Exercises</h2>
+<div class="question">
+<blockquote>
+<p>Calling handlers are called in the context of the call that signalled the condition. Exiting handlers are called in the context of the call to tryCatch().</p>
+</blockquote>
+<p>What exactly does this mean? tryCatch evaluates what we were calling the protected code first and calling handlers execute the handling code first? Can we make a simple example?</p>
+</div>
+<div class="TODO">
+<p>XXX</p>
+</div>
+</div>
+<div id="exercises-8" class="section level2 unnumbered">
+<h2>8.6.6.4 Exercises</h2>
+<div class="question">
+<blockquote>
+<p>There’s no way to break out of the function because we’re capturing the interrupt that you’d usually use!</p>
+</blockquote>
+<p>What does this mean? You can’t stop the function if you set an <code>interrupt</code> argument inside a <code>tryCatch</code>?</p>
+</div>
+<div class="TODO">
+<p>XXX</p>
+</div>
+</div>
+<div id="slides" class="section level2 unnumbered">
+<h2>Slides</h2>
 <div class="question">
 <p>Let’s revist my example from the talk: can we build on this to use tidyeval so that the user can write <code>beer_states %&gt;% beer_mean(state)</code> [I think we need to use <code>.data</code> and note how state is given as an object so we need to use tidyeval to suppress it’s evaluation…]</p>
 </div>
-<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb369-1" data-line-number="1">beer_mean &lt;-<span class="st"> </span><span class="cf">function</span>(.data, x) {</a>
-<a class="sourceLine" id="cb369-2" data-line-number="2">  </a>
-<a class="sourceLine" id="cb369-3" data-line-number="3">  column_name &lt;-<span class="st"> </span><span class="kw">deparse</span>(<span class="kw">substitute</span>(x))</a>
-<a class="sourceLine" id="cb369-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb369-5" data-line-number="5">  msg &lt;-<span class="st"> </span>glue<span class="op">::</span><span class="kw">glue</span>(<span class="st">&quot;Can&#39;t calculate mean, {column_name} is not numeric&quot;</span>)</a>
-<a class="sourceLine" id="cb369-6" data-line-number="6">  </a>
-<a class="sourceLine" id="cb369-7" data-line-number="7">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.numeric</span>(.data[[column_name]])) {</a>
-<a class="sourceLine" id="cb369-8" data-line-number="8">    <span class="kw">abort</span>(</a>
-<a class="sourceLine" id="cb369-9" data-line-number="9">      <span class="dt">message =</span> msg,</a>
-<a class="sourceLine" id="cb369-10" data-line-number="10">      <span class="dt">arg =</span> column_name,</a>
-<a class="sourceLine" id="cb369-11" data-line-number="11">      <span class="dt">data =</span> .data</a>
-<a class="sourceLine" id="cb369-12" data-line-number="12">    )</a>
-<a class="sourceLine" id="cb369-13" data-line-number="13">  } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb369-14" data-line-number="14">    <span class="kw">mean</span>(.data[[column_name]])</a>
-<a class="sourceLine" id="cb369-15" data-line-number="15">  }</a>
-<a class="sourceLine" id="cb369-16" data-line-number="16">}</a>
-<a class="sourceLine" id="cb369-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb369-18" data-line-number="18">beer_states <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">beer_mean</span>(state)</a></code></pre></div>
-<pre><code>Error: Can&#39;t calculate mean, state is not numeric
-   12. stop(fallback)
-   11. signal_abort(cnd)
-   10. abort(message = msg, arg = column_name, data = .data)
-   9. beer_mean(., state)
-   8. function_list[[k]](value)
-   7. withVisible(function_list[[k]](value))
-   6. freduce(value, `_function_list`)
-   5. `_fseq`(`_lhs`)
-   4. eval(quote(`_fseq`(`_lhs`)), env, env)
-   3. eval(quote(`_fseq`(`_lhs`)), env, env)
-   2. withVisible(eval(quote(`_fseq`(`_lhs`)), env, env))
-   1. beer_states %&gt;% beer_mean(state)</code></pre>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb379-1" data-line-number="1">beer_states &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(</a>
+<a class="sourceLine" id="cb379-2" data-line-number="2">  <span class="st">&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/beer_states.csv&#39;</span>)</a>
+<a class="sourceLine" id="cb379-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb379-4" data-line-number="4">beer_mean &lt;-<span class="st"> </span><span class="cf">function</span>(.data, x) {</a>
+<a class="sourceLine" id="cb379-5" data-line-number="5">  </a>
+<a class="sourceLine" id="cb379-6" data-line-number="6">  column_name &lt;-<span class="st"> </span><span class="kw">deparse</span>(<span class="kw">substitute</span>(x))</a>
+<a class="sourceLine" id="cb379-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb379-8" data-line-number="8">  msg &lt;-<span class="st"> </span>glue<span class="op">::</span><span class="kw">glue</span>(<span class="st">&quot;Can&#39;t calculate mean, {column_name} is not numeric&quot;</span>)</a>
+<a class="sourceLine" id="cb379-9" data-line-number="9">  </a>
+<a class="sourceLine" id="cb379-10" data-line-number="10">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.numeric</span>(.data[[column_name]])) {</a>
+<a class="sourceLine" id="cb379-11" data-line-number="11">    <span class="kw">abort</span>(</a>
+<a class="sourceLine" id="cb379-12" data-line-number="12">      <span class="dt">message =</span> msg,</a>
+<a class="sourceLine" id="cb379-13" data-line-number="13">      <span class="dt">arg =</span> column_name,</a>
+<a class="sourceLine" id="cb379-14" data-line-number="14">      <span class="dt">data =</span> .data</a>
+<a class="sourceLine" id="cb379-15" data-line-number="15">    )</a>
+<a class="sourceLine" id="cb379-16" data-line-number="16">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb379-17" data-line-number="17">    <span class="kw">mean</span>(<span class="kw">which</span>(<span class="op">!</span><span class="kw">is.na</span>(.data[[column_name]])[.data[[column_name]]]))</a>
+<a class="sourceLine" id="cb379-18" data-line-number="18">  }</a>
+<a class="sourceLine" id="cb379-19" data-line-number="19">}</a>
+<a class="sourceLine" id="cb379-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb379-21" data-line-number="21">beer_states <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">beer_mean</span>(barrels)</a></code></pre></div>
+<pre><code>[1] 806.4551</code></pre>
 
 
 </div>

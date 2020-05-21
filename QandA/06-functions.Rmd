@@ -752,7 +752,7 @@ warning("5) warning()")
 
 * `sink` diverts R output to a connection. 
 
-```{r}
+```{r, eval=FALSE}
 zz <- file("all.Rout", open = "wt")
 sink(zz)
 sink(zz, type = "message")
