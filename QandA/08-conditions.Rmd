@@ -11,17 +11,13 @@ library(rlang)
 I can't quite think of a time where `try` is more appropraite than `tryCatch` - does anyone have an example?
 :::
 
-:::TODO
-XXX
-:::
+It seems that try is just a wrapper for `tryCatch` and you can use it whenever you'd use `try`
 
 :::question
 When would you actually use `suppressWarning`? Maybe when loading libraries? I created an example for `suppressMessages`, but does someone have a better, practical use case?
 :::
 
-:::TODO
-XXX
-:::
+As a function user it's common to supress warnings when loading in data and using `readr` and `dplyr` - but not so much as a function creator
 
 ## 8.4.2 Exiting handlers {-}
 
@@ -42,17 +38,13 @@ tryCatch(
 Clarifcation question what is the "handler code" and "protected code"?
 :::
 
-:::TODO
-The protected code is `message = function(cnd) "There"` and the handler inside the `{}`
-:::
+The protected code is inside the `{}` and the handler code is `message = function(cnd) "There"`
 
 :::question
 In the tryCatch example where we have `finally` print "Thank God for Beer" I find it interesting that this is printed **before** the code inside the tryCatch. Can anyone explain why?
 :::
 
-:::TODO
-XXX
-:::
+The handler code is evaulated prior to the protected code, that is why we see it second!
 
 ## 8.4.3 Calling handlers {-}
 
@@ -61,7 +53,6 @@ Can we make up our own bubbling and muffled `withCallingHandlers` examples? The 
 :::
 
 :::TODO
-Bubbling is the phenomenon where all the handler statements will be evaluated, all the way up, prior to the body code and muffling allows us to stop this? Not sure if this is true and it doesn't really explain the muffling examples.
 :::
 
 :::question
@@ -137,9 +128,7 @@ show_condition({
 ```
 :::
 
-:::TODO
-XXX
-:::
+`{}` let us execute multiple lines of code!
 
 ## 8.4.5.3 Exercises {-}
 
@@ -156,21 +145,6 @@ withCallingHandlers(
   )
 )
 ```
-
-
-:::TODO
-XXX
-:::
-
-## 8.5.4.2 Exercises {-}
-
-:::question
-Q: Inside a package you often need to stop with an error when something is not right. Other packages that depend on your package might be tempted to check these errors in their unit tests. How could you help these packages to avoid relying on the error message which is part of the user interface rather than the API and might change without notice?
-
-A: Instead returning an error it might be preferable to throw a customized condition and place a standardized error message inside the metadata. Then the downstream package could check for the class of the condition, rather than inspecting the message.
-
-Can we come up with something concrete for this?
-:::
 
 :::TODO
 XXX
@@ -198,10 +172,8 @@ warning2error({
 ```
 Error: Hello
 ```
-:::
 
 :::TODO
-We are passing `warn("Hello")` as handler code but since it's an `abort` the protected code `x` never gets evaluated? That seems wrong. 
 :::
 
 ## 8.6.4 Record {-}
@@ -288,9 +260,18 @@ log <- function(message, level = c("info", "error", "fatal")) {
 ```
 :::
 
-:::TODO
-XXX
-:::
+Signal is a general function that calls abort, inform  or warn. It has the same signature as those functions except for the class argument that is necessary for signal but NULL by default for each of the others
+
+```{r, eval=FALSE}
+signal <- function(message, class, ..., .subclass) {
+  if (!missing(.subclass)) {
+    deprecate_subclass(.subclass)
+  }
+  message <- collapse_cnd_message(message)
+  cnd <- cnd(class, ..., message = message)
+  cnd_signal(cnd)
+}
+```
 
 :::question
 > If you create a condition object by hand, and signal it with signalCondition(), cnd_muffle() will not work. Instead you need to call it with a muffle restart defined, like this: `withRestarts(signalCondition(cond), muffle = function() NULL)`
@@ -322,9 +303,7 @@ XXX
 What does this mean? You can't stop the function if you set an `interrupt` argument inside a `tryCatch`?
 :::
 
-:::TODO
-XXX
-:::
+That's exactly it - this was a warning not to use `inturrupt` in your functions!
 
 ## Slides {-}
 

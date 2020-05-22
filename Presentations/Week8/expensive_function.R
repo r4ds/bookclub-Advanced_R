@@ -25,6 +25,8 @@ expensive_function <- function(x,
         )
 }
 
+
+expensive_function(-2)
 auto_expensive_function(-2)
 
 auto_expensive_function = function(x) {

@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-05-20" />
+<meta name="date" content="2020-05-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -231,11 +231,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#calling-handlers"><i class="fa fa-check"></i>8.4.3 Calling handlers</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-4"><i class="fa fa-check"></i>8.4.5.2 Exercises</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-5"><i class="fa fa-check"></i>8.4.5.3 Exercises</a></li>
-<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-6"><i class="fa fa-check"></i>8.5.4.2 Exercises</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#resignal"><i class="fa fa-check"></i>8.6.3 Resignal</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#record"><i class="fa fa-check"></i>8.6.4 Record</a></li>
-<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-7"><i class="fa fa-check"></i>8.6.6.2 Exercises</a></li>
-<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-8"><i class="fa fa-check"></i>8.6.6.4 Exercises</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-6"><i class="fa fa-check"></i>8.6.6.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-7"><i class="fa fa-check"></i>8.6.6.4 Exercises</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#slides"><i class="fa fa-check"></i>Slides</a></li>
 </ul></li>
 <li class="divider"></li>
@@ -265,15 +264,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="question">
 <p>I can’t quite think of a time where <code>try</code> is more appropraite than <code>tryCatch</code> - does anyone have an example?</p>
 </div>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<p>It seems that try is just a wrapper for <code>tryCatch</code> and you can use it whenever you’d use <code>try</code></p>
 <div class="question">
 <p>When would you actually use <code>suppressWarning</code>? Maybe when loading libraries? I created an example for <code>suppressMessages</code>, but does someone have a better, practical use case?</p>
 </div>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<p>As a function user it’s common to supress warnings when loading in data and using <code>readr</code> and <code>dplyr</code> - but not so much as a function creator</p>
 </div>
 <div id="exiting-handlers" class="section level2 unnumbered">
 <h2>8.4.2 Exiting handlers</h2>
@@ -291,15 +286,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p>Clarifcation question what is the “handler code” and “protected code”?</p>
 </div>
-<div class="TODO">
-<p>The protected code is <code>message = function(cnd) &quot;There&quot;</code> and the handler inside the <code>{}</code></p>
-</div>
+<p>The protected code is inside the <code>{}</code> and the handler code is <code>message = function(cnd) &quot;There&quot;</code></p>
 <div class="question">
 <p>In the tryCatch example where we have <code>finally</code> print “Thank God for Beer” I find it interesting that this is printed <strong>before</strong> the code inside the tryCatch. Can anyone explain why?</p>
 </div>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<p>The handler code is evaulated prior to the protected code, that is why we see it second!</p>
 </div>
 <div id="calling-handlers" class="section level2 unnumbered">
 <h2>8.4.3 Calling handlers</h2>
@@ -307,7 +298,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Can we make up our own bubbling and muffled <code>withCallingHandlers</code> examples? The example code was a little unclear to me.</p>
 </div>
 <div class="TODO">
-<p>Bubbling is the phenomenon where all the handler statements will be evaluated, all the way up, prior to the body code and muffling allows us to stop this? Not sure if this is true and it doesn’t really explain the muffling examples.</p>
+
 </div>
 <div class="question">
 <p>Why is this message executed once per message in the function?</p>
@@ -364,9 +355,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb372-4" data-line-number="4">  <span class="kw">warning</span>(<span class="st">&quot;?!&quot;</span>)</a>
 <a class="sourceLine" id="cb372-5" data-line-number="5">})</a></code></pre></div>
 </div>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<p><code>{}</code> let us execute multiple lines of code!</p>
 </div>
 <div id="exercises-5" class="section level2 unnumbered">
 <h2>8.4.5.3 Exercises</h2>
@@ -384,21 +373,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>XXX</p>
 </div>
 </div>
-<div id="exercises-6" class="section level2 unnumbered">
-<h2>8.5.4.2 Exercises</h2>
-<div class="question">
-<p>Q: Inside a package you often need to stop with an error when something is not right. Other packages that depend on your package might be tempted to check these errors in their unit tests. How could you help these packages to avoid relying on the error message which is part of the user interface rather than the API and might change without notice?</p>
-<p>A: Instead returning an error it might be preferable to throw a customized condition and place a standardized error message inside the metadata. Then the downstream package could check for the class of the condition, rather than inspecting the message.</p>
-<p>Can we come up with something concrete for this?</p>
-</div>
-<div class="TODO">
-<p>XXX</p>
-</div>
-</div>
 <div id="resignal" class="section level2 unnumbered">
 <h2>8.6.3 Resignal</h2>
-<div class="question">
-<p>Can we go over what is happening here?</p>
+<p>:::question
+Can we go over what is happening here?</p>
 <div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb374-1" data-line-number="1">warning2error &lt;-<span class="st"> </span><span class="cf">function</span>(expr) {</a>
 <a class="sourceLine" id="cb374-2" data-line-number="2">  <span class="kw">withCallingHandlers</span>(</a>
 <a class="sourceLine" id="cb374-3" data-line-number="3">    <span class="dt">warning =</span> <span class="cf">function</span>(cnd) <span class="kw">abort</span>(<span class="kw">conditionMessage</span>(cnd)),</a>
@@ -411,9 +389,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb374-10" data-line-number="10">  <span class="kw">warn</span>(<span class="st">&quot;Hello&quot;</span>)</a>
 <a class="sourceLine" id="cb374-11" data-line-number="11">})</a></code></pre></div>
 <pre><code>Error: Hello</code></pre>
-</div>
 <div class="TODO">
-<p>We are passing <code>warn(&quot;Hello&quot;)</code> as handler code but since it’s an <code>abort</code> the protected code <code>x</code> never gets evaluated? That seems wrong.</p>
+
 </div>
 </div>
 <div id="record" class="section level2 unnumbered">
@@ -486,9 +463,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb378-7" data-line-number="7">  <span class="kw">signal</span>(message, <span class="st">&quot;log&quot;</span>, <span class="dt">level =</span> level)</a>
 <a class="sourceLine" id="cb378-8" data-line-number="8">}</a></code></pre></div>
 </div>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<p>Signal is a general function that calls abort, inform or warn. It has the same signature as those functions except for the class argument that is necessary for signal but NULL by default for each of the others</p>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb379-1" data-line-number="1">signal &lt;-<span class="st"> </span><span class="cf">function</span>(message, class, ..., .subclass) {</a>
+<a class="sourceLine" id="cb379-2" data-line-number="2">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">missing</span>(.subclass)) {</a>
+<a class="sourceLine" id="cb379-3" data-line-number="3">    <span class="kw">deprecate_subclass</span>(.subclass)</a>
+<a class="sourceLine" id="cb379-4" data-line-number="4">  }</a>
+<a class="sourceLine" id="cb379-5" data-line-number="5">  message &lt;-<span class="st"> </span><span class="kw">collapse_cnd_message</span>(message)</a>
+<a class="sourceLine" id="cb379-6" data-line-number="6">  cnd &lt;-<span class="st"> </span><span class="kw">cnd</span>(class, ..., <span class="dt">message =</span> message)</a>
+<a class="sourceLine" id="cb379-7" data-line-number="7">  <span class="kw">cnd_signal</span>(cnd)</a>
+<a class="sourceLine" id="cb379-8" data-line-number="8">}</a></code></pre></div>
 <div class="question">
 <blockquote>
 <p>If you create a condition object by hand, and signal it with signalCondition(), cnd_muffle() will not work. Instead you need to call it with a muffle restart defined, like this: <code>withRestarts(signalCondition(cond), muffle = function() NULL)</code></p>
@@ -499,7 +482,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>XXX</p>
 </div>
 </div>
-<div id="exercises-7" class="section level2 unnumbered">
+<div id="exercises-6" class="section level2 unnumbered">
 <h2>8.6.6.2 Exercises</h2>
 <div class="question">
 <blockquote>
@@ -511,7 +494,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>XXX</p>
 </div>
 </div>
-<div id="exercises-8" class="section level2 unnumbered">
+<div id="exercises-7" class="section level2 unnumbered">
 <h2>8.6.6.4 Exercises</h2>
 <div class="question">
 <blockquote>
@@ -519,36 +502,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p>What does this mean? You can’t stop the function if you set an <code>interrupt</code> argument inside a <code>tryCatch</code>?</p>
 </div>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<p>That’s exactly it - this was a warning not to use <code>inturrupt</code> in your functions!</p>
 </div>
 <div id="slides" class="section level2 unnumbered">
 <h2>Slides</h2>
 <div class="question">
 <p>Let’s revist my example from the talk: can we build on this to use tidyeval so that the user can write <code>beer_states %&gt;% beer_mean(state)</code> [I think we need to use <code>.data</code> and note how state is given as an object so we need to use tidyeval to suppress it’s evaluation…]</p>
 </div>
-<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb379-1" data-line-number="1">beer_states &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(</a>
-<a class="sourceLine" id="cb379-2" data-line-number="2">  <span class="st">&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/beer_states.csv&#39;</span>)</a>
-<a class="sourceLine" id="cb379-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb379-4" data-line-number="4">beer_mean &lt;-<span class="st"> </span><span class="cf">function</span>(.data, x) {</a>
-<a class="sourceLine" id="cb379-5" data-line-number="5">  </a>
-<a class="sourceLine" id="cb379-6" data-line-number="6">  column_name &lt;-<span class="st"> </span><span class="kw">deparse</span>(<span class="kw">substitute</span>(x))</a>
-<a class="sourceLine" id="cb379-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb379-8" data-line-number="8">  msg &lt;-<span class="st"> </span>glue<span class="op">::</span><span class="kw">glue</span>(<span class="st">&quot;Can&#39;t calculate mean, {column_name} is not numeric&quot;</span>)</a>
-<a class="sourceLine" id="cb379-9" data-line-number="9">  </a>
-<a class="sourceLine" id="cb379-10" data-line-number="10">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.numeric</span>(.data[[column_name]])) {</a>
-<a class="sourceLine" id="cb379-11" data-line-number="11">    <span class="kw">abort</span>(</a>
-<a class="sourceLine" id="cb379-12" data-line-number="12">      <span class="dt">message =</span> msg,</a>
-<a class="sourceLine" id="cb379-13" data-line-number="13">      <span class="dt">arg =</span> column_name,</a>
-<a class="sourceLine" id="cb379-14" data-line-number="14">      <span class="dt">data =</span> .data</a>
-<a class="sourceLine" id="cb379-15" data-line-number="15">    )</a>
-<a class="sourceLine" id="cb379-16" data-line-number="16">  } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb379-17" data-line-number="17">    <span class="kw">mean</span>(<span class="kw">which</span>(<span class="op">!</span><span class="kw">is.na</span>(.data[[column_name]])[.data[[column_name]]]))</a>
-<a class="sourceLine" id="cb379-18" data-line-number="18">  }</a>
-<a class="sourceLine" id="cb379-19" data-line-number="19">}</a>
-<a class="sourceLine" id="cb379-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb379-21" data-line-number="21">beer_states <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">beer_mean</span>(barrels)</a></code></pre></div>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb380-1" data-line-number="1">beer_states &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(</a>
+<a class="sourceLine" id="cb380-2" data-line-number="2">  <span class="st">&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/beer_states.csv&#39;</span>)</a>
+<a class="sourceLine" id="cb380-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb380-4" data-line-number="4">beer_mean &lt;-<span class="st"> </span><span class="cf">function</span>(.data, x) {</a>
+<a class="sourceLine" id="cb380-5" data-line-number="5">  </a>
+<a class="sourceLine" id="cb380-6" data-line-number="6">  column_name &lt;-<span class="st"> </span><span class="kw">deparse</span>(<span class="kw">substitute</span>(x))</a>
+<a class="sourceLine" id="cb380-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb380-8" data-line-number="8">  msg &lt;-<span class="st"> </span>glue<span class="op">::</span><span class="kw">glue</span>(<span class="st">&quot;Can&#39;t calculate mean, {column_name} is not numeric&quot;</span>)</a>
+<a class="sourceLine" id="cb380-9" data-line-number="9">  </a>
+<a class="sourceLine" id="cb380-10" data-line-number="10">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.numeric</span>(.data[[column_name]])) {</a>
+<a class="sourceLine" id="cb380-11" data-line-number="11">    <span class="kw">abort</span>(</a>
+<a class="sourceLine" id="cb380-12" data-line-number="12">      <span class="dt">message =</span> msg,</a>
+<a class="sourceLine" id="cb380-13" data-line-number="13">      <span class="dt">arg =</span> column_name,</a>
+<a class="sourceLine" id="cb380-14" data-line-number="14">      <span class="dt">data =</span> .data</a>
+<a class="sourceLine" id="cb380-15" data-line-number="15">    )</a>
+<a class="sourceLine" id="cb380-16" data-line-number="16">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb380-17" data-line-number="17">    <span class="kw">mean</span>(<span class="kw">which</span>(<span class="op">!</span><span class="kw">is.na</span>(.data[[column_name]])[.data[[column_name]]]))</a>
+<a class="sourceLine" id="cb380-18" data-line-number="18">  }</a>
+<a class="sourceLine" id="cb380-19" data-line-number="19">}</a>
+<a class="sourceLine" id="cb380-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb380-21" data-line-number="21">beer_states <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">beer_mean</span>(barrels)</a></code></pre></div>
 <pre><code>[1] 806.4551</code></pre>
 
 

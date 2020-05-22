@@ -119,7 +119,7 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-05-20}
+\date{2020-05-21}
 
 \begin{document}
 \maketitle
@@ -363,7 +363,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa94c600850"
+## [1] "0x7fb10bf2eba0"
 \end{verbatim}
 
 \begin{Shaded}
@@ -373,7 +373,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa94c600850"
+## [1] "0x7fb10bf2eba0"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -385,7 +385,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa94d0e5d80"
+## [1] "0x7fb10e3c1e40"
 \end{verbatim}
 
 \begin{Shaded}
@@ -395,8 +395,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fa94c7b5e78] <list> 
-## └─[2:0x7fa94c600850] <dbl>
+## █ [1:0x7fb10e3cec80] <list> 
+## └─[2:0x7fb10bf2eba0] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -406,7 +406,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa94e06fa10"
+## [1] "0x7fb10e3e55b0"
 \end{verbatim}
 
 \begin{Shaded}
@@ -443,7 +443,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fa94fccfb48>"
+## [1] "<0x7fb10f11b198>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -453,7 +453,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fa94fccfb48>
+## <0x7fb10f11b198>
 \end{verbatim}
 
 \begin{Shaded}
@@ -463,7 +463,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa94fccfb48"
+## [1] "0x7fb10f11b198"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -512,7 +512,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa950d89cc8"
+## [1] "0x7fb110992708"
 \end{verbatim}
 
 \begin{Shaded}
@@ -522,7 +522,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fa950d89cc8>"
+## [1] "<0x7fb110992708>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -532,7 +532,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fa950d89cc8 -> 0x7fa950da5f88]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fb110992708 -> 0x7fb105fed3c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -628,7 +628,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa94b4db9a8"
+## [1] "0x7fb10ccf2418"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -641,7 +641,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa94befb7f8"
+## [1] "0x7fb10e15a0d8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -664,7 +664,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa94befb7f8"
+## [1] "0x7fb10e15a0d8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -674,7 +674,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa94befb7f8"
+## [1] "0x7fb10e15a0d8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -697,7 +697,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa94befb7f8"
+## [1] "0x7fb10e15a0d8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -707,7 +707,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa94c657898"
+## [1] "0x7fb108a086e8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -730,7 +730,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa94d23bb88"
+## [1] "0x7fb10e370fe8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2531,13 +2531,13 @@ This will work:
 
 \begin{verbatim}
 ## # A tibble: 5 x 1
-##       x1
-##    <dbl>
-## 1 0.238 
-## 2 0.271 
-## 3 0.0650
-## 4 0.248 
-## 5 0.643
+##      x1
+##   <dbl>
+## 1 0.898
+## 2 0.280
+## 3 0.265
+## 4 0.566
+## 5 0.864
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2611,7 +2611,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 219 242 239 251 256 246 202 218 210 265
+##  [1] 231 263 286 229 296 209 232 259 287 295
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3048,7 +3048,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fa943677bc8>
+## <bytecode: 0x7fb104af33c8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3919,7 +3919,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7fa94433cdb0>
+## <bytecode: 0x7fb105aee5b0>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4057,7 +4057,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7fa94c23ba80>
+## <bytecode: 0x7fb10bb965b8>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4143,11 +4143,11 @@ They are sort of like fast look-up tables! It may be impossible to show with a s
 
 I can't quite think of a time where \texttt{try} is more appropraite than \texttt{tryCatch} - does anyone have an example?
 
-XXX
+It seems that try is just a wrapper for \texttt{tryCatch} and you can use it whenever you'd use \texttt{try}
 
 When would you actually use \texttt{suppressWarning}? Maybe when loading libraries? I created an example for \texttt{suppressMessages}, but does someone have a better, practical use case?
 
-XXX
+As a function user it's common to supress warnings when loading in data and using \texttt{readr} and \texttt{dplyr} - but not so much as a function creator
 
 \hypertarget{exiting-handlers}{%
 \section*{8.4.2 Exiting handlers}\label{exiting-handlers}}
@@ -4172,19 +4172,17 @@ The protected code is evaluated in the environment of \texttt{tryCatch()}, but t
 
 Clarifcation question what is the ``handler code'' and ``protected code''?
 
-The protected code is \texttt{message\ =\ function(cnd)\ "There"} and the handler inside the \texttt{\{\}}
+The protected code is inside the \texttt{\{\}} and the handler code is \texttt{message\ =\ function(cnd)\ "There"}
 
 In the tryCatch example where we have \texttt{finally} print ``Thank God for Beer'' I find it interesting that this is printed \textbf{before} the code inside the tryCatch. Can anyone explain why?
 
-XXX
+The handler code is evaulated prior to the protected code, that is why we see it second!
 
 \hypertarget{calling-handlers}{%
 \section*{8.4.3 Calling handlers}\label{calling-handlers}}
 \addcontentsline{toc}{section}{8.4.3 Calling handlers}
 
 Can we make up our own bubbling and muffled \texttt{withCallingHandlers} examples? The example code was a little unclear to me.
-
-Bubbling is the phenomenon where all the handler statements will be evaluated, all the way up, prior to the body code and muffling allows us to stop this? Not sure if this is true and it doesn't really explain the muffling examples.
 
 Why is this message executed once per message in the function?
 
@@ -4255,7 +4253,7 @@ The first three calls to \texttt{show\_condition} make sense to me, and I even u
 \end{Highlighting}
 \end{Shaded}
 
-XXX
+\texttt{\{\}} let us execute multiple lines of code!
 
 \hypertarget{exercises-5}{%
 \section*{8.4.5.3 Exercises}\label{exercises-5}}
@@ -4277,22 +4275,11 @@ I couldn't follow the manual's answer for what's happening here, can we come up 
 
 XXX
 
-\hypertarget{exercises-6}{%
-\section*{8.5.4.2 Exercises}\label{exercises-6}}
-\addcontentsline{toc}{section}{8.5.4.2 Exercises}
-
-Q: Inside a package you often need to stop with an error when something is not right. Other packages that depend on your package might be tempted to check these errors in their unit tests. How could you help these packages to avoid relying on the error message which is part of the user interface rather than the API and might change without notice?
-
-A: Instead returning an error it might be preferable to throw a customized condition and place a standardized error message inside the metadata. Then the downstream package could check for the class of the condition, rather than inspecting the message.
-
-Can we come up with something concrete for this?
-
-XXX
-
 \hypertarget{resignal}{%
 \section*{8.6.3 Resignal}\label{resignal}}
 \addcontentsline{toc}{section}{8.6.3 Resignal}
 
+:::question
 Can we go over what is happening here?
 
 \begin{Shaded}
@@ -4314,8 +4301,6 @@ Can we go over what is happening here?
 \begin{verbatim}
 Error: Hello
 \end{verbatim}
-
-We are passing \texttt{warn("Hello")} as handler code but since it's an \texttt{abort} the protected code \texttt{x} never gets evaluated? That seems wrong.
 
 \hypertarget{record}{%
 \section*{8.6.4 Record}\label{record}}
@@ -4401,7 +4386,20 @@ What is \texttt{signal} and what is it doing here?
 \end{Highlighting}
 \end{Shaded}
 
-XXX
+Signal is a general function that calls abort, inform or warn. It has the same signature as those functions except for the class argument that is necessary for signal but NULL by default for each of the others
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{signal <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(message, class, ..., .subclass) \{}
+  \ControlFlowTok{if}\NormalTok{ (}\OperatorTok{!}\KeywordTok{missing}\NormalTok{(.subclass)) \{}
+    \KeywordTok{deprecate_subclass}\NormalTok{(.subclass)}
+\NormalTok{  \}}
+\NormalTok{  message <-}\StringTok{ }\KeywordTok{collapse_cnd_message}\NormalTok{(message)}
+\NormalTok{  cnd <-}\StringTok{ }\KeywordTok{cnd}\NormalTok{(class, ..., }\DataTypeTok{message =}\NormalTok{ message)}
+  \KeywordTok{cnd_signal}\NormalTok{(cnd)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{quote}
 If you create a condition object by hand, and signal it with signalCondition(), cnd\_muffle() will not work. Instead you need to call it with a muffle restart defined, like this: \texttt{withRestarts(signalCondition(cond),\ muffle\ =\ function()\ NULL)}
@@ -4411,8 +4409,8 @@ Where does this code go given the prior example?
 
 XXX
 
-\hypertarget{exercises-7}{%
-\section*{8.6.6.2 Exercises}\label{exercises-7}}
+\hypertarget{exercises-6}{%
+\section*{8.6.6.2 Exercises}\label{exercises-6}}
 \addcontentsline{toc}{section}{8.6.6.2 Exercises}
 
 \begin{quote}
@@ -4423,8 +4421,8 @@ What exactly does this mean? tryCatch evaluates what we were calling the protect
 
 XXX
 
-\hypertarget{exercises-8}{%
-\section*{8.6.6.4 Exercises}\label{exercises-8}}
+\hypertarget{exercises-7}{%
+\section*{8.6.6.4 Exercises}\label{exercises-7}}
 \addcontentsline{toc}{section}{8.6.6.4 Exercises}
 
 \begin{quote}
@@ -4433,7 +4431,7 @@ There's no way to break out of the function because we're capturing the interrup
 
 What does this mean? You can't stop the function if you set an \texttt{interrupt} argument inside a \texttt{tryCatch}?
 
-XXX
+That's exactly it - this was a warning not to use \texttt{inturrupt} in your functions!
 
 \hypertarget{slides}{%
 \section*{Slides}\label{slides}}
