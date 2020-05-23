@@ -413,8 +413,48 @@ That's exactly it - this was a warning not to use `inturrupt` in your functions!
 What environment(s) these restarts are called within, or if that even applies or matters
 :::
 
-:::TODO
-:::
+Given this little example:
+
+```{r}
+# low level function
+# if text isn't correct then abort with class malformed_text
+is_correct <- function(text) {
+  if (text != "CORRECT") {
+    msg <- paste0(text, " needs to be 'CORRECT")
+    abort(
+      "malformed_text",
+      message = msg,
+      text = text
+    )
+  }
+  return(text)
+}
+
+# medium level function
+# apply low level function to all text in a list
+# if it doesn't pass give it the restart skip_text
+# which will change that entry to NA
+replace_not_correct <- function(all_text) {
+  lapply(all_text, function(text) {
+    withRestarts(
+      is_correct(text),
+      skip_text = function(e){ NA;  print(current_env())}
+    )
+  })
+}
+
+# high level function
+# if you have an error of type malformed_text, 
+# use the restart from the midlevel function
+analyze_text <- function(all_text) {
+  withCallingHandlers(
+    malformed_text = function(e) invokeRestart("skip_text"),
+    lapply(all_text, replace_not_correct)
+  )
+}
+
+analyze_text(list("CORRECT", "NOT", "CORRECT"))
+```
 
 :::question
 Let's revisit my example from the talk: can we build on this to use tidyeval so that the user can write `beer_states %>% beer_mean(state)` [I think we need to use `.data` and note how state is given as an object so we need to use tidyeval to suppress it's evaluation...]

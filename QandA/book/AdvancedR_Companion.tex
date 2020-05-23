@@ -363,7 +363,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f80484fac40"
+## [1] "0x7fceaf905ad8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -373,7 +373,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f80484fac40"
+## [1] "0x7fceaf905ad8"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -385,7 +385,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8049fe9190"
+## [1] "0x7fceb0a82968"
 \end{verbatim}
 
 \begin{Shaded}
@@ -395,8 +395,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7f8049f0df50] <list> 
-## └─[2:0x7f80484fac40] <dbl>
+## █ [1:0x7fceb293f540] <list> 
+## └─[2:0x7fceaf905ad8] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -406,7 +406,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8049ebf2e8"
+## [1] "0x7fceb29caba0"
 \end{verbatim}
 
 \begin{Shaded}
@@ -443,7 +443,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7f804a434a58>"
+## [1] "<0x7fceb4218878>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -453,7 +453,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7f804a434a58>
+## <0x7fceb4218878>
 \end{verbatim}
 
 \begin{Shaded}
@@ -463,7 +463,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f804a434a58"
+## [1] "0x7fceb4218878"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -512,7 +512,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f804c99b3c8"
+## [1] "0x7fceb36c3548"
 \end{verbatim}
 
 \begin{Shaded}
@@ -522,7 +522,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7f804c99b3c8>"
+## [1] "<0x7fceb36c3548>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -532,7 +532,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7f804c99b3c8 -> 0x7f804fdcad08]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fceb36c3548 -> 0x7fceb350a508]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -628,7 +628,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f804b1419f8"
+## [1] "0x7fceb0df25d8"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -641,7 +641,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f80449ba738"
+## [1] "0x7fceb1eb8598"
 \end{verbatim}
 
 \begin{Shaded}
@@ -664,7 +664,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f80449ba738"
+## [1] "0x7fceb1eb8598"
 \end{verbatim}
 
 \begin{Shaded}
@@ -674,7 +674,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f80449ba738"
+## [1] "0x7fceb1eb8598"
 \end{verbatim}
 
 \begin{Shaded}
@@ -697,7 +697,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f80449ba738"
+## [1] "0x7fceb1eb8598"
 \end{verbatim}
 
 \begin{Shaded}
@@ -707,7 +707,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f8049e63048"
+## [1] "0x7fceb09ea718"
 \end{verbatim}
 
 \begin{Shaded}
@@ -730,7 +730,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f804c96a038"
+## [1] "0x7fceb250cda8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2531,13 +2531,13 @@ This will work:
 
 \begin{verbatim}
 ## # A tibble: 5 x 1
-##      x1
-##   <dbl>
-## 1 0.261
-## 2 0.758
-## 3 0.549
-## 4 0.725
-## 5 0.282
+##       x1
+##    <dbl>
+## 1 0.0805
+## 2 0.348 
+## 3 0.931 
+## 4 0.419 
+## 5 0.322
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2611,7 +2611,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 206 223 290 249 259 288 276 282 267 224
+##  [1] 237 283 231 216 218 271 219 277 291 287
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3048,7 +3048,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7f80435e59c8>
+## <bytecode: 0x7fcea92dc7c8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3919,7 +3919,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7f8042c879b0>
+## <bytecode: 0x7fcea9cff3b0>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4057,7 +4057,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7f804adbe9e0>
+## <bytecode: 0x7fceb0d20770>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4685,6 +4685,67 @@ That's exactly it - this was a warning not to use \texttt{inturrupt} in your fun
 \addcontentsline{toc}{section}{Slides}
 
 What environment(s) these restarts are called within, or if that even applies or matters
+
+Given this little example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# low level function}
+\CommentTok{# if text isn't correct then abort with class malformed_text}
+\NormalTok{is_correct <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(text) \{}
+  \ControlFlowTok{if}\NormalTok{ (text }\OperatorTok{!=}\StringTok{ "CORRECT"}\NormalTok{) \{}
+\NormalTok{    msg <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(text, }\StringTok{" needs to be 'CORRECT"}\NormalTok{)}
+    \KeywordTok{abort}\NormalTok{(}
+      \StringTok{"malformed_text"}\NormalTok{,}
+      \DataTypeTok{message =}\NormalTok{ msg,}
+      \DataTypeTok{text =}\NormalTok{ text}
+\NormalTok{    )}
+\NormalTok{  \}}
+  \KeywordTok{return}\NormalTok{(text)}
+\NormalTok{\}}
+
+\CommentTok{# medium level function}
+\CommentTok{# apply low level function to all text in a list}
+\CommentTok{# if it doesn't pass give it the restart skip_text}
+\CommentTok{# which will change that entry to NA}
+\NormalTok{replace_not_correct <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(all_text) \{}
+  \KeywordTok{lapply}\NormalTok{(all_text, }\ControlFlowTok{function}\NormalTok{(text) \{}
+    \KeywordTok{withRestarts}\NormalTok{(}
+      \KeywordTok{is_correct}\NormalTok{(text),}
+      \DataTypeTok{skip_text =} \ControlFlowTok{function}\NormalTok{(e) }\OtherTok{NA}
+\NormalTok{    )}
+\NormalTok{  \})}
+\NormalTok{\}}
+
+\CommentTok{# high level function}
+\CommentTok{# if you have an error of type malformed_text, }
+\CommentTok{# use the restart from the midlevel function}
+\NormalTok{analyze_text <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(all_text) \{}
+  \KeywordTok{withCallingHandlers}\NormalTok{(}
+    \DataTypeTok{malformed_text =} \ControlFlowTok{function}\NormalTok{(e) }\KeywordTok{invokeRestart}\NormalTok{(}\StringTok{"skip_text"}\NormalTok{),}
+    \KeywordTok{lapply}\NormalTok{(all_text, replace_not_correct)}
+\NormalTok{  )}
+\NormalTok{\}}
+
+\KeywordTok{analyze_text}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\StringTok{"CORRECT"}\NormalTok{, }\StringTok{"NOT"}\NormalTok{, }\StringTok{"CORRECT"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [[1]][[1]]
+## [1] "CORRECT"
+## 
+## 
+## [[2]]
+## [[2]][[1]]
+## [1] NA
+## 
+## 
+## [[3]]
+## [[3]][[1]]
+## [1] "CORRECT"
+\end{verbatim}
 
 Let's revisit my example from the talk: can we build on this to use tidyeval so that the user can write \texttt{beer\_states\ \%\textgreater{}\%\ beer\_mean(state)} {[}I think we need to use \texttt{.data} and note how state is given as an object so we need to use tidyeval to suppress it's evaluation\ldots{}{]}
 
