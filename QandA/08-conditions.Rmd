@@ -250,6 +250,7 @@ warning2error({
 ```
 Error: Hello
 ```
+:::
 
 The function `warning2error` captures an expression which is evaluated by `withCallingHandlers` where you have defined a handler for warning conditions. The handler captures the condition cnd raised by warn which is `structure(list(message = "Hello"), class = c("warning", "condition")`
 

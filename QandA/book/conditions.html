@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="environments.html"/>
-
+<link rel="next" href="functionals.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -236,6 +236,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-6"><i class="fa fa-check"></i>8.6.6.2 Exercises</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-7"><i class="fa fa-check"></i>8.6.6.4 Exercises</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#slides"><i class="fa fa-check"></i>Slides</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="functionals.html"><a href="functionals.html"><i class="fa fa-check"></i><b>9</b> Functionals</a><ul>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#anonymous-functions-and-shortcuts"><i class="fa fa-check"></i>9.2.2 Anonymous functions and shortcuts</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-8"><i class="fa fa-check"></i>9.2.6.4 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-9"><i class="fa fa-check"></i>9.2.6.5 Exercise</a></li>
+<li><a href="functionals.html#same-type-of-output-as-input-modify">9.4.1 Same type of output as input: <code>modify()</code></a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#any-number-of-inputs-pmap-and-friends"><i class="fa fa-check"></i>9.4.5 Any number of inputs: pmap() and friends</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-10"><i class="fa fa-check"></i>9.4.6.2 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#multiple-inputs"><i class="fa fa-check"></i>9.5.4 Multiple inputs</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#map-reduce"><i class="fa fa-check"></i>9.5.5 Map-reduce</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-11"><i class="fa fa-check"></i>9.6.3.2 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-12"><i class="fa fa-check"></i>9.6.3.3 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-13"><i class="fa fa-check"></i>9.6.3.4 Exercise</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -445,8 +458,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="resignal" class="section level2 unnumbered">
 <h2>8.6.3 Resignal</h2>
-<p>:::question
-Can we go over what is happening here?</p>
+<div class="question">
+<p>Can we go over what is happening here?</p>
 <div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb402-1" data-line-number="1">warning2error &lt;-<span class="st"> </span><span class="cf">function</span>(expr) {</a>
 <a class="sourceLine" id="cb402-2" data-line-number="2">  <span class="kw">withCallingHandlers</span>(</a>
 <a class="sourceLine" id="cb402-3" data-line-number="3">    <span class="dt">warning =</span> <span class="cf">function</span>(cnd) <span class="kw">abort</span>(<span class="kw">conditionMessage</span>(cnd)),</a>
@@ -459,6 +472,7 @@ Can we go over what is happening here?</p>
 <a class="sourceLine" id="cb402-10" data-line-number="10">  <span class="kw">warn</span>(<span class="st">&quot;Hello&quot;</span>)</a>
 <a class="sourceLine" id="cb402-11" data-line-number="11">})</a></code></pre></div>
 <pre><code>Error: Hello</code></pre>
+</div>
 <p>The function <code>warning2error</code> captures an expression which is evaluated by <code>withCallingHandlers</code> where you have defined a handler for warning conditions. The handler captures the condition cnd raised by warn which is <code>structure(list(message = &quot;Hello&quot;), class = c(&quot;warning&quot;, &quot;condition&quot;)</code></p>
 <p>The function <code>conditionMessage</code> is an s3 generic which evaluates to <code>conditionMessage.condition</code> which simply accesses <code>cnd$message</code> this is then the input to abort which raises an error with the message <code>&quot;Hello&quot;</code></p>
 </div>
@@ -648,7 +662,7 @@ Can we go over what is happening here?</p>
 <a class="sourceLine" id="cb412-36" data-line-number="36">}</a>
 <a class="sourceLine" id="cb412-37" data-line-number="37"></a>
 <a class="sourceLine" id="cb412-38" data-line-number="38"><span class="kw">analyze_text</span>(<span class="kw">list</span>(<span class="st">&quot;CORRECT&quot;</span>, <span class="st">&quot;NOT&quot;</span>, <span class="st">&quot;CORRECT&quot;</span>))</a></code></pre></div>
-<pre><code>## &lt;environment: 0x7fcd2ff487b8&gt;</code></pre>
+<pre><code>## &lt;environment: 0x7fa47eef61c0&gt;</code></pre>
 <pre><code>## [[1]]
 ## [[1]][[1]]
 ## [1] &quot;CORRECT&quot;
@@ -656,7 +670,7 @@ Can we go over what is happening here?</p>
 ## 
 ## [[2]]
 ## [[2]][[1]]
-## &lt;environment: 0x7fcd2ff487b8&gt;
+## &lt;environment: 0x7fa47eef61c0&gt;
 ## 
 ## 
 ## [[3]]
@@ -688,7 +702,6 @@ Can we go over what is happening here?</p>
 <a class="sourceLine" id="cb415-21" data-line-number="21">beer_states <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">beer_mean</span>(barrels)</a></code></pre></div>
 <pre><code>[1] 806.4551</code></pre>
 
-
 </div>
 </div>
             </section>
@@ -696,8 +709,8 @@ Can we go over what is happening here?</p>
           </div>
         </div>
       </div>
-<a href="environments.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="environments.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="functionals.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -741,7 +754,7 @@ gitbook.start({
 },
 "download": ["AdvancedR_Companion.pdf", "AdvancedR_Companion.epub"],
 "toc": {
-"collapse": "subsection"
+"collapse": "section"
 }
 });
 });

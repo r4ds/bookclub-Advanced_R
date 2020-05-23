@@ -363,7 +363,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcd30263290"
+## [1] "0x7fa48c9543b0"
 \end{verbatim}
 
 \begin{Shaded}
@@ -373,7 +373,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcd30263290"
+## [1] "0x7fa48c9543b0"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -385,7 +385,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcd32d23268"
+## [1] "0x7fa47edc8f90"
 \end{verbatim}
 
 \begin{Shaded}
@@ -395,8 +395,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fcd320438f8] <list> 
-## └─[2:0x7fcd30263290] <dbl>
+## █ [1:0x7fa47ee03010] <list> 
+## └─[2:0x7fa48c9543b0] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -406,7 +406,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcd320f73b8"
+## [1] "0x7fa4832b8fb0"
 \end{verbatim}
 
 \begin{Shaded}
@@ -443,7 +443,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fcd2e2da978>"
+## [1] "<0x7fa487253c78>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -453,7 +453,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fcd2e2da978>
+## <0x7fa487253c78>
 \end{verbatim}
 
 \begin{Shaded}
@@ -463,7 +463,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcd2e2da978"
+## [1] "0x7fa487253c78"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -512,7 +512,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcd33372a48"
+## [1] "0x7fa48c88ca88"
 \end{verbatim}
 
 \begin{Shaded}
@@ -522,7 +522,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fcd33372a48>"
+## [1] "<0x7fa48c88ca88>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -532,7 +532,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fcd33372a48 -> 0x7fcd333a6c08]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fa48c88ca88 -> 0x7fa486ea0588]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -628,7 +628,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcd29d15318"
+## [1] "0x7fa4870779f8"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -641,7 +641,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcd31658288"
+## [1] "0x7fa483662a38"
 \end{verbatim}
 
 \begin{Shaded}
@@ -664,7 +664,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcd31658288"
+## [1] "0x7fa483662a38"
 \end{verbatim}
 
 \begin{Shaded}
@@ -674,7 +674,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcd31658288"
+## [1] "0x7fa483662a38"
 \end{verbatim}
 
 \begin{Shaded}
@@ -697,7 +697,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcd31658288"
+## [1] "0x7fa483662a38"
 \end{verbatim}
 
 \begin{Shaded}
@@ -707,7 +707,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcd3133c918"
+## [1] "0x7fa48798eff8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -730,7 +730,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcd31530508"
+## [1] "0x7fa483919598"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2531,13 +2531,13 @@ This will work:
 
 \begin{verbatim}
 ## # A tibble: 5 x 1
-##       x1
-##    <dbl>
-## 1 0.241 
-## 2 0.438 
-## 3 0.0837
-## 4 0.583 
-## 5 0.999
+##      x1
+##   <dbl>
+## 1 0.602
+## 2 0.515
+## 3 0.991
+## 4 0.969
+## 5 0.825
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2611,7 +2611,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 272 209 278 262 259 225 265 208 211 251
+##  [1] 237 242 224 220 255 262 295 268 215 229
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3048,7 +3048,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fcd297225c8>
+## <bytecode: 0x7fa4802959c8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3919,7 +3919,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7fcd2a336fb0>
+## <bytecode: 0x7fa482cbd3b0>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4057,7 +4057,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7fcd2ffbbc90>
+## <bytecode: 0x7fa47ee748c0>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4463,7 +4463,6 @@ Another exercise: Guess the output of these two functions:
 \section*{8.6.3 Resignal}\label{resignal}}
 \addcontentsline{toc}{section}{8.6.3 Resignal}
 
-:::question
 Can we go over what is happening here?
 
 \begin{Shaded}
@@ -4732,7 +4731,7 @@ Given this little example:
 \end{Shaded}
 
 \begin{verbatim}
-## <environment: 0x7fcd295fe560>
+## <environment: 0x7fa4846290e0>
 \end{verbatim}
 
 \begin{verbatim}
@@ -4743,7 +4742,7 @@ Given this little example:
 ## 
 ## [[2]]
 ## [[2]][[1]]
-## <environment: 0x7fcd295fe560>
+## <environment: 0x7fa4846290e0>
 ## 
 ## 
 ## [[3]]
@@ -4782,6 +4781,215 @@ Let's revisit my example from the talk: can we build on this to use tidyeval so 
 \begin{verbatim}
 [1] 806.4551
 \end{verbatim}
+
+\hypertarget{functionals}{%
+\chapter{Functionals}\label{functionals}}
+
+\hypertarget{anonymous-functions-and-shortcuts}{%
+\section*{9.2.2 Anonymous functions and shortcuts}\label{anonymous-functions-and-shortcuts}}
+\addcontentsline{toc}{section}{9.2.2 Anonymous functions and shortcuts}
+
+We saw you'll get an error if you try to map over elements that don't exist, and can use \texttt{.default} to override that. Is this related to \texttt{tryCatch} in some way? Can we look at the \texttt{map} source code for \texttt{.default?} And how would we overcome this error if we were to use base R's \texttt{lapply(x,\ \textquotesingle{}two\textquotesingle{})}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}
+  \KeywordTok{list}\NormalTok{(}\DataTypeTok{one =} \StringTok{"a"}\NormalTok{),}
+  \KeywordTok{list}\NormalTok{(}\DataTypeTok{one =} \StringTok{"b"}\NormalTok{),}
+  \KeywordTok{list}\NormalTok{(}\DataTypeTok{one =} \StringTok{"c"}\NormalTok{)}
+\NormalTok{)}
+
+\KeywordTok{map_chr}\NormalTok{(x, }\StringTok{'two'}\NormalTok{, }\DataTypeTok{.default =} \OtherTok{NA}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] NA NA NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{lapply}\NormalTok{(x, }\StringTok{'two'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Error in get(as.character(FUN), mode = "function", envir = envir) : object 'two' of mode 'function' was not found
+\end{verbatim}
+
+Within \texttt{purrr} \href{https://github.com/tidyverse/purrr/blob/7104367bb6599f13e56c554bd07488b508a8a02b/R/as_mapper.R\#L98}{there's the function}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{find_extract_default <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(.null, .default) \{}
+  \ControlFlowTok{if}\NormalTok{ (}\OperatorTok{!}\KeywordTok{missing}\NormalTok{(.null)) \{}
+\NormalTok{    .null}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{    .default}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+So it doesn't seem to be a conditional, but rather a way to deal with missing errors
+
+XXX
+
+\hypertarget{exercise-8}{%
+\section*{9.2.6.4 Exercise}\label{exercise-8}}
+\addcontentsline{toc}{section}{9.2.6.4 Exercise}
+
+In order to extract p-values the solution manual suggests using \texttt{map\_dbl} but could we use \texttt{pluck} to get these values? If so how?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trials <-}\StringTok{ }\KeywordTok{map}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{100}\NormalTok{, }\OperatorTok{~}\StringTok{ }\KeywordTok{t.test}\NormalTok{(}\KeywordTok{rpois}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{10}\NormalTok{), }\KeywordTok{rpois}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{7}\NormalTok{)))}
+\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{p_value =} \KeywordTok{map_dbl}\NormalTok{(trials, }\StringTok{"p.value"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 100 x 1
+##    p_value
+##      <dbl>
+##  1 0.0834 
+##  2 0.0122 
+##  3 0.0442 
+##  4 0.0771 
+##  5 0.0132 
+##  6 0.0560 
+##  7 0.00882
+##  8 0.131  
+##  9 0.00744
+## 10 0.109  
+## # ... with 90 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{pluck}\NormalTok{(trials, }\StringTok{"p.value"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{exercise-9}{%
+\section*{9.2.6.5 Exercise}\label{exercise-9}}
+\addcontentsline{toc}{section}{9.2.6.5 Exercise}
+
+Can we make this work?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}
+  \KeywordTok{list}\NormalTok{(}\DecValTok{1}\NormalTok{, }\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{9}\NormalTok{)),}
+  \KeywordTok{list}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{6}\NormalTok{), }\DecValTok{7}\NormalTok{, }\KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{6}\NormalTok{))}
+\NormalTok{)}
+
+\NormalTok{triple <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) x }\OperatorTok{*}\StringTok{ }\DecValTok{3}
+\KeywordTok{map}\NormalTok{(x, map, }\DataTypeTok{.f =}\NormalTok{ triple)}
+\end{Highlighting}
+\end{Shaded}
+
+XXX
+
+\hypertarget{same-type-of-output-as-input-modify}{%
+\section*{\texorpdfstring{9.4.1 Same type of output as input: \texttt{modify()}}{9.4.1 Same type of output as input: modify()}}\label{same-type-of-output-as-input-modify}}
+\addcontentsline{toc}{section}{9.4.1 Same type of output as input: \texttt{modify()}}
+
+When using modify we now get the warning:\texttt{Warning\ message:}modify()\texttt{is\ deprecated\ as\ of\ rlang\ 0.4.0.\ Vector\ tools\ are\ now\ out\ of\ scope\ for\ rlang\ to\ make\ it\ a\ more\ focused\ package.}
+
+How should we rewrite this example?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data.frame}\NormalTok{(}
+  \DataTypeTok{x =} \DecValTok{1}\OperatorTok{:}\DecValTok{3}\NormalTok{,}
+  \DataTypeTok{y =} \DecValTok{6}\OperatorTok{:}\DecValTok{4}
+\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{modify}\NormalTok{( }\OperatorTok{~}\StringTok{ }\NormalTok{.x }\OperatorTok{*}\StringTok{ }\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+:::
+
+XXX
+
+\hypertarget{any-number-of-inputs-pmap-and-friends}{%
+\section*{9.4.5 Any number of inputs: pmap() and friends}\label{any-number-of-inputs-pmap-and-friends}}
+\addcontentsline{toc}{section}{9.4.5 Any number of inputs: pmap() and friends}
+
+I want to use pmap to map over a vector, but the metadata for the functions other arguments is elsewhere - how would I combine these using \texttt{pmap}? The book says to name the metadata columns the same name as your function which I did but this still doesn't work?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my_data <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{3}
+
+\NormalTok{metadata <-}\StringTok{ }\KeywordTok{tribble}\NormalTok{(}
+  \OperatorTok{~}\NormalTok{id, }\OperatorTok{~}\NormalTok{mult, }\OperatorTok{~}\NormalTok{adder,}
+  \StringTok{"one"}\NormalTok{,   }\DecValTok{2}\NormalTok{,      }\DecValTok{5}\NormalTok{,}
+  \StringTok{"two"}\NormalTok{,   }\DecValTok{3}\NormalTok{,      }\DecValTok{6}\NormalTok{,}
+  \StringTok{"three"}\NormalTok{, }\DecValTok{4}\NormalTok{,      }\DecValTok{7}
+\NormalTok{)}
+
+\NormalTok{the_function <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(vec, id, mult, adder) \{}
+\NormalTok{  glue}\OperatorTok{::}\KeywordTok{glue}\NormalTok{(}\StringTok{"\{id\} is now \{vec * mult + adder\}"}\NormalTok{)}
+\NormalTok{\}}
+
+\CommentTok{# my_data doesn't change but we want to map over the metadata}
+\CommentTok{# x = string}
+\CommentTok{# y = multiplier}
+\CommentTok{# z = adder}
+\KeywordTok{pmap}\NormalTok{(}\KeywordTok{list}\NormalTok{(metadata), }\OperatorTok{~}\KeywordTok{the_function}\NormalTok{(}\DataTypeTok{vec =}\NormalTok{ my_data))}
+\end{Highlighting}
+\end{Shaded}
+
+XXX
+
+\hypertarget{exercise-10}{%
+\section*{9.4.6.2 Exercise}\label{exercise-10}}
+\addcontentsline{toc}{section}{9.4.6.2 Exercise}
+
+I see how we can use \texttt{iwalk} and \texttt{walk2} for writing to multiple files, but the question asks about disadvantages to this - what would they be?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cyls <-}\StringTok{ }\KeywordTok{split}\NormalTok{(mtcars, mtcars}\OperatorTok{$}\NormalTok{cyl)}
+\NormalTok{paths <-}\StringTok{ }\KeywordTok{file.path}\NormalTok{(temp, }\KeywordTok{paste0}\NormalTok{(}\StringTok{"cyl-"}\NormalTok{, }\KeywordTok{names}\NormalTok{(cyls), }\StringTok{".csv"}\NormalTok{))}
+\KeywordTok{walk2}\NormalTok{(cyls, paths, write.csv)}
+
+\NormalTok{mtcars }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{split}\NormalTok{(mtcars}\OperatorTok{$}\NormalTok{cyl) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{set_names}\NormalTok{(}\OperatorTok{~}\StringTok{ }\KeywordTok{file.path}\NormalTok{(temp, }\KeywordTok{paste0}\NormalTok{(}\StringTok{"cyl-"}\NormalTok{, .x, }\StringTok{".csv"}\NormalTok{))) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{iwalk}\NormalTok{(}\OperatorTok{~}\StringTok{ }\KeywordTok{write.csv}\NormalTok{(.x, .y))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{multiple-inputs}{%
+\section*{9.5.4 Multiple inputs}\label{multiple-inputs}}
+\addcontentsline{toc}{section}{9.5.4 Multiple inputs}
+
+Can we think of a simple example for \texttt{reduce2()}? I was playing with \texttt{accumulate(c(FALSE,\ FALSE,\ TRUE),}\textbar{}\texttt{)}, maybe we can combine this with something?
+
+XXX
+
+\hypertarget{map-reduce}{%
+\section*{9.5.5 Map-reduce}\label{map-reduce}}
+\addcontentsline{toc}{section}{9.5.5 Map-reduce}
+
+I like the books Hadoop simple example - can we come up with one with code or is it solely for computing on multiple machines?
+
+XXX
+
+\hypertarget{exercise-11}{%
+\section*{9.6.3.2 Exercise}\label{exercise-11}}
+\addcontentsline{toc}{section}{9.6.3.2 Exercise}
+
+\hypertarget{exercise-12}{%
+\section*{9.6.3.3 Exercise}\label{exercise-12}}
+\addcontentsline{toc}{section}{9.6.3.3 Exercise}
+
+\hypertarget{exercise-13}{%
+\section*{9.6.3.4 Exercise}\label{exercise-13}}
+\addcontentsline{toc}{section}{9.6.3.4 Exercise}
 
 \bibliography{book.bib,packages.bib}
 

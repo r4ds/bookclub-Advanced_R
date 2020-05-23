@@ -237,6 +237,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-7"><i class="fa fa-check"></i>8.6.6.4 Exercises</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#slides"><i class="fa fa-check"></i>Slides</a></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="functionals.html"><a href="functionals.html"><i class="fa fa-check"></i><b>9</b> Functionals</a><ul>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#anonymous-functions-and-shortcuts"><i class="fa fa-check"></i>9.2.2 Anonymous functions and shortcuts</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-8"><i class="fa fa-check"></i>9.2.6.4 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-9"><i class="fa fa-check"></i>9.2.6.5 Exercise</a></li>
+<li><a href="functionals.html#same-type-of-output-as-input-modify">9.4.1 Same type of output as input: <code>modify()</code></a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#any-number-of-inputs-pmap-and-friends"><i class="fa fa-check"></i>9.4.5 Any number of inputs: pmap() and friends</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-10"><i class="fa fa-check"></i>9.4.6.2 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#multiple-inputs"><i class="fa fa-check"></i>9.5.4 Multiple inputs</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#map-reduce"><i class="fa fa-check"></i>9.5.5 Map-reduce</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-11"><i class="fa fa-check"></i>9.6.3.2 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-12"><i class="fa fa-check"></i>9.6.3.3 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-13"><i class="fa fa-check"></i>9.6.3.4 Exercise</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -366,17 +379,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb18-3" data-line-number="3"><span class="kw">identical</span>(lobstr<span class="op">::</span><span class="kw">ref</span>(l1),lobstr<span class="op">::</span><span class="kw">ref</span>(l2))</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">obj_addr</span>(l1[[<span class="dv">1</span>]])</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fcd2fa415b8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fa4832a7f80&quot;</code></pre>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">obj_addr</span>(l2[[<span class="dv">1</span>]])</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fcd2fa415b8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fa4832a7f80&quot;</code></pre>
 <p>But why isn’t this the case for their subsets? Using <code>obj_addr</code> they have different addresses, but when we look at their references they are the same</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">obj_addr</span>(l1[<span class="dv">1</span>])</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fcd2fb57060&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fa485622038&quot;</code></pre>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">ref</span>(l1[<span class="dv">1</span>])</a></code></pre></div>
-<pre><code>## █ [1:0x7fcd30596680] &lt;list&gt; 
-## └─[2:0x7fcd2fa415b8] &lt;dbl&gt;</code></pre>
+<pre><code>## █ [1:0x7fa485616d00] &lt;list&gt; 
+## └─[2:0x7fa4832a7f80] &lt;dbl&gt;</code></pre>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">obj_addr</span>(l2[<span class="dv">1</span>])</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fcd30578350&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fa47edbbed8&quot;</code></pre>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">identical</span>(lobstr<span class="op">::</span><span class="kw">obj_addr</span>(l1[<span class="dv">1</span>]), lobstr<span class="op">::</span><span class="kw">obj_addr</span>(l2[<span class="dv">1</span>]))</a></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 </div>
@@ -389,11 +402,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Nothing - it has to do with the printing method:</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb34-2" data-line-number="2"><span class="kw">print</span>(<span class="kw">tracemem</span>(x))</a></code></pre></div>
-<pre><code>## [1] &quot;&lt;0x7fcd2fc437b8&gt;&quot;</code></pre>
+<pre><code>## [1] &quot;&lt;0x7fa483320528&gt;&quot;</code></pre>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">cat</span>(<span class="kw">tracemem</span>(x))</a></code></pre></div>
-<pre><code>## &lt;0x7fcd2fc437b8&gt;</code></pre>
+<pre><code>## &lt;0x7fa483320528&gt;</code></pre>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">obj_addr</span>(x)</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fcd2fc437b8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fa483320528&quot;</code></pre>
 <div class="question">
 <p>When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that’s optimized behind the scenes?</p>
 </div>
@@ -423,11 +436,11 @@ tracemem[0x7f84b7fe5288 -&gt; 0x7f84bc0817c8]: </code></pre>
 <p>When we assign the new value as an integer there is no intermediate step. This probably means <code>c(1,2, NA)</code> is the intermediate step; creating an intermediate vector that’s the same length of the final product with NA values at all locations that are new or to be changed</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(1L, 2L, 3L)</a>
 <a class="sourceLine" id="cb42-2" data-line-number="2"><span class="kw">obj_addr</span>(x)</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fcd302d1388&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fa485589cc8&quot;</code></pre>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">tracemem</span>(x)</a></code></pre></div>
-<pre><code>## [1] &quot;&lt;0x7fcd302d1388&gt;&quot;</code></pre>
+<pre><code>## [1] &quot;&lt;0x7fa485589cc8&gt;&quot;</code></pre>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">x[[<span class="dv">3</span>]] &lt;-<span class="st"> </span>4L</a></code></pre></div>
-<pre><code>## tracemem[0x7fcd302d1388 -&gt; 0x7fcd2fab47c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir &lt;Anonymous&gt; &lt;Anonymous&gt;</code></pre>
+<pre><code>## tracemem[0x7fa485589cc8 -&gt; 0x7fa484b6b8c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir &lt;Anonymous&gt; &lt;Anonymous&gt;</code></pre>
 <p>You can dig into the C code running this:</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">pryr<span class="op">::</span><span class="kw">show_c_source</span>(<span class="kw">.Internal</span>(<span class="st">&quot;[&lt;-&quot;</span>))</a></code></pre></div>
 </div>
@@ -470,33 +483,33 @@ tracemem[0x7f84b7fe5288 -&gt; 0x7f84bc0817c8]: </code></pre>
 <p>Now we can create a vector:</p>
 <div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1">v &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb57-2" data-line-number="2">(old_address &lt;-<span class="st"> </span>lobstr<span class="op">::</span><span class="kw">obj_addr</span>(v))</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fcd314313b8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fa486c680a8&quot;</code></pre>
 <p>Changing a value within it changes its address:</p>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1">v[[<span class="dv">3</span>]] &lt;-<span class="st"> </span><span class="dv">4</span></a>
 <a class="sourceLine" id="cb59-2" data-line-number="2">(new_address &lt;-<span class="st"> </span>lobstr<span class="op">::</span><span class="kw">obj_addr</span>(v))</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fcd3180e648&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fa486e8d228&quot;</code></pre>
 <div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1">old_address <span class="op">==</span><span class="st"> </span>new_address</a></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <p>We can assign the modified vector to a new name, where <code>y</code> and <code>v</code> point to the same thing.</p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1">y &lt;-<span class="st"> </span>v</a>
 <a class="sourceLine" id="cb63-2" data-line-number="2">(y_address &lt;-<span class="st"> </span>lobstr<span class="op">::</span><span class="kw">obj_addr</span>(y))</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fcd3180e648&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fa486e8d228&quot;</code></pre>
 <div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1">(v_address &lt;-<span class="st"> </span>lobstr<span class="op">::</span><span class="kw">obj_addr</span>(v))</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fcd3180e648&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fa486e8d228&quot;</code></pre>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1">y_address <span class="op">==</span><span class="st"> </span>v_address</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>Now if we modify <code>v</code> it won’t point to the same thing as <code>y</code>:</p>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1">v[[<span class="dv">3</span>]] &lt;-<span class="st"> </span><span class="dv">3</span></a>
 <a class="sourceLine" id="cb69-2" data-line-number="2">(y_address &lt;-<span class="st"> </span>lobstr<span class="op">::</span><span class="kw">obj_addr</span>(y))</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fcd3180e648&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fa486e8d228&quot;</code></pre>
 <div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1">(v_address &lt;-<span class="st"> </span>lobstr<span class="op">::</span><span class="kw">obj_addr</span>(v))</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fcd29d959a8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fa47ecf7098&quot;</code></pre>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1">y_address <span class="op">==</span><span class="st"> </span>v_address</a></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <p>But if we now change <code>y</code> to look like <code>v</code>, the original address, in theory editing y should occur in place, but it doesn’t - the “count does not go back to one”!</p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1">y[[<span class="dv">3</span>]] &lt;-<span class="st"> </span><span class="dv">3</span></a>
 <a class="sourceLine" id="cb75-2" data-line-number="2">(new_y_address &lt;-<span class="st"> </span>lobstr<span class="op">::</span><span class="kw">obj_addr</span>(y))</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fcd32044378&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fa487876f58&quot;</code></pre>
 <div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1">new_y_address <span class="op">==</span><span class="st"> </span>y_address</a></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="question">
@@ -685,7 +698,7 @@ gitbook.start({
 },
 "download": ["AdvancedR_Companion.pdf", "AdvancedR_Companion.epub"],
 "toc": {
-"collapse": "subsection"
+"collapse": "section"
 }
 });
 });

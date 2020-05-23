@@ -1,0 +1,183 @@
+# Functionals
+
+```{r, include=FALSE}
+library(purrr)
+```
+
+## 9.2.2 Anonymous functions and shortcuts {-}
+
+:::question
+We saw you'll get an error if you try to map over elements that don't exist, and can use `.default` to override that. Is this related to `tryCatch` in some way? Can we look at the `map` source code for `.default?` And how would we overcome this error if we were to use base R's `lapply(x, 'two')`
+
+```{r}
+x <- list(
+  list(one = "a"),
+  list(one = "b"),
+  list(one = "c")
+)
+
+map_chr(x, 'two', .default = NA)
+```
+
+```{r, eval=FALSE}
+lapply(x, 'two')
+```
+
+```
+Error in get(as.character(FUN), mode = "function", envir = envir) : object 'two' of mode 'function' was not found
+```
+:::
+
+:::TODO
+Within `purrr` [there's the function](https://github.com/tidyverse/purrr/blob/7104367bb6599f13e56c554bd07488b508a8a02b/R/as_mapper.R#L98)
+
+```{r, eval=FALSE}
+find_extract_default <- function(.null, .default) {
+  if (!missing(.null)) {
+    .null
+  } else {
+    .default
+  }
+}
+```
+
+So it doesn't seem to be a conditional, but rather a way to deal with missing errors
+:::
+
+:::TODO
+XXX
+:::
+
+## 9.2.6.4 Exercise {-}
+
+:::question
+In order to extract p-values the solution manual suggests using `map_dbl` but could we use `pluck` to get these values? If so how?
+:::
+
+```{r}
+trials <- map(1:100, ~ t.test(rpois(10, 10), rpois(10, 7)))
+tibble(p_value = map_dbl(trials, "p.value"))
+```
+
+:::TODO
+```{r, eval=FALSE}
+pluck(trials, "p.value")
+```
+:::
+
+## 9.2.6.5 Exercise {-}
+
+:::question
+Can we make this work?
+
+```{r, eval=FALSE}
+x <- list(
+  list(1, c(3, 9)),
+  list(c(3, 6), 7, c(4, 7, 6))
+)
+
+triple <- function(x) x * 3
+map(x, map, .f = triple)
+```
+:::
+
+:::TODO
+XXX
+:::
+
+## 9.4.1 Same type of output as input: `modify()` {-}
+
+When using modify we now get the warning:`Warning message: `modify()` is deprecated as of rlang 0.4.0. Vector tools are now out of scope for rlang to make it a more focused package.`
+
+How should we rewrite this example?
+
+```{r, eval=FALSE}
+data.frame(
+  x = 1:3,
+  y = 6:4
+) %>% 
+  modify( ~ .x * 2)
+```
+:::
+
+:::TODO
+XXX
+:::
+
+## 9.4.5 Any number of inputs: pmap() and friends {-}
+
+:::question
+I want to use pmap to map over a vector, but the metadata for the functions other arguments is elsewhere - how would I combine these using `pmap`? The book says to name the metadata columns the same name as your function which I did but this still doesn't work?
+:::
+
+```{r, eval=FALSE}
+my_data <- 1:3
+
+metadata <- tribble(
+  ~id, ~mult, ~adder,
+  "one",   2,      5,
+  "two",   3,      6,
+  "three", 4,      7
+)
+
+the_function <- function(vec, id, mult, adder) {
+  glue::glue("{id} is now {vec * mult + adder}")
+}
+
+# my_data doesn't change but we want to map over the metadata
+# x = string
+# y = multiplier
+# z = adder
+pmap(list(metadata), ~the_function(vec = my_data))
+```
+
+:::TODO
+XXX
+:::
+
+## 9.4.6.2 Exercise {-}
+
+:::question
+I see how we can use `iwalk` and `walk2` for writing to multiple files, but the question asks about disadvantages to this - what would they be?
+:::
+
+:::TODO
+```{r, eval=FALSE}
+cyls <- split(mtcars, mtcars$cyl)
+paths <- file.path(temp, paste0("cyl-", names(cyls), ".csv"))
+walk2(cyls, paths, write.csv)
+
+mtcars %>% 
+  split(mtcars$cyl) %>% 
+  set_names(~ file.path(temp, paste0("cyl-", .x, ".csv"))) %>% 
+  iwalk(~ write.csv(.x, .y))
+```
+:::
+
+
+## 9.5.4 Multiple inputs {-}
+
+:::question
+Can we think of a simple example for `reduce2()`? I was playing with `accumulate(c(FALSE, FALSE, TRUE), `|`)`, maybe we can combine this with something?
+:::
+
+:::TODO
+XXX
+:::
+
+## 9.5.5 Map-reduce {-}
+
+:::question
+I like the books Hadoop simple example - can we come up with one with code or is it solely for computing on multiple machines?
+:::
+
+:::TODO
+XXX
+:::
+
+## 9.6.3.2 Exercise {-}
+
+## 9.6.3.3 Exercise {-}
+
+## 9.6.3.4 Exercise {-}
+
