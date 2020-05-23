@@ -356,9 +356,28 @@ signal <- function(message, class, ..., .subclass) {
 Where does this code go given the prior example? 
 :::
 
-:::TODO
-XXX
-:::
+We would replace the code `cnd_muffle(cnd)`:
+
+```{r, eval=FALSE}
+ignore_log_levels <- function(expr, levels) {
+  withCallingHandlers(
+    log = function(cnd) {
+      if (cnd$level %in% levels) {
+        # cnd_muffle(cnd)
+        withRestarts(signalCondition(cnd), muffle = function() NULL)
+      }
+    },
+    expr
+  )
+}
+
+record_log(ignore_log_levels(log("Hello"), "warning"))
+```
+
+```
+[info] "Hello"
+```
+
 
 ## 8.6.6.2 Exercises {-}
 
@@ -461,6 +480,14 @@ analyze_text(list("CORRECT", "NOT", "CORRECT"))
 ```
 
 So, the parent environment of the handler (is that the right term?) called skip_text in the mid-level function is the environment of the expr part of withRestarts (i.e. the first parameter), also in the mid-level function.
+
+:::question
+Are there any default restarts include in base R so that you could `invokeRestart("XXX")` or is the restart always user defined?
+:::
+
+:::TODO
+XXX
+:::
 
 :::question
 Let's revisit my example from the talk: can we build on this to use tidyeval so that the user can write `beer_states %>% beer_mean(state)` [I think we need to use `.data` and note how state is given as an object so we need to use tidyeval to suppress it's evaluation...]
