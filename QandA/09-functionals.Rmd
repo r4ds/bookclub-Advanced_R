@@ -175,9 +175,3 @@ I like the books Hadoop simple example - can we come up with one with code or is
 XXX
 :::
 
-## 9.6.3.2 Exercise {-}
-
-## 9.6.3.3 Exercise {-}
-
-## 9.6.3.4 Exercise {-}
-
