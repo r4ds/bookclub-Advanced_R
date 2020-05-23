@@ -8,7 +8,7 @@ library(rlang)
 ## 8.3 Ignoring conditions {-}
 
 :::question
-I can't quite think of a time where `try` is more appropraite than `tryCatch` - does anyone have an example?
+I can't quite think of a time where `try` is more appropriate than `tryCatch` - does anyone have an example?
 :::
 
 It seems that try is just a wrapper for `tryCatch` and you can use it whenever you'd use `try`
@@ -17,7 +17,7 @@ It seems that try is just a wrapper for `tryCatch` and you can use it whenever y
 When would you actually use `suppressWarning`? Maybe when loading libraries? I created an example for `suppressMessages`, but does someone have a better, practical use case?
 :::
 
-As a function user it's common to supress warnings when loading in data and using `readr` and `dplyr` - but not so much as a function creator
+As a function user, it's common to suppress warnings when loading in data and using `readr` and `dplyr` - but not so much as a function creator
 
 ## 8.4.2 Exiting handlers {-}
 
@@ -35,7 +35,7 @@ tryCatch(
 
 > The protected code is evaluated in the environment of `tryCatch()`, but the handler code is not, because the handlers are functions.
 
-Clarifcation question what is the "handler code" and "protected code"?
+Clarification question what is the "handler code" and "protected code"?
 :::
 
 The protected code is inside the `{}` and the handler code is `message = function(cnd) "There"`
@@ -44,17 +44,17 @@ The protected code is inside the `{}` and the handler code is `message = functio
 In the tryCatch example where we have `finally` print "Thank God for Beer" I find it interesting that this is printed **before** the code inside the tryCatch. Can anyone explain why?
 :::
 
-The handler code is evaulated prior to the protected code, that is why we see it second!
+The handler code is evaluated prior to the protected code, that is why we see it second!
 
 ## 8.4.3 Calling handlers {-}
 
 :::question
-Can we make up our own bubbling and muffled `withCallingHandlers` examples? The example code was a little unclear to me.
+How would you define bubbling up?
 :::
 
-:::TODO
-XXX
-:::
+**Bubbling up:** By default, a condition will continue to propagate to parent handlers, all the way up to the default handler (or an exiting handler, if provided)
+
+I would consider what is being described there "bubbling up".
 
 :::question
 Why is this message executed once per message in the function?
@@ -77,8 +77,22 @@ withCallingHandlers(
 ```
 :::
 
+The following prints the message once:
+
+```{r}
+withCallingHandlers(
+  message = function(cnd) cat("Caught a message!\n"), 
+  {
+    warning("Someone there?")
+    message("Why, yes!")
+  }
+)
+```
+
+and it comes in the warning message, so it's not really a "direct" print
+
 :::TODO
-XXX
+Oh wait, the handler code is named `message`, so is it possible that the two message calls in the protected block are actually calling both `base::message` and the message - named handler?
 :::
 
 :::question
@@ -87,17 +101,51 @@ XXX
 Can we come up with an example for this masking? I think seeing it will help me understand...
 :::
 
-:::TODO
-XXX
-:::
+This just means that you cannot capture the return value of your handler (but you sort of can)
+
+```{r}
+f <- function() {
+  my_lovin <- NULL
+  withCallingHandlers(
+    message = function(cnd) {my_lovin <<- "not this time"},
+    {
+      never_ever_gunna_get_it = message("No, you're never gonna get it")
+    }
+  )
+  my_lovin
+}
+f()
+```
 
 :::question
 How does muffling differ from `suppressWarnings`?
 :::
 
-:::TODO
-XXX
-:::
+muffling allows for an over-ride/replacement of messages, while suppress just quiets everything:
+
+```{r}
+fn <- function() {
+  inform("Beware!", "my_particular_msg")
+  inform("On your guard!")
+  "foobar"
+}
+```
+
+Now we can use a new definition of `my_particular_msg` to replace "Beware"
+
+```{r}
+with_handlers(fn(),
+  my_particular_msg = calling(function(cnd) {
+    inform("Dealt with this particular message")
+    cnd_muffle(cnd)
+  })
+)
+```
+whereas suppressMessages just returns foobar:
+
+```{r}
+suppressMessages(fn())
+```
 
 ## 8.4.5.2 Exercises {-}
 
@@ -118,7 +166,7 @@ show_condition <- function(code) {
 }
 ```
 
-The first three calls to `show_condition` make sense to me, and I even understand that the first time the code is evaluated inside a `tryCatch` it exists (that's why it returns `message`) but how are you suppling `3` arguments to a function that just takes on one argument, `code`? Is that what the `{}` are for?
+The first three calls to `show_condition` make sense to me, and I even understand that the first time the code is evaluated inside a `tryCatch` it exists (that's why it returns `message`) but how are you supplying `3` arguments to a function that just takes on one argument, `code`? Is that what the `{}` are for?
 
 ```{r, eval=FALSE}
 show_condition({
@@ -137,7 +185,7 @@ show_condition({
 I couldn't follow the manual's answer for what's happening here, can we come up with our own answer for what's happening here in words?
 :::
 
-```{r, eval=FALSE}
+```{r}
 withCallingHandlers(
   message = function(cnd) message("b"),
   withCallingHandlers(
@@ -147,9 +195,38 @@ withCallingHandlers(
 )
 ```
 
-:::TODO
-XXX
+The first call to `withcallinghandlers` adds a condition handler for conditions with class "message" to the handler stack (not sure if its actually a stack?)  and then executes the second `withcallinghandlers` which adds another condition handler for conditions with class "message" to the handler stack (see above), and then executes the code `message("c")`.
+
+What happens next is a chain reaction of handlers. The call `message("c")` is handled by the inner handler, which then calls `message("a")`, but `message("a")` is caught by the outer handler, and so it outputs `b` first.  
+
+Then the inner handler resolves itself and outputs `a` and then that condition (having not been muffled) "bubbles up" to the outer handler, which calls `message("b")` again producing the second `b` and again since the message wasn't muffled, the original condition `message("c")` "bubbles up" to the top where it is evaluated producing the output `c`
+
+:::question
+Another exercise: Guess the output of these two functions:
 :::
+
+```{r}
+i <- 1
+withCallingHandlers(
+  message = function(cnd) {message(paste0(i, ". b")); i <<- i+1},
+  withCallingHandlers(
+    message = function(cnd) {message(paste0(i, ". a")); i <<- i+1},
+    {message(paste0(i, ". c"))}
+  )
+)
+```
+
+```{r}
+i <- 1
+withCallingHandlers(
+  message = function(cnd) {i <<- i+1; message(paste0(i, ". b"))},
+  withCallingHandlers(
+    message = function(cnd) {i <<- i+1; message(paste0(i, ". a"))},
+    {message(paste0(i, ". c"))}
+  )
+)
+```
+
 
 ## 8.6.3 Resignal {-}
 
@@ -174,8 +251,9 @@ warning2error({
 Error: Hello
 ```
 
-:::TODO
-:::
+The function `warning2error` captures an expression which is evaluated by `withCallingHandlers` where you have defined a handler for warning conditions. The handler captures the condition cnd raised by warn which is `structure(list(message = "Hello"), class = c("warning", "condition")`
+
+The function `conditionMessage` is an s3 generic which evaluates to `conditionMessage.condition` which simply accesses `cnd$message` this is then the input to abort which raises an error with the message `"Hello"`
 
 ## 8.6.4 Record {-}
 
@@ -242,9 +320,7 @@ catch_cnds({
 })
 ```
 
-:::TODO
-XXX
-:::
+I'm not positive, but I don't think so without mucking around in the C code. You "can" using try instead of `tryCatch`, but I can't think of a way to have it let you try each line in your passed in expression for example
 
 :::question
 What is `signal` and what is it doing here?
@@ -287,14 +363,39 @@ XXX
 ## 8.6.6.2 Exercises {-}
 
 :::question
-> Calling handlers are called in the context of the call that signalled the condition. Exiting handlers are called in the context of the call to tryCatch().
+> Calling handlers are called in the context of the call that signaled the condition. Exiting handlers are called in the context of the call to tryCatch().
 
 What exactly does this mean? tryCatch evaluates what we were calling the protected code first and calling handlers execute the handling code first? Can we make a simple example?
 :::
 
-:::TODO
-XXX
-:::
+- `tryCatch` is a project manager who oversees everything and then personally hands over the end product
+- `withCallingHandlers` writes some procedures/guidelines and assumes everyone has enough information to get their jobs done
+
+Comparing:
+
+```{r}
+f <- function() g()
+g <- function() h()
+h <- function() message("!")
+
+withCallingHandlers(f(), message = function(cnd) {
+  lobstr::cst()
+  cnd_muffle(cnd)
+})
+```
+
+`withCallingHandlers` is run to completion before `f` is called/put onto the stack. While `f` is in progress, `g` needs to be called so `g` is put on top of the stack, then `h` etc. Eventually they're all completed and taken off the stack (in reverse order). Then the handler `(function (cnd) ...` is called
+
+While
+
+```{r}
+tryCatch(f(), message = function(cnd) lobstr::cst())
+```
+
+`tryCatch` is still on the stack when the handler is called i.e. value, `tryCatchOne`, `tryCatchList` and `tryCatch` are all still in line to be completed
+
+
+Calling handlers are called in the context of the call that signaled the condition, in this case,`f()`. So the message handler returns a value to the environment where `f()` is a meaningful call. Exiting handlers are called in the context of the call to `tryCatch()`. The exiting handler returns to an ongoing `tryCatch()` so it can do whatever it needs to do.
 
 ## 8.6.6.4 Exercises {-}
 
@@ -309,7 +410,14 @@ That's exactly it - this was a warning not to use `inturrupt` in your functions!
 ## Slides {-}
 
 :::question
-Let's revist my example from the talk: can we build on this to use tidyeval so that the user can write `beer_states %>% beer_mean(state)` [I think we need to use `.data` and note how state is given as an object so we need to use tidyeval to suppress it's evaluation...]
+What environment(s) these restarts are called within, or if that even applies or matters
+:::
+
+:::TODO
+:::
+
+:::question
+Let's revisit my example from the talk: can we build on this to use tidyeval so that the user can write `beer_states %>% beer_mean(state)` [I think we need to use `.data` and note how state is given as an object so we need to use tidyeval to suppress it's evaluation...]
 :::
 
 ```{r, eval=FALSE}
