@@ -632,7 +632,7 @@ Can we go over what is happening here?</p>
 <a class="sourceLine" id="cb412-20" data-line-number="20">  <span class="kw">lapply</span>(all_text, <span class="cf">function</span>(text) {</a>
 <a class="sourceLine" id="cb412-21" data-line-number="21">    <span class="kw">withRestarts</span>(</a>
 <a class="sourceLine" id="cb412-22" data-line-number="22">      <span class="kw">is_correct</span>(text),</a>
-<a class="sourceLine" id="cb412-23" data-line-number="23">      <span class="dt">skip_text =</span> <span class="cf">function</span>(e) <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb412-23" data-line-number="23">      <span class="dt">skip_text =</span> <span class="cf">function</span>(e){ <span class="ot">NA</span>;  <span class="kw">print</span>(<span class="kw">current_env</span>())}</a>
 <a class="sourceLine" id="cb412-24" data-line-number="24">    )</a>
 <a class="sourceLine" id="cb412-25" data-line-number="25">  })</a>
 <a class="sourceLine" id="cb412-26" data-line-number="26">}</a>
@@ -648,6 +648,7 @@ Can we go over what is happening here?</p>
 <a class="sourceLine" id="cb412-36" data-line-number="36">}</a>
 <a class="sourceLine" id="cb412-37" data-line-number="37"></a>
 <a class="sourceLine" id="cb412-38" data-line-number="38"><span class="kw">analyze_text</span>(<span class="kw">list</span>(<span class="st">&quot;CORRECT&quot;</span>, <span class="st">&quot;NOT&quot;</span>, <span class="st">&quot;CORRECT&quot;</span>))</a></code></pre></div>
+<pre><code>## &lt;environment: 0x7fcd2ff487b8&gt;</code></pre>
 <pre><code>## [[1]]
 ## [[1]][[1]]
 ## [1] &quot;CORRECT&quot;
@@ -655,7 +656,7 @@ Can we go over what is happening here?</p>
 ## 
 ## [[2]]
 ## [[2]][[1]]
-## [1] NA
+## &lt;environment: 0x7fcd2ff487b8&gt;
 ## 
 ## 
 ## [[3]]
@@ -664,27 +665,27 @@ Can we go over what is happening here?</p>
 <div class="question">
 <p>Let’s revisit my example from the talk: can we build on this to use tidyeval so that the user can write <code>beer_states %&gt;% beer_mean(state)</code> [I think we need to use <code>.data</code> and note how state is given as an object so we need to use tidyeval to suppress it’s evaluation…]</p>
 </div>
-<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb414-1" data-line-number="1">beer_states &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(</a>
-<a class="sourceLine" id="cb414-2" data-line-number="2">  <span class="st">&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/beer_states.csv&#39;</span>)</a>
-<a class="sourceLine" id="cb414-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb414-4" data-line-number="4">beer_mean &lt;-<span class="st"> </span><span class="cf">function</span>(.data, x) {</a>
-<a class="sourceLine" id="cb414-5" data-line-number="5">  </a>
-<a class="sourceLine" id="cb414-6" data-line-number="6">  column_name &lt;-<span class="st"> </span><span class="kw">deparse</span>(<span class="kw">substitute</span>(x))</a>
-<a class="sourceLine" id="cb414-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb414-8" data-line-number="8">  msg &lt;-<span class="st"> </span>glue<span class="op">::</span><span class="kw">glue</span>(<span class="st">&quot;Can&#39;t calculate mean, {column_name} is not numeric&quot;</span>)</a>
-<a class="sourceLine" id="cb414-9" data-line-number="9">  </a>
-<a class="sourceLine" id="cb414-10" data-line-number="10">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.numeric</span>(.data[[column_name]])) {</a>
-<a class="sourceLine" id="cb414-11" data-line-number="11">    <span class="kw">abort</span>(</a>
-<a class="sourceLine" id="cb414-12" data-line-number="12">      <span class="dt">message =</span> msg,</a>
-<a class="sourceLine" id="cb414-13" data-line-number="13">      <span class="dt">arg =</span> column_name,</a>
-<a class="sourceLine" id="cb414-14" data-line-number="14">      <span class="dt">data =</span> .data</a>
-<a class="sourceLine" id="cb414-15" data-line-number="15">    )</a>
-<a class="sourceLine" id="cb414-16" data-line-number="16">  } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb414-17" data-line-number="17">    <span class="kw">mean</span>(<span class="kw">which</span>(<span class="op">!</span><span class="kw">is.na</span>(.data[[column_name]])[.data[[column_name]]]))</a>
-<a class="sourceLine" id="cb414-18" data-line-number="18">  }</a>
-<a class="sourceLine" id="cb414-19" data-line-number="19">}</a>
-<a class="sourceLine" id="cb414-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb414-21" data-line-number="21">beer_states <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">beer_mean</span>(barrels)</a></code></pre></div>
+<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb415-1" data-line-number="1">beer_states &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(</a>
+<a class="sourceLine" id="cb415-2" data-line-number="2">  <span class="st">&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/beer_states.csv&#39;</span>)</a>
+<a class="sourceLine" id="cb415-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb415-4" data-line-number="4">beer_mean &lt;-<span class="st"> </span><span class="cf">function</span>(.data, x) {</a>
+<a class="sourceLine" id="cb415-5" data-line-number="5">  </a>
+<a class="sourceLine" id="cb415-6" data-line-number="6">  column_name &lt;-<span class="st"> </span><span class="kw">deparse</span>(<span class="kw">substitute</span>(x))</a>
+<a class="sourceLine" id="cb415-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb415-8" data-line-number="8">  msg &lt;-<span class="st"> </span>glue<span class="op">::</span><span class="kw">glue</span>(<span class="st">&quot;Can&#39;t calculate mean, {column_name} is not numeric&quot;</span>)</a>
+<a class="sourceLine" id="cb415-9" data-line-number="9">  </a>
+<a class="sourceLine" id="cb415-10" data-line-number="10">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.numeric</span>(.data[[column_name]])) {</a>
+<a class="sourceLine" id="cb415-11" data-line-number="11">    <span class="kw">abort</span>(</a>
+<a class="sourceLine" id="cb415-12" data-line-number="12">      <span class="dt">message =</span> msg,</a>
+<a class="sourceLine" id="cb415-13" data-line-number="13">      <span class="dt">arg =</span> column_name,</a>
+<a class="sourceLine" id="cb415-14" data-line-number="14">      <span class="dt">data =</span> .data</a>
+<a class="sourceLine" id="cb415-15" data-line-number="15">    )</a>
+<a class="sourceLine" id="cb415-16" data-line-number="16">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb415-17" data-line-number="17">    <span class="kw">mean</span>(<span class="kw">which</span>(<span class="op">!</span><span class="kw">is.na</span>(.data[[column_name]])[.data[[column_name]]]))</a>
+<a class="sourceLine" id="cb415-18" data-line-number="18">  }</a>
+<a class="sourceLine" id="cb415-19" data-line-number="19">}</a>
+<a class="sourceLine" id="cb415-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb415-21" data-line-number="21">beer_states <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">beer_mean</span>(barrels)</a></code></pre></div>
 <pre><code>[1] 806.4551</code></pre>
 
 

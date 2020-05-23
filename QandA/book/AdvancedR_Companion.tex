@@ -363,7 +363,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fceaf905ad8"
+## [1] "0x7fcd30263290"
 \end{verbatim}
 
 \begin{Shaded}
@@ -373,7 +373,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fceaf905ad8"
+## [1] "0x7fcd30263290"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -385,7 +385,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fceb0a82968"
+## [1] "0x7fcd32d23268"
 \end{verbatim}
 
 \begin{Shaded}
@@ -395,8 +395,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fceb293f540] <list> 
-## └─[2:0x7fceaf905ad8] <dbl>
+## █ [1:0x7fcd320438f8] <list> 
+## └─[2:0x7fcd30263290] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -406,7 +406,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fceb29caba0"
+## [1] "0x7fcd320f73b8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -443,7 +443,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fceb4218878>"
+## [1] "<0x7fcd2e2da978>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -453,7 +453,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fceb4218878>
+## <0x7fcd2e2da978>
 \end{verbatim}
 
 \begin{Shaded}
@@ -463,7 +463,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fceb4218878"
+## [1] "0x7fcd2e2da978"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -512,7 +512,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fceb36c3548"
+## [1] "0x7fcd33372a48"
 \end{verbatim}
 
 \begin{Shaded}
@@ -522,7 +522,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fceb36c3548>"
+## [1] "<0x7fcd33372a48>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -532,7 +532,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fceb36c3548 -> 0x7fceb350a508]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fcd33372a48 -> 0x7fcd333a6c08]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -628,7 +628,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fceb0df25d8"
+## [1] "0x7fcd29d15318"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -641,7 +641,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fceb1eb8598"
+## [1] "0x7fcd31658288"
 \end{verbatim}
 
 \begin{Shaded}
@@ -664,7 +664,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fceb1eb8598"
+## [1] "0x7fcd31658288"
 \end{verbatim}
 
 \begin{Shaded}
@@ -674,7 +674,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fceb1eb8598"
+## [1] "0x7fcd31658288"
 \end{verbatim}
 
 \begin{Shaded}
@@ -697,7 +697,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fceb1eb8598"
+## [1] "0x7fcd31658288"
 \end{verbatim}
 
 \begin{Shaded}
@@ -707,7 +707,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fceb09ea718"
+## [1] "0x7fcd3133c918"
 \end{verbatim}
 
 \begin{Shaded}
@@ -730,7 +730,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fceb250cda8"
+## [1] "0x7fcd31530508"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2533,11 +2533,11 @@ This will work:
 ## # A tibble: 5 x 1
 ##       x1
 ##    <dbl>
-## 1 0.0805
-## 2 0.348 
-## 3 0.931 
-## 4 0.419 
-## 5 0.322
+## 1 0.241 
+## 2 0.438 
+## 3 0.0837
+## 4 0.583 
+## 5 0.999
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2611,7 +2611,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 237 283 231 216 218 271 219 277 291 287
+##  [1] 272 209 278 262 259 225 265 208 211 251
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3048,7 +3048,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fcea92dc7c8>
+## <bytecode: 0x7fcd297225c8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3919,7 +3919,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7fcea9cff3b0>
+## <bytecode: 0x7fcd2a336fb0>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4057,7 +4057,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7fceb0d20770>
+## <bytecode: 0x7fcd2ffbbc90>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4712,7 +4712,7 @@ Given this little example:
   \KeywordTok{lapply}\NormalTok{(all_text, }\ControlFlowTok{function}\NormalTok{(text) \{}
     \KeywordTok{withRestarts}\NormalTok{(}
       \KeywordTok{is_correct}\NormalTok{(text),}
-      \DataTypeTok{skip_text =} \ControlFlowTok{function}\NormalTok{(e) }\OtherTok{NA}
+      \DataTypeTok{skip_text =} \ControlFlowTok{function}\NormalTok{(e)\{ }\OtherTok{NA}\NormalTok{;  }\KeywordTok{print}\NormalTok{(}\KeywordTok{current_env}\NormalTok{())\}}
 \NormalTok{    )}
 \NormalTok{  \})}
 \NormalTok{\}}
@@ -4732,6 +4732,10 @@ Given this little example:
 \end{Shaded}
 
 \begin{verbatim}
+## <environment: 0x7fcd295fe560>
+\end{verbatim}
+
+\begin{verbatim}
 ## [[1]]
 ## [[1]][[1]]
 ## [1] "CORRECT"
@@ -4739,7 +4743,7 @@ Given this little example:
 ## 
 ## [[2]]
 ## [[2]][[1]]
-## [1] NA
+## <environment: 0x7fcd295fe560>
 ## 
 ## 
 ## [[3]]
