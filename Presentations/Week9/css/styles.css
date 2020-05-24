@@ -21,7 +21,7 @@ g-table-intro h4 {
 }
 
 
-@media screen and (max-width: 2000px) {
+@media screen and (max-width: 1000px) {
   .topics {
     width: 99%;
   }

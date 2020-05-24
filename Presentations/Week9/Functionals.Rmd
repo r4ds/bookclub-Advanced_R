@@ -14,9 +14,8 @@ runtime: shiny_prerendered
 knitr::opts_chunk$set(echo = TRUE)
 
 library(shiny)
-library(purrr)
-library(tidyverse)
 library(learnr)
+library(knitr)
 
 ```
 
@@ -29,24 +28,50 @@ library(learnr)
 
 ## Intro
 
-  - You may or may not have noticed this, but I appear almost any time the word "Shiny" is typed on the Slack
-  - This is because 
-    a) I love Shiny 
-    b) I love Shiny
-    c) <details> <summary></summary> *because I may or may not have Slack keyworded to summon me with the words Shiny and reactive [cough]* </details>
+![_"All Day I Dream About Shiny"_](images/shiny_meme.jpg)
 
-## Outline
+Chapter recaps? Nah, let's build a beer reviews app in Shiny!
 
-  - So it may not surprise you that instead of a chapter recap presentation, I'm going to do a lesson on "applications of purrr in shiny"
+Along the way, we'll try to find opportunities to use: 
 
-## Expectations
+  * map and friends like map2/pmap, lgl
+  * walk
+  * modify
+  * reduce
 
-  * I'm expecting that you have some passing familiarity with purrr and functional programming
-    * Having read R4DS's chapter on functional programming 
+I'll be live-coding this, so feel free to chime in with suggestions, critiques, and reminders about forgetting parentheses ()!
 
 
+## Beer Reviews (an introduction)
 
-## Inputs and Outputs
+This data comes from BeerAdvocate and spans 10+ years of beer reviews on their platform up until Nov 2011, including ~1.5 million reviews. Each review includes ratings in terms of five "aspects": appearance, aroma, palate, taste, and overall impression. Reviews include product and user information, followed by each of these five ratings, and a plaintext review.
+
+I found this set from watching one of [Nick Wan's live-coding Twitch streams](http://twitter.com/nickwan) where he does some really cool live code and DATA SCIENCE on it (unfortunately, he does his coding in Python, but we can't all be perfect!). He had a "recommender model" which did some clustering and similarity scores, so that he could get the model to output "ten beers to try" if you happened to like a specific beer. 
+
+The goal of today's app is to build something that'll collect beer rankings from users (i.e. you guys!) and then compare your reviews with the reviews from the dataset! 
+
+I ***think *** that I can do Shiny app components in the {learnr} package, so we'll give that a spin first but if that doesn't work out, I can always open up a fresh RStudio window to do this `r emo::ji('sunglasses')`
+
+```{r packages_and_data, echo = TRUE}
+
+suppressPackageStartupMessages({
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(shiny)
+library(learnr)
+library(arrow)
+library(here)
+})
+
+beer_reviews <-read_parquet(file = here("data/beer_reviews.pdata")) 
+
+head(beer_reviews)
+
+```
+
+
+
+## random shiny demo
 
 You can embed Shiny inputs and outputs in your document. Outputs are automatically updated whenever inputs change.  This demonstrates how a standard R plot can be made interactive by wrapping it in the Shiny `renderPlot` function. The `selectInput` and `sliderInput` functions create the input widgets used to drive the plot.
 
