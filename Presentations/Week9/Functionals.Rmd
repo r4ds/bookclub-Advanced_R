@@ -1,0 +1,73 @@
+---
+title: "map_shiny(v,fun)"
+author: "Tan Ho (@_TanHo)"
+date: "28/05/2020"
+output: 
+  learnr::tutorial:
+        css: css/styles.css
+        toc: true
+        toc_depth: 2
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(shiny)
+library(purrr)
+library(tidyverse)
+library(learnr)
+
+```
+
+## AdvR Book Club Ch 9 - Functionals
+
+[\@_TanHo](https://twitter.com/_TanHo)
+
+2020-05-28
+
+
+## Intro
+
+  - You may or may not have noticed this, but I appear almost any time the word "Shiny" is typed on the Slack
+  - This is because 
+    a) I love Shiny 
+    b) I love Shiny
+    c) <details> <summary></summary> *because I may or may not have Slack keyworded to summon me with the words Shiny and reactive [cough]* </details>
+
+## Outline
+
+  - So it may not surprise you that instead of a chapter recap presentation, I'm going to do a lesson on "applications of purrr in shiny"
+
+## Expectations
+
+  * I'm expecting that you have some passing familiarity with purrr and functional programming
+    * Having read R4DS's chapter on functional programming 
+
+
+
+## Inputs and Outputs
+
+You can embed Shiny inputs and outputs in your document. Outputs are automatically updated whenever inputs change.  This demonstrates how a standard R plot can be made interactive by wrapping it in the Shiny `renderPlot` function. The `selectInput` and `sliderInput` functions create the input widgets used to drive the plot.
+
+```{r eruptions, echo=FALSE}
+inputPanel(
+  selectInput("n_breaks", label = "Number of bins:",
+              choices = c(10, 20, 35, 50), selected = 20),
+  
+  sliderInput("bw_adjust", label = "Bandwidth adjustment:",
+              min = 0.2, max = 2, value = 1, step = 0.2)
+)
+
+renderPlot({
+  hist(faithful$eruptions, probability = TRUE, breaks = as.numeric(input$n_breaks),
+       xlab = "Duration (minutes)", main = "Geyser eruption duration")
+  
+  dens <- density(faithful$eruptions, adjust = input$bw_adjust)
+  lines(dens, col = "blue")
+})
+
+```
+
+
+
