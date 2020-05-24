@@ -119,7 +119,7 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-05-23}
+\date{2020-05-24}
 
 \begin{document}
 \maketitle
@@ -363,7 +363,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff04b62c438"
+## [1] "0x7fabfba7e8c0"
 \end{verbatim}
 
 \begin{Shaded}
@@ -373,7 +373,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff04b62c438"
+## [1] "0x7fabfba7e8c0"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -385,7 +385,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff04993af58"
+## [1] "0x7fabf6c5db08"
 \end{verbatim}
 
 \begin{Shaded}
@@ -395,8 +395,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7ff0498f2260] <list> 
-## └─[2:0x7ff04b62c438] <dbl>
+## █ [1:0x7fabf78473f0] <list> 
+## └─[2:0x7fabfba7e8c0] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -406,7 +406,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff049509458"
+## [1] "0x7fabf72eaba0"
 \end{verbatim}
 
 \begin{Shaded}
@@ -443,7 +443,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7ff04869cd78>"
+## [1] "<0x7fabefc58a58>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -453,7 +453,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7ff04869cd78>
+## <0x7fabefc58a58>
 \end{verbatim}
 
 \begin{Shaded}
@@ -463,7 +463,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff04869cd78"
+## [1] "0x7fabefc58a58"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -512,7 +512,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff04b3c0148"
+## [1] "0x7fabf9017488"
 \end{verbatim}
 
 \begin{Shaded}
@@ -522,7 +522,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7ff04b3c0148>"
+## [1] "<0x7fabf9017488>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -532,7 +532,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7ff04b3c0148 -> 0x7ff04ac22448]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fabf9017488 -> 0x7fabf84e7408]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -628,7 +628,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff048e51438"
+## [1] "0x7fabf7a96968"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -641,7 +641,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff04a7f1e18"
+## [1] "0x7fabf7cbdd68"
 \end{verbatim}
 
 \begin{Shaded}
@@ -664,7 +664,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff04a7f1e18"
+## [1] "0x7fabf7cbdd68"
 \end{verbatim}
 
 \begin{Shaded}
@@ -674,7 +674,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff04a7f1e18"
+## [1] "0x7fabf7cbdd68"
 \end{verbatim}
 
 \begin{Shaded}
@@ -697,7 +697,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff04a7f1e18"
+## [1] "0x7fabf7cbdd68"
 \end{verbatim}
 
 \begin{Shaded}
@@ -707,7 +707,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff04947a308"
+## [1] "0x7fabf6b0ad38"
 \end{verbatim}
 
 \begin{Shaded}
@@ -730,7 +730,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff04a623178"
+## [1] "0x7fabf8959d18"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2531,13 +2531,13 @@ This will work:
 
 \begin{verbatim}
 ## # A tibble: 5 x 1
-##       x1
-##    <dbl>
-## 1 0.0644
-## 2 0.205 
-## 3 0.401 
-## 4 0.216 
-## 5 0.905
+##      x1
+##   <dbl>
+## 1 0.510
+## 2 0.335
+## 3 0.136
+## 4 0.492
+## 5 0.836
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2611,7 +2611,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 258 249 236 212 228 219 273 251 204 289
+##  [1] 208 262 250 293 272 210 254 289 265 242
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3048,7 +3048,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7ff0431d17c8>
+## <bytecode: 0x7fabef1e35c8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3919,7 +3919,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7ff0469f0bb0>
+## <bytecode: 0x7fabf05e79b0>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4057,7 +4057,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7ff04a574760>
+## <bytecode: 0x7fabf6f042f8>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4759,29 +4759,29 @@ Given this little example:
 
 \begin{verbatim}
 ## [1] "parent in mid: "
-## <environment: 0x7ff047fc0240>
+## <environment: 0x7fabf0d5e180>
 ## [1] "current in mid: "
-## <environment: 0x7ff047fc09e8>
+## <environment: 0x7fabf0d5e998>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid: "
-## <environment: 0x7ff047f869e8>
+## <environment: 0x7fabf0d24dc0>
 ## [1] "current in mid: "
-## <environment: 0x7ff0436ef818>
+## <environment: 0x7fabf5bf6d28>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid skip: "
-## <environment: 0x7ff0436ef818>
+## <environment: 0x7fabf5bf6d28>
 ## [1] "current in mid skip: "
-## <environment: 0x7ff04288cd90>
+## <environment: 0x7fabf11f2f28>
 ## [1] "parent in mid: "
-## <environment: 0x7ff042969ce8>
+## <environment: 0x7fabf11ca278>
 ## [1] "current in mid: "
-## <environment: 0x7ff04296ab58>
+## <environment: 0x7fabf11c8b70>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
@@ -4796,7 +4796,7 @@ Given this little example:
 ## 
 ## [[2]]
 ## [[2]][[1]]
-## <environment: 0x7ff04288cd90>
+## <environment: 0x7fabf11f2f28>
 ## 
 ## 
 ## [[3]]
@@ -4807,6 +4807,14 @@ Given this little example:
 So, the parent environment of the handler (is that the right term?) called skip\_text in the mid-level function is the environment of the expr part of withRestarts (i.e.~the first parameter), also in the mid-level function.
 
 Are there any default restarts include in base R so that you could \texttt{invokeRestart("XXX")} or is the restart always user defined?
+
+From the warning documentation:
+
+\begin{quote}
+While a warning is being processed, a \texttt{muffleWarning} restart is available. If this restart is invoked with \texttt{invokeRestart}, then warning returns immediately.
+\end{quote}
+
+We can also use the \texttt{computeRestarts} function which lists all available ``default'' restart functions:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4819,7 +4827,7 @@ Are there any default restarts include in base R so that you could \texttt{invok
 <restart: abort >
 \end{verbatim}
 
-\texttt{computeRestarts()} lists all available ``default'' restart functions, I believe and it looks like So, \texttt{computeRestarts()} is able to find \texttt{abort} even without \texttt{\{rlang\}} attached, then it surely would be able to find some function from the base packages if one existed. But it does not, so that leads me to believe that none exists. So you do always have to specify a function name for \texttt{invokeRestart()}
+It seems \texttt{computeRestarts()} is able to find \texttt{abort} even without \texttt{\{rlang\}} attached! Which means it surely would be able to find some function from the base packages if one existed. But it does not, so that leads me to believe that they aren't any beyond \texttt{muffleWarning}. it seems, in general, you need to specify a function name for \texttt{invokeRestart()}
 
 Let's revisit my example from the talk: can we build on this to use tidyeval so that the user can write \texttt{beer\_states\ \%\textgreater{}\%\ beer\_mean(state)} {[}I think we need to use \texttt{.data} and note how state is given as an object so we need to use tidyeval to suppress it's evaluation\ldots{}{]}
 

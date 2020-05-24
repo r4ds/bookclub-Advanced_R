@@ -485,6 +485,12 @@ So, the parent environment of the handler (is that the right term?) called skip_
 Are there any default restarts include in base R so that you could `invokeRestart("XXX")` or is the restart always user defined?
 :::
 
+From the warning documentation: 
+
+> While a warning is being processed, a `muffleWarning` restart is available. If this restart is invoked with `invokeRestart`, then warning returns immediately.
+
+We can also use the `computeRestarts` function which lists all available "default" restart functions:
+
 ```{r, eval=FALSE}
 computeRestarts()
 ```
@@ -494,7 +500,7 @@ computeRestarts()
 <restart: abort >
 ```
 
-`computeRestarts()` lists all available "default" restart functions, I believe and it looks like So, `computeRestarts()` is able to find `abort` even without `{rlang}` attached, then it surely would be able to find some function from the base packages if one existed. But it does not, so that leads me to believe that none exists. So you do always have to specify a function name for `invokeRestart()`
+It seems `computeRestarts()` is able to find `abort` even without `{rlang}` attached! Which means it surely would be able to find some function from the base packages if one existed. But it does not, so that leads me to believe that they aren't any beyond `muffleWarning`. it seems, in general, you need to specify a function name for `invokeRestart()`
 
 :::question
 Let's revisit my example from the talk: can we build on this to use tidyeval so that the user can write `beer_states %>% beer_mean(state)` [I think we need to use `.data` and note how state is given as an object so we need to use tidyeval to suppress it's evaluation...]
