@@ -260,6 +260,10 @@ Can we come up with an example for `rapply` allowing us to apply a function to o
 What exactly is the [Fixed Point Algrithm](https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-12.html#%25_idx_1096) and can we go over the books answer?
 :::
 
+The fixed point theory is the specific scenario in which `x = g(x)`, meaning the functions input is equal to the function's output. 
+
+We are creating a function that can be used to find where `x = g(x)`
+
 ```{r, eval=FALSE}
 fixed_point <- function(f, x_init, n_max = 10000, tol = 0.0001) {
   n <- 0
@@ -283,16 +287,21 @@ fixed_point <- function(f, x_init, n_max = 10000, tol = 0.0001) {
 
   x
 }
+```
 
-# Functions with fixed points
+Functions with fixed points:
+```{r}
 fixed_point(sin, x_init = 1)
-#> [1] 0.0843
 fixed_point(cos, x_init = 1)
-#> [1] 0.739
+```
 
+```{r, eval=FALSE}
 # Functions without fixed points
 add_one <- function(x) x + 1
 fixed_point(add_one, x_init = 1)
+```
+
+```
 #> Error: Failed to converge
 ```
 
