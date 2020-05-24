@@ -175,3 +175,124 @@ I like the books Hadoop simple example - can we come up with one with code or is
 XXX
 :::
 
+## 9.6.3.2 Exercise {-}
+
+:::question
+I understand that `if (length(x) == 1L) return(x[[1L]])` covers the case like `simple_reduce(1, +)` but what's the deal with `if (length(x) == 0L) return(default)` and what exactly is `default`?
+:::
+
+```{r}
+simple_reduce <- function(x, f, default) {
+  # when would you use reduce on something length 0?
+  if (length(x) == 0L) return(default)
+  if (length(x) == 1L) return(x[[1L]])
+
+  out <- x[[1]]
+  for (i in seq(2, length(x))) {
+    out <- f(out, x[[i]])
+  }
+  out
+}
+```
+
+Default is the user supplied second number to add by, and we can use `integer(0)` to work with a `length(0)` vector.
+
+```{r}
+simple_reduce(integer(0), `+`, default = 0L)
+```
+
+I guess I understand this but when would you want to perform a reduce on something of length zero?
+
+:::TODO
+XXX
+:::
+
+## 9.7.1 Matrices and arrays {-}
+
+:::question
+How would you tidyverse the `rowSums` function?
+
+```{r}
+x <- tribble(
+  ~x, ~y,
+  1, 1,
+  2, 2,
+  3, 3
+)
+
+apply(x, 1, function(x) sum(x>2))
+```
+:::
+
+:::TODO
+XXX
+:::
+
+:::question
+I'm not quite sure what idempotent means but Hadley warns that `a2d` and `a1` aren't the same, but isn't that just because we're using `1` which is row wise, and not `2`? What is the warning he is heeding us against here?
+:::
+
+```{r}
+a2d <- matrix(1:20, nrow = 5)
+a1 <- apply(a2d, 1, identity)
+identical(a2d, a1)
+```
+
+## 9.7.3.2 Exercise {-}
+
+:::question
+What's an example of using `eapply` (iterates over the (named) elements of an environment)?
+:::
+
+:::TODO
+:::
+
+:::question
+Can we come up with an example for `rapply` allowing us to apply a function to only a specified class? Does something like this exist within `purrr`?
+:::
+
+:::TODO
+:::
+
+## 9.7.3.3 Exercise {-}
+
+:::question
+What exactly is the [Fixed Point Algrithm](https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-12.html#%25_idx_1096) and can we go over the books answer?
+:::
+
+```{r, eval=FALSE}
+fixed_point <- function(f, x_init, n_max = 10000, tol = 0.0001) {
+  n <- 0
+  x <- x_init
+  y <- f(x)
+
+  is_fixed_point <- function(x, y) {
+    abs(x - y) < tol
+  }
+
+  while (!is_fixed_point(x, y)) {
+    x <- y
+    y <- f(y)
+
+    # Make sure we eventually stop
+    n <- n + 1
+    if (n > n_max) {
+      stop("Failed to converge", call. = FALSE)
+    }
+  }
+
+  x
+}
+
+# Functions with fixed points
+fixed_point(sin, x_init = 1)
+#> [1] 0.0843
+fixed_point(cos, x_init = 1)
+#> [1] 0.739
+
+# Functions without fixed points
+add_one <- function(x) x + 1
+fixed_point(add_one, x_init = 1)
+#> Error: Failed to converge
+```
+

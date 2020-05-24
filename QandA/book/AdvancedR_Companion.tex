@@ -363,7 +363,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa48c9543b0"
+## [1] "0x7fc9f886b038"
 \end{verbatim}
 
 \begin{Shaded}
@@ -373,7 +373,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa48c9543b0"
+## [1] "0x7fc9f886b038"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -385,7 +385,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa47edc8f90"
+## [1] "0x7fc9f1b07ea0"
 \end{verbatim}
 
 \begin{Shaded}
@@ -395,8 +395,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fa47ee03010] <list> 
-## └─[2:0x7fa48c9543b0] <dbl>
+## █ [1:0x7fc9f1b22a28] <list> 
+## └─[2:0x7fc9f886b038] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -406,7 +406,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa4832b8fb0"
+## [1] "0x7fc9f4401c28"
 \end{verbatim}
 
 \begin{Shaded}
@@ -443,7 +443,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fa487253c78>"
+## [1] "<0x7fc9f3045898>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -453,7 +453,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fa487253c78>
+## <0x7fc9f3045898>
 \end{verbatim}
 
 \begin{Shaded}
@@ -463,7 +463,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa487253c78"
+## [1] "0x7fc9f3045898"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -512,7 +512,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa48c88ca88"
+## [1] "0x7fc9fd10c548"
 \end{verbatim}
 
 \begin{Shaded}
@@ -522,7 +522,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fa48c88ca88>"
+## [1] "<0x7fc9fd10c548>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -532,7 +532,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fa48c88ca88 -> 0x7fa486ea0588]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fc9fd10c548 -> 0x7fc9f95210c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -628,7 +628,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa4870779f8"
+## [1] "0x7fc9f9ca8008"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -641,7 +641,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa483662a38"
+## [1] "0x7fc9f302a108"
 \end{verbatim}
 
 \begin{Shaded}
@@ -664,7 +664,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa483662a38"
+## [1] "0x7fc9f302a108"
 \end{verbatim}
 
 \begin{Shaded}
@@ -674,7 +674,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa483662a38"
+## [1] "0x7fc9f302a108"
 \end{verbatim}
 
 \begin{Shaded}
@@ -697,7 +697,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa483662a38"
+## [1] "0x7fc9f302a108"
 \end{verbatim}
 
 \begin{Shaded}
@@ -707,7 +707,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa48798eff8"
+## [1] "0x7fc9f8593b08"
 \end{verbatim}
 
 \begin{Shaded}
@@ -730,7 +730,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fa483919598"
+## [1] "0x7fc9f9d84148"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2533,11 +2533,11 @@ This will work:
 ## # A tibble: 5 x 1
 ##      x1
 ##   <dbl>
-## 1 0.602
-## 2 0.515
-## 3 0.991
-## 4 0.969
-## 5 0.825
+## 1 0.713
+## 2 0.451
+## 3 0.893
+## 4 0.100
+## 5 0.857
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2611,7 +2611,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 237 242 224 220 255 262 295 268 215 229
+##  [1] 253 213 239 283 277 250 279 251 273 242
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3048,7 +3048,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fa4802959c8>
+## <bytecode: 0x7fc9f19c57c8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3919,7 +3919,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7fa482cbd3b0>
+## <bytecode: 0x7fc9f53491b0>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4057,7 +4057,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7fa47ee748c0>
+## <bytecode: 0x7fc9f84a6520>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4731,7 +4731,7 @@ Given this little example:
 \end{Shaded}
 
 \begin{verbatim}
-## <environment: 0x7fa4846290e0>
+## <environment: 0x7fc9f6aff150>
 \end{verbatim}
 
 \begin{verbatim}
@@ -4742,7 +4742,7 @@ Given this little example:
 ## 
 ## [[2]]
 ## [[2]][[1]]
-## <environment: 0x7fa4846290e0>
+## <environment: 0x7fc9f6aff150>
 ## 
 ## 
 ## [[3]]
@@ -4852,16 +4852,16 @@ In order to extract p-values the solution manual suggests using \texttt{map\_dbl
 ## # A tibble: 100 x 1
 ##    p_value
 ##      <dbl>
-##  1 0.0834 
-##  2 0.0122 
-##  3 0.0442 
-##  4 0.0771 
-##  5 0.0132 
-##  6 0.0560 
-##  7 0.00882
-##  8 0.131  
-##  9 0.00744
-## 10 0.109  
+##  1 0.0909 
+##  2 0.00553
+##  3 0.675  
+##  4 0.00951
+##  5 0.0126 
+##  6 0.0115 
+##  7 0.215  
+##  8 0.127  
+##  9 0.00622
+## 10 0.216  
 ## # ... with 90 more rows
 \end{verbatim}
 
@@ -4983,13 +4983,130 @@ XXX
 \section*{9.6.3.2 Exercise}\label{exercise-11}}
 \addcontentsline{toc}{section}{9.6.3.2 Exercise}
 
+I understand that \texttt{if\ (length(x)\ ==\ 1L)\ return(x{[}{[}1L{]}{]})} covers the case like \texttt{simple\_reduce(1,\ +)} but what's the deal with \texttt{if\ (length(x)\ ==\ 0L)\ return(default)} and what exactly is \texttt{default}?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{simple_reduce <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, f, default) \{}
+  \CommentTok{# when would you use reduce on something length 0?}
+  \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{length}\NormalTok{(x) }\OperatorTok{==}\StringTok{ }\NormalTok{0L) }\KeywordTok{return}\NormalTok{(default)}
+  \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{length}\NormalTok{(x) }\OperatorTok{==}\StringTok{ }\NormalTok{1L) }\KeywordTok{return}\NormalTok{(x[[1L]])}
+
+\NormalTok{  out <-}\StringTok{ }\NormalTok{x[[}\DecValTok{1}\NormalTok{]]}
+  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \KeywordTok{seq}\NormalTok{(}\DecValTok{2}\NormalTok{, }\KeywordTok{length}\NormalTok{(x))) \{}
+\NormalTok{    out <-}\StringTok{ }\KeywordTok{f}\NormalTok{(out, x[[i]])}
+\NormalTok{  \}}
+\NormalTok{  out}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Default is the user supplied second number to add by, and we can use \texttt{integer(0)} to work with a \texttt{length(0)} vector.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{simple_reduce}\NormalTok{(}\KeywordTok{integer}\NormalTok{(}\DecValTok{0}\NormalTok{), }\StringTok{`}\DataTypeTok{+}\StringTok{`}\NormalTok{, }\DataTypeTok{default =}\NormalTok{ 0L)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+I guess I understand this but when would you want to perform a reduce on something of length zero?
+
+XXX
+
+\hypertarget{matrices-and-arrays}{%
+\section*{9.7.1 Matrices and arrays}\label{matrices-and-arrays}}
+\addcontentsline{toc}{section}{9.7.1 Matrices and arrays}
+
+How would you tidyverse the \texttt{rowSums} function?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{tribble}\NormalTok{(}
+  \OperatorTok{~}\NormalTok{x, }\OperatorTok{~}\NormalTok{y,}
+  \DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{,}
+  \DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{,}
+  \DecValTok{3}\NormalTok{, }\DecValTok{3}
+\NormalTok{)}
+
+\KeywordTok{apply}\NormalTok{(x, }\DecValTok{1}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{sum}\NormalTok{(x}\OperatorTok{>}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0 0 2
+\end{verbatim}
+
+XXX
+
+I'm not quite sure what idempotent means but Hadley warns that \texttt{a2d} and \texttt{a1} aren't the same, but isn't that just because we're using \texttt{1} which is row wise, and not \texttt{2}? What is the warning he is heeding us against here?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a2d <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{20}\NormalTok{, }\DataTypeTok{nrow =} \DecValTok{5}\NormalTok{)}
+\NormalTok{a1 <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(a2d, }\DecValTok{1}\NormalTok{, identity)}
+\KeywordTok{identical}\NormalTok{(a2d, a1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
 \hypertarget{exercise-12}{%
-\section*{9.6.3.3 Exercise}\label{exercise-12}}
-\addcontentsline{toc}{section}{9.6.3.3 Exercise}
+\section*{9.7.3.2 Exercise}\label{exercise-12}}
+\addcontentsline{toc}{section}{9.7.3.2 Exercise}
+
+What's an example of using \texttt{eapply} (iterates over the (named) elements of an environment)?
+
+Can we come up with an example for \texttt{rapply} allowing us to apply a function to only a specified class? Does something like this exist within \texttt{purrr}?
 
 \hypertarget{exercise-13}{%
-\section*{9.6.3.4 Exercise}\label{exercise-13}}
-\addcontentsline{toc}{section}{9.6.3.4 Exercise}
+\section*{9.7.3.3 Exercise}\label{exercise-13}}
+\addcontentsline{toc}{section}{9.7.3.3 Exercise}
+
+What exactly is the \href{https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-12.html\#\%25_idx_1096}{Fixed Point Algrithm} and can we go over the books answer?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fixed_point <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(f, x_init, }\DataTypeTok{n_max =} \DecValTok{10000}\NormalTok{, }\DataTypeTok{tol =} \FloatTok{0.0001}\NormalTok{) \{}
+\NormalTok{  n <-}\StringTok{ }\DecValTok{0}
+\NormalTok{  x <-}\StringTok{ }\NormalTok{x_init}
+\NormalTok{  y <-}\StringTok{ }\KeywordTok{f}\NormalTok{(x)}
+
+\NormalTok{  is_fixed_point <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, y) \{}
+    \KeywordTok{abs}\NormalTok{(x }\OperatorTok{-}\StringTok{ }\NormalTok{y) }\OperatorTok{<}\StringTok{ }\NormalTok{tol}
+\NormalTok{  \}}
+
+  \ControlFlowTok{while}\NormalTok{ (}\OperatorTok{!}\KeywordTok{is_fixed_point}\NormalTok{(x, y)) \{}
+\NormalTok{    x <-}\StringTok{ }\NormalTok{y}
+\NormalTok{    y <-}\StringTok{ }\KeywordTok{f}\NormalTok{(y)}
+
+    \CommentTok{# Make sure we eventually stop}
+\NormalTok{    n <-}\StringTok{ }\NormalTok{n }\OperatorTok{+}\StringTok{ }\DecValTok{1}
+    \ControlFlowTok{if}\NormalTok{ (n }\OperatorTok{>}\StringTok{ }\NormalTok{n_max) \{}
+      \KeywordTok{stop}\NormalTok{(}\StringTok{"Failed to converge"}\NormalTok{, }\DataTypeTok{call. =} \OtherTok{FALSE}\NormalTok{)}
+\NormalTok{    \}}
+\NormalTok{  \}}
+
+\NormalTok{  x}
+\NormalTok{\}}
+
+\CommentTok{# Functions with fixed points}
+\KeywordTok{fixed_point}\NormalTok{(sin, }\DataTypeTok{x_init =} \DecValTok{1}\NormalTok{)}
+\CommentTok{#> [1] 0.0843}
+\KeywordTok{fixed_point}\NormalTok{(cos, }\DataTypeTok{x_init =} \DecValTok{1}\NormalTok{)}
+\CommentTok{#> [1] 0.739}
+
+\CommentTok{# Functions without fixed points}
+\NormalTok{add_one <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) x }\OperatorTok{+}\StringTok{ }\DecValTok{1}
+\KeywordTok{fixed_point}\NormalTok{(add_one, }\DataTypeTok{x_init =} \DecValTok{1}\NormalTok{)}
+\CommentTok{#> Error: Failed to converge}
+\end{Highlighting}
+\end{Shaded}
 
 \bibliography{book.bib,packages.bib}
 
