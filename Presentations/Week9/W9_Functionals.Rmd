@@ -11,23 +11,19 @@ runtime: shiny_prerendered
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
 
-suppressPackageStartupMessages({
+  knitr::opts_chunk$set(echo = TRUE)
+
   # Data Import
   library(arrow)
   library(here)
-  
   # Data manip
   library(tidyverse)
-  
   # Shiny
   library(shiny)
   library(shinydashboard)
   library(shinyWidgets)
   library(learnr)
-  
-})
 
 ```
 
@@ -37,13 +33,19 @@ suppressPackageStartupMessages({
 
 2020-05-28
 
-
 ## Intro
 
 So lately we've been doing a lot of chapter recaps in these presentations, but...
 
+##     
+
 ![](images/shiny_meme.jpg)
 
+... = "Actually doing a presentation"
+
+##     
+
+### So instead...
 
 This time, let's build  a beer reviews app in Shiny!
 
@@ -65,7 +67,7 @@ Some prerequisite assumptions I'm making here:
   4. You've heard of the glorious Shiny (it's okay if you haven't built an app before!)
 
 
-I'll be live-coding this, so feel free to chime in with suggestions, critiques, and (frequent) reminders about forgetting parentheses () !
+I'll be live-coding this, so feel free to chime in with questions, suggestions, and (frequent) reminders about forgetting parentheses () !
 
 
 ## Dataset Overview
@@ -77,8 +79,6 @@ From the Kaggle notes:
 > This data comes from BeerAdvocate and spans 10+ years of beer reviews on their platform up until Nov 2011, including ~1.5 million reviews. Each review includes ratings in terms of five "aspects": appearance, aroma, palate, taste, and overall impression. Reviews include product and user information, followed by each of these five ratings, and a plaintext review.
 
 While Nick dove down the datasci rabbithole with PCA, clustering, and recommender models, for today's purposes we'll be building a tool that collects beer ratings from users (i.e. you guys!) and compares your reviews with the reviews from the dataset!
-
-I ***think *** that I can do Shiny app components in the {learnr} package, so we'll give that a spin first. If that doesn't work out, I can always open up a fresh RStudio window `r emo::ji('sunglasses')`
 
 Here's what my setup chunk looks like and a brief skim of the raw data:
 
@@ -101,7 +101,7 @@ suppressPackageStartupMessages({
 })
 
 # Read data in via arrow for much fast
-beer_reviews <- arrow::read_parquet(file = here::here("data/beer_reviews.pdata")) 
+beer_reviews <- arrow::read_parquet(here::here("data/beer_reviews.pdata")) 
 
 # What does this data look like?
 beer_reviews %>%
@@ -114,28 +114,20 @@ beer_reviews %>%
 I've roadmapped a few features that I'd like to try to include (and should help demonstrate some FUNctionals)
 
 1. Dynamically generate a review form for each beer selected from a picker (*using map*)
+
 2. Add some filters to the select option so we can quickly find beers by type, ABV, and average rating (*map/reduce*)
+
 3. Read back the ratings from the user! (*map lgl/chr/dbl/int*)
+
 4. Convert to z-scores to better compare rankings (*modify*)
+
 5. Write reviews to one csv per brewery (*walk*)
 
 ## Data Cleaning
 
 I've gone ahead and done a little bit of pre-emptive data cleaning `r emo::ji('broom')` to help us just focus on the functionals in the app session later.
 
-```{r data, context = "data"}
-
-breweries <- beer_reviews %>% 
-  group_by(brewery_id,brewery_name) %>% 
-  summarise(
-    review_count = n(),
-    review_avg = mean(review_overall,na.rm=TRUE),
-    review_sd = sd(review_overall,na.rm = TRUE),
-    beer_count = length(unique(beer_beerid)),
-    beer_styles = paste0(unique(beer_style),collapse = ", "),
-    beer_list = list(unique(beer_name))
-  ) %>% 
-  ungroup()
+```{r data}
 
 beers <- beer_reviews %>% 
   group_by(review_profilename) %>%   # Scaling reviews by reviewer
@@ -148,28 +140,116 @@ beers <- beer_reviews %>%
   summarise(
     review_count = n(),
     review_avg = mean(review_overall,na.rm = TRUE),
-    review_z = sum(reviewer_z,na.rm = TRUE)
+    review_z = sum(reviewer_z,na.rm = TRUE),
+    review_meanz = review_z/review_count
   ) %>% 
-  ungroup()
+  ungroup() %>% 
+  top_n(5000,review_count) %>%  # Trim to 5000 for app working purposes
+  arrange(desc(review_z)) # Fav beers to top, pls!
+  
+write_parquet(beers,here::here("Presentations/Week9/data/beers.pdata"))
 
-breweries %>%
-  sample_n(10)
+```
 
+Inspecting the output:
+
+```{r}
 beers %>%
-  sample_n(10)
+  top_n(10,review_z)
+```
+
+## 1 - Generate inputs
+
+Prompt: 
+
+> "Generate one sliderInput with ranking between 1-5, step = 0.5, for each beer picked from a selectPicker" 
+
+<details>
+<summary>Hint</summary>
+
+```{r eval = FALSE}
+
+pickerInput("selected_beers","Beer Selection",
+            choices = beers$beer_name,
+            selected = NULL,
+            multiple = TRUE,options = list(title = "Select Beer",`live-search`=TRUE)
+            )
+
+fn_ratinginput <- function(input_id,input_name){
+  sliderInput(inputId = input_id,label = input_name,min = 0,max = 5,value = 2.5,step = 0.5)
+}
+
+map()
 
 ```
 
 
-## 1 - Generate inputs
+</details>
 
 ## 2 - Add dynamic filters
 
+Prompt: 
+
+> "Pass dynamic filters into the selectPicker so that we can more easily find beers by most-reviewed, type, and more"
+
+<details>
+<summary>Hint</summary>
+
+```{r eval = FALSE}
+print('pie')
+```
+
+
+</details>
+
 ## 3 - Read back inputs
+
+Prompt: 
+
+> "Read the user ratings from the generated sliderInputs into a dataframe"
+
+
+<details>
+<summary>Hint</summary>
+
+```{r eval = FALSE}
+print('pie')
+```
+
+
+</details>
 
 ## 4 - Convert to z-scores
 
+Prompt: 
+
+> Apply a z-score function to the returned data
+
+<details>
+<summary>Hint</summary>
+
+```{r eval = FALSE}
+print('pie')
+```
+
+
+</details>
+
 ## 5 - Write to csv
+
+Prompt: 
+
+> Save reviews into a data folder per brewery
+
+<details>
+<summary>Hint</summary>
+
+```{r eval = FALSE}
+print('pie')
+```
+
+
+</details>
 
 ## CHEERS
 
@@ -177,5 +257,8 @@ Cheers, folks! `r emo::ji('beers')`
 
 That's all I had roadmapped - questions? Other cool ideas to tackle?
 
-I've attached a prototype version of this app I made into the Presentations/Week9 folder and it should run standalone (provided you have the requisite packages, of course `r emo::ji('box')`)
+I'll be saving a copy of the app we made into the Presentations/Week9 folder and it should run fairly standalone (provided you have the requisite packages, of course `r emo::ji('package')`)
+
+##
+This chunk seems broken. Oh well. 
 

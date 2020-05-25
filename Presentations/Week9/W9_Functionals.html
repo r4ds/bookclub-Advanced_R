@@ -126,7 +126,16 @@ $(document).ready(function () {
 <div id="section-intro" class="section level2">
 <h2>Intro</h2>
 <p>So lately we’ve been doing a lot of chapter recaps in these presentations, but…</p>
+</div>
+<div id="section-section" class="section level2">
+<h2></h2>
 <p><img src="images/shiny_meme.jpg" /></p>
+<p>… = “Actually doing a presentation”</p>
+</div>
+<div id="section-section-1" class="section level2">
+<h2></h2>
+<div id="section-so-instead" class="section level3">
+<h3>So instead…</h3>
 <p>This time, let’s build a beer reviews app in Shiny!</p>
 <p>Along the way, we’ll try to find (minimally contrived) opportunities to use:</p>
 <ul>
@@ -142,7 +151,8 @@ $(document).ready(function () {
 <li><p>You have some familiarity with purrr, lapply, or loops</p></li>
 <li><p>You’ve heard of the glorious Shiny (it’s okay if you haven’t built an app before!)</p></li>
 </ol>
-<p>I’ll be live-coding this, so feel free to chime in with suggestions, critiques, and (frequent) reminders about forgetting parentheses () !</p>
+<p>I’ll be live-coding this, so feel free to chime in with questions, suggestions, and (frequent) reminders about forgetting parentheses () !</p>
+</div>
 </div>
 <div id="section-dataset-overview" class="section level2">
 <h2>Dataset Overview</h2>
@@ -152,7 +162,6 @@ $(document).ready(function () {
 <p>This data comes from BeerAdvocate and spans 10+ years of beer reviews on their platform up until Nov 2011, including ~1.5 million reviews. Each review includes ratings in terms of five “aspects”: appearance, aroma, palate, taste, and overall impression. Reviews include product and user information, followed by each of these five ratings, and a plaintext review.</p>
 </blockquote>
 <p>While Nick dove down the datasci rabbithole with PCA, clustering, and recommender models, for today’s purposes we’ll be building a tool that collects beer ratings from users (i.e. you guys!) and compares your reviews with the reviews from the dataset!</p>
-<p>I <strong><em>think </em></strong> that I can do Shiny app components in the {learnr} package, so we’ll give that a spin first. If that doesn’t work out, I can always open up a fresh RStudio window 😎</p>
 <p>Here’s what my setup chunk looks like and a brief skim of the raw data:</p>
 <pre class="r"><code>suppressPackageStartupMessages({
   # Data Import
@@ -171,54 +180,42 @@ $(document).ready(function () {
 })
 
 # Read data in via arrow for much fast
-beer_reviews &lt;- arrow::read_parquet(file = here::here(&quot;data/beer_reviews.pdata&quot;)) 
+beer_reviews &lt;- arrow::read_parquet(here::here(&quot;data/beer_reviews.pdata&quot;)) 
 
 # What does this data look like?
 beer_reviews %&gt;%
   sample_n(10) %&gt;% 
   str()</code></pre>
 <pre><code>## tibble [10 x 13] (S3: tbl_df/tbl/data.frame)
-##  $ brewery_id        : num [1:10] 18149 3818 396 139 147 ...
-##  $ brewery_name      : chr [1:10] &quot;The Lost Abbey&quot; &quot;Southern Tier Brewing Company&quot; &quot;AleSmith Brewing Company&quot; &quot;Shipyard Brewing Co.&quot; ...
-##  $ review_time       : num [1:10] 1.25e+09 1.26e+09 1.20e+09 1.30e+09 1.30e+09 ...
-##  $ review_overall    : num [1:10] 3.5 3.5 4 2.5 4 3 4 4.5 4 4
-##  $ review_aroma      : num [1:10] 4.5 4.5 3.5 3 4 3.5 4.5 3.5 4 3.5
-##  $ review_appearance : num [1:10] 4 4 4.5 3 4.5 3.5 4 3.5 4.5 4
-##  $ review_profilename: chr [1:10] &quot;Diablerie&quot; &quot;billab914&quot; &quot;dsigmon&quot; &quot;surprenant1138&quot; ...
-##  $ beer_style        : chr [1:10] &quot;American Strong Ale&quot; &quot;American Double / Imperial Stout&quot; &quot;Scotch Ale / Wee Heavy&quot; &quot;Extra Special / Strong Bitter (ESB)&quot; ...
-##  $ review_palate     : num [1:10] 3.5 4.5 4 3.5 4.5 3 4 4 4.5 4
-##  $ review_taste      : num [1:10] 4 4 4.5 2.5 4.5 3 4.5 4 4.5 4
-##  $ beer_name         : chr [1:10] &quot;The Angel&#39;s Share - Bourbon Barrel-Aged&quot; &quot;Mokah&quot; &quot;AleSmith Wee Heavy&quot; &quot;Double Old Thumper Ale&quot; ...
-##  $ beer_abv          : num [1:10] 12.5 11.2 10 11.2 8.5 5 8 6.2 8 4.7
-##  $ beer_beerid       : num [1:10] 32413 49286 16400 65848 62645 ...</code></pre>
+##  $ brewery_id        : num [1:10] 71 3 132 913 206 ...
+##  $ brewery_name      : chr [1:10] &quot;Fuller Smith &amp; Turner PLC&quot; &quot;Abita Brewing Co.&quot; &quot;Rogue Ales&quot; &quot;Brauerei Spezial&quot; ...
+##  $ review_time       : num [1:10] 1.06e+09 1.32e+09 1.27e+09 1.14e+09 1.31e+09 ...
+##  $ review_overall    : num [1:10] 3.5 3 4.5 4 3 3 4 4 4 4
+##  $ review_aroma      : num [1:10] 4 3.5 3.5 3.5 2.5 4 4 3.5 4 3.5
+##  $ review_appearance : num [1:10] 4 3 4 3.5 3 3.5 4 4 3.5 4
+##  $ review_profilename: chr [1:10] &quot;Stingray5&quot; &quot;mrfrancis&quot; &quot;ToasterChef&quot; &quot;AltBock&quot; ...
+##  $ beer_style        : chr [1:10] &quot;English India Pale Ale (IPA)&quot; &quot;Vienna Lager&quot; &quot;Märzen / Oktoberfest&quot; &quot;Rauchbier&quot; ...
+##  $ review_palate     : num [1:10] 3.5 3 4.5 3 3.5 3.5 4 4 3.5 4
+##  $ review_taste      : num [1:10] 3 3.5 4 3.5 3.5 3 4 3.5 3.5 4
+##  $ beer_name         : chr [1:10] &quot;Fuller&#39;s India Pale Ale&quot; &quot;Amber&quot; &quot;Maierfest Lager&quot; &quot;Spezial Rauchbier Lager&quot; ...
+##  $ beer_abv          : num [1:10] 4.9 4.5 5.6 4.6 5.2 5 6.1 5.6 5.4 8.5
+##  $ beer_beerid       : num [1:10] 733 5 51869 2960 45931 ...</code></pre>
 </div>
 <div id="section-game-plan" class="section level2">
 <h2>Game Plan</h2>
 <p>I’ve roadmapped a few features that I’d like to try to include (and should help demonstrate some FUNctionals)</p>
 <ol style="list-style-type: decimal">
-<li>Dynamically generate a review form for each beer selected from a picker (<em>using map</em>)</li>
-<li>Add some filters to the select option so we can quickly find beers by type, ABV, and average rating (<em>map/reduce</em>)</li>
-<li>Read back the ratings from the user! (<em>map lgl/chr/dbl/int</em>)</li>
-<li>Convert to z-scores to better compare rankings (<em>modify</em>)</li>
-<li>Write reviews to one csv per brewery (<em>walk</em>)</li>
+<li><p>Dynamically generate a review form for each beer selected from a picker (<em>using map</em>)</p></li>
+<li><p>Add some filters to the select option so we can quickly find beers by type, ABV, and average rating (<em>map/reduce</em>)</p></li>
+<li><p>Read back the ratings from the user! (<em>map lgl/chr/dbl/int</em>)</p></li>
+<li><p>Convert to z-scores to better compare rankings (<em>modify</em>)</p></li>
+<li><p>Write reviews to one csv per brewery (<em>walk</em>)</p></li>
 </ol>
 </div>
 <div id="section-data-cleaning" class="section level2">
 <h2>Data Cleaning</h2>
 <p>I’ve gone ahead and done a little bit of pre-emptive data cleaning 🧹 to help us just focus on the functionals in the app session later.</p>
-<pre class="r"><code>breweries &lt;- beer_reviews %&gt;% 
-  group_by(brewery_id,brewery_name) %&gt;% 
-  summarise(
-    review_count = n(),
-    review_avg = mean(review_overall,na.rm=TRUE),
-    review_sd = sd(review_overall,na.rm = TRUE),
-    beer_count = length(unique(beer_beerid)),
-    beer_styles = paste0(unique(beer_style),collapse = &quot;, &quot;),
-    beer_list = list(unique(beer_name))
-  ) %&gt;% 
-  ungroup()
-
-beers &lt;- beer_reviews %&gt;% 
+<pre class="r"><code>beers &lt;- beer_reviews %&gt;% 
   group_by(review_profilename) %&gt;%   # Scaling reviews by reviewer
   mutate(reviewer_avg = mean(review_overall,na.rm = TRUE),
          reviewer_sd = sd(review_overall,na.rm = TRUE),
@@ -229,86 +226,122 @@ beers &lt;- beer_reviews %&gt;%
   summarise(
     review_count = n(),
     review_avg = mean(review_overall,na.rm = TRUE),
-    review_z = sum(reviewer_z,na.rm = TRUE)
+    review_z = sum(reviewer_z,na.rm = TRUE),
+    review_meanz = review_z/review_count
   ) %&gt;% 
-  ungroup()
-
-breweries %&gt;%
-  sample_n(10)</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["brewery_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["brewery_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["review_count"],"name":[3],"type":["int"],"align":["right"]},{"label":["review_avg"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["review_sd"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["beer_count"],"name":[6],"type":["int"],"align":["right"]},{"label":["beer_styles"],"name":[7],"type":["chr"],"align":["left"]},{"label":["beer_list"],"name":[8],"type":["list"],"align":["right"]}],"data":[{"1":"7011","2":"Schwetzinger Brauhaus zum Ritter GmbH & Co. KG","3":"4","4":"4.375000","5":"0.9464847","6":"4","7":"Munich Helles Lager, Czech Pilsener, Schwarzbier, Hefeweizen","8":"<chr [4]>"},{"1":"15150","2":"Anxanum Brewing Company","3":"3","4":"2.666667","5":"0.2886751","6":"3","7":"English Pale Ale, English India Pale Ale (IPA)","8":"<chr [3]>"},{"1":"3448","2":"Hoppy Brewing Co.","3":"179","4":"3.469274","5":"0.6872883","6":"18","7":"American Stout, Doppelbock, Irish Dry Stout, American Blonde Ale, Winter Warmer, American Amber / Red Ale, American Strong Ale, American Pale Ale (APA), American IPA, American Brown Ale, Hefeweizen, Cream Ale, Smoked Beer","8":"<chr [18]>"},{"1":"664","2":"Wells & Young's Ltd","3":"5013","4":"3.887991","5":"0.6916814","6":"33","7":"English Pale Ale, Fruit / Vegetable Beer, Milk / Sweet Stout, Extra Special / Strong Bitter (ESB), Oatmeal Stout, English Bitter, English Stout, Euro Pale Lager, English India Pale Ale (IPA), Winter Warmer, American Blonde Ale, Old Ale, Euro Dark Lager, English Barleywine, English Strong Ale, Russian Imperial Stout, English Porter, English Brown Ale, Euro Strong Lager","8":"<chr [33]>"},{"1":"3098","2":"Big Dog's Draft House","3":"201","4":"3.915423","5":"0.6207342","6":"43","7":"American Amber / Red Ale, American Pale Ale (APA), American IPA, American Strong Ale, Cream Ale, Fruit / Vegetable Beer, Doppelbock, Czech Pilsener, Dubbel, American Pale Wheat Ale, Dunkelweizen, English Barleywine, Milk / Sweet Stout, American Stout, Witbier, Chile Beer, American Pale Lager, Scottish Ale, Belgian Strong Pale Ale, English Dark Mild Ale, American Blonde Ale, Kölsch, American Double / Imperial IPA, Weizenbock, Smoked Beer, Märzen / Oktoberfest, American Porter, Hefeweizen, Light Lager, Pumpkin Ale, Scotch Ale / Wee Heavy","8":"<chr [43]>"},{"1":"13501","2":"The Cellar Grill","3":"1","4":"4.500000","5":"NaN","6":"1","7":"Oatmeal Stout","8":"<chr [1]>"},{"1":"599","2":"Brasseurs Du Nord Inc.","3":"175","4":"3.602857","5":"0.5680607","6":"8","7":"English Stout, American Amber / Red Ale, American Blonde Ale, Witbier, American Pale Ale (APA), Belgian Strong Pale Ale, Extra Special / Strong Bitter (ESB), American Strong Ale","8":"<chr [8]>"},{"1":"17286","2":"Zeos Brewing Company S.A.","3":"9","4":"2.888889","5":"0.6009252","6":"3","7":"Euro Pale Lager, Dunkelweizen","8":"<chr [3]>"},{"1":"19587","2":"Hofbräuhaus Pittsburgh","3":"49","4":"3.928571","5":"0.5303301","6":"15","7":"Light Lager, Doppelbock, Weizenbock, Schwarzbier, Munich Helles Lager, Munich Dunkel Lager, Märzen / Oktoberfest, Vienna Lager, Keller Bier / Zwickel Bier, Hefeweizen, Altbier, German Pilsener, Dunkelweizen, Czech Pilsener","8":"<chr [15]>"},{"1":"22412","2":"Noble Ale Works","3":"31","4":"3.629032","5":"0.6827364","6":"6","7":"English Pale Ale, American Double / Imperial IPA, American Amber / Red Ale, American Double / Imperial Stout, American Black Ale, American IPA","8":"<chr [6]>"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+  ungroup() %&gt;% 
+  top_n(5000,review_count) %&gt;%  # Trim to 5000 for app working purposes
+  arrange(desc(review_z)) # Fav beers to top, pls!
+  
+write_parquet(beers,here::here(&quot;Presentations/Week9/data/beers.pdata&quot;))</code></pre>
+<p>Inspecting the output:</p>
 <pre class="r"><code>beers %&gt;%
-  sample_n(10)</code></pre>
+  top_n(10,review_z)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["brewery_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["brewery_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["beer_style"],"name":[3],"type":["chr"],"align":["left"]},{"label":["beer_id"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["beer_name"],"name":[5],"type":["chr"],"align":["left"]},{"label":["beer_abv"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["review_count"],"name":[7],"type":["int"],"align":["right"]},{"label":["review_avg"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["review_z"],"name":[9],"type":["dbl"],"align":["right"]}],"data":[{"1":"1177","2":"Minneapolis Town Hall Brewery","3":"American Porter","4":"74061","5":"Chocolate Java Porter","6":"5.1","7":"2","8":"4.500000","9":"2.2386647"},{"1":"2599","2":"Fredericksburg Brewing Company, Inc.","3":"American Porter","4":"53765","5":"Pick Me Up Porter","6":"NA","7":"3","8":"4.166667","9":"1.7808736"},{"1":"565","2":"Michigan Brewing Company","3":"Rye Beer","4":"51677","5":"Rye IPA","6":"NA","7":"1","8":"4.000000","9":"0.1674722"},{"1":"24300","2":"Evil Twin Brewing","3":"American Double / Imperial IPA","4":"68300","5":"Evil Twin Yang","6":"10.0","7":"51","8":"3.823529","9":"-0.6588893"},{"1":"5687","2":"Brauerei Locher AG","3":"Herbed / Spiced Beer","4":"70203","5":"Schnuggebock Bier","6":"5.2","7":"1","8":"3.500000","9":"0.7862578"},{"1":"1937","2":"Swashbuckler Brewing Co, LTD","3":"Oatmeal Stout","4":"32706","5":"Captain Rude's Blackwater Stout","6":"5.1","7":"9","8":"4.111111","9":"4.2631147"},{"1":"27839","2":"Einstök Ölgerð","3":"Witbier","4":"77315","5":"Icelandic White Beer","6":"5.2","7":"1","8":"3.500000","9":"-0.5382935"},{"1":"12389","2":"Wildlife Brewing & Pizza","3":"American IPA","4":"76674","5":"Glacier IPA","6":"NA","7":"1","8":"3.000000","9":"-1.5877763"},{"1":"1169","2":"Fitger's Brewhouse","3":"Witbier","4":"37633","5":"White Knight Wit Noir","6":"4.7","7":"4","8":"3.625000","9":"-1.9808397"},{"1":"10226","2":"Water Street Brewing & Ale House","3":"American IPA","4":"38113","5":"Balls To The Wahl Strom Hop Bomb","6":"NA","7":"2","8":"3.500000","9":"-0.5145094"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["brewery_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["brewery_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["beer_style"],"name":[3],"type":["chr"],"align":["left"]},{"label":["beer_id"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["beer_name"],"name":[5],"type":["chr"],"align":["left"]},{"label":["beer_abv"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["review_count"],"name":[7],"type":["int"],"align":["right"]},{"label":["review_avg"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["review_z"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["review_meanz"],"name":[10],"type":["dbl"],"align":["right"]}],"data":[{"1":"863","2":"Russian River Brewing Company","3":"American Double / Imperial IPA","4":"7971","5":"Pliny The Elder","6":"8.0","7":"2527","8":"4.590028","9":"2505.237","10":"0.9913877"},{"1":"252","2":"Bayerische Staatsbrauerei Weihenstephan","3":"Hefeweizen","4":"731","5":"Weihenstephaner Hefeweissbier","6":"5.4","7":"1981","8":"4.515901","9":"1907.058","10":"0.9626743"},{"1":"287","2":"Bell's Brewery, Inc.","3":"American IPA","4":"1093","5":"Two Hearted Ale","6":"7.0","7":"2728","8":"4.329729","9":"1802.520","10":"0.6607478"},{"1":"222","2":"Brouwerij Duvel Moortgat NV","3":"Belgian Strong Pale Ale","4":"695","5":"Duvel","6":"8.5","7":"2450","8":"4.342245","9":"1744.129","10":"0.7118895"},{"1":"1199","2":"Founders Brewing Company","3":"American Double / Imperial Stout","4":"11757","5":"Founders Breakfast Stout","6":"8.3","7":"2502","8":"4.354516","9":"1707.848","10":"0.6825932"},{"1":"287","2":"Bell's Brewery, Inc.","3":"American Double / Imperial IPA","4":"17112","5":"Bell's Hopslam Ale","6":"10.0","7":"2443","8":"4.377609","9":"1630.513","10":"0.6674223"},{"1":"22","2":"Unibroue","3":"Tripel","4":"34","5":"La Fin Du Monde","6":"9.0","7":"2483","8":"4.298027","9":"1593.299","10":"0.6416832"},{"1":"140","2":"Sierra Nevada Brewing Co.","3":"American Pale Ale (APA)","4":"276","5":"Sierra Nevada Pale Ale","6":"5.6","7":"2587","8":"4.245845","9":"1586.659","10":"0.6133200"},{"1":"259","2":"Brouwerij St. Bernardus NV","3":"Quadrupel (Quad)","4":"1708","5":"St. Bernardus Abt 12","6":"10.0","7":"2217","8":"4.327921","9":"1507.754","10":"0.6800877"},{"1":"147","2":"Stone Brewing Co.","3":"American IPA","4":"88","5":"Stone IPA (India Pale Ale)","6":"6.9","7":"2575","8":"4.257670","9":"1477.370","10":"0.5737360"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 <div id="section-generate-inputs" class="section level2">
 <h2>1 - Generate inputs</h2>
+<p>Prompt:</p>
+<blockquote>
+<p>“Generate one sliderInput with ranking between 1-5, step = 0.5, for each beer picked from a selectPicker”</p>
+</blockquote>
+<details>
+<p><summary>Hint</summary></p>
+<pre class="r"><code>pickerInput(&quot;selected_beers&quot;,&quot;Beer Selection&quot;,
+            choices = beers$beer_name,
+            selected = NULL,
+            multiple = TRUE,options = list(title = &quot;Select Beer&quot;,`live-search`=TRUE)
+            )
+
+fn_ratinginput &lt;- function(input_id,input_name){
+  sliderInput(inputId = input_id,label = input_name,min = 0,max = 5,value = 2.5,step = 0.5)
+}
+
+map()</code></pre>
+</details>
 </div>
 <div id="section-add-dynamic-filters" class="section level2">
 <h2>2 - Add dynamic filters</h2>
+<p>Prompt:</p>
+<blockquote>
+<p>“Pass dynamic filters into the selectPicker so that we can more easily find beers by most-reviewed, type, and more”</p>
+</blockquote>
+<details>
+<p><summary>Hint</summary></p>
+<pre class="r"><code>print(&#39;pie&#39;)</code></pre>
+</details>
 </div>
 <div id="section-read-back-inputs" class="section level2">
 <h2>3 - Read back inputs</h2>
+<p>Prompt:</p>
+<blockquote>
+<p>“Read the user ratings from the generated sliderInputs into a dataframe”</p>
+</blockquote>
+<details>
+<p><summary>Hint</summary></p>
+<pre class="r"><code>print(&#39;pie&#39;)</code></pre>
+</details>
 </div>
 <div id="section-convert-to-z-scores" class="section level2">
 <h2>4 - Convert to z-scores</h2>
+<p>Prompt:</p>
+<blockquote>
+<p>Apply a z-score function to the returned data</p>
+</blockquote>
+<details>
+<p><summary>Hint</summary></p>
+<pre class="r"><code>print(&#39;pie&#39;)</code></pre>
+</details>
 </div>
 <div id="section-write-to-csv" class="section level2">
 <h2>5 - Write to csv</h2>
+<p>Prompt:</p>
+<blockquote>
+<p>Save reviews into a data folder per brewery</p>
+</blockquote>
+<details>
+<p><summary>Hint</summary></p>
+<pre class="r"><code>print(&#39;pie&#39;)</code></pre>
+</details>
 </div>
 <div id="section-cheers" class="section level2">
 <h2>CHEERS</h2>
 <p>Cheers, folks! 🍻</p>
 <p>That’s all I had roadmapped - questions? Other cool ideas to tackle?</p>
-<p>I’ve attached a prototype version of this app I made into the Presentations/Week9 folder and it should run standalone (provided you have the requisite packages, of course 🎁)</p>
-<!--ript type="application/shiny-prerendered" data-context="server-start">
-knitr::opts_chunk$set(echo = TRUE)
+<p>I’ll be saving a copy of the app we made into the Presentations/Week9 folder and it should run fairly standalone (provided you have the requisite packages, of course 📦)</p>
+</div>
+<div id="section-section-2" class="section level2">
+<h2></h2>
+<p>This chunk seems broken. Oh well.</p>
+&lt;!-cript type="application/shiny-prerendered" data-context="server-start">
 
-suppressPackageStartupMessages({
+  knitr::opts_chunk$set(echo = TRUE)
+
   # Data Import
   library(arrow)
   library(here)
-  
   # Data manip
   library(tidyverse)
-  
   # Shiny
   library(shiny)
   library(shinydashboard)
   library(shinyWidgets)
   library(learnr)
-  
-})
 
 </script>
-<!---ript type="application/shiny-prerendered" data-context="server">
+<!--cript type="application/shiny-prerendered" data-context="server">
 learnr:::register_http_handlers(session, metadata = NULL)
 </script>
-<!---ript type="application/shiny-prerendered" data-context="server">
+<!--cript type="application/shiny-prerendered" data-context="server">
 session$onSessionEnded(function() {
         learnr:::session_stop_event(session)
       })
 </script>
-<!---ript type="application/shiny-prerendered" data-context="data">
-
-breweries <- beer_reviews %>% 
-  group_by(brewery_id,brewery_name) %>% 
-  summarise(
-    review_count = n(),
-    review_avg = mean(review_overall,na.rm=TRUE),
-    review_sd = sd(review_overall,na.rm = TRUE),
-    beer_count = length(unique(beer_beerid)),
-    beer_styles = paste0(unique(beer_style),collapse = ", "),
-    beer_list = list(unique(beer_name))
-  ) %>% 
-  ungroup()
+<!--cript type="application/shiny-prerendered" data-context="data">
 
 beers <- beer_reviews %>% 
   group_by(review_profilename) %>%   # Scaling reviews by reviewer
@@ -321,19 +354,17 @@ beers <- beer_reviews %>%
   summarise(
     review_count = n(),
     review_avg = mean(review_overall,na.rm = TRUE),
-    review_z = sum(reviewer_z,na.rm = TRUE)
+    review_z = sum(reviewer_z,na.rm = TRUE),
+    review_meanz = review_z/review_count
   ) %>% 
-  ungroup()
-
-breweries %>%
-  sample_n(10)
-
-beers %>%
-  sample_n(10)
+  ungroup() %>% 
+  top_n(5000,review_count) %>%  # Trim to 5000 for app working purposes
+  arrange(desc(review_z)) # Fav beers to top, pls!
+  
+write_parquet(beers,here::here("Presentations/Week9/data/beers.pdata"))
 
 </script>
-<!--
-<!--html_preserve-->
+<!- <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="dependencies">
 {"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["navigation"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/navigation-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tabsets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["default.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["5.1.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/fontawesome"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/all.css","css/v4-shims.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["4.4.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["idb-keyvalue"]},{"type":"character","attributes":{},"value":["3.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/idb-keyval"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["idb-keyval-iife-compat.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]}]}
 </script>
