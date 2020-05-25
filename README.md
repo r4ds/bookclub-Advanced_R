@@ -25,7 +25,7 @@ All Meetings Scheduled for 8:00 PM Eastern unless otherwise noted
 - 2020-06-04 Chapter 10 - [Function factories](https://cran.r-project.org/package=factory): [Jon Harmon](https://twitter.com/jonthegeek)
 - 2020-06-11 Chapter 11 - Function operators: [Tony ElHabr](https://twitter.com/TonyElHabr)
 - 2020-06-18 Chapter 12 - OOP base types:
-- 2020-06-25 Chapter 13 - S3:[Daryn Ramsden](https://twitter.com/thisisdaryn) 
+- 2020-06-25 Chapter 13 - S3: [Daryn Ramsden](https://twitter.com/thisisdaryn) 
 - 2020-07-02 Chapter 14 - R6:
 - 2020-07-09 Chapter 15 - S4:
 - 2020-07-16 Chapter 16 - Trade-offs:
