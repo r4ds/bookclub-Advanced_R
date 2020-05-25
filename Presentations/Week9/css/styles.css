@@ -20,6 +20,10 @@ g-table-intro h4 {
   text-indent: 0px;
 }
 
+.bandContent {
+    margin: 0 auto;
+    max-width: 1500px;
+}
 
 @media screen and (max-width: 1000px) {
   .topics {

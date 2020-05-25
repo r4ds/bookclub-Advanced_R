@@ -13,9 +13,21 @@ runtime: shiny_prerendered
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-library(shiny)
-library(learnr)
-library(knitr)
+suppressPackageStartupMessages({
+  # Data Import
+  library(arrow)
+  library(here)
+  
+  # Data manip
+  library(tidyverse)
+  
+  # Shiny
+  library(shiny)
+  library(shinydashboard)
+  library(shinyWidgets)
+  library(learnr)
+  
+})
 
 ```
 
@@ -58,75 +70,112 @@ I'll be live-coding this, so feel free to chime in with suggestions, critiques, 
 
 ## Dataset Overview
 
-This data comes from BeerAdvocate and spans 10+ years of beer reviews on their platform up until Nov 2011, including ~1.5 million reviews. Each review includes ratings in terms of five "aspects": appearance, aroma, palate, taste, and overall impression. Reviews include product and user information, followed by each of these five ratings, and a plaintext review.
+I first came across the Beer Reviews dataset from watching one of [Nick Wan](http://twitter.com/nickwan)'s Twitch streams, in which he does some really awesome live-code and data science. 
 
-I first came across this dataset from watching one of [Nick Wan's live-coding Twitch streams](http://twitter.com/nickwan) where he does some really cool live code and modelling (unfortunately, he does his coding in Python, but we can't all be perfect!). He had a "recommender model" which did some clustering and similarity scores, so that he could get the model to output "ten beers to try" if you happened to like a specific beer. 
+From the Kaggle notes:
 
-I don't think 
+> This data comes from BeerAdvocate and spans 10+ years of beer reviews on their platform up until Nov 2011, including ~1.5 million reviews. Each review includes ratings in terms of five "aspects": appearance, aroma, palate, taste, and overall impression. Reviews include product and user information, followed by each of these five ratings, and a plaintext review.
 
-The goal of today's app is to build something that'll collect beer rankings from users (i.e. you guys!) and then compare your reviews with the reviews from the dataset! 
+While Nick dove down the datasci rabbithole with PCA, clustering, and recommender models, for today's purposes we'll be building a tool that collects beer ratings from users (i.e. you guys!) and compares your reviews with the reviews from the dataset!
 
-I ***think *** that I can do Shiny app components in the {learnr} package, so we'll give that a spin first but if that doesn't work out, I can always open up a fresh RStudio window to do this `r emo::ji('sunglasses')`
+I ***think *** that I can do Shiny app components in the {learnr} package, so we'll give that a spin first. If that doesn't work out, I can always open up a fresh RStudio window `r emo::ji('sunglasses')`
+
+Here's what my setup chunk looks like and a brief skim of the raw data:
 
 ```{r packages_and_data, echo = TRUE}
 
 suppressPackageStartupMessages({
-knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse)
-library(shiny)
-library(learnr)
-library(arrow)
-library(here)
+  # Data Import
+  library(arrow)
+  library(here)
+  
+  # Data manip
+  library(tidyverse)
+  
+  # Shiny
+  library(shiny)
+  library(shinydashboard)
+  library(shinyWidgets)
+  library(learnr)
+  
 })
 
-beer_reviews <-read_parquet(file = here("data/beer_reviews.pdata")) 
-# read in parquet file from repository
+# Read data in via arrow for much fast
+beer_reviews <- arrow::read_parquet(file = here::here("data/beer_reviews.pdata")) 
 
-head(beer_reviews)
-
+# What does this data look like?
+beer_reviews %>%
+  sample_n(10) %>% 
+  str()
 ```
 
 ## Game Plan
 
-Some fun features we'll try: 
+I've roadmapped a few features that I'd like to try to include (and should help demonstrate some FUNctionals)
 
-1. 
-2. 
-3. 
-4. 
-5. 
+1. Dynamically generate a review form for each beer selected from a picker (*using map*)
+2. Add some filters to the select option so we can quickly find beers by type, ABV, and average rating (*map/reduce*)
+3. Read back the ratings from the user! (*map lgl/chr/dbl/int*)
+4. Convert to z-scores to better compare rankings (*modify*)
+5. Write reviews to one csv per brewery (*walk*)
 
 ## Data Cleaning
 
+I've gone ahead and done a little bit of pre-emptive data cleaning `r emo::ji('broom')` to help us just focus on the functionals in the app session later.
 
+```{r data, context = "data"}
 
-## PART ONE: CREATE INPUTS
+breweries <- beer_reviews %>% 
+  group_by(brewery_id,brewery_name) %>% 
+  summarise(
+    review_count = n(),
+    review_avg = mean(review_overall,na.rm=TRUE),
+    review_sd = sd(review_overall,na.rm = TRUE),
+    beer_count = length(unique(beer_beerid)),
+    beer_styles = paste0(unique(beer_style),collapse = ", "),
+    beer_list = list(unique(beer_name))
+  ) %>% 
+  ungroup()
 
-## PART TWO: RETURN INPUTS
+beers <- beer_reviews %>% 
+  group_by(review_profilename) %>%   # Scaling reviews by reviewer
+  mutate(reviewer_avg = mean(review_overall,na.rm = TRUE),
+         reviewer_sd = sd(review_overall,na.rm = TRUE),
+         reviewer_z = (review_overall - reviewer_avg)/reviewer_sd
+         ) %>% 
+  ungroup() %>% 
+  group_by(brewery_id,brewery_name,beer_style,beer_id = beer_beerid, beer_name, beer_abv) %>% 
+  summarise(
+    review_count = n(),
+    review_avg = mean(review_overall,na.rm = TRUE),
+    review_z = sum(reviewer_z,na.rm = TRUE)
+  ) %>% 
+  ungroup()
 
-## PART THREE: ???
+breweries %>%
+  sample_n(10)
 
-## PROFIT
-
-## random shiny demo
-
-You can embed Shiny inputs and outputs in your document. Outputs are automatically updated whenever inputs change.  This demonstrates how a standard R plot can be made interactive by wrapping it in the Shiny `renderPlot` function. The `selectInput` and `sliderInput` functions create the input widgets used to drive the plot.
-
-```{r eruptions, echo=FALSE, eval = FALSE}
-inputPanel(
-  selectInput("n_breaks", label = "Number of bins:",
-              choices = c(10, 20, 35, 50), selected = 20),
-  
-  sliderInput("bw_adjust", label = "Bandwidth adjustment:",
-              min = 0.2, max = 2, value = 1, step = 0.2)
-)
-
-renderPlot({
-  hist(faithful$eruptions, probability = TRUE, breaks = as.numeric(input$n_breaks),
-       xlab = "Duration (minutes)", main = "Geyser eruption duration")
-  
-  dens <- density(faithful$eruptions, adjust = input$bw_adjust)
-  lines(dens, col = "blue")
-})
+beers %>%
+  sample_n(10)
 
 ```
+
+
+## 1 - Generate inputs
+
+## 2 - Add dynamic filters
+
+## 3 - Read back inputs
+
+## 4 - Convert to z-scores
+
+## 5 - Write to csv
+
+## CHEERS
+
+Cheers, folks! `r emo::ji('beers')` 
+
+That's all I had roadmapped - questions? Other cool ideas to tackle?
+
+I've attached a prototype version of this app I made into the Presentations/Week9 folder and it should run standalone (provided you have the requisite packages, of course `r emo::ji('box')`)
+
