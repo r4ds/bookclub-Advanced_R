@@ -13,7 +13,9 @@ library(rlang)
 So if you are familiar with C can you just write a function in C *in* R? What does that process look like? I think this is a bigger question of digging into the relationship between C and R.
 :::
 
-We can use RCPP!
+Primitives are part of R core, and can only be written by the R-core team. At its heart, R *is* the set of primitive C functions underneath it.
+
+You can use Rcpp to include C++ code in your R code, but these aren't Primitives. There are also other techniques which we'll likely see covered in later chapters. Here's an example using Rcpp.
 
 ```{r}
 Rcpp::cppFunction('#include<string>
@@ -24,6 +26,14 @@ Rcpp::cppFunction('#include<string>
 val <- IPA()
 val
 ```
+
+:::question
+Are there any non-base primitives? If so how is that possible!
+:::
+
+:::TODO
+XXX
+:::
 
 ## 6.2.5.1 Exercises {-}
 
@@ -452,6 +462,45 @@ y = NULL
 f1()
 ```
 
+What is happening here:
+- The default value of `x` is "assign 1 to y then return 2 implicitly."
+- The default value of `y` is `0`.
+- `x` and `y` aren't their defaults until they're referenced and there isn't a value, so when you invoke the question `x` is the default, but `y` is never the default.
+- When you get to `c(x`, `x` is evaluated. Now the value of  `y` is `1` instead of its default value!
+- When you get to `c(x, y)`, `y` is now `1`, so the return is `2` `1`
+
+Using the original `f1` function, if we write `f1(x <- 5)` we get `5` `0`, When you make that call, the function's x argument gets set to x <- 5 (instead of the default). When you get to c(x, the x <- 5 call gets evaluated in the calling environment (global, most likely, unless you're calling it from inside a function or something).
+
+To see where x gets assigned, try this:
+```{r, eval=FALSE}
+f2 <- function(x = {y <- 1; 2}, y = 0) {
+  # c(x, y)
+  "Nothing to see here."
+}
+```
+
+```{r, eval=FALSE}
+f2(x <- 5)
+```
+
+```
+## [1] "Nothing to see here."
+```
+
+```{r, eval=FALSE}
+x
+```
+
+```
+## Error: object 'x' not found
+```
+
+Since `x` is never used in this version, the `x = {x <- 5}` promise never gets evaluated, so `x` never gets set in the calling environment. But if you do the same thing with `f1`, `x` is now `5` in the calling environment.
+
+Also note that calling the `<-` function returns the value (the second argument) invisibly, so `y <- {x <- 5}` assigns `5` to both `y` and `x`. I wouldn't recommend ever doing this on purpose, but it's useful to know for debugging weird cases.
+
+A piece that **ALMOST** confused me was that the function's default value only ever "exists" in the function's environment, not in the calling environment, so the original case doesn't change `y` to `1` globally. But `f1({y <- 1; 2})` **WILL** change `y` globally... but does not change the value of `y` inside the function.
+
 ## 6.5.4.4 Exercise {-}
 
 :::question
@@ -703,7 +752,7 @@ warning("5) warning()")
 
 * `sink` diverts R output to a connection. 
 
-```{r}
+```{r, eval=FALSE}
 zz <- file("all.Rout", open = "wt")
 sink(zz)
 sink(zz, type = "message")
