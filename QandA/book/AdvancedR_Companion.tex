@@ -119,7 +119,11 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
+<<<<<<< HEAD
 \date{2020-05-26}
+=======
+\date{2020-05-25}
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 
 \begin{document}
 \maketitle
@@ -363,7 +367,11 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7f93c0e25798"
+=======
+## [1] "0x7fa332af41e8"
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 \end{verbatim}
 
 \begin{Shaded}
@@ -373,7 +381,11 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7f93c0e25798"
+=======
+## [1] "0x7fa332af41e8"
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -385,7 +397,11 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7f93be62fb88"
+=======
+## [1] "0x7fa32f9854d0"
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 \end{verbatim}
 
 \begin{Shaded}
@@ -395,8 +411,13 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## █ [1:0x7f93be5fd720] <list> 
 ## └─[2:0x7f93c0e25798] <dbl>
+=======
+## █ [1:0x7fa32f90d428] <list> 
+## └─[2:0x7fa332af41e8] <dbl>
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 \end{verbatim}
 
 \begin{Shaded}
@@ -406,7 +427,11 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7f93be3cc610"
+=======
+## [1] "0x7fa32f868ba0"
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 \end{verbatim}
 
 \begin{Shaded}
@@ -443,7 +468,11 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "<0x7f93c6ada1f8>"
+=======
+## [1] "<0x7fa330a2e718>"
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 \end{verbatim}
 
 \begin{Shaded}
@@ -453,7 +482,11 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## <0x7f93c6ada1f8>
+=======
+## <0x7fa330a2e718>
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 \end{verbatim}
 
 \begin{Shaded}
@@ -463,7 +496,11 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7f93c6ada1f8"
+=======
+## [1] "0x7fa330a2e718"
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -512,7 +549,11 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7f93c6b78d88"
+=======
+## [1] "0x7fa330ca2048"
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 \end{verbatim}
 
 \begin{Shaded}
@@ -522,7 +563,11 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "<0x7f93c6b78d88>"
+=======
+## [1] "<0x7fa330ca2048>"
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 \end{verbatim}
 
 \begin{Shaded}
@@ -532,7 +577,11 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## tracemem[0x7f93c6b78d88 -> 0x7f93c6b9e408]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+=======
+## tracemem[0x7fa330ca2048 -> 0x7fa33148fc88]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -628,7 +677,11 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7f93c3a02558"
+=======
+## [1] "0x7fa33007d598"
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -641,7 +694,11 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7f93c2b75138"
+=======
+## [1] "0x7fa32ee178d8"
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 \end{verbatim}
 
 \begin{Shaded}
@@ -664,7 +721,11 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7f93c2b75138"
+=======
+## [1] "0x7fa32ee178d8"
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 \end{verbatim}
 
 \begin{Shaded}
@@ -674,7 +735,11 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7f93c2b75138"
+=======
+## [1] "0x7fa32ee178d8"
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 \end{verbatim}
 
 \begin{Shaded}
@@ -697,7 +762,11 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7f93c2b75138"
+=======
+## [1] "0x7fa32ee178d8"
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 \end{verbatim}
 
 \begin{Shaded}
@@ -707,7 +776,11 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7f93c255bce8"
+=======
+## [1] "0x7fa32ea57a08"
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 \end{verbatim}
 
 \begin{Shaded}
@@ -730,7 +803,11 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7f93bca432d8"
+=======
+## [1] "0x7fa3289faf88"
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 \end{verbatim}
 
 \begin{Shaded}
@@ -2533,11 +2610,19 @@ This will work:
 ## # A tibble: 5 x 1
 ##      x1
 ##   <dbl>
+<<<<<<< HEAD
 ## 1 0.447
 ## 2 0.564
 ## 3 0.883
 ## 4 0.864
 ## 5 0.136
+=======
+## 1 0.215
+## 2 0.588
+## 3 0.729
+## 4 0.814
+## 5 0.722
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2611,7 +2696,11 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ##  [1] 297 268 228 213 290 204 265 201 287 281
+=======
+##  [1] 221 253 278 215 237 264 257 236 212 216
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3048,7 +3137,11 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
+<<<<<<< HEAD
 ## <bytecode: 0x7f93b9b88d80>
+=======
+## <bytecode: 0x7fa327e813c8>
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3919,7 +4012,11 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
+<<<<<<< HEAD
 ## <bytecode: 0x7f93b99bc290>
+=======
+## <bytecode: 0x7fa32ca2b9b0>
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4057,7 +4154,11 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
+<<<<<<< HEAD
 ## <bytecode: 0x7f93c254faf8>
+=======
+## <bytecode: 0x7fa3312f6878>
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4209,7 +4310,40 @@ Why is this message executed once per message in the function?
 #> Why, yes!
 \end{verbatim}
 
+<<<<<<< HEAD
 \texttt{withCallingHandlers} could be understood as: ``for each \{message\}, do x''
+=======
+The following prints the message once:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{withCallingHandlers}\NormalTok{(}
+  \DataTypeTok{message =} \ControlFlowTok{function}\NormalTok{(cnd) }\KeywordTok{cat}\NormalTok{(}\StringTok{"Caught a message!}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{), }
+\NormalTok{  \{}
+    \KeywordTok{warning}\NormalTok{(}\StringTok{"Someone there?"}\NormalTok{)}
+    \KeywordTok{message}\NormalTok{(}\StringTok{"Why, yes!"}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in withCallingHandlers(message = function(cnd) cat("Caught a message!
+## \n"), : Someone there?
+\end{verbatim}
+
+\begin{verbatim}
+## Caught a message!
+\end{verbatim}
+
+\begin{verbatim}
+## Why, yes!
+\end{verbatim}
+
+and it comes in the warning message, so it's not really a ``direct'' print
+
+Oh wait, the handler code is named \texttt{message}, so is it possible that the two message calls in the protected block are actually calling both \texttt{base::message} and the message - named handler?
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 
 \begin{quote}
 The return value of a calling handler is ignored because the code continues to execute after the handler completes; where would the return value go? That means that calling handlers are only useful for their side-effects.
@@ -4434,6 +4568,7 @@ Another exercise: Guess the output of these two functions:
 \section*{8.6.3 Resignal}\label{resignal}}
 \addcontentsline{toc}{section}{8.6.3 Resignal}
 
+:::question
 Can we go over what is happening here?
 
 \begin{Shaded}
@@ -4657,9 +4792,15 @@ While
 \end{verbatim}
 
 \texttt{tryCatch} is still on the stack when the handler is called i.e.~value, \texttt{tryCatchOne}, \texttt{tryCatchList} and \texttt{tryCatch} are all still in line to be completed
+<<<<<<< HEAD
 
 Calling handlers are called in the context of the call that signaled the condition, in this case,\texttt{f()}. So the message handler returns a value to the environment where \texttt{f()} is a meaningful call. Exiting handlers are called in the context of the call to \texttt{tryCatch()}. The exiting handler returns to an ongoing \texttt{tryCatch()} so it can do whatever it needs to do.
 
+=======
+
+Calling handlers are called in the context of the call that signaled the condition, in this case,\texttt{f()}. So the message handler returns a value to the environment where \texttt{f()} is a meaningful call. Exiting handlers are called in the context of the call to \texttt{tryCatch()}. The exiting handler returns to an ongoing \texttt{tryCatch()} so it can do whatever it needs to do.
+
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 \hypertarget{exercises-7}{%
 \section*{8.6.6.4 Exercises}\label{exercises-7}}
 \addcontentsline{toc}{section}{8.6.6.4 Exercises}
@@ -4678,6 +4819,7 @@ That's exactly it - this was a warning not to use \texttt{inturrupt} in your fun
 
 What environment(s) these restarts are called within, or if that even applies or matters
 
+<<<<<<< HEAD
 Note: for this example I set my Environment panel in Rstudio to ``Manual Refresh Only'' (the curly arrow menu) while running this to make sure it wasn't doing anything to confuse me.
 
 \begin{Shaded}
@@ -4743,6 +4885,105 @@ You can run it yourself (and then \texttt{invokeRestart("force\_positive")}) to 
 \end{itemize}
 
 The \texttt{caller\_env} for \texttt{force\_positive}, though, is still a bit of a mystery. Some further poking found that its grandparent is the base package's namespace, but I don't grok why. Maybe because it's the \texttt{browser()} environment? Is that a thing?
+=======
+Given this little example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# low level function}
+\CommentTok{# if text isn't correct then abort with class malformed_text}
+\NormalTok{is_correct <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(text) \{}
+  \KeywordTok{print}\NormalTok{(}\StringTok{'parent in low: '}\NormalTok{); }\KeywordTok{print}\NormalTok{(}\KeywordTok{env_parent}\NormalTok{())}
+  \KeywordTok{print}\NormalTok{(}\StringTok{'current in low: '}\NormalTok{); }\KeywordTok{print}\NormalTok{(}\KeywordTok{env_parent}\NormalTok{())}
+  \ControlFlowTok{if}\NormalTok{ (text }\OperatorTok{!=}\StringTok{ "CORRECT"}\NormalTok{) \{}
+\NormalTok{    msg <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(text, }\StringTok{" needs to be 'CORRECT'"}\NormalTok{)}
+    \KeywordTok{abort}\NormalTok{(}
+      \StringTok{"malformed_text"}\NormalTok{,}
+      \DataTypeTok{message =}\NormalTok{ msg,}
+      \DataTypeTok{text =}\NormalTok{ text}
+\NormalTok{    )}
+\NormalTok{  \}}
+  \KeywordTok{return}\NormalTok{(text)}
+\NormalTok{\}}
+\CommentTok{# medium level function}
+\CommentTok{# apply low level function to all text in a list}
+\CommentTok{# if it doesn't pass give it the restart skip_text}
+\CommentTok{# which will change that entry to NA}
+\NormalTok{replace_not_correct <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(all_text) \{}
+  \CommentTok{# f <- function(x) \{ print(current_env()); is_correct(x) \}}
+  \KeywordTok{lapply}\NormalTok{(all_text, }\ControlFlowTok{function}\NormalTok{(text) \{}
+    \KeywordTok{withRestarts}\NormalTok{(}
+      \CommentTok{# f(text),}
+\NormalTok{      \{ }\KeywordTok{print}\NormalTok{(}\StringTok{'parent in mid: '}\NormalTok{) ; }\KeywordTok{print}\NormalTok{(}\KeywordTok{env_parent}\NormalTok{()); }\KeywordTok{print}\NormalTok{(}\StringTok{'current in mid: '}\NormalTok{); }\KeywordTok{print}\NormalTok{(}\KeywordTok{current_env}\NormalTok{()); }\KeywordTok{is_correct}\NormalTok{(text) \},}
+      \DataTypeTok{skip_text =} \ControlFlowTok{function}\NormalTok{(e)\{ }\OtherTok{NA}\NormalTok{;  }\KeywordTok{print}\NormalTok{(}\StringTok{'parent in mid skip: '}\NormalTok{); }\KeywordTok{print}\NormalTok{(}\KeywordTok{env_parent}\NormalTok{()); }\KeywordTok{print}\NormalTok{(}\StringTok{'current in mid skip: '}\NormalTok{); }\KeywordTok{print}\NormalTok{(}\KeywordTok{current_env}\NormalTok{())\}}
+\NormalTok{    )}
+\NormalTok{  \})}
+\NormalTok{\}}
+\CommentTok{# res <- replace_not_correct(list('A', 'B', 'C'))}
+\CommentTok{# res <- replace_not_correct(list('CORRECT', 'A'))}
+\CommentTok{# res}
+\CommentTok{# high level function}
+\CommentTok{# if you have an error of type malformed_text, }
+\CommentTok{# use the restart from the midlevel function}
+\NormalTok{analyze_text <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(all_text) \{}
+  \KeywordTok{withCallingHandlers}\NormalTok{(}
+    \DataTypeTok{malformed_text =} \ControlFlowTok{function}\NormalTok{(e) }\KeywordTok{invokeRestart}\NormalTok{(}\StringTok{"skip_text"}\NormalTok{),}
+    \KeywordTok{lapply}\NormalTok{(all_text, replace_not_correct)}
+\NormalTok{  )}
+\NormalTok{\}}
+\KeywordTok{analyze_text}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\StringTok{"CORRECT"}\NormalTok{, }\StringTok{"NOT"}\NormalTok{, }\StringTok{"CORRECT"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "parent in mid: "
+## <environment: 0x7fa32c1c2e00>
+## [1] "current in mid: "
+## <environment: 0x7fa32c1bf708>
+## [1] "parent in low: "
+## <environment: R_GlobalEnv>
+## [1] "current in low: "
+## <environment: R_GlobalEnv>
+## [1] "parent in mid: "
+## <environment: 0x7fa32c1adcf0>
+## [1] "current in mid: "
+## <environment: 0x7fa328728900>
+## [1] "parent in low: "
+## <environment: R_GlobalEnv>
+## [1] "current in low: "
+## <environment: R_GlobalEnv>
+## [1] "parent in mid skip: "
+## <environment: 0x7fa328728900>
+## [1] "current in mid skip: "
+## <environment: 0x7fa3295b2dc8>
+## [1] "parent in mid: "
+## <environment: 0x7fa3295a2098>
+## [1] "current in mid: "
+## <environment: 0x7fa3295a03a8>
+## [1] "parent in low: "
+## <environment: R_GlobalEnv>
+## [1] "current in low: "
+## <environment: R_GlobalEnv>
+\end{verbatim}
+
+\begin{verbatim}
+## [[1]]
+## [[1]][[1]]
+## [1] "CORRECT"
+## 
+## 
+## [[2]]
+## [[2]][[1]]
+## <environment: 0x7fa3295b2dc8>
+## 
+## 
+## [[3]]
+## [[3]][[1]]
+## [1] "CORRECT"
+\end{verbatim}
+
+So, the parent environment of the handler (is that the right term?) called skip\_text in the mid-level function is the environment of the expr part of withRestarts (i.e.~the first parameter), also in the mid-level function.
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 
 Are there any default restarts include in base R so that you could \texttt{invokeRestart("XXX")} or is the restart always user defined?
 

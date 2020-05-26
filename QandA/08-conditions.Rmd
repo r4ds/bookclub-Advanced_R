@@ -77,7 +77,27 @@ withCallingHandlers(
 ```
 :::
 
+<<<<<<< HEAD
 `withCallingHandlers` could be understood as: "for each {message}, do x"
+=======
+The following prints the message once:
+
+```{r}
+withCallingHandlers(
+  message = function(cnd) cat("Caught a message!\n"), 
+  {
+    warning("Someone there?")
+    message("Why, yes!")
+  }
+)
+```
+
+and it comes in the warning message, so it's not really a "direct" print
+
+:::TODO
+Oh wait, the handler code is named `message`, so is it possible that the two message calls in the protected block are actually calling both `base::message` and the message - named handler?
+:::
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 
 :::question
 > The return value of a calling handler is ignored because the code continues to execute after the handler completes; where would the return value go? That means that calling handlers are only useful for their side-effects.
@@ -234,7 +254,6 @@ warning2error({
 ```
 Error: Hello
 ```
-:::
 
 The function `warning2error` captures an expression which is evaluated by `withCallingHandlers` where you have defined a handler for warning conditions. The handler captures the condition cnd raised by warn which is `structure(list(message = "Hello"), class = c("warning", "condition")`
 
@@ -410,6 +429,7 @@ What does this mean? You can't stop the function if you set an `interrupt` argum
 :::
 
 That's exactly it - this was a warning not to use `inturrupt` in your functions!
+<<<<<<< HEAD
 
 ## Slides {-}
 
@@ -476,6 +496,8 @@ You can run it yourself (and then `invokeRestart("force_positive")`) to see the 
 :::TODO
 The `caller_env` for `force_positive`, though, is still a bit of a mystery. Some further poking found that its grandparent is the base package's namespace, but I don't grok why. Maybe because it's the `browser()` environment? Is that a thing?
 :::
+=======
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 
 :::question
 Are there any default restarts include in base R so that you could `invokeRestart("XXX")` or is the restart always user defined?
@@ -499,6 +521,83 @@ computeRestarts()
 It seems `computeRestarts()` is able to find `abort` even without `{rlang}` attached! Which means it surely would be able to find some function from the base packages if one existed. But it does not, so that leads me to believe that they aren't any beyond `muffleWarning`. it seems, in general, you need to specify a function name for `invokeRestart()`
 
 :::question
+<<<<<<< HEAD
+=======
+What environment(s) these restarts are called within, or if that even applies or matters
+:::
+
+Given this little example:
+
+```{r}
+# low level function
+# if text isn't correct then abort with class malformed_text
+is_correct <- function(text) {
+  print('parent in low: '); print(env_parent())
+  print('current in low: '); print(env_parent())
+  if (text != "CORRECT") {
+    msg <- paste0(text, " needs to be 'CORRECT'")
+    abort(
+      "malformed_text",
+      message = msg,
+      text = text
+    )
+  }
+  return(text)
+}
+# medium level function
+# apply low level function to all text in a list
+# if it doesn't pass give it the restart skip_text
+# which will change that entry to NA
+replace_not_correct <- function(all_text) {
+  # f <- function(x) { print(current_env()); is_correct(x) }
+  lapply(all_text, function(text) {
+    withRestarts(
+      # f(text),
+      { print('parent in mid: ') ; print(env_parent()); print('current in mid: '); print(current_env()); is_correct(text) },
+      skip_text = function(e){ NA;  print('parent in mid skip: '); print(env_parent()); print('current in mid skip: '); print(current_env())}
+    )
+  })
+}
+# res <- replace_not_correct(list('A', 'B', 'C'))
+# res <- replace_not_correct(list('CORRECT', 'A'))
+# res
+# high level function
+# if you have an error of type malformed_text, 
+# use the restart from the midlevel function
+analyze_text <- function(all_text) {
+  withCallingHandlers(
+    malformed_text = function(e) invokeRestart("skip_text"),
+    lapply(all_text, replace_not_correct)
+  )
+}
+analyze_text(list("CORRECT", "NOT", "CORRECT"))
+```
+
+So, the parent environment of the handler (is that the right term?) called skip_text in the mid-level function is the environment of the expr part of withRestarts (i.e. the first parameter), also in the mid-level function.
+
+:::question
+Are there any default restarts include in base R so that you could `invokeRestart("XXX")` or is the restart always user defined?
+:::
+
+From the warning documentation: 
+
+> While a warning is being processed, a `muffleWarning` restart is available. If this restart is invoked with `invokeRestart`, then warning returns immediately.
+
+We can also use the `computeRestarts` function which lists all available "default" restart functions:
+
+```{r, eval=FALSE}
+computeRestarts()
+```
+
+```
+[[1]]
+<restart: abort >
+```
+
+It seems `computeRestarts()` is able to find `abort` even without `{rlang}` attached! Which means it surely would be able to find some function from the base packages if one existed. But it does not, so that leads me to believe that they aren't any beyond `muffleWarning`. it seems, in general, you need to specify a function name for `invokeRestart()`
+
+:::question
+>>>>>>> 79e870e5894f508bc404dc1ec1b04df9ef6cc255
 Let's revisit my example from the talk: can we build on this to use tidyeval so that the user can write `beer_states %>% beer_mean(state)` [I think we need to use `.data` and note how state is given as an object so we need to use tidyeval to suppress it's evaluation...]
 :::
 
