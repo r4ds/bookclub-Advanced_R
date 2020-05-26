@@ -1,0 +1,308 @@
+---
+title: "map_shiny(v,fun)"
+author: "Tan Ho (@_TanHo)"
+date: "28/05/2020"
+output: 
+  learnr::tutorial:
+        css: css/styles.css
+        toc: true
+        toc_depth: 2
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+
+  knitr::opts_chunk$set(echo = TRUE)
+
+  # Data Import
+  library(arrow)
+  library(here)
+  # Data manip
+  library(tidyverse)
+  # Shiny
+  library(shiny)
+  library(shinydashboard)
+  library(shinyWidgets)
+  library(learnr)
+
+```
+
+## AdvR Book Club Ch 9 - Functionals
+
+[\@_TanHo](https://twitter.com/_TanHo)
+
+2020-05-28
+
+## Intro
+
+So lately we've been doing a lot of chapter recaps in these presentations, but...
+
+##     
+
+![](images/shiny_meme.jpg)
+
+... = "Actually doing a presentation"
+
+##     
+
+### So instead...
+
+This time, let's build  a beer reviews app in Shiny!
+
+Along the way, we'll try to find (minimally contrived) opportunities to use: 
+
+  * map and friends like map2/pmap, lgl/chr/dbl
+  * walk
+  * reduce
+  * modify
+
+Some prerequisite assumptions I'm making here: 
+
+  1. You've already read chapter 9 in the Adv R book (`r emo::ji('raised_eyebrow')`)
+  
+  2. You've read ch21 of R4DataScience (i.e. the chapter on purrr) (and/or)
+  
+  3. You have some familiarity with purrr, lapply, or loops
+  
+  4. You've heard of the glorious Shiny (it's okay if you haven't built an app before!)
+
+
+I'll be live-coding this, so feel free to chime in with questions, suggestions, and (frequent) reminders about forgetting parentheses () !
+
+
+## Dataset Overview
+
+I first came across the Beer Reviews dataset from watching one of [Nick Wan](http://twitter.com/nickwan)'s Twitch streams, in which he does some really awesome live-code and data science. 
+
+From the Kaggle notes:
+
+> This data comes from BeerAdvocate and spans 10+ years of beer reviews on their platform up until Nov 2011, including ~1.5 million reviews. Each review includes ratings in terms of five "aspects": appearance, aroma, palate, taste, and overall impression. Reviews include product and user information, followed by each of these five ratings, and a plaintext review.
+
+While Nick dove down the datasci rabbithole with PCA, clustering, and recommender models, for today's purposes we'll be building a tool that collects beer ratings from users (i.e. you guys!) and compares your reviews with the reviews from the dataset!
+
+Here's what my setup chunk looks like and a brief skim of the raw data:
+
+```{r packages_and_data, echo = TRUE}
+
+suppressPackageStartupMessages({
+  # Data Import
+  library(arrow)
+  library(here)
+  
+  # Data manip
+  library(tidyverse)
+  
+  # Shiny
+  library(shiny)
+  library(shinydashboard)
+  library(shinyWidgets)
+  library(learnr)
+  
+})
+
+# Read data in via arrow for much fast
+beer_reviews <- arrow::read_parquet(here::here("data/beer_reviews.pdata")) 
+
+# What does this data look like?
+beer_reviews %>%
+  sample_n(10) %>% 
+  str()
+```
+
+## Game Plan
+
+I've roadmapped a few features that I'd like to try to include (and should help demonstrate some FUNctionals)
+
+1. Dynamically generate a review form for each beer selected from a picker (*using map*)
+
+2. Add some filters to the select option so we can quickly find beers by type, review_count, and average rating (*map/reduce*)
+
+3. Read back the ratings from the user! (*map lgl/chr/dbl/int*)
+
+5. Write reviews to one csv per brewery (*walk*)
+
+## Data Cleaning
+
+I've gone ahead and done a little bit of pre-emptive data cleaning `r emo::ji('broom')` to help us just focus on the functionals in the app session later.
+
+```{r data}
+
+beers <- beer_reviews %>% 
+  group_by(review_profilename) %>%   # Scaling reviews by reviewer
+  mutate(reviewer_avg = mean(review_overall,na.rm = TRUE),
+         reviewer_sd = sd(review_overall,na.rm = TRUE),
+         reviewer_z = (review_overall - reviewer_avg)/reviewer_sd
+         ) %>% 
+  ungroup() %>% 
+  group_by(brewery_id,brewery_name,beer_style,beer_id = beer_beerid, beer_name, beer_abv) %>% 
+  summarise(
+    review_count = n(),
+    review_avg = mean(review_overall,na.rm = TRUE),
+    review_z = sum(reviewer_z,na.rm = TRUE),
+    review_meanz = review_z/review_count
+  ) %>% 
+  ungroup() %>% 
+  top_n(5000,review_count) %>%  # Trim to 5000 for app working purposes
+  arrange(desc(review_z)) # Fav beers to top, pls!
+  
+write_parquet(beers,here::here("Presentations/Week9/data/beers.pdata"))
+
+```
+
+Inspecting the output:
+
+```{r}
+beers %>%
+  top_n(10,review_z)
+```
+
+## 1 - Generate inputs
+
+Prompt: 
+
+> "Generate one sliderInput with ranking between 1-5, step = 0.5, for each beer picked from a selectPicker" 
+
+<details>
+<summary>Hint</summary>
+
+```{r eval = FALSE}
+
+  fn_beerslider <- function(input_id,input_label){
+    box(width = 4,
+    sliderInput(inputId = input_id, label = input_label, min = 0, max = 5, value = 2.5, step = 0.5)
+    )
+  }
+  
+  df_selectedbeers <- reactive({
+    beers %>% 
+      filter(beer_name %in% input$selected_beers) %>% 
+      mutate(input_id = paste0("rating_",beer_id),
+             input_label = paste0('Rating for ',beer_name))
+  })
+  
+  output$review_box <- renderUI({
+    
+    req(input$selected_beers)
+    
+    box(width = 12, title = "Ratings Box",
+        map2(df_selectedbeers()$input_id,df_selectedbeers()$input_label,fn_beerslider),
+        br(),
+        div(actionButton('submit_ratings',"Submit Ratings", class = 'btn-success'), style = 'text-align:center;')
+        )
+  })
+
+```
+
+
+</details>
+
+## 2 - Add dynamic filters
+
+Prompt: 
+
+> "Pass dynamic filters into the selectPicker so that we can more easily find beers by most-reviewed, type, and more"
+
+Helpfully borrowing some code inspired by Hadley's new Mastering Shiny book:
+
+```{r eval = FALSE}
+
+  fn_filter <- function(x,val){
+    
+    if(is.numeric(x)) {return(!is.na(x) & x >= val[[1]] & x<=val[[2]])}
+    
+    if(is.character(x)) {return(x %in% val)}
+    
+    TRUE
+  }
+
+```
+
+
+<details>
+<summary>Hint</summary>
+
+```{r eval = FALSE}
+
+  filter_names <- c('review_count','beer_style','review_avg')
+  
+  filtered_beernames <- reactive({
+    selected <- map(filter_names,~fn_filter(beers[[..1]],input[[..1]])) %>% 
+      reduce(`&`)
+    
+    beers %>% 
+      filter(selected) %>% 
+      pull(beer_name)
+  })
+  
+  observeEvent(filtered_beernames(),{
+    updatePickerInput(session,"selected_beers",choices = filtered_beernames())
+  })
+
+```
+
+
+</details>
+
+## 3 - Read back inputs
+
+Prompt: 
+
+> "Read the user ratings from the generated sliderInputs into a dataframe"
+
+
+<details>
+<summary>Hint</summary>
+
+```{r eval = FALSE}
+
+  df_ratings <- eventReactive(input$submit_ratings,{
+    df_selectedbeers() %>%
+      mutate(user_rating= map_dbl(input_id,~input[[..1]])) %>%
+      select(user_rating,everything())
+  })
+
+```
+
+
+</details>
+
+
+</details>
+
+## 4 - Write to csv
+
+Prompt: 
+
+> Save reviews into a data folder per brewery
+
+<details>
+<summary>Hint</summary>
+
+```{r eval = FALSE}
+
+  observeEvent(df_ratings(),{
+    
+    df_save <- df_ratings() %>% 
+      mutate(file_name = glue::glue('data/{brewery_name}.csv')) %>% 
+      nest(data = -"file_name")
+    
+      walk2(df_save$data,df_save$file_name,~write_csv(..1,..2,append = file.exists(..2)))
+      
+      Sys.sleep(2)
+      
+      showModal(modalDialog("Saved to CSV!"))
+  })
+
+```
+
+
+</details>
+
+## CHEERS
+
+Cheers, folks! `r emo::ji('beers')` 
+
+That's all I had roadmapped - questions? Other cool ideas to tackle? 
+
+I'll be saving a copy of the app we made into the Presentations/Week9 folder to go along with my "practice" app and it should run fairly standalone (provided you have the requisite packages, of course `r emo::ji('package')`)
+
