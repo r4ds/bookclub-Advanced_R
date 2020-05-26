@@ -44,7 +44,7 @@ The protected code is inside the `{}` and the handler code is `message = functio
 In the tryCatch example where we have `finally` print "Thank God for Beer" I find it interesting that this is printed **before** the code inside the tryCatch. Can anyone explain why?
 :::
 
-The handler code is evaluated prior to the protected code, that is why we see it second!
+From the help it's, "expression to be evaluated before returning or exiting." That means it's the final thing that happens inside the `tryCatch`, but it happens before the return (of NA or the string), so it happens first.
 
 ## 8.4.3 Calling handlers {-}
 
