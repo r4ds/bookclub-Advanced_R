@@ -8,20 +8,16 @@ library(rlang)
 ## 8.3 Ignoring conditions {-}
 
 :::question
-I can't quite think of a time where `try` is more appropraite than `tryCatch` - does anyone have an example?
+I can't quite think of a time where `try` is more appropriate than `tryCatch` - does anyone have an example?
 :::
 
-:::TODO
-XXX
-:::
+It seems that try is just a wrapper for `tryCatch` and you can use it whenever you'd use `try`
 
 :::question
 When would you actually use `suppressWarning`? Maybe when loading libraries? I created an example for `suppressMessages`, but does someone have a better, practical use case?
 :::
 
-:::TODO
-XXX
-:::
+As a function user, it's common to suppress warnings when loading in data and using `readr` and `dplyr` - but not so much as a function creator
 
 ## 8.4.2 Exiting handlers {-}
 
@@ -39,30 +35,26 @@ tryCatch(
 
 > The protected code is evaluated in the environment of `tryCatch()`, but the handler code is not, because the handlers are functions.
 
-Clarifcation question what is the "handler code" and "protected code"?
+Clarification question what is the "handler code" and "protected code"?
 :::
 
-:::TODO
-The protected code is `message = function(cnd) "There"` and the handler inside the `{}`
-:::
+The protected code is inside the `{}` and the handler code is `message = function(cnd) "There"`
 
 :::question
 In the tryCatch example where we have `finally` print "Thank God for Beer" I find it interesting that this is printed **before** the code inside the tryCatch. Can anyone explain why?
 :::
 
-:::TODO
-XXX
-:::
+From the help it's, "expression to be evaluated before returning or exiting." That means it's the final thing that happens inside the `tryCatch`, but it happens before the return (of NA or the string), so it happens first.
 
 ## 8.4.3 Calling handlers {-}
 
 :::question
-Can we make up our own bubbling and muffled `withCallingHandlers` examples? The example code was a little unclear to me.
+How would you define bubbling up?
 :::
 
-:::TODO
-Bubbling is the phenomenon where all the handler statements will be evaluated, all the way up, prior to the body code and muffling allows us to stop this? Not sure if this is true and it doesn't really explain the muffling examples.
-:::
+**Bubbling up:** By default, a condition will continue to propagate to parent handlers, all the way up to the default handler (or an exiting handler, if provided)
+
+I would consider what is being described there "bubbling up".
 
 :::question
 Why is this message executed once per message in the function?
@@ -85,8 +77,22 @@ withCallingHandlers(
 ```
 :::
 
+The following prints the message once:
+
+```{r}
+withCallingHandlers(
+  message = function(cnd) cat("Caught a message!\n"), 
+  {
+    warning("Someone there?")
+    message("Why, yes!")
+  }
+)
+```
+
+and it comes in the warning message, so it's not really a "direct" print
+
 :::TODO
-XXX
+Oh wait, the handler code is named `message`, so is it possible that the two message calls in the protected block are actually calling both `base::message` and the message - named handler?
 :::
 
 :::question
@@ -95,17 +101,51 @@ XXX
 Can we come up with an example for this masking? I think seeing it will help me understand...
 :::
 
-:::TODO
-XXX
-:::
+This just means that you cannot capture the return value of your handler (but you sort of can)
+
+```{r}
+f <- function() {
+  my_lovin <- NULL
+  withCallingHandlers(
+    message = function(cnd) {my_lovin <<- "not this time"},
+    {
+      never_ever_gunna_get_it = message("No, you're never gonna get it")
+    }
+  )
+  my_lovin
+}
+f()
+```
 
 :::question
 How does muffling differ from `suppressWarnings`?
 :::
 
-:::TODO
-XXX
-:::
+muffling allows for an over-ride/replacement of messages, while suppress just quiets everything:
+
+```{r}
+fn <- function() {
+  inform("Beware!", "my_particular_msg")
+  inform("On your guard!")
+  "foobar"
+}
+```
+
+Now we can use a new definition of `my_particular_msg` to replace "Beware"
+
+```{r}
+with_handlers(fn(),
+  my_particular_msg = calling(function(cnd) {
+    inform("Dealt with this particular message")
+    cnd_muffle(cnd)
+  })
+)
+```
+whereas suppressMessages just returns foobar:
+
+```{r}
+suppressMessages(fn())
+```
 
 ## 8.4.5.2 Exercises {-}
 
@@ -126,7 +166,7 @@ show_condition <- function(code) {
 }
 ```
 
-The first three calls to `show_condition` make sense to me, and I even understand that the first time the code is evaluated inside a `tryCatch` it exists (that's why it returns `message`) but how are you suppling `3` arguments to a function that just takes on one argument, `code`? Is that what the `{}` are for?
+The first three calls to `show_condition` make sense to me, and I even understand that the first time the code is evaluated inside a `tryCatch` it exists (that's why it returns `message`) but how are you supplying `3` arguments to a function that just takes on one argument, `code`? Is that what the `{}` are for?
 
 ```{r, eval=FALSE}
 show_condition({
@@ -137,9 +177,7 @@ show_condition({
 ```
 :::
 
-:::TODO
-XXX
-:::
+`{}` let us execute multiple lines of code!
 
 ## 8.4.5.3 Exercises {-}
 
@@ -147,7 +185,7 @@ XXX
 I couldn't follow the manual's answer for what's happening here, can we come up with our own answer for what's happening here in words?
 :::
 
-```{r, eval=FALSE}
+```{r}
 withCallingHandlers(
   message = function(cnd) message("b"),
   withCallingHandlers(
@@ -157,24 +195,38 @@ withCallingHandlers(
 )
 ```
 
+The first call to `withcallinghandlers` adds a condition handler for conditions with class "message" to the handler stack (not sure if its actually a stack?)  and then executes the second `withcallinghandlers` which adds another condition handler for conditions with class "message" to the handler stack (see above), and then executes the code `message("c")`.
 
-:::TODO
-XXX
-:::
+What happens next is a chain reaction of handlers. The call `message("c")` is handled by the inner handler, which then calls `message("a")`, but `message("a")` is caught by the outer handler, and so it outputs `b` first.  
 
-## 8.5.4.2 Exercises {-}
+Then the inner handler resolves itself and outputs `a` and then that condition (having not been muffled) "bubbles up" to the outer handler, which calls `message("b")` again producing the second `b` and again since the message wasn't muffled, the original condition `message("c")` "bubbles up" to the top where it is evaluated producing the output `c`
 
 :::question
-Q: Inside a package you often need to stop with an error when something is not right. Other packages that depend on your package might be tempted to check these errors in their unit tests. How could you help these packages to avoid relying on the error message which is part of the user interface rather than the API and might change without notice?
-
-A: Instead returning an error it might be preferable to throw a customized condition and place a standardized error message inside the metadata. Then the downstream package could check for the class of the condition, rather than inspecting the message.
-
-Can we come up with something concrete for this?
+Another exercise: Guess the output of these two functions:
 :::
 
-:::TODO
-XXX
-:::
+```{r}
+i <- 1
+withCallingHandlers(
+  message = function(cnd) {message(paste0(i, ". b")); i <<- i+1},
+  withCallingHandlers(
+    message = function(cnd) {message(paste0(i, ". a")); i <<- i+1},
+    {message(paste0(i, ". c"))}
+  )
+)
+```
+
+```{r}
+i <- 1
+withCallingHandlers(
+  message = function(cnd) {i <<- i+1; message(paste0(i, ". b"))},
+  withCallingHandlers(
+    message = function(cnd) {i <<- i+1; message(paste0(i, ". a"))},
+    {message(paste0(i, ". c"))}
+  )
+)
+```
+
 
 ## 8.6.3 Resignal {-}
 
@@ -198,11 +250,10 @@ warning2error({
 ```
 Error: Hello
 ```
-:::
 
-:::TODO
-We are passing `warn("Hello")` as handler code but since it's an `abort` the protected code `x` never gets evaluated? That seems wrong. 
-:::
+The function `warning2error` captures an expression which is evaluated by `withCallingHandlers` where you have defined a handler for warning conditions. The handler captures the condition cnd raised by warn which is `structure(list(message = "Hello"), class = c("warning", "condition")`
+
+The function `conditionMessage` is an s3 generic which evaluates to `conditionMessage.condition` which simply accesses `cnd$message` this is then the input to abort which raises an error with the message `"Hello"`
 
 ## 8.6.4 Record {-}
 
@@ -269,9 +320,7 @@ catch_cnds({
 })
 ```
 
-:::TODO
-XXX
-:::
+I'm not positive, but I don't think so without mucking around in the C code. You "can" using try instead of `tryCatch`, but I can't think of a way to have it let you try each line in your passed in expression for example
 
 :::question
 What is `signal` and what is it doing here?
@@ -288,9 +337,18 @@ log <- function(message, level = c("info", "error", "fatal")) {
 ```
 :::
 
-:::TODO
-XXX
-:::
+Signal is a general function that calls abort, inform  or warn. It has the same signature as those functions except for the class argument that is necessary for signal but NULL by default for each of the others
+
+```{r, eval=FALSE}
+signal <- function(message, class, ..., .subclass) {
+  if (!missing(.subclass)) {
+    deprecate_subclass(.subclass)
+  }
+  message <- collapse_cnd_message(message)
+  cnd <- cnd(class, ..., message = message)
+  cnd_signal(cnd)
+}
+```
 
 :::question
 > If you create a condition object by hand, and signal it with signalCondition(), cnd_muffle() will not work. Instead you need to call it with a muffle restart defined, like this: `withRestarts(signalCondition(cond), muffle = function() NULL)`
@@ -298,21 +356,65 @@ XXX
 Where does this code go given the prior example? 
 :::
 
-:::TODO
-XXX
-:::
+We would replace the code `cnd_muffle(cnd)`:
+
+```{r, eval=FALSE}
+ignore_log_levels <- function(expr, levels) {
+  withCallingHandlers(
+    log = function(cnd) {
+      if (cnd$level %in% levels) {
+        # cnd_muffle(cnd)
+        withRestarts(signalCondition(cnd), muffle = function() NULL)
+      }
+    },
+    expr
+  )
+}
+
+record_log(ignore_log_levels(log("Hello"), "warning"))
+```
+
+```
+[info] "Hello"
+```
+
 
 ## 8.6.6.2 Exercises {-}
 
 :::question
-> Calling handlers are called in the context of the call that signalled the condition. Exiting handlers are called in the context of the call to tryCatch().
+> Calling handlers are called in the context of the call that signaled the condition. Exiting handlers are called in the context of the call to tryCatch().
 
 What exactly does this mean? tryCatch evaluates what we were calling the protected code first and calling handlers execute the handling code first? Can we make a simple example?
 :::
 
-:::TODO
-XXX
-:::
+- `tryCatch` is a project manager who oversees everything and then personally hands over the end product
+- `withCallingHandlers` writes some procedures/guidelines and assumes everyone has enough information to get their jobs done
+
+Comparing:
+
+```{r}
+f <- function() g()
+g <- function() h()
+h <- function() message("!")
+
+withCallingHandlers(f(), message = function(cnd) {
+  lobstr::cst()
+  cnd_muffle(cnd)
+})
+```
+
+`withCallingHandlers` is run to completion before `f` is called/put onto the stack. While `f` is in progress, `g` needs to be called so `g` is put on top of the stack, then `h` etc. Eventually they're all completed and taken off the stack (in reverse order). Then the handler `(function (cnd) ...` is called
+
+While
+
+```{r}
+tryCatch(f(), message = function(cnd) lobstr::cst())
+```
+
+`tryCatch` is still on the stack when the handler is called i.e. value, `tryCatchOne`, `tryCatchList` and `tryCatch` are all still in line to be completed
+
+
+Calling handlers are called in the context of the call that signaled the condition, in this case,`f()`. So the message handler returns a value to the environment where `f()` is a meaningful call. Exiting handlers are called in the context of the call to `tryCatch()`. The exiting handler returns to an ongoing `tryCatch()` so it can do whatever it needs to do.
 
 ## 8.6.6.4 Exercises {-}
 
@@ -322,14 +424,86 @@ XXX
 What does this mean? You can't stop the function if you set an `interrupt` argument inside a `tryCatch`?
 :::
 
-:::TODO
-XXX
-:::
+That's exactly it - this was a warning not to use `inturrupt` in your functions!
 
 ## Slides {-}
 
 :::question
-Let's revist my example from the talk: can we build on this to use tidyeval so that the user can write `beer_states %>% beer_mean(state)` [I think we need to use `.data` and note how state is given as an object so we need to use tidyeval to suppress it's evaluation...]
+What environment(s) these restarts are called within, or if that even applies or matters
+:::
+
+Given this little example:
+
+```{r}
+# low level function
+# if text isn't correct then abort with class malformed_text
+is_correct <- function(text) {
+  print('parent in low: '); print(env_parent())
+  print('current in low: '); print(env_parent())
+  if (text != "CORRECT") {
+    msg <- paste0(text, " needs to be 'CORRECT'")
+    abort(
+      "malformed_text",
+      message = msg,
+      text = text
+    )
+  }
+  return(text)
+}
+# medium level function
+# apply low level function to all text in a list
+# if it doesn't pass give it the restart skip_text
+# which will change that entry to NA
+replace_not_correct <- function(all_text) {
+  # f <- function(x) { print(current_env()); is_correct(x) }
+  lapply(all_text, function(text) {
+    withRestarts(
+      # f(text),
+      { print('parent in mid: ') ; print(env_parent()); print('current in mid: '); print(current_env()); is_correct(text) },
+      skip_text = function(e){ NA;  print('parent in mid skip: '); print(env_parent()); print('current in mid skip: '); print(current_env())}
+    )
+  })
+}
+# res <- replace_not_correct(list('A', 'B', 'C'))
+# res <- replace_not_correct(list('CORRECT', 'A'))
+# res
+# high level function
+# if you have an error of type malformed_text, 
+# use the restart from the midlevel function
+analyze_text <- function(all_text) {
+  withCallingHandlers(
+    malformed_text = function(e) invokeRestart("skip_text"),
+    lapply(all_text, replace_not_correct)
+  )
+}
+analyze_text(list("CORRECT", "NOT", "CORRECT"))
+```
+
+So, the parent environment of the handler (is that the right term?) called skip_text in the mid-level function is the environment of the expr part of withRestarts (i.e. the first parameter), also in the mid-level function.
+
+:::question
+Are there any default restarts include in base R so that you could `invokeRestart("XXX")` or is the restart always user defined?
+:::
+
+From the warning documentation: 
+
+> While a warning is being processed, a `muffleWarning` restart is available. If this restart is invoked with `invokeRestart`, then warning returns immediately.
+
+We can also use the `computeRestarts` function which lists all available "default" restart functions:
+
+```{r, eval=FALSE}
+computeRestarts()
+```
+
+```
+[[1]]
+<restart: abort >
+```
+
+It seems `computeRestarts()` is able to find `abort` even without `{rlang}` attached! Which means it surely would be able to find some function from the base packages if one existed. But it does not, so that leads me to believe that they aren't any beyond `muffleWarning`. it seems, in general, you need to specify a function name for `invokeRestart()`
+
+:::question
+Let's revisit my example from the talk: can we build on this to use tidyeval so that the user can write `beer_states %>% beer_mean(state)` [I think we need to use `.data` and note how state is given as an object so we need to use tidyeval to suppress it's evaluation...]
 :::
 
 ```{r, eval=FALSE}
