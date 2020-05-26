@@ -24,15 +24,18 @@ All Meetings Scheduled for 8:00 PM Eastern unless otherwise noted
 - 2020-05-28 Chapter 9 - Functionals: [Tan Ho](https://twitter.com/_tanho)
 - 2020-06-04 Chapter 10 - [Function factories](https://cran.r-project.org/package=factory): [Jon Harmon](https://twitter.com/jonthegeek)
 - 2020-06-11 Chapter 11 - Function operators: [Tony ElHabr](https://twitter.com/TonyElHabr)
-- 2020-06-18 Chapters [12 &] 13 - OOP base types & S3: 
-- 2020-06-25 Chapter 14 - R6:
-- 2020-07-02 Chapters 15 [& 16] - S4 + Trade-offs:
-- 2020-07-09 Chapter 17 - Big Picture
-- 2020-07-16 Chapter 18 - Expressions:
-- 2020-07-23 Chapter 19 - Quasiquotation:
-- 2020-07-30 Chapter 20 - Evaluation:
-- 2020-08-06 Chapter 21 - Translating R code:
-- 2020-08-13 Chapter 22 - Debugging:
-- 2020-08-20 Chapter 23 - Measuring performance:
-- 2020-08-27 Chapter 24 - Improving performance:
-- 2020-09-03 Chapter 25 - Rewriting R code in C++:
+- 2020-06-18 Chapter 12 - OOP base types:
+- 2020-06-25 Chapter 13 - S3: [Daryn Ramsden](https://twitter.com/thisisdaryn) 
+- 2020-07-02 Chapter 14 - R6:
+- 2020-07-09 Chapter 15 - S4:
+- 2020-07-16 Chapter 16 - Trade-offs:
+- 2020-07-23 Chapter 17 - Metaprogramming, big picture:
+- 2020-07-30 Chapter 18 - Expressions:
+- 2020-08-06 Chapter 19 - Quasiquotation:
+- 2020-08-13 Chapter 20 - Evaluation:
+- 2020-08-20 Chapter 21 - Translating R code:
+- 2020-08-27 Chapter 22 - Debugging:
+- 2020-09-03 Chapter 23 - Measuring performance:
+- 2020-09-10 Chapter 24 - Improving performance:
+- 2020-09-17 Chapter 25 - Rewriting R code in C++:
+>>>>>>> 90a529a7153bfb089f9dbd500041d7208fb81d40
