@@ -141,12 +141,12 @@ $(document).ready(function () {
 <ul>
 <li>map and friends like map2/pmap, lgl/chr/dbl</li>
 <li>walk</li>
-<li>modify</li>
 <li>reduce</li>
+<li>modify</li>
 </ul>
 <p>Some prerequisite assumptions I’m making here:</p>
 <ol style="list-style-type: decimal">
-<li><p>You’ve already read chapter 9 in the Adv R book (and/or)</p></li>
+<li><p>You’ve already read chapter 9 in the Adv R book (🤨)</p></li>
 <li><p>You’ve read ch21 of R4DataScience (i.e. the chapter on purrr) (and/or)</p></li>
 <li><p>You have some familiarity with purrr, lapply, or loops</p></li>
 <li><p>You’ve heard of the glorious Shiny (it’s okay if you haven’t built an app before!)</p></li>
@@ -187,28 +187,27 @@ beer_reviews %&gt;%
   sample_n(10) %&gt;% 
   str()</code></pre>
 <pre><code>## tibble [10 x 13] (S3: tbl_df/tbl/data.frame)
-##  $ brewery_id        : num [1:10] 71 3 132 913 206 ...
-##  $ brewery_name      : chr [1:10] &quot;Fuller Smith &amp; Turner PLC&quot; &quot;Abita Brewing Co.&quot; &quot;Rogue Ales&quot; &quot;Brauerei Spezial&quot; ...
-##  $ review_time       : num [1:10] 1.06e+09 1.32e+09 1.27e+09 1.14e+09 1.31e+09 ...
-##  $ review_overall    : num [1:10] 3.5 3 4.5 4 3 3 4 4 4 4
-##  $ review_aroma      : num [1:10] 4 3.5 3.5 3.5 2.5 4 4 3.5 4 3.5
-##  $ review_appearance : num [1:10] 4 3 4 3.5 3 3.5 4 4 3.5 4
-##  $ review_profilename: chr [1:10] &quot;Stingray5&quot; &quot;mrfrancis&quot; &quot;ToasterChef&quot; &quot;AltBock&quot; ...
-##  $ beer_style        : chr [1:10] &quot;English India Pale Ale (IPA)&quot; &quot;Vienna Lager&quot; &quot;Märzen / Oktoberfest&quot; &quot;Rauchbier&quot; ...
-##  $ review_palate     : num [1:10] 3.5 3 4.5 3 3.5 3.5 4 4 3.5 4
-##  $ review_taste      : num [1:10] 3 3.5 4 3.5 3.5 3 4 3.5 3.5 4
-##  $ beer_name         : chr [1:10] &quot;Fuller&#39;s India Pale Ale&quot; &quot;Amber&quot; &quot;Maierfest Lager&quot; &quot;Spezial Rauchbier Lager&quot; ...
-##  $ beer_abv          : num [1:10] 4.9 4.5 5.6 4.6 5.2 5 6.1 5.6 5.4 8.5
-##  $ beer_beerid       : num [1:10] 733 5 51869 2960 45931 ...</code></pre>
+##  $ brewery_id        : num [1:10] 11063 436 3456 1500 158 ...
+##  $ brewery_name      : chr [1:10] &quot;Ølfabrikken&quot; &quot;Brouwerij Alken-Maes&quot; &quot;Brouwerij Sint-Jozef&quot; &quot;Freeport Brewing Company&quot; ...
+##  $ review_time       : num [1:10] 1.24e+09 1.16e+09 1.14e+09 1.20e+09 1.15e+09 ...
+##  $ review_overall    : num [1:10] 3 4 3 4.5 3.5 4.5 4.5 4 4 4
+##  $ review_aroma      : num [1:10] 4 4 2.5 3.5 5 3.5 4 4.5 4 3.5
+##  $ review_appearance : num [1:10] 3.5 4.5 3.5 4 4.5 4 4.5 4 4.5 3
+##  $ review_profilename: chr [1:10] &quot;northyorksammy&quot; &quot;scottoale&quot; &quot;Absumaster&quot; &quot;ericj551&quot; ...
+##  $ beer_style        : chr [1:10] &quot;Dubbel&quot; &quot;Dubbel&quot; &quot;Dubbel&quot; &quot;English Brown Ale&quot; ...
+##  $ review_palate     : num [1:10] 4 3.5 2.5 4 4 4 4 4 4 3.5
+##  $ review_taste      : num [1:10] 3 4 2.5 4 4.5 4.5 4 3.5 3.5 4
+##  $ beer_name         : chr [1:10] &quot;Ølfabrikken Abbey Ale (Special Reserve)&quot; &quot;Grimbergen Dubbel&quot; &quot;Sint Gummarus Dubbel&quot; &quot;Brown Hound Brown Ale&quot; ...
+##  $ beer_abv          : num [1:10] 8.5 6.5 7 NA 9.5 10 7 6 5.8 6.8
+##  $ beer_beerid       : num [1:10] 40047 1496 15090 4765 19216 ...</code></pre>
 </div>
 <div id="section-game-plan" class="section level2">
 <h2>Game Plan</h2>
 <p>I’ve roadmapped a few features that I’d like to try to include (and should help demonstrate some FUNctionals)</p>
 <ol style="list-style-type: decimal">
 <li><p>Dynamically generate a review form for each beer selected from a picker (<em>using map</em>)</p></li>
-<li><p>Add some filters to the select option so we can quickly find beers by type, ABV, and average rating (<em>map/reduce</em>)</p></li>
+<li><p>Add some filters to the select option so we can quickly find beers by type, review_count, and average rating (<em>map/reduce</em>)</p></li>
 <li><p>Read back the ratings from the user! (<em>map lgl/chr/dbl/int</em>)</p></li>
-<li><p>Convert to z-scores to better compare rankings (<em>modify</em>)</p></li>
 <li><p>Write reviews to one csv per brewery (<em>walk</em>)</p></li>
 </ol>
 </div>
@@ -251,17 +250,29 @@ write_parquet(beers,here::here(&quot;Presentations/Week9/data/beers.pdata&quot;)
 </blockquote>
 <details>
 <p><summary>Hint</summary></p>
-<pre class="r"><code>pickerInput(&quot;selected_beers&quot;,&quot;Beer Selection&quot;,
-            choices = beers$beer_name,
-            selected = NULL,
-            multiple = TRUE,options = list(title = &quot;Select Beer&quot;,`live-search`=TRUE)
-            )
-
-fn_ratinginput &lt;- function(input_id,input_name){
-  sliderInput(inputId = input_id,label = input_name,min = 0,max = 5,value = 2.5,step = 0.5)
-}
-
-map()</code></pre>
+<pre class="r"><code>  fn_beerslider &lt;- function(input_id,input_label){
+    box(width = 4,
+    sliderInput(inputId = input_id, label = input_label, min = 0, max = 5, value = 2.5, step = 0.5)
+    )
+  }
+  
+  df_selectedbeers &lt;- reactive({
+    beers %&gt;% 
+      filter(beer_name %in% input$selected_beers) %&gt;% 
+      mutate(input_id = paste0(&quot;rating_&quot;,beer_id),
+             input_label = paste0(&#39;Rating for &#39;,beer_name))
+  })
+  
+  output$review_box &lt;- renderUI({
+    
+    req(input$selected_beers)
+    
+    box(width = 12, title = &quot;Ratings Box&quot;,
+        map2(df_selectedbeers()$input_id,df_selectedbeers()$input_label,fn_beerslider),
+        br(),
+        div(actionButton(&#39;submit_ratings&#39;,&quot;Submit Ratings&quot;, class = &#39;btn-success&#39;), style = &#39;text-align:center;&#39;)
+        )
+  })</code></pre>
 </details>
 </div>
 <div id="section-add-dynamic-filters" class="section level2">
@@ -270,9 +281,31 @@ map()</code></pre>
 <blockquote>
 <p>“Pass dynamic filters into the selectPicker so that we can more easily find beers by most-reviewed, type, and more”</p>
 </blockquote>
+<p>Helpfully borrowing some code inspired by Hadley’s new Mastering Shiny book:</p>
+<pre class="r"><code>  fn_filter &lt;- function(x,val){
+    
+    if(is.numeric(x)) {return(!is.na(x) &amp; x &gt;= val[[1]] &amp; x&lt;=val[[2]])}
+    
+    if(is.character(x)) {return(x %in% val)}
+    
+    TRUE
+  }</code></pre>
 <details>
 <p><summary>Hint</summary></p>
-<pre class="r"><code>print(&#39;pie&#39;)</code></pre>
+<pre class="r"><code>  filter_names &lt;- c(&#39;review_count&#39;,&#39;beer_style&#39;,&#39;review_avg&#39;)
+  
+  filtered_beernames &lt;- reactive({
+    selected &lt;- map(filter_names,~fn_filter(beers[[..1]],input[[..1]])) %&gt;% 
+      reduce(`&amp;`)
+    
+    beers %&gt;% 
+      filter(selected) %&gt;% 
+      pull(beer_name)
+  })
+  
+  observeEvent(filtered_beernames(),{
+    updatePickerInput(session,&quot;selected_beers&quot;,choices = filtered_beernames())
+  })</code></pre>
 </details>
 </div>
 <div id="section-read-back-inputs" class="section level2">
@@ -283,41 +316,46 @@ map()</code></pre>
 </blockquote>
 <details>
 <p><summary>Hint</summary></p>
-<pre class="r"><code>print(&#39;pie&#39;)</code></pre>
+<pre class="r"><code>  df_ratings &lt;- eventReactive(input$submit_ratings,{
+    df_selectedbeers() %&gt;%
+      mutate(user_rating= map_dbl(input_id,~input[[..1]])) %&gt;%
+      select(user_rating,everything())
+  })</code></pre>
 </details>
-</div>
-<div id="section-convert-to-z-scores" class="section level2">
-<h2>4 - Convert to z-scores</h2>
-<p>Prompt:</p>
-<blockquote>
-<p>Apply a z-score function to the returned data</p>
-</blockquote>
-<details>
-<p><summary>Hint</summary></p>
-<pre class="r"><code>print(&#39;pie&#39;)</code></pre>
 </details>
 </div>
 <div id="section-write-to-csv" class="section level2">
-<h2>5 - Write to csv</h2>
+<h2>4 - Write to csv</h2>
 <p>Prompt:</p>
 <blockquote>
 <p>Save reviews into a data folder per brewery</p>
 </blockquote>
 <details>
 <p><summary>Hint</summary></p>
-<pre class="r"><code>print(&#39;pie&#39;)</code></pre>
+<pre class="r"><code>  observeEvent(df_ratings(),{
+    
+    df_save &lt;- df_ratings() %&gt;% 
+      mutate(file_name = glue::glue(&#39;data/{brewery_name}.csv&#39;)) %&gt;% 
+      nest(data = -&quot;file_name&quot;)
+    
+      walk2(df_save$data,df_save$file_name,~write_csv(..1,..2,append = file.exists(..2)))
+      
+      Sys.sleep(2)
+      
+      showModal(modalDialog(&quot;Saved to CSV!&quot;))
+  })</code></pre>
 </details>
 </div>
 <div id="section-cheers" class="section level2">
 <h2>CHEERS</h2>
 <p>Cheers, folks! 🍻</p>
 <p>That’s all I had roadmapped - questions? Other cool ideas to tackle?</p>
-<p>I’ll be saving a copy of the app we made into the Presentations/Week9 folder and it should run fairly standalone (provided you have the requisite packages, of course 📦)</p>
+<p>I’ll be saving a copy of the app we made into the Presentations/Week9 folder to go along with my “practice” app and it should run fairly standalone (provided you have the requisite packages, of course 📦)</p>
 </div>
 <div id="section-section-2" class="section level2">
 <h2></h2>
 <p>This chunk seems broken. Oh well.</p>
-&lt;!-cript type="application/shiny-prerendered" data-context="server-start">
+<!--ript type="application/shiny-prerendered" data-context="server-start">
 
   knitr::opts_chunk$set(echo = TRUE)
 
@@ -333,15 +371,15 @@ map()</code></pre>
   library(learnr)
 
 </script>
-<!--cript type="application/shiny-prerendered" data-context="server">
+<!---ript type="application/shiny-prerendered" data-context="server">
 learnr:::register_http_handlers(session, metadata = NULL)
 </script>
-<!--cript type="application/shiny-prerendered" data-context="server">
+<!---ript type="application/shiny-prerendered" data-context="server">
 session$onSessionEnded(function() {
         learnr:::session_stop_event(session)
       })
 </script>
-<!--cript type="application/shiny-prerendered" data-context="data">
+<!---ript type="application/shiny-prerendered" data-context="data">
 
 beers <- beer_reviews %>% 
   group_by(review_profilename) %>%   # Scaling reviews by reviewer
@@ -364,7 +402,8 @@ beers <- beer_reviews %>%
 write_parquet(beers,here::here("Presentations/Week9/data/beers.pdata"))
 
 </script>
-<!- <!--html_preserve-->
+<!--
+<!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="dependencies">
 {"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["navigation"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/navigation-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tabsets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["default.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["5.1.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/fontawesome"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/all.css","css/v4-shims.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["4.4.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["idb-keyvalue"]},{"type":"character","attributes":{},"value":["3.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/idb-keyval"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["idb-keyval-iife-compat.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1"]}]}]}
 </script>
