@@ -38,4 +38,3 @@ All Meetings Scheduled for 8:00 PM Eastern unless otherwise noted
 - 2020-09-03 Chapter 23 - Measuring performance:
 - 2020-09-10 Chapter 24 - Improving performance:
 - 2020-09-17 Chapter 25 - Rewriting R code in C++:
->>>>>>> 90a529a7153bfb089f9dbd500041d7208fb81d40
