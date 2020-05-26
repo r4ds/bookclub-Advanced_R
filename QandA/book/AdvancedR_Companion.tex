@@ -119,7 +119,7 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-05-23}
+\date{2020-05-26}
 
 \begin{document}
 \maketitle
@@ -363,7 +363,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc9f886b038"
+## [1] "0x7f93c0e25798"
 \end{verbatim}
 
 \begin{Shaded}
@@ -373,7 +373,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc9f886b038"
+## [1] "0x7f93c0e25798"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -385,7 +385,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc9f1b07ea0"
+## [1] "0x7f93be62fb88"
 \end{verbatim}
 
 \begin{Shaded}
@@ -395,8 +395,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fc9f1b22a28] <list> 
-## └─[2:0x7fc9f886b038] <dbl>
+## █ [1:0x7f93be5fd720] <list> 
+## └─[2:0x7f93c0e25798] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -406,7 +406,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc9f4401c28"
+## [1] "0x7f93be3cc610"
 \end{verbatim}
 
 \begin{Shaded}
@@ -443,7 +443,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fc9f3045898>"
+## [1] "<0x7f93c6ada1f8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -453,7 +453,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fc9f3045898>
+## <0x7f93c6ada1f8>
 \end{verbatim}
 
 \begin{Shaded}
@@ -463,7 +463,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc9f3045898"
+## [1] "0x7f93c6ada1f8"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -512,7 +512,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc9fd10c548"
+## [1] "0x7f93c6b78d88"
 \end{verbatim}
 
 \begin{Shaded}
@@ -522,7 +522,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fc9fd10c548>"
+## [1] "<0x7f93c6b78d88>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -532,7 +532,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fc9fd10c548 -> 0x7fc9f95210c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7f93c6b78d88 -> 0x7f93c6b9e408]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -628,7 +628,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc9f9ca8008"
+## [1] "0x7f93c3a02558"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -641,7 +641,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc9f302a108"
+## [1] "0x7f93c2b75138"
 \end{verbatim}
 
 \begin{Shaded}
@@ -664,7 +664,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc9f302a108"
+## [1] "0x7f93c2b75138"
 \end{verbatim}
 
 \begin{Shaded}
@@ -674,7 +674,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc9f302a108"
+## [1] "0x7f93c2b75138"
 \end{verbatim}
 
 \begin{Shaded}
@@ -697,7 +697,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc9f302a108"
+## [1] "0x7f93c2b75138"
 \end{verbatim}
 
 \begin{Shaded}
@@ -707,7 +707,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc9f8593b08"
+## [1] "0x7f93c255bce8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -730,7 +730,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc9f9d84148"
+## [1] "0x7f93bca432d8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2533,11 +2533,11 @@ This will work:
 ## # A tibble: 5 x 1
 ##      x1
 ##   <dbl>
-## 1 0.713
-## 2 0.451
-## 3 0.893
-## 4 0.100
-## 5 0.857
+## 1 0.447
+## 2 0.564
+## 3 0.883
+## 4 0.864
+## 5 0.136
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2611,7 +2611,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 253 213 239 283 277 250 279 251 273 242
+##  [1] 297 268 228 213 290 204 265 201 287 281
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3048,7 +3048,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fc9f19c57c8>
+## <bytecode: 0x7f93b9b88d80>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3919,7 +3919,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7fc9f53491b0>
+## <bytecode: 0x7f93b99bc290>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4057,7 +4057,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7fc9f84a6520>
+## <bytecode: 0x7f93c254faf8>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4176,7 +4176,7 @@ The protected code is inside the \texttt{\{\}} and the handler code is \texttt{m
 
 In the tryCatch example where we have \texttt{finally} print ``Thank God for Beer'' I find it interesting that this is printed \textbf{before} the code inside the tryCatch. Can anyone explain why?
 
-The handler code is evaluated prior to the protected code, that is why we see it second!
+From the help it's, ``expression to be evaluated before returning or exiting.'' That means it's the final thing that happens inside the \texttt{tryCatch}, but it happens before the return (of NA or the string), so it happens first.
 
 \hypertarget{calling-handlers}{%
 \section*{8.4.3 Calling handlers}\label{calling-handlers}}
@@ -4209,36 +4209,7 @@ Why is this message executed once per message in the function?
 #> Why, yes!
 \end{verbatim}
 
-The following prints the message once:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{withCallingHandlers}\NormalTok{(}
-  \DataTypeTok{message =} \ControlFlowTok{function}\NormalTok{(cnd) }\KeywordTok{cat}\NormalTok{(}\StringTok{"Caught a message!}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{), }
-\NormalTok{  \{}
-    \KeywordTok{warning}\NormalTok{(}\StringTok{"Someone there?"}\NormalTok{)}
-    \KeywordTok{message}\NormalTok{(}\StringTok{"Why, yes!"}\NormalTok{)}
-\NormalTok{  \}}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Warning in withCallingHandlers(message = function(cnd) cat("Caught a message!
-## \n"), : Someone there?
-\end{verbatim}
-
-\begin{verbatim}
-## Caught a message!
-\end{verbatim}
-
-\begin{verbatim}
-## Why, yes!
-\end{verbatim}
-
-and it comes in the warning message, so it's not really a ``direct'' print
-
-Oh wait, the handler code is named \texttt{message}, so is it possible that the two message calls in the protected block are actually calling both \texttt{base::message} and the message - named handler?
+\texttt{withCallingHandlers} could be understood as: ``for each \{message\}, do x''
 
 \begin{quote}
 The return value of a calling handler is ignored because the code continues to execute after the handler completes; where would the return value go? That means that calling handlers are only useful for their side-effects.
@@ -4594,7 +4565,29 @@ If you create a condition object by hand, and signal it with signalCondition(), 
 
 Where does this code go given the prior example?
 
-XXX
+We would replace the code \texttt{cnd\_muffle(cnd)}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ignore_log_levels <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(expr, levels) \{}
+  \KeywordTok{withCallingHandlers}\NormalTok{(}
+    \DataTypeTok{log =} \ControlFlowTok{function}\NormalTok{(cnd) \{}
+      \ControlFlowTok{if}\NormalTok{ (cnd}\OperatorTok{$}\NormalTok{level }\OperatorTok{%in%}\StringTok{ }\NormalTok{levels) \{}
+        \CommentTok{# cnd_muffle(cnd)}
+        \KeywordTok{withRestarts}\NormalTok{(}\KeywordTok{signalCondition}\NormalTok{(cnd), }\DataTypeTok{muffle =} \ControlFlowTok{function}\NormalTok{() }\OtherTok{NULL}\NormalTok{)}
+\NormalTok{      \}}
+\NormalTok{    \},}
+\NormalTok{    expr}
+\NormalTok{  )}
+\NormalTok{\}}
+
+\KeywordTok{record_log}\NormalTok{(}\KeywordTok{ignore_log_levels}\NormalTok{(}\KeywordTok{log}\NormalTok{(}\StringTok{"Hello"}\NormalTok{), }\StringTok{"warning"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[info] "Hello"
+\end{verbatim}
 
 \hypertarget{exercises-6}{%
 \section*{8.6.6.2 Exercises}\label{exercises-6}}
@@ -4685,70 +4678,94 @@ That's exactly it - this was a warning not to use \texttt{inturrupt} in your fun
 
 What environment(s) these restarts are called within, or if that even applies or matters
 
-Given this little example:
+Note: for this example I set my Environment panel in Rstudio to ``Manual Refresh Only'' (the curly arrow menu) while running this to make sure it wasn't doing anything to confuse me.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# low level function}
-\CommentTok{# if text isn't correct then abort with class malformed_text}
-\NormalTok{is_correct <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(text) \{}
-  \ControlFlowTok{if}\NormalTok{ (text }\OperatorTok{!=}\StringTok{ "CORRECT"}\NormalTok{) \{}
-\NormalTok{    msg <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(text, }\StringTok{" needs to be 'CORRECT"}\NormalTok{)}
-    \KeywordTok{abort}\NormalTok{(}
-      \StringTok{"malformed_text"}\NormalTok{,}
-      \DataTypeTok{message =}\NormalTok{ msg,}
-      \DataTypeTok{text =}\NormalTok{ text}
-\NormalTok{    )}
-\NormalTok{  \}}
-  \KeywordTok{return}\NormalTok{(text)}
-\NormalTok{\}}
-
-\CommentTok{# medium level function}
-\CommentTok{# apply low level function to all text in a list}
-\CommentTok{# if it doesn't pass give it the restart skip_text}
-\CommentTok{# which will change that entry to NA}
-\NormalTok{replace_not_correct <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(all_text) \{}
-  \KeywordTok{lapply}\NormalTok{(all_text, }\ControlFlowTok{function}\NormalTok{(text) \{}
+\NormalTok{expensive_function <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x,}
+                               \CommentTok{# warning print the warning and send us to browser}
+                               \DataTypeTok{warning =} \ControlFlowTok{function}\NormalTok{(w) \{ }\KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{'warning:'}\NormalTok{, w ));  }\KeywordTok{browser}\NormalTok{() \},}
+                               \CommentTok{# error print the error and send us to browser}
+                               \DataTypeTok{error=}\ControlFlowTok{function}\NormalTok{(e) \{ }\KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{'e:'}\NormalTok{,e )); }\KeywordTok{browser}\NormalTok{()\} ) \{}
+  \KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"big expensive step we don't want to repeat for x:"}\NormalTok{,x))}
+\NormalTok{  z <-}\StringTok{ }\NormalTok{x  }\CommentTok{# the "expensive operation"}
+  \KeywordTok{print}\NormalTok{(}\StringTok{"Main function caller_env:"}\NormalTok{)}
+  \KeywordTok{print}\NormalTok{(rlang}\OperatorTok{::}\KeywordTok{caller_env}\NormalTok{())}
+  \KeywordTok{print}\NormalTok{(}\StringTok{"Main function current_env:"}\NormalTok{)}
+  \KeywordTok{print}\NormalTok{(rlang}\OperatorTok{::}\KeywordTok{current_env}\NormalTok{())}
+  \KeywordTok{print}\NormalTok{(}\StringTok{"Main function parent:"}\NormalTok{)}
+  \KeywordTok{print}\NormalTok{(rlang}\OperatorTok{::}\KeywordTok{env_parent}\NormalTok{(rlang}\OperatorTok{::}\KeywordTok{current_env}\NormalTok{(), }\DecValTok{1}\NormalTok{))}
+  \ControlFlowTok{repeat}
+  \CommentTok{# second function on z that isn't expensive but could potentially error}
+  \KeywordTok{withRestarts}\NormalTok{(}
     \KeywordTok{withRestarts}\NormalTok{(}
-      \KeywordTok{is_correct}\NormalTok{(text),}
-      \DataTypeTok{skip_text =} \ControlFlowTok{function}\NormalTok{(e)\{ }\OtherTok{NA}\NormalTok{;  }\KeywordTok{print}\NormalTok{(}\KeywordTok{current_env}\NormalTok{())\}}
-\NormalTok{    )}
-\NormalTok{  \})}
-\NormalTok{\}}
-
-\CommentTok{# high level function}
-\CommentTok{# if you have an error of type malformed_text, }
-\CommentTok{# use the restart from the midlevel function}
-\NormalTok{analyze_text <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(all_text) \{}
-  \KeywordTok{withCallingHandlers}\NormalTok{(}
-    \DataTypeTok{malformed_text =} \ControlFlowTok{function}\NormalTok{(e) }\KeywordTok{invokeRestart}\NormalTok{(}\StringTok{"skip_text"}\NormalTok{),}
-    \KeywordTok{lapply}\NormalTok{(all_text, replace_not_correct)}
+      \KeywordTok{withCallingHandlers}\NormalTok{(}
+\NormalTok{        \{}
+          \KeywordTok{print}\NormalTok{(}\StringTok{"withCallingHandlers caller_env:"}\NormalTok{)}
+          \KeywordTok{print}\NormalTok{(rlang}\OperatorTok{::}\KeywordTok{caller_env}\NormalTok{())}
+          \KeywordTok{print}\NormalTok{(}\StringTok{"withCallingHandlers current_env:"}\NormalTok{)}
+          \KeywordTok{print}\NormalTok{(rlang}\OperatorTok{::}\KeywordTok{current_env}\NormalTok{())}
+          \KeywordTok{print}\NormalTok{(}\StringTok{"withCallingHandlers parent:"}\NormalTok{)}
+          \KeywordTok{print}\NormalTok{(rlang}\OperatorTok{::}\KeywordTok{env_parent}\NormalTok{(rlang}\OperatorTok{::}\KeywordTok{current_env}\NormalTok{(), }\DecValTok{1}\NormalTok{))}
+          \KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"attempt cheap operation for z:"}\NormalTok{,z))}
+          \KeywordTok{return}\NormalTok{(}\KeywordTok{log}\NormalTok{(z))}
+\NormalTok{        \},}
+        \DataTypeTok{warning =}\NormalTok{ warning,}
+        \DataTypeTok{error =}\NormalTok{ error}
+\NormalTok{      ),}
+      \DataTypeTok{force_positive =} \ControlFlowTok{function}\NormalTok{() \{}
+\NormalTok{        z <<-}\StringTok{ }\OperatorTok{-}\NormalTok{z}
+        \KeywordTok{print}\NormalTok{(}\StringTok{"force_positive caller_env:"}\NormalTok{)}
+        \KeywordTok{print}\NormalTok{(rlang}\OperatorTok{::}\KeywordTok{caller_env}\NormalTok{())}
+        \KeywordTok{print}\NormalTok{(}\StringTok{"force_positive current_env:"}\NormalTok{)}
+        \KeywordTok{print}\NormalTok{(rlang}\OperatorTok{::}\KeywordTok{current_env}\NormalTok{())}
+        \KeywordTok{print}\NormalTok{(}\StringTok{"force_positive parent:"}\NormalTok{)}
+        \KeywordTok{print}\NormalTok{(rlang}\OperatorTok{::}\KeywordTok{env_parent}\NormalTok{(rlang}\OperatorTok{::}\KeywordTok{current_env}\NormalTok{(), }\DecValTok{1}\NormalTok{))}
+\NormalTok{      \}}
+\NormalTok{    ),}
+    \DataTypeTok{set_to_one =} \ControlFlowTok{function}\NormalTok{() \{z <<-}\StringTok{ }\DecValTok{1}\NormalTok{\}}
 \NormalTok{  )}
 \NormalTok{\}}
+\KeywordTok{expensive_function}\NormalTok{(}\OperatorTok{-}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-\KeywordTok{analyze_text}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\StringTok{"CORRECT"}\NormalTok{, }\StringTok{"NOT"}\NormalTok{, }\StringTok{"CORRECT"}\NormalTok{))}
+You can run it yourself (and then \texttt{invokeRestart("force\_positive")}) to see the results, but to summarize:
+
+\begin{itemize}
+\tightlist
+\item
+  The \texttt{withCallingHandlers} part is executing in exactly the same environment as the function.
+\item
+  The \texttt{force\_positive} restart is executing in its own new environment.
+\item
+  The parent of that environment is the execution environment of the main function.
+\end{itemize}
+
+The \texttt{caller\_env} for \texttt{force\_positive}, though, is still a bit of a mystery. Some further poking found that its grandparent is the base package's namespace, but I don't grok why. Maybe because it's the \texttt{browser()} environment? Is that a thing?
+
+Are there any default restarts include in base R so that you could \texttt{invokeRestart("XXX")} or is the restart always user defined?
+
+From the warning documentation:
+
+\begin{quote}
+While a warning is being processed, a \texttt{muffleWarning} restart is available. If this restart is invoked with \texttt{invokeRestart}, then warning returns immediately.
+\end{quote}
+
+We can also use the \texttt{computeRestarts} function which lists all available ``default'' restart functions:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{computeRestarts}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## <environment: 0x7fc9f6aff150>
+[[1]]
+<restart: abort >
 \end{verbatim}
 
-\begin{verbatim}
-## [[1]]
-## [[1]][[1]]
-## [1] "CORRECT"
-## 
-## 
-## [[2]]
-## [[2]][[1]]
-## <environment: 0x7fc9f6aff150>
-## 
-## 
-## [[3]]
-## [[3]][[1]]
-## [1] "CORRECT"
-\end{verbatim}
+It seems \texttt{computeRestarts()} is able to find \texttt{abort} even without \texttt{\{rlang\}} attached! Which means it surely would be able to find some function from the base packages if one existed. But it does not, so that leads me to believe that they aren't any beyond \texttt{muffleWarning}. it seems, in general, you need to specify a function name for \texttt{invokeRestart()}
 
 Let's revisit my example from the talk: can we build on this to use tidyeval so that the user can write \texttt{beer\_states\ \%\textgreater{}\%\ beer\_mean(state)} {[}I think we need to use \texttt{.data} and note how state is given as an object so we need to use tidyeval to suppress it's evaluation\ldots{}{]}
 
@@ -4850,18 +4867,18 @@ In order to extract p-values the solution manual suggests using \texttt{map\_dbl
 
 \begin{verbatim}
 ## # A tibble: 100 x 1
-##    p_value
-##      <dbl>
-##  1 0.0909 
-##  2 0.00553
-##  3 0.675  
-##  4 0.00951
-##  5 0.0126 
-##  6 0.0115 
-##  7 0.215  
-##  8 0.127  
-##  9 0.00622
-## 10 0.216  
+##      p_value
+##        <dbl>
+##  1 0.195    
+##  2 0.0641   
+##  3 0.317    
+##  4 0.000220 
+##  5 0.0000686
+##  6 0.000908 
+##  7 0.0214   
+##  8 0.0799   
+##  9 0.153    
+## 10 0.0133   
 ## # ... with 90 more rows
 \end{verbatim}
 
@@ -5070,6 +5087,10 @@ Can we come up with an example for \texttt{rapply} allowing us to apply a functi
 
 What exactly is the \href{https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-12.html\#\%25_idx_1096}{Fixed Point Algrithm} and can we go over the books answer?
 
+The fixed point theory is the specific scenario in which \texttt{x\ =\ g(x)}, meaning the functions input is equal to the function's output.
+
+We are creating a function that can be used to find where \texttt{x\ =\ g(x)}
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{fixed_point <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(f, x_init, }\DataTypeTok{n_max =} \DecValTok{10000}\NormalTok{, }\DataTypeTok{tol =} \FloatTok{0.0001}\NormalTok{) \{}
@@ -5094,19 +5115,29 @@ What exactly is the \href{https://mitpress.mit.edu/sites/default/files/sicp/full
 
 \NormalTok{  x}
 \NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
 
-\CommentTok{# Functions with fixed points}
+Functions with fixed points:
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \KeywordTok{fixed_point}\NormalTok{(sin, }\DataTypeTok{x_init =} \DecValTok{1}\NormalTok{)}
-\CommentTok{#> [1] 0.0843}
 \KeywordTok{fixed_point}\NormalTok{(cos, }\DataTypeTok{x_init =} \DecValTok{1}\NormalTok{)}
-\CommentTok{#> [1] 0.739}
+\end{Highlighting}
+\end{Shaded}
 
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{# Functions without fixed points}
 \NormalTok{add_one <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) x }\OperatorTok{+}\StringTok{ }\DecValTok{1}
 \KeywordTok{fixed_point}\NormalTok{(add_one, }\DataTypeTok{x_init =} \DecValTok{1}\NormalTok{)}
-\CommentTok{#> Error: Failed to converge}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+#> Error: Failed to converge
+\end{verbatim}
 
 \bibliography{book.bib,packages.bib}
 

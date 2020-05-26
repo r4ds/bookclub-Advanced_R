@@ -290,7 +290,7 @@ fixed_point <- function(f, x_init, n_max = 10000, tol = 0.0001) {
 ```
 
 Functions with fixed points:
-```{r}
+```{r, eval=FALSE}
 fixed_point(sin, x_init = 1)
 fixed_point(cos, x_init = 1)
 ```
