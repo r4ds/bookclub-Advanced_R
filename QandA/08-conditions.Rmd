@@ -428,8 +428,7 @@ Calling handlers are called in the context of the call that signaled the conditi
 What does this mean? You can't stop the function if you set an `interrupt` argument inside a `tryCatch`?
 :::
 
-That's exactly it - this was a warning not to use `inturrupt` in your functions!
-<<<<<<< HEAD
+That's exactly it - this was a warning not to use `inturrupt` in your functions!ß
 
 ## Slides {-}
 
