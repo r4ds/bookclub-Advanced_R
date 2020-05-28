@@ -77,9 +77,9 @@ withCallingHandlers(
 ```
 :::
 
-<<<<<<< HEAD
+
 `withCallingHandlers` could be understood as: "for each {message}, do x"
-=======
+
 The following prints the message once:
 
 ```{r}
@@ -520,8 +520,6 @@ computeRestarts()
 It seems `computeRestarts()` is able to find `abort` even without `{rlang}` attached! Which means it surely would be able to find some function from the base packages if one existed. But it does not, so that leads me to believe that they aren't any beyond `muffleWarning`. it seems, in general, you need to specify a function name for `invokeRestart()`
 
 :::question
-<<<<<<< HEAD
-=======
 What environment(s) these restarts are called within, or if that even applies or matters
 :::
 
