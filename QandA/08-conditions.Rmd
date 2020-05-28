@@ -77,6 +77,9 @@ withCallingHandlers(
 ```
 :::
 
+
+`withCallingHandlers` could be understood as: "for each {message}, do x"
+
 The following prints the message once:
 
 ```{r}
@@ -250,6 +253,7 @@ warning2error({
 ```
 Error: Hello
 ```
+:::
 
 The function `warning2error` captures an expression which is evaluated by `withCallingHandlers` where you have defined a handler for warning conditions. The handler captures the condition cnd raised by warn which is `structure(list(message = "Hello"), class = c("warning", "condition")`
 
@@ -424,9 +428,94 @@ Calling handlers are called in the context of the call that signaled the conditi
 What does this mean? You can't stop the function if you set an `interrupt` argument inside a `tryCatch`?
 :::
 
-That's exactly it - this was a warning not to use `inturrupt` in your functions!
+That's exactly it - this was a warning not to use `inturrupt` in your functions!ß
 
 ## Slides {-}
+
+:::question
+What environment(s) these restarts are called within, or if that even applies or matters
+:::
+
+Note: for this example I set my Environment panel in Rstudio to "Manual Refresh Only" (the curly arrow menu) while running this to make sure it wasn't doing anything to confuse me.
+
+```{r, eval=FALSE}
+expensive_function <- function(x,
+                               # warning print the warning and send us to browser
+                               warning = function(w) { print(paste('warning:', w ));  browser() },
+                               # error print the error and send us to browser
+                               error=function(e) { print(paste('e:',e )); browser()} ) {
+  print(paste("big expensive step we don't want to repeat for x:",x))
+  z <- x  # the "expensive operation"
+  print("Main function caller_env:")
+  print(rlang::caller_env())
+  print("Main function current_env:")
+  print(rlang::current_env())
+  print("Main function parent:")
+  print(rlang::env_parent(rlang::current_env(), 1))
+  repeat
+  # second function on z that isn't expensive but could potentially error
+  withRestarts(
+    withRestarts(
+      withCallingHandlers(
+        {
+          print("withCallingHandlers caller_env:")
+          print(rlang::caller_env())
+          print("withCallingHandlers current_env:")
+          print(rlang::current_env())
+          print("withCallingHandlers parent:")
+          print(rlang::env_parent(rlang::current_env(), 1))
+          print(paste("attempt cheap operation for z:",z))
+          return(log(z))
+        },
+        warning = warning,
+        error = error
+      ),
+      force_positive = function() {
+        z <<- -z
+        print("force_positive caller_env:")
+        print(rlang::caller_env())
+        print("force_positive current_env:")
+        print(rlang::current_env())
+        print("force_positive parent:")
+        print(rlang::env_parent(rlang::current_env(), 1))
+      }
+    ),
+    set_to_one = function() {z <<- 1}
+  )
+}
+expensive_function(-1)
+```
+
+You can run it yourself (and then `invokeRestart("force_positive")`) to see the results, but to summarize:
+
+- The `withCallingHandlers` part is executing in exactly the same environment as the function.
+- The `force_positive` restart is executing in its own new environment. 
+- The parent of that environment is the execution environment of the main function.
+
+:::TODO
+The `caller_env` for `force_positive`, though, is still a bit of a mystery. Some further poking found that its grandparent is the base package's namespace, but I don't grok why. Maybe because it's the `browser()` environment? Is that a thing?
+:::
+
+:::question
+Are there any default restarts include in base R so that you could `invokeRestart("XXX")` or is the restart always user defined?
+:::
+
+From the warning documentation: 
+
+> While a warning is being processed, a `muffleWarning` restart is available. If this restart is invoked with `invokeRestart`, then warning returns immediately.
+
+We can also use the `computeRestarts` function which lists all available "default" restart functions:
+
+```{r, eval=FALSE}
+computeRestarts()
+```
+
+```
+[[1]]
+<restart: abort >
+```
+
+It seems `computeRestarts()` is able to find `abort` even without `{rlang}` attached! Which means it surely would be able to find some function from the base packages if one existed. But it does not, so that leads me to believe that they aren't any beyond `muffleWarning`. it seems, in general, you need to specify a function name for `invokeRestart()`
 
 :::question
 What environment(s) these restarts are called within, or if that even applies or matters

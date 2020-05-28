@@ -1,0 +1,307 @@
+# Functionals
+
+```{r, include=FALSE}
+library(purrr)
+```
+
+## 9.2.2 Anonymous functions and shortcuts {-}
+
+:::question
+We saw you'll get an error if you try to map over elements that don't exist, and can use `.default` to override that. Is this related to `tryCatch` in some way? Can we look at the `map` source code for `.default?` And how would we overcome this error if we were to use base R's `lapply(x, 'two')`
+
+```{r}
+x <- list(
+  list(one = "a"),
+  list(one = "b"),
+  list(one = "c")
+)
+
+map_chr(x, 'two', .default = NA)
+```
+
+```{r, eval=FALSE}
+lapply(x, 'two')
+```
+
+```
+Error in get(as.character(FUN), mode = "function", envir = envir) : object 'two' of mode 'function' was not found
+```
+:::
+
+:::TODO
+Within `purrr` [there's the function](https://github.com/tidyverse/purrr/blob/7104367bb6599f13e56c554bd07488b508a8a02b/R/as_mapper.R#L98)
+
+```{r, eval=FALSE}
+find_extract_default <- function(.null, .default) {
+  if (!missing(.null)) {
+    .null
+  } else {
+    .default
+  }
+}
+```
+
+So it doesn't seem to be a conditional, but rather a way to deal with missing errors
+:::
+
+:::TODO
+XXX
+:::
+
+## 9.2.6.4 Exercise {-}
+
+:::question
+In order to extract p-values the solution manual suggests using `map_dbl` but could we use `pluck` to get these values? If so how?
+:::
+
+```{r}
+trials <- map(1:100, ~ t.test(rpois(10, 10), rpois(10, 7)))
+tibble(p_value = map_dbl(trials, "p.value"))
+```
+
+:::TODO
+```{r, eval=FALSE}
+pluck(trials, "p.value")
+```
+:::
+
+## 9.2.6.5 Exercise {-}
+
+:::question
+Can we make this work?
+
+```{r, eval=FALSE}
+x <- list(
+  list(1, c(3, 9)),
+  list(c(3, 6), 7, c(4, 7, 6))
+)
+
+triple <- function(x) x * 3
+map(x, map, .f = triple)
+```
+:::
+
+:::TODO
+XXX
+:::
+
+## 9.4.1 Same type of output as input: `modify()` {-}
+
+When using modify we now get the warning:`Warning message: `modify()` is deprecated as of rlang 0.4.0. Vector tools are now out of scope for rlang to make it a more focused package.`
+
+How should we rewrite this example?
+
+```{r, eval=FALSE}
+data.frame(
+  x = 1:3,
+  y = 6:4
+) %>% 
+  modify( ~ .x * 2)
+```
+:::
+
+:::TODO
+XXX
+:::
+
+## 9.4.5 Any number of inputs: pmap() and friends {-}
+
+:::question
+I want to use pmap to map over a vector, but the metadata for the functions other arguments is elsewhere - how would I combine these using `pmap`? The book says to name the metadata columns the same name as your function which I did but this still doesn't work?
+:::
+
+```{r, eval=FALSE}
+my_data <- 1:3
+
+metadata <- tribble(
+  ~id, ~mult, ~adder,
+  "one",   2,      5,
+  "two",   3,      6,
+  "three", 4,      7
+)
+
+the_function <- function(vec, id, mult, adder) {
+  glue::glue("{id} is now {vec * mult + adder}")
+}
+
+# my_data doesn't change but we want to map over the metadata
+# x = string
+# y = multiplier
+# z = adder
+pmap(list(metadata), ~the_function(vec = my_data))
+```
+
+:::TODO
+XXX
+:::
+
+## 9.4.6.2 Exercise {-}
+
+:::question
+I see how we can use `iwalk` and `walk2` for writing to multiple files, but the question asks about disadvantages to this - what would they be?
+:::
+
+:::TODO
+```{r, eval=FALSE}
+cyls <- split(mtcars, mtcars$cyl)
+paths <- file.path(temp, paste0("cyl-", names(cyls), ".csv"))
+walk2(cyls, paths, write.csv)
+
+mtcars %>% 
+  split(mtcars$cyl) %>% 
+  set_names(~ file.path(temp, paste0("cyl-", .x, ".csv"))) %>% 
+  iwalk(~ write.csv(.x, .y))
+```
+:::
+
+
+## 9.5.4 Multiple inputs {-}
+
+:::question
+Can we think of a simple example for `reduce2()`? I was playing with `accumulate(c(FALSE, FALSE, TRUE), `|`)`, maybe we can combine this with something?
+:::
+
+:::TODO
+XXX
+:::
+
+## 9.5.5 Map-reduce {-}
+
+:::question
+I like the books Hadoop simple example - can we come up with one with code or is it solely for computing on multiple machines?
+:::
+
+:::TODO
+XXX
+:::
+
+## 9.6.3.2 Exercise {-}
+
+:::question
+I understand that `if (length(x) == 1L) return(x[[1L]])` covers the case like `simple_reduce(1, +)` but what's the deal with `if (length(x) == 0L) return(default)` and what exactly is `default`?
+:::
+
+```{r}
+simple_reduce <- function(x, f, default) {
+  # when would you use reduce on something length 0?
+  if (length(x) == 0L) return(default)
+  if (length(x) == 1L) return(x[[1L]])
+
+  out <- x[[1]]
+  for (i in seq(2, length(x))) {
+    out <- f(out, x[[i]])
+  }
+  out
+}
+```
+
+Default is the user supplied second number to add by, and we can use `integer(0)` to work with a `length(0)` vector.
+
+```{r}
+simple_reduce(integer(0), `+`, default = 0L)
+```
+
+I guess I understand this but when would you want to perform a reduce on something of length zero?
+
+:::TODO
+XXX
+:::
+
+## 9.7.1 Matrices and arrays {-}
+
+:::question
+How would you tidyverse the `rowSums` function?
+
+```{r}
+x <- tribble(
+  ~x, ~y,
+  1, 1,
+  2, 2,
+  3, 3
+)
+
+apply(x, 1, function(x) sum(x>2))
+```
+:::
+
+:::TODO
+XXX
+:::
+
+:::question
+I'm not quite sure what idempotent means but Hadley warns that `a2d` and `a1` aren't the same, but isn't that just because we're using `1` which is row wise, and not `2`? What is the warning he is heeding us against here?
+:::
+
+```{r}
+a2d <- matrix(1:20, nrow = 5)
+a1 <- apply(a2d, 1, identity)
+identical(a2d, a1)
+```
+
+## 9.7.3.2 Exercise {-}
+
+:::question
+What's an example of using `eapply` (iterates over the (named) elements of an environment)?
+:::
+
+:::TODO
+:::
+
+:::question
+Can we come up with an example for `rapply` allowing us to apply a function to only a specified class? Does something like this exist within `purrr`?
+:::
+
+:::TODO
+:::
+
+## 9.7.3.3 Exercise {-}
+
+:::question
+What exactly is the [Fixed Point Algrithm](https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-12.html#%25_idx_1096) and can we go over the books answer?
+:::
+
+The fixed point theory is the specific scenario in which `x = g(x)`, meaning the functions input is equal to the function's output. 
+
+We are creating a function that can be used to find where `x = g(x)`
+
+```{r, eval=FALSE}
+fixed_point <- function(f, x_init, n_max = 10000, tol = 0.0001) {
+  n <- 0
+  x <- x_init
+  y <- f(x)
+
+  is_fixed_point <- function(x, y) {
+    abs(x - y) < tol
+  }
+
+  while (!is_fixed_point(x, y)) {
+    x <- y
+    y <- f(y)
+
+    # Make sure we eventually stop
+    n <- n + 1
+    if (n > n_max) {
+      stop("Failed to converge", call. = FALSE)
+    }
+  }
+
+  x
+}
+```
+
+Functions with fixed points:
+```{r, eval=FALSE}
+fixed_point(sin, x_init = 1)
+fixed_point(cos, x_init = 1)
+```
+
+```{r, eval=FALSE}
+# Functions without fixed points
+add_one <- function(x) x + 1
+fixed_point(add_one, x_init = 1)
+```
+
+```
+#> Error: Failed to converge
+```
+
