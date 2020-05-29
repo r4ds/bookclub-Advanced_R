@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-05-27" />
+<meta name="date" content="2020-05-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -232,14 +232,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-4"><i class="fa fa-check"></i>8.4.5.2 Exercises</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-5"><i class="fa fa-check"></i>8.4.5.3 Exercises</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#resignal"><i class="fa fa-check"></i>8.6.3 Resignal</a></li>
-<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#any-number-of-inputs-pmap-and-friends"><i class="fa fa-check"></i>9.4.5 Any number of inputs: pmap() and friends</a></li>
-<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercise-10"><i class="fa fa-check"></i>9.4.6.2 Exercise</a></li>
-<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#multiple-inputs"><i class="fa fa-check"></i>9.5.4 Multiple inputs</a></li>
-<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#map-reduce"><i class="fa fa-check"></i>9.5.5 Map-reduce</a></li>
-<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercise-11"><i class="fa fa-check"></i>9.6.3.2 Exercise</a></li>
-<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#matrices-and-arrays"><i class="fa fa-check"></i>9.7.1 Matrices and arrays</a></li>
-<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercise-12"><i class="fa fa-check"></i>9.7.3.2 Exercise</a></li>
-<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercise-13"><i class="fa fa-check"></i>9.7.3.3 Exercise</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#record"><i class="fa fa-check"></i>8.6.4 Record</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-6"><i class="fa fa-check"></i>8.6.6.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-7"><i class="fa fa-check"></i>8.6.6.4 Exercises</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#slides"><i class="fa fa-check"></i>Slides</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="functionals.html"><a href="functionals.html"><i class="fa fa-check"></i><b>9</b> Functionals</a><ul>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#anonymous-functions-and-shortcuts"><i class="fa fa-check"></i>9.2.2 Anonymous functions and shortcuts</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-8"><i class="fa fa-check"></i>9.2.6.4 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-9"><i class="fa fa-check"></i>9.2.6.5 Exercise</a></li>
+<li><a href="functionals.html#same-type-of-output-as-input-modify">9.4.1 Same type of output as input: <code>modify()</code></a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#any-number-of-inputs-pmap-and-friends"><i class="fa fa-check"></i>9.4.5 Any number of inputs: pmap() and friends</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-10"><i class="fa fa-check"></i>9.4.6.2 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#multiple-inputs"><i class="fa fa-check"></i>9.5.4 Multiple inputs</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-11"><i class="fa fa-check"></i>9.6.3.2 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#matrices-and-arrays"><i class="fa fa-check"></i>9.7.1 Matrices and arrays</a></li>
+<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-12"><i class="fa fa-check"></i>9.7.3.2 Exercise</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -395,11 +403,11 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <pre><code>## # A tibble: 5 x 1
 ##      x1
 ##   &lt;dbl&gt;
-## 1 0.887
-## 2 0.327
-## 3 0.624
-## 4 0.253
-## 5 0.652</code></pre>
+## 1 0.731
+## 2 0.202
+## 3 0.996
+## 4 0.181
+## 5 0.335</code></pre>
 </div>
 <div id="a-fresh-start" class="section level2 unnumbered">
 <h2>6.4.3 A fresh start</h2>
@@ -447,7 +455,7 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <a class="sourceLine" id="cb249-8" data-line-number="8">}</a>
 <a class="sourceLine" id="cb249-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb249-10" data-line-number="10"><span class="kw">mega_model</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))</a></code></pre></div>
-<pre><code>##  [1] 227 237 220 204 273 268 282 269 280 211</code></pre>
+<pre><code>##  [1] 271 200 218 214 290 259 287 279 295 224</code></pre>
 </div>
 <div id="promises" class="section level2 unnumbered">
 <h2>6.5.1 Promises</h2>
@@ -694,7 +702,7 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb296-1" data-line-number="1">hist</a></code></pre></div>
 <pre><code>## function (x, ...) 
 ## UseMethod(&quot;hist&quot;)
-## &lt;bytecode: 0x7fe86cbed980&gt;
+## &lt;bytecode: 0x7fcb12207bc8&gt;
 ## &lt;environment: namespace:graphics&gt;</code></pre>
 <p>does not give me the actual contents of the actual function….</p>
 </div>

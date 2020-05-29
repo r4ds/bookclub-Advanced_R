@@ -2,6 +2,7 @@
 
 ```{r, include=FALSE}
 library(purrr)
+library(tidyverse)
 ```
 
 ## 9.2.2 Anonymous functions and shortcuts {-}
@@ -12,8 +13,8 @@ We saw you'll get an error if you try to map over elements that don't exist, and
 ```{r}
 x <- list(
   list(one = "a"),
-  list(one = "b"),
-  list(one = "c")
+  list(two = "b"),
+  list(three = "c")
 )
 
 map_chr(x, 'two', .default = NA)
@@ -28,7 +29,7 @@ Error in get(as.character(FUN), mode = "function", envir = envir) : object 'two'
 ```
 :::
 
-:::TODO
+
 Within `purrr` [there's the function](https://github.com/tidyverse/purrr/blob/7104367bb6599f13e56c554bd07488b508a8a02b/R/as_mapper.R#L98)
 
 ```{r, eval=FALSE}
@@ -42,11 +43,14 @@ find_extract_default <- function(.null, .default) {
 ```
 
 So it doesn't seem to be a conditional, but rather a way to deal with missing errors
-:::
 
-:::TODO
-XXX
-:::
+```{r, eval=FALSE}
+as.character(lapply(x,`[[`,"two"))
+```
+
+```
+[1] "NULL" "b" "NULL"
+```
 
 ## 9.2.6.4 Exercise {-}
 
@@ -56,34 +60,31 @@ In order to extract p-values the solution manual suggests using `map_dbl` but co
 
 ```{r}
 trials <- map(1:100, ~ t.test(rpois(10, 10), rpois(10, 7)))
-tibble(p_value = map_dbl(trials, "p.value"))
+# tibble(p_value = map_dbl(trials, "p.value"))
+map_dbl(trials, pluck, "p.value")
 ```
-
-:::TODO
-```{r, eval=FALSE}
-pluck(trials, "p.value")
-```
-:::
 
 ## 9.2.6.5 Exercise {-}
 
 :::question
 Can we make this work?
 
-```{r, eval=FALSE}
+```{r}
 x <- list(
   list(1, c(3, 9)),
   list(c(3, 6), 7, c(4, 7, 6))
 )
 
 triple <- function(x) x * 3
-map(x, map, .f = triple)
+# map(x, map, .f = triple)
 ```
 :::
 
-:::TODO
-XXX
-:::
+Specifying `.f` there replaces the second argument of the top level map function, so you'd be doing `map(.x = x, .f = triple, map)` which is not what you mean. What you want here is:
+
+```{r}
+map_depth(x, 2, triple)
+```
 
 ## 9.4.1 Same type of output as input: `modify()` {-}
 
@@ -100,9 +101,7 @@ data.frame(
 ```
 :::
 
-:::TODO
-XXX
-:::
+`rlang::modify` != `purrr::modify()`
 
 ## 9.4.5 Any number of inputs: pmap() and friends {-}
 
@@ -110,7 +109,7 @@ XXX
 I want to use pmap to map over a vector, but the metadata for the functions other arguments is elsewhere - how would I combine these using `pmap`? The book says to name the metadata columns the same name as your function which I did but this still doesn't work?
 :::
 
-```{r, eval=FALSE}
+```{r}
 my_data <- 1:3
 
 metadata <- tribble(
@@ -128,12 +127,12 @@ the_function <- function(vec, id, mult, adder) {
 # x = string
 # y = multiplier
 # z = adder
-pmap(list(metadata), ~the_function(vec = my_data))
+# pmap(list(metadata), ~the_function(vec = my_data))
 ```
 
-:::TODO
-XXX
-:::
+```{r}
+pmap(c(list(my_data), metadata), the_function)
+```
 
 ## 9.4.6.2 Exercise {-}
 
@@ -141,7 +140,6 @@ XXX
 I see how we can use `iwalk` and `walk2` for writing to multiple files, but the question asks about disadvantages to this - what would they be?
 :::
 
-:::TODO
 ```{r, eval=FALSE}
 cyls <- split(mtcars, mtcars$cyl)
 paths <- file.path(temp, paste0("cyl-", names(cyls), ".csv"))
@@ -152,28 +150,27 @@ mtcars %>%
   set_names(~ file.path(temp, paste0("cyl-", .x, ".csv"))) %>% 
   iwalk(~ write.csv(.x, .y))
 ```
-:::
+
+A readability problem mostly, as well as implicitly using `names(cyls)` as opposed to explicitly like it's used in paths
 
 
 ## 9.5.4 Multiple inputs {-}
 
 :::question
-Can we think of a simple example for `reduce2()`? I was playing with `accumulate(c(FALSE, FALSE, TRUE), `|`)`, maybe we can combine this with something?
+Can we think of a simple example for `reduce()`?
 :::
 
-:::TODO
-XXX
-:::
+A Fibonacci function! 
 
-## 9.5.5 Map-reduce {-}
+```{r}
+n <- 10
+purrr::accumulate( .init = c(0L,1L),            # Starting with (0,1)
+                   rep(0,n),                    # Accumulate n times
+                   ~c(.x,sum(.x))[2:3]          # (x,y) -> (x, y, x+y)[2:3]
+                 ) %>% 
+    purrr::map_int( `[`, 1 ) 
+```
 
-:::question
-I like the books Hadoop simple example - can we come up with one with code or is it solely for computing on multiple machines?
-:::
-
-:::TODO
-XXX
-:::
 
 ## 9.6.3.2 Exercise {-}
 
@@ -201,11 +198,7 @@ Default is the user supplied second number to add by, and we can use `integer(0)
 simple_reduce(integer(0), `+`, default = 0L)
 ```
 
-I guess I understand this but when would you want to perform a reduce on something of length zero?
-
-:::TODO
-XXX
-:::
+You would want to make sure your reduce is covered in the case of length zero so that your program doesn't crash when a user passes in an empty vector.
 
 ## 9.7.1 Matrices and arrays {-}
 
@@ -224,9 +217,11 @@ apply(x, 1, function(x) sum(x>2))
 ```
 :::
 
-:::TODO
-XXX
-:::
+
+```{r}
+pmap_dbl(x, ~sum(c(...) > 2))
+```
+
 
 :::question
 I'm not quite sure what idempotent means but Hadley warns that `a2d` and `a1` aren't the same, but isn't that just because we're using `1` which is row wise, and not `2`? What is the warning he is heeding us against here?
@@ -238,70 +233,78 @@ a1 <- apply(a2d, 1, identity)
 identical(a2d, a1)
 ```
 
+
+I think he is just trying to drive home the idea that you might expect no change by apply-ing an operator like identity which leaves its input unchanged, however what it instead returns is the transpose.  So perhaps it would have been better to more specifically say that `apply(..., MARGIN = 1)` isn't idempotent.
+
 ## 9.7.3.2 Exercise {-}
 
 :::question
 What's an example of using `eapply` (iterates over the (named) elements of an environment)?
 :::
 
-:::TODO
-:::
+```{r, eval=FALSE}
+baseenv() %>% eapply(is.primitive) %>% unlist %>% which %>% names
+```
 
 :::question
 Can we come up with an example for `rapply` allowing us to apply a function to only a specified class? Does something like this exist within `purrr`?
 :::
 
-:::TODO
-:::
+Answer from [this community post](https://community.rstudio.com/t/recursive-purrr-mutate-if/16638/7):
 
-## 9.7.3.3 Exercise {-}
+#### rapply
 
-:::question
-What exactly is the [Fixed Point Algrithm](https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-12.html#%25_idx_1096) and can we go over the books answer?
-:::
+```{r}
+x <- list(list(a = as.character(1), b = as.double(2)), 
+          c = as.character(3), 
+          d = as.double(4))
 
-The fixed point theory is the specific scenario in which `x = g(x)`, meaning the functions input is equal to the function's output. 
-
-We are creating a function that can be used to find where `x = g(x)`
-
-```{r, eval=FALSE}
-fixed_point <- function(f, x_init, n_max = 10000, tol = 0.0001) {
-  n <- 0
-  x <- x_init
-  y <- f(x)
-
-  is_fixed_point <- function(x, y) {
-    abs(x - y) < tol
-  }
-
-  while (!is_fixed_point(x, y)) {
-    x <- y
-    y <- f(y)
-
-    # Make sure we eventually stop
-    n <- n + 1
-    if (n > n_max) {
-      stop("Failed to converge", call. = FALSE)
-    }
-  }
-
-  x
+as_integer_rapply <- function(x) {
+  rapply(
+    x,
+    as.integer,
+    "character",
+    how = "replace"
+  )
 }
+
+x %>% as_integer_rapply() %>% str()
 ```
 
-Functions with fixed points:
-```{r, eval=FALSE}
-fixed_point(sin, x_init = 1)
-fixed_point(cos, x_init = 1)
+#### map
+
+```{r}
+as_integer_recursive_map <- function(x) {
+  x %>%
+    map_if(is.character, as.integer) %>%
+    map_if(is.list, as_integer_recursive_map)
+}
+x %>% as_integer_recursive_map() %>% str()
 ```
 
-```{r, eval=FALSE}
-# Functions without fixed points
-add_one <- function(x) x + 1
-fixed_point(add_one, x_init = 1)
+#### Comparing the two:
+
+```{r}
+microbenchmark::microbenchmark(
+  as_integer_rapply(x),
+  as_integer_recursive_map(x),
+  times = 100
+)
 ```
 
+
+```{r}
+as_integer_safe <- function(y) {
+  if (is.character(y) && all(grepl("^\\d+$", y))) {
+    as.integer(y)
+  } else {
+    y
+  }
+}
+
+x[[1]][[3]] <- "dog"
+
+rapply(x, f = as_integer_safe, how = "replace")
 ```
-#> Error: Failed to converge
-```
+
 
