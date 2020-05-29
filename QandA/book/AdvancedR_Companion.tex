@@ -119,7 +119,7 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-05-27}
+\date{2020-05-29}
 
 \begin{document}
 \maketitle
@@ -363,7 +363,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe86f9c6258"
+## [1] "0x7fcb1ae10370"
 \end{verbatim}
 
 \begin{Shaded}
@@ -373,7 +373,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe86f9c6258"
+## [1] "0x7fcb1ae10370"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -385,7 +385,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe8741b56b0"
+## [1] "0x7fcb19f38660"
 \end{verbatim}
 
 \begin{Shaded}
@@ -395,8 +395,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fe87416e988] <list> 
-## └─[2:0x7fe86f9c6258] <dbl>
+## █ [1:0x7fcb19ef1b60] <list> 
+## └─[2:0x7fcb1ae10370] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -406,7 +406,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe874144768"
+## [1] "0x7fcb19e418f8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -443,7 +443,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fe86faf4b58>"
+## [1] "<0x7fcb192b3cd8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -453,7 +453,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fe86faf4b58>
+## <0x7fcb192b3cd8>
 \end{verbatim}
 
 \begin{Shaded}
@@ -463,7 +463,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe86faf4b58"
+## [1] "0x7fcb192b3cd8"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -512,7 +512,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe879e17488"
+## [1] "0x7fcb11809408"
 \end{verbatim}
 
 \begin{Shaded}
@@ -522,7 +522,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fe879e17488>"
+## [1] "<0x7fcb11809408>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -532,7 +532,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fe879e17488 -> 0x7fe86fb35248]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fcb11809408 -> 0x7fcb16cbc808]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -628,7 +628,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe875f79428"
+## [1] "0x7fcb1ecd3e88"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -641,7 +641,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe86d1e3d78"
+## [1] "0x7fcb1ae8dcb8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -664,7 +664,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe86d1e3d78"
+## [1] "0x7fcb1ae8dcb8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -674,7 +674,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe86d1e3d78"
+## [1] "0x7fcb1ae8dcb8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -697,7 +697,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe86d1e3d78"
+## [1] "0x7fcb1ae8dcb8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -707,7 +707,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe878870b78"
+## [1] "0x7fcb1c987bd8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -730,7 +730,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fe875bc5768"
+## [1] "0x7fcb1a142078"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2531,13 +2531,13 @@ This will work:
 
 \begin{verbatim}
 ## # A tibble: 5 x 1
-##      x1
-##   <dbl>
-## 1 0.827
-## 2 0.455
-## 3 0.826
-## 4 0.899
-## 5 0.406
+##       x1
+##    <dbl>
+## 1 0.792 
+## 2 0.502 
+## 3 0.385 
+## 4 0.803 
+## 5 0.0326
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2611,7 +2611,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 266 262 201 216 259 253 232 288 211 258
+##  [1] 243 297 225 276 200 292 261 271 244 221
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3048,7 +3048,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fe86cbed980>
+## <bytecode: 0x7fcb12207bc8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3919,7 +3919,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7fe871a11290>
+## <bytecode: 0x7fcb1319a5b0>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4057,7 +4057,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7fe8758efce0>
+## <bytecode: 0x7fcb19d75cb0>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4851,29 +4851,29 @@ Given this little example:
 
 \begin{verbatim}
 ## [1] "parent in mid: "
-## <environment: 0x7fe873295428>
+## <environment: 0x7fcb199a8248>
 ## [1] "current in mid: "
-## <environment: 0x7fe873295bd0>
+## <environment: 0x7fcb199a89f0>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid: "
-## <environment: 0x7fe87325c580>
+## <environment: 0x7fcb19a4b608>
 ## [1] "current in mid: "
-## <environment: 0x7fe87094cdf8>
+## <environment: 0x7fcb1b821e60>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid skip: "
-## <environment: 0x7fe87094cdf8>
+## <environment: 0x7fcb1b821e60>
 ## [1] "current in mid skip: "
-## <environment: 0x7fe878ca1638>
+## <environment: 0x7fcb1ae92430>
 ## [1] "parent in mid: "
-## <environment: 0x7fe878ca7328>
+## <environment: 0x7fcb1ae435e8>
 ## [1] "current in mid: "
-## <environment: 0x7fe878ca6b48>
+## <environment: 0x7fcb1ae43d58>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
@@ -4888,7 +4888,7 @@ Given this little example:
 ## 
 ## [[2]]
 ## [[2]][[1]]
-## <environment: 0x7fe878ca1638>
+## <environment: 0x7fcb1ae92430>
 ## 
 ## 
 ## [[3]]
@@ -4966,8 +4966,8 @@ We saw you'll get an error if you try to map over elements that don't exist, and
 \begin{Highlighting}[]
 \NormalTok{x <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}
   \KeywordTok{list}\NormalTok{(}\DataTypeTok{one =} \StringTok{"a"}\NormalTok{),}
-  \KeywordTok{list}\NormalTok{(}\DataTypeTok{one =} \StringTok{"b"}\NormalTok{),}
-  \KeywordTok{list}\NormalTok{(}\DataTypeTok{one =} \StringTok{"c"}\NormalTok{)}
+  \KeywordTok{list}\NormalTok{(}\DataTypeTok{two =} \StringTok{"b"}\NormalTok{),}
+  \KeywordTok{list}\NormalTok{(}\DataTypeTok{three =} \StringTok{"c"}\NormalTok{)}
 \NormalTok{)}
 
 \KeywordTok{map_chr}\NormalTok{(x, }\StringTok{'two'}\NormalTok{, }\DataTypeTok{.default =} \OtherTok{NA}\NormalTok{)}
@@ -4975,7 +4975,7 @@ We saw you'll get an error if you try to map over elements that don't exist, and
 \end{Shaded}
 
 \begin{verbatim}
-## [1] NA NA NA
+## [1] NA  "b" NA
 \end{verbatim}
 
 \begin{Shaded}
@@ -5004,7 +5004,15 @@ Within \texttt{purrr} \href{https://github.com/tidyverse/purrr/blob/7104367bb659
 
 So it doesn't seem to be a conditional, but rather a way to deal with missing errors
 
-XXX
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{as.character}\NormalTok{(}\KeywordTok{lapply}\NormalTok{(x,}\StringTok{`}\DataTypeTok{[[}\StringTok{`}\NormalTok{,}\StringTok{"two"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "NULL" "b" "NULL"
+\end{verbatim}
 
 \hypertarget{exercise-8}{%
 \section*{9.2.6.4 Exercise}\label{exercise-8}}
@@ -5015,32 +5023,33 @@ In order to extract p-values the solution manual suggests using \texttt{map\_dbl
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{trials <-}\StringTok{ }\KeywordTok{map}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{100}\NormalTok{, }\OperatorTok{~}\StringTok{ }\KeywordTok{t.test}\NormalTok{(}\KeywordTok{rpois}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{10}\NormalTok{), }\KeywordTok{rpois}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{7}\NormalTok{)))}
-\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{p_value =} \KeywordTok{map_dbl}\NormalTok{(trials, }\StringTok{"p.value"}\NormalTok{))}
+\CommentTok{# tibble(p_value = map_dbl(trials, "p.value"))}
+\KeywordTok{map_dbl}\NormalTok{(trials, pluck, }\StringTok{"p.value"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## # A tibble: 100 x 1
-##     p_value
-##       <dbl>
-##  1 0.00983 
-##  2 0.162   
-##  3 0.0232  
-##  4 0.00362 
-##  5 0.101   
-##  6 0.0157  
-##  7 0.105   
-##  8 0.000137
-##  9 0.121   
-## 10 0.00562 
-## # ... with 90 more rows
+##   [1] 5.635143e-01 4.784753e-01 1.216148e-01 7.310548e-04 5.717359e-01
+##   [6] 4.113135e-03 1.074937e-01 1.410527e-01 2.185884e-02 7.601042e-02
+##  [11] 1.068610e-02 1.135739e-01 7.241659e-03 2.054861e-01 9.269688e-02
+##  [16] 2.619853e-01 1.197820e-01 1.203064e-02 3.232589e-02 8.653389e-05
+##  [21] 1.916145e-01 1.711711e-02 1.490314e-01 2.178004e-01 2.055051e-01
+##  [26] 2.535498e-03 3.988995e-03 3.024745e-02 1.000000e+00 1.330176e-01
+##  [31] 3.118831e-01 3.709104e-01 5.588820e-02 5.207435e-02 3.936427e-01
+##  [36] 5.454346e-03 2.185002e-02 8.119566e-03 3.501670e-02 2.853775e-02
+##  [41] 5.405546e-01 2.918886e-03 1.097473e-03 9.824198e-02 1.593555e-02
+##  [46] 3.210962e-01 9.890389e-03 1.597857e-02 2.172364e-01 9.874113e-02
+##  [51] 3.314296e-02 1.129102e-01 1.020648e-01 8.240089e-02 3.476941e-03
+##  [56] 2.469711e-03 1.052537e-01 5.862097e-03 9.486169e-02 2.200354e-01
+##  [61] 5.362110e-02 8.781936e-02 5.664556e-03 5.675981e-01 1.035666e-02
+##  [66] 1.382224e-02 5.787710e-03 6.958387e-03 2.964681e-02 1.320918e-04
+##  [71] 2.882801e-02 9.951927e-03 2.739549e-01 2.098790e-02 3.268752e-02
+##  [76] 1.244844e-02 6.430711e-02 2.869838e-01 6.742992e-03 2.281427e-04
+##  [81] 4.213771e-05 4.433497e-03 1.109392e-03 1.275786e-02 4.190870e-02
+##  [86] 3.492255e-01 1.847705e-02 2.258206e-02 7.688949e-02 5.421378e-03
+##  [91] 6.250085e-01 5.396665e-01 1.168024e-01 3.750291e-04 2.144637e-02
+##  [96] 1.070474e-02 6.419642e-03 5.632221e-04 5.086836e-02 1.931307e-01
 \end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{pluck}\NormalTok{(trials, }\StringTok{"p.value"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
 
 \hypertarget{exercise-9}{%
 \section*{9.2.6.5 Exercise}\label{exercise-9}}
@@ -5056,11 +5065,37 @@ Can we make this work?
 \NormalTok{)}
 
 \NormalTok{triple <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) x }\OperatorTok{*}\StringTok{ }\DecValTok{3}
-\KeywordTok{map}\NormalTok{(x, map, }\DataTypeTok{.f =}\NormalTok{ triple)}
+\CommentTok{# map(x, map, .f = triple)}
 \end{Highlighting}
 \end{Shaded}
 
-XXX
+Specifying \texttt{.f} there replaces the second argument of the top level map function, so you'd be doing \texttt{map(.x\ =\ x,\ .f\ =\ triple,\ map)} which is not what you mean. What you want here is:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{map_depth}\NormalTok{(x, }\DecValTok{2}\NormalTok{, triple)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [[1]][[1]]
+## [1] 3
+## 
+## [[1]][[2]]
+## [1]  9 27
+## 
+## 
+## [[2]]
+## [[2]][[1]]
+## [1]  9 18
+## 
+## [[2]][[2]]
+## [1] 21
+## 
+## [[2]][[3]]
+## [1] 12 21 18
+\end{verbatim}
 
 \hypertarget{same-type-of-output-as-input-modify}{%
 \section*{\texorpdfstring{9.4.1 Same type of output as input: \texttt{modify()}}{9.4.1 Same type of output as input: modify()}}\label{same-type-of-output-as-input-modify}}
@@ -5080,7 +5115,9 @@ How should we rewrite this example?
 \end{Highlighting}
 \end{Shaded}
 
-XXX
+:::
+
+\texttt{rlang::modify} != \texttt{purrr::modify()}
 
 \hypertarget{any-number-of-inputs-pmap-and-friends}{%
 \section*{9.4.5 Any number of inputs: pmap() and friends}\label{any-number-of-inputs-pmap-and-friends}}
@@ -5107,11 +5144,26 @@ I want to use pmap to map over a vector, but the metadata for the functions othe
 \CommentTok{# x = string}
 \CommentTok{# y = multiplier}
 \CommentTok{# z = adder}
-\KeywordTok{pmap}\NormalTok{(}\KeywordTok{list}\NormalTok{(metadata), }\OperatorTok{~}\KeywordTok{the_function}\NormalTok{(}\DataTypeTok{vec =}\NormalTok{ my_data))}
+\CommentTok{# pmap(list(metadata), ~the_function(vec = my_data))}
 \end{Highlighting}
 \end{Shaded}
 
-XXX
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{pmap}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\KeywordTok{list}\NormalTok{(my_data), metadata), the_function)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## one is now 7
+## 
+## [[2]]
+## two is now 12
+## 
+## [[3]]
+## three is now 19
+\end{verbatim}
 
 \hypertarget{exercise-10}{%
 \section*{9.4.6.2 Exercise}\label{exercise-10}}
@@ -5132,21 +5184,30 @@ I see how we can use \texttt{iwalk} and \texttt{walk2} for writing to multiple f
 \end{Highlighting}
 \end{Shaded}
 
+A readability problem mostly, as well as implicitly using \texttt{names(cyls)} as opposed to explicitly like it's used in paths
+
 \hypertarget{multiple-inputs}{%
 \section*{9.5.4 Multiple inputs}\label{multiple-inputs}}
 \addcontentsline{toc}{section}{9.5.4 Multiple inputs}
 
-Can we think of a simple example for \texttt{reduce2()}? I was playing with \texttt{accumulate(c(FALSE,\ FALSE,\ TRUE),}\textbar{}\texttt{)}, maybe we can combine this with something?
+Can we think of a simple example for \texttt{reduce()}?
 
-XXX
+A Fibonacci function!
 
-\hypertarget{map-reduce}{%
-\section*{9.5.5 Map-reduce}\label{map-reduce}}
-\addcontentsline{toc}{section}{9.5.5 Map-reduce}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n <-}\StringTok{ }\DecValTok{10}
+\NormalTok{purrr}\OperatorTok{::}\KeywordTok{accumulate}\NormalTok{( }\DataTypeTok{.init =} \KeywordTok{c}\NormalTok{(0L,1L),            }\CommentTok{# Starting with (0,1)}
+                   \KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,n),                    }\CommentTok{# Accumulate n times}
+                   \OperatorTok{~}\KeywordTok{c}\NormalTok{(.x,}\KeywordTok{sum}\NormalTok{(.x))[}\DecValTok{2}\OperatorTok{:}\DecValTok{3}\NormalTok{]          }\CommentTok{# (x,y) -> (x, y, x+y)[2:3]}
+\NormalTok{                 ) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{purrr}\OperatorTok{::}\KeywordTok{map_int}\NormalTok{( }\StringTok{`}\DataTypeTok{[}\StringTok{`}\NormalTok{, }\DecValTok{1}\NormalTok{ ) }
+\end{Highlighting}
+\end{Shaded}
 
-I like the books Hadoop simple example - can we come up with one with code or is it solely for computing on multiple machines?
-
-XXX
+\begin{verbatim}
+##  [1]  0  1  1  2  3  5  8 13 21 34 55
+\end{verbatim}
 
 \hypertarget{exercise-11}{%
 \section*{9.6.3.2 Exercise}\label{exercise-11}}
@@ -5182,9 +5243,7 @@ Default is the user supplied second number to add by, and we can use \texttt{int
 ## [1] 0
 \end{verbatim}
 
-I guess I understand this but when would you want to perform a reduce on something of length zero?
-
-XXX
+You would want to make sure your reduce is covered in the case of length zero so that your program doesn't crash when a user passes in an empty vector.
 
 \hypertarget{matrices-and-arrays}{%
 \section*{9.7.1 Matrices and arrays}\label{matrices-and-arrays}}
@@ -5209,7 +5268,15 @@ How would you tidyverse the \texttt{rowSums} function?
 ## [1] 0 0 2
 \end{verbatim}
 
-XXX
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{pmap_dbl}\NormalTok{(x, }\OperatorTok{~}\KeywordTok{sum}\NormalTok{(}\KeywordTok{c}\NormalTok{(...) }\OperatorTok{>}\StringTok{ }\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0 0 2
+\end{verbatim}
 
 I'm not quite sure what idempotent means but Hadley warns that \texttt{a2d} and \texttt{a1} aren't the same, but isn't that just because we're using \texttt{1} which is row wise, and not \texttt{2}? What is the warning he is heeding us against here?
 
@@ -5225,70 +5292,134 @@ I'm not quite sure what idempotent means but Hadley warns that \texttt{a2d} and 
 ## [1] FALSE
 \end{verbatim}
 
+I think he is just trying to drive home the idea that you might expect no change by apply-ing an operator like identity which leaves its input unchanged, however what it instead returns is the transpose. So perhaps it would have been better to more specifically say that \texttt{apply(...,\ MARGIN\ =\ 1)} isn't idempotent.
+
 \hypertarget{exercise-12}{%
 \section*{9.7.3.2 Exercise}\label{exercise-12}}
 \addcontentsline{toc}{section}{9.7.3.2 Exercise}
 
 What's an example of using \texttt{eapply} (iterates over the (named) elements of an environment)?
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{baseenv}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }\KeywordTok{eapply}\NormalTok{(is.primitive) }\OperatorTok{%>%}\StringTok{ }\NormalTok{unlist }\OperatorTok{%>%}\StringTok{ }\NormalTok{which }\OperatorTok{%>%}\StringTok{ }\NormalTok{names}
+\end{Highlighting}
+\end{Shaded}
+
 Can we come up with an example for \texttt{rapply} allowing us to apply a function to only a specified class? Does something like this exist within \texttt{purrr}?
 
-\hypertarget{exercise-13}{%
-\section*{9.7.3.3 Exercise}\label{exercise-13}}
-\addcontentsline{toc}{section}{9.7.3.3 Exercise}
+Answer from \href{https://community.rstudio.com/t/recursive-purrr-mutate-if/16638/7}{this community post}:
 
-What exactly is the \href{https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-12.html\#\%25_idx_1096}{Fixed Point Algrithm} and can we go over the books answer?
-
-The fixed point theory is the specific scenario in which \texttt{x\ =\ g(x)}, meaning the functions input is equal to the function's output.
-
-We are creating a function that can be used to find where \texttt{x\ =\ g(x)}
+\hypertarget{rapply}{%
+\subsubsection{rapply}\label{rapply}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fixed_point <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(f, x_init, }\DataTypeTok{n_max =} \DecValTok{10000}\NormalTok{, }\DataTypeTok{tol =} \FloatTok{0.0001}\NormalTok{) \{}
-\NormalTok{  n <-}\StringTok{ }\DecValTok{0}
-\NormalTok{  x <-}\StringTok{ }\NormalTok{x_init}
-\NormalTok{  y <-}\StringTok{ }\KeywordTok{f}\NormalTok{(x)}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{a =} \KeywordTok{as.character}\NormalTok{(}\DecValTok{1}\NormalTok{), }\DataTypeTok{b =} \KeywordTok{as.double}\NormalTok{(}\DecValTok{2}\NormalTok{)), }
+          \DataTypeTok{c =} \KeywordTok{as.character}\NormalTok{(}\DecValTok{3}\NormalTok{), }
+          \DataTypeTok{d =} \KeywordTok{as.double}\NormalTok{(}\DecValTok{4}\NormalTok{))}
 
-\NormalTok{  is_fixed_point <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, y) \{}
-    \KeywordTok{abs}\NormalTok{(x }\OperatorTok{-}\StringTok{ }\NormalTok{y) }\OperatorTok{<}\StringTok{ }\NormalTok{tol}
-\NormalTok{  \}}
-
-  \ControlFlowTok{while}\NormalTok{ (}\OperatorTok{!}\KeywordTok{is_fixed_point}\NormalTok{(x, y)) \{}
-\NormalTok{    x <-}\StringTok{ }\NormalTok{y}
-\NormalTok{    y <-}\StringTok{ }\KeywordTok{f}\NormalTok{(y)}
-
-    \CommentTok{# Make sure we eventually stop}
-\NormalTok{    n <-}\StringTok{ }\NormalTok{n }\OperatorTok{+}\StringTok{ }\DecValTok{1}
-    \ControlFlowTok{if}\NormalTok{ (n }\OperatorTok{>}\StringTok{ }\NormalTok{n_max) \{}
-      \KeywordTok{stop}\NormalTok{(}\StringTok{"Failed to converge"}\NormalTok{, }\DataTypeTok{call. =} \OtherTok{FALSE}\NormalTok{)}
-\NormalTok{    \}}
-\NormalTok{  \}}
-
-\NormalTok{  x}
+\NormalTok{as_integer_rapply <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \KeywordTok{rapply}\NormalTok{(}
+\NormalTok{    x,}
+\NormalTok{    as.integer,}
+    \StringTok{"character"}\NormalTok{,}
+    \DataTypeTok{how =} \StringTok{"replace"}
+\NormalTok{  )}
 \NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
 
-Functions with fixed points:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{fixed_point}\NormalTok{(sin, }\DataTypeTok{x_init =} \DecValTok{1}\NormalTok{)}
-\KeywordTok{fixed_point}\NormalTok{(cos, }\DataTypeTok{x_init =} \DecValTok{1}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# Functions without fixed points}
-\NormalTok{add_one <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) x }\OperatorTok{+}\StringTok{ }\DecValTok{1}
-\KeywordTok{fixed_point}\NormalTok{(add_one, }\DataTypeTok{x_init =} \DecValTok{1}\NormalTok{)}
+\NormalTok{x }\OperatorTok{%>%}\StringTok{ }\KeywordTok{as_integer_rapply}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }\KeywordTok{str}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-#> Error: Failed to converge
+## List of 3
+##  $  :List of 2
+##   ..$ a: int 1
+##   ..$ b: num 2
+##  $ c: int 3
+##  $ d: num 4
+\end{verbatim}
+
+\hypertarget{map}{%
+\subsubsection{map}\label{map}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{as_integer_recursive_map <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  x }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{map_if}\NormalTok{(is.character, as.integer) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{map_if}\NormalTok{(is.list, as_integer_recursive_map)}
+\NormalTok{\}}
+\NormalTok{x }\OperatorTok{%>%}\StringTok{ }\KeywordTok{as_integer_recursive_map}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }\KeywordTok{str}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## List of 3
+##  $  :List of 2
+##   ..$ a: int 1
+##   ..$ b: num 2
+##  $ c: int 3
+##  $ d: num 4
+\end{verbatim}
+
+\hypertarget{comparing-the-two}{%
+\subsubsection{Comparing the two:}\label{comparing-the-two}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{microbenchmark}\OperatorTok{::}\KeywordTok{microbenchmark}\NormalTok{(}
+  \KeywordTok{as_integer_rapply}\NormalTok{(x),}
+  \KeywordTok{as_integer_recursive_map}\NormalTok{(x),}
+  \DataTypeTok{times =} \DecValTok{100}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Unit: microseconds
+##                         expr      min       lq       mean    median       uq
+##         as_integer_rapply(x)   11.074   14.592   59.35686   21.4885   25.658
+##  as_integer_recursive_map(x) 1088.225 1187.525 1409.37686 1243.7065 1433.577
+##       max neval
+##  3703.057   100
+##  4790.720   100
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{as_integer_safe <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(y) \{}
+  \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{is.character}\NormalTok{(y) }\OperatorTok{&&}\StringTok{ }\KeywordTok{all}\NormalTok{(}\KeywordTok{grepl}\NormalTok{(}\StringTok{"^}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{d+$"}\NormalTok{, y))) \{}
+    \KeywordTok{as.integer}\NormalTok{(y)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{    y}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\NormalTok{x[[}\DecValTok{1}\NormalTok{]][[}\DecValTok{3}\NormalTok{]] <-}\StringTok{ "dog"}
+
+\KeywordTok{rapply}\NormalTok{(x, }\DataTypeTok{f =}\NormalTok{ as_integer_safe, }\DataTypeTok{how =} \StringTok{"replace"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [[1]]$a
+## [1] 1
+## 
+## [[1]]$b
+## [1] 2
+## 
+## [[1]][[3]]
+## [1] "dog"
+## 
+## 
+## $c
+## [1] 3
+## 
+## $d
+## [1] 4
 \end{verbatim}
 
 \bibliography{book.bib,packages.bib}

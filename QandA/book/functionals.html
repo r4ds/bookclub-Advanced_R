@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-05-26" />
+<meta name="date" content="2020-05-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -245,11 +245,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#any-number-of-inputs-pmap-and-friends"><i class="fa fa-check"></i>9.4.5 Any number of inputs: pmap() and friends</a></li>
 <li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-10"><i class="fa fa-check"></i>9.4.6.2 Exercise</a></li>
 <li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#multiple-inputs"><i class="fa fa-check"></i>9.5.4 Multiple inputs</a></li>
-<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#map-reduce"><i class="fa fa-check"></i>9.5.5 Map-reduce</a></li>
 <li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-11"><i class="fa fa-check"></i>9.6.3.2 Exercise</a></li>
 <li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#matrices-and-arrays"><i class="fa fa-check"></i>9.7.1 Matrices and arrays</a></li>
 <li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-12"><i class="fa fa-check"></i>9.7.3.2 Exercise</a></li>
-<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-13"><i class="fa fa-check"></i>9.7.3.3 Exercise</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -277,250 +275,302 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>9.2.2 Anonymous functions and shortcuts</h2>
 <div class="question">
 <p>We saw you’ll get an error if you try to map over elements that don’t exist, and can use <code>.default</code> to override that. Is this related to <code>tryCatch</code> in some way? Can we look at the <code>map</code> source code for <code>.default?</code> And how would we overcome this error if we were to use base R’s <code>lapply(x, 'two')</code></p>
-<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb415-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb415-2" data-line-number="2">  <span class="kw">list</span>(<span class="dt">one =</span> <span class="st">&quot;a&quot;</span>),</a>
-<a class="sourceLine" id="cb415-3" data-line-number="3">  <span class="kw">list</span>(<span class="dt">one =</span> <span class="st">&quot;b&quot;</span>),</a>
-<a class="sourceLine" id="cb415-4" data-line-number="4">  <span class="kw">list</span>(<span class="dt">one =</span> <span class="st">&quot;c&quot;</span>)</a>
-<a class="sourceLine" id="cb415-5" data-line-number="5">)</a>
-<a class="sourceLine" id="cb415-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb415-7" data-line-number="7"><span class="kw">map_chr</span>(x, <span class="st">&#39;two&#39;</span>, <span class="dt">.default =</span> <span class="ot">NA</span>)</a></code></pre></div>
-<pre><code>## [1] NA NA NA</code></pre>
-<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb417-1" data-line-number="1"><span class="kw">lapply</span>(x, <span class="st">&#39;two&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb424-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb424-2" data-line-number="2">  <span class="kw">list</span>(<span class="dt">one =</span> <span class="st">&quot;a&quot;</span>),</a>
+<a class="sourceLine" id="cb424-3" data-line-number="3">  <span class="kw">list</span>(<span class="dt">two =</span> <span class="st">&quot;b&quot;</span>),</a>
+<a class="sourceLine" id="cb424-4" data-line-number="4">  <span class="kw">list</span>(<span class="dt">three =</span> <span class="st">&quot;c&quot;</span>)</a>
+<a class="sourceLine" id="cb424-5" data-line-number="5">)</a>
+<a class="sourceLine" id="cb424-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb424-7" data-line-number="7"><span class="kw">map_chr</span>(x, <span class="st">&#39;two&#39;</span>, <span class="dt">.default =</span> <span class="ot">NA</span>)</a></code></pre></div>
+<pre><code>## [1] NA  &quot;b&quot; NA</code></pre>
+<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb426-1" data-line-number="1"><span class="kw">lapply</span>(x, <span class="st">&#39;two&#39;</span>)</a></code></pre></div>
 <pre><code>Error in get(as.character(FUN), mode = &quot;function&quot;, envir = envir) : object &#39;two&#39; of mode &#39;function&#39; was not found</code></pre>
 </div>
-<div class="TODO">
 <p>Within <code>purrr</code> <a href="https://github.com/tidyverse/purrr/blob/7104367bb6599f13e56c554bd07488b508a8a02b/R/as_mapper.R#L98">there’s the function</a></p>
-<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb419-1" data-line-number="1">find_extract_default &lt;-<span class="st"> </span><span class="cf">function</span>(.null, .default) {</a>
-<a class="sourceLine" id="cb419-2" data-line-number="2">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">missing</span>(.null)) {</a>
-<a class="sourceLine" id="cb419-3" data-line-number="3">    .null</a>
-<a class="sourceLine" id="cb419-4" data-line-number="4">  } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb419-5" data-line-number="5">    .default</a>
-<a class="sourceLine" id="cb419-6" data-line-number="6">  }</a>
-<a class="sourceLine" id="cb419-7" data-line-number="7">}</a></code></pre></div>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb428-1" data-line-number="1">find_extract_default &lt;-<span class="st"> </span><span class="cf">function</span>(.null, .default) {</a>
+<a class="sourceLine" id="cb428-2" data-line-number="2">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">missing</span>(.null)) {</a>
+<a class="sourceLine" id="cb428-3" data-line-number="3">    .null</a>
+<a class="sourceLine" id="cb428-4" data-line-number="4">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb428-5" data-line-number="5">    .default</a>
+<a class="sourceLine" id="cb428-6" data-line-number="6">  }</a>
+<a class="sourceLine" id="cb428-7" data-line-number="7">}</a></code></pre></div>
 <p>So it doesn’t seem to be a conditional, but rather a way to deal with missing errors</p>
-</div>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb429-1" data-line-number="1"><span class="kw">as.character</span>(<span class="kw">lapply</span>(x,<span class="st">`</span><span class="dt">[[</span><span class="st">`</span>,<span class="st">&quot;two&quot;</span>))</a></code></pre></div>
+<pre><code>[1] &quot;NULL&quot; &quot;b&quot; &quot;NULL&quot;</code></pre>
 </div>
 <div id="exercise-8" class="section level2 unnumbered">
 <h2>9.2.6.4 Exercise</h2>
 <div class="question">
 <p>In order to extract p-values the solution manual suggests using <code>map_dbl</code> but could we use <code>pluck</code> to get these values? If so how?</p>
 </div>
-<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb420-1" data-line-number="1">trials &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="op">~</span><span class="st"> </span><span class="kw">t.test</span>(<span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">10</span>), <span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">7</span>)))</a>
-<a class="sourceLine" id="cb420-2" data-line-number="2"><span class="kw">tibble</span>(<span class="dt">p_value =</span> <span class="kw">map_dbl</span>(trials, <span class="st">&quot;p.value&quot;</span>))</a></code></pre></div>
-<pre><code>## # A tibble: 100 x 1
-##     p_value
-##       &lt;dbl&gt;
-##  1 0.0198  
-##  2 0.000799
-##  3 0.616   
-##  4 0.0146  
-##  5 0.0177  
-##  6 0.117   
-##  7 0.00480 
-##  8 0.208   
-##  9 0.0101  
-## 10 0.00592 
-## # … with 90 more rows</code></pre>
-<div class="TODO">
-<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb422-1" data-line-number="1"><span class="kw">pluck</span>(trials, <span class="st">&quot;p.value&quot;</span>)</a></code></pre></div>
-</div>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb431-1" data-line-number="1">trials &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="op">~</span><span class="st"> </span><span class="kw">t.test</span>(<span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">10</span>), <span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">7</span>)))</a>
+<a class="sourceLine" id="cb431-2" data-line-number="2"><span class="co"># tibble(p_value = map_dbl(trials, &quot;p.value&quot;))</span></a>
+<a class="sourceLine" id="cb431-3" data-line-number="3"><span class="kw">map_dbl</span>(trials, pluck, <span class="st">&quot;p.value&quot;</span>)</a></code></pre></div>
+<pre><code>##   [1] 4.257919e-02 4.690012e-03 1.492816e-02 3.429617e-01 6.474726e-02
+##   [6] 1.212347e-01 2.882362e-02 9.363890e-02 6.402419e-03 2.507139e-02
+##  [11] 3.442683e-01 1.557276e-01 6.770389e-01 1.382802e-01 5.454916e-02
+##  [16] 8.761445e-04 1.961468e-01 6.212780e-01 6.400241e-02 3.492144e-04
+##  [21] 1.164990e-01 3.792448e-03 3.009342e-03 7.926338e-04 1.812124e-02
+##  [26] 2.773414e-03 2.885500e-03 2.897031e-01 6.936359e-01 2.398803e-01
+##  [31] 6.368088e-02 3.511484e-03 1.453440e-01 1.849429e-01 9.887288e-02
+##  [36] 3.036427e-02 5.738908e-05 5.959964e-03 1.300723e-02 1.704170e-01
+##  [41] 1.342043e-02 4.084301e-02 5.421060e-03 1.032035e-02 5.454120e-01
+##  [46] 9.949495e-02 1.902894e-01 1.046865e-01 4.787205e-03 5.890209e-02
+##  [51] 4.699765e-02 4.624521e-02 2.723024e-03 4.426657e-02 1.744939e-03
+##  [56] 3.728406e-01 1.105070e-03 3.703607e-03 1.473138e-03 4.283746e-03
+##  [61] 8.540696e-03 3.252527e-02 5.087545e-02 9.315084e-02 1.556252e-02
+##  [66] 4.007284e-01 3.454755e-03 1.951412e-03 6.403262e-02 1.125482e-01
+##  [71] 1.813502e-01 8.665963e-03 1.020235e-02 1.140858e-04 4.855718e-01
+##  [76] 6.869608e-02 2.921477e-02 4.118200e-04 2.985148e-02 4.476699e-02
+##  [81] 7.610971e-03 2.904879e-02 1.196144e-01 1.931322e-02 1.692454e-01
+##  [86] 9.467969e-01 2.787850e-01 4.081396e-03 2.254144e-02 5.496226e-02
+##  [91] 2.957634e-02 1.971476e-03 2.036038e-01 5.010194e-03 1.718385e-01
+##  [96] 4.458266e-01 2.791943e-03 9.386321e-02 5.019418e-05 4.937698e-02</code></pre>
 </div>
 <div id="exercise-9" class="section level2 unnumbered">
 <h2>9.2.6.5 Exercise</h2>
 <div class="question">
 <p>Can we make this work?</p>
-<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb423-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb423-2" data-line-number="2">  <span class="kw">list</span>(<span class="dv">1</span>, <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">9</span>)),</a>
-<a class="sourceLine" id="cb423-3" data-line-number="3">  <span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">6</span>), <span class="dv">7</span>, <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">6</span>))</a>
-<a class="sourceLine" id="cb423-4" data-line-number="4">)</a>
-<a class="sourceLine" id="cb423-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb423-6" data-line-number="6">triple &lt;-<span class="st"> </span><span class="cf">function</span>(x) x <span class="op">*</span><span class="st"> </span><span class="dv">3</span></a>
-<a class="sourceLine" id="cb423-7" data-line-number="7"><span class="kw">map</span>(x, map, <span class="dt">.f =</span> triple)</a></code></pre></div>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb433-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb433-2" data-line-number="2">  <span class="kw">list</span>(<span class="dv">1</span>, <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">9</span>)),</a>
+<a class="sourceLine" id="cb433-3" data-line-number="3">  <span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">6</span>), <span class="dv">7</span>, <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">6</span>))</a>
+<a class="sourceLine" id="cb433-4" data-line-number="4">)</a>
+<a class="sourceLine" id="cb433-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb433-6" data-line-number="6">triple &lt;-<span class="st"> </span><span class="cf">function</span>(x) x <span class="op">*</span><span class="st"> </span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb433-7" data-line-number="7"><span class="co"># map(x, map, .f = triple)</span></a></code></pre></div>
 </div>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<p>Specifying <code>.f</code> there replaces the second argument of the top level map function, so you’d be doing <code>map(.x = x, .f = triple, map)</code> which is not what you mean. What you want here is:</p>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb434-1" data-line-number="1"><span class="kw">map_depth</span>(x, <span class="dv">2</span>, triple)</a></code></pre></div>
+<pre><code>## [[1]]
+## [[1]][[1]]
+## [1] 3
+## 
+## [[1]][[2]]
+## [1]  9 27
+## 
+## 
+## [[2]]
+## [[2]][[1]]
+## [1]  9 18
+## 
+## [[2]][[2]]
+## [1] 21
+## 
+## [[2]][[3]]
+## [1] 12 21 18</code></pre>
 </div>
 <div id="same-type-of-output-as-input-modify" class="section level2 unnumbered">
 <h2>9.4.1 Same type of output as input: <code>modify()</code></h2>
 <p>When using modify we now get the warning:<code>Warning message:</code>modify()<code>is deprecated as of rlang 0.4.0. Vector tools are now out of scope for rlang to make it a more focused package.</code></p>
 <p>How should we rewrite this example?</p>
-<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb424-1" data-line-number="1"><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb424-2" data-line-number="2">  <span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb424-3" data-line-number="3">  <span class="dt">y =</span> <span class="dv">6</span><span class="op">:</span><span class="dv">4</span></a>
-<a class="sourceLine" id="cb424-4" data-line-number="4">) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb424-5" data-line-number="5"><span class="st">  </span><span class="kw">modify</span>( <span class="op">~</span><span class="st"> </span>.x <span class="op">*</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb436-1" data-line-number="1"><span class="kw">data.frame</span>(</a>
+<a class="sourceLine" id="cb436-2" data-line-number="2">  <span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb436-3" data-line-number="3">  <span class="dt">y =</span> <span class="dv">6</span><span class="op">:</span><span class="dv">4</span></a>
+<a class="sourceLine" id="cb436-4" data-line-number="4">) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb436-5" data-line-number="5"><span class="st">  </span><span class="kw">modify</span>( <span class="op">~</span><span class="st"> </span>.x <span class="op">*</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
 <p>:::</p>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<p><code>rlang::modify</code> != <code>purrr::modify()</code></p>
 </div>
 <div id="any-number-of-inputs-pmap-and-friends" class="section level2 unnumbered">
 <h2>9.4.5 Any number of inputs: pmap() and friends</h2>
 <div class="question">
 <p>I want to use pmap to map over a vector, but the metadata for the functions other arguments is elsewhere - how would I combine these using <code>pmap</code>? The book says to name the metadata columns the same name as your function which I did but this still doesn’t work?</p>
 </div>
-<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb425-1" data-line-number="1">my_data &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span></a>
-<a class="sourceLine" id="cb425-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb425-3" data-line-number="3">metadata &lt;-<span class="st"> </span><span class="kw">tribble</span>(</a>
-<a class="sourceLine" id="cb425-4" data-line-number="4">  <span class="op">~</span>id, <span class="op">~</span>mult, <span class="op">~</span>adder,</a>
-<a class="sourceLine" id="cb425-5" data-line-number="5">  <span class="st">&quot;one&quot;</span>,   <span class="dv">2</span>,      <span class="dv">5</span>,</a>
-<a class="sourceLine" id="cb425-6" data-line-number="6">  <span class="st">&quot;two&quot;</span>,   <span class="dv">3</span>,      <span class="dv">6</span>,</a>
-<a class="sourceLine" id="cb425-7" data-line-number="7">  <span class="st">&quot;three&quot;</span>, <span class="dv">4</span>,      <span class="dv">7</span></a>
-<a class="sourceLine" id="cb425-8" data-line-number="8">)</a>
-<a class="sourceLine" id="cb425-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb425-10" data-line-number="10">the_function &lt;-<span class="st"> </span><span class="cf">function</span>(vec, id, mult, adder) {</a>
-<a class="sourceLine" id="cb425-11" data-line-number="11">  glue<span class="op">::</span><span class="kw">glue</span>(<span class="st">&quot;{id} is now {vec * mult + adder}&quot;</span>)</a>
-<a class="sourceLine" id="cb425-12" data-line-number="12">}</a>
-<a class="sourceLine" id="cb425-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb425-14" data-line-number="14"><span class="co"># my_data doesn&#39;t change but we want to map over the metadata</span></a>
-<a class="sourceLine" id="cb425-15" data-line-number="15"><span class="co"># x = string</span></a>
-<a class="sourceLine" id="cb425-16" data-line-number="16"><span class="co"># y = multiplier</span></a>
-<a class="sourceLine" id="cb425-17" data-line-number="17"><span class="co"># z = adder</span></a>
-<a class="sourceLine" id="cb425-18" data-line-number="18"><span class="kw">pmap</span>(<span class="kw">list</span>(metadata), <span class="op">~</span><span class="kw">the_function</span>(<span class="dt">vec =</span> my_data))</a></code></pre></div>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb437-1" data-line-number="1">my_data &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb437-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb437-3" data-line-number="3">metadata &lt;-<span class="st"> </span><span class="kw">tribble</span>(</a>
+<a class="sourceLine" id="cb437-4" data-line-number="4">  <span class="op">~</span>id, <span class="op">~</span>mult, <span class="op">~</span>adder,</a>
+<a class="sourceLine" id="cb437-5" data-line-number="5">  <span class="st">&quot;one&quot;</span>,   <span class="dv">2</span>,      <span class="dv">5</span>,</a>
+<a class="sourceLine" id="cb437-6" data-line-number="6">  <span class="st">&quot;two&quot;</span>,   <span class="dv">3</span>,      <span class="dv">6</span>,</a>
+<a class="sourceLine" id="cb437-7" data-line-number="7">  <span class="st">&quot;three&quot;</span>, <span class="dv">4</span>,      <span class="dv">7</span></a>
+<a class="sourceLine" id="cb437-8" data-line-number="8">)</a>
+<a class="sourceLine" id="cb437-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb437-10" data-line-number="10">the_function &lt;-<span class="st"> </span><span class="cf">function</span>(vec, id, mult, adder) {</a>
+<a class="sourceLine" id="cb437-11" data-line-number="11">  glue<span class="op">::</span><span class="kw">glue</span>(<span class="st">&quot;{id} is now {vec * mult + adder}&quot;</span>)</a>
+<a class="sourceLine" id="cb437-12" data-line-number="12">}</a>
+<a class="sourceLine" id="cb437-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb437-14" data-line-number="14"><span class="co"># my_data doesn&#39;t change but we want to map over the metadata</span></a>
+<a class="sourceLine" id="cb437-15" data-line-number="15"><span class="co"># x = string</span></a>
+<a class="sourceLine" id="cb437-16" data-line-number="16"><span class="co"># y = multiplier</span></a>
+<a class="sourceLine" id="cb437-17" data-line-number="17"><span class="co"># z = adder</span></a>
+<a class="sourceLine" id="cb437-18" data-line-number="18"><span class="co"># pmap(list(metadata), ~the_function(vec = my_data))</span></a></code></pre></div>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb438-1" data-line-number="1"><span class="kw">pmap</span>(<span class="kw">c</span>(<span class="kw">list</span>(my_data), metadata), the_function)</a></code></pre></div>
+<pre><code>## [[1]]
+## one is now 7
+## 
+## [[2]]
+## two is now 12
+## 
+## [[3]]
+## three is now 19</code></pre>
 </div>
 <div id="exercise-10" class="section level2 unnumbered">
 <h2>9.4.6.2 Exercise</h2>
 <div class="question">
 <p>I see how we can use <code>iwalk</code> and <code>walk2</code> for writing to multiple files, but the question asks about disadvantages to this - what would they be?</p>
 </div>
-<div class="TODO">
-<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb426-1" data-line-number="1">cyls &lt;-<span class="st"> </span><span class="kw">split</span>(mtcars, mtcars<span class="op">$</span>cyl)</a>
-<a class="sourceLine" id="cb426-2" data-line-number="2">paths &lt;-<span class="st"> </span><span class="kw">file.path</span>(temp, <span class="kw">paste0</span>(<span class="st">&quot;cyl-&quot;</span>, <span class="kw">names</span>(cyls), <span class="st">&quot;.csv&quot;</span>))</a>
-<a class="sourceLine" id="cb426-3" data-line-number="3"><span class="kw">walk2</span>(cyls, paths, write.csv)</a>
-<a class="sourceLine" id="cb426-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb426-5" data-line-number="5">mtcars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb426-6" data-line-number="6"><span class="st">  </span><span class="kw">split</span>(mtcars<span class="op">$</span>cyl) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb426-7" data-line-number="7"><span class="st">  </span><span class="kw">set_names</span>(<span class="op">~</span><span class="st"> </span><span class="kw">file.path</span>(temp, <span class="kw">paste0</span>(<span class="st">&quot;cyl-&quot;</span>, .x, <span class="st">&quot;.csv&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb426-8" data-line-number="8"><span class="st">  </span><span class="kw">iwalk</span>(<span class="op">~</span><span class="st"> </span><span class="kw">write.csv</span>(.x, .y))</a></code></pre></div>
-</div>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb440-1" data-line-number="1">cyls &lt;-<span class="st"> </span><span class="kw">split</span>(mtcars, mtcars<span class="op">$</span>cyl)</a>
+<a class="sourceLine" id="cb440-2" data-line-number="2">paths &lt;-<span class="st"> </span><span class="kw">file.path</span>(temp, <span class="kw">paste0</span>(<span class="st">&quot;cyl-&quot;</span>, <span class="kw">names</span>(cyls), <span class="st">&quot;.csv&quot;</span>))</a>
+<a class="sourceLine" id="cb440-3" data-line-number="3"><span class="kw">walk2</span>(cyls, paths, write.csv)</a>
+<a class="sourceLine" id="cb440-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb440-5" data-line-number="5">mtcars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb440-6" data-line-number="6"><span class="st">  </span><span class="kw">split</span>(mtcars<span class="op">$</span>cyl) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb440-7" data-line-number="7"><span class="st">  </span><span class="kw">set_names</span>(<span class="op">~</span><span class="st"> </span><span class="kw">file.path</span>(temp, <span class="kw">paste0</span>(<span class="st">&quot;cyl-&quot;</span>, .x, <span class="st">&quot;.csv&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb440-8" data-line-number="8"><span class="st">  </span><span class="kw">iwalk</span>(<span class="op">~</span><span class="st"> </span><span class="kw">write.csv</span>(.x, .y))</a></code></pre></div>
+<p>A readability problem mostly, as well as implicitly using <code>names(cyls)</code> as opposed to explicitly like it’s used in paths</p>
 </div>
 <div id="multiple-inputs" class="section level2 unnumbered">
 <h2>9.5.4 Multiple inputs</h2>
 <div class="question">
-<p>Can we think of a simple example for <code>reduce2()</code>? I was playing with <code>accumulate(c(FALSE, FALSE, TRUE),</code>|<code>)</code>, maybe we can combine this with something?</p>
+<p>Can we think of a simple example for <code>reduce()</code>?</p>
 </div>
-<div class="TODO">
-<p>XXX</p>
-</div>
-</div>
-<div id="map-reduce" class="section level2 unnumbered">
-<h2>9.5.5 Map-reduce</h2>
-<div class="question">
-<p>I like the books Hadoop simple example - can we come up with one with code or is it solely for computing on multiple machines?</p>
-</div>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<p>A Fibonacci function!</p>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb441-1" data-line-number="1">n &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb441-2" data-line-number="2">purrr<span class="op">::</span><span class="kw">accumulate</span>( <span class="dt">.init =</span> <span class="kw">c</span>(0L,1L),            <span class="co"># Starting with (0,1)</span></a>
+<a class="sourceLine" id="cb441-3" data-line-number="3">                   <span class="kw">rep</span>(<span class="dv">0</span>,n),                    <span class="co"># Accumulate n times</span></a>
+<a class="sourceLine" id="cb441-4" data-line-number="4">                   <span class="op">~</span><span class="kw">c</span>(.x,<span class="kw">sum</span>(.x))[<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]          <span class="co"># (x,y) -&gt; (x, y, x+y)[2:3]</span></a>
+<a class="sourceLine" id="cb441-5" data-line-number="5">                 ) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb441-6" data-line-number="6"><span class="st">    </span>purrr<span class="op">::</span><span class="kw">map_int</span>( <span class="st">`</span><span class="dt">[</span><span class="st">`</span>, <span class="dv">1</span> ) </a></code></pre></div>
+<pre><code>##  [1]  0  1  1  2  3  5  8 13 21 34 55</code></pre>
 </div>
 <div id="exercise-11" class="section level2 unnumbered">
 <h2>9.6.3.2 Exercise</h2>
 <div class="question">
 <p>I understand that <code>if (length(x) == 1L) return(x[[1L]])</code> covers the case like <code>simple_reduce(1, +)</code> but what’s the deal with <code>if (length(x) == 0L) return(default)</code> and what exactly is <code>default</code>?</p>
 </div>
-<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb427-1" data-line-number="1">simple_reduce &lt;-<span class="st"> </span><span class="cf">function</span>(x, f, default) {</a>
-<a class="sourceLine" id="cb427-2" data-line-number="2">  <span class="co"># when would you use reduce on something length 0?</span></a>
-<a class="sourceLine" id="cb427-3" data-line-number="3">  <span class="cf">if</span> (<span class="kw">length</span>(x) <span class="op">==</span><span class="st"> </span>0L) <span class="kw">return</span>(default)</a>
-<a class="sourceLine" id="cb427-4" data-line-number="4">  <span class="cf">if</span> (<span class="kw">length</span>(x) <span class="op">==</span><span class="st"> </span>1L) <span class="kw">return</span>(x[[1L]])</a>
-<a class="sourceLine" id="cb427-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb427-6" data-line-number="6">  out &lt;-<span class="st"> </span>x[[<span class="dv">1</span>]]</a>
-<a class="sourceLine" id="cb427-7" data-line-number="7">  <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq</span>(<span class="dv">2</span>, <span class="kw">length</span>(x))) {</a>
-<a class="sourceLine" id="cb427-8" data-line-number="8">    out &lt;-<span class="st"> </span><span class="kw">f</span>(out, x[[i]])</a>
-<a class="sourceLine" id="cb427-9" data-line-number="9">  }</a>
-<a class="sourceLine" id="cb427-10" data-line-number="10">  out</a>
-<a class="sourceLine" id="cb427-11" data-line-number="11">}</a></code></pre></div>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb443-1" data-line-number="1">simple_reduce &lt;-<span class="st"> </span><span class="cf">function</span>(x, f, default) {</a>
+<a class="sourceLine" id="cb443-2" data-line-number="2">  <span class="co"># when would you use reduce on something length 0?</span></a>
+<a class="sourceLine" id="cb443-3" data-line-number="3">  <span class="cf">if</span> (<span class="kw">length</span>(x) <span class="op">==</span><span class="st"> </span>0L) <span class="kw">return</span>(default)</a>
+<a class="sourceLine" id="cb443-4" data-line-number="4">  <span class="cf">if</span> (<span class="kw">length</span>(x) <span class="op">==</span><span class="st"> </span>1L) <span class="kw">return</span>(x[[1L]])</a>
+<a class="sourceLine" id="cb443-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb443-6" data-line-number="6">  out &lt;-<span class="st"> </span>x[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb443-7" data-line-number="7">  <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq</span>(<span class="dv">2</span>, <span class="kw">length</span>(x))) {</a>
+<a class="sourceLine" id="cb443-8" data-line-number="8">    out &lt;-<span class="st"> </span><span class="kw">f</span>(out, x[[i]])</a>
+<a class="sourceLine" id="cb443-9" data-line-number="9">  }</a>
+<a class="sourceLine" id="cb443-10" data-line-number="10">  out</a>
+<a class="sourceLine" id="cb443-11" data-line-number="11">}</a></code></pre></div>
 <p>Default is the user supplied second number to add by, and we can use <code>integer(0)</code> to work with a <code>length(0)</code> vector.</p>
-<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb428-1" data-line-number="1"><span class="kw">simple_reduce</span>(<span class="kw">integer</span>(<span class="dv">0</span>), <span class="st">`</span><span class="dt">+</span><span class="st">`</span>, <span class="dt">default =</span> 0L)</a></code></pre></div>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb444-1" data-line-number="1"><span class="kw">simple_reduce</span>(<span class="kw">integer</span>(<span class="dv">0</span>), <span class="st">`</span><span class="dt">+</span><span class="st">`</span>, <span class="dt">default =</span> 0L)</a></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<p>I guess I understand this but when would you want to perform a reduce on something of length zero?</p>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<p>You would want to make sure your reduce is covered in the case of length zero so that your program doesn’t crash when a user passes in an empty vector.</p>
 </div>
 <div id="matrices-and-arrays" class="section level2 unnumbered">
 <h2>9.7.1 Matrices and arrays</h2>
 <div class="question">
 <p>How would you tidyverse the <code>rowSums</code> function?</p>
-<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb430-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">tribble</span>(</a>
-<a class="sourceLine" id="cb430-2" data-line-number="2">  <span class="op">~</span>x, <span class="op">~</span>y,</a>
-<a class="sourceLine" id="cb430-3" data-line-number="3">  <span class="dv">1</span>, <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb430-4" data-line-number="4">  <span class="dv">2</span>, <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb430-5" data-line-number="5">  <span class="dv">3</span>, <span class="dv">3</span></a>
-<a class="sourceLine" id="cb430-6" data-line-number="6">)</a>
-<a class="sourceLine" id="cb430-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb430-8" data-line-number="8"><span class="kw">apply</span>(x, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">sum</span>(x<span class="op">&gt;</span><span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb446-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">tribble</span>(</a>
+<a class="sourceLine" id="cb446-2" data-line-number="2">  <span class="op">~</span>x, <span class="op">~</span>y,</a>
+<a class="sourceLine" id="cb446-3" data-line-number="3">  <span class="dv">1</span>, <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb446-4" data-line-number="4">  <span class="dv">2</span>, <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb446-5" data-line-number="5">  <span class="dv">3</span>, <span class="dv">3</span></a>
+<a class="sourceLine" id="cb446-6" data-line-number="6">)</a>
+<a class="sourceLine" id="cb446-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb446-8" data-line-number="8"><span class="kw">apply</span>(x, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">sum</span>(x<span class="op">&gt;</span><span class="dv">2</span>))</a></code></pre></div>
 <pre><code>## [1] 0 0 2</code></pre>
 </div>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb448-1" data-line-number="1"><span class="kw">pmap_dbl</span>(x, <span class="op">~</span><span class="kw">sum</span>(<span class="kw">c</span>(...) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>))</a></code></pre></div>
+<pre><code>## [1] 0 0 2</code></pre>
 <div class="question">
 <p>I’m not quite sure what idempotent means but Hadley warns that <code>a2d</code> and <code>a1</code> aren’t the same, but isn’t that just because we’re using <code>1</code> which is row wise, and not <code>2</code>? What is the warning he is heeding us against here?</p>
 </div>
-<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb432-1" data-line-number="1">a2d &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="dt">nrow =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb432-2" data-line-number="2">a1 &lt;-<span class="st"> </span><span class="kw">apply</span>(a2d, <span class="dv">1</span>, identity)</a>
-<a class="sourceLine" id="cb432-3" data-line-number="3"><span class="kw">identical</span>(a2d, a1)</a></code></pre></div>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb450-1" data-line-number="1">a2d &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="dt">nrow =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb450-2" data-line-number="2">a1 &lt;-<span class="st"> </span><span class="kw">apply</span>(a2d, <span class="dv">1</span>, identity)</a>
+<a class="sourceLine" id="cb450-3" data-line-number="3"><span class="kw">identical</span>(a2d, a1)</a></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
+<p>I think he is just trying to drive home the idea that you might expect no change by apply-ing an operator like identity which leaves its input unchanged, however what it instead returns is the transpose. So perhaps it would have been better to more specifically say that <code>apply(..., MARGIN = 1)</code> isn’t idempotent.</p>
 </div>
 <div id="exercise-12" class="section level2 unnumbered">
 <h2>9.7.3.2 Exercise</h2>
 <div class="question">
 <p>What’s an example of using <code>eapply</code> (iterates over the (named) elements of an environment)?</p>
 </div>
-<div class="TODO">
-
-</div>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb452-1" data-line-number="1"><span class="kw">baseenv</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">eapply</span>(is.primitive) <span class="op">%&gt;%</span><span class="st"> </span>unlist <span class="op">%&gt;%</span><span class="st"> </span>which <span class="op">%&gt;%</span><span class="st"> </span>names</a></code></pre></div>
 <div class="question">
 <p>Can we come up with an example for <code>rapply</code> allowing us to apply a function to only a specified class? Does something like this exist within <code>purrr</code>?</p>
 </div>
-<div class="TODO">
+<p>Answer from <a href="https://community.rstudio.com/t/recursive-purrr-mutate-if/16638/7">this community post</a>:</p>
+<div id="rapply" class="section level4">
+<h4><span class="header-section-number">9.0.0.1</span> rapply</h4>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb453-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">a =</span> <span class="kw">as.character</span>(<span class="dv">1</span>), <span class="dt">b =</span> <span class="kw">as.double</span>(<span class="dv">2</span>)), </a>
+<a class="sourceLine" id="cb453-2" data-line-number="2">          <span class="dt">c =</span> <span class="kw">as.character</span>(<span class="dv">3</span>), </a>
+<a class="sourceLine" id="cb453-3" data-line-number="3">          <span class="dt">d =</span> <span class="kw">as.double</span>(<span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb453-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb453-5" data-line-number="5">as_integer_rapply &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb453-6" data-line-number="6">  <span class="kw">rapply</span>(</a>
+<a class="sourceLine" id="cb453-7" data-line-number="7">    x,</a>
+<a class="sourceLine" id="cb453-8" data-line-number="8">    as.integer,</a>
+<a class="sourceLine" id="cb453-9" data-line-number="9">    <span class="st">&quot;character&quot;</span>,</a>
+<a class="sourceLine" id="cb453-10" data-line-number="10">    <span class="dt">how =</span> <span class="st">&quot;replace&quot;</span></a>
+<a class="sourceLine" id="cb453-11" data-line-number="11">  )</a>
+<a class="sourceLine" id="cb453-12" data-line-number="12">}</a>
+<a class="sourceLine" id="cb453-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb453-14" data-line-number="14">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_integer_rapply</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str</span>()</a></code></pre></div>
+<pre><code>## List of 3
+##  $  :List of 2
+##   ..$ a: int 1
+##   ..$ b: num 2
+##  $ c: int 3
+##  $ d: num 4</code></pre>
+</div>
+<div id="map" class="section level4">
+<h4><span class="header-section-number">9.0.0.2</span> map</h4>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb455-1" data-line-number="1">as_integer_recursive_map &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb455-2" data-line-number="2">  x <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb455-3" data-line-number="3"><span class="st">    </span><span class="kw">map_if</span>(is.character, as.integer) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb455-4" data-line-number="4"><span class="st">    </span><span class="kw">map_if</span>(is.list, as_integer_recursive_map)</a>
+<a class="sourceLine" id="cb455-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb455-6" data-line-number="6">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_integer_recursive_map</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str</span>()</a></code></pre></div>
+<pre><code>## List of 3
+##  $  :List of 2
+##   ..$ a: int 1
+##   ..$ b: num 2
+##  $ c: int 3
+##  $ d: num 4</code></pre>
+</div>
+<div id="comparing-the-two" class="section level4">
+<h4><span class="header-section-number">9.0.0.3</span> Comparing the two:</h4>
+<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb457-1" data-line-number="1">microbenchmark<span class="op">::</span><span class="kw">microbenchmark</span>(</a>
+<a class="sourceLine" id="cb457-2" data-line-number="2">  <span class="kw">as_integer_rapply</span>(x),</a>
+<a class="sourceLine" id="cb457-3" data-line-number="3">  <span class="kw">as_integer_recursive_map</span>(x),</a>
+<a class="sourceLine" id="cb457-4" data-line-number="4">  <span class="dt">times =</span> <span class="dv">100</span></a>
+<a class="sourceLine" id="cb457-5" data-line-number="5">)</a></code></pre></div>
+<pre><code>## Unit: microseconds
+##                         expr      min        lq       mean    median       uq
+##         as_integer_rapply(x)    9.115   12.0905   33.87318   19.5945   23.016
+##  as_integer_recursive_map(x) 1010.800 1040.9980 1245.18589 1125.2790 1307.867
+##       max neval
+##  1459.710   100
+##  4864.722   100</code></pre>
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb459-1" data-line-number="1">as_integer_safe &lt;-<span class="st"> </span><span class="cf">function</span>(y) {</a>
+<a class="sourceLine" id="cb459-2" data-line-number="2">  <span class="cf">if</span> (<span class="kw">is.character</span>(y) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">all</span>(<span class="kw">grepl</span>(<span class="st">&quot;^</span><span class="ch">\\</span><span class="st">d+$&quot;</span>, y))) {</a>
+<a class="sourceLine" id="cb459-3" data-line-number="3">    <span class="kw">as.integer</span>(y)</a>
+<a class="sourceLine" id="cb459-4" data-line-number="4">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb459-5" data-line-number="5">    y</a>
+<a class="sourceLine" id="cb459-6" data-line-number="6">  }</a>
+<a class="sourceLine" id="cb459-7" data-line-number="7">}</a>
+<a class="sourceLine" id="cb459-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb459-9" data-line-number="9">x[[<span class="dv">1</span>]][[<span class="dv">3</span>]] &lt;-<span class="st"> &quot;dog&quot;</span></a>
+<a class="sourceLine" id="cb459-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb459-11" data-line-number="11"><span class="kw">rapply</span>(x, <span class="dt">f =</span> as_integer_safe, <span class="dt">how =</span> <span class="st">&quot;replace&quot;</span>)</a></code></pre></div>
+<pre><code>## [[1]]
+## [[1]]$a
+## [1] 1
+## 
+## [[1]]$b
+## [1] 2
+## 
+## [[1]][[3]]
+## [1] &quot;dog&quot;
+## 
+## 
+## $c
+## [1] 3
+## 
+## $d
+## [1] 4</code></pre>
+
 
 </div>
-</div>
-<div id="exercise-13" class="section level2 unnumbered">
-<h2>9.7.3.3 Exercise</h2>
-<div class="question">
-<p>What exactly is the <a href="https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-12.html#%25_idx_1096">Fixed Point Algrithm</a> and can we go over the books answer?</p>
-</div>
-<p>The fixed point theory is the specific scenario in which <code>x = g(x)</code>, meaning the functions input is equal to the function’s output.</p>
-<p>We are creating a function that can be used to find where <code>x = g(x)</code></p>
-<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb434-1" data-line-number="1">fixed_point &lt;-<span class="st"> </span><span class="cf">function</span>(f, x_init, <span class="dt">n_max =</span> <span class="dv">10000</span>, <span class="dt">tol =</span> <span class="fl">0.0001</span>) {</a>
-<a class="sourceLine" id="cb434-2" data-line-number="2">  n &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb434-3" data-line-number="3">  x &lt;-<span class="st"> </span>x_init</a>
-<a class="sourceLine" id="cb434-4" data-line-number="4">  y &lt;-<span class="st"> </span><span class="kw">f</span>(x)</a>
-<a class="sourceLine" id="cb434-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb434-6" data-line-number="6">  is_fixed_point &lt;-<span class="st"> </span><span class="cf">function</span>(x, y) {</a>
-<a class="sourceLine" id="cb434-7" data-line-number="7">    <span class="kw">abs</span>(x <span class="op">-</span><span class="st"> </span>y) <span class="op">&lt;</span><span class="st"> </span>tol</a>
-<a class="sourceLine" id="cb434-8" data-line-number="8">  }</a>
-<a class="sourceLine" id="cb434-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb434-10" data-line-number="10">  <span class="cf">while</span> (<span class="op">!</span><span class="kw">is_fixed_point</span>(x, y)) {</a>
-<a class="sourceLine" id="cb434-11" data-line-number="11">    x &lt;-<span class="st"> </span>y</a>
-<a class="sourceLine" id="cb434-12" data-line-number="12">    y &lt;-<span class="st"> </span><span class="kw">f</span>(y)</a>
-<a class="sourceLine" id="cb434-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb434-14" data-line-number="14">    <span class="co"># Make sure we eventually stop</span></a>
-<a class="sourceLine" id="cb434-15" data-line-number="15">    n &lt;-<span class="st"> </span>n <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb434-16" data-line-number="16">    <span class="cf">if</span> (n <span class="op">&gt;</span><span class="st"> </span>n_max) {</a>
-<a class="sourceLine" id="cb434-17" data-line-number="17">      <span class="kw">stop</span>(<span class="st">&quot;Failed to converge&quot;</span>, <span class="dt">call. =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb434-18" data-line-number="18">    }</a>
-<a class="sourceLine" id="cb434-19" data-line-number="19">  }</a>
-<a class="sourceLine" id="cb434-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb434-21" data-line-number="21">  x</a>
-<a class="sourceLine" id="cb434-22" data-line-number="22">}</a></code></pre></div>
-<p>Functions with fixed points:</p>
-<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb435-1" data-line-number="1"><span class="kw">fixed_point</span>(sin, <span class="dt">x_init =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb435-2" data-line-number="2"><span class="kw">fixed_point</span>(cos, <span class="dt">x_init =</span> <span class="dv">1</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb436-1" data-line-number="1"><span class="co"># Functions without fixed points</span></a>
-<a class="sourceLine" id="cb436-2" data-line-number="2">add_one &lt;-<span class="st"> </span><span class="cf">function</span>(x) x <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb436-3" data-line-number="3"><span class="kw">fixed_point</span>(add_one, <span class="dt">x_init =</span> <span class="dv">1</span>)</a></code></pre></div>
-<pre><code>#&gt; Error: Failed to converge</code></pre>
-
-
 </div>
 </div>
             </section>
