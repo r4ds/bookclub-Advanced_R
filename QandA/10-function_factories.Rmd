@@ -1,0 +1,53 @@
+# Function factories
+
+## 10.2 Factory fundamentals {-}
+
+:::question
+Let's really solidify this statement in our own words using the `power1` and `square`/`cube` example:
+
+> The enclosing environment of the manufactured function is an execution environment of the function factory.
+
+:::
+
+```{r, echo=FALSE}
+knitr::include_graphics("images/factories1.png")
+```
+
+* enclosing environment (this is the function environment - like `square` and `cube`) [in red]
+* execution environment (this is the same environment as above but from the "perspective" of `power1`) [in green]
+
+`square` and `cube` have their own enclosing environments where `x` is different for each function - but their parent, the environment of `power1`, is the same. 
+
+Because `power1` is a function, it has its own execution environment which is usually ephemeral but in this case it is the environment of both `square` and `cube` -- and that is how the manufactured functions have access to `exp`.
+
+## 10.2.3 Forcing evaluation {-}
+
+:::question
+I think this force section is trying to convey how we should use force on every argument in the factory's execution environment (here just `exp`) because you want to avoid lazy eval in the manufactured function's enclosing environment (like how we want to `force(exp = 2)` for `square`) but how does it not just become `force(exp = 3)` when we set `x <- 3`?
+:::
+
+:::TODO
+```{r}
+power2 <- function(exp) {
+  force(exp)
+  function(x) {
+    x ^ exp
+  }
+}
+x <- 2
+square <- power2(x)
+x <- 3
+# how does force not just use 3 in this case?
+# force == function (x) x wont it just be 3 now?
+fn_env(square)$exp
+# [1] 2
+# how???? 
+```
+
+What happens:
+* If you don't force, `exp` in the square environment is a promise which hasn't been evaluated.
+* If you do force, `exp` evaluates to 2 and is no longer a promise.
+
+But how are you not just forcing it to three in the second case?
+:::
+

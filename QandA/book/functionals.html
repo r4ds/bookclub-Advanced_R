@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-05-29" />
+<meta name="date" content="2020-05-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="conditions.html"/>
-
+<link rel="next" href="function-factories.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -249,6 +249,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#matrices-and-arrays"><i class="fa fa-check"></i>9.7.1 Matrices and arrays</a></li>
 <li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-12"><i class="fa fa-check"></i>9.7.3.2 Exercise</a></li>
 </ul></li>
+<li class="chapter" data-level="10" data-path="function-factories.html"><a href="function-factories.html"><i class="fa fa-check"></i><b>10</b> Function factories</a><ul>
+<li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#factory-fundamentals"><i class="fa fa-check"></i>10.2 Factory fundamentals</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -306,26 +309,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb431-1" data-line-number="1">trials &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="op">~</span><span class="st"> </span><span class="kw">t.test</span>(<span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">10</span>), <span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">7</span>)))</a>
 <a class="sourceLine" id="cb431-2" data-line-number="2"><span class="co"># tibble(p_value = map_dbl(trials, &quot;p.value&quot;))</span></a>
 <a class="sourceLine" id="cb431-3" data-line-number="3"><span class="kw">map_dbl</span>(trials, pluck, <span class="st">&quot;p.value&quot;</span>)</a></code></pre></div>
-<pre><code>##   [1] 4.257919e-02 4.690012e-03 1.492816e-02 3.429617e-01 6.474726e-02
-##   [6] 1.212347e-01 2.882362e-02 9.363890e-02 6.402419e-03 2.507139e-02
-##  [11] 3.442683e-01 1.557276e-01 6.770389e-01 1.382802e-01 5.454916e-02
-##  [16] 8.761445e-04 1.961468e-01 6.212780e-01 6.400241e-02 3.492144e-04
-##  [21] 1.164990e-01 3.792448e-03 3.009342e-03 7.926338e-04 1.812124e-02
-##  [26] 2.773414e-03 2.885500e-03 2.897031e-01 6.936359e-01 2.398803e-01
-##  [31] 6.368088e-02 3.511484e-03 1.453440e-01 1.849429e-01 9.887288e-02
-##  [36] 3.036427e-02 5.738908e-05 5.959964e-03 1.300723e-02 1.704170e-01
-##  [41] 1.342043e-02 4.084301e-02 5.421060e-03 1.032035e-02 5.454120e-01
-##  [46] 9.949495e-02 1.902894e-01 1.046865e-01 4.787205e-03 5.890209e-02
-##  [51] 4.699765e-02 4.624521e-02 2.723024e-03 4.426657e-02 1.744939e-03
-##  [56] 3.728406e-01 1.105070e-03 3.703607e-03 1.473138e-03 4.283746e-03
-##  [61] 8.540696e-03 3.252527e-02 5.087545e-02 9.315084e-02 1.556252e-02
-##  [66] 4.007284e-01 3.454755e-03 1.951412e-03 6.403262e-02 1.125482e-01
-##  [71] 1.813502e-01 8.665963e-03 1.020235e-02 1.140858e-04 4.855718e-01
-##  [76] 6.869608e-02 2.921477e-02 4.118200e-04 2.985148e-02 4.476699e-02
-##  [81] 7.610971e-03 2.904879e-02 1.196144e-01 1.931322e-02 1.692454e-01
-##  [86] 9.467969e-01 2.787850e-01 4.081396e-03 2.254144e-02 5.496226e-02
-##  [91] 2.957634e-02 1.971476e-03 2.036038e-01 5.010194e-03 1.718385e-01
-##  [96] 4.458266e-01 2.791943e-03 9.386321e-02 5.019418e-05 4.937698e-02</code></pre>
+<pre><code>##   [1] 3.503781e-02 2.487713e-03 3.883114e-02 2.340175e-02 1.975110e-01
+##   [6] 2.861548e-03 1.410126e-03 1.841100e-02 8.932252e-04 3.163937e-02
+##  [11] 7.519574e-02 4.575355e-01 2.299273e-03 8.782183e-01 1.194412e-01
+##  [16] 3.024656e-04 1.292358e-01 6.804233e-03 4.334373e-01 8.389298e-05
+##  [21] 6.074048e-04 1.667452e-03 9.096679e-02 4.572623e-01 8.847081e-03
+##  [26] 1.208960e-01 3.196775e-02 1.285887e-01 2.764024e-02 8.241848e-03
+##  [31] 2.013674e-01 5.702632e-02 2.425434e-03 1.304102e-02 9.034879e-03
+##  [36] 1.748755e-03 1.272662e-02 5.613447e-03 8.130117e-03 1.315472e-01
+##  [41] 2.640555e-02 2.940559e-02 4.604307e-03 7.164098e-02 1.326124e-02
+##  [46] 7.734496e-03 6.916668e-02 1.673203e-02 5.976665e-02 1.634724e-02
+##  [51] 4.486722e-02 2.352696e-03 9.739031e-02 9.455964e-04 1.646139e-01
+##  [56] 4.397111e-01 1.577306e-01 1.085849e-02 2.961129e-01 2.559883e-02
+##  [61] 8.473233e-02 1.000000e+00 1.130305e-03 1.872323e-01 7.398091e-02
+##  [66] 1.404581e-01 5.591533e-01 1.790204e-03 7.384645e-04 7.049048e-01
+##  [71] 6.559200e-02 7.711241e-03 1.331073e-01 3.131668e-01 7.367076e-02
+##  [76] 9.526548e-02 4.492295e-02 3.471285e-03 3.085034e-04 2.948183e-02
+##  [81] 3.844260e-02 5.660701e-03 9.808977e-02 3.808138e-02 1.501907e-01
+##  [86] 1.315466e-02 7.410522e-04 5.129002e-02 1.406374e-02 1.627670e-01
+##  [91] 2.649828e-02 2.910122e-02 9.586010e-03 2.178471e-03 4.547915e-01
+##  [96] 7.553413e-03 1.797085e-02 2.739049e-02 2.892539e-02 1.522557e-01</code></pre>
 </div>
 <div id="exercise-9" class="section level2 unnumbered">
 <h2>9.2.6.5 Exercise</h2>
@@ -535,12 +538,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb457-4" data-line-number="4">  <span class="dt">times =</span> <span class="dv">100</span></a>
 <a class="sourceLine" id="cb457-5" data-line-number="5">)</a></code></pre></div>
 <pre><code>## Unit: microseconds
-##                         expr      min        lq       mean    median       uq
-##         as_integer_rapply(x)    9.115   12.0905   33.87318   19.5945   23.016
-##  as_integer_recursive_map(x) 1010.800 1040.9980 1245.18589 1125.2790 1307.867
+##                         expr      min       lq      mean   median       uq
+##         as_integer_rapply(x)   12.106   16.851   49.8076   25.911   30.852
+##  as_integer_recursive_map(x) 1347.028 1399.028 1696.9675 1531.504 1822.363
 ##       max neval
-##  1459.710   100
-##  4864.722   100</code></pre>
+##  2412.229   100
+##  5520.684   100</code></pre>
 <div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb459-1" data-line-number="1">as_integer_safe &lt;-<span class="st"> </span><span class="cf">function</span>(y) {</a>
 <a class="sourceLine" id="cb459-2" data-line-number="2">  <span class="cf">if</span> (<span class="kw">is.character</span>(y) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">all</span>(<span class="kw">grepl</span>(<span class="st">&quot;^</span><span class="ch">\\</span><span class="st">d+$&quot;</span>, y))) {</a>
 <a class="sourceLine" id="cb459-3" data-line-number="3">    <span class="kw">as.integer</span>(y)</a>
@@ -569,7 +572,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $d
 ## [1] 4</code></pre>
 
-
 </div>
 </div>
 </div>
@@ -578,8 +580,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="conditions.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="conditions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="function-factories.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
