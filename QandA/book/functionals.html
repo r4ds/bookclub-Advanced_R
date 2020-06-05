@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-05-31" />
+<meta name="date" content="2020-06-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -251,6 +251,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="function-factories.html"><a href="function-factories.html"><i class="fa fa-check"></i><b>10</b> Function factories</a><ul>
 <li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#factory-fundamentals"><i class="fa fa-check"></i>10.2 Factory fundamentals</a></li>
+<li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#forcing-evaluation"><i class="fa fa-check"></i>10.2.3 Forcing evaluation</a></li>
+<li class="chapter" data-level="10.1" data-path="function-factories.html"><a href="function-factories.html#without-force"><i class="fa fa-check"></i><b>10.1</b> WITHOUT FORCE</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="function-factories.html"><a href="function-factories.html#using-force"><i class="fa fa-check"></i><b>10.1.1</b> USING FORCE</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#garbage-collection"><i class="fa fa-check"></i>10.2.5 garbage collection</a></li>
+<li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#exercise-13"><i class="fa fa-check"></i>10.2.6.2 Exercise</a></li>
+<li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#exercise-14"><i class="fa fa-check"></i>10.2.6.3 Exercise</a></li>
+<li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#labelling"><i class="fa fa-check"></i>10.3.1 Labelling</a></li>
+<li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#exercises-8"><i class="fa fa-check"></i>10.3.4 Exercises</a></li>
+<li class="chapter" data-level="10.2" data-path="function-factories.html"><a href="function-factories.html#factories-and-functionals"><i class="fa fa-check"></i><b>10.2</b> 10.5 factories and functionals</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -309,26 +319,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb431-1" data-line-number="1">trials &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="op">~</span><span class="st"> </span><span class="kw">t.test</span>(<span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">10</span>), <span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">7</span>)))</a>
 <a class="sourceLine" id="cb431-2" data-line-number="2"><span class="co"># tibble(p_value = map_dbl(trials, &quot;p.value&quot;))</span></a>
 <a class="sourceLine" id="cb431-3" data-line-number="3"><span class="kw">map_dbl</span>(trials, pluck, <span class="st">&quot;p.value&quot;</span>)</a></code></pre></div>
-<pre><code>##   [1] 3.503781e-02 2.487713e-03 3.883114e-02 2.340175e-02 1.975110e-01
-##   [6] 2.861548e-03 1.410126e-03 1.841100e-02 8.932252e-04 3.163937e-02
-##  [11] 7.519574e-02 4.575355e-01 2.299273e-03 8.782183e-01 1.194412e-01
-##  [16] 3.024656e-04 1.292358e-01 6.804233e-03 4.334373e-01 8.389298e-05
-##  [21] 6.074048e-04 1.667452e-03 9.096679e-02 4.572623e-01 8.847081e-03
-##  [26] 1.208960e-01 3.196775e-02 1.285887e-01 2.764024e-02 8.241848e-03
-##  [31] 2.013674e-01 5.702632e-02 2.425434e-03 1.304102e-02 9.034879e-03
-##  [36] 1.748755e-03 1.272662e-02 5.613447e-03 8.130117e-03 1.315472e-01
-##  [41] 2.640555e-02 2.940559e-02 4.604307e-03 7.164098e-02 1.326124e-02
-##  [46] 7.734496e-03 6.916668e-02 1.673203e-02 5.976665e-02 1.634724e-02
-##  [51] 4.486722e-02 2.352696e-03 9.739031e-02 9.455964e-04 1.646139e-01
-##  [56] 4.397111e-01 1.577306e-01 1.085849e-02 2.961129e-01 2.559883e-02
-##  [61] 8.473233e-02 1.000000e+00 1.130305e-03 1.872323e-01 7.398091e-02
-##  [66] 1.404581e-01 5.591533e-01 1.790204e-03 7.384645e-04 7.049048e-01
-##  [71] 6.559200e-02 7.711241e-03 1.331073e-01 3.131668e-01 7.367076e-02
-##  [76] 9.526548e-02 4.492295e-02 3.471285e-03 3.085034e-04 2.948183e-02
-##  [81] 3.844260e-02 5.660701e-03 9.808977e-02 3.808138e-02 1.501907e-01
-##  [86] 1.315466e-02 7.410522e-04 5.129002e-02 1.406374e-02 1.627670e-01
-##  [91] 2.649828e-02 2.910122e-02 9.586010e-03 2.178471e-03 4.547915e-01
-##  [96] 7.553413e-03 1.797085e-02 2.739049e-02 2.892539e-02 1.522557e-01</code></pre>
+<pre><code>##   [1] 3.912277e-02 7.016412e-01 2.311730e-04 4.010441e-03 3.494923e-02
+##   [6] 2.852972e-01 1.556290e-01 7.964912e-01 8.117245e-06 5.455390e-02
+##  [11] 4.139744e-02 4.354374e-02 4.121921e-03 3.338921e-03 2.534698e-01
+##  [16] 2.113112e-01 1.167580e-01 3.479590e-02 3.804286e-03 6.221792e-01
+##  [21] 2.283485e-01 3.427221e-02 1.264223e-02 5.553962e-01 6.946844e-01
+##  [26] 7.382687e-01 8.498444e-02 7.110683e-01 4.768812e-02 1.179671e-02
+##  [31] 2.634649e-03 2.061073e-01 8.321542e-02 8.480217e-03 2.722907e-03
+##  [36] 6.962598e-02 4.653970e-04 4.335937e-04 2.370755e-02 1.169632e-01
+##  [41] 6.562739e-04 3.116877e-02 2.250383e-03 6.330379e-03 3.093120e-02
+##  [46] 3.277942e-02 1.682023e-01 8.552642e-02 2.575631e-01 8.395762e-04
+##  [51] 5.315297e-02 8.500449e-01 2.791578e-01 1.159125e-02 2.112323e-01
+##  [56] 4.591295e-02 1.360035e-03 4.050806e-03 6.421745e-02 1.059428e-04
+##  [61] 3.512097e-02 1.325841e-03 2.080272e-01 4.138132e-03 4.443982e-01
+##  [66] 6.302720e-04 1.883785e-01 2.805079e-01 1.586337e-01 8.203096e-02
+##  [71] 3.198274e-02 2.197375e-02 6.256309e-02 5.875269e-01 6.153252e-03
+##  [76] 5.788656e-03 7.645511e-02 5.153251e-01 1.456585e-02 1.255011e-04
+##  [81] 3.019399e-03 5.968961e-02 3.233810e-02 4.601305e-03 1.703045e-01
+##  [86] 2.525118e-02 2.282794e-02 7.104449e-03 1.335098e-03 2.557691e-01
+##  [91] 3.082740e-01 1.218257e-02 3.356263e-02 3.139093e-03 9.408698e-01
+##  [96] 2.629875e-01 1.364764e-02 7.813046e-02 6.836954e-04 1.000935e-01</code></pre>
 </div>
 <div id="exercise-9" class="section level2 unnumbered">
 <h2>9.2.6.5 Exercise</h2>
@@ -538,12 +548,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb457-4" data-line-number="4">  <span class="dt">times =</span> <span class="dv">100</span></a>
 <a class="sourceLine" id="cb457-5" data-line-number="5">)</a></code></pre></div>
 <pre><code>## Unit: microseconds
-##                         expr      min       lq      mean   median       uq
-##         as_integer_rapply(x)   12.106   16.851   49.8076   25.911   30.852
-##  as_integer_recursive_map(x) 1347.028 1399.028 1696.9675 1531.504 1822.363
+##                         expr     min        lq       mean    median       uq
+##         as_integer_rapply(x)   9.603   12.6835   32.23379   15.8445   20.788
+##  as_integer_recursive_map(x) 984.312 1051.9365 1141.14636 1086.2575 1164.945
 ##       max neval
-##  2412.229   100
-##  5520.684   100</code></pre>
+##  1577.124   100
+##  4800.881   100</code></pre>
 <div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb459-1" data-line-number="1">as_integer_safe &lt;-<span class="st"> </span><span class="cf">function</span>(y) {</a>
 <a class="sourceLine" id="cb459-2" data-line-number="2">  <span class="cf">if</span> (<span class="kw">is.character</span>(y) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">all</span>(<span class="kw">grepl</span>(<span class="st">&quot;^</span><span class="ch">\\</span><span class="st">d+$&quot;</span>, y))) {</a>
 <a class="sourceLine" id="cb459-3" data-line-number="3">    <span class="kw">as.integer</span>(y)</a>

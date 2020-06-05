@@ -119,7 +119,7 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-05-31}
+\date{2020-06-05}
 
 \begin{document}
 \maketitle
@@ -363,7 +363,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcec3c33a68"
+## [1] "0x7fbced7e5618"
 \end{verbatim}
 
 \begin{Shaded}
@@ -373,7 +373,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcec3c33a68"
+## [1] "0x7fbced7e5618"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -385,7 +385,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcebd9d9870"
+## [1] "0x7fbcf3c17a50"
 \end{verbatim}
 
 \begin{Shaded}
@@ -395,8 +395,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fcec220ea18] <list> 
-## └─[2:0x7fcec3c33a68] <dbl>
+## █ [1:0x7fbcf263bbd0] <list> 
+## └─[2:0x7fbced7e5618] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -406,7 +406,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcebeb28588"
+## [1] "0x7fbcf306d5a0"
 \end{verbatim}
 
 \begin{Shaded}
@@ -443,7 +443,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fcec19261e8>"
+## [1] "<0x7fbced7a9ef8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -453,7 +453,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fcec19261e8>
+## <0x7fbced7a9ef8>
 \end{verbatim}
 
 \begin{Shaded}
@@ -463,7 +463,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcec19261e8"
+## [1] "0x7fbced7a9ef8"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -512,7 +512,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcec752e9c8"
+## [1] "0x7fbcf2412888"
 \end{verbatim}
 
 \begin{Shaded}
@@ -522,7 +522,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fcec752e9c8>"
+## [1] "<0x7fbcf2412888>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -532,7 +532,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fcec752e9c8 -> 0x7fcec7635688]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fbcf2412888 -> 0x7fbcf24ed608]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -628,7 +628,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcec5596498"
+## [1] "0x7fbcd92b1a68"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -641,7 +641,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcec4ea8a48"
+## [1] "0x7fbcf76251f8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -664,7 +664,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcec4ea8a48"
+## [1] "0x7fbcf76251f8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -674,7 +674,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcec4ea8a48"
+## [1] "0x7fbcf76251f8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -697,7 +697,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcec4ea8a48"
+## [1] "0x7fbcf76251f8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -707,7 +707,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcec5e4a378"
+## [1] "0x7fbcd92737e8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -730,7 +730,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcec3678c48"
+## [1] "0x7fbcea084498"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2531,13 +2531,13 @@ This will work:
 
 \begin{verbatim}
 ## # A tibble: 5 x 1
-##       x1
-##    <dbl>
-## 1 0.911 
-## 2 0.424 
-## 3 0.163 
-## 4 0.0893
-## 5 0.841
+##      x1
+##   <dbl>
+## 1 0.716
+## 2 0.402
+## 3 0.594
+## 4 0.333
+## 5 0.512
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2611,7 +2611,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 236 287 293 250 246 259 264 244 232 249
+##  [1] 219 280 266 223 241 242 297 292 282 285
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3048,7 +3048,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fcebf3121c8>
+## <bytecode: 0x7fbcea8ac980>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3919,7 +3919,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7fcec12a3bb0>
+## <bytecode: 0x7fbce9c87290>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4057,7 +4057,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7fcec59cf200>
+## <bytecode: 0x7fbced5577b0>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4851,29 +4851,29 @@ Given this little example:
 
 \begin{verbatim}
 ## [1] "parent in mid: "
-## <environment: 0x7fcec29bed98>
+## <environment: 0x7fbcec35ea80>
 ## [1] "current in mid: "
-## <environment: 0x7fcec29bf578>
+## <environment: 0x7fbcec35f228>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid: "
-## <environment: 0x7fcec29a4cb8>
+## <environment: 0x7fbceb422ee8>
 ## [1] "current in mid: "
-## <environment: 0x7fcec974d200>
+## <environment: 0x7fbcd94d15b8>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid skip: "
-## <environment: 0x7fcec974d200>
+## <environment: 0x7fbcd94d15b8>
 ## [1] "current in mid skip: "
-## <environment: 0x7fcec53c2748>
+## <environment: 0x7fbcf1f83b38>
 ## [1] "parent in mid: "
-## <environment: 0x7fcec539ab90>
+## <environment: 0x7fbcf1f89f28>
 ## [1] "current in mid: "
-## <environment: 0x7fcec539b300>
+## <environment: 0x7fbcf1f897b8>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
@@ -4888,7 +4888,7 @@ Given this little example:
 ## 
 ## [[2]]
 ## [[2]][[1]]
-## <environment: 0x7fcec53c2748>
+## <environment: 0x7fbcf1f83b38>
 ## 
 ## 
 ## [[3]]
@@ -5029,26 +5029,26 @@ In order to extract p-values the solution manual suggests using \texttt{map\_dbl
 \end{Shaded}
 
 \begin{verbatim}
-##   [1] 6.513073e-03 5.659685e-01 5.095201e-02 1.584605e-03 2.172239e-02
-##   [6] 1.058624e-01 2.861634e-02 1.856939e-02 2.948525e-06 2.133666e-03
-##  [11] 1.788306e-02 9.887069e-05 2.618871e-03 2.073885e-02 2.071637e-02
-##  [16] 1.074357e-02 5.104112e-01 3.495820e-02 1.493750e-04 5.899827e-01
-##  [21] 1.702779e-01 6.312502e-02 8.164236e-02 6.718522e-04 1.233604e-02
-##  [26] 4.096918e-02 4.494459e-02 4.548231e-01 5.126174e-02 1.761707e-02
-##  [31] 8.137153e-03 1.569398e-03 7.530440e-02 1.334424e-01 1.460808e-01
-##  [36] 1.741750e-03 1.705392e-01 1.083834e-01 4.265383e-01 3.371978e-02
-##  [41] 3.687055e-02 7.572312e-03 1.374814e-02 1.526744e-02 5.948424e-02
-##  [46] 1.311769e-01 4.121483e-01 4.099969e-02 2.642180e-02 5.528728e-02
-##  [51] 1.154057e-01 1.107467e-03 1.359464e-01 1.011275e-03 5.681636e-02
-##  [56] 3.481876e-03 1.973627e-02 1.063778e-01 6.856613e-01 1.006774e-02
-##  [61] 3.435411e-02 1.141958e-01 4.561351e-01 9.412344e-01 3.596712e-02
-##  [66] 1.148298e-03 1.477924e-01 6.966761e-02 1.551635e-03 2.731898e-01
-##  [71] 2.050625e-02 4.198240e-01 6.404942e-02 4.673864e-03 1.130328e-01
-##  [76] 1.152762e-01 8.200099e-02 8.329038e-04 1.440060e-01 2.985707e-03
-##  [81] 4.724710e-02 2.513201e-02 9.959604e-03 1.836039e-02 1.930897e-02
-##  [86] 2.628448e-03 6.483254e-01 2.356346e-03 1.102637e-04 1.710217e-01
-##  [91] 1.911639e-01 6.022918e-03 1.046952e-02 2.103949e-01 4.551758e-02
-##  [96] 7.212483e-03 4.905276e-02 1.206522e-01 1.312372e-01 2.393412e-02
+##   [1] 5.119986e-02 5.120823e-02 4.467811e-02 4.304729e-02 1.499805e-03
+##   [6] 4.085967e-01 2.656083e-02 3.801490e-01 4.423594e-03 2.001869e-03
+##  [11] 4.505043e-03 1.359769e-05 1.164993e-03 1.041539e-01 8.326687e-03
+##  [16] 3.448786e-02 6.345625e-02 1.079788e-01 6.853942e-04 5.890476e-02
+##  [21] 4.090033e-02 1.422438e-02 5.999366e-02 3.481803e-03 5.345282e-03
+##  [26] 1.859088e-01 1.449141e-03 6.830779e-02 1.200159e-02 5.581495e-01
+##  [31] 5.278313e-01 3.958630e-02 3.685504e-02 1.976087e-02 5.686627e-01
+##  [36] 1.726601e-03 1.362703e-02 6.028284e-03 1.359215e-03 8.477425e-01
+##  [41] 7.459407e-02 9.640527e-02 7.945923e-02 7.287384e-02 7.839478e-02
+##  [46] 7.420552e-02 1.070032e-03 4.243908e-01 5.260607e-02 1.628651e-01
+##  [51] 2.649013e-02 9.786565e-03 3.323885e-02 7.309513e-02 2.215493e-01
+##  [56] 8.799198e-01 1.580200e-02 4.580076e-03 2.410204e-01 3.563454e-02
+##  [61] 6.396319e-02 8.313419e-02 1.231166e-01 1.488453e-02 5.208888e-02
+##  [66] 4.390876e-03 2.194859e-01 1.574387e-02 2.392773e-03 3.938670e-01
+##  [71] 2.374729e-01 4.326859e-03 2.891964e-02 4.704657e-02 4.048224e-03
+##  [76] 2.330901e-03 1.951110e-02 3.474059e-04 3.367591e-04 1.341647e-01
+##  [81] 2.727711e-01 2.004323e-02 2.033099e-02 3.506518e-02 2.447857e-01
+##  [86] 2.380184e-02 7.299126e-02 3.512161e-02 1.189746e-01 4.931144e-02
+##  [91] 2.819954e-03 1.020460e-02 2.332857e-02 6.182124e-01 1.908922e-02
+##  [96] 1.775133e-03 2.755947e-01 3.014063e-03 6.500961e-02 8.283700e-04
 \end{verbatim}
 
 \hypertarget{exercise-9}{%
@@ -5379,12 +5379,12 @@ Answer from \href{https://community.rstudio.com/t/recursive-purrr-mutate-if/1663
 
 \begin{verbatim}
 ## Unit: microseconds
-##                         expr      min       lq       mean   median        uq
-##         as_integer_rapply(x)   13.498   19.699   66.07701   30.414   34.8805
-##  as_integer_recursive_map(x) 1457.891 1581.686 1988.45696 1814.755 2224.5310
+##                         expr      min        lq       mean    median       uq
+##         as_integer_rapply(x)    9.410   12.9515   43.15729   20.1555   22.065
+##  as_integer_recursive_map(x) 1009.408 1063.6885 1290.60130 1126.9130 1290.130
 ##       max neval
-##  3566.572   100
-##  6702.152   100
+##  2429.070   100
+##  5024.883   100
 \end{verbatim}
 
 \begin{Shaded}
@@ -5448,6 +5448,466 @@ The enclosing environment of the manufactured function is an execution environme
 \texttt{square} and \texttt{cube} have their own enclosing environments where \texttt{x} is different for each function - but their parent, the environment of \texttt{power1}, is the same.
 
 Because \texttt{power1} is a function, it has its own execution environment which is usually ephemeral but in this case it is the environment of both \texttt{square} and \texttt{cube} -- and that is how the manufactured functions have access to \texttt{exp}.
+
+\hypertarget{forcing-evaluation}{%
+\section*{10.2.3 Forcing evaluation}\label{forcing-evaluation}}
+\addcontentsline{toc}{section}{10.2.3 Forcing evaluation}
+
+I think this force section is trying to convey how we should use force on every argument in the factory's execution environment (here just \texttt{exp}) because you want to avoid lazy eval in the manufactured function's enclosing environment (like how we want to \texttt{force(exp\ =\ 2)} for \texttt{square}) but how does it not just become \texttt{force(exp\ =\ 3)} when we set \texttt{x\ \textless{}-\ 3}?
+
+\hypertarget{without-force}{%
+\section{WITHOUT FORCE}\label{without-force}}
+
+Without \texttt{force}, \texttt{exp} doesn't get evaluated when \texttt{power} is called. \texttt{square} is a promise to create a function to raise its input to the \texttt{exp}'th power. Once \texttt{square} is called, the promise evaluates, and \texttt{square} becomes a function to raise its input to whatever \texttt{exp} was that first time \texttt{square} was called. That's what makes it dangerous; what \texttt{square} does depends on the order in which things are called. Dangers and confusions like this are part of why function factories don't get used that much, despite the fact that they're really quite cool.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{suppressMessages}\NormalTok{(}\KeywordTok{requireNamespace}\NormalTok{(}\StringTok{"pryr"}\NormalTok{))}
+
+\CommentTok{# make sure this isn't already defined}
+\KeywordTok{rm}\NormalTok{(x)}
+
+\NormalTok{power2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(exp) \{}
+  \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"outer execution environment: "}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(}\KeywordTok{environment}\NormalTok{()), }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+  \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"outer enclosure: "}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(}\KeywordTok{parent.env}\NormalTok{(}\KeywordTok{environment}\NormalTok{())), }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+  \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"exp promise info: }\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\KeywordTok{paste0}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(pryr}\OperatorTok{::}\KeywordTok{promise_info}\NormalTok{(exp)), }\DataTypeTok{collapse =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)))}
+\NormalTok{  out <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x_) \{}
+    \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"inner execution environment: "}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(}\KeywordTok{environment}\NormalTok{()), }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+    \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"inner enclosure: "}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(}\KeywordTok{parent.env}\NormalTok{(}\KeywordTok{environment}\NormalTok{())), }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+    \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"exp promise info: }\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\KeywordTok{paste0}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(pryr}\OperatorTok{::}\KeywordTok{promise_info}\NormalTok{(exp)), }\DataTypeTok{collapse =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)))}
+\NormalTok{    x_ }\OperatorTok{^}\StringTok{ }\NormalTok{exp}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\NormalTok{square <-}\StringTok{ }\KeywordTok{power2}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> outer execution environment: <environment: 0x0000000015812568>
+#> outer enclosure: <environment: R_GlobalEnv>
+#> exp promise info: 
+#>  $code
+#>  x
+#>  
+#>  $env
+#>  <environment: R_GlobalEnv>
+#>  
+#>  $evaled
+#>  [1] FALSE
+#>  
+#>  $value
+#>  NULL
+#>  
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{square}\NormalTok{(}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> inner execution environment: <environment: 0x0000000012aee2a8>
+#> inner enclosure: <environment: 0x0000000015812568>
+#> exp promise info: 
+#>  $code
+#>  x
+#>  
+#>  $env
+#>  <environment: R_GlobalEnv>
+#>  
+#>  $evaled
+#>  [1] FALSE
+#>  
+#>  $value
+#>  NULL
+#>  
+#> Error in square(4): object 'x' not found
+\end{verbatim}
+
+The \texttt{exp} promise is looking for \texttt{x} in the enclosure of \texttt{power2} (global) and can't find it.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{2}
+\KeywordTok{square}\NormalTok{(}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> inner execution environment: <environment: 0x0000000017c915d0>
+#> inner enclosure: <environment: 0x0000000015812568>
+#> exp promise info: 
+#>  $code
+#>  x
+#>  
+#>  $env
+#>  <environment: R_GlobalEnv>
+#>  
+#>  $evaled
+#>  [1] FALSE
+#>  
+#>  $value
+#>  NULL
+#>  
+#> Warning in square(4): restarting interrupted promise evaluation
+#> [1] 16
+\end{verbatim}
+
+Notice, that the \texttt{exp} promise still wasn't evaled until the last line, \texttt{x\_\ \^{}\ exp}. The warning is caused by our previous failed attempt to evaluate the promise.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{3}
+\KeywordTok{square}\NormalTok{(}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> inner execution environment: <environment: 0x0000000017d9b270>
+#> inner enclosure: <environment: 0x0000000015812568>
+#> exp promise info: 
+#>  $code
+#>  x
+#>  
+#>  $env
+#>  NULL
+#>  
+#>  $evaled
+#>  [1] TRUE
+#>  
+#>  $value
+#>  [1] 2
+#>  
+#> [1] 25
+# exp was evaled already, so no further warning is produced, and our change to x has no effect.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rm}\NormalTok{(x)}
+\NormalTok{square <-}\StringTok{ }\KeywordTok{power2}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> outer execution environment: <environment: 0x0000000017e96e78>
+#> outer enclosure: <environment: R_GlobalEnv>
+#> exp promise info: 
+#>  $code
+#>  x
+#>  
+#>  $env
+#>  <environment: R_GlobalEnv>
+#>  
+#>  $evaled
+#>  [1] FALSE
+#>  
+#>  $value
+#>  NULL
+#>  
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{environment}\NormalTok{(square)}\OperatorTok{$}\NormalTok{x <-}\StringTok{ }\DecValTok{2}
+\KeywordTok{square}\NormalTok{(}\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> inner execution environment: <environment: 0x0000000017f8a530>
+#> inner enclosure: <environment: 0x0000000017e96e78>
+#> exp promise info: 
+#>  $code
+#>  x
+#>  
+#>  $env
+#>  <environment: R_GlobalEnv>
+#>  
+#>  $evaled
+#>  [1] FALSE
+#>  
+#>  $value
+#>  NULL
+#>  
+#> Error in square(6): object 'x' not found
+\end{verbatim}
+
+Defining \texttt{x} in the function environment doesn't work, because the promise isn't looking for \texttt{x} there
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{power2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(exp) }\ControlFlowTok{function}\NormalTok{(x_) x_ }\OperatorTok{^}\StringTok{ }\NormalTok{exp}
+\CommentTok{# wasn't sure this would work without braces...neat}
+\NormalTok{square <-}\StringTok{ }\KeywordTok{power2}\NormalTok{(x)}
+\KeywordTok{environment}\NormalTok{(square)}\OperatorTok{$}\NormalTok{exp <-}\StringTok{ }\DecValTok{2}
+\KeywordTok{square}\NormalTok{(}\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 36
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{square <-}\StringTok{ }\KeywordTok{power2}\NormalTok{(x)}
+\NormalTok{exp <-}\StringTok{ }\DecValTok{2}
+\KeywordTok{square}\NormalTok{(}\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Error in square(6): object 'x' not found
+\end{verbatim}
+
+This doesn't work because we need to define x within \texttt{environment(power2)\$exp\ \textless{}-\ 2}
+
+\hypertarget{using-force}{%
+\subsection{USING FORCE}\label{using-force}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rm}\NormalTok{(exp)}
+\KeywordTok{rm}\NormalTok{(x, power2, square)}
+
+\NormalTok{power2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(exp) \{}
+  \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"outer execution environment: "}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(}\KeywordTok{environment}\NormalTok{()), }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+  \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"outer enclosure: "}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(}\KeywordTok{parent.env}\NormalTok{(}\KeywordTok{environment}\NormalTok{())), }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+  \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"exp promise info before: }\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\KeywordTok{paste0}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(pryr}\OperatorTok{::}\KeywordTok{promise_info}\NormalTok{(exp)), }\DataTypeTok{collapse =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)))}
+  \KeywordTok{force}\NormalTok{(exp)}
+  \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"exp promise info after: }\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\KeywordTok{paste0}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(pryr}\OperatorTok{::}\KeywordTok{promise_info}\NormalTok{(exp)), }\DataTypeTok{collapse =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)))}
+\NormalTok{  out <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x_) \{}
+    \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"inner execution environment: "}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(}\KeywordTok{environment}\NormalTok{()), }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+    \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"inner enclosure: "}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(}\KeywordTok{parent.env}\NormalTok{(}\KeywordTok{environment}\NormalTok{())), }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+    \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"exp promise info: }\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\KeywordTok{paste0}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(pryr}\OperatorTok{::}\KeywordTok{promise_info}\NormalTok{(exp)), }\DataTypeTok{collapse =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)))}
+\NormalTok{    x_ }\OperatorTok{^}\StringTok{ }\NormalTok{exp}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\NormalTok{square <-}\StringTok{ }\KeywordTok{power2}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> outer execution environment: <environment: 0x00000000184e4e90>
+#> outer enclosure: <environment: R_GlobalEnv>
+#> exp promise info before: 
+#>  $code
+#>  x
+#>  
+#>  $env
+#>  <environment: R_GlobalEnv>
+#>  
+#>  $evaled
+#>  [1] FALSE
+#>  
+#>  $value
+#>  NULL
+#>  
+#> Error in force(exp): object 'x' not found
+# error because x isn't defined
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{2}
+\NormalTok{square <-}\StringTok{ }\KeywordTok{power2}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> outer execution environment: <environment: 0x0000000018cafaf8>
+#> outer enclosure: <environment: R_GlobalEnv>
+#> exp promise info before: 
+#>  $code
+#>  x
+#>  
+#>  $env
+#>  <environment: R_GlobalEnv>
+#>  
+#>  $evaled
+#>  [1] FALSE
+#>  
+#>  $value
+#>  NULL
+#>  exp promise info after: 
+#>  $code
+#>  x
+#>  
+#>  $env
+#>  NULL
+#>  
+#>  $evaled
+#>  [1] TRUE
+#>  
+#>  $value
+#>  [1] 2
+#>  
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{square}\NormalTok{(}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> inner execution environment: <environment: 0x0000000018d55b48>
+#> inner enclosure: <environment: 0x0000000018cafaf8>
+#> exp promise info: 
+#>  $code
+#>  x
+#>  
+#>  $env
+#>  NULL
+#>  
+#>  $evaled
+#>  [1] TRUE
+#>  
+#>  $value
+#>  [1] 2
+#>  
+#> [1] 16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{3}
+\KeywordTok{square}\NormalTok{(}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{garbage-collection}{%
+\section*{10.2.5 garbage collection}\label{garbage-collection}}
+\addcontentsline{toc}{section}{10.2.5 garbage collection}
+
+Does \{factory\} handle the issue of temporary objects in the manufactured function not getting garbage collected?
+
+We don't need to use \texttt{rm} because the execution environment of the factory remains ephemeral (like any other function call).Rather than returning a function wrapped in the execution environment, it returns a function in the caller environment, allowing normal garbage collection to clean up the temporary objects created during creation of the manufactured functions.
+
+\hypertarget{exercise-13}{%
+\section*{10.2.6.2 Exercise}\label{exercise-13}}
+\addcontentsline{toc}{section}{10.2.6.2 Exercise}
+
+Base R contains two function factories, \texttt{approxfun()} and \texttt{ecdf()}. Read their documentation and experiment to figure out what the functions do and what they return.
+
+\hypertarget{exercise-14}{%
+\section*{10.2.6.3 Exercise}\label{exercise-14}}
+\addcontentsline{toc}{section}{10.2.6.3 Exercise}
+
+How would we make this function using \{factory\}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pick <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(i) \{}
+  \KeywordTok{force}\NormalTok{(i)}
+  \ControlFlowTok{function}\NormalTok{(x) x[[i]]}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(factory)}
+\NormalTok{pick <-}\StringTok{ }\KeywordTok{build_factory}\NormalTok{(}
+  \DataTypeTok{.factory_fun =} \ControlFlowTok{function}\NormalTok{(x) x[[i]],}
+\NormalTok{  i}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{labelling}{%
+\section*{10.3.1 Labelling}\label{labelling}}
+\addcontentsline{toc}{section}{10.3.1 Labelling}
+
+What is the ``factory'' happening here? That we're supplying a function as the \texttt{label} argument? Is \texttt{summarize} also a factory then?
+
+It isn't that the \texttt{ggplot2} functions are factories, it's that they're a great place to use factories. They're actually functionals when you pass in a function, since they're using a function as an argument!
+
+\hypertarget{exercises-8}{%
+\section*{10.3.4 Exercises}\label{exercises-8}}
+\addcontentsline{toc}{section}{10.3.4 Exercises}
+
+Can we use code to answer the question: compare and contrast ggplot2::label\_bquote() with scales::number\_format()
+
+Data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sd <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{15}\NormalTok{)}
+\NormalTok{n <-}\StringTok{ }\DecValTok{100}
+\NormalTok{df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{3} \OperatorTok{*}\StringTok{ }\NormalTok{n, }\DataTypeTok{sd =}\NormalTok{ sd), }\DataTypeTok{sd =} \KeywordTok{rep}\NormalTok{(sd, n))}
+\end{Highlighting}
+\end{Shaded}
+
+Using \texttt{label\_bquote} using \texttt{plotMath} explanation\ldots{}\ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(df, }\KeywordTok{aes}\NormalTok{(x)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{2}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{facet_wrap}\NormalTok{(}\OperatorTok{~}\StringTok{ }\NormalTok{sd, }\DataTypeTok{scales =} \StringTok{"free_x"}\NormalTok{, }\DataTypeTok{labeller =} \KeywordTok{label_bquote}\NormalTok{(alpha }\OperatorTok{^}\StringTok{ }\NormalTok{.(sd))) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \OtherTok{NULL}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{AdvancedR_Companion_files/figure-latex/unnamed-chunk-239-1.pdf}
+
+Using \texttt{number\_format} will \texttt{force} the computation of the parameters, formatting numbers explanation\ldots{}\ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(df, }\KeywordTok{aes}\NormalTok{(x)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{2}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{facet_wrap}\NormalTok{(}\OperatorTok{~}\StringTok{ }\NormalTok{sd, }\DataTypeTok{scales =} \StringTok{"free_x"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \OtherTok{NULL}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}
+  \DataTypeTok{labels =}\NormalTok{ scales}\OperatorTok{::}\KeywordTok{number_format}\NormalTok{(}\DataTypeTok{scale =} \DecValTok{1}\NormalTok{, }\DataTypeTok{suffix =} \StringTok{" K"}\NormalTok{) }
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{AdvancedR_Companion_files/figure-latex/unnamed-chunk-240-1.pdf}
+
+\hypertarget{factories-and-functionals}{%
+\section{10.5 factories and functionals}\label{factories-and-functionals}}
+
+Can we \{factory\} this?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{names <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{square =} \DecValTok{2}\NormalTok{, }
+  \DataTypeTok{cube =} \DecValTok{3}\NormalTok{, }
+  \DataTypeTok{root =} \DecValTok{1}\OperatorTok{/}\DecValTok{2}\NormalTok{, }
+  \DataTypeTok{cuberoot =} \DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{, }
+  \DataTypeTok{reciprocal =} \DecValTok{-1}
+\NormalTok{)}
+\NormalTok{funs <-}\StringTok{ }\NormalTok{purrr}\OperatorTok{::}\KeywordTok{map}\NormalTok{(names, power1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{power4 <-}\StringTok{ }\KeywordTok{build_factory}\NormalTok{(}
+  \DataTypeTok{fun =} \ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{    x }\OperatorTok{^}\StringTok{ }\NormalTok{exponent}
+\NormalTok{  \},}
+\NormalTok{  exponent}
+\NormalTok{)}
+\NormalTok{power_names <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{square =} \DecValTok{2}\NormalTok{,}
+  \DataTypeTok{cube =} \DecValTok{3}\NormalTok{,}
+  \DataTypeTok{root =} \DecValTok{1}\OperatorTok{/}\DecValTok{2}\NormalTok{,}
+  \DataTypeTok{cuberoot =} \DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{,}
+  \DataTypeTok{reciprocal =} \DecValTok{-1}
+\NormalTok{)}
+\NormalTok{powers <-}\StringTok{ }\NormalTok{purrr}\OperatorTok{::}\KeywordTok{map}\NormalTok{(power_names, power4)}
+\end{Highlighting}
+\end{Shaded}
 
 \bibliography{book.bib,packages.bib}
 
