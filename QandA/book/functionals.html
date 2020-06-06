@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-05-29" />
+<meta name="date" content="2020-06-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="conditions.html"/>
-
+<link rel="next" href="function-factories.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -249,6 +249,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#matrices-and-arrays"><i class="fa fa-check"></i>9.7.1 Matrices and arrays</a></li>
 <li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-12"><i class="fa fa-check"></i>9.7.3.2 Exercise</a></li>
 </ul></li>
+<li class="chapter" data-level="10" data-path="function-factories.html"><a href="function-factories.html"><i class="fa fa-check"></i><b>10</b> Function factories</a><ul>
+<li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#factory-fundamentals"><i class="fa fa-check"></i>10.2 Factory fundamentals</a></li>
+<li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#forcing-evaluation"><i class="fa fa-check"></i>10.2.3 Forcing evaluation</a></li>
+<li class="chapter" data-level="10.1" data-path="function-factories.html"><a href="function-factories.html#without-force"><i class="fa fa-check"></i><b>10.1</b> WITHOUT FORCE</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="function-factories.html"><a href="function-factories.html#using-force"><i class="fa fa-check"></i><b>10.1.1</b> USING FORCE</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#garbage-collection"><i class="fa fa-check"></i>10.2.5 garbage collection</a></li>
+<li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#exercise-13"><i class="fa fa-check"></i>10.2.6.2 Exercise</a></li>
+<li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#exercise-14"><i class="fa fa-check"></i>10.2.6.3 Exercise</a></li>
+<li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#labelling"><i class="fa fa-check"></i>10.3.1 Labelling</a></li>
+<li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#exercises-8"><i class="fa fa-check"></i>10.3.4 Exercises</a></li>
+<li class="chapter" data-level="10.2" data-path="function-factories.html"><a href="function-factories.html#factories-and-functionals"><i class="fa fa-check"></i><b>10.2</b> 10.5 factories and functionals</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -306,26 +319,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb431-1" data-line-number="1">trials &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="op">~</span><span class="st"> </span><span class="kw">t.test</span>(<span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">10</span>), <span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">7</span>)))</a>
 <a class="sourceLine" id="cb431-2" data-line-number="2"><span class="co"># tibble(p_value = map_dbl(trials, &quot;p.value&quot;))</span></a>
 <a class="sourceLine" id="cb431-3" data-line-number="3"><span class="kw">map_dbl</span>(trials, pluck, <span class="st">&quot;p.value&quot;</span>)</a></code></pre></div>
-<pre><code>##   [1] 4.257919e-02 4.690012e-03 1.492816e-02 3.429617e-01 6.474726e-02
-##   [6] 1.212347e-01 2.882362e-02 9.363890e-02 6.402419e-03 2.507139e-02
-##  [11] 3.442683e-01 1.557276e-01 6.770389e-01 1.382802e-01 5.454916e-02
-##  [16] 8.761445e-04 1.961468e-01 6.212780e-01 6.400241e-02 3.492144e-04
-##  [21] 1.164990e-01 3.792448e-03 3.009342e-03 7.926338e-04 1.812124e-02
-##  [26] 2.773414e-03 2.885500e-03 2.897031e-01 6.936359e-01 2.398803e-01
-##  [31] 6.368088e-02 3.511484e-03 1.453440e-01 1.849429e-01 9.887288e-02
-##  [36] 3.036427e-02 5.738908e-05 5.959964e-03 1.300723e-02 1.704170e-01
-##  [41] 1.342043e-02 4.084301e-02 5.421060e-03 1.032035e-02 5.454120e-01
-##  [46] 9.949495e-02 1.902894e-01 1.046865e-01 4.787205e-03 5.890209e-02
-##  [51] 4.699765e-02 4.624521e-02 2.723024e-03 4.426657e-02 1.744939e-03
-##  [56] 3.728406e-01 1.105070e-03 3.703607e-03 1.473138e-03 4.283746e-03
-##  [61] 8.540696e-03 3.252527e-02 5.087545e-02 9.315084e-02 1.556252e-02
-##  [66] 4.007284e-01 3.454755e-03 1.951412e-03 6.403262e-02 1.125482e-01
-##  [71] 1.813502e-01 8.665963e-03 1.020235e-02 1.140858e-04 4.855718e-01
-##  [76] 6.869608e-02 2.921477e-02 4.118200e-04 2.985148e-02 4.476699e-02
-##  [81] 7.610971e-03 2.904879e-02 1.196144e-01 1.931322e-02 1.692454e-01
-##  [86] 9.467969e-01 2.787850e-01 4.081396e-03 2.254144e-02 5.496226e-02
-##  [91] 2.957634e-02 1.971476e-03 2.036038e-01 5.010194e-03 1.718385e-01
-##  [96] 4.458266e-01 2.791943e-03 9.386321e-02 5.019418e-05 4.937698e-02</code></pre>
+<pre><code>##   [1] 3.912277e-02 7.016412e-01 2.311730e-04 4.010441e-03 3.494923e-02
+##   [6] 2.852972e-01 1.556290e-01 7.964912e-01 8.117245e-06 5.455390e-02
+##  [11] 4.139744e-02 4.354374e-02 4.121921e-03 3.338921e-03 2.534698e-01
+##  [16] 2.113112e-01 1.167580e-01 3.479590e-02 3.804286e-03 6.221792e-01
+##  [21] 2.283485e-01 3.427221e-02 1.264223e-02 5.553962e-01 6.946844e-01
+##  [26] 7.382687e-01 8.498444e-02 7.110683e-01 4.768812e-02 1.179671e-02
+##  [31] 2.634649e-03 2.061073e-01 8.321542e-02 8.480217e-03 2.722907e-03
+##  [36] 6.962598e-02 4.653970e-04 4.335937e-04 2.370755e-02 1.169632e-01
+##  [41] 6.562739e-04 3.116877e-02 2.250383e-03 6.330379e-03 3.093120e-02
+##  [46] 3.277942e-02 1.682023e-01 8.552642e-02 2.575631e-01 8.395762e-04
+##  [51] 5.315297e-02 8.500449e-01 2.791578e-01 1.159125e-02 2.112323e-01
+##  [56] 4.591295e-02 1.360035e-03 4.050806e-03 6.421745e-02 1.059428e-04
+##  [61] 3.512097e-02 1.325841e-03 2.080272e-01 4.138132e-03 4.443982e-01
+##  [66] 6.302720e-04 1.883785e-01 2.805079e-01 1.586337e-01 8.203096e-02
+##  [71] 3.198274e-02 2.197375e-02 6.256309e-02 5.875269e-01 6.153252e-03
+##  [76] 5.788656e-03 7.645511e-02 5.153251e-01 1.456585e-02 1.255011e-04
+##  [81] 3.019399e-03 5.968961e-02 3.233810e-02 4.601305e-03 1.703045e-01
+##  [86] 2.525118e-02 2.282794e-02 7.104449e-03 1.335098e-03 2.557691e-01
+##  [91] 3.082740e-01 1.218257e-02 3.356263e-02 3.139093e-03 9.408698e-01
+##  [96] 2.629875e-01 1.364764e-02 7.813046e-02 6.836954e-04 1.000935e-01</code></pre>
 </div>
 <div id="exercise-9" class="section level2 unnumbered">
 <h2>9.2.6.5 Exercise</h2>
@@ -535,12 +548,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb457-4" data-line-number="4">  <span class="dt">times =</span> <span class="dv">100</span></a>
 <a class="sourceLine" id="cb457-5" data-line-number="5">)</a></code></pre></div>
 <pre><code>## Unit: microseconds
-##                         expr      min        lq       mean    median       uq
-##         as_integer_rapply(x)    9.115   12.0905   33.87318   19.5945   23.016
-##  as_integer_recursive_map(x) 1010.800 1040.9980 1245.18589 1125.2790 1307.867
+##                         expr     min        lq       mean    median       uq
+##         as_integer_rapply(x)   9.603   12.6835   32.23379   15.8445   20.788
+##  as_integer_recursive_map(x) 984.312 1051.9365 1141.14636 1086.2575 1164.945
 ##       max neval
-##  1459.710   100
-##  4864.722   100</code></pre>
+##  1577.124   100
+##  4800.881   100</code></pre>
 <div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb459-1" data-line-number="1">as_integer_safe &lt;-<span class="st"> </span><span class="cf">function</span>(y) {</a>
 <a class="sourceLine" id="cb459-2" data-line-number="2">  <span class="cf">if</span> (<span class="kw">is.character</span>(y) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">all</span>(<span class="kw">grepl</span>(<span class="st">&quot;^</span><span class="ch">\\</span><span class="st">d+$&quot;</span>, y))) {</a>
 <a class="sourceLine" id="cb459-3" data-line-number="3">    <span class="kw">as.integer</span>(y)</a>
@@ -569,7 +582,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $d
 ## [1] 4</code></pre>
 
-
 </div>
 </div>
 </div>
@@ -578,8 +590,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="conditions.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="conditions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="function-factories.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
