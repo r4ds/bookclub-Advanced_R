@@ -367,7 +367,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbb3cf2f8b8"
+## [1] "0x7fe87bae9e40"
 \end{verbatim}
 
 \begin{Shaded}
@@ -377,7 +377,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbb3cf2f8b8"
+## [1] "0x7fe87bae9e40"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -389,7 +389,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbb40378510"
+## [1] "0x7fe87c2cf8f8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -399,8 +399,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fbb3fdc0cd8] <list> 
-## └─[2:0x7fbb3cf2f8b8] <dbl>
+## █ [1:0x7fe87c3fb8f8] <list> 
+## └─[2:0x7fe87bae9e40] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -410,7 +410,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbb3febbab0"
+## [1] "0x7fe87acb6ec0"
 \end{verbatim}
 
 \begin{Shaded}
@@ -447,7 +447,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fbb3aae70a8>"
+## [1] "<0x7fe87c987998>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -457,7 +457,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fbb3aae70a8>
+## <0x7fe87c987998>
 \end{verbatim}
 
 \begin{Shaded}
@@ -467,7 +467,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbb3aae70a8"
+## [1] "0x7fe87c987998"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -516,7 +516,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbb46407f88"
+## [1] "0x7fe8758a1888"
 \end{verbatim}
 
 \begin{Shaded}
@@ -526,7 +526,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fbb46407f88>"
+## [1] "<0x7fe8758a1888>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -536,7 +536,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fbb46407f88 -> 0x7fbb42640a88]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fe8758a1888 -> 0x7fe861de3f48]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -632,7 +632,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbb40368338"
+## [1] "0x7fe87a7f0578"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -645,7 +645,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbb41cf31f8"
+## [1] "0x7fe87cb334b8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -668,7 +668,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbb41cf31f8"
+## [1] "0x7fe87cb334b8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -678,7 +678,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbb41cf31f8"
+## [1] "0x7fe87cb334b8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -701,7 +701,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbb41cf31f8"
+## [1] "0x7fe87cb334b8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -711,7 +711,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbb40367d48"
+## [1] "0x7fe87a7f1e78"
 \end{verbatim}
 
 \begin{Shaded}
@@ -734,7 +734,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbb28092368"
+## [1] "0x7fe861df70c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2535,13 +2535,13 @@ This will work:
 
 \begin{verbatim}
 ## # A tibble: 5 x 1
-##       x1
-##    <dbl>
-## 1 0.699 
-## 2 0.135 
-## 3 0.942 
-## 4 0.117 
-## 5 0.0895
+##      x1
+##   <dbl>
+## 1 0.656
+## 2 0.222
+## 3 0.956
+## 4 0.929
+## 5 0.924
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2615,7 +2615,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 230 278 250 281 254 282 269 242 207 243
+##  [1] 266 294 269 217 265 202 225 277 284 221
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3052,7 +3052,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fbb39d8bdc8>
+## <bytecode: 0x7fe871ec5dc8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3923,7 +3923,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7fbb3c915db0>
+## <bytecode: 0x7fe876db71b0>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4061,7 +4061,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7fbb3fb7c9c8>
+## <bytecode: 0x7fe87a173dc8>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4855,29 +4855,29 @@ Given this little example:
 
 \begin{verbatim}
 ## [1] "parent in mid: "
-## <environment: 0x7fbb3fbaf8a8>
+## <environment: 0x7fe87972a808>
 ## [1] "current in mid: "
-## <environment: 0x7fbb3fba8140>
+## <environment: 0x7fe8796db0a0>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid: "
-## <environment: 0x7fbb3fb70220>
+## <environment: 0x7fe87508b888>
 ## [1] "current in mid: "
-## <environment: 0x7fbb3dd4f898>
+## <environment: 0x7fe877b83590>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid skip: "
-## <environment: 0x7fbb3dd4f898>
+## <environment: 0x7fe877b83590>
 ## [1] "current in mid skip: "
-## <environment: 0x7fbb3eb94c58>
+## <environment: 0x7fe878ca6dd0>
 ## [1] "parent in mid: "
-## <environment: 0x7fbb3eb7d358>
+## <environment: 0x7fe878c85508>
 ## [1] "current in mid: "
-## <environment: 0x7fbb3eb7db00>
+## <environment: 0x7fe878c85e38>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
@@ -4892,7 +4892,7 @@ Given this little example:
 ## 
 ## [[2]]
 ## [[2]][[1]]
-## <environment: 0x7fbb3eb94c58>
+## <environment: 0x7fe878ca6dd0>
 ## 
 ## 
 ## [[3]]
@@ -5033,26 +5033,26 @@ In order to extract p-values the solution manual suggests using \texttt{map\_dbl
 \end{Shaded}
 
 \begin{verbatim}
-##   [1] 4.029181e-02 5.468375e-02 2.683390e-01 2.475195e-04 3.914750e-02
-##   [6] 1.158571e-02 8.618738e-03 5.709927e-02 2.022032e-01 1.662287e-02
-##  [11] 1.900091e-03 1.162234e-02 2.449076e-01 3.906889e-01 2.598221e-02
-##  [16] 4.085723e-03 1.541798e-03 1.022400e-02 2.567558e-02 1.726268e-01
-##  [21] 4.402667e-01 7.273626e-02 1.762795e-02 4.664767e-03 3.313837e-04
-##  [26] 6.988486e-02 5.056902e-02 2.441399e-02 1.246583e-03 5.617695e-01
-##  [31] 3.969577e-02 2.212143e-02 7.441607e-04 1.473443e-03 9.646850e-03
-##  [36] 3.247750e-03 6.905249e-03 1.180191e-02 5.112353e-02 4.716000e-04
-##  [41] 1.745474e-04 9.544749e-03 1.989092e-02 7.368517e-02 6.896798e-03
-##  [46] 2.380755e-02 5.142072e-02 1.178700e-01 6.544688e-03 7.306006e-03
-##  [51] 5.456585e-04 3.537081e-04 6.776589e-02 1.307384e-02 2.985687e-02
-##  [56] 2.320413e-04 7.970488e-05 5.948752e-04 1.492502e-05 1.283240e-01
-##  [61] 1.255323e-02 4.579574e-01 3.265347e-03 1.545693e-01 7.696476e-02
-##  [66] 9.179001e-03 2.320896e-01 9.825357e-03 1.877782e-02 4.046568e-01
-##  [71] 1.255015e-02 4.738603e-04 8.886378e-02 1.103187e-01 2.698039e-02
-##  [76] 3.772354e-01 1.379802e-01 1.056419e-02 7.182027e-02 1.479640e-03
-##  [81] 1.376179e-04 1.921154e-01 3.832010e-01 5.663792e-03 2.619321e-01
-##  [86] 4.731410e-05 4.038605e-01 5.774229e-03 3.940093e-01 8.601127e-04
-##  [91] 8.761598e-04 1.243187e-04 2.284961e-02 8.350656e-04 8.369535e-03
-##  [96] 1.591207e-03 3.319869e-03 5.734292e-01 6.065211e-03 7.094929e-02
+##   [1] 1.155705e-04 1.292407e-02 5.873211e-06 1.142644e-02 2.861903e-02
+##   [6] 8.757302e-03 2.429314e-02 3.006731e-02 1.690868e-02 1.133799e-03
+##  [11] 1.391247e-01 6.695685e-02 4.132598e-01 1.426750e-05 1.013483e-02
+##  [16] 3.221894e-02 8.347523e-02 4.644112e-03 4.335027e-02 7.511495e-01
+##  [21] 1.457177e-01 2.058012e-03 1.687215e-02 6.662740e-01 9.306745e-02
+##  [26] 9.874221e-04 2.298510e-01 5.841558e-03 3.436912e-02 9.316873e-02
+##  [31] 8.148581e-02 2.814398e-02 3.944548e-02 6.870113e-02 7.320680e-01
+##  [36] 6.326107e-05 1.717048e-02 2.057855e-02 5.681817e-01 5.082038e-02
+##  [41] 1.607771e-02 6.331448e-02 6.686047e-01 1.164534e-01 4.448044e-03
+##  [46] 1.868766e-01 4.644754e-01 4.100328e-03 3.791195e-02 7.414000e-01
+##  [51] 2.091550e-02 1.634885e-01 5.797498e-02 1.172972e-02 4.586584e-02
+##  [56] 7.023030e-02 3.850764e-02 5.995432e-01 6.712488e-02 1.942980e-04
+##  [61] 9.482999e-03 3.207069e-03 1.232693e-02 5.717585e-02 2.612603e-03
+##  [66] 2.092498e-01 4.859270e-02 4.145673e-02 1.092098e-01 4.925374e-03
+##  [71] 3.760907e-03 1.132464e-03 3.814416e-02 6.159852e-02 4.612877e-01
+##  [76] 6.851560e-02 6.197776e-02 1.996937e-02 3.002374e-04 1.216195e-02
+##  [81] 1.175518e-03 4.613660e-02 9.839782e-05 5.063485e-01 4.202651e-03
+##  [86] 6.741912e-03 2.055631e-01 4.547374e-02 1.195590e-02 2.115918e-03
+##  [91] 6.759811e-03 2.540568e-03 3.221120e-01 1.543873e-01 1.818045e-01
+##  [96] 4.179831e-02 1.426020e-02 6.944539e-02 3.905531e-03 1.073573e-01
 \end{verbatim}
 
 \hypertarget{exercise-9}{%
@@ -5383,12 +5383,12 @@ Answer from \href{https://community.rstudio.com/t/recursive-purrr-mutate-if/1663
 
 \begin{verbatim}
 ## Unit: microseconds
-##                         expr      min        lq       mean    median       uq
-##         as_integer_rapply(x)    9.427   12.0385   31.67573   18.7345   20.994
-##  as_integer_recursive_map(x) 1002.242 1049.7280 1160.66482 1078.3250 1161.096
+##                         expr      min       lq       mean    median       uq
+##         as_integer_rapply(x)    9.999   13.745   37.40957   20.8285   24.596
+##  as_integer_recursive_map(x) 1061.983 1162.806 1367.02048 1249.5970 1480.066
 ##       max neval
-##  1504.286   100
-##  5245.652   100
+##  1685.641   100
+##  5278.106   100
 \end{verbatim}
 
 \begin{Shaded}
@@ -5798,6 +5798,40 @@ We don't need to use \texttt{rm} because the execution environment of the factor
 
 Base R contains two function factories, \texttt{approxfun()} and \texttt{ecdf()}. Read their documentation and experiment to figure out what the functions do and what they return.
 
+\hypertarget{approxfun}{%
+\subsubsection*{approxfun}\label{approxfun}}
+\addcontentsline{toc}{subsubsection}{approxfun}
+
+What am I looking at here?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{10}
+\NormalTok{y <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(x, y, }\DataTypeTok{main =} \StringTok{"approx(.) and approxfun(.)"}\NormalTok{)}
+\KeywordTok{points}\NormalTok{(}\KeywordTok{approx}\NormalTok{(x, y), }\DataTypeTok{col =} \DecValTok{2}\NormalTok{, }\DataTypeTok{pch =} \StringTok{"*"}\NormalTok{)}
+\KeywordTok{points}\NormalTok{(}\KeywordTok{approx}\NormalTok{(x, y, }\DataTypeTok{method =} \StringTok{"constant"}\NormalTok{), }\DataTypeTok{col =} \DecValTok{4}\NormalTok{, }\DataTypeTok{pch =} \StringTok{"*"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{AdvancedR_Companion_files/figure-latex/unnamed-chunk-236-1.pdf}
+
+\hypertarget{ecdf}{%
+\subsubsection*{ECDF}\label{ecdf}}
+\addcontentsline{toc}{subsubsection}{ECDF}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{3}\NormalTok{) }\CommentTok{# 3 random numbers}
+\NormalTok{Fn <-}\StringTok{ }\KeywordTok{ecdf}\NormalTok{(x) }\CommentTok{# create distribution function for each x}
+\KeywordTok{Fn}\NormalTok{(x) }\CommentTok{# apply the distribution function to each number}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.3333333 1.0000000 0.6666667
+\end{verbatim}
+
 \hypertarget{exercise-14}{%
 \section*{10.2.6.3 Exercise}\label{exercise-14}}
 \addcontentsline{toc}{section}{10.2.6.3 Exercise}
@@ -5858,7 +5892,7 @@ Using \texttt{label\_bquote} using \texttt{plotMath} explanation\ldots{}\ldots{}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AdvancedR_Companion_files/figure-latex/unnamed-chunk-239-1.pdf}
+\includegraphics{AdvancedR_Companion_files/figure-latex/unnamed-chunk-241-1.pdf}
 
 Using \texttt{number\_format} will \texttt{force} the computation of the parameters, formatting numbers explanation\ldots{}\ldots{}
 
@@ -5874,7 +5908,7 @@ Using \texttt{number\_format} will \texttt{force} the computation of the paramet
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AdvancedR_Companion_files/figure-latex/unnamed-chunk-240-1.pdf}
+\includegraphics{AdvancedR_Companion_files/figure-latex/unnamed-chunk-242-1.pdf}
 
 \hypertarget{factories-and-functionals}{%
 \section{10.5 factories and functionals}\label{factories-and-functionals}}
