@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-06-05" />
+<meta name="date" content="2020-06-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -262,6 +262,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#exercises-8"><i class="fa fa-check"></i>10.3.4 Exercises</a></li>
 <li class="chapter" data-level="10.2" data-path="function-factories.html"><a href="function-factories.html#factories-and-functionals"><i class="fa fa-check"></i><b>10.2</b> 10.5 factories and functionals</a></li>
 </ul></li>
+<li class="chapter" data-level="11" data-path="function-operators.html"><a href="function-operators.html"><i class="fa fa-check"></i><b>11</b> Function operators</a><ul>
+<li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#introduction-1"><i class="fa fa-check"></i>11.1 Introduction</a></li>
+<li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#purrrsafely"><i class="fa fa-check"></i>11.2.1 purrr::safely</a></li>
+<li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#exercises-9"><i class="fa fa-check"></i>11.2.3.1 Exercises</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -319,26 +324,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb431-1" data-line-number="1">trials &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="op">~</span><span class="st"> </span><span class="kw">t.test</span>(<span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">10</span>), <span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">7</span>)))</a>
 <a class="sourceLine" id="cb431-2" data-line-number="2"><span class="co"># tibble(p_value = map_dbl(trials, &quot;p.value&quot;))</span></a>
 <a class="sourceLine" id="cb431-3" data-line-number="3"><span class="kw">map_dbl</span>(trials, pluck, <span class="st">&quot;p.value&quot;</span>)</a></code></pre></div>
-<pre><code>##   [1] 3.912277e-02 7.016412e-01 2.311730e-04 4.010441e-03 3.494923e-02
-##   [6] 2.852972e-01 1.556290e-01 7.964912e-01 8.117245e-06 5.455390e-02
-##  [11] 4.139744e-02 4.354374e-02 4.121921e-03 3.338921e-03 2.534698e-01
-##  [16] 2.113112e-01 1.167580e-01 3.479590e-02 3.804286e-03 6.221792e-01
-##  [21] 2.283485e-01 3.427221e-02 1.264223e-02 5.553962e-01 6.946844e-01
-##  [26] 7.382687e-01 8.498444e-02 7.110683e-01 4.768812e-02 1.179671e-02
-##  [31] 2.634649e-03 2.061073e-01 8.321542e-02 8.480217e-03 2.722907e-03
-##  [36] 6.962598e-02 4.653970e-04 4.335937e-04 2.370755e-02 1.169632e-01
-##  [41] 6.562739e-04 3.116877e-02 2.250383e-03 6.330379e-03 3.093120e-02
-##  [46] 3.277942e-02 1.682023e-01 8.552642e-02 2.575631e-01 8.395762e-04
-##  [51] 5.315297e-02 8.500449e-01 2.791578e-01 1.159125e-02 2.112323e-01
-##  [56] 4.591295e-02 1.360035e-03 4.050806e-03 6.421745e-02 1.059428e-04
-##  [61] 3.512097e-02 1.325841e-03 2.080272e-01 4.138132e-03 4.443982e-01
-##  [66] 6.302720e-04 1.883785e-01 2.805079e-01 1.586337e-01 8.203096e-02
-##  [71] 3.198274e-02 2.197375e-02 6.256309e-02 5.875269e-01 6.153252e-03
-##  [76] 5.788656e-03 7.645511e-02 5.153251e-01 1.456585e-02 1.255011e-04
-##  [81] 3.019399e-03 5.968961e-02 3.233810e-02 4.601305e-03 1.703045e-01
-##  [86] 2.525118e-02 2.282794e-02 7.104449e-03 1.335098e-03 2.557691e-01
-##  [91] 3.082740e-01 1.218257e-02 3.356263e-02 3.139093e-03 9.408698e-01
-##  [96] 2.629875e-01 1.364764e-02 7.813046e-02 6.836954e-04 1.000935e-01</code></pre>
+<pre><code>##   [1] 0.0271277411 0.0625376533 0.0037946713 0.1497464117 0.0019556954
+##   [6] 0.0134386943 0.0093780287 0.3147324796 0.0006887546 0.0209904356
+##  [11] 0.0073963657 0.0191589137 0.1002679480 0.0661076563 0.0722107697
+##  [16] 0.0009067774 0.1547464292 0.2760839537 0.0011015824 0.1517404069
+##  [21] 0.0034352204 0.3276729633 0.0120799832 0.1114787785 0.0252048156
+##  [26] 0.8079758851 0.0003641602 0.0003659448 0.0298459169 0.0805845689
+##  [31] 0.0062187581 0.0023715594 0.0075789659 0.0222459676 0.0077660899
+##  [36] 0.0222217224 0.0023920100 1.0000000000 0.0303876026 0.2886518097
+##  [41] 0.0039765870 0.0701938107 0.0269265423 0.2043321302 0.0011166116
+##  [46] 0.0987793172 0.0041745278 0.0167808365 0.0018187563 0.0373806586
+##  [51] 0.0684115373 0.5046854570 0.0172242945 0.3178913145 0.0093647658
+##  [56] 0.0401391017 0.0411659653 0.0047449717 0.3557468245 0.1426279854
+##  [61] 0.1253025873 0.1850844217 0.0335157974 0.0039055723 0.5794396322
+##  [66] 0.0665283954 0.0041013475 0.0091463770 0.1204482603 0.1041069139
+##  [71] 0.6593176320 0.0060179704 0.0176398557 0.3505618650 0.0024388850
+##  [76] 0.0138072527 0.0111473364 0.6083818808 0.2217874762 0.0631729178
+##  [81] 0.0053656634 0.0040198895 0.0992253741 0.0199453164 0.1142261458
+##  [86] 0.2723499642 0.3663991244 0.3271212223 0.0239775551 0.0199366375
+##  [91] 0.0254040856 0.1178032836 0.0170667200 0.0011954804 0.0438955604
+##  [96] 0.0033946368 0.2128777483 0.0018471361 0.1124162058 0.0456991687</code></pre>
 </div>
 <div id="exercise-9" class="section level2 unnumbered">
 <h2>9.2.6.5 Exercise</h2>
@@ -548,12 +553,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb457-4" data-line-number="4">  <span class="dt">times =</span> <span class="dv">100</span></a>
 <a class="sourceLine" id="cb457-5" data-line-number="5">)</a></code></pre></div>
 <pre><code>## Unit: microseconds
-##                         expr     min        lq       mean    median       uq
-##         as_integer_rapply(x)   9.603   12.6835   32.23379   15.8445   20.788
-##  as_integer_recursive_map(x) 984.312 1051.9365 1141.14636 1086.2575 1164.945
+##                         expr      min       lq       mean    median       uq
+##         as_integer_rapply(x)    9.451   13.099   32.01591   19.8275   22.171
+##  as_integer_recursive_map(x) 1004.452 1093.825 1266.51746 1193.3800 1288.254
 ##       max neval
-##  1577.124   100
-##  4800.881   100</code></pre>
+##  1380.425   100
+##  5540.893   100</code></pre>
 <div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb459-1" data-line-number="1">as_integer_safe &lt;-<span class="st"> </span><span class="cf">function</span>(y) {</a>
 <a class="sourceLine" id="cb459-2" data-line-number="2">  <span class="cf">if</span> (<span class="kw">is.character</span>(y) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">all</span>(<span class="kw">grepl</span>(<span class="st">&quot;^</span><span class="ch">\\</span><span class="st">d+$&quot;</span>, y))) {</a>
 <a class="sourceLine" id="cb459-3" data-line-number="3">    <span class="kw">as.integer</span>(y)</a>

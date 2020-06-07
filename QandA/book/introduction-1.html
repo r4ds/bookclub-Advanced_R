@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Advanced R Companion</title>
+  <title>11.1 Introduction | Advanced R Companion</title>
   <meta name="description" content="This is a companion to Advanced R and supplement to Advanced R Solutions." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Advanced R Companion" />
+  <meta property="og:title" content="11.1 Introduction | Advanced R Companion" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Advanced R Companion" />
+  <meta name="twitter:title" content="11.1 Introduction | Advanced R Companion" />
   
   <meta name="twitter:description" content="This is a companion to Advanced R and supplement to Advanced R Solutions." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="function-operators.html"/>
 
-<link rel="next" href="names-and-values.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -262,10 +262,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#exercises-8"><i class="fa fa-check"></i>10.3.4 Exercises</a></li>
 <li class="chapter" data-level="10.2" data-path="function-factories.html"><a href="function-factories.html#factories-and-functionals"><i class="fa fa-check"></i><b>10.2</b> 10.5 factories and functionals</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="function-operators.html"><a href="function-operators.html"><i class="fa fa-check"></i><b>11</b> Function operators</a><ul>
-<li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#introduction-1"><i class="fa fa-check"></i>11.1 Introduction</a></li>
-<li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#purrrsafely"><i class="fa fa-check"></i>11.2.1 purrr::safely</a></li>
-<li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#exercises-9"><i class="fa fa-check"></i>11.2.3.1 Exercises</a></li>
+<li class="chapter" data-level="11" data-path="function-operators.html"><a href="function-operators.html"><i class="fa fa-check"></i><b>11</b> Function operators</a></li>
+<li class="chapter" data-level="" data-path="introduction-1.html"><a href="introduction-1.html"><i class="fa fa-check"></i>11.1 Introduction</a><ul>
+<li class="chapter" data-level="" data-path="introduction-1.html"><a href="introduction-1.html#purrrsafely"><i class="fa fa-check"></i>11.2.1 purrr::safely</a></li>
+<li class="chapter" data-level="" data-path="introduction-1.html"><a href="introduction-1.html#exercises-9"><i class="fa fa-check"></i>11.2.3.1 Exercises</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -287,24 +287,487 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Advanced R Companion</h1>
-<p class="author"><em>R4DS Reading Group</em></p>
-<p class="date"><em>2020-06-07</em></p>
+<div id="introduction-1" class="section level1 unnumbered">
+<h1>11.1 Introduction</h1>
+<div class="question">
+<blockquote>
+<p>A function operator is a function that takes one (or more) functions as input and returns a function as output</p>
+</blockquote>
+<p>…How exactly does this definition differ from a function factory?</p>
 </div>
-<div id="welcome" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Welcome</h1>
-<p>A companion to <a href="https://adv-r.hadley.nz/rcpp.html#acknowledgments">Advanced R</a> and supplement to <a href="https://advanced-r-solutions.rbind.io/names-and-values.html#copy-on-modify">Advanced R Solutions</a></p>
-<p>Recordings for the accompanied presentation for each chapter can be seen <a href="https://www.youtube.com/watch?v=pQ-xDAPEQaw&amp;list=PL3x6DOfs2NGi9lH7q-phZlPrl6HKXYDbn">here</a>.</p>
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
 
+#lfkhibmsrh .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#lfkhibmsrh .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#lfkhibmsrh .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#lfkhibmsrh .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#lfkhibmsrh .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lfkhibmsrh .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#lfkhibmsrh .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#lfkhibmsrh .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#lfkhibmsrh .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#lfkhibmsrh .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#lfkhibmsrh .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#lfkhibmsrh .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#lfkhibmsrh .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#lfkhibmsrh .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#lfkhibmsrh .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#lfkhibmsrh .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#lfkhibmsrh .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#lfkhibmsrh .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#lfkhibmsrh .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lfkhibmsrh .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#lfkhibmsrh .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lfkhibmsrh .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#lfkhibmsrh .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lfkhibmsrh .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#lfkhibmsrh .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#lfkhibmsrh .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#lfkhibmsrh .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#lfkhibmsrh .gt_left {
+  text-align: left;
+}
+
+#lfkhibmsrh .gt_center {
+  text-align: center;
+}
+
+#lfkhibmsrh .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#lfkhibmsrh .gt_font_normal {
+  font-weight: normal;
+}
+
+#lfkhibmsrh .gt_font_bold {
+  font-weight: bold;
+}
+
+#lfkhibmsrh .gt_font_italic {
+  font-style: italic;
+}
+
+#lfkhibmsrh .gt_super {
+  font-size: 65%;
+}
+
+#lfkhibmsrh .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="lfkhibmsrh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Term</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Required Input</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Optional Output</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Output</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left">Functionals</td>
+      <td class="gt_row gt_left">Function</td>
+      <td class="gt_row gt_left">Vector</td>
+      <td class="gt_row gt_left">Vector</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Function Factory</td>
+      <td class="gt_row gt_left">NA</td>
+      <td class="gt_row gt_left">Vector,Function</td>
+      <td class="gt_row gt_left">Function</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Function Operator</td>
+      <td class="gt_row gt_left">Function</td>
+      <td class="gt_row gt_left">Function</td>
+      <td class="gt_row gt_left">Function</td>
+    </tr>
+  </tbody>
+  
+  
+</table></div>
+<blockquote>
+<p>Function operators are closely related to function factories; indeed they’re just a function factory that takes a function as input</p>
+</blockquote>
+<div class="question">
+<p>Can anyone confirm that, by definition, function operators can only take functions as inputs (and not any kind of vector)? Book quote: “A function operator is a function that takes one (or more) functions as input and returns a function as output.” If this is true, then something like the following would only be a function factory, not both a function factory and a function operator:</p>
+<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb491-1" data-line-number="1">sleepy &lt;-<span class="st"> </span><span class="cf">function</span>(f, n){</a>
+<a class="sourceLine" id="cb491-2" data-line-number="2">  <span class="kw">force</span>(f)</a>
+<a class="sourceLine" id="cb491-3" data-line-number="3">  <span class="cf">function</span>(...){</a>
+<a class="sourceLine" id="cb491-4" data-line-number="4">    <span class="kw">cat</span>(</a>
+<a class="sourceLine" id="cb491-5" data-line-number="5">      glue<span class="op">::</span><span class="kw">glue</span>(<span class="st">&#39;Sleeping for {n} second{ifelse(n != 1, &quot;s&quot;, &quot;&quot;)}.&#39;</span>), </a>
+<a class="sourceLine" id="cb491-6" data-line-number="6">      <span class="dt">sep =</span> <span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span></a>
+<a class="sourceLine" id="cb491-7" data-line-number="7">    )</a>
+<a class="sourceLine" id="cb491-8" data-line-number="8">    <span class="kw">Sys.sleep</span>(n)</a>
+<a class="sourceLine" id="cb491-9" data-line-number="9">    <span class="kw">f</span>(...)</a>
+<a class="sourceLine" id="cb491-10" data-line-number="10">  }</a>
+<a class="sourceLine" id="cb491-11" data-line-number="11">}</a>
+<a class="sourceLine" id="cb491-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb491-13" data-line-number="13">sleepy_print &lt;-<span class="st"> </span><span class="kw">sleepy</span>(print, <span class="fl">1.5</span>)</a>
+<a class="sourceLine" id="cb491-14" data-line-number="14"><span class="kw">sleepy_print</span>(<span class="st">&#39;hello world&#39;</span>)</a></code></pre></div>
+<pre><code>## Sleeping for 1.5 seconds.
+## [1] &quot;hello world&quot;</code></pre>
+</div>
+<p>Function factories are “any function that returns a function” and Hadley uses “simple” examples where you pass in a numeric or character to get back a customized function (pass a number to a power function to get a function dedicated to cubes)</p>
+<p>Function operators are factories where you pass in a function and modify its behaviour a little, without actually building up the logic for a function from scratch. The operator does not supply the actual meat of the logic.
+examples: <code>safely</code>, <code>silently</code>, <code>rate-limity</code> etc</p>
+<div id="purrrsafely" class="section level2 unnumbered">
+<h2>11.2.1 purrr::safely</h2>
+<div class="question">
+<p>It seems like safely is a condition wrapper - are conditions a kind of function operator?</p>
+</div>
+<div class="TODO">
+
+</div>
+<div class="question">
+<p>Can we come up with simple example for these function operators?</p>
+</div>
+<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb493-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb493-2" data-line-number="2">  <span class="kw">c</span>(<span class="fl">0.512</span>, <span class="fl">0.165</span>, <span class="fl">0.717</span>),</a>
+<a class="sourceLine" id="cb493-3" data-line-number="3">  <span class="kw">c</span>(<span class="fl">0.064</span>, <span class="fl">0.781</span>, <span class="fl">0.427</span>),</a>
+<a class="sourceLine" id="cb493-4" data-line-number="4">  <span class="kw">c</span>(<span class="fl">0.890</span>, <span class="fl">0.785</span>, <span class="fl">0.495</span>),</a>
+<a class="sourceLine" id="cb493-5" data-line-number="5">  <span class="st">&quot;oops&quot;</span></a>
+<a class="sourceLine" id="cb493-6" data-line-number="6">)</a></code></pre></div>
+<div class="TODO">
+<h4 id="possibly" class="unnumbered">possibly</h4>
+<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb494-1" data-line-number="1"><span class="kw">map_dbl</span>(x, <span class="kw">possibly</span>(sum, <span class="ot">NA</span>))</a></code></pre></div>
+<pre><code>## [1] 1.394 1.272 2.170    NA</code></pre>
+<h4 id="quietly" class="unnumbered">quietly</h4>
+<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb496-1" data-line-number="1"><span class="kw">map_dbl</span>(x[[<span class="dv">4</span>]], <span class="kw">quietly</span>(sum))</a></code></pre></div>
+<h4 id="auto_browser" class="unnumbered">auto_browser</h4>
+<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb497-1" data-line-number="1"><span class="kw">map_dbl</span>(x, <span class="kw">auto_browse</span>(sum))</a></code></pre></div>
+</div>
+</div>
+<div id="exercises-9" class="section level2 unnumbered">
+<h2>11.2.3.1 Exercises</h2>
+<div class="question">
+<blockquote>
+<p>Vectorize() provides a convenient and concise notation to iterate over multiple arguments, but has some major drawbacks that mean you generally shouldn’t use it.</p>
+</blockquote>
+<p>What are these drawbacks the solution manual is referring to?</p>
+</div>
+<div id="deans-way" class="section level4">
+<h4><span class="header-section-number">11.0.0.1</span> <a href="https://deanattali.com/blog/mutate-non-vectorized/">Dean’s Way</a></h4>
+<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb498-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb498-2" data-line-number="2">patient_name &lt;-<span class="st"> </span><span class="cf">function</span>(path) {</a>
+<a class="sourceLine" id="cb498-3" data-line-number="3">  path_list &lt;-<span class="st"> </span><span class="kw">str_split</span>(path, <span class="st">&quot;/&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unlist</span>()</a>
+<a class="sourceLine" id="cb498-4" data-line-number="4">  <span class="kw">paste</span>(path_list[<span class="kw">length</span>(path_list) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>], path_list[<span class="kw">length</span>(path_list)], <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)</a>
+<a class="sourceLine" id="cb498-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb498-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb498-7" data-line-number="7"><span class="co"># Vectorize it with Vectorize</span></a>
+<a class="sourceLine" id="cb498-8" data-line-number="8">patient_name_v &lt;-<span class="st"> </span><span class="kw">Vectorize</span>(patient_name)</a>
+<a class="sourceLine" id="cb498-9" data-line-number="9"><span class="kw">patient_name_v</span>(<span class="dt">path =</span> <span class="kw">c</span>(<span class="st">&quot;some/path/abc/001.txt&quot;</span>, <span class="st">&quot;another/directory/xyz/002.txt&quot;</span>))</a></code></pre></div>
+<pre><code>##         some/path/abc/001.txt another/directory/xyz/002.txt 
+##                 &quot;abc_001.txt&quot;                 &quot;xyz_002.txt&quot;</code></pre>
+</div>
+<div id="jims-way-jims-way" class="section level4">
+<h4><span class="header-section-number">11.0.0.2</span> Jim’s Way <a href="https://www.jimhester.com/post/2018-04-12-vectorize/">Jim’s Way</a></h4>
+<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb500-1" data-line-number="1">patient_name_best &lt;-<span class="st"> </span><span class="cf">function</span>(path) {</a>
+<a class="sourceLine" id="cb500-2" data-line-number="2">  <span class="kw">paste0</span>(<span class="kw">basename</span>(<span class="kw">dirname</span>(path)), <span class="st">&quot;_&quot;</span>, <span class="kw">basename</span>(path))</a>
+<a class="sourceLine" id="cb500-3" data-line-number="3">}</a></code></pre></div>
+<ol style="list-style-type: decimal">
+<li><code>SIMPLIFY</code> logical or character string; attempt to reduce the result to a vector, matrix or higher dimensional array; see the simplify argument of sapply. <strong>This means the type of the function output depends on the input.</strong></li>
+</ol>
+<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb501-1" data-line-number="1"><span class="kw">patient_name_v</span>(<span class="st">&quot;some/path/abc/001.txt&quot;</span>)</a></code></pre></div>
+<pre><code>## some/path/abc/001.txt 
+##         &quot;abc_001.txt&quot;</code></pre>
+<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb503-1" data-line-number="1"><span class="kw">patient_name_v</span>(<span class="kw">character</span>())</a></code></pre></div>
+<pre><code>## named list()</code></pre>
+<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb505-1" data-line-number="1"><span class="kw">patient_name_v</span>(<span class="ot">NULL</span>)</a></code></pre></div>
+<pre><code>## list()</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Vectorize does not generate functions with easily inspect-able code</li>
+<li>Vectorize functions use <code>do.call()</code>, which can have unexpected performance consequences</li>
+<li>Vectorize does not actually make your code execute faster</li>
+</ol>
+
+
+</div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
+<a href="function-operators.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="names-and-values.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -335,7 +798,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/01-preface.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/11-function_operators.Rmd",
 "text": "Edit"
 },
 "history": {
