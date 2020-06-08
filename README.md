@@ -22,7 +22,7 @@ All Meetings Scheduled for 8:00 PM Eastern unless otherwise noted
 - 2020-05-14 Chapter 7 - Environments: [Daryn Ramsden](https://twitter.com/thisisdaryn)  ([Slides](https://r4dscommunity.shinyapps.io/environments/) | [Static Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week07/Chap7Slides.html#1) | [Zoom Recording](https://www.youtube.com/watch?v=mk7iu1-P8ZU))
 - 2020-05-21 Chapter 8 - Conditions: [Maya Gans](https://maya.rbind.io) ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week08/Chapter8.html#1) | [Zoom Recording](https://www.youtube.com/watch?v=mwiNe083DLU))
 - 2020-05-28 Chapter 9 - Functionals: [Tan Ho](https://twitter.com/_tanho) ([Zoom Recording](https://youtu.be/o0a6aJ4kCkU) | [LearnR lesson](https://apps.tanho.ca/app_direct/advr_w9_learnr/) | [Example App](https://apps.tanho.ca/app_direct/advr_w9_app/) | [Repo folder](https://github.com/r4ds/bookclub-Advanced_R/tree/master/Presentations/Week09) )
-- 2020-06-04 Chapter 10 - [Function factories](https://cran.r-project.org/package=factory): [Jon Harmon](https://twitter.com/jonthegeek) ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week08/Chapter8.html#1) | [Zoom Recording](https://www.youtube.com/watch?v=enI5Ynq6olI))
+- 2020-06-04 Chapter 10 - [Function factories](https://cran.r-project.org/package=factory): [Jon Harmon](https://twitter.com/jonthegeek) ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week10/Chapter10.html#1) | [Zoom Recording](https://www.youtube.com/watch?v=enI5Ynq6olI))
 - 2020-06-11 Chapter 11 - Function operators: [Tony ElHabr](https://twitter.com/TonyElHabr)
 - 2020-06-18 Chapter 12 + 13 - OOP base types + S3: [Daryn Ramsden](https://twitter.com/thisisdaryn) 
 - 2020-06-25 Chapter 14 - R6:
