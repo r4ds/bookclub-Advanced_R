@@ -340,9 +340,15 @@ Base R contains two function factories, `approxfun()` and `ecdf()`. Read their d
 
 #### approxfun {-}
 
-:::TODO
-What am I looking at here?
-:::
+`approxfun` creates a function (i.e. mathematical formula) that can be used to find the linear interpolation for any given point, based on the data that was passed into the factory-function at the time it was passed into the function 
+
+```{r}
+dat <- data.frame(x=1:10, y=(1:10)^2)
+dat
+fn <- approxfun(dat$x,dat$y)
+fn(4.5)
+4.5^2
+```
 
 ```{r}
 x <- 1:10
