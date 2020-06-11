@@ -34,18 +34,11 @@ style_mono_light(
 ```
 
 <style>
-img {
-  display: block;
-  margin: 0 auto;
-}
 hide {
   display: none;
 }
 .remark-slide-content h1 {
   font-size: 45px;
-}
-.remark-code, .remark-inline-code {
-  font-family: var(--code-font-family);
 }
 h1 {
   font-size: 2em;
@@ -426,7 +419,7 @@ brewer_size <- readr::read_csv('https://raw.githubusercontent.com/rfordatascienc
 brewer_size %>% 
   summarize_at(
     vars(total_barrels, total_shipped),
-    list(mean = mean, mean_robust = mean_robust)
+    list(mean = mean, mean_robust = mean_robust) #<<
   ) %>% 
   mutate_all(
     ~scales::number(., scale = 1e-3, big.mark = ',', suffix = ' k')
@@ -507,7 +500,7 @@ nms <- c('woops', 'brewing_materials', 'beer_taxed', 'brewer_size', 'beer_states
 download_beers_nicely <- slowly(download_beers_safely, 0.1)
 beers <- nms %>%
   map(., 
-      ~download_beers_nicely(..1) %>% 
+      ~download_beers_nicely(..1) %>%  #<<
         purrr::pluck('result')
     )
 
