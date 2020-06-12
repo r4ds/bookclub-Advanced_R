@@ -114,12 +114,16 @@
   \thm@postskip=\thm@preskip
 }
 \makeatother
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{longtable}
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-06-05}
+\date{2020-06-11}
 
 \begin{document}
 \maketitle
@@ -363,7 +367,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbced7e5618"
+## [1] "0x7ff1a16b0e48"
 \end{verbatim}
 
 \begin{Shaded}
@@ -373,7 +377,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbced7e5618"
+## [1] "0x7ff1a16b0e48"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -385,7 +389,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbcf3c17a50"
+## [1] "0x7ff19f37ceb0"
 \end{verbatim}
 
 \begin{Shaded}
@@ -395,8 +399,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fbcf263bbd0] <list> 
-## └─[2:0x7fbced7e5618] <dbl>
+## █ [1:0x7ff19f623df8] <list> 
+## └─[2:0x7ff1a16b0e48] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -406,7 +410,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbcf306d5a0"
+## [1] "0x7ff19dfd0260"
 \end{verbatim}
 
 \begin{Shaded}
@@ -443,7 +447,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fbced7a9ef8>"
+## [1] "<0x7ff1a023c978>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -453,7 +457,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fbced7a9ef8>
+## <0x7ff1a023c978>
 \end{verbatim}
 
 \begin{Shaded}
@@ -463,7 +467,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbced7a9ef8"
+## [1] "0x7ff1a023c978"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -512,7 +516,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbcf2412888"
+## [1] "0x7ff19f0ddc88"
 \end{verbatim}
 
 \begin{Shaded}
@@ -522,7 +526,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fbcf2412888>"
+## [1] "<0x7ff19f0ddc88>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -532,7 +536,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fbcf2412888 -> 0x7fbcf24ed608]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7ff19f0ddc88 -> 0x7ff19de2a608]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -628,7 +632,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbcd92b1a68"
+## [1] "0x7ff19f2f4348"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -641,7 +645,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbcf76251f8"
+## [1] "0x7ff19b0133c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -664,7 +668,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbcf76251f8"
+## [1] "0x7ff19b0133c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -674,7 +678,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbcf76251f8"
+## [1] "0x7ff19b0133c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -697,7 +701,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbcf76251f8"
+## [1] "0x7ff19b0133c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -707,7 +711,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbcd92737e8"
+## [1] "0x7ff19fb8d318"
 \end{verbatim}
 
 \begin{Shaded}
@@ -730,7 +734,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fbcea084498"
+## [1] "0x7ff19f8e54f8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2533,11 +2537,11 @@ This will work:
 ## # A tibble: 5 x 1
 ##      x1
 ##   <dbl>
-## 1 0.716
-## 2 0.402
-## 3 0.594
-## 4 0.333
-## 5 0.512
+## 1 0.487
+## 2 0.265
+## 3 0.860
+## 4 0.420
+## 5 0.364
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2611,7 +2615,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 219 280 266 223 241 242 297 292 282 285
+##  [1] 295 206 258 214 223 270 234 204 254 287
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3048,7 +3052,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fbcea8ac980>
+## <bytecode: 0x7ff1963a71c8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3666,26 +3670,26 @@ Each package becomes a parent to the global environment. We can inspect local en
 
 \begin{verbatim}
 ##  [[1]] $ <env: global>
-##  [[2]] $ <env: package:openintro>
-##  [[3]] $ <env: package:rlang>
-##  [[4]] $ <env: package:cyclocomp>
-##  [[5]] $ <env: package:lobstr>
-##  [[6]] $ <env: package:kableExtra>
-##  [[7]] $ <env: package:forcats>
-##  [[8]] $ <env: package:stringr>
-##  [[9]] $ <env: package:dplyr>
-## [[10]] $ <env: package:purrr>
-## [[11]] $ <env: package:readr>
-## [[12]] $ <env: package:tidyr>
-## [[13]] $ <env: package:tibble>
-## [[14]] $ <env: package:ggplot2>
-## [[15]] $ <env: package:tidyverse>
-## [[16]] $ <env: package:stats>
-## [[17]] $ <env: package:graphics>
-## [[18]] $ <env: package:grDevices>
-## [[19]] $ <env: package:utils>
-## [[20]] $ <env: package:datasets>
-## ... and 3 more environments
+##  [[2]] $ <env: package:gt>
+##  [[3]] $ <env: package:openintro>
+##  [[4]] $ <env: package:rlang>
+##  [[5]] $ <env: package:cyclocomp>
+##  [[6]] $ <env: package:lobstr>
+##  [[7]] $ <env: package:kableExtra>
+##  [[8]] $ <env: package:forcats>
+##  [[9]] $ <env: package:stringr>
+## [[10]] $ <env: package:dplyr>
+## [[11]] $ <env: package:purrr>
+## [[12]] $ <env: package:readr>
+## [[13]] $ <env: package:tidyr>
+## [[14]] $ <env: package:tibble>
+## [[15]] $ <env: package:ggplot2>
+## [[16]] $ <env: package:tidyverse>
+## [[17]] $ <env: package:stats>
+## [[18]] $ <env: package:graphics>
+## [[19]] $ <env: package:grDevices>
+## [[20]] $ <env: package:utils>
+## ... and 4 more environments
 \end{verbatim}
 
 \hypertarget{super-assignment}{%
@@ -3919,7 +3923,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7fbce9c87290>
+## <bytecode: 0x7ff197d3b5b0>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4057,7 +4061,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7fbced5577b0>
+## <bytecode: 0x7ff19faaaa88>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4851,29 +4855,29 @@ Given this little example:
 
 \begin{verbatim}
 ## [1] "parent in mid: "
-## <environment: 0x7fbcec35ea80>
+## <environment: 0x7ff1a05d1238>
 ## [1] "current in mid: "
-## <environment: 0x7fbcec35f228>
+## <environment: 0x7ff1a05cbad0>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid: "
-## <environment: 0x7fbceb422ee8>
+## <environment: 0x7ff1a0563238>
 ## [1] "current in mid: "
-## <environment: 0x7fbcd94d15b8>
+## <environment: 0x7ff19dbc62a8>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid skip: "
-## <environment: 0x7fbcd94d15b8>
+## <environment: 0x7ff19dbc62a8>
 ## [1] "current in mid skip: "
-## <environment: 0x7fbcf1f83b38>
+## <environment: 0x7ff19d80c0b0>
 ## [1] "parent in mid: "
-## <environment: 0x7fbcf1f89f28>
+## <environment: 0x7ff19b7e3e48>
 ## [1] "current in mid: "
-## <environment: 0x7fbcf1f897b8>
+## <environment: 0x7ff19b7e0718>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
@@ -4888,7 +4892,7 @@ Given this little example:
 ## 
 ## [[2]]
 ## [[2]][[1]]
-## <environment: 0x7fbcf1f83b38>
+## <environment: 0x7ff19d80c0b0>
 ## 
 ## 
 ## [[3]]
@@ -5029,26 +5033,26 @@ In order to extract p-values the solution manual suggests using \texttt{map\_dbl
 \end{Shaded}
 
 \begin{verbatim}
-##   [1] 5.119986e-02 5.120823e-02 4.467811e-02 4.304729e-02 1.499805e-03
-##   [6] 4.085967e-01 2.656083e-02 3.801490e-01 4.423594e-03 2.001869e-03
-##  [11] 4.505043e-03 1.359769e-05 1.164993e-03 1.041539e-01 8.326687e-03
-##  [16] 3.448786e-02 6.345625e-02 1.079788e-01 6.853942e-04 5.890476e-02
-##  [21] 4.090033e-02 1.422438e-02 5.999366e-02 3.481803e-03 5.345282e-03
-##  [26] 1.859088e-01 1.449141e-03 6.830779e-02 1.200159e-02 5.581495e-01
-##  [31] 5.278313e-01 3.958630e-02 3.685504e-02 1.976087e-02 5.686627e-01
-##  [36] 1.726601e-03 1.362703e-02 6.028284e-03 1.359215e-03 8.477425e-01
-##  [41] 7.459407e-02 9.640527e-02 7.945923e-02 7.287384e-02 7.839478e-02
-##  [46] 7.420552e-02 1.070032e-03 4.243908e-01 5.260607e-02 1.628651e-01
-##  [51] 2.649013e-02 9.786565e-03 3.323885e-02 7.309513e-02 2.215493e-01
-##  [56] 8.799198e-01 1.580200e-02 4.580076e-03 2.410204e-01 3.563454e-02
-##  [61] 6.396319e-02 8.313419e-02 1.231166e-01 1.488453e-02 5.208888e-02
-##  [66] 4.390876e-03 2.194859e-01 1.574387e-02 2.392773e-03 3.938670e-01
-##  [71] 2.374729e-01 4.326859e-03 2.891964e-02 4.704657e-02 4.048224e-03
-##  [76] 2.330901e-03 1.951110e-02 3.474059e-04 3.367591e-04 1.341647e-01
-##  [81] 2.727711e-01 2.004323e-02 2.033099e-02 3.506518e-02 2.447857e-01
-##  [86] 2.380184e-02 7.299126e-02 3.512161e-02 1.189746e-01 4.931144e-02
-##  [91] 2.819954e-03 1.020460e-02 2.332857e-02 6.182124e-01 1.908922e-02
-##  [96] 1.775133e-03 2.755947e-01 3.014063e-03 6.500961e-02 8.283700e-04
+##   [1] 9.089874e-02 2.475762e-01 1.608147e-01 5.417927e-03 1.840396e-02
+##   [6] 8.878055e-01 4.776750e-04 4.351104e-02 3.473099e-01 6.114168e-04
+##  [11] 6.182167e-02 1.566656e-05 7.609876e-02 1.722346e-01 8.724290e-02
+##  [16] 5.056553e-02 1.432919e-03 1.320675e-01 1.435325e-01 6.455887e-04
+##  [21] 2.449044e-04 2.188465e-03 7.383409e-02 9.750835e-02 3.111224e-02
+##  [26] 1.613409e-01 1.469276e-01 4.278258e-03 2.180042e-02 6.823625e-03
+##  [31] 3.910387e-01 1.287314e-02 3.121685e-02 1.158531e-01 7.642350e-02
+##  [36] 5.731835e-01 7.311044e-03 5.074664e-04 2.419907e-01 3.028290e-02
+##  [41] 1.473366e-01 1.283797e-02 6.920015e-02 4.168239e-01 2.843440e-02
+##  [46] 7.272309e-02 4.910437e-03 4.358494e-04 3.852207e-02 1.716001e-03
+##  [51] 3.943073e-03 6.356953e-02 2.107384e-03 1.929885e-01 3.489927e-05
+##  [56] 2.228523e-02 4.437464e-03 2.586294e-02 1.421897e-03 2.328140e-04
+##  [61] 2.481723e-02 1.146689e-02 3.862712e-01 4.549605e-02 7.444758e-03
+##  [66] 4.926553e-02 2.153188e-03 9.572862e-03 2.695517e-02 5.482413e-02
+##  [71] 5.370921e-05 1.029403e-01 9.703077e-02 8.464630e-03 1.424477e-01
+##  [76] 1.009649e-01 1.961811e-01 3.583042e-04 1.028526e-02 4.339008e-01
+##  [81] 1.043086e-01 1.000000e+00 5.061621e-02 8.432648e-02 5.452923e-02
+##  [86] 5.986135e-02 3.896131e-01 1.137041e-02 4.353984e-03 8.999736e-03
+##  [91] 2.743377e-02 1.104764e-02 2.487710e-02 6.699127e-01 1.673674e-01
+##  [96] 3.227383e-01 2.692341e-01 6.055868e-06 1.941664e-02 2.011931e-04
 \end{verbatim}
 
 \hypertarget{exercise-9}{%
@@ -5379,12 +5383,12 @@ Answer from \href{https://community.rstudio.com/t/recursive-purrr-mutate-if/1663
 
 \begin{verbatim}
 ## Unit: microseconds
-##                         expr      min        lq       mean    median       uq
-##         as_integer_rapply(x)    9.410   12.9515   43.15729   20.1555   22.065
-##  as_integer_recursive_map(x) 1009.408 1063.6885 1290.60130 1126.9130 1290.130
+##                         expr      min       lq      mean    median        uq
+##         as_integer_rapply(x)    9.404   12.172   31.7466   14.5895   21.2845
+##  as_integer_recursive_map(x) 1009.477 1066.279 1167.8301 1104.3815 1142.5505
 ##       max neval
-##  2429.070   100
-##  5024.883   100
+##  1486.528   100
+##  4634.935   100
 \end{verbatim}
 
 \begin{Shaded}
@@ -5794,6 +5798,72 @@ We don't need to use \texttt{rm} because the execution environment of the factor
 
 Base R contains two function factories, \texttt{approxfun()} and \texttt{ecdf()}. Read their documentation and experiment to figure out what the functions do and what they return.
 
+\hypertarget{approxfun}{%
+\subsubsection*{approxfun}\label{approxfun}}
+\addcontentsline{toc}{subsubsection}{approxfun}
+
+\texttt{approxfun} creates a function (i.e.~mathematical formula) that can be used to find the linear interpolation for any given point, based on the data that was passed into the factory-function at the time it was passed into the function
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x=}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{, }\DataTypeTok{y=}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{)}\OperatorTok{^}\DecValTok{2}\NormalTok{)}
+\NormalTok{dat}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     x   y
+## 1   1   1
+## 2   2   4
+## 3   3   9
+## 4   4  16
+## 5   5  25
+## 6   6  36
+## 7   7  49
+## 8   8  64
+## 9   9  81
+## 10 10 100
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fn <-}\StringTok{ }\KeywordTok{approxfun}\NormalTok{(dat}\OperatorTok{$}\NormalTok{x,dat}\OperatorTok{$}\NormalTok{y)}
+\KeywordTok{fn}\NormalTok{(}\FloatTok{4.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20.5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{10}
+\NormalTok{y <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(x, y, }\DataTypeTok{main =} \StringTok{"approx(.) and approxfun(.)"}\NormalTok{)}
+\KeywordTok{points}\NormalTok{(}\KeywordTok{approx}\NormalTok{(x, y), }\DataTypeTok{col =} \DecValTok{2}\NormalTok{, }\DataTypeTok{pch =} \StringTok{"*"}\NormalTok{)}
+\KeywordTok{points}\NormalTok{(}\KeywordTok{approx}\NormalTok{(x, y, }\DataTypeTok{method =} \StringTok{"constant"}\NormalTok{), }\DataTypeTok{col =} \DecValTok{4}\NormalTok{, }\DataTypeTok{pch =} \StringTok{"*"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{AdvancedR_Companion_files/figure-latex/unnamed-chunk-237-1.pdf}
+
+\hypertarget{ecdf}{%
+\subsubsection*{ECDF}\label{ecdf}}
+\addcontentsline{toc}{subsubsection}{ECDF}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{3}\NormalTok{) }\CommentTok{# 3 random numbers}
+\NormalTok{Fn <-}\StringTok{ }\KeywordTok{ecdf}\NormalTok{(x) }\CommentTok{# create distribution function for each x}
+\KeywordTok{Fn}\NormalTok{(x) }\CommentTok{# apply the distribution function to each number}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.3333333 0.6666667 1.0000000
+\end{verbatim}
+
 \hypertarget{exercise-14}{%
 \section*{10.2.6.3 Exercise}\label{exercise-14}}
 \addcontentsline{toc}{section}{10.2.6.3 Exercise}
@@ -5854,7 +5924,7 @@ Using \texttt{label\_bquote} using \texttt{plotMath} explanation\ldots{}\ldots{}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AdvancedR_Companion_files/figure-latex/unnamed-chunk-239-1.pdf}
+\includegraphics{AdvancedR_Companion_files/figure-latex/unnamed-chunk-242-1.pdf}
 
 Using \texttt{number\_format} will \texttt{force} the computation of the parameters, formatting numbers explanation\ldots{}\ldots{}
 
@@ -5870,7 +5940,7 @@ Using \texttt{number\_format} will \texttt{force} the computation of the paramet
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AdvancedR_Companion_files/figure-latex/unnamed-chunk-240-1.pdf}
+\includegraphics{AdvancedR_Companion_files/figure-latex/unnamed-chunk-243-1.pdf}
 
 \hypertarget{factories-and-functionals}{%
 \section{10.5 factories and functionals}\label{factories-and-functionals}}
@@ -5908,6 +5978,211 @@ Can we \{factory\} this?
 \NormalTok{powers <-}\StringTok{ }\NormalTok{purrr}\OperatorTok{::}\KeywordTok{map}\NormalTok{(power_names, power4)}
 \end{Highlighting}
 \end{Shaded}
+
+\hypertarget{function-operators}{%
+\chapter{Function operators}\label{function-operators}}
+
+\hypertarget{introduction-1}{%
+\section*{11.1 Introduction}\label{introduction-1}}
+\addcontentsline{toc}{section}{11.1 Introduction}
+
+\begin{quote}
+A function operator is a function that takes one (or more) functions as input and returns a function as output
+\end{quote}
+
+\ldots{}How exactly does this definition differ from a function factory?
+
+\captionsetup[table]{labelformat=empty,skip=1pt}
+\begin{longtable}{llll}
+\toprule
+Term & Required Input & Optional Output & Output \\ 
+\midrule
+Functionals & Function & Vector & Vector \\ 
+Function Factory & NA & Vector,Function & Function \\ 
+Function Operator & Function & Function & Function \\ 
+\bottomrule
+\end{longtable}
+
+\begin{quote}
+Function operators are closely related to function factories; indeed they're just a function factory that takes a function as input
+\end{quote}
+
+Can anyone confirm that, by definition, function operators can only take functions as inputs (and not any kind of vector)? Book quote: ``A function operator is a function that takes one (or more) functions as input and returns a function as output.'' If this is true, then something like the following would only be a function factory, not both a function factory and a function operator:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sleepy <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(f, n)\{}
+  \KeywordTok{force}\NormalTok{(f)}
+  \ControlFlowTok{function}\NormalTok{(...)\{}
+    \KeywordTok{cat}\NormalTok{(}
+\NormalTok{      glue}\OperatorTok{::}\KeywordTok{glue}\NormalTok{(}\StringTok{'Sleeping for \{n\} second\{ifelse(n != 1, "s", "")\}.'}\NormalTok{), }
+      \DataTypeTok{sep =} \StringTok{'}\CharTok{\textbackslash{}n}\StringTok{'}
+\NormalTok{    )}
+    \KeywordTok{Sys.sleep}\NormalTok{(n)}
+    \KeywordTok{f}\NormalTok{(...)}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\NormalTok{sleepy_print <-}\StringTok{ }\KeywordTok{sleepy}\NormalTok{(print, }\FloatTok{1.5}\NormalTok{)}
+\KeywordTok{sleepy_print}\NormalTok{(}\StringTok{'hello world'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Sleeping for 1.5 seconds.
+## [1] "hello world"
+\end{verbatim}
+
+Function factories are ``any function that returns a function'' and Hadley uses ``simple'' examples where you pass in a numeric or character to get back a customized function (pass a number to a power function to get a function dedicated to cubes)
+
+Function operators are factories where you pass in a function and modify its behaviour a little, without actually building up the logic for a function from scratch. The operator does not supply the actual meat of the logic.
+examples: \texttt{safely}, \texttt{silently}, \texttt{rate-limity} etc
+
+\hypertarget{purrrsafely}{%
+\section*{11.2.1 purrr::safely}\label{purrrsafely}}
+\addcontentsline{toc}{section}{11.2.1 purrr::safely}
+
+It seems like safely is a condition wrapper - are conditions a kind of function operator?
+
+Can we come up with simple example for these function operators?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}
+  \KeywordTok{c}\NormalTok{(}\FloatTok{0.512}\NormalTok{, }\FloatTok{0.165}\NormalTok{, }\FloatTok{0.717}\NormalTok{),}
+  \KeywordTok{c}\NormalTok{(}\FloatTok{0.064}\NormalTok{, }\FloatTok{0.781}\NormalTok{, }\FloatTok{0.427}\NormalTok{),}
+  \KeywordTok{c}\NormalTok{(}\FloatTok{0.890}\NormalTok{, }\FloatTok{0.785}\NormalTok{, }\FloatTok{0.495}\NormalTok{),}
+  \StringTok{"oops"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{possibly}{%
+\subsubsection*{possibly}\label{possibly}}
+\addcontentsline{toc}{subsubsection}{possibly}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{map_dbl}\NormalTok{(x, }\KeywordTok{possibly}\NormalTok{(sum, }\OtherTok{NA}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.394 1.272 2.170    NA
+\end{verbatim}
+
+\hypertarget{quietly}{%
+\subsubsection*{quietly}\label{quietly}}
+\addcontentsline{toc}{subsubsection}{quietly}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{map_dbl}\NormalTok{(x[[}\DecValTok{4}\NormalTok{]], }\KeywordTok{quietly}\NormalTok{(sum))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{auto_browser}{%
+\subsubsection*{auto\_browser}\label{auto_browser}}
+\addcontentsline{toc}{subsubsection}{auto\_browser}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{map_dbl}\NormalTok{(x, }\KeywordTok{auto_browse}\NormalTok{(sum))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{exercises-9}{%
+\section*{11.2.3.1 Exercises}\label{exercises-9}}
+\addcontentsline{toc}{section}{11.2.3.1 Exercises}
+
+\begin{quote}
+Vectorize() provides a convenient and concise notation to iterate over multiple arguments, but has some major drawbacks that mean you generally shouldn't use it.
+\end{quote}
+
+What are these drawbacks the solution manual is referring to?
+
+\hypertarget{deans-way}{%
+\subsubsection{\texorpdfstring{\href{https://deanattali.com/blog/mutate-non-vectorized/}{Dean's Way}}{Dean's Way}}\label{deans-way}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\NormalTok{patient_name <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(path) \{}
+\NormalTok{  path_list <-}\StringTok{ }\KeywordTok{str_split}\NormalTok{(path, }\StringTok{"/"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{unlist}\NormalTok{()}
+  \KeywordTok{paste}\NormalTok{(path_list[}\KeywordTok{length}\NormalTok{(path_list) }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{], path_list[}\KeywordTok{length}\NormalTok{(path_list)], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{\}}
+
+\CommentTok{# Vectorize it with Vectorize}
+\NormalTok{patient_name_v <-}\StringTok{ }\KeywordTok{Vectorize}\NormalTok{(patient_name)}
+\KeywordTok{patient_name_v}\NormalTok{(}\DataTypeTok{path =} \KeywordTok{c}\NormalTok{(}\StringTok{"some/path/abc/001.txt"}\NormalTok{, }\StringTok{"another/directory/xyz/002.txt"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         some/path/abc/001.txt another/directory/xyz/002.txt 
+##                 "abc_001.txt"                 "xyz_002.txt"
+\end{verbatim}
+
+\hypertarget{jims-way}{%
+\subsubsection{\texorpdfstring{\href{https://www.jimhester.com/post/2018-04-12-vectorize/}{Jim's Way}}{Jim's Way}}\label{jims-way}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{patient_name_best <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(path) \{}
+  \KeywordTok{paste0}\NormalTok{(}\KeywordTok{basename}\NormalTok{(}\KeywordTok{dirname}\NormalTok{(path)), }\StringTok{"_"}\NormalTok{, }\KeywordTok{basename}\NormalTok{(path))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \texttt{SIMPLIFY} logical or character string; attempt to reduce the result to a vector, matrix or higher dimensional array; see the simplify argument of sapply. \textbf{This means the type of the function output depends on the input.}
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{patient_name_v}\NormalTok{(}\StringTok{"some/path/abc/001.txt"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## some/path/abc/001.txt 
+##         "abc_001.txt"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{patient_name_v}\NormalTok{(}\KeywordTok{character}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## named list()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{patient_name_v}\NormalTok{(}\OtherTok{NULL}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## list()
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Vectorize does not generate functions with easily inspect-able code
+\item
+  Vectorize functions use \texttt{do.call()}, which can have unexpected performance consequences
+\item
+  Vectorize does not actually make your code execute faster
+\end{enumerate}
 
 \bibliography{book.bib,packages.bib}
 

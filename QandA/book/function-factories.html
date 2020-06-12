@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-06-05" />
+<meta name="date" content="2020-06-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="functionals.html"/>
-
+<link rel="next" href="function-operators.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -261,6 +261,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#labelling"><i class="fa fa-check"></i>10.3.1 Labelling</a></li>
 <li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#exercises-8"><i class="fa fa-check"></i>10.3.4 Exercises</a></li>
 <li class="chapter" data-level="10.2" data-path="function-factories.html"><a href="function-factories.html#factories-and-functionals"><i class="fa fa-check"></i><b>10.2</b> 10.5 factories and functionals</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="function-operators.html"><a href="function-operators.html"><i class="fa fa-check"></i><b>11</b> Function operators</a><ul>
+<li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#introduction-1"><i class="fa fa-check"></i>11.1 Introduction</a></li>
+<li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#purrrsafely"><i class="fa fa-check"></i>11.2.1 purrr::safely</a></li>
+<li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#exercises-9"><i class="fa fa-check"></i>11.2.3.1 Exercises</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -545,24 +550,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="question">
 <p>Base R contains two function factories, <code>approxfun()</code> and <code>ecdf()</code>. Read their documentation and experiment to figure out what the functions do and what they return.</p>
 </div>
-<div class="TODO">
-
+<div id="approxfun" class="section level4 unnumbered">
+<h4>approxfun</h4>
+<p><code>approxfun</code> creates a function (i.e. mathematical formula) that can be used to find the linear interpolation for any given point, based on the data that was passed into the factory-function at the time it was passed into the function</p>
+<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb484-1" data-line-number="1">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">y=</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)<span class="op">^</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb484-2" data-line-number="2">dat</a></code></pre></div>
+<pre><code>##     x   y
+## 1   1   1
+## 2   2   4
+## 3   3   9
+## 4   4  16
+## 5   5  25
+## 6   6  36
+## 7   7  49
+## 8   8  64
+## 9   9  81
+## 10 10 100</code></pre>
+<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb486-1" data-line-number="1">fn &lt;-<span class="st"> </span><span class="kw">approxfun</span>(dat<span class="op">$</span>x,dat<span class="op">$</span>y)</a>
+<a class="sourceLine" id="cb486-2" data-line-number="2"><span class="kw">fn</span>(<span class="fl">4.5</span>)</a></code></pre></div>
+<pre><code>## [1] 20.5</code></pre>
+<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb488-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb488-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb488-3" data-line-number="3"><span class="kw">plot</span>(x, y, <span class="dt">main =</span> <span class="st">&quot;approx(.) and approxfun(.)&quot;</span>)</a>
+<a class="sourceLine" id="cb488-4" data-line-number="4"><span class="kw">points</span>(<span class="kw">approx</span>(x, y), <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">pch =</span> <span class="st">&quot;*&quot;</span>)</a>
+<a class="sourceLine" id="cb488-5" data-line-number="5"><span class="kw">points</span>(<span class="kw">approx</span>(x, y, <span class="dt">method =</span> <span class="st">&quot;constant&quot;</span>), <span class="dt">col =</span> <span class="dv">4</span>, <span class="dt">pch =</span> <span class="st">&quot;*&quot;</span>)</a></code></pre></div>
+<p><img src="AdvancedR_Companion_files/figure-html/unnamed-chunk-237-1.png" width="672" /></p>
+</div>
+<div id="ecdf" class="section level4 unnumbered">
+<h4>ECDF</h4>
+<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb489-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">3</span>) <span class="co"># 3 random numbers</span></a>
+<a class="sourceLine" id="cb489-2" data-line-number="2">Fn &lt;-<span class="st"> </span><span class="kw">ecdf</span>(x) <span class="co"># create distribution function for each x</span></a>
+<a class="sourceLine" id="cb489-3" data-line-number="3"><span class="kw">Fn</span>(x) <span class="co"># apply the distribution function to each number</span></a></code></pre></div>
+<pre><code>## [1] 1.0000000 0.6666667 0.3333333</code></pre>
 </div>
 </div>
 <div id="exercise-14" class="section level2 unnumbered">
 <h2>10.2.6.3 Exercise</h2>
 <div class="question">
 <p>How would we make this function using {factory}</p>
-<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb484-1" data-line-number="1">pick &lt;-<span class="st"> </span><span class="cf">function</span>(i) {</a>
-<a class="sourceLine" id="cb484-2" data-line-number="2">  <span class="kw">force</span>(i)</a>
-<a class="sourceLine" id="cb484-3" data-line-number="3">  <span class="cf">function</span>(x) x[[i]]</a>
-<a class="sourceLine" id="cb484-4" data-line-number="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb491-1" data-line-number="1">pick &lt;-<span class="st"> </span><span class="cf">function</span>(i) {</a>
+<a class="sourceLine" id="cb491-2" data-line-number="2">  <span class="kw">force</span>(i)</a>
+<a class="sourceLine" id="cb491-3" data-line-number="3">  <span class="cf">function</span>(x) x[[i]]</a>
+<a class="sourceLine" id="cb491-4" data-line-number="4">}</a></code></pre></div>
 </div>
-<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb485-1" data-line-number="1"><span class="kw">library</span>(factory)</a>
-<a class="sourceLine" id="cb485-2" data-line-number="2">pick &lt;-<span class="st"> </span><span class="kw">build_factory</span>(</a>
-<a class="sourceLine" id="cb485-3" data-line-number="3">  <span class="dt">.factory_fun =</span> <span class="cf">function</span>(x) x[[i]],</a>
-<a class="sourceLine" id="cb485-4" data-line-number="4">  i</a>
-<a class="sourceLine" id="cb485-5" data-line-number="5">)</a></code></pre></div>
+<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb492-1" data-line-number="1"><span class="kw">library</span>(factory)</a>
+<a class="sourceLine" id="cb492-2" data-line-number="2">pick &lt;-<span class="st"> </span><span class="kw">build_factory</span>(</a>
+<a class="sourceLine" id="cb492-3" data-line-number="3">  <span class="dt">.factory_fun =</span> <span class="cf">function</span>(x) x[[i]],</a>
+<a class="sourceLine" id="cb492-4" data-line-number="4">  i</a>
+<a class="sourceLine" id="cb492-5" data-line-number="5">)</a></code></pre></div>
 </div>
 <div id="labelling" class="section level2 unnumbered">
 <h2>10.3.1 Labelling</h2>
@@ -578,54 +613,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div class="TODO">
 <p>Data:</p>
-<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb486-1" data-line-number="1">sd &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">15</span>)</a>
-<a class="sourceLine" id="cb486-2" data-line-number="2">n &lt;-<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb486-3" data-line-number="3">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dv">3</span> <span class="op">*</span><span class="st"> </span>n, <span class="dt">sd =</span> sd), <span class="dt">sd =</span> <span class="kw">rep</span>(sd, n))</a></code></pre></div>
+<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb493-1" data-line-number="1">sd &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">15</span>)</a>
+<a class="sourceLine" id="cb493-2" data-line-number="2">n &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb493-3" data-line-number="3">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dv">3</span> <span class="op">*</span><span class="st"> </span>n, <span class="dt">sd =</span> sd), <span class="dt">sd =</span> <span class="kw">rep</span>(sd, n))</a></code></pre></div>
 <p>Using <code>label_bquote</code> using <code>plotMath</code> explanation……</p>
-<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb487-1" data-line-number="1"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(x)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb487-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb487-3" data-line-number="3"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>sd, <span class="dt">scales =</span> <span class="st">&quot;free_x&quot;</span>, <span class="dt">labeller =</span> <span class="kw">label_bquote</span>(alpha <span class="op">^</span><span class="st"> </span>.(sd))) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb487-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>) </a></code></pre></div>
-<p><img src="AdvancedR_Companion_files/figure-html/unnamed-chunk-239-1.png" width="672" /></p>
+<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb494-1" data-line-number="1"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(x)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb494-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb494-3" data-line-number="3"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>sd, <span class="dt">scales =</span> <span class="st">&quot;free_x&quot;</span>, <span class="dt">labeller =</span> <span class="kw">label_bquote</span>(alpha <span class="op">^</span><span class="st"> </span>.(sd))) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb494-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>) </a></code></pre></div>
+<p><img src="AdvancedR_Companion_files/figure-html/unnamed-chunk-242-1.png" width="672" /></p>
 <p>Using <code>number_format</code> will <code>force</code> the computation of the parameters, formatting numbers explanation……</p>
-<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb488-1" data-line-number="1"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(x)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb488-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb488-3" data-line-number="3"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>sd, <span class="dt">scales =</span> <span class="st">&quot;free_x&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb488-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb488-5" data-line-number="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(</a>
-<a class="sourceLine" id="cb488-6" data-line-number="6">  <span class="dt">labels =</span> scales<span class="op">::</span><span class="kw">number_format</span>(<span class="dt">scale =</span> <span class="dv">1</span>, <span class="dt">suffix =</span> <span class="st">&quot; K&quot;</span>) </a>
-<a class="sourceLine" id="cb488-7" data-line-number="7">)</a></code></pre></div>
-<p><img src="AdvancedR_Companion_files/figure-html/unnamed-chunk-240-1.png" width="672" /></p>
+<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb495-1" data-line-number="1"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(x)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb495-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb495-3" data-line-number="3"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>sd, <span class="dt">scales =</span> <span class="st">&quot;free_x&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb495-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb495-5" data-line-number="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(</a>
+<a class="sourceLine" id="cb495-6" data-line-number="6">  <span class="dt">labels =</span> scales<span class="op">::</span><span class="kw">number_format</span>(<span class="dt">scale =</span> <span class="dv">1</span>, <span class="dt">suffix =</span> <span class="st">&quot; K&quot;</span>) </a>
+<a class="sourceLine" id="cb495-7" data-line-number="7">)</a></code></pre></div>
+<p><img src="AdvancedR_Companion_files/figure-html/unnamed-chunk-243-1.png" width="672" /></p>
 </div>
 </div>
 <div id="factories-and-functionals" class="section level2">
 <h2><span class="header-section-number">10.2</span> 10.5 factories and functionals</h2>
 <div class="question">
 <p>Can we {factory} this?</p>
-<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb489-1" data-line-number="1">names &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb489-2" data-line-number="2">  <span class="dt">square =</span> <span class="dv">2</span>, </a>
-<a class="sourceLine" id="cb489-3" data-line-number="3">  <span class="dt">cube =</span> <span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb489-4" data-line-number="4">  <span class="dt">root =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, </a>
-<a class="sourceLine" id="cb489-5" data-line-number="5">  <span class="dt">cuberoot =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb489-6" data-line-number="6">  <span class="dt">reciprocal =</span> <span class="dv">-1</span></a>
-<a class="sourceLine" id="cb489-7" data-line-number="7">)</a>
-<a class="sourceLine" id="cb489-8" data-line-number="8">funs &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map</span>(names, power1)</a></code></pre></div>
+<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb496-1" data-line-number="1">names &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb496-2" data-line-number="2">  <span class="dt">square =</span> <span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb496-3" data-line-number="3">  <span class="dt">cube =</span> <span class="dv">3</span>, </a>
+<a class="sourceLine" id="cb496-4" data-line-number="4">  <span class="dt">root =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb496-5" data-line-number="5">  <span class="dt">cuberoot =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>, </a>
+<a class="sourceLine" id="cb496-6" data-line-number="6">  <span class="dt">reciprocal =</span> <span class="dv">-1</span></a>
+<a class="sourceLine" id="cb496-7" data-line-number="7">)</a>
+<a class="sourceLine" id="cb496-8" data-line-number="8">funs &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map</span>(names, power1)</a></code></pre></div>
 </div>
-<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb490-1" data-line-number="1">power4 &lt;-<span class="st"> </span><span class="kw">build_factory</span>(</a>
-<a class="sourceLine" id="cb490-2" data-line-number="2">  <span class="dt">fun =</span> <span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb490-3" data-line-number="3">    x <span class="op">^</span><span class="st"> </span>exponent</a>
-<a class="sourceLine" id="cb490-4" data-line-number="4">  },</a>
-<a class="sourceLine" id="cb490-5" data-line-number="5">  exponent</a>
-<a class="sourceLine" id="cb490-6" data-line-number="6">)</a>
-<a class="sourceLine" id="cb490-7" data-line-number="7">power_names &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb490-8" data-line-number="8">  <span class="dt">square =</span> <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb490-9" data-line-number="9">  <span class="dt">cube =</span> <span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb490-10" data-line-number="10">  <span class="dt">root =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb490-11" data-line-number="11">  <span class="dt">cuberoot =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb490-12" data-line-number="12">  <span class="dt">reciprocal =</span> <span class="dv">-1</span></a>
-<a class="sourceLine" id="cb490-13" data-line-number="13">)</a>
-<a class="sourceLine" id="cb490-14" data-line-number="14">powers &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map</span>(power_names, power4)</a></code></pre></div>
-
+<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb497-1" data-line-number="1">power4 &lt;-<span class="st"> </span><span class="kw">build_factory</span>(</a>
+<a class="sourceLine" id="cb497-2" data-line-number="2">  <span class="dt">fun =</span> <span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb497-3" data-line-number="3">    x <span class="op">^</span><span class="st"> </span>exponent</a>
+<a class="sourceLine" id="cb497-4" data-line-number="4">  },</a>
+<a class="sourceLine" id="cb497-5" data-line-number="5">  exponent</a>
+<a class="sourceLine" id="cb497-6" data-line-number="6">)</a>
+<a class="sourceLine" id="cb497-7" data-line-number="7">power_names &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb497-8" data-line-number="8">  <span class="dt">square =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb497-9" data-line-number="9">  <span class="dt">cube =</span> <span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb497-10" data-line-number="10">  <span class="dt">root =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb497-11" data-line-number="11">  <span class="dt">cuberoot =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb497-12" data-line-number="12">  <span class="dt">reciprocal =</span> <span class="dv">-1</span></a>
+<a class="sourceLine" id="cb497-13" data-line-number="13">)</a>
+<a class="sourceLine" id="cb497-14" data-line-number="14">powers &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map</span>(power_names, power4)</a></code></pre></div>
 
 </div>
 </div>
@@ -634,8 +668,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="functionals.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="functionals.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="function-operators.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

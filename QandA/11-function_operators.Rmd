@@ -1,0 +1,141 @@
+# Function operators
+
+```{r, include=FALSE}
+library(tidyverse)
+library(gt)
+```
+
+## 11.1 Introduction {-}
+
+:::question
+> A function operator is a function that takes one (or more) functions as input and returns a function as output
+
+...How exactly does this definition differ from a function factory?
+:::
+
+```{r, echo=FALSE}
+tibble(
+  Term = c("Functionals", "Function Factory", "Function Operator"),
+  `Required Input` = c("Function", NA, "Function"),
+  `Optional Output` = c("Vector", "Vector,Function", "Function"),
+  Output = c("Vector", "Function", "Function"),
+) %>%
+  gt()
+```
+
+> Function operators are closely related to function factories; indeed they’re just a function factory that takes a function as input
+
+:::question
+Can anyone confirm that, by definition, function operators can only take functions as inputs (and not any kind of vector)? Book quote: "A function operator is a function that takes one (or more) functions as input and returns a function as output." If this is true, then something like the following would only be a function factory, not both a function factory and a function operator:
+
+```{r}
+sleepy <- function(f, n){
+  force(f)
+  function(...){
+    cat(
+      glue::glue('Sleeping for {n} second{ifelse(n != 1, "s", "")}.'), 
+      sep = '\n'
+    )
+    Sys.sleep(n)
+    f(...)
+  }
+}
+
+sleepy_print <- sleepy(print, 1.5)
+sleepy_print('hello world')
+```
+:::
+
+
+Function factories are “any function that returns a function” and Hadley uses “simple” examples where you pass in a numeric or character to get back a customized function (pass a number to a power function to get a function dedicated to cubes)
+
+Function operators are factories where you pass in a function and modify its behaviour a little, without actually building up the logic for a function from scratch. The operator does not supply the actual meat of the logic.
+examples: `safely`, `silently`, `rate-limity` etc
+
+
+## 11.2.1 purrr::safely {-}
+
+:::question
+It seems like safely is a condition wrapper - are conditions a kind of function operator?
+:::
+
+:::TODO
+:::
+
+:::question
+Can we come up with simple example for these function operators?
+:::
+
+```{r}
+x <- list(
+  c(0.512, 0.165, 0.717),
+  c(0.064, 0.781, 0.427),
+  c(0.890, 0.785, 0.495),
+  "oops"
+)
+```
+
+:::TODO
+#### possibly {-}
+
+```{r}
+map_dbl(x, possibly(sum, NA))
+```
+
+#### quietly {-}
+
+```{r, eval=FALSE}
+map_dbl(x[[4]], quietly(sum))
+```
+
+#### auto_browser {-}
+
+```{r, eval=FALSE}
+map_dbl(x, auto_browse(sum))
+```
+:::
+
+## 11.2.3.1 Exercises {-}
+
+:::question
+> Vectorize() provides a convenient and concise notation to iterate over multiple arguments, but has some major drawbacks that mean you generally shouldn’t use it.
+
+What are these drawbacks the solution manual is referring to?
+:::
+
+
+#### [Dean's Way](https://deanattali.com/blog/mutate-non-vectorized/)
+
+```{r}
+library(tidyverse)
+patient_name <- function(path) {
+  path_list <- str_split(path, "/") %>% unlist()
+  paste(path_list[length(path_list) - 1], path_list[length(path_list)], sep = "_")
+}
+
+# Vectorize it with Vectorize
+patient_name_v <- Vectorize(patient_name)
+patient_name_v(path = c("some/path/abc/001.txt", "another/directory/xyz/002.txt"))
+```
+
+#### [Jim's Way](https://www.jimhester.com/post/2018-04-12-vectorize/)
+
+```{r}
+patient_name_best <- function(path) {
+  paste0(basename(dirname(path)), "_", basename(path))
+}
+```
+
+
+1. `SIMPLIFY` logical or character string; attempt to reduce the result to a vector, matrix or higher dimensional array; see the simplify argument of sapply. **This means the type of the function output depends on the input.**
+
+```{r}
+patient_name_v("some/path/abc/001.txt")
+patient_name_v(character())
+patient_name_v(NULL)
+```
+
+2. Vectorize does not generate functions with easily inspect-able code
+3. Vectorize functions use `do.call()`, which can have unexpected performance consequences
+4. Vectorize does not actually make your code execute faster
+

@@ -338,8 +338,32 @@ We don't need to use `rm` because the execution environment of the factory remai
 Base R contains two function factories, `approxfun()` and `ecdf()`. Read their documentation and experiment to figure out what the functions do and what they return.
 :::
 
-:::TODO
-:::
+#### approxfun {-}
+
+`approxfun` creates a function (i.e. mathematical formula) that can be used to find the linear interpolation for any given point, based on the data that was passed into the factory-function at the time it was passed into the function 
+
+```{r}
+dat <- data.frame(x=1:10, y=(1:10)^2)
+dat
+fn <- approxfun(dat$x,dat$y)
+fn(4.5)
+```
+
+```{r}
+x <- 1:10
+y <- rnorm(10)
+plot(x, y, main = "approx(.) and approxfun(.)")
+points(approx(x, y), col = 2, pch = "*")
+points(approx(x, y, method = "constant"), col = 4, pch = "*")
+```
+
+#### ECDF {-}
+
+```{r}
+x <- rnorm(3) # 3 random numbers
+Fn <- ecdf(x) # create distribution function for each x
+Fn(x) # apply the distribution function to each number
+```
 
 ## 10.2.6.3 Exercise {-}
 
