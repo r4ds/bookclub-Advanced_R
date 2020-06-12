@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-06-11" />
+<meta name="date" content="2020-06-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -265,6 +265,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11" data-path="function-operators.html"><a href="function-operators.html"><i class="fa fa-check"></i><b>11</b> Function operators</a><ul>
 <li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#introduction-1"><i class="fa fa-check"></i>11.1 Introduction</a></li>
 <li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#purrrsafely"><i class="fa fa-check"></i>11.2.1 purrr::safely</a></li>
+<li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#memoise"><i class="fa fa-check"></i>11.2.2 memoise</a></li>
 <li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#exercises-9"><i class="fa fa-check"></i>11.2.3.1 Exercises</a></li>
 </ul></li>
 <li class="divider"></li>
@@ -767,29 +768,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb417-41" data-line-number="41">}</a>
 <a class="sourceLine" id="cb417-42" data-line-number="42"><span class="kw">analyze_text</span>(<span class="kw">list</span>(<span class="st">&quot;CORRECT&quot;</span>, <span class="st">&quot;NOT&quot;</span>, <span class="st">&quot;CORRECT&quot;</span>))</a></code></pre></div>
 <pre><code>## [1] &quot;parent in mid: &quot;
-## &lt;environment: 0x7ff19f956af8&gt;
+## &lt;environment: 0x7fc009fa26e8&gt;
 ## [1] &quot;current in mid: &quot;
-## &lt;environment: 0x7ff19f956350&gt;
+## &lt;environment: 0x7fc009fa1f40&gt;
 ## [1] &quot;parent in low: &quot;
 ## &lt;environment: R_GlobalEnv&gt;
 ## [1] &quot;current in low: &quot;
 ## &lt;environment: R_GlobalEnv&gt;
 ## [1] &quot;parent in mid: &quot;
-## &lt;environment: 0x7ff19f9691f8&gt;
+## &lt;environment: 0x7fc009fb0ed8&gt;
 ## [1] &quot;current in mid: &quot;
-## &lt;environment: 0x7ff19faedaf0&gt;
+## &lt;environment: 0x7fc00b262cf0&gt;
 ## [1] &quot;parent in low: &quot;
 ## &lt;environment: R_GlobalEnv&gt;
 ## [1] &quot;current in low: &quot;
 ## &lt;environment: R_GlobalEnv&gt;
 ## [1] &quot;parent in mid skip: &quot;
-## &lt;environment: 0x7ff19faedaf0&gt;
+## &lt;environment: 0x7fc00b262cf0&gt;
 ## [1] &quot;current in mid skip: &quot;
-## &lt;environment: 0x7ff19f6552a0&gt;
+## &lt;environment: 0x7fc00a730890&gt;
 ## [1] &quot;parent in mid: &quot;
-## &lt;environment: 0x7ff19f65b690&gt;
+## &lt;environment: 0x7fc00a736c80&gt;
 ## [1] &quot;current in mid: &quot;
-## &lt;environment: 0x7ff19f65af20&gt;
+## &lt;environment: 0x7fc00a736510&gt;
 ## [1] &quot;parent in low: &quot;
 ## &lt;environment: R_GlobalEnv&gt;
 ## [1] &quot;current in low: &quot;
@@ -801,7 +802,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## [[2]]
 ## [[2]][[1]]
-## &lt;environment: 0x7ff19f6552a0&gt;
+## &lt;environment: 0x7fc00a730890&gt;
 ## 
 ## 
 ## [[3]]

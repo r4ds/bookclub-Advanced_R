@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-06-11" />
+<meta name="date" content="2020-06-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -265,6 +265,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11" data-path="function-operators.html"><a href="function-operators.html"><i class="fa fa-check"></i><b>11</b> Function operators</a><ul>
 <li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#introduction-1"><i class="fa fa-check"></i>11.1 Introduction</a></li>
 <li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#purrrsafely"><i class="fa fa-check"></i>11.2.1 purrr::safely</a></li>
+<li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#memoise"><i class="fa fa-check"></i>11.2.2 memoise</a></li>
 <li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#exercises-9"><i class="fa fa-check"></i>11.2.3.1 Exercises</a></li>
 </ul></li>
 <li class="divider"></li>
@@ -301,7 +302,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#qxsfgrqhxn .gt_table {
+#wiyehyhvxu .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -324,7 +325,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-#qxsfgrqhxn .gt_heading {
+#wiyehyhvxu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -336,7 +337,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#qxsfgrqhxn .gt_title {
+#wiyehyhvxu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -346,7 +347,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-#qxsfgrqhxn .gt_subtitle {
+#wiyehyhvxu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -356,13 +357,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-#qxsfgrqhxn .gt_bottom_border {
+#wiyehyhvxu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qxsfgrqhxn .gt_col_headings {
+#wiyehyhvxu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -377,7 +378,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#qxsfgrqhxn .gt_col_heading {
+#wiyehyhvxu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -397,7 +398,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#qxsfgrqhxn .gt_column_spanner_outer {
+#wiyehyhvxu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -409,15 +410,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-#qxsfgrqhxn .gt_column_spanner_outer:first-child {
+#wiyehyhvxu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qxsfgrqhxn .gt_column_spanner_outer:last-child {
+#wiyehyhvxu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qxsfgrqhxn .gt_column_spanner {
+#wiyehyhvxu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -429,7 +430,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-#qxsfgrqhxn .gt_group_heading {
+#wiyehyhvxu .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -451,7 +452,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#qxsfgrqhxn .gt_empty_group_heading {
+#wiyehyhvxu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -466,19 +467,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#qxsfgrqhxn .gt_striped {
+#wiyehyhvxu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qxsfgrqhxn .gt_from_md > :first-child {
+#wiyehyhvxu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qxsfgrqhxn .gt_from_md > :last-child {
+#wiyehyhvxu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qxsfgrqhxn .gt_row {
+#wiyehyhvxu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -497,7 +498,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#qxsfgrqhxn .gt_stub {
+#wiyehyhvxu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -509,7 +510,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-left: 12px;
 }
 
-#qxsfgrqhxn .gt_summary_row {
+#wiyehyhvxu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -519,7 +520,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#qxsfgrqhxn .gt_first_summary_row {
+#wiyehyhvxu .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -529,7 +530,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-#qxsfgrqhxn .gt_grand_summary_row {
+#wiyehyhvxu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -539,7 +540,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#qxsfgrqhxn .gt_first_grand_summary_row {
+#wiyehyhvxu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -549,7 +550,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-#qxsfgrqhxn .gt_table_body {
+#wiyehyhvxu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -558,7 +559,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#qxsfgrqhxn .gt_footnotes {
+#wiyehyhvxu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -572,13 +573,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#qxsfgrqhxn .gt_footnote {
+#wiyehyhvxu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#qxsfgrqhxn .gt_sourcenotes {
+#wiyehyhvxu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -592,46 +593,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#qxsfgrqhxn .gt_sourcenote {
+#wiyehyhvxu .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#qxsfgrqhxn .gt_left {
+#wiyehyhvxu .gt_left {
   text-align: left;
 }
 
-#qxsfgrqhxn .gt_center {
+#wiyehyhvxu .gt_center {
   text-align: center;
 }
 
-#qxsfgrqhxn .gt_right {
+#wiyehyhvxu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qxsfgrqhxn .gt_font_normal {
+#wiyehyhvxu .gt_font_normal {
   font-weight: normal;
 }
 
-#qxsfgrqhxn .gt_font_bold {
+#wiyehyhvxu .gt_font_bold {
   font-weight: bold;
 }
 
-#qxsfgrqhxn .gt_font_italic {
+#wiyehyhvxu .gt_font_italic {
   font-style: italic;
 }
 
-#qxsfgrqhxn .gt_super {
+#wiyehyhvxu .gt_super {
   font-size: 65%;
 }
 
-#qxsfgrqhxn .gt_footnote_marks {
+#wiyehyhvxu .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="qxsfgrqhxn" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="wiyehyhvxu" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
@@ -693,28 +694,98 @@ examples: <code>safely</code>, <code>silently</code>, <code>rate-limity</code> e
 <div id="purrrsafely" class="section level2 unnumbered">
 <h2>11.2.1 purrr::safely</h2>
 <div class="question">
-<p>It seems like safely is a condition wrapper - are conditions a kind of function operator?</p>
+<p>It seems like safely is a condition wrapper - are all conditions a kind of function operator?</p>
 </div>
-<div class="TODO">
+<p><code>safely</code>/<code>possibly</code>/<code>quietly</code> are function operators that are condition-wrappers, but <code>tryCatch</code>/<code>withCallingHandlers</code> are not function operators (they catch the outputs and do X thing but don’t actually return a function)</p>
+<div class="question">
+<p>How would we apply <code>safely</code> to find which dataframe in a list of dataframes is causing an error?</p>
+</div>
+<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb500-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb500-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb500-3" data-line-number="3">random_starwars &lt;-<span class="st"> </span><span class="cf">function</span>() { </a>
+<a class="sourceLine" id="cb500-4" data-line-number="4">  starwars <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb500-5" data-line-number="5"><span class="st">    </span><span class="kw">sample_n</span>(<span class="dv">50</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb500-6" data-line-number="6"><span class="st">    </span><span class="kw">select</span>(name, height,mass)</a>
+<a class="sourceLine" id="cb500-7" data-line-number="7">}</a>
+<a class="sourceLine" id="cb500-8" data-line-number="8">    </a>
+<a class="sourceLine" id="cb500-9" data-line-number="9">broken_starwars &lt;-<span class="st"> </span><span class="cf">function</span>(){ </a>
+<a class="sourceLine" id="cb500-10" data-line-number="10">  starwars <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb500-11" data-line-number="11"><span class="st">  </span><span class="kw">sample_n</span>(<span class="dv">50</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb500-12" data-line-number="12"><span class="st">  </span><span class="kw">select</span>(name, height,mass) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb500-13" data-line-number="13"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">height =</span> <span class="kw">as.character</span>(height))</a>
+<a class="sourceLine" id="cb500-14" data-line-number="14">}</a>
+<a class="sourceLine" id="cb500-15" data-line-number="15">  </a>
+<a class="sourceLine" id="cb500-16" data-line-number="16">list_data &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">a =</span> <span class="kw">random_starwars</span>(),</a>
+<a class="sourceLine" id="cb500-17" data-line-number="17">                  <span class="dt">b =</span> <span class="kw">random_starwars</span>(),</a>
+<a class="sourceLine" id="cb500-18" data-line-number="18">                  <span class="dt">c =</span> <span class="kw">broken_starwars</span>(),</a>
+<a class="sourceLine" id="cb500-19" data-line-number="19">                  <span class="dt">d =</span> <span class="kw">random_starwars</span>())</a>
+<a class="sourceLine" id="cb500-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb500-21" data-line-number="21">map_dfr_safely &lt;-<span class="st"> </span><span class="cf">function</span>(.x, .f, ... ) {</a>
+<a class="sourceLine" id="cb500-22" data-line-number="22">  results &lt;-<span class="st"> </span><span class="kw">map</span>(.x, <span class="kw">safely</span>(.f), ...)</a>
+<a class="sourceLine" id="cb500-23" data-line-number="23">  <span class="kw">list</span>(<span class="dt">result =</span> <span class="kw">bind_rows</span>(<span class="op">!!!</span><span class="kw">map</span>(results, <span class="st">&quot;result&quot;</span>)), <span class="dt">error =</span> <span class="kw">map</span>(results, <span class="st">&quot;error&quot;</span>))</a>
+<a class="sourceLine" id="cb500-24" data-line-number="24">}    </a>
+<a class="sourceLine" id="cb500-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb500-26" data-line-number="26"><span class="kw">map_dfr_safely</span>(list_data, semi_join, filter_starwars, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;height&quot;</span>))</a></code></pre></div>
+<pre><code>## Warning in tbl_vars_dispatch(x): restarting interrupted promise evaluation
 
+## Warning in tbl_vars_dispatch(x): restarting interrupted promise evaluation
+
+## Warning in tbl_vars_dispatch(x): restarting interrupted promise evaluation</code></pre>
+<pre><code>## $result
+## # A tibble: 0 x 0
+## 
+## $error
+## $error$a
+## &lt;simpleError in tbl_vars_dispatch(x): object &#39;filter_starwars&#39; not found&gt;
+## 
+## $error$b
+## &lt;simpleError in tbl_vars_dispatch(x): object &#39;filter_starwars&#39; not found&gt;
+## 
+## $error$c
+## &lt;simpleError in tbl_vars_dispatch(x): object &#39;filter_starwars&#39; not found&gt;
+## 
+## $error$d
+## &lt;simpleError in tbl_vars_dispatch(x): object &#39;filter_starwars&#39; not found&gt;</code></pre>
 </div>
+<div id="memoise" class="section level2 unnumbered">
+<h2>11.2.2 memoise</h2>
+<p>How do you check how much memory is allocated to memoise’s caching?</p>
+<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb503-1" data-line-number="1">random_starwars &lt;-<span class="st"> </span><span class="cf">function</span>(...){ </a>
+<a class="sourceLine" id="cb503-2" data-line-number="2">  starwars <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb503-3" data-line-number="3"><span class="st">    </span><span class="kw">sample_n</span>(<span class="dv">3</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb503-4" data-line-number="4"><span class="st">    </span><span class="kw">select</span>(name)}</a>
+<a class="sourceLine" id="cb503-5" data-line-number="5">memoised_starwars &lt;-<span class="st"> </span><span class="kw">memoise</span>(random_starwars)</a>
+<a class="sourceLine" id="cb503-6" data-line-number="6">a &lt;-<span class="st"> </span><span class="kw">random_starwars</span>()</a>
+<a class="sourceLine" id="cb503-7" data-line-number="7">b &lt;-<span class="st"> </span><span class="kw">memoised_starwars</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb503-8" data-line-number="8">c &lt;-<span class="st"> </span><span class="kw">memoised_starwars</span>(<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb503-9" data-line-number="9">d &lt;-<span class="st"> </span><span class="kw">memoised_starwars</span>(<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb503-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb503-11" data-line-number="11">lobstr<span class="op">::</span><span class="kw">obj_size</span>(<span class="kw">get</span>(<span class="st">&quot;_cache&quot;</span>,<span class="kw">environment</span>(memoised_starwars)))</a></code></pre></div>
+<pre><code>## 16,232 B</code></pre>
 <div class="question">
 <p>Can we come up with simple example for these function operators?</p>
 </div>
-<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb500-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb500-2" data-line-number="2">  <span class="kw">c</span>(<span class="fl">0.512</span>, <span class="fl">0.165</span>, <span class="fl">0.717</span>),</a>
-<a class="sourceLine" id="cb500-3" data-line-number="3">  <span class="kw">c</span>(<span class="fl">0.064</span>, <span class="fl">0.781</span>, <span class="fl">0.427</span>),</a>
-<a class="sourceLine" id="cb500-4" data-line-number="4">  <span class="kw">c</span>(<span class="fl">0.890</span>, <span class="fl">0.785</span>, <span class="fl">0.495</span>),</a>
-<a class="sourceLine" id="cb500-5" data-line-number="5">  <span class="st">&quot;oops&quot;</span></a>
-<a class="sourceLine" id="cb500-6" data-line-number="6">)</a></code></pre></div>
-<div class="TODO">
-<h4 id="possibly" class="unnumbered">possibly</h4>
-<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb501-1" data-line-number="1"><span class="kw">map_dbl</span>(x, <span class="kw">possibly</span>(sum, <span class="ot">NA</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb505-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb505-2" data-line-number="2">  <span class="kw">c</span>(<span class="fl">0.512</span>, <span class="fl">0.165</span>, <span class="fl">0.717</span>),</a>
+<a class="sourceLine" id="cb505-3" data-line-number="3">  <span class="kw">c</span>(<span class="fl">0.064</span>, <span class="fl">0.781</span>, <span class="fl">0.427</span>),</a>
+<a class="sourceLine" id="cb505-4" data-line-number="4">  <span class="kw">c</span>(<span class="fl">0.890</span>, <span class="fl">0.785</span>, <span class="fl">0.495</span>),</a>
+<a class="sourceLine" id="cb505-5" data-line-number="5">  <span class="st">&quot;oops&quot;</span></a>
+<a class="sourceLine" id="cb505-6" data-line-number="6">)</a>
+<a class="sourceLine" id="cb505-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb505-8" data-line-number="8">f &lt;-<span class="st"> </span><span class="cf">function</span>(...) {<span class="kw">sum</span>(...)}</a></code></pre></div>
+<div id="possibly" class="section level4 unnumbered">
+<h4>possibly</h4>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb506-1" data-line-number="1"><span class="kw">map_dbl</span>(x, <span class="kw">possibly</span>(f, <span class="ot">NA</span>))</a></code></pre></div>
 <pre><code>## [1] 1.394 1.272 2.170    NA</code></pre>
-<h4 id="quietly" class="unnumbered">quietly</h4>
-<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb503-1" data-line-number="1"><span class="kw">map_dbl</span>(x[[<span class="dv">4</span>]], <span class="kw">quietly</span>(sum))</a></code></pre></div>
-<h4 id="auto_browser" class="unnumbered">auto_browser</h4>
-<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb504-1" data-line-number="1"><span class="kw">map_dbl</span>(x, <span class="kw">auto_browse</span>(sum))</a></code></pre></div>
+</div>
+<div id="quietly" class="section level4 unnumbered">
+<h4>quietly</h4>
+<p>Quetly doesn’t work on errors, only warnings:</p>
+<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb508-1" data-line-number="1"><span class="kw">map</span>(x, <span class="kw">quietly</span>(<span class="cf">function</span>(x) <span class="kw">tryCatch</span>(<span class="kw">f</span>(x), <span class="dt">error =</span> <span class="cf">function</span>(e) <span class="kw">warning</span>(e)))</a></code></pre></div>
+</div>
+<div id="auto_browser" class="section level4 unnumbered">
+<h4>auto_browser</h4>
+<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb509-1" data-line-number="1"><span class="kw">map_dbl</span>(x, <span class="kw">auto_browse</span>(f))</a></code></pre></div>
 </div>
 </div>
 <div id="exercises-9" class="section level2 unnumbered">
@@ -727,32 +798,32 @@ examples: <code>safely</code>, <code>silently</code>, <code>rate-limity</code> e
 </div>
 <div id="deans-way" class="section level4">
 <h4><span class="header-section-number">11.0.0.1</span> <a href="https://deanattali.com/blog/mutate-non-vectorized/">Dean’s Way</a></h4>
-<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb505-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb505-2" data-line-number="2">patient_name &lt;-<span class="st"> </span><span class="cf">function</span>(path) {</a>
-<a class="sourceLine" id="cb505-3" data-line-number="3">  path_list &lt;-<span class="st"> </span><span class="kw">str_split</span>(path, <span class="st">&quot;/&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unlist</span>()</a>
-<a class="sourceLine" id="cb505-4" data-line-number="4">  <span class="kw">paste</span>(path_list[<span class="kw">length</span>(path_list) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>], path_list[<span class="kw">length</span>(path_list)], <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)</a>
-<a class="sourceLine" id="cb505-5" data-line-number="5">}</a>
-<a class="sourceLine" id="cb505-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb505-7" data-line-number="7"><span class="co"># Vectorize it with Vectorize</span></a>
-<a class="sourceLine" id="cb505-8" data-line-number="8">patient_name_v &lt;-<span class="st"> </span><span class="kw">Vectorize</span>(patient_name)</a>
-<a class="sourceLine" id="cb505-9" data-line-number="9"><span class="kw">patient_name_v</span>(<span class="dt">path =</span> <span class="kw">c</span>(<span class="st">&quot;some/path/abc/001.txt&quot;</span>, <span class="st">&quot;another/directory/xyz/002.txt&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb510-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb510-2" data-line-number="2">patient_name &lt;-<span class="st"> </span><span class="cf">function</span>(path) {</a>
+<a class="sourceLine" id="cb510-3" data-line-number="3">  path_list &lt;-<span class="st"> </span><span class="kw">str_split</span>(path, <span class="st">&quot;/&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unlist</span>()</a>
+<a class="sourceLine" id="cb510-4" data-line-number="4">  <span class="kw">paste</span>(path_list[<span class="kw">length</span>(path_list) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>], path_list[<span class="kw">length</span>(path_list)], <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)</a>
+<a class="sourceLine" id="cb510-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb510-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb510-7" data-line-number="7"><span class="co"># Vectorize it with Vectorize</span></a>
+<a class="sourceLine" id="cb510-8" data-line-number="8">patient_name_v &lt;-<span class="st"> </span><span class="kw">Vectorize</span>(patient_name)</a>
+<a class="sourceLine" id="cb510-9" data-line-number="9"><span class="kw">patient_name_v</span>(<span class="dt">path =</span> <span class="kw">c</span>(<span class="st">&quot;some/path/abc/001.txt&quot;</span>, <span class="st">&quot;another/directory/xyz/002.txt&quot;</span>))</a></code></pre></div>
 <pre><code>##         some/path/abc/001.txt another/directory/xyz/002.txt 
 ##                 &quot;abc_001.txt&quot;                 &quot;xyz_002.txt&quot;</code></pre>
 </div>
 <div id="jims-way" class="section level4">
 <h4><span class="header-section-number">11.0.0.2</span> <a href="https://www.jimhester.com/post/2018-04-12-vectorize/">Jim’s Way</a></h4>
-<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb507-1" data-line-number="1">patient_name_best &lt;-<span class="st"> </span><span class="cf">function</span>(path) {</a>
-<a class="sourceLine" id="cb507-2" data-line-number="2">  <span class="kw">paste0</span>(<span class="kw">basename</span>(<span class="kw">dirname</span>(path)), <span class="st">&quot;_&quot;</span>, <span class="kw">basename</span>(path))</a>
-<a class="sourceLine" id="cb507-3" data-line-number="3">}</a></code></pre></div>
+<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb512-1" data-line-number="1">patient_name_best &lt;-<span class="st"> </span><span class="cf">function</span>(path) {</a>
+<a class="sourceLine" id="cb512-2" data-line-number="2">  <span class="kw">paste0</span>(<span class="kw">basename</span>(<span class="kw">dirname</span>(path)), <span class="st">&quot;_&quot;</span>, <span class="kw">basename</span>(path))</a>
+<a class="sourceLine" id="cb512-3" data-line-number="3">}</a></code></pre></div>
 <ol style="list-style-type: decimal">
 <li><code>SIMPLIFY</code> logical or character string; attempt to reduce the result to a vector, matrix or higher dimensional array; see the simplify argument of sapply. <strong>This means the type of the function output depends on the input.</strong></li>
 </ol>
-<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb508-1" data-line-number="1"><span class="kw">patient_name_v</span>(<span class="st">&quot;some/path/abc/001.txt&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb513-1" data-line-number="1"><span class="kw">patient_name_v</span>(<span class="st">&quot;some/path/abc/001.txt&quot;</span>)</a></code></pre></div>
 <pre><code>## some/path/abc/001.txt 
 ##         &quot;abc_001.txt&quot;</code></pre>
-<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb510-1" data-line-number="1"><span class="kw">patient_name_v</span>(<span class="kw">character</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb515-1" data-line-number="1"><span class="kw">patient_name_v</span>(<span class="kw">character</span>())</a></code></pre></div>
 <pre><code>## named list()</code></pre>
-<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb512-1" data-line-number="1"><span class="kw">patient_name_v</span>(<span class="ot">NULL</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb517-1" data-line-number="1"><span class="kw">patient_name_v</span>(<span class="ot">NULL</span>)</a></code></pre></div>
 <pre><code>## list()</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Vectorize does not generate functions with easily inspect-able code</li>

@@ -123,7 +123,7 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-06-11}
+\date{2020-06-12}
 
 \begin{document}
 \maketitle
@@ -367,7 +367,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff1a16b0e48"
+## [1] "0x7fc00ae4dc90"
 \end{verbatim}
 
 \begin{Shaded}
@@ -377,7 +377,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff1a16b0e48"
+## [1] "0x7fc00ae4dc90"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -389,7 +389,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff19f37ceb0"
+## [1] "0x7fc00b9e90e0"
 \end{verbatim}
 
 \begin{Shaded}
@@ -399,8 +399,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7ff19f623df8] <list> 
-## └─[2:0x7ff1a16b0e48] <dbl>
+## █ [1:0x7fc00b9be350] <list> 
+## └─[2:0x7fc00ae4dc90] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -410,7 +410,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff19dfd0260"
+## [1] "0x7fc00d83e9a8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -447,7 +447,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7ff1a023c978>"
+## [1] "<0x7fc009d1db68>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -457,7 +457,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7ff1a023c978>
+## <0x7fc009d1db68>
 \end{verbatim}
 
 \begin{Shaded}
@@ -467,7 +467,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff1a023c978"
+## [1] "0x7fc009d1db68"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -516,7 +516,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff19f0ddc88"
+## [1] "0x7fc008b97948"
 \end{verbatim}
 
 \begin{Shaded}
@@ -526,7 +526,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7ff19f0ddc88>"
+## [1] "<0x7fc008b97948>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -536,7 +536,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7ff19f0ddc88 -> 0x7ff19de2a608]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fc008b97948 -> 0x7fc0081713c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -632,7 +632,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff19f2f4348"
+## [1] "0x7fc00d953fb8"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -645,7 +645,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff19b0133c8"
+## [1] "0x7fc00d906158"
 \end{verbatim}
 
 \begin{Shaded}
@@ -668,7 +668,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff19b0133c8"
+## [1] "0x7fc00d906158"
 \end{verbatim}
 
 \begin{Shaded}
@@ -678,7 +678,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff19b0133c8"
+## [1] "0x7fc00d906158"
 \end{verbatim}
 
 \begin{Shaded}
@@ -701,7 +701,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff19b0133c8"
+## [1] "0x7fc00d906158"
 \end{verbatim}
 
 \begin{Shaded}
@@ -711,7 +711,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff19fb8d318"
+## [1] "0x7fc0052f7748"
 \end{verbatim}
 
 \begin{Shaded}
@@ -734,7 +734,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7ff19f8e54f8"
+## [1] "0x7fc00ba7bd28"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1883,7 +1883,7 @@ NULL
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Out of range"
+## [1] "In range"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1893,7 +1893,7 @@ NULL
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Out of range"
+## [1] "In range"
 \end{verbatim}
 
 \texttt{ifelse} explicitly returns its result, whereas \texttt{if} invisibly returns it!
@@ -2535,13 +2535,13 @@ This will work:
 
 \begin{verbatim}
 ## # A tibble: 5 x 1
-##      x1
-##   <dbl>
-## 1 0.487
-## 2 0.265
-## 3 0.860
-## 4 0.420
-## 5 0.364
+##       x1
+##    <dbl>
+## 1 0.197 
+## 2 0.770 
+## 3 0.179 
+## 4 0.0919
+## 5 0.815
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2615,7 +2615,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 295 206 258 214 223 270 234 204 254 287
+##  [1] 259 286 235 242 256 234 262 218 200 205
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3052,7 +3052,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7ff1963a71c8>
+## <bytecode: 0x7fc003b6f1c8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3670,26 +3670,26 @@ Each package becomes a parent to the global environment. We can inspect local en
 
 \begin{verbatim}
 ##  [[1]] $ <env: global>
-##  [[2]] $ <env: package:gt>
-##  [[3]] $ <env: package:openintro>
-##  [[4]] $ <env: package:rlang>
-##  [[5]] $ <env: package:cyclocomp>
-##  [[6]] $ <env: package:lobstr>
-##  [[7]] $ <env: package:kableExtra>
-##  [[8]] $ <env: package:forcats>
-##  [[9]] $ <env: package:stringr>
-## [[10]] $ <env: package:dplyr>
-## [[11]] $ <env: package:purrr>
-## [[12]] $ <env: package:readr>
-## [[13]] $ <env: package:tidyr>
-## [[14]] $ <env: package:tibble>
-## [[15]] $ <env: package:ggplot2>
-## [[16]] $ <env: package:tidyverse>
-## [[17]] $ <env: package:stats>
-## [[18]] $ <env: package:graphics>
-## [[19]] $ <env: package:grDevices>
-## [[20]] $ <env: package:utils>
-## ... and 4 more environments
+##  [[2]] $ <env: package:memoise>
+##  [[3]] $ <env: package:gt>
+##  [[4]] $ <env: package:openintro>
+##  [[5]] $ <env: package:rlang>
+##  [[6]] $ <env: package:cyclocomp>
+##  [[7]] $ <env: package:lobstr>
+##  [[8]] $ <env: package:kableExtra>
+##  [[9]] $ <env: package:forcats>
+## [[10]] $ <env: package:stringr>
+## [[11]] $ <env: package:dplyr>
+## [[12]] $ <env: package:purrr>
+## [[13]] $ <env: package:readr>
+## [[14]] $ <env: package:tidyr>
+## [[15]] $ <env: package:tibble>
+## [[16]] $ <env: package:ggplot2>
+## [[17]] $ <env: package:tidyverse>
+## [[18]] $ <env: package:stats>
+## [[19]] $ <env: package:graphics>
+## [[20]] $ <env: package:grDevices>
+## ... and 5 more environments
 \end{verbatim}
 
 \hypertarget{super-assignment}{%
@@ -3923,7 +3923,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7ff197d3b5b0>
+## <bytecode: 0x7fc006f4d5b0>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4061,7 +4061,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7ff19faaaa88>
+## <bytecode: 0x7fc00a2a4748>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4855,29 +4855,29 @@ Given this little example:
 
 \begin{verbatim}
 ## [1] "parent in mid: "
-## <environment: 0x7ff1a05d1238>
+## <environment: 0x7fc0073ca720>
 ## [1] "current in mid: "
-## <environment: 0x7ff1a05cbad0>
+## <environment: 0x7fc0073cb018>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid: "
-## <environment: 0x7ff1a0563238>
+## <environment: 0x7fc00a1691c0>
 ## [1] "current in mid: "
-## <environment: 0x7ff19dbc62a8>
+## <environment: 0x7fc0067d4d68>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid skip: "
-## <environment: 0x7ff19dbc62a8>
+## <environment: 0x7fc0067d4d68>
 ## [1] "current in mid skip: "
-## <environment: 0x7ff19d80c0b0>
+## <environment: 0x7fc009131fa0>
 ## [1] "parent in mid: "
-## <environment: 0x7ff19b7e3e48>
+## <environment: 0x7fc00911f4b0>
 ## [1] "current in mid: "
-## <environment: 0x7ff19b7e0718>
+## <environment: 0x7fc00911fc20>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
@@ -4892,7 +4892,7 @@ Given this little example:
 ## 
 ## [[2]]
 ## [[2]][[1]]
-## <environment: 0x7ff19d80c0b0>
+## <environment: 0x7fc009131fa0>
 ## 
 ## 
 ## [[3]]
@@ -5033,26 +5033,26 @@ In order to extract p-values the solution manual suggests using \texttt{map\_dbl
 \end{Shaded}
 
 \begin{verbatim}
-##   [1] 9.089874e-02 2.475762e-01 1.608147e-01 5.417927e-03 1.840396e-02
-##   [6] 8.878055e-01 4.776750e-04 4.351104e-02 3.473099e-01 6.114168e-04
-##  [11] 6.182167e-02 1.566656e-05 7.609876e-02 1.722346e-01 8.724290e-02
-##  [16] 5.056553e-02 1.432919e-03 1.320675e-01 1.435325e-01 6.455887e-04
-##  [21] 2.449044e-04 2.188465e-03 7.383409e-02 9.750835e-02 3.111224e-02
-##  [26] 1.613409e-01 1.469276e-01 4.278258e-03 2.180042e-02 6.823625e-03
-##  [31] 3.910387e-01 1.287314e-02 3.121685e-02 1.158531e-01 7.642350e-02
-##  [36] 5.731835e-01 7.311044e-03 5.074664e-04 2.419907e-01 3.028290e-02
-##  [41] 1.473366e-01 1.283797e-02 6.920015e-02 4.168239e-01 2.843440e-02
-##  [46] 7.272309e-02 4.910437e-03 4.358494e-04 3.852207e-02 1.716001e-03
-##  [51] 3.943073e-03 6.356953e-02 2.107384e-03 1.929885e-01 3.489927e-05
-##  [56] 2.228523e-02 4.437464e-03 2.586294e-02 1.421897e-03 2.328140e-04
-##  [61] 2.481723e-02 1.146689e-02 3.862712e-01 4.549605e-02 7.444758e-03
-##  [66] 4.926553e-02 2.153188e-03 9.572862e-03 2.695517e-02 5.482413e-02
-##  [71] 5.370921e-05 1.029403e-01 9.703077e-02 8.464630e-03 1.424477e-01
-##  [76] 1.009649e-01 1.961811e-01 3.583042e-04 1.028526e-02 4.339008e-01
-##  [81] 1.043086e-01 1.000000e+00 5.061621e-02 8.432648e-02 5.452923e-02
-##  [86] 5.986135e-02 3.896131e-01 1.137041e-02 4.353984e-03 8.999736e-03
-##  [91] 2.743377e-02 1.104764e-02 2.487710e-02 6.699127e-01 1.673674e-01
-##  [96] 3.227383e-01 2.692341e-01 6.055868e-06 1.941664e-02 2.011931e-04
+##   [1] 3.215496e-01 2.718831e-01 3.185477e-03 4.183739e-01 9.647526e-03
+##   [6] 1.033030e-02 7.795020e-03 6.635304e-03 2.093336e-01 8.985381e-04
+##  [11] 2.393565e-03 3.849560e-01 4.063539e-02 1.065252e-02 5.777078e-02
+##  [16] 1.497392e-01 1.720923e-03 2.966788e-04 3.354055e-03 2.120347e-01
+##  [21] 9.582675e-02 6.503753e-01 1.267207e-02 3.751783e-01 8.803199e-02
+##  [26] 1.263614e-02 1.789605e-01 1.736650e-02 4.490532e-03 5.097142e-03
+##  [31] 2.033368e-03 2.262372e-04 3.526702e-02 1.457199e-02 2.014148e-01
+##  [36] 2.303706e-02 2.551540e-02 8.794947e-02 1.244362e-02 1.271332e-02
+##  [41] 5.712675e-02 9.152232e-02 9.416983e-02 1.214745e-03 7.180720e-01
+##  [46] 6.112056e-01 4.366551e-02 4.553585e-03 6.756721e-03 1.586225e-03
+##  [51] 2.931986e-02 4.994495e-01 1.206400e-02 5.691156e-03 6.140094e-03
+##  [56] 1.219325e-02 6.244399e-02 4.031055e-02 5.370151e-02 3.517685e-02
+##  [61] 2.508877e-07 9.871801e-02 5.650013e-02 2.938995e-01 1.514048e-02
+##  [66] 1.352531e-02 1.602888e-01 1.650188e-02 1.203392e-02 1.386033e-01
+##  [71] 3.475966e-01 1.513957e-01 1.341344e-03 5.907792e-03 7.294836e-03
+##  [76] 3.153166e-01 2.534273e-02 1.798337e-01 5.937876e-02 1.644991e-04
+##  [81] 1.487468e-03 2.130370e-02 1.446708e-02 3.250899e-01 1.175102e-02
+##  [86] 1.503668e-03 5.484040e-01 3.125771e-02 3.735330e-03 7.696328e-02
+##  [91] 2.210527e-03 3.460945e-01 2.461674e-02 1.010002e-03 2.371366e-03
+##  [96] 1.912166e-02 2.282138e-01 5.434778e-02 4.215838e-02 7.579265e-02
 \end{verbatim}
 
 \hypertarget{exercise-9}{%
@@ -5383,12 +5383,12 @@ Answer from \href{https://community.rstudio.com/t/recursive-purrr-mutate-if/1663
 
 \begin{verbatim}
 ## Unit: microseconds
-##                         expr      min       lq      mean    median        uq
-##         as_integer_rapply(x)    9.404   12.172   31.7466   14.5895   21.2845
-##  as_integer_recursive_map(x) 1009.477 1066.279 1167.8301 1104.3815 1142.5505
-##       max neval
-##  1486.528   100
-##  4634.935   100
+##                         expr      min       lq       mean   median       uq
+##         as_integer_rapply(x)   10.808   14.800   45.26056   22.745   28.440
+##  as_integer_recursive_map(x) 1132.281 1312.664 3232.67190 1567.164 2183.907
+##        max neval
+##   2020.252   100
+##  85314.253   100
 \end{verbatim}
 
 \begin{Shaded}
@@ -6042,7 +6042,94 @@ examples: \texttt{safely}, \texttt{silently}, \texttt{rate-limity} etc
 \section*{11.2.1 purrr::safely}\label{purrrsafely}}
 \addcontentsline{toc}{section}{11.2.1 purrr::safely}
 
-It seems like safely is a condition wrapper - are conditions a kind of function operator?
+It seems like safely is a condition wrapper - are all conditions a kind of function operator?
+
+\texttt{safely}/\texttt{possibly}/\texttt{quietly} are function operators that are condition-wrappers, but \texttt{tryCatch}/\texttt{withCallingHandlers} are not function operators (they catch the outputs and do X thing but don't actually return a function)
+
+How would we apply \texttt{safely} to find which dataframe in a list of dataframes is causing an error?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+
+\NormalTok{random_starwars <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{ }
+\NormalTok{  starwars }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{sample_n}\NormalTok{(}\DecValTok{50}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(name, height,mass)}
+\NormalTok{\}}
+    
+\NormalTok{broken_starwars <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{()\{ }
+\NormalTok{  starwars }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{sample_n}\NormalTok{(}\DecValTok{50}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(name, height,mass) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{height =} \KeywordTok{as.character}\NormalTok{(height))}
+\NormalTok{\}}
+  
+\NormalTok{list_data <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{a =} \KeywordTok{random_starwars}\NormalTok{(),}
+                  \DataTypeTok{b =} \KeywordTok{random_starwars}\NormalTok{(),}
+                  \DataTypeTok{c =} \KeywordTok{broken_starwars}\NormalTok{(),}
+                  \DataTypeTok{d =} \KeywordTok{random_starwars}\NormalTok{())}
+
+\NormalTok{map_dfr_safely <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(.x, .f, ... ) \{}
+\NormalTok{  results <-}\StringTok{ }\KeywordTok{map}\NormalTok{(.x, }\KeywordTok{safely}\NormalTok{(.f), ...)}
+  \KeywordTok{list}\NormalTok{(}\DataTypeTok{result =} \KeywordTok{bind_rows}\NormalTok{(}\OperatorTok{!!!}\KeywordTok{map}\NormalTok{(results, }\StringTok{"result"}\NormalTok{)), }\DataTypeTok{error =} \KeywordTok{map}\NormalTok{(results, }\StringTok{"error"}\NormalTok{))}
+\NormalTok{\}    }
+
+\KeywordTok{map_dfr_safely}\NormalTok{(list_data, semi_join, filter_starwars, }\DataTypeTok{by =} \KeywordTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{, }\StringTok{"height"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in tbl_vars_dispatch(x): restarting interrupted promise evaluation
+
+## Warning in tbl_vars_dispatch(x): restarting interrupted promise evaluation
+
+## Warning in tbl_vars_dispatch(x): restarting interrupted promise evaluation
+\end{verbatim}
+
+\begin{verbatim}
+## $result
+## # A tibble: 0 x 0
+## 
+## $error
+## $error$a
+## <simpleError in tbl_vars_dispatch(x): object 'filter_starwars' not found>
+## 
+## $error$b
+## <simpleError in tbl_vars_dispatch(x): object 'filter_starwars' not found>
+## 
+## $error$c
+## <simpleError in tbl_vars_dispatch(x): object 'filter_starwars' not found>
+## 
+## $error$d
+## <simpleError in tbl_vars_dispatch(x): object 'filter_starwars' not found>
+\end{verbatim}
+
+\hypertarget{memoise}{%
+\section*{11.2.2 memoise}\label{memoise}}
+\addcontentsline{toc}{section}{11.2.2 memoise}
+
+How do you check how much memory is allocated to memoise's caching?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{random_starwars <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(...)\{ }
+\NormalTok{  starwars }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{sample_n}\NormalTok{(}\DecValTok{3}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(name)\}}
+\NormalTok{memoised_starwars <-}\StringTok{ }\KeywordTok{memoise}\NormalTok{(random_starwars)}
+\NormalTok{a <-}\StringTok{ }\KeywordTok{random_starwars}\NormalTok{()}
+\NormalTok{b <-}\StringTok{ }\KeywordTok{memoised_starwars}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{c <-}\StringTok{ }\KeywordTok{memoised_starwars}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\NormalTok{d <-}\StringTok{ }\KeywordTok{memoised_starwars}\NormalTok{(}\DecValTok{3}\NormalTok{)}
+
+\NormalTok{lobstr}\OperatorTok{::}\KeywordTok{obj_size}\NormalTok{(}\KeywordTok{get}\NormalTok{(}\StringTok{"_cache"}\NormalTok{,}\KeywordTok{environment}\NormalTok{(memoised_starwars)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 16,192 B
+\end{verbatim}
 
 Can we come up with simple example for these function operators?
 
@@ -6054,6 +6141,8 @@ Can we come up with simple example for these function operators?
   \KeywordTok{c}\NormalTok{(}\FloatTok{0.890}\NormalTok{, }\FloatTok{0.785}\NormalTok{, }\FloatTok{0.495}\NormalTok{),}
   \StringTok{"oops"}
 \NormalTok{)}
+
+\NormalTok{f <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(...) \{}\KeywordTok{sum}\NormalTok{(...)\}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6063,7 +6152,7 @@ Can we come up with simple example for these function operators?
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{map_dbl}\NormalTok{(x, }\KeywordTok{possibly}\NormalTok{(sum, }\OtherTok{NA}\NormalTok{))}
+\KeywordTok{map_dbl}\NormalTok{(x, }\KeywordTok{possibly}\NormalTok{(f, }\OtherTok{NA}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6075,9 +6164,11 @@ Can we come up with simple example for these function operators?
 \subsubsection*{quietly}\label{quietly}}
 \addcontentsline{toc}{subsubsection}{quietly}
 
+Quetly doesn't work on errors, only warnings:
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{map_dbl}\NormalTok{(x[[}\DecValTok{4}\NormalTok{]], }\KeywordTok{quietly}\NormalTok{(sum))}
+\KeywordTok{map}\NormalTok{(x, }\KeywordTok{quietly}\NormalTok{(}\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{tryCatch}\NormalTok{(}\KeywordTok{f}\NormalTok{(x), }\DataTypeTok{error =} \ControlFlowTok{function}\NormalTok{(e) }\KeywordTok{warning}\NormalTok{(e)))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6087,7 +6178,7 @@ Can we come up with simple example for these function operators?
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{map_dbl}\NormalTok{(x, }\KeywordTok{auto_browse}\NormalTok{(sum))}
+\KeywordTok{map_dbl}\NormalTok{(x, }\KeywordTok{auto_browse}\NormalTok{(f))}
 \end{Highlighting}
 \end{Shaded}
 
