@@ -1,0 +1,493 @@
+---
+title: 'Chapter 11: Function Operators'
+subtitle: 'Tony ElHabr'
+author: 'R4DS Reading Group'
+output:
+  xaringan::moon_reader:
+    nature:
+      highlightLines: true
+    lib_dir: libs
+    css: xaringan-themer.css
+    includes:
+      after_body: insert-logo.html
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  cache = TRUE,
+  cache.lazy = FALSE,
+  include = TRUE,
+  message = FALSE, 
+  warning = FALSE
+)
+```
+
+```{r xaringan-themer, eval=T, echo=F, include=F}
+# xaringan::inf_mr()
+library(xaringanthemer)
+library(tidyverse)
+style_mono_light(
+  base_color = '#3092FF',
+  header_font_google = google_font('Josefin Slab'),
+  text_font_google = google_font('Raleway', '300', '300i')
+)
+```
+
+<style>
+hide {
+  display: none;
+}
+.remark-slide-content h1 {
+  font-size: 45px;
+}
+h1 {
+  font-size: 2em;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+}
+.remark-slide-content {
+  font-size: 16px
+}
+.remark-code {
+  font-size: 14px;
+}
+code.r {
+  font-size: 14px;
+}
+pre {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.red {
+  color: #FF0000;
+}
+
+.footnote {
+  color: #800020;
+  font-size: 9px;
+}
+
+</style>
+
+# What are function operators (FO)?
+
+Chapter 9 is about functionals. Chapter 10 is about function factories. What makes function operators different?
+
+--
+
+```{r eval=T, echo=F, include=T}
+functional_programming_summary <-
+  tibble(
+    Term = c('Functionals', 'Function Factory', 'Function Operator'),
+    `Required Input` = c('Function', '', 'Function'),
+    `Optional Input` = c('Vector', 'Vector, Function', 'Vector'),
+    Output = c('Vector', 'Function', 'Function')
+  ) %>% 
+  gt::gt() %>% 
+  gt::tab_options(
+    # column_labels.vlines.width = px(3),
+    # column_labels.border.bottom.width = 
+    column_labels.font.weight = 'bold'
+  )
+functional_programming_summary
+```
+
+```{r eval=F, echo=F, include=F}
+gt::gtsave(functional_programming_summary, filename = here::here('Presentations', 'Week1R1', 'functional_programming_summary.png'))
+```
+
+--
+
+FOs are probably best studied by thinking about how they operate on functions.
+
++ __Behavioral FO__: Changes the behavior of a function, e.g. logging, running a function only when necessary
+
+  + `memoise::memoise()`
+
++ __Output FO__: Manipulates the output of a function
+
+  + `purrr::possibly()`, `purrr::safely()`, `purrr::quietly()`
+
++ __Input FO__: Maniuplates the input of a function
+
+  + `purrr::partial()`
+
+--
+
+`purrr::safely()` docs: ... "They are all adverbs because they modify the action of a verb (a function)."
+
+---
+
+# Behavior FO Example #1
+
+Now with an additional input, vector `n`
+
+```{r }
+slowly <- function(f, n){
+  force(f)
+  force(n)
+  function(...){
+    stopifnot(is.numeric(n))
+    cat(
+      glue::glue('Sleeping for {n} seconds.'), 
+      sep = '\n'
+    )
+    Sys.sleep(n)
+    f(...)
+  }
+}
+
+purrr::walk(
+  c('hello', 'world'),
+  slowly(cat, 0.1), #<<
+  sep = '\n' # Passed to `f()` via `...`
+)
+```
+
+.footnote[
+https://gist.github.com/ColinFay/d32cf4c9c5fb8d849f12a4e98d6c0549
+]
+
+
+---
+
+# Behavioral FO Example #2
+
+```{r }
+twice <- function(f){
+  force(f)
+  function(...){
+    f(...)
+    f(...)
+  }
+}
+
+purrr::walk(
+  c('hello', 'world'), 
+  twice(cat), #<<
+  sep = '\n' # Passed to `f()` via `...`
+)
+```
+
+.footnote[
+Inspiration: https://realpython.com/primer-on-python-decorators/
+]
+
+---
+
+# Behavioral FO Example #2
+
+With `python` `r fontawesome::fa('python')`
+
+```{r setup-python, include=F}
+library(reticulate)
+config <- reticulate::py_config()
+reticulate::use_python(config$python)
+```
+
+```{python }
+def do_twice(f):
+    def wrapper(*args, **kwargs):
+        f(*args, **kwargs)
+        f(*args, **kwargs)
+    return wrapper
+    
+@do_twice
+def say(x):
+    print(x)
+
+```
+
+```{python }
+list(map(say, ['hello', 'world']))
+```
+
+```{r }
+```
+
+---
+
+# Behavioral FO Example #3
+
+```{r }
+download_beers <- function(name, verbose = TRUE) {
+  base_url <- 'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/'
+  url <- glue::glue('{base_url}{name}.csv')
+  if(verbose) {
+    cat(glue::glue('Downloading {name}.csv'), sep = '\n')
+  }
+  readr::read_csv(url)
+}
+```
+
+```{r eval=F, echo=F, include=F}
+# Only really need this while developing this presentation.
+memoise::forget(download_beers_quickly)
+```
+
+Using `memoise::memoise()` for caching
+
+```{r }
+download_beers_quickly <- memoise::memoise(download_beers)
+
+bench::mark(
+  download_beers('brewer_size', verbose = FALSE),
+  download_beers_quickly('brewer_size', verbose = FALSE)
+) %>% 
+  dplyr::select(expression, min, median)
+```
+
+<hide>
+This is useful for scraping... and also a tutorial, where there are repeated actions across code chunks :P.
+Should memoisization be used when scraping? It depends. If the data really won't ever change, then it should be fine.
+</hide>
+
+---
+
+# Behavioral FO Example #4
+
+Testing the speed of `memoise::memoise()`
+
+```{r }
+# Forgive the contrived function.
+slow_function <- function(x) {
+  Sys.sleep(0.2)
+  x * runif(1)
+}
+fast_function <- memoise::memoise(slow_function)
+```
+
+<br />
+
+```{r eval=F, echo=F, include=F}
+# memoise::forget(fast_function)
+```
+
+```{r }
+system.time(slow_function(1))
+system.time(slow_function(1)) #<<
+```
+
+```{r }
+system.time(fast_function(11))
+system.time(fast_function(11)) #<<
+```
+
+---
+
+# Behavioral FO Example #4
+
+Even if you've changed the inputs since the most recent call, it will still be fast.
+
+```{r }
+system.time(fast_function(22))
+system.time(fast_function(33))
+system.time(fast_function(22)) #<<
+```
+--
+
+In fact, it remembers everything from the same session (assuming you haven't used `memoise::forget()`).
+
+```{r }
+system.time(fast_function(11))
+system.time(fast_function(22))
+system.time(fast_function(33))
+```
+
+---
+
+# Input FO Example #1
+
+Setting `na.rm = TRUE`
+
+```{r }
+stat_robust <- function(f, ...) {
+  function(...) {
+    f(..., na.rm = TRUE)
+  }
+}
+mean_robust <- stat_robust(mean)
+min_robust <- stat_robust(min)
+quantile_robust <- stat_robust(quantile)
+```
+
+<br />
+
+--
+
+.pull-left[
+```{r }
+x1 <- 1L:10L
+mean_robust(x1)
+min_robust(x1)
+quantile_robust(x1, 0.25)
+```
+]
+
+.pull-right[
+```{r }
+x2 <- x1; x2[1] <- NA
+mean_robust(x2)
+min_robust(x2)
+quantile_robust(x2, 0.25)
+```
+]
+
+---
+
+# Input FO Example #1
+
+Using `purrr::partial()` to set `na.rm = TRUE`
+
+```{r }
+mean_partial <- partial(mean, na.rm = TRUE)
+min_partial <- partial(min, na.rm = TRUE)
+quantile_partial <- partial(quantile, na.rm = TRUE, ... = )
+```
+
+--
+
+Without `purrr::partial()`
+
+```{r }
+mean_wrapper <- function(...) {
+  mean(..., na.rm = TRUE)
+}
+```
+
+---
+
+# Input FO Example #2
+
+Using the `brewer_size` data set
+
+```{r eval=T, echo=F, include=F}
+brewer_size <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/brewer_size.csv')
+```
+
+```{r }
+brewer_size %>% 
+  summarize_at(
+    vars(total_barrels, total_shipped),
+    list(mean = mean, mean_robust = mean_robust) #<<
+  ) %>% 
+  mutate_all(
+    ~scales::number(., scale = 1e-3, big.mark = ',', suffix = ' k')
+  ) %>% 
+  glimpse()
+```
+
+---
+
+# Output FO Example #1
+
+Using `purrr::safely()`
+
+
+```{r }
+download_beers_safely <- purrr::safely(download_beers)
+```
+
+```{r }
+brewing_material <- download_beers_safely('brewing_material') # Oops!
+brewing_material
+```
+
+<br />
+
+```{r }
+brewing_materials <- download_beers_safely('brewing_materials') # Good
+brewing_materials$result %>% head(5)
+```
+
+<hide>
+In a real-world example, it is more likely that the error is with something unexpected on the web-page, not in the user's code.
+</hide>
+
+---
+
+# Output FO Example #2
+
+Using `purrr::possibly()`
+
+
+```{r }
+download_beers_possibly <- purrr::possibly(download_beers, otherwise = tibble())
+```
+
+```{r }
+brewing_material <- download_beers_possibly('brewing_material') # Oops!
+brewing_material
+```
+
+<hide>
+`purrr::safely()` also has an `otherwise` argument, but I think it makes more sense to use in conjuction with `possibly()`.
+</hide>
+
+---
+
+# Output FO Example #3
+
+Using `purrr::quietly()`
+
+
+```{r }
+download_beers_quietly <- purrr::quietly(download_beers)
+```
+
+```{r }
+brewing_materials <- download_beers_quietly('brewing_materials')
+names(brewing_materials)
+brewing_materials$result %>% head(5)
+```
+
+---
+
+# Combining FOs Example
+
+```{r }
+nms <- c('woops', 'brewing_materials', 'beer_taxed', 'brewer_size', 'beer_states') %>% 
+  setNames(., .)
+```
+
+```{r }
+download_beers_nicely <- slowly(download_beers_safely, 0.1)
+beers <- nms %>%
+  map(., 
+      ~download_beers_nicely(..1) %>%  #<<
+        purrr::pluck('result')
+    )
+
+beers %>% map(dim) %>% str()
+```
+---
+
+# Combining FOs Example
+
+And a real-world use-case for `purrr::reduce()`!
+
+```{r }
+beers %>% 
+  purrr::discard(is.null) %>% 
+  purrr::reduce(dplyr::left_join) %>% 
+  dim()
+```
+
+---
+
+# FOs in the Wild
+
++ `{scales}` and `{ggplot2}`'s `scale_(color|fill)_*()`
+
++ `{glue}` with it's transformers
+
++ Sparingly in `{styler}` and `{lintr}`
+
+--
+
++ `{plumber}` uses R6 `r emo::ji('surprised')`
+
+---
+
+# FIN
