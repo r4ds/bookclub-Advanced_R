@@ -15,7 +15,8 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
-  # cache = TRUE,
+  cache = TRUE,
+  cache.lazy = FALSE,
   include = TRUE,
   message = FALSE, 
   warning = FALSE
@@ -98,7 +99,7 @@ gt::gtsave(functional_programming_summary, filename = here::here('Presentations'
 
 --
 
-FOs are probably best studied by thinking about how they operate on functions
+FOs are probably best studied by thinking about how they operate on functions.
 
 + __Behavioral FO__: Changes the behavior of a function, e.g. logging, running a function only when necessary
 
@@ -112,40 +113,9 @@ FOs are probably best studied by thinking about how they operate on functions
 
   + `purrr::partial()`
 
+--
 
-<hide>
 `purrr::safely()` docs: ... "They are all adverbs because they modify the action of a verb (a function)."
-</hide>
-
----
-
-# Behavioral FO Example #1
-
-Passing in only function `f`
-
-```{r }
-slowly <- function(f){
-  force(f)
-  function(n, ...){
-    cat(
-      glue::glue('Sleeping for {n} seconds.'), 
-      sep = '\n'
-    )
-    Sys.sleep(n)
-    # Need to do this to prevent extra printing.
-    res <- utils::capture.output(f(n, ...))
-  }
-}
-
-purrr::walk(
-  seq(0.4, 0.2, by = -0.2), 
-  slowly(cat) #<<
-)
-```
-
-.footnote[
-https://gist.github.com/ColinFay/d32cf4c9c5fb8d849f12a4e98d6c0549
-]
 
 ---
 
@@ -168,9 +138,17 @@ slowly <- function(f, n){
   }
 }
 
-slowly_cat <- slowly(cat, 0.5)
-slowly_cat('hello world')
+purrr::walk(
+  c('hello', 'world'),
+  slowly(cat, 0.1), #<<
+  sep = '\n' # Passed to `f()` via `...`
+)
 ```
+
+.footnote[
+https://gist.github.com/ColinFay/d32cf4c9c5fb8d849f12a4e98d6c0549
+]
+
 
 ---
 
@@ -188,7 +166,7 @@ twice <- function(f){
 purrr::walk(
   c('hello', 'world'), 
   twice(cat), #<<
-  sep = '\n' # Passed to `cat()` via `...`
+  sep = '\n' # Passed to `f()` via `...`
 )
 ```
 
@@ -250,7 +228,7 @@ memoise::forget(download_beers_quickly)
 
 Using `memoise::memoise()` for caching
 
-```{r echo=F}
+```{r }
 download_beers_quickly <- memoise::memoise(download_beers)
 
 bench::mark(
@@ -280,6 +258,8 @@ slow_function <- function(x) {
 fast_function <- memoise::memoise(slow_function)
 ```
 
+<br />
+
 ```{r eval=F, echo=F, include=F}
 # memoise::forget(fast_function)
 ```
@@ -290,8 +270,8 @@ system.time(slow_function(1)) #<<
 ```
 
 ```{r }
-system.time(fast_function(1))
-system.time(fast_function(1)) #<<
+system.time(fast_function(11))
+system.time(fast_function(11)) #<<
 ```
 
 ---
@@ -301,54 +281,25 @@ system.time(fast_function(1)) #<<
 Even if you've changed the inputs since the most recent call, it will still be fast.
 
 ```{r }
-system.time(fast_function(2))
-system.time(fast_function(3))
-system.time(fast_function(2)) #<<
+system.time(fast_function(22))
+system.time(fast_function(33))
+system.time(fast_function(22)) #<<
 ```
 --
 
 In fact, it remembers everything from the same session (assuming you haven't used `memoise::forget()`).
 
 ```{r }
-system.time(fast_function(1))
-system.time(fast_function(2))
-system.time(fast_function(3))
+system.time(fast_function(11))
+system.time(fast_function(22))
+system.time(fast_function(33))
 ```
-
----
-
-# Behavioral FO Example #5
-
-How does memoisization work with a factory?
-
-
-```{r }
-fast_function_factory <- function(x) {
-    memoise::memoise(function(...) {
-    slow_function(...)
-  })
-}
-```
-
-<br />
-
-```{r }
-system.time(fast_function(42))
-system.time(fast_function(42)) #<<
-```
-
-```{r }
-system.time(fast_function_factory(-1))
-system.time(fast_function_factory(-1)) #<<
-```
-
-<hide>
-TBH this seems silly. I was just curious about it.
-</hide>
 
 ---
 
 # Input FO Example #1
+
+Setting `na.rm = TRUE`
 
 ```{r }
 stat_robust <- function(f, ...) {
@@ -387,7 +338,7 @@ quantile_robust(x2, 0.25)
 
 # Input FO Example #1
 
-Using `purrr::partial()`
+Using `purrr::partial()` to set `na.rm = TRUE`
 
 ```{r }
 mean_partial <- partial(mean, na.rm = TRUE)
@@ -441,7 +392,11 @@ download_beers_safely <- purrr::safely(download_beers)
 ```{r }
 brewing_material <- download_beers_safely('brewing_material') # Oops!
 brewing_material
+```
 
+<br />
+
+```{r }
 brewing_materials <- download_beers_safely('brewing_materials') # Good
 brewing_materials$result %>% head(5)
 ```
@@ -482,7 +437,7 @@ download_beers_quietly <- purrr::quietly(download_beers)
 ```
 
 ```{r }
-brewing_materials <- download_beers_quietly('brewing_materials') # Oops!
+brewing_materials <- download_beers_quietly('brewing_materials')
 names(brewing_materials)
 brewing_materials$result %>% head(5)
 ```
