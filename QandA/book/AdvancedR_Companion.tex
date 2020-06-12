@@ -367,7 +367,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc00ae4dc90"
+## [1] "0x7fb8062c0ee8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -377,7 +377,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc00ae4dc90"
+## [1] "0x7fb8062c0ee8"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -389,7 +389,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc00b9e90e0"
+## [1] "0x7fb8052ec740"
 \end{verbatim}
 
 \begin{Shaded}
@@ -399,8 +399,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fc00b9be350] <list> 
-## └─[2:0x7fc00ae4dc90] <dbl>
+## █ [1:0x7fb805292938] <list> 
+## └─[2:0x7fb8062c0ee8] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -410,7 +410,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc00d83e9a8"
+## [1] "0x7fb8051da5b8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -447,7 +447,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fc009d1db68>"
+## [1] "<0x7fb8088c1748>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -457,7 +457,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fc009d1db68>
+## <0x7fb8088c1748>
 \end{verbatim}
 
 \begin{Shaded}
@@ -467,7 +467,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc009d1db68"
+## [1] "0x7fb8088c1748"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -516,7 +516,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc008b97948"
+## [1] "0x7fb8071cb008"
 \end{verbatim}
 
 \begin{Shaded}
@@ -526,7 +526,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fc008b97948>"
+## [1] "<0x7fb8071cb008>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -536,7 +536,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fc008b97948 -> 0x7fc0081713c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fb8071cb008 -> 0x7fb8071baa48]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -632,7 +632,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc00d953fb8"
+## [1] "0x7fb8083c2758"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -645,7 +645,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc00d906158"
+## [1] "0x7fb8084b6e38"
 \end{verbatim}
 
 \begin{Shaded}
@@ -668,7 +668,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc00d906158"
+## [1] "0x7fb8084b6e38"
 \end{verbatim}
 
 \begin{Shaded}
@@ -678,7 +678,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc00d906158"
+## [1] "0x7fb8084b6e38"
 \end{verbatim}
 
 \begin{Shaded}
@@ -701,7 +701,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc00d906158"
+## [1] "0x7fb8084b6e38"
 \end{verbatim}
 
 \begin{Shaded}
@@ -711,7 +711,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc0052f7748"
+## [1] "0x7fb8046609b8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -734,7 +734,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc00ba7bd28"
+## [1] "0x7fb8067b30c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1883,7 +1883,7 @@ NULL
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "In range"
+## [1] "Out of range"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1893,7 +1893,7 @@ NULL
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "In range"
+## [1] "Out of range"
 \end{verbatim}
 
 \texttt{ifelse} explicitly returns its result, whereas \texttt{if} invisibly returns it!
@@ -2535,13 +2535,13 @@ This will work:
 
 \begin{verbatim}
 ## # A tibble: 5 x 1
-##       x1
-##    <dbl>
-## 1 0.197 
-## 2 0.770 
-## 3 0.179 
-## 4 0.0919
-## 5 0.815
+##      x1
+##   <dbl>
+## 1 0.758
+## 2 0.854
+## 3 0.872
+## 4 0.659
+## 5 0.768
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2615,7 +2615,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 259 286 235 242 256 234 262 218 200 205
+##  [1] 270 278 214 223 238 258 220 250 246 224
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3052,7 +3052,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fc003b6f1c8>
+## <bytecode: 0x7fb7fe84d1c8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3923,7 +3923,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7fc006f4d5b0>
+## <bytecode: 0x7fb7fdb9b5b0>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4061,7 +4061,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7fc00a2a4748>
+## <bytecode: 0x7fb8000caf88>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4855,29 +4855,29 @@ Given this little example:
 
 \begin{verbatim}
 ## [1] "parent in mid: "
-## <environment: 0x7fc0073ca720>
+## <environment: 0x7fb80586fc20>
 ## [1] "current in mid: "
-## <environment: 0x7fc0073cb018>
+## <environment: 0x7fb805870438>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid: "
-## <environment: 0x7fc00a1691c0>
+## <environment: 0x7fb805975b08>
 ## [1] "current in mid: "
-## <environment: 0x7fc0067d4d68>
+## <environment: 0x7fb80375e848>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid skip: "
-## <environment: 0x7fc0067d4d68>
+## <environment: 0x7fb80375e848>
 ## [1] "current in mid skip: "
-## <environment: 0x7fc009131fa0>
+## <environment: 0x7fb802983e40>
 ## [1] "parent in mid: "
-## <environment: 0x7fc00911f4b0>
+## <environment: 0x7fb802892e18>
 ## [1] "current in mid: "
-## <environment: 0x7fc00911fc20>
+## <environment: 0x7fb80288f720>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
@@ -4892,7 +4892,7 @@ Given this little example:
 ## 
 ## [[2]]
 ## [[2]][[1]]
-## <environment: 0x7fc009131fa0>
+## <environment: 0x7fb802983e40>
 ## 
 ## 
 ## [[3]]
@@ -5033,26 +5033,26 @@ In order to extract p-values the solution manual suggests using \texttt{map\_dbl
 \end{Shaded}
 
 \begin{verbatim}
-##   [1] 3.215496e-01 2.718831e-01 3.185477e-03 4.183739e-01 9.647526e-03
-##   [6] 1.033030e-02 7.795020e-03 6.635304e-03 2.093336e-01 8.985381e-04
-##  [11] 2.393565e-03 3.849560e-01 4.063539e-02 1.065252e-02 5.777078e-02
-##  [16] 1.497392e-01 1.720923e-03 2.966788e-04 3.354055e-03 2.120347e-01
-##  [21] 9.582675e-02 6.503753e-01 1.267207e-02 3.751783e-01 8.803199e-02
-##  [26] 1.263614e-02 1.789605e-01 1.736650e-02 4.490532e-03 5.097142e-03
-##  [31] 2.033368e-03 2.262372e-04 3.526702e-02 1.457199e-02 2.014148e-01
-##  [36] 2.303706e-02 2.551540e-02 8.794947e-02 1.244362e-02 1.271332e-02
-##  [41] 5.712675e-02 9.152232e-02 9.416983e-02 1.214745e-03 7.180720e-01
-##  [46] 6.112056e-01 4.366551e-02 4.553585e-03 6.756721e-03 1.586225e-03
-##  [51] 2.931986e-02 4.994495e-01 1.206400e-02 5.691156e-03 6.140094e-03
-##  [56] 1.219325e-02 6.244399e-02 4.031055e-02 5.370151e-02 3.517685e-02
-##  [61] 2.508877e-07 9.871801e-02 5.650013e-02 2.938995e-01 1.514048e-02
-##  [66] 1.352531e-02 1.602888e-01 1.650188e-02 1.203392e-02 1.386033e-01
-##  [71] 3.475966e-01 1.513957e-01 1.341344e-03 5.907792e-03 7.294836e-03
-##  [76] 3.153166e-01 2.534273e-02 1.798337e-01 5.937876e-02 1.644991e-04
-##  [81] 1.487468e-03 2.130370e-02 1.446708e-02 3.250899e-01 1.175102e-02
-##  [86] 1.503668e-03 5.484040e-01 3.125771e-02 3.735330e-03 7.696328e-02
-##  [91] 2.210527e-03 3.460945e-01 2.461674e-02 1.010002e-03 2.371366e-03
-##  [96] 1.912166e-02 2.282138e-01 5.434778e-02 4.215838e-02 7.579265e-02
+##   [1] 3.245688e-03 2.391297e-01 3.262030e-01 6.289951e-01 1.234431e-02
+##   [6] 1.614402e-02 4.658161e-03 9.369887e-03 1.981969e-02 5.851876e-04
+##  [11] 8.781936e-02 1.758084e-02 3.704289e-03 3.488309e-02 1.737139e-02
+##  [16] 1.760440e-01 3.202135e-01 2.018433e-02 3.038051e-01 3.196416e-03
+##  [21] 2.940559e-02 3.807423e-02 1.017454e-03 1.295179e-03 6.776576e-04
+##  [26] 1.461251e-01 3.254908e-03 1.060098e-02 3.770829e-01 5.706166e-01
+##  [31] 1.130900e-01 1.295284e-02 2.158045e-01 7.442327e-02 6.630493e-04
+##  [36] 6.739517e-02 4.243750e-02 2.013231e-03 1.381567e-01 3.599782e-01
+##  [41] 7.412253e-02 3.545028e-01 3.458228e-02 2.059917e-01 2.107472e-01
+##  [46] 5.533242e-03 9.497244e-01 1.430629e-01 1.805432e-03 1.585281e-02
+##  [51] 1.587337e-04 1.688268e-01 1.335918e-02 4.031565e-02 8.605068e-03
+##  [56] 2.602592e-03 2.242413e-02 9.758754e-03 1.867428e-01 4.890231e-02
+##  [61] 1.587473e-03 1.047753e-01 4.750341e-02 1.229562e-01 1.328952e-01
+##  [66] 1.568066e-01 1.925041e-01 1.346289e-04 3.454682e-03 2.093708e-02
+##  [71] 3.525111e-02 1.128772e-01 1.926567e-02 1.600241e-02 4.147511e-02
+##  [76] 4.287292e-03 8.629544e-01 1.751386e-02 1.891588e-02 4.505017e-01
+##  [81] 1.562196e-03 5.915104e-03 7.674126e-07 5.695139e-03 7.878393e-03
+##  [86] 9.106825e-02 1.477582e-04 8.859575e-01 4.020825e-02 3.180865e-01
+##  [91] 3.320616e-02 6.964162e-03 1.695803e-04 6.689827e-02 1.428979e-01
+##  [96] 9.228595e-01 2.263873e-01 4.265824e-04 1.000000e+00 4.000739e-01
 \end{verbatim}
 
 \hypertarget{exercise-9}{%
@@ -5383,12 +5383,12 @@ Answer from \href{https://community.rstudio.com/t/recursive-purrr-mutate-if/1663
 
 \begin{verbatim}
 ## Unit: microseconds
-##                         expr      min       lq       mean   median       uq
-##         as_integer_rapply(x)   10.808   14.800   45.26056   22.745   28.440
-##  as_integer_recursive_map(x) 1132.281 1312.664 3232.67190 1567.164 2183.907
-##        max neval
-##   2020.252   100
-##  85314.253   100
+##                         expr     min        lq       mean   median       uq
+##         as_integer_rapply(x)  10.254   12.8535   31.25762   14.825   20.482
+##  as_integer_recursive_map(x) 981.889 1035.9740 1134.67007 1086.186 1121.188
+##       max neval
+##  1467.454   100
+##  5785.476   100
 \end{verbatim}
 
 \begin{Shaded}
@@ -5861,7 +5861,7 @@ Base R contains two function factories, \texttt{approxfun()} and \texttt{ecdf()}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.3333333 0.6666667 1.0000000
+## [1] 1.0000000 0.6666667 0.3333333
 \end{verbatim}
 
 \hypertarget{exercise-14}{%
@@ -6128,7 +6128,176 @@ How do you check how much memory is allocated to memoise's caching?
 \end{Shaded}
 
 \begin{verbatim}
-## 16,192 B
+## 16,216 B
+\end{verbatim}
+
+Could we create a memoise wrapper that clears the cache when that's a certain number?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{random_starwars <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(...)\{ }
+\NormalTok{  dplyr}\OperatorTok{::}\NormalTok{starwars }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{sample_n}\NormalTok{(}\DecValTok{3}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(name)}
+\NormalTok{  \}}
+\NormalTok{cache_memory_size <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(f) \{}
+\NormalTok{  cache <-}\StringTok{ }\KeywordTok{get}\NormalTok{(}\StringTok{"_cache"}\NormalTok{, }\KeywordTok{environment}\NormalTok{(f))}
+\NormalTok{  lobstr}\OperatorTok{::}\KeywordTok{obj_size}\NormalTok{(cache)}
+\NormalTok{\}}
+\NormalTok{capped_memoise <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(..., .cache_size) \{}
+  \KeywordTok{force}\NormalTok{(.cache_size)}
+\NormalTok{  .self_ref <-}\StringTok{ }\NormalTok{memoise}\OperatorTok{::}\KeywordTok{memoise}\NormalTok{(...)}
+\NormalTok{  f <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(...) \{}
+\NormalTok{    env <-}\StringTok{ }\KeywordTok{parent.env}\NormalTok{(}\KeywordTok{environment}\NormalTok{())}
+\NormalTok{    cache_size <-}\StringTok{ }\KeywordTok{cache_memory_size}\NormalTok{(env[[}\StringTok{"_self_ref"}\NormalTok{]])}
+    \ControlFlowTok{if}\NormalTok{ (cache_size }\OperatorTok{>}\StringTok{ }\NormalTok{env[[}\StringTok{"_cache_size"}\NormalTok{]]) \{}
+      \KeywordTok{message}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"Clearing cache [@"}\NormalTok{,cache_size,}\StringTok{"]}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+\NormalTok{      memoise}\OperatorTok{::}\KeywordTok{forget}\NormalTok{(env[[}\StringTok{"_self_ref"}\NormalTok{]])}
+\NormalTok{    \}}
+\NormalTok{    env[[}\StringTok{"_self_ref"}\NormalTok{]](...)}
+\NormalTok{  \}}
+  \KeywordTok{assign}\NormalTok{(}\StringTok{"_cache_size"}\NormalTok{, .cache_size, }\KeywordTok{environment}\NormalTok{(.self_ref))}
+  \KeywordTok{assign}\NormalTok{(}\StringTok{"_self_ref"}\NormalTok{, .self_ref, }\KeywordTok{environment}\NormalTok{(.self_ref))}
+  \KeywordTok{environment}\NormalTok{(f) <-}\StringTok{ }\KeywordTok{environment}\NormalTok{(.self_ref)}
+\NormalTok{  f}
+\NormalTok{\}}
+\NormalTok{capped_memoised_starwars <-}\StringTok{ }\KeywordTok{capped_memoise}\NormalTok{(random_starwars, }\DataTypeTok{.cache_size =} \DecValTok{30000}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{100}\NormalTok{) \{}
+  \KeywordTok{capped_memoised_starwars}\NormalTok{(i)}
+  \KeywordTok{print}\NormalTok{(}\KeywordTok{cache_memory_size}\NormalTok{(capped_memoised_starwars))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 14,448 B
+## 15,352 B
+## 16,128 B
+## 17,040 B
+## 17,936 B
+## 18,840 B
+## 19,672 B
+## 20,512 B
+## 21,400 B
+## 22,240 B
+## 23,016 B
+## 23,928 B
+## 24,760 B
+## 25,592 B
+## 26,304 B
+## 27,080 B
+## 27,848 B
+## 28,688 B
+## 29,464 B
+## 30,304 B
+\end{verbatim}
+
+\begin{verbatim}
+## Clearing cache [@30304]
+\end{verbatim}
+
+\begin{verbatim}
+## 14,424 B
+## 15,320 B
+## 16,224 B
+## 17,080 B
+## 17,976 B
+## 18,880 B
+## 19,720 B
+## 20,600 B
+## 21,440 B
+## 22,272 B
+## 23,176 B
+## 24,016 B
+## 24,872 B
+## 25,776 B
+## 26,552 B
+## 27,424 B
+## 28,280 B
+## 29,056 B
+## 29,824 B
+## 30,656 B
+\end{verbatim}
+
+\begin{verbatim}
+## Clearing cache [@30656]
+\end{verbatim}
+
+\begin{verbatim}
+## 14,440 B
+## 15,344 B
+## 16,256 B
+## 17,168 B
+## 18,072 B
+## 18,992 B
+## 19,832 B
+## 20,664 B
+## 21,440 B
+## 22,216 B
+## 23,072 B
+## 23,912 B
+## 24,736 B
+## 25,568 B
+## 26,472 B
+## 27,304 B
+## 28,072 B
+## 28,944 B
+## 29,784 B
+## 30,560 B
+\end{verbatim}
+
+\begin{verbatim}
+## Clearing cache [@30560]
+\end{verbatim}
+
+\begin{verbatim}
+## 14,432 B
+## 15,328 B
+## 16,248 B
+## 17,160 B
+## 18,056 B
+## 18,960 B
+## 19,792 B
+## 20,680 B
+## 21,512 B
+## 22,368 B
+## 23,208 B
+## 24,112 B
+## 25,016 B
+## 25,936 B
+## 26,776 B
+## 27,608 B
+## 28,440 B
+## 29,280 B
+## 29,992 B
+## 30,816 B
+\end{verbatim}
+
+\begin{verbatim}
+## Clearing cache [@30816]
+\end{verbatim}
+
+\begin{verbatim}
+## 14,472 B
+## 15,360 B
+## 16,184 B
+## 17,080 B
+## 17,984 B
+## 18,824 B
+## 19,720 B
+## 20,560 B
+## 21,456 B
+## 22,288 B
+## 23,128 B
+## 23,904 B
+## 24,744 B
+## 25,664 B
+## 26,504 B
+## 27,280 B
+## 28,136 B
+## 28,976 B
+## 29,816 B
+## 30,648 B
 \end{verbatim}
 
 Can we come up with simple example for these function operators?

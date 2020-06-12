@@ -115,6 +115,44 @@ lobstr::obj_size(get("_cache",environment(memoised_starwars)))
 ```
 
 :::question
+Could we create a memoise wrapper that clears the cache when that's a certain number?
+:::
+
+```{r}
+random_starwars <- function(...){ 
+  dplyr::starwars %>%
+    dplyr::sample_n(3) %>%
+    dplyr::select(name)
+  }
+cache_memory_size <- function(f) {
+  cache <- get("_cache", environment(f))
+  lobstr::obj_size(cache)
+}
+capped_memoise <- function(..., .cache_size) {
+  force(.cache_size)
+  .self_ref <- memoise::memoise(...)
+  f <- function(...) {
+    env <- parent.env(environment())
+    cache_size <- cache_memory_size(env[["_self_ref"]])
+    if (cache_size > env[["_cache_size"]]) {
+      message(paste0("Clearing cache [@",cache_size,"]\n"))
+      memoise::forget(env[["_self_ref"]])
+    }
+    env[["_self_ref"]](...)
+  }
+  assign("_cache_size", .cache_size, environment(.self_ref))
+  assign("_self_ref", .self_ref, environment(.self_ref))
+  environment(f) <- environment(.self_ref)
+  f
+}
+capped_memoised_starwars <- capped_memoise(random_starwars, .cache_size = 30000)
+for (i in 1:100) {
+  capped_memoised_starwars(i)
+  print(cache_memory_size(capped_memoised_starwars))
+}
+```
+
+:::question
 Can we come up with simple example for these function operators?
 :::
 
