@@ -1,4 +1,4 @@
-# S3 {-}
+# S3
 
 ```{r, include=FALSE}
 library(sloop)
@@ -27,21 +27,21 @@ Can we come up with a simple example for a `constructor`, `validator`, and `help
 
 Create the custom class
 
-```{r}
+```{#r}
 ```
 
 #### Validator {-}
 
 Function to make sure you can use your custom class
 
-```{r}
+```{#r}
 ```
 
 #### Helper {-}
 
 Wrapper for constructor to make sure the validation checks pass
 
-```{r}
+```{#r}
 ```
 :::
 
@@ -146,7 +146,7 @@ Now that we've gone through the source code, I don't see where the contrasts att
 :::question
 In the example: 
 
-```{r}
+```{r, eval=FALSE}
 my_new_generic <- function(x) {
   UseMethod("my_new_generic")
 }
@@ -166,7 +166,7 @@ Can we go over why?
 Can we explain what's happening here in our own words I was a little confused with the solutions manual? `g(x)` uses 1 from the `.default` method but `10` from the generic? Why?
 :::
 
-```{r}
+```{r, eval=FALSE}
 g <- function(x) {
   x <- 10
   y <- 10
@@ -178,6 +178,11 @@ g.default <- function(x) c(x = x, y = y)
 x <- 1
 y <- 1
 g(x)
+```
+
+```
+ x  y 
+ 1 10 
 ```
 
 :::TODO
@@ -227,7 +232,7 @@ Can we in our own words break down what `vctrs::vec_restore` is doing for us? Ho
 Can we go over why this doesn't return `a1`? 
 :::
 
-```{r}
+```{r, eval=FALSE}
 generic2 <- function(x) UseMethod("generic2")
 generic2.a1 <- function(x) "a1"
 generic2.a2 <- function(x) "a2"
@@ -237,6 +242,10 @@ generic2.b <- function(x) {
 }
 
 generic2(structure(list(), class = c("b", "a2")))
+```
+
+```
+[1] "a2"
 ```
 
 
@@ -255,13 +264,23 @@ What exactly is meant by "implicit class"?
 WHY isn't the dispatch of mean(x1) determined by its type???
 :::
 
-```{r}
+```{r, eval=FALSE}
 x1 <- 1:5
 class(x1)
 ```
 
-```{r}
+```
+[1] "integer"
+```
+
+```{r, eval=FALSE}
 s3_dispatch(mean(x1))
+```
+
+```
+   mean.integer
+   mean.numeric
+=> mean.default
 ```
 
 :::TODO
@@ -284,10 +303,15 @@ If you define `abs` for your class it won't know how to do the other things. Sup
 
 :::question
 What is happening here:
-```{r}
+```{r, eval=FALSE}
 Ops.foo <- function(...)  print("Called twice for some reason?")
 x <- structure(2, class = "foo")
 x > 0
+```
+
+```
+[1] "Called twice for some reason?"
+[1] "Called twice for some reason?"
 ```
 :::
 
@@ -299,10 +323,13 @@ The book mentions that we can use `vctrs::vec_arith` to avoid the aboce, but doe
 
 The `vec_arith` generic will first dispatch on `class(x)` So, in this case it tries to find `vec_arith.foo` but we haven't defined that yet, so it instead finds `vec_arith.default` which signals the error.
 
-```{r}
-library(vctrs)
+```{r, eval=FALSE}
 x <- structure(2, class = "foo")
 x > 0
+```
+
+```
+[1] TRUE
 ```
 
 ```{r, eval=FALSE}
@@ -310,10 +337,9 @@ vec_arith(">", x, 0)
 ```
 
 ```
-#> Error: <foo> > <double> is not permitted
+Error: <foo> > <double> is not permitted
+vec_arith will dispatch to this first, because it finds the "foo" generic
 ```
-
-`vec_arith` will dispatch to this first, because it finds the "foo" generic
 
 ```{r, eval=FALSE}
 vec_arith.foo <- function(op, x, y, ...) {
@@ -327,13 +353,17 @@ vec_arith(">", x, 0)
 Error in UseMethod("vec_arith.foo", y): no applicable method for 'vec_arith.foo' applied to an object of class "c('double', 'numeric')"
 ```
 
-Uh oh another error, and this is super confusing because none of our objects are class double. `(typeof(x) is "double")` The problem is that `vec_arith.foo` further dispatches on the second argument and it is looking for `vec_arith.numeric` or `vec_arith.default`, but we haven't defined that yet.
+Uh oh another error, and this is super confusing because none of our objects are class double.  (typeof(x) is "double"). The problem is that vec_arith.foo further dispatches on the second argument and it is looking for `vec_arith.numeric` or `vec_arith.default`, but we haven't defined that yet.
 
-```{r}
+```{r, eval=FALSE}
 vec_arith.foo.numeric <- function(op, x, y, ...) {
   vctrs::vec_arith_base(op, x, y, ...)
 }
 vec_arith(">", x, 0)
+```
+
+```
+[1] TRUE
 ```
 
 ```{r, eval=FALSE}
@@ -344,20 +374,24 @@ vec_arith(">", 0, x)
 Error: <double> > <foo> is not permitted
 ```
 
-Now `vec_arith` will first dispatch on the `0` and scope to `vec_arith.numeric` which will then try to dispatch to `vec_arith.numeric.foo` which we havent defined yet.
+now vec_arith will first dispatch on the 0 and scope to vec_arith.numeric which will then try to dispatch to vec_arith.numeric.foo which we havent defined yet.
 
-```{r}
+```{r, eval=FALSE}
 vec_arith.numeric.foo <- function(op, x, y, ...) {
   vctrs::vec_arith_base(op, x, y, ...) 
 }
 vec_arith(">", 0, x)
 ```
 
+```
+[1] FALSE
+```
+
 :::question
 What is happening here?!
 :::
 
-```{r}
+```{r, eval=FALSE}
 Math.bar <- function(x) {
   print("Math bar")
   NextMethod(.Generic)
