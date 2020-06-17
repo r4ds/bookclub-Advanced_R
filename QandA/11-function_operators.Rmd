@@ -3,6 +3,8 @@
 ```{r, include=FALSE}
 library(tidyverse)
 library(gt)
+library(memoise)
+library(lobstr)
 ```
 
 ## 11.1 Introduction {-}
@@ -56,11 +58,99 @@ examples: `safely`, `silently`, `rate-limity` etc
 ## 11.2.1 purrr::safely {-}
 
 :::question
-It seems like safely is a condition wrapper - are conditions a kind of function operator?
+It seems like safely is a condition wrapper - are all conditions a kind of function operator?
 :::
 
-:::TODO
+`safely`/`possibly`/`quietly` are function operators that are condition-wrappers, but `tryCatch`/`withCallingHandlers` are not function operators (they catch the outputs and do X thing but don't actually return a function)
+
+:::question
+How would we apply `safely` to find which dataframe in a list of dataframes is causing an error?
 :::
+
+```{r}
+library(tidyverse)
+
+random_starwars <- function() { 
+  starwars %>%
+    sample_n(50) %>%
+    select(name, height,mass)
+}
+	
+broken_starwars <- function(){ 
+  starwars %>%
+  sample_n(50) %>%
+  select(name, height,mass) %>% 
+  mutate(height = as.character(height))
+}
+  
+list_data <- list(a = random_starwars(),
+                  b = random_starwars(),
+                  c = broken_starwars(),
+                  d = random_starwars())
+
+map_dfr_safely <- function(.x, .f, ... ) {
+  results <- map(.x, safely(.f), ...)
+  list(result = bind_rows(!!!map(results, "result")), error = map(results, "error"))
+}    
+
+map_dfr_safely(list_data, semi_join, filter_starwars, by = c("name", "height"))
+```
+
+## 11.2.2 memoise {-}
+
+How do you check how much memory is allocated to memoise's caching? 
+
+```{r}
+random_starwars <- function(...){ 
+  starwars %>%
+    sample_n(3) %>%
+    select(name)}
+memoised_starwars <- memoise(random_starwars)
+a <- random_starwars()
+b <- memoised_starwars(1)
+c <- memoised_starwars(2)
+d <- memoised_starwars(3)
+
+lobstr::obj_size(get("_cache",environment(memoised_starwars)))
+```
+
+:::question
+Could we create a memoise wrapper that clears the cache when that's a certain number?
+:::
+
+```{r}
+random_starwars <- function(...){ 
+  dplyr::starwars %>%
+    dplyr::sample_n(3) %>%
+    dplyr::select(name)
+  }
+cache_memory_size <- function(f) {
+  cache <- get("_cache", environment(f))
+  lobstr::obj_size(cache)
+}
+capped_memoise <- function(..., .cache_size) {
+  force(.cache_size)
+  .self_ref <- memoise::memoise(...)
+  f <- function(...) {
+    env <- parent.env(environment())
+    cache_size <- cache_memory_size(env[["_self_ref"]])
+    if (cache_size > env[["_cache_size"]]) {
+      message(paste0("Clearing cache [@",cache_size,"]\n"))
+      memoise::forget(env[["_self_ref"]])
+    }
+    env[["_self_ref"]](...)
+  }
+  assign("_cache_size", .cache_size, environment(.self_ref))
+  assign("_self_ref", .self_ref, environment(.self_ref))
+  environment(f) <- environment(.self_ref)
+  f
+}
+capped_memoised_starwars <- capped_memoise(random_starwars, .cache_size = 30000)
+for (i in 1:100) {
+  capped_memoised_starwars(i)
+  print(cache_memory_size(capped_memoised_starwars))
+}
+```
 
 :::question
 Can we come up with simple example for these function operators?
@@ -73,27 +163,29 @@ x <- list(
   c(0.890, 0.785, 0.495),
   "oops"
 )
+
+f <- function(...) {sum(...)}
 ```
 
-:::TODO
 #### possibly {-}
 
 ```{r}
-map_dbl(x, possibly(sum, NA))
+map_dbl(x, possibly(f, NA))
 ```
 
 #### quietly {-}
 
+Quetly doesn't work on errors, only warnings:
+
 ```{r, eval=FALSE}
-map_dbl(x[[4]], quietly(sum))
+map(x, quietly(function(x) tryCatch(f(x), error = function(e) warning(e)))
 ```
 
 #### auto_browser {-}
 
 ```{r, eval=FALSE}
-map_dbl(x, auto_browse(sum))
+map_dbl(x, auto_browse(f))
 ```
-:::
 
 ## 11.2.3.1 Exercises {-}
 

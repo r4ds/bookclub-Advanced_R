@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-06-11" />
+<meta name="date" content="2020-06-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -265,7 +265,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11" data-path="function-operators.html"><a href="function-operators.html"><i class="fa fa-check"></i><b>11</b> Function operators</a><ul>
 <li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#introduction-1"><i class="fa fa-check"></i>11.1 Introduction</a></li>
 <li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#purrrsafely"><i class="fa fa-check"></i>11.2.1 purrr::safely</a></li>
+<li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#memoise"><i class="fa fa-check"></i>11.2.2 memoise</a></li>
 <li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#exercises-9"><i class="fa fa-check"></i>11.2.3.1 Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="base-types.html"><a href="base-types.html"><i class="fa fa-check"></i><b>12</b> Base Types</a><ul>
+<li class="chapter" data-level="" data-path="base-types.html"><a href="base-types.html#introduction-2"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="base-types.html"><a href="base-types.html#base-types-1"><i class="fa fa-check"></i>12.3 Base types</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="s3.html"><a href="s3.html"><i class="fa fa-check"></i><b>13</b> S3</a><ul>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#introduction-3"><i class="fa fa-check"></i>13.1 Introduction</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#classes"><i class="fa fa-check"></i>13.3 Classes</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#exercises-10"><i class="fa fa-check"></i>13.3.4.3 Exercises</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#exercises-11"><i class="fa fa-check"></i>13.3.4.4 Exercises</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#generics"><i class="fa fa-check"></i>13.4.1 Generics</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#exercises-12"><i class="fa fa-check"></i>13.4.4.4 Exercises</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#object-styles"><i class="fa fa-check"></i>13.5 Object styles</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#exercise-15"><i class="fa fa-check"></i>13.5.1.1 Exercise</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#inheritance"><i class="fa fa-check"></i>13.6 Inheritance</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#subclassing"><i class="fa fa-check"></i>13.6.2 Subclassing</a></li>
+<li class="chapter" data-level="13.1" data-path="s3.html"><a href="s3.html#section-1"><i class="fa fa-check"></i><b>13.1</b> 13.4.3.3</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#s3-and-base-types"><i class="fa fa-check"></i>13.7.1 S3 and Base Types</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#internal-generics"><i class="fa fa-check"></i>13.7.3 Internal Generics</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#double-dispatch"><i class="fa fa-check"></i>13.7.4 Double Dispatch</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -324,26 +345,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb431-1" data-line-number="1">trials &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="op">~</span><span class="st"> </span><span class="kw">t.test</span>(<span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">10</span>), <span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">7</span>)))</a>
 <a class="sourceLine" id="cb431-2" data-line-number="2"><span class="co"># tibble(p_value = map_dbl(trials, &quot;p.value&quot;))</span></a>
 <a class="sourceLine" id="cb431-3" data-line-number="3"><span class="kw">map_dbl</span>(trials, pluck, <span class="st">&quot;p.value&quot;</span>)</a></code></pre></div>
-<pre><code>##   [1] 3.769079e-02 4.145179e-03 1.710329e-01 9.351920e-03 6.039894e-04
-##   [6] 1.684167e-01 2.026491e-03 1.099213e-03 1.619495e-03 1.433371e-01
-##  [11] 2.181560e-02 7.669551e-01 8.608365e-03 3.468377e-03 1.008607e-02
-##  [16] 1.389838e-02 1.034324e-01 9.863230e-02 8.074843e-01 3.645797e-02
-##  [21] 4.300570e-01 8.018893e-02 4.922909e-02 2.054795e-02 1.284169e-03
-##  [26] 3.212141e-02 2.078761e-02 9.478343e-01 3.275119e-01 4.433182e-02
-##  [31] 3.557754e-02 1.687925e-01 6.727899e-01 1.423949e-01 9.847622e-02
-##  [36] 4.740489e-03 3.670729e-01 6.483527e-03 1.621308e-05 1.186565e-01
-##  [41] 5.325924e-01 4.797620e-01 5.275919e-02 8.051797e-02 2.677863e-01
-##  [46] 1.048456e-03 4.269474e-03 1.531043e-03 2.373724e-02 1.959858e-02
-##  [51] 1.304204e-02 4.101393e-03 6.629676e-01 7.418388e-03 2.664100e-02
-##  [56] 3.036042e-03 4.014812e-02 9.705003e-04 3.720062e-02 6.663994e-02
-##  [61] 9.268597e-03 1.079324e-03 2.983403e-02 1.671539e-03 6.345770e-03
-##  [66] 1.009293e-02 8.311150e-03 1.913011e-01 4.002672e-02 1.025378e-02
-##  [71] 1.544155e-01 3.411083e-02 4.216975e-02 6.815990e-03 6.764418e-02
-##  [76] 6.593839e-02 1.888616e-01 3.152972e-04 2.444494e-01 6.530740e-02
-##  [81] 9.044035e-04 8.302509e-02 2.504999e-02 1.655527e-02 3.714424e-01
-##  [86] 1.315530e-05 9.325601e-01 3.459826e-03 1.814887e-02 6.432925e-01
-##  [91] 8.852072e-03 1.322934e-02 2.274097e-03 4.832751e-02 6.812623e-04
-##  [96] 1.933957e-02 5.588076e-02 4.793780e-02 2.531630e-02 1.072566e-01</code></pre>
+<pre><code>##   [1] 2.212559e-02 1.120100e-01 4.503872e-02 1.998105e-01 5.445771e-02
+##   [6] 1.986142e-01 1.115674e-02 9.856050e-03 6.583901e-03 4.167948e-02
+##  [11] 1.001197e-01 6.351564e-02 1.354434e-02 9.045972e-05 5.641550e-02
+##  [16] 4.685276e-02 3.765108e-02 5.124060e-02 3.057062e-01 9.498100e-01
+##  [21] 1.046985e-02 3.286067e-01 1.836036e-02 1.094375e-02 5.263284e-02
+##  [26] 1.086607e-01 4.897655e-02 5.357071e-04 1.763392e-02 2.988086e-02
+##  [31] 2.497583e-01 1.306197e-01 9.825419e-02 1.244638e-04 2.529811e-02
+##  [36] 2.645433e-02 9.897474e-03 1.545767e-01 1.220852e-01 1.044102e-01
+##  [41] 9.559481e-02 2.388224e-02 4.003117e-03 5.974833e-02 1.089168e-02
+##  [46] 1.004414e-01 2.870663e-04 7.933880e-02 2.080695e-03 1.306942e-01
+##  [51] 1.154884e-03 1.238521e-03 2.450801e-01 1.000227e-02 1.172263e-02
+##  [56] 7.907712e-03 3.589858e-01 1.703781e-02 4.250645e-03 1.497726e-01
+##  [61] 2.324579e-02 4.408160e-02 2.670975e-01 1.873165e-01 1.428631e-02
+##  [66] 3.911711e-01 4.721465e-01 1.333614e-01 1.915746e-02 1.579715e-03
+##  [71] 5.492839e-03 1.616477e-01 2.892241e-03 9.745420e-02 2.194844e-02
+##  [76] 6.595490e-02 8.654581e-02 5.270986e-03 9.249064e-02 4.402150e-01
+##  [81] 7.444619e-01 3.070477e-01 2.300414e-03 5.810673e-03 2.633976e-01
+##  [86] 4.611374e-02 2.421138e-02 2.649490e-02 2.419607e-01 2.315629e-02
+##  [91] 2.747324e-01 5.871360e-03 2.087681e-01 2.193490e-02 3.571210e-03
+##  [96] 3.792941e-02 4.685340e-02 1.970061e-01 1.183190e-03 6.724913e-02</code></pre>
 </div>
 <div id="exercise-9" class="section level2 unnumbered">
 <h2>9.2.6.5 Exercise</h2>
@@ -553,12 +574,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb457-4" data-line-number="4">  <span class="dt">times =</span> <span class="dv">100</span></a>
 <a class="sourceLine" id="cb457-5" data-line-number="5">)</a></code></pre></div>
 <pre><code>## Unit: microseconds
-##                         expr     min       lq      mean    median        uq
-##         as_integer_rapply(x)  10.274   12.350   33.2796   19.0185   20.9085
-##  as_integer_recursive_map(x) 997.864 1024.868 1142.1703 1054.4285 1132.8915
+##                         expr     min        lq       mean    median       uq
+##         as_integer_rapply(x)   9.509   12.5515   33.86406   18.6595   20.945
+##  as_integer_recursive_map(x) 994.047 1039.9080 1173.91425 1103.2515 1184.939
 ##       max neval
-##  1637.989   100
-##  5513.465   100</code></pre>
+##  1670.346   100
+##  5326.474   100</code></pre>
 <div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb459-1" data-line-number="1">as_integer_safe &lt;-<span class="st"> </span><span class="cf">function</span>(y) {</a>
 <a class="sourceLine" id="cb459-2" data-line-number="2">  <span class="cf">if</span> (<span class="kw">is.character</span>(y) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">all</span>(<span class="kw">grepl</span>(<span class="st">&quot;^</span><span class="ch">\\</span><span class="st">d+$&quot;</span>, y))) {</a>
 <a class="sourceLine" id="cb459-3" data-line-number="3">    <span class="kw">as.integer</span>(y)</a>
