@@ -1,2 +1,10 @@
 # R6
 
+- encapsulated object$method()
+- mutable: reference semantics
+
+- in most cases R6 will lead you to non-idiomatic R code ?
+
+```{r}
+library(R6)
+```
