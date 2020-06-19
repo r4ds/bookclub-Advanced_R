@@ -282,9 +282,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#generics"><i class="fa fa-check"></i>13.4.1 Generics</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#exercises-12"><i class="fa fa-check"></i>13.4.4.5 Exercises</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#object-styles"><i class="fa fa-check"></i>13.5 Object styles</a></li>
-<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#exercise-15"><i class="fa fa-check"></i>13.5.1.1 Exercise</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#inheritance"><i class="fa fa-check"></i>13.6 Inheritance</a></li>
-<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#subclassing"><i class="fa fa-check"></i>13.6.2 Subclassing</a></li>
 <li class="chapter" data-level="13.1" data-path="s3.html"><a href="s3.html#section-1"><i class="fa fa-check"></i><b>13.1</b> 13.4.3.3</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#s3-and-base-types"><i class="fa fa-check"></i>13.7.1 S3 and Base Types</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#internal-generics"><i class="fa fa-check"></i>13.7.3 Internal Generics</a></li>
@@ -495,7 +493,7 @@ and ultimately the delayed binding is realized as a promise with <code>defineVar
 <a class="sourceLine" id="cb358-3" data-line-number="3"><span class="kw">fget</span>(<span class="st">&quot;mean&quot;</span>, <span class="dt">inherits =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## function (x, ...) 
 ## UseMethod(&quot;mean&quot;)
-## &lt;bytecode: 0x7fdb985c07b0&gt;
+## &lt;bytecode: 0x7ffd86d0c9b0&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 </div>
 <p>Inherits is an argument that stops the function from performing the recursive action of looking into the parent environment for the name. Inherits is acting like a valve. If false, and the name wasnt found in the current environment, then stop because the next expression searches the parent of env. In the case environment is the empty environment then stop because the empty environment doesnt have a parent.</p>
@@ -607,7 +605,7 @@ and ultimately the delayed binding is realized as a promise with <code>defineVar
 ##     conflicts &lt;- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## &lt;bytecode: 0x7fdba0fd5ca0&gt;
+## &lt;bytecode: 0x7ffd8c069af0&gt;
 ## &lt;environment: namespace:conflicted&gt;</code></pre>
 </div>
 <div id="call-stacks" class="section level2 unnumbered">

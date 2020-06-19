@@ -367,7 +367,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdba0932b30"
+## [1] "0x7ffd85e056b0"
 \end{verbatim}
 
 \begin{Shaded}
@@ -377,7 +377,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdba0932b30"
+## [1] "0x7ffd85e056b0"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -389,7 +389,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdb9a4ce200"
+## [1] "0x7ffd89f79a30"
 \end{verbatim}
 
 \begin{Shaded}
@@ -399,8 +399,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fdb9d055628] <list> 
-## └─[2:0x7fdba0932b30] <dbl>
+## █ [1:0x7ffd89f4d148] <list> 
+## └─[2:0x7ffd85e056b0] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -410,7 +410,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdb9bd15810"
+## [1] "0x7ffd91436fa0"
 \end{verbatim}
 
 \begin{Shaded}
@@ -447,7 +447,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fdba1ebaff8>"
+## [1] "<0x7ffd90e60b08>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -457,7 +457,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fdba1ebaff8>
+## <0x7ffd90e60b08>
 \end{verbatim}
 
 \begin{Shaded}
@@ -467,7 +467,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdba1ebaff8"
+## [1] "0x7ffd90e60b08"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -516,7 +516,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdba1144cc8"
+## [1] "0x7ffd8a1b4d88"
 \end{verbatim}
 
 \begin{Shaded}
@@ -526,7 +526,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fdba1144cc8>"
+## [1] "<0x7ffd8a1b4d88>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -536,7 +536,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fdba1144cc8 -> 0x7fdb88382ec8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7ffd8a1b4d88 -> 0x7ffd91204e08]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -632,7 +632,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdba621b1a8"
+## [1] "0x7ffd728f54c8"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -645,7 +645,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdba14aa3b8"
+## [1] "0x7ffd9162d748"
 \end{verbatim}
 
 \begin{Shaded}
@@ -668,7 +668,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdba14aa3b8"
+## [1] "0x7ffd9162d748"
 \end{verbatim}
 
 \begin{Shaded}
@@ -678,7 +678,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdba14aa3b8"
+## [1] "0x7ffd9162d748"
 \end{verbatim}
 
 \begin{Shaded}
@@ -701,7 +701,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdba14aa3b8"
+## [1] "0x7ffd9162d748"
 \end{verbatim}
 
 \begin{Shaded}
@@ -711,7 +711,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdba13b3798"
+## [1] "0x7ffd90e6bba8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -734,7 +734,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fdba125c4b8"
+## [1] "0x7ffd90e71278"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1883,7 +1883,7 @@ NULL
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Out of range"
+## [1] "In range"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1893,7 +1893,7 @@ NULL
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Out of range"
+## [1] "In range"
 \end{verbatim}
 
 \texttt{ifelse} explicitly returns its result, whereas \texttt{if} invisibly returns it!
@@ -2535,13 +2535,13 @@ This will work:
 
 \begin{verbatim}
 ## # A tibble: 5 x 1
-##       x1
-##    <dbl>
-## 1 0.401 
-## 2 0.0575
-## 3 0.687 
-## 4 0.408 
-## 5 0.880
+##      x1
+##   <dbl>
+## 1 0.385
+## 2 0.188
+## 3 0.245
+## 4 0.747
+## 5 0.271
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2615,7 +2615,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 298 300 211 202 208 263 292 279 233 232
+##  [1] 201 237 203 279 225 242 286 260 243 264
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3052,7 +3052,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fdb983d45c8>
+## <bytecode: 0x7ffd834fbdc8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3923,7 +3923,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7fdb985c07b0>
+## <bytecode: 0x7ffd86d0c9b0>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4061,7 +4061,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7fdba0fd5ca0>
+## <bytecode: 0x7ffd8c069af0>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4855,29 +4855,29 @@ Given this little example:
 
 \begin{verbatim}
 ## [1] "parent in mid: "
-## <environment: 0x7fdb9d3b1e60>
+## <environment: 0x7ffd899f7890>
 ## [1] "current in mid: "
-## <environment: 0x7fdb9f310838>
+## <environment: 0x7ffd899f8038>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid: "
-## <environment: 0x7fdb9f2f4a50>
+## <environment: 0x7ffd899e8e00>
 ## [1] "current in mid: "
-## <environment: 0x7fdb9a7dad28>
+## <environment: 0x7ffd88b447b0>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid skip: "
-## <environment: 0x7fdb9a7dad28>
+## <environment: 0x7ffd88b447b0>
 ## [1] "current in mid skip: "
-## <environment: 0x7fdba38a20b0>
+## <environment: 0x7ffd8d6e2c58>
 ## [1] "parent in mid: "
-## <environment: 0x7fdb9cfe3ea0>
+## <environment: 0x7ffd8d6d0c48>
 ## [1] "current in mid: "
-## <environment: 0x7fdba03d9040>
+## <environment: 0x7ffd8d6d04d8>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
@@ -4892,7 +4892,7 @@ Given this little example:
 ## 
 ## [[2]]
 ## [[2]][[1]]
-## <environment: 0x7fdba38a20b0>
+## <environment: 0x7ffd8d6e2c58>
 ## 
 ## 
 ## [[3]]
@@ -5033,26 +5033,26 @@ In order to extract p-values the solution manual suggests using \texttt{map\_dbl
 \end{Shaded}
 
 \begin{verbatim}
-##   [1] 0.0781956092 0.0003018894 0.0095030013 0.0477700987 0.3003741598
-##   [6] 0.0168942461 0.0035875791 0.0005476578 0.0229492093 0.2046419641
-##  [11] 0.1591165162 0.0284667502 0.0220369087 0.1229689281 0.0675808388
-##  [16] 0.5220296760 0.0381098406 0.2343895240 0.0009793411 0.0024504146
-##  [21] 0.3501917337 0.0023780935 0.3353798649 0.0899075264 0.0791330875
-##  [26] 0.0113479867 0.1298784238 0.0005871237 0.0285737485 0.0311020648
-##  [31] 0.0534588522 0.1874323851 0.0295051682 0.0551275035 0.0318662721
-##  [36] 0.1257073796 0.0711734535 0.0061411044 0.0016748314 0.0032358610
-##  [41] 0.0680987530 0.0334942197 0.1598799697 0.0615893969 0.1003773085
-##  [46] 0.7638227796 0.6218700776 0.2140924791 0.0084413622 0.1128843195
-##  [51] 0.0024843492 0.0048172566 0.0215223253 0.1331652562 0.0051165829
-##  [56] 0.1510503737 0.0435072673 0.0062211942 0.0024478722 0.9439465345
-##  [61] 0.0152585697 0.0653580878 0.0282877793 0.0070156547 0.0201898557
-##  [66] 0.1730705163 0.8073388527 0.5814853178 0.0029162604 0.0087067266
-##  [71] 0.0567547047 0.3434593030 0.0108707049 0.1557723455 0.0553308450
-##  [76] 0.0330658802 0.0003600055 0.1213512472 0.0609670883 0.0414247907
-##  [81] 0.0003857368 0.2652142451 0.0132168110 0.0014153550 0.0002946439
-##  [86] 0.0313285221 0.4275807699 0.0009475187 0.0002266673 0.2436678992
-##  [91] 0.0230104528 0.0231539121 0.0722849835 0.0060865472 0.7331997155
-##  [96] 0.1026721552 0.0144958562 0.0355918591 0.0301670086 0.0669094442
+##   [1] 1.154984e-01 2.519610e-02 2.631330e-01 8.875650e-02 8.587759e-01
+##   [6] 1.404054e-02 2.160124e-02 2.101519e-02 7.674028e-03 3.496454e-03
+##  [11] 2.711314e-02 2.645881e-02 2.914382e-03 1.520664e-01 7.761718e-03
+##  [16] 3.337838e-03 8.654453e-03 4.051869e-02 5.017592e-01 2.676743e-02
+##  [21] 1.304179e-01 2.499865e-01 6.243841e-02 4.119358e-01 1.499279e-02
+##  [26] 5.443831e-02 4.493478e-02 1.896964e-01 1.214582e-01 1.413273e-01
+##  [31] 5.760040e-01 6.869600e-02 3.171074e-03 8.103523e-02 1.281316e-03
+##  [36] 7.465622e-02 2.809172e-02 8.225027e-02 9.319087e-01 3.932204e-03
+##  [41] 8.830920e-04 1.284256e-01 3.941924e-01 5.206744e-02 7.305352e-02
+##  [46] 6.208799e-02 3.365046e-02 1.882240e-02 2.276767e-01 5.833807e-01
+##  [51] 2.335841e-01 8.015547e-03 7.011201e-04 2.027645e-01 4.813626e-03
+##  [56] 9.746532e-03 3.957417e-01 5.995076e-03 1.968747e-01 1.426307e-02
+##  [61] 1.243559e-02 1.214715e-03 9.943176e-02 7.864401e-04 1.301142e-02
+##  [66] 7.650938e-05 2.759159e-05 3.299408e-02 2.620086e-01 1.162073e-01
+##  [71] 2.532421e-02 5.117365e-02 6.821415e-04 4.509707e-03 1.137253e-01
+##  [76] 3.300675e-03 4.560727e-01 8.740656e-03 4.565355e-04 3.652628e-01
+##  [81] 3.185187e-01 1.393712e-02 2.801115e-01 3.695600e-03 1.715129e-02
+##  [86] 2.625241e-02 1.650533e-02 1.395559e-02 4.065866e-03 1.001851e-06
+##  [91] 2.331682e-02 1.814688e-01 1.939516e-02 6.705850e-02 8.826917e-03
+##  [96] 1.774541e-01 8.273213e-03 6.387857e-02 3.115453e-02 2.798558e-02
 \end{verbatim}
 
 \hypertarget{exercise-9}{%
@@ -5383,12 +5383,12 @@ Answer from \href{https://community.rstudio.com/t/recursive-purrr-mutate-if/1663
 
 \begin{verbatim}
 ## Unit: microseconds
-##                         expr      min       lq       mean   median       uq
-##         as_integer_rapply(x)    9.319   12.575   31.43597   18.992   20.877
-##  as_integer_recursive_map(x) 1000.076 1037.559 1081.90821 1058.298 1113.177
+##                         expr      min        lq      mean    median        uq
+##         as_integer_rapply(x)    9.772   13.2935   38.3984   20.2105   22.9215
+##  as_integer_recursive_map(x) 1015.665 1088.8885 1221.8427 1152.3090 1266.9110
 ##       max neval
-##  1421.290   100
-##  1458.102   100
+##  1831.531   100
+##  2114.119   100
 \end{verbatim}
 
 \begin{Shaded}
@@ -5861,7 +5861,7 @@ Base R contains two function factories, \texttt{approxfun()} and \texttt{ecdf()}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.6666667 1.0000000 0.3333333
+## [1] 0.6666667 0.3333333 1.0000000
 \end{verbatim}
 
 \hypertarget{exercise-14}{%
@@ -6128,7 +6128,7 @@ How do you check how much memory is allocated to memoise's caching?
 \end{Shaded}
 
 \begin{verbatim}
-## 16,216 B
+## 16,248 B
 \end{verbatim}
 
 Could we create a memoise wrapper that clears the cache when that's a certain number?
@@ -6170,134 +6170,134 @@ Could we create a memoise wrapper that clears the cache when that's a certain nu
 \end{Shaded}
 
 \begin{verbatim}
-## 14,440 B
-## 15,280 B
-## 16,176 B
-## 17,064 B
-## 17,896 B
-## 18,816 B
-## 19,712 B
-## 20,560 B
-## 21,488 B
-## 22,320 B
-## 23,168 B
-## 24,064 B
-## 24,840 B
-## 25,616 B
-## 26,392 B
-## 27,296 B
-## 28,128 B
-## 28,896 B
-## 29,672 B
-## 30,448 B
-\end{verbatim}
-
-\begin{verbatim}
-## Clearing cache [@30448]
-\end{verbatim}
-
-\begin{verbatim}
-## 14,424 B
+## 14,448 B
 ## 15,328 B
-## 16,168 B
-## 17,072 B
-## 17,840 B
-## 18,680 B
-## 19,576 B
-## 20,480 B
-## 21,320 B
-## 22,160 B
-## 22,928 B
-## 23,704 B
-## 24,544 B
-## 25,312 B
-## 26,224 B
-## 27,000 B
-## 27,832 B
-## 28,728 B
-## 29,568 B
-## 30,280 B
-\end{verbatim}
-
-\begin{verbatim}
-## Clearing cache [@30280]
-\end{verbatim}
-
-\begin{verbatim}
-## 14,440 B
-## 15,344 B
-## 16,248 B
+## 16,232 B
 ## 17,152 B
-## 18,048 B
-## 18,888 B
-## 19,728 B
-## 20,568 B
-## 21,400 B
-## 22,232 B
-## 23,128 B
-## 23,968 B
-## 24,800 B
-## 25,640 B
-## 26,472 B
-## 27,312 B
-## 28,144 B
-## 28,912 B
-## 29,808 B
-## 30,520 B
-\end{verbatim}
-
-\begin{verbatim}
-## Clearing cache [@30520]
-\end{verbatim}
-
-\begin{verbatim}
-## 14,456 B
-## 15,360 B
-## 16,256 B
-## 17,152 B
-## 18,072 B
-## 18,904 B
-## 19,760 B
-## 20,592 B
-## 21,432 B
-## 22,272 B
-## 23,104 B
-## 23,952 B
-## 24,848 B
-## 25,688 B
-## 26,592 B
-## 27,368 B
+## 18,056 B
+## 18,960 B
+## 19,864 B
+## 20,640 B
+## 21,480 B
+## 22,376 B
+## 23,272 B
+## 24,112 B
+## 24,944 B
+## 25,656 B
+## 26,488 B
+## 27,376 B
 ## 28,216 B
-## 28,992 B
-## 29,760 B
-## 30,600 B
+## 28,928 B
+## 29,768 B
+## 30,608 B
 \end{verbatim}
 
 \begin{verbatim}
-## Clearing cache [@30600]
+## Clearing cache [@30608]
 \end{verbatim}
 
 \begin{verbatim}
 ## 14,440 B
 ## 15,336 B
+## 16,240 B
+## 17,136 B
+## 18,032 B
+## 18,928 B
+## 19,760 B
+## 20,696 B
+## 21,592 B
+## 22,432 B
+## 23,208 B
+## 24,064 B
+## 24,912 B
+## 25,744 B
+## 26,520 B
+## 27,288 B
+## 28,128 B
+## 28,984 B
+## 29,840 B
+## 30,608 B
+\end{verbatim}
+
+\begin{verbatim}
+## Clearing cache [@30608]
+\end{verbatim}
+
+\begin{verbatim}
+## 14,432 B
+## 15,336 B
 ## 16,232 B
 ## 17,128 B
-## 18,024 B
-## 18,856 B
-## 19,744 B
-## 20,576 B
-## 21,448 B
-## 22,288 B
-## 23,064 B
-## 23,960 B
-## 24,800 B
-## 25,704 B
-## 26,616 B
-## 27,520 B
-## 28,352 B
-## 29,192 B
-## 29,904 B
-## 30,760 B
+## 18,064 B
+## 18,968 B
+## 19,864 B
+## 20,704 B
+## 21,472 B
+## 22,376 B
+## 23,208 B
+## 23,984 B
+## 24,760 B
+## 25,536 B
+## 26,328 B
+## 27,216 B
+## 28,048 B
+## 28,816 B
+## 29,648 B
+## 30,536 B
+\end{verbatim}
+
+\begin{verbatim}
+## Clearing cache [@30536]
+\end{verbatim}
+
+\begin{verbatim}
+## 14,440 B
+## 15,336 B
+## 16,168 B
+## 17,000 B
+## 17,896 B
+## 18,736 B
+## 19,568 B
+## 20,392 B
+## 21,304 B
+## 22,208 B
+## 22,920 B
+## 23,808 B
+## 24,728 B
+## 25,496 B
+## 26,336 B
+## 27,048 B
+## 27,904 B
+## 28,680 B
+## 29,456 B
+## 30,288 B
+\end{verbatim}
+
+\begin{verbatim}
+## Clearing cache [@30288]
+\end{verbatim}
+
+\begin{verbatim}
+## 14,448 B
+## 15,336 B
+## 16,224 B
+## 17,072 B
+## 17,968 B
+## 18,744 B
+## 19,656 B
+## 20,432 B
+## 21,256 B
+## 22,160 B
+## 22,992 B
+## 23,832 B
+## 24,720 B
+## 25,624 B
+## 26,464 B
+## 27,288 B
+## 28,128 B
+## 29,048 B
+## 29,952 B
+## 30,728 B
 \end{verbatim}
 
 Can we come up with simple example for these function operators?
@@ -6703,6 +6703,55 @@ Warning: Prior to R 2.1.0 UseMethod accepted a call with no arguments and tried 
 
 Basically, you're specifying the name of the function and then telling R to go find this generic function's methods. You can't self-reference the name of the generic after it's been assigned to itself?
 
+Maybe the name doesn't exist!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{test.default <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+  \StringTok{"test"}
+\NormalTok{\}}
+
+\CommentTok{# not sure why you would want to do this, but you can}
+\NormalTok{(}\ControlFlowTok{function}\NormalTok{() \{}
+  \KeywordTok{UseMethod}\NormalTok{(}\StringTok{"test"}\NormalTok{)}
+\NormalTok{\})()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "test"
+\end{verbatim}
+
+Also because you might have assigned your generic to a new name, how would it know to use the true ``generic'' name.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{superuglygenericfunction <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+  \KeywordTok{UseMethod}\NormalTok{(}\StringTok{"superuglygenericfunction"}\NormalTok{)}
+\NormalTok{\}}
+
+\NormalTok{superuglygenericfunction.default <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+  \StringTok{"ugh"}
+\NormalTok{\}}
+
+\NormalTok{nice <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+  \KeywordTok{UseMethod}\NormalTok{(}\StringTok{"superuglygenericfunction"}\NormalTok{)}
+\NormalTok{\}}
+
+\KeywordTok{nice}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "ugh"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#> [1] "ugh"}
+\end{Highlighting}
+\end{Shaded}
+
 \hypertarget{exercises-12}{%
 \section*{13.4.4.5 Exercises}\label{exercises-12}}
 \addcontentsline{toc}{section}{13.4.4.5 Exercises}
@@ -6730,6 +6779,28 @@ Can we explain what's happening here in our own words I was a little confused wi
  1 10 
 \end{verbatim}
 
+UseMethod creates a new function call with arguments matched as they came in to the generic. Any local variables defined before the call to \texttt{UseMethod} are retained (unlike S).
+
+When you call \texttt{g(x)} even though you appear to be ignoring it in your definition of \texttt{g} and assigning \texttt{x\ \textless{}-\ 10}, when you call \texttt{UseMethod} it will basically match the \texttt{x} in the \texttt{g.default} formals to the \texttt{x} that was passed in. The \texttt{y} isn't matched to any argument and is retained.
+
+Tyler Grant Smith:m: 13 minutes ago
+r
+g \textless{}- function(x) \{
+x \textless{}- 10
+y \textless{}- 10
+UseMethod(``g'')
+\}
+g.default \textless{}- function(x = NULL) c(x = x, y = y)
+x \textless{}- 1
+y \textless{}- 1
+\# this is interesting behavior
+g()
+\#\textgreater{} y
+\#\textgreater{} 10
+g(x)
+\#\textgreater{} x y
+\#\textgreater{} 1 10
+
 \hypertarget{object-styles}{%
 \section*{13.5 Object styles}\label{object-styles}}
 \addcontentsline{toc}{section}{13.5 Object styles}
@@ -6740,11 +6811,44 @@ Unfortunately, describing the appropriate use of each of these object styles is 
 
 Can we use the \texttt{vctrs} package in a concrete example to address some of these fringe cases and reasons why \texttt{length(x)} is causing an issue?
 
-\hypertarget{exercise-15}{%
-\section*{13.5.1.1 Exercise}\label{exercise-15}}
-\addcontentsline{toc}{section}{13.5.1.1 Exercise}
+An object style is a pattern for structuring your class. You can use any structure you want but these 4 patterns get used very often. Date and factor are both vector style for example: the core data for objects of both types are stored in a single vector. And there are some other context-appropriate things denoted by attributes in each case.
 
-Categorise the objects returned by lm(), factor(), table(), as.Date(), as.POSIXct() ecdf(), ordered(), I() into the styles described above.
+I don't think length is an issue but when you move away from the vanilla vector style object then the meaning changes. For example, under the hood, a data frame is really a list of vectors. Each of the vectors (columns) has the same length. So if you take the length of a data frame you get the length of the list i.e.~the number of columns.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(mtcars)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 11
+\end{verbatim}
+
+The result of calling \texttt{length} on a data.frame isn't necessarily intuitive: most people would probably say that the number of rows is a more natural value for the length of a data frame.
+
+This is the same for dates: which are actually of length \texttt{3} when classes and \texttt{9} when unclassed.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{as.POSIXlt}\NormalTok{(}\KeywordTok{ISOdatetime}\NormalTok{(}\DecValTok{2020}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\OperatorTok{:}\DecValTok{3}\NormalTok{))}
+\KeywordTok{length}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(}\KeywordTok{unclass}\NormalTok{(x))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 11
+\end{verbatim}
 
 \hypertarget{inheritance}{%
 \section*{13.6 Inheritance}\label{inheritance}}
@@ -6828,12 +6932,6 @@ Creating an IBU calculator for beer, we can use the \texttt{.ipa} method for a b
 ## => IBU_calculator.default
 \end{verbatim}
 
-\hypertarget{subclassing}{%
-\section*{13.6.2 Subclassing}\label{subclassing}}
-\addcontentsline{toc}{section}{13.6.2 Subclassing}
-
-Can we in our own words break down what \texttt{vctrs::vec\_restore} is doing for us? How does \texttt{...} allow us to keep the right class on the output?
-
 \hypertarget{section-1}{%
 \section{13.4.3.3}\label{section-1}}
 
@@ -6855,6 +6953,32 @@ Can we go over why this doesn't return \texttt{a1}?
 
 \begin{verbatim}
 [1] "a2"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{generic2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{UseMethod}\NormalTok{(}\StringTok{"generic2"}\NormalTok{)}
+\NormalTok{generic2.a1 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{ }\KeywordTok{cat}\NormalTok{(}\StringTok{"generic2.a1}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{); }\KeywordTok{cat}\NormalTok{(}\KeywordTok{class}\NormalTok{(x)) \}}
+\NormalTok{generic2.a2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{ }\KeywordTok{cat}\NormalTok{(}\StringTok{"generic2.a2}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{); }\KeywordTok{cat}\NormalTok{(}\KeywordTok{class}\NormalTok{(x)) \}}
+\NormalTok{generic2.b <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \KeywordTok{cat}\NormalTok{(}\StringTok{"generic2.b}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \KeywordTok{cat}\NormalTok{(}\StringTok{"Regardless of what we do, NextMethod will search for the following"}\NormalTok{, }
+      \StringTok{"classes:}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\KeywordTok{paste0}\NormalTok{(.Class, }\DataTypeTok{collapse =} \StringTok{", "}\NormalTok{), }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \KeywordTok{class}\NormalTok{(x) <-}\StringTok{ "a1"}
+  \KeywordTok{NextMethod}\NormalTok{()}
+\NormalTok{\}}
+
+\NormalTok{x <-}\StringTok{ }\KeywordTok{structure}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\FloatTok{1e8}\NormalTok{, }\DataTypeTok{class =} \KeywordTok{c}\NormalTok{(}\StringTok{"b"}\NormalTok{, }\StringTok{"a2"}\NormalTok{))}
+\KeywordTok{generic2}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## generic2.b
+## Regardless of what we do, NextMethod will search for the following classes:
+##  b, a2 
+## generic2.a2
+## a1
 \end{verbatim}
 
 \hypertarget{s3-and-base-types}{%
@@ -6931,7 +7055,7 @@ mean doesn't actually have a specific method defined in base R for int or numeri
 ##     }
 ##     .Internal(mean(x))
 ## }
-## <bytecode: 0x7fdb9f732e20>
+## <bytecode: 0x7ffd8b1ec9a8>
 ## <environment: namespace:base>
 \end{verbatim}
 
