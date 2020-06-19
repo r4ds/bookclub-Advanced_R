@@ -4,16 +4,14 @@
 library(sloop)
 ```
 
-## 13.1 Introduction {-}
+## 13.2 Basics {-}
 
 :::question
-> S3 is very flexible, which means it allows you to do things that are quite ill-advised
-
-This sounds ominous, like what?
+What's a real use case for `unclass`?
 :::
 
-:::TODO
-:::
+I wanted to pass a paletteer palette to `leaflet::colorNumeric` which ends up calling the S3 method `leaflet:::toPaletteFunc` but that only has methods defined for character function and matrix . The paletteer output is a character vector with class color and so `colorNumeric(palette, domain)` failed. Simple solution: `colorNumeric(unclass(palette), domain)`
+
 
 ## 13.3 Classes {-}
 
@@ -21,29 +19,60 @@ This sounds ominous, like what?
 Can we come up with a simple example for a `constructor`, `validator`, and `helper`?
 :::
 
-:::TODO
-
-#### Constructor {-}
+#### IPA Constructor {-}
 
 Create the custom class
 
-```{#r}
+```{r}
+new_ipa <- function(x = double()) {
+  structure(x, class = "ipa")
+}
 ```
 
-#### Validator {-}
+#### IPA Validator {-}
 
 Function to make sure you can use your custom class
 
-```{#r}
+```{r}
+validate_ipa <- function(x = double()) {
+  stopifnot(is.numeric(x))
+  # has to be at least 15 bitterness
+  stopifnot(x >= 15)
+  x
+}
 ```
 
-#### Helper {-}
+### IPA Helper {-}
 
-Wrapper for constructor to make sure the validation checks pass
+Calls both the validator and the constructor
 
-```{#r}
+```{r}
+ipa <- function(x) {
+  x <- as.numeric(x)
+  # Both helper and valditor
+  x <- new_ipa(x)
+  res <- validate_ipa(x)
+  res
+}
 ```
-:::
+
+#### Test it out!
+
+Fails as expected:
+
+```{r, eval=FALSE}
+ipa(5)
+```
+
+```
+Error in validate_ipa(x) : x >= 15 is not TRUE
+```
+
+But this works!
+
+```{r}
+ipa(50)
+```
 
 ## 13.3.4.3 Exercises {-}
 
@@ -157,10 +186,9 @@ The book states: "If you wonder why we have to repeat my_new_generic twice, thin
 Can we go over why?
 :::
 
-:::TODO
-:::
+I think he’s referring to the fact that you have to use a string representation inside the UseMethod call.
 
-## 13.4.4.4 Exercises {-}
+## 13.4.4.5 Exercises {-}
 
 :::question
 Can we explain what's happening here in our own words I was a little confused with the solutions manual? `g(x)` uses 1 from the `.default` method but `10` from the generic? Why?
@@ -214,8 +242,51 @@ Categorise the objects returned by lm(), factor(), table(), as.Date(), as.POSIXc
 Can we make our own example of a method with inheritance?
 :::
 
-:::TODO
-:::
+Creating an IBU calculator for beer, we can use the `.ipa` method for a beer of class `.wipa`:
+
+```{r}
+library(sloop)
+
+# IBUs are calculated as onces x alpha acid x boil time / constant
+# we're going to use a different constant for IPAs and Stouts
+
+
+# generic
+IBU_calculator <- function(x) {
+  UseMethod("IBU_calculator")
+}
+
+# default
+IBU_calculator.default <- function(x){
+  stop("Can only calculate IBU for beers, not ",class(x))
+}
+
+# ipa
+IBU_calculator.ipa <- function(x) {
+  1 * x * 30 / 7.25
+}
+
+# stout
+IBU_calculator.stout <- function(x) {
+  1.5 * x * 30 / 6
+}
+
+#### some beers ####
+ipa_1 <- structure(
+  15, class = c("ipa","beer")
+)
+
+# define a wine to see default dispatch
+wine_1 <- structure(3,class = c("pinot","wine"))
+
+# wipa "inherits" class ipa so we can use that method!
+wipa_1 <- structure(20, class = c("wipa","ipa","beer"))
+
+s3_dispatch(IBU_calculator(ipa_1))
+s3_dispatch(IBU_calculator(wipa_1))
+s3_dispatch(IBU_calculator(wine_1))
+```
+
 
 ## 13.6.2 Subclassing {-}
 
