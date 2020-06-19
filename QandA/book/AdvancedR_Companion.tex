@@ -123,7 +123,7 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-06-17}
+\date{2020-06-19}
 
 \begin{document}
 \maketitle
@@ -367,7 +367,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc81ef054d8"
+## [1] "0x7fdba0932b30"
 \end{verbatim}
 
 \begin{Shaded}
@@ -377,7 +377,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc81ef054d8"
+## [1] "0x7fdba0932b30"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -389,7 +389,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc81d7f1e48"
+## [1] "0x7fdb9a4ce200"
 \end{verbatim}
 
 \begin{Shaded}
@@ -399,8 +399,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fc81d78a750] <list> 
-## └─[2:0x7fc81ef054d8] <dbl>
+## █ [1:0x7fdb9d055628] <list> 
+## └─[2:0x7fdba0932b30] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -410,7 +410,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc81d6352f8"
+## [1] "0x7fdb9bd15810"
 \end{verbatim}
 
 \begin{Shaded}
@@ -447,7 +447,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fc820488b48>"
+## [1] "<0x7fdba1ebaff8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -457,7 +457,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fc820488b48>
+## <0x7fdba1ebaff8>
 \end{verbatim}
 
 \begin{Shaded}
@@ -467,7 +467,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc820488b48"
+## [1] "0x7fdba1ebaff8"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -516,7 +516,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc816f05e08"
+## [1] "0x7fdba1144cc8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -526,7 +526,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fc816f05e08>"
+## [1] "<0x7fdba1144cc8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -536,7 +536,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fc816f05e08 -> 0x7fc824b6a288]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fdba1144cc8 -> 0x7fdb88382ec8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -632,7 +632,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc81e3cbf98"
+## [1] "0x7fdba621b1a8"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -645,7 +645,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc81e388b28"
+## [1] "0x7fdba14aa3b8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -668,7 +668,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc81e388b28"
+## [1] "0x7fdba14aa3b8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -678,7 +678,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc81e388b28"
+## [1] "0x7fdba14aa3b8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -701,7 +701,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc81e388b28"
+## [1] "0x7fdba14aa3b8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -711,7 +711,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc82164c6c8"
+## [1] "0x7fdba13b3798"
 \end{verbatim}
 
 \begin{Shaded}
@@ -734,7 +734,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fc81eb8d518"
+## [1] "0x7fdba125c4b8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2535,13 +2535,13 @@ This will work:
 
 \begin{verbatim}
 ## # A tibble: 5 x 1
-##        x1
-##     <dbl>
-## 1 0.158  
-## 2 0.866  
-## 3 0.00462
-## 4 0.333  
-## 5 0.537
+##       x1
+##    <dbl>
+## 1 0.401 
+## 2 0.0575
+## 3 0.687 
+## 4 0.408 
+## 5 0.880
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2615,7 +2615,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 240 250 299 296 267 258 287 289 230 221
+##  [1] 298 300 211 202 208 263 292 279 233 232
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3052,7 +3052,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fc815b61180>
+## <bytecode: 0x7fdb983d45c8>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3923,7 +3923,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7fc816c89090>
+## <bytecode: 0x7fdb985c07b0>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4061,7 +4061,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7fc81d7d8b40>
+## <bytecode: 0x7fdba0fd5ca0>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4855,29 +4855,29 @@ Given this little example:
 
 \begin{verbatim}
 ## [1] "parent in mid: "
-## <environment: 0x7fc81dcf8418>
+## <environment: 0x7fdb9d3b1e60>
 ## [1] "current in mid: "
-## <environment: 0x7fc81dcf4f88>
+## <environment: 0x7fdb9f310838>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid: "
-## <environment: 0x7fc81dc9ca38>
+## <environment: 0x7fdb9f2f4a50>
 ## [1] "current in mid: "
-## <environment: 0x7fc81cc2e848>
+## <environment: 0x7fdb9a7dad28>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid skip: "
-## <environment: 0x7fc81cc2e848>
+## <environment: 0x7fdb9a7dad28>
 ## [1] "current in mid skip: "
-## <environment: 0x7fc81b3bd148>
+## <environment: 0x7fdba38a20b0>
 ## [1] "parent in mid: "
-## <environment: 0x7fc81b9ce860>
+## <environment: 0x7fdb9cfe3ea0>
 ## [1] "current in mid: "
-## <environment: 0x7fc81b9cf1c8>
+## <environment: 0x7fdba03d9040>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
@@ -4892,7 +4892,7 @@ Given this little example:
 ## 
 ## [[2]]
 ## [[2]][[1]]
-## <environment: 0x7fc81b3bd148>
+## <environment: 0x7fdba38a20b0>
 ## 
 ## 
 ## [[3]]
@@ -5033,26 +5033,26 @@ In order to extract p-values the solution manual suggests using \texttt{map\_dbl
 \end{Shaded}
 
 \begin{verbatim}
-##   [1] 9.246491e-01 2.066028e-02 1.938065e-02 5.172025e-01 8.675733e-03
-##   [6] 1.536712e-01 9.180338e-02 7.889812e-02 9.029523e-01 1.544440e-02
-##  [11] 2.125454e-02 2.525127e-01 6.984436e-01 3.298387e-02 9.266511e-02
-##  [16] 1.009064e-01 1.670159e-02 4.911375e-02 3.109024e-01 3.054543e-01
-##  [21] 3.584754e-03 5.476227e-04 1.504955e-01 4.729707e-02 5.524173e-02
-##  [26] 6.164813e-03 7.972696e-03 3.193471e-02 2.606070e-02 8.382622e-02
-##  [31] 3.071489e-02 2.707118e-02 3.207838e-03 6.681485e-03 1.468529e-02
-##  [36] 1.398108e-02 4.091583e-02 1.063465e-01 9.107632e-05 1.338021e-02
-##  [41] 1.850575e-01 6.228083e-04 4.204690e-03 6.222364e-01 1.564868e-01
-##  [46] 5.951002e-02 2.267086e-03 3.240792e-01 2.135652e-02 8.541339e-02
-##  [51] 3.594081e-02 1.852796e-03 4.099328e-03 6.815973e-01 8.595852e-02
-##  [56] 1.863309e-01 3.947520e-03 8.192827e-03 2.827503e-03 5.024609e-02
-##  [61] 5.416548e-02 1.186608e-01 4.747826e-03 1.872452e-02 6.505210e-01
-##  [66] 1.139036e-01 1.810327e-02 4.022432e-02 1.208690e-02 6.727341e-06
-##  [71] 4.936519e-02 5.272861e-05 4.574126e-01 3.798216e-02 1.152686e-01
-##  [76] 4.179649e-01 5.113098e-02 7.788954e-01 1.976161e-01 9.948727e-02
-##  [81] 3.046434e-02 9.041009e-03 7.009498e-02 3.435088e-01 2.355598e-02
-##  [86] 9.303141e-03 1.160973e-01 3.707848e-01 2.385355e-04 2.961570e-01
-##  [91] 7.237811e-03 2.027872e-01 2.169921e-02 2.200569e-02 4.750695e-03
-##  [96] 1.311370e-02 3.678157e-02 4.088433e-02 1.314343e-02 3.193763e-02
+##   [1] 0.0781956092 0.0003018894 0.0095030013 0.0477700987 0.3003741598
+##   [6] 0.0168942461 0.0035875791 0.0005476578 0.0229492093 0.2046419641
+##  [11] 0.1591165162 0.0284667502 0.0220369087 0.1229689281 0.0675808388
+##  [16] 0.5220296760 0.0381098406 0.2343895240 0.0009793411 0.0024504146
+##  [21] 0.3501917337 0.0023780935 0.3353798649 0.0899075264 0.0791330875
+##  [26] 0.0113479867 0.1298784238 0.0005871237 0.0285737485 0.0311020648
+##  [31] 0.0534588522 0.1874323851 0.0295051682 0.0551275035 0.0318662721
+##  [36] 0.1257073796 0.0711734535 0.0061411044 0.0016748314 0.0032358610
+##  [41] 0.0680987530 0.0334942197 0.1598799697 0.0615893969 0.1003773085
+##  [46] 0.7638227796 0.6218700776 0.2140924791 0.0084413622 0.1128843195
+##  [51] 0.0024843492 0.0048172566 0.0215223253 0.1331652562 0.0051165829
+##  [56] 0.1510503737 0.0435072673 0.0062211942 0.0024478722 0.9439465345
+##  [61] 0.0152585697 0.0653580878 0.0282877793 0.0070156547 0.0201898557
+##  [66] 0.1730705163 0.8073388527 0.5814853178 0.0029162604 0.0087067266
+##  [71] 0.0567547047 0.3434593030 0.0108707049 0.1557723455 0.0553308450
+##  [76] 0.0330658802 0.0003600055 0.1213512472 0.0609670883 0.0414247907
+##  [81] 0.0003857368 0.2652142451 0.0132168110 0.0014153550 0.0002946439
+##  [86] 0.0313285221 0.4275807699 0.0009475187 0.0002266673 0.2436678992
+##  [91] 0.0230104528 0.0231539121 0.0722849835 0.0060865472 0.7331997155
+##  [96] 0.1026721552 0.0144958562 0.0355918591 0.0301670086 0.0669094442
 \end{verbatim}
 
 \hypertarget{exercise-9}{%
@@ -5384,11 +5384,11 @@ Answer from \href{https://community.rstudio.com/t/recursive-purrr-mutate-if/1663
 \begin{verbatim}
 ## Unit: microseconds
 ##                         expr      min       lq       mean   median       uq
-##         as_integer_rapply(x)    9.501   13.110   34.73203   19.450   22.216
-##  as_integer_recursive_map(x) 1008.259 1072.511 1206.02328 1124.367 1206.540
+##         as_integer_rapply(x)    9.319   12.575   31.43597   18.992   20.877
+##  as_integer_recursive_map(x) 1000.076 1037.559 1081.90821 1058.298 1113.177
 ##       max neval
-##  1559.036   100
-##  5563.828   100
+##  1421.290   100
+##  1458.102   100
 \end{verbatim}
 
 \begin{Shaded}
@@ -6128,7 +6128,7 @@ How do you check how much memory is allocated to memoise's caching?
 \end{Shaded}
 
 \begin{verbatim}
-## 16,120 B
+## 16,216 B
 \end{verbatim}
 
 Could we create a memoise wrapper that clears the cache when that's a certain number?
@@ -6171,133 +6171,133 @@ Could we create a memoise wrapper that clears the cache when that's a certain nu
 
 \begin{verbatim}
 ## 14,440 B
-## 15,336 B
-## 16,240 B
-## 17,072 B
-## 17,968 B
-## 18,824 B
-## 19,664 B
-## 20,568 B
-## 21,400 B
-## 22,240 B
-## 23,112 B
-## 24,000 B
-## 24,776 B
-## 25,568 B
-## 26,280 B
-## 27,216 B
-## 28,112 B
-## 29,008 B
-## 29,912 B
-## 30,624 B
-\end{verbatim}
-
-\begin{verbatim}
-## Clearing cache [@30624]
-\end{verbatim}
-
-\begin{verbatim}
-## 14,432 B
-## 15,336 B
-## 16,232 B
-## 17,136 B
-## 18,056 B
-## 18,968 B
-## 19,808 B
-## 20,640 B
-## 21,544 B
-## 22,440 B
-## 23,272 B
-## 24,104 B
-## 25,008 B
-## 25,784 B
-## 26,552 B
-## 27,344 B
-## 28,200 B
-## 28,976 B
-## 29,768 B
-## 30,608 B
-\end{verbatim}
-
-\begin{verbatim}
-## Clearing cache [@30608]
-\end{verbatim}
-
-\begin{verbatim}
-## 14,432 B
-## 15,336 B
-## 16,240 B
-## 17,160 B
-## 18,000 B
-## 18,840 B
-## 19,672 B
+## 15,280 B
+## 16,176 B
+## 17,064 B
+## 17,896 B
+## 18,816 B
+## 19,712 B
 ## 20,560 B
-## 21,464 B
-## 22,296 B
-## 23,088 B
-## 23,928 B
-## 24,856 B
-## 25,768 B
-## 26,616 B
-## 27,456 B
-## 28,336 B
-## 29,048 B
-## 29,824 B
-## 30,592 B
+## 21,488 B
+## 22,320 B
+## 23,168 B
+## 24,064 B
+## 24,840 B
+## 25,616 B
+## 26,392 B
+## 27,296 B
+## 28,128 B
+## 28,896 B
+## 29,672 B
+## 30,448 B
 \end{verbatim}
 
 \begin{verbatim}
-## Clearing cache [@30592]
+## Clearing cache [@30448]
+\end{verbatim}
+
+\begin{verbatim}
+## 14,424 B
+## 15,328 B
+## 16,168 B
+## 17,072 B
+## 17,840 B
+## 18,680 B
+## 19,576 B
+## 20,480 B
+## 21,320 B
+## 22,160 B
+## 22,928 B
+## 23,704 B
+## 24,544 B
+## 25,312 B
+## 26,224 B
+## 27,000 B
+## 27,832 B
+## 28,728 B
+## 29,568 B
+## 30,280 B
+\end{verbatim}
+
+\begin{verbatim}
+## Clearing cache [@30280]
 \end{verbatim}
 
 \begin{verbatim}
 ## 14,440 B
 ## 15,344 B
-## 16,224 B
-## 17,112 B
-## 18,024 B
-## 18,944 B
-## 19,784 B
-## 20,720 B
-## 21,488 B
-## 22,384 B
-## 23,240 B
-## 24,080 B
-## 24,936 B
-## 25,776 B
-## 26,656 B
-## 27,368 B
+## 16,248 B
+## 17,152 B
+## 18,048 B
+## 18,888 B
+## 19,728 B
+## 20,568 B
+## 21,400 B
+## 22,232 B
+## 23,128 B
+## 23,968 B
+## 24,800 B
+## 25,640 B
+## 26,472 B
+## 27,312 B
 ## 28,144 B
-## 29,000 B
-## 29,840 B
-## 30,608 B
+## 28,912 B
+## 29,808 B
+## 30,520 B
 \end{verbatim}
 
 \begin{verbatim}
-## Clearing cache [@30608]
+## Clearing cache [@30520]
 \end{verbatim}
 
 \begin{verbatim}
-## 14,432 B
-## 15,352 B
+## 14,456 B
+## 15,360 B
 ## 16,256 B
-## 17,144 B
-## 18,040 B
-## 18,960 B
-## 19,800 B
+## 17,152 B
+## 18,072 B
+## 18,904 B
+## 19,760 B
 ## 20,592 B
-## 21,488 B
-## 22,320 B
-## 23,032 B
-## 23,920 B
-## 24,760 B
-## 25,664 B
-## 26,504 B
-## 27,344 B
-## 28,176 B
-## 28,968 B
-## 29,824 B
-## 30,536 B
+## 21,432 B
+## 22,272 B
+## 23,104 B
+## 23,952 B
+## 24,848 B
+## 25,688 B
+## 26,592 B
+## 27,368 B
+## 28,216 B
+## 28,992 B
+## 29,760 B
+## 30,600 B
+\end{verbatim}
+
+\begin{verbatim}
+## Clearing cache [@30600]
+\end{verbatim}
+
+\begin{verbatim}
+## 14,440 B
+## 15,336 B
+## 16,232 B
+## 17,128 B
+## 18,024 B
+## 18,856 B
+## 19,744 B
+## 20,576 B
+## 21,448 B
+## 22,288 B
+## 23,064 B
+## 23,960 B
+## 24,800 B
+## 25,704 B
+## 26,616 B
+## 27,520 B
+## 28,352 B
+## 29,192 B
+## 29,904 B
+## 30,760 B
 \end{verbatim}
 
 Can we come up with simple example for these function operators?
@@ -6486,15 +6486,13 @@ symbol is the difference between: \texttt{"a"} and \texttt{a}. One is a string a
 \hypertarget{s3}{%
 \chapter{S3}\label{s3}}
 
-\hypertarget{introduction-3}{%
-\section*{13.1 Introduction}\label{introduction-3}}
-\addcontentsline{toc}{section}{13.1 Introduction}
+\hypertarget{basics}{%
+\section*{13.2 Basics}\label{basics}}
+\addcontentsline{toc}{section}{13.2 Basics}
 
-\begin{quote}
-S3 is very flexible, which means it allows you to do things that are quite ill-advised
-\end{quote}
+What's a real use case for \texttt{unclass}?
 
-This sounds ominous, like what?
+I wanted to pass a paletteer palette to \texttt{leaflet::colorNumeric} which ends up calling the S3 method \texttt{leaflet:::toPaletteFunc} but that only has methods defined for character function and matrix . The paletteer output is a character vector with class color and so \texttt{colorNumeric(palette,\ domain)} failed. Simple solution: \texttt{colorNumeric(unclass(palette),\ domain)}
 
 \hypertarget{classes}{%
 \section*{13.3 Classes}\label{classes}}
@@ -6502,37 +6500,82 @@ This sounds ominous, like what?
 
 Can we come up with a simple example for a \texttt{constructor}, \texttt{validator}, and \texttt{helper}?
 
-\hypertarget{constructor}{%
-\subsubsection*{Constructor}\label{constructor}}
-\addcontentsline{toc}{subsubsection}{Constructor}
+\hypertarget{ipa-constructor}{%
+\subsubsection*{IPA Constructor}\label{ipa-constructor}}
+\addcontentsline{toc}{subsubsection}{IPA Constructor}
 
 Create the custom class
 
-\hypertarget{r}{%
-\label{r}}%
-\begin{verbatim}
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{new_ipa <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{double}\NormalTok{()) \{}
+  \KeywordTok{structure}\NormalTok{(x, }\DataTypeTok{class =} \StringTok{"ipa"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
 
-\hypertarget{validator}{%
-\subsubsection*{Validator}\label{validator}}
-\addcontentsline{toc}{subsubsection}{Validator}
+\hypertarget{ipa-validator}{%
+\subsubsection*{IPA Validator}\label{ipa-validator}}
+\addcontentsline{toc}{subsubsection}{IPA Validator}
 
 Function to make sure you can use your custom class
 
-\hypertarget{r}{%
-\label{r}}%
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{validate_ipa <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{double}\NormalTok{()) \{}
+  \KeywordTok{stopifnot}\NormalTok{(}\KeywordTok{is.numeric}\NormalTok{(x))}
+  \CommentTok{# has to be at least 15 bitterness}
+  \KeywordTok{stopifnot}\NormalTok{(x }\OperatorTok{>=}\StringTok{ }\DecValTok{15}\NormalTok{)}
+\NormalTok{  x}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ipa-helper}{%
+\subsection*{IPA Helper}\label{ipa-helper}}
+\addcontentsline{toc}{subsection}{IPA Helper}
+
+Calls both the validator and the constructor
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ipa <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  x <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(x)}
+  \CommentTok{# Both helper and valditor}
+\NormalTok{  x <-}\StringTok{ }\KeywordTok{new_ipa}\NormalTok{(x)}
+\NormalTok{  res <-}\StringTok{ }\KeywordTok{validate_ipa}\NormalTok{(x)}
+\NormalTok{  res}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{test-it-out}{%
+\subsubsection{Test it out!}\label{test-it-out}}
+
+Fails as expected:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ipa}\NormalTok{(}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
 \begin{verbatim}
+Error in validate_ipa(x) : x >= 15 is not TRUE
 \end{verbatim}
 
-\hypertarget{helper}{%
-\subsubsection*{Helper}\label{helper}}
-\addcontentsline{toc}{subsubsection}{Helper}
+But this works!
 
-Wrapper for constructor to make sure the validation checks pass
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ipa}\NormalTok{(}\DecValTok{50}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-\hypertarget{r}{%
-\label{r}}%
 \begin{verbatim}
+## [1] 50
+## attr(,"class")
+## [1] "ipa"
 \end{verbatim}
 
 \hypertarget{exercises-10}{%
@@ -6630,6 +6673,8 @@ Can we go over the factor source code, commenting it line for line?
 
 Now that we've gone through the source code, I don't see where the contrasts attibute comes into play? We can look at the \texttt{C()} function but where is this used within \texttt{factor()}?
 
+It is a little misleading to say that factors ``have an \ldots{} attribute'', where I really think he means that ``some functions might check if that attribute has been assigned''.
+
 \hypertarget{generics}{%
 \section*{13.4.1 Generics}\label{generics}}
 \addcontentsline{toc}{section}{13.4.1 Generics}
@@ -6648,9 +6693,19 @@ The book states: ``If you wonder why we have to repeat my\_new\_generic twice, t
 
 Can we go over why?
 
+I think he's referring to the fact that you have to use a string representation inside the UseMethod call.
+
+I'm guessing part of the answer to this is baked into this warning on the UseMethod function docs:
+
+\begin{quote}
+Warning: Prior to R 2.1.0 UseMethod accepted a call with no arguments and tried to deduce the generic from the context.
+\end{quote}
+
+Basically, you're specifying the name of the function and then telling R to go find this generic function's methods. You can't self-reference the name of the generic after it's been assigned to itself?
+
 \hypertarget{exercises-12}{%
-\section*{13.4.4.4 Exercises}\label{exercises-12}}
-\addcontentsline{toc}{section}{13.4.4.4 Exercises}
+\section*{13.4.4.5 Exercises}\label{exercises-12}}
+\addcontentsline{toc}{section}{13.4.4.5 Exercises}
 
 Can we explain what's happening here in our own words I was a little confused with the solutions manual? \texttt{g(x)} uses 1 from the \texttt{.default} method but \texttt{10} from the generic? Why?
 
@@ -6697,6 +6752,82 @@ Categorise the objects returned by lm(), factor(), table(), as.Date(), as.POSIXc
 
 Can we make our own example of a method with inheritance?
 
+Creating an IBU calculator for beer, we can use the \texttt{.ipa} method for a beer of class \texttt{.wipa}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(sloop)}
+
+\CommentTok{# IBUs are calculated as onces x alpha acid x boil time / constant}
+\CommentTok{# we're going to use a different constant for IPAs and Stouts}
+
+
+\CommentTok{# generic}
+\NormalTok{IBU_calculator <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \KeywordTok{UseMethod}\NormalTok{(}\StringTok{"IBU_calculator"}\NormalTok{)}
+\NormalTok{\}}
+
+\CommentTok{# default}
+\NormalTok{IBU_calculator.default <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x)\{}
+  \KeywordTok{stop}\NormalTok{(}\StringTok{"Can only calculate IBU for beers, not "}\NormalTok{,}\KeywordTok{class}\NormalTok{(x))}
+\NormalTok{\}}
+
+\CommentTok{# ipa}
+\NormalTok{IBU_calculator.ipa <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \DecValTok{1} \OperatorTok{*}\StringTok{ }\NormalTok{x }\OperatorTok{*}\StringTok{ }\DecValTok{30} \OperatorTok{/}\StringTok{ }\FloatTok{7.25}
+\NormalTok{\}}
+
+\CommentTok{# stout}
+\NormalTok{IBU_calculator.stout <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \FloatTok{1.5} \OperatorTok{*}\StringTok{ }\NormalTok{x }\OperatorTok{*}\StringTok{ }\DecValTok{30} \OperatorTok{/}\StringTok{ }\DecValTok{6}
+\NormalTok{\}}
+
+\CommentTok{#### some beers ####}
+\NormalTok{ipa_}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\KeywordTok{structure}\NormalTok{(}
+  \DecValTok{15}\NormalTok{, }\DataTypeTok{class =} \KeywordTok{c}\NormalTok{(}\StringTok{"ipa"}\NormalTok{,}\StringTok{"beer"}\NormalTok{)}
+\NormalTok{)}
+
+\CommentTok{# define a wine to see default dispatch}
+\NormalTok{wine_}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\KeywordTok{structure}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DataTypeTok{class =} \KeywordTok{c}\NormalTok{(}\StringTok{"pinot"}\NormalTok{,}\StringTok{"wine"}\NormalTok{))}
+
+\CommentTok{# wipa "inherits" class ipa so we can use that method!}
+\NormalTok{wipa_}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\KeywordTok{structure}\NormalTok{(}\DecValTok{20}\NormalTok{, }\DataTypeTok{class =} \KeywordTok{c}\NormalTok{(}\StringTok{"wipa"}\NormalTok{,}\StringTok{"ipa"}\NormalTok{,}\StringTok{"beer"}\NormalTok{))}
+
+\KeywordTok{s3_dispatch}\NormalTok{(}\KeywordTok{IBU_calculator}\NormalTok{(ipa_}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## => IBU_calculator.ipa
+##    IBU_calculator.beer
+##  * IBU_calculator.default
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{s3_dispatch}\NormalTok{(}\KeywordTok{IBU_calculator}\NormalTok{(wipa_}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    IBU_calculator.wipa
+## => IBU_calculator.ipa
+##    IBU_calculator.beer
+##  * IBU_calculator.default
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{s3_dispatch}\NormalTok{(}\KeywordTok{IBU_calculator}\NormalTok{(wine_}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    IBU_calculator.pinot
+##    IBU_calculator.wine
+## => IBU_calculator.default
+\end{verbatim}
+
 \hypertarget{subclassing}{%
 \section*{13.6.2 Subclassing}\label{subclassing}}
 \addcontentsline{toc}{section}{13.6.2 Subclassing}
@@ -6730,8 +6861,6 @@ Can we go over why this doesn't return \texttt{a1}?
 \section*{13.7.1 S3 and Base Types}\label{s3-and-base-types}}
 \addcontentsline{toc}{section}{13.7.1 S3 and Base Types}
 
-What exactly is meant by ``implicit class''?
-
 WHY isn't the dispatch of mean(x1) determined by its type???
 
 \begin{Shaded}
@@ -6755,6 +6884,55 @@ WHY isn't the dispatch of mean(x1) determined by its type???
    mean.integer
    mean.numeric
 => mean.default
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{methods}\NormalTok{(mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] mean.Date        mean.default     mean.difftime    mean.POSIXct    
+## [5] mean.POSIXlt     mean.quosure*    mean.vctrs_vctr*
+## see '?methods' for accessing help and source code
+\end{verbatim}
+
+mean doesn't actually have a specific method defined in base R for int or numeric. the default method handles all base types, type checking along the way:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mean.default}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function (x, trim = 0, na.rm = FALSE, ...) 
+## {
+##     if (!is.numeric(x) && !is.complex(x) && !is.logical(x)) {
+##         warning("argument is not numeric or logical: returning NA")
+##         return(NA_real_)
+##     }
+##     if (na.rm) 
+##         x <- x[!is.na(x)]
+##     if (!is.numeric(trim) || length(trim) != 1L) 
+##         stop("'trim' must be numeric of length one")
+##     n <- length(x)
+##     if (trim > 0 && n) {
+##         if (is.complex(x)) 
+##             stop("trimmed means are not defined for complex data")
+##         if (anyNA(x)) 
+##             return(NA_real_)
+##         if (trim >= 0.5) 
+##             return(stats::median(x, na.rm = FALSE))
+##         lo <- floor(n * trim) + 1
+##         hi <- n + 1 - lo
+##         x <- sort.int(x, partial = unique(c(lo, hi)))[lo:hi]
+##     }
+##     .Internal(mean(x))
+## }
+## <bytecode: 0x7fdb9f732e20>
+## <environment: namespace:base>
 \end{verbatim}
 
 \hypertarget{internal-generics}{%
