@@ -24,7 +24,7 @@ All Meetings Scheduled for 8:00 PM Eastern unless otherwise noted
 - 2020-05-28 Chapter 9 - Functionals: [Tan Ho](https://twitter.com/_tanho) ([Zoom Recording](https://youtu.be/o0a6aJ4kCkU) | [LearnR lesson](https://apps.tanho.ca/app_direct/advr_w9_learnr/) | [Example App](https://apps.tanho.ca/app_direct/advr_w9_app/) | [Repo folder](https://github.com/r4ds/bookclub-Advanced_R/tree/master/Presentations/Week09) )
 - 2020-06-04 Chapter 10 - [Function factories](https://cran.r-project.org/package=factory): [Jon Harmon](https://twitter.com/jonthegeek) ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week10/Chapter10.html#1) | [Zoom Recording](https://www.youtube.com/watch?v=enI5Ynq6olI))
 - 2020-06-11 Chapter 11 - Function operators: [Tony ElHabr](https://twitter.com/TonyElHabr) | ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week11/Chapter11.html#1) | [Zoom Recording](https://www.youtube.com/watch?v=zzUY03gt_pA&feature=youtu.be))
-- 2020-06-18 Chapter 12 + 13 - OOP base types + S3: [Daryn Ramsden](https://twitter.com/thisisdaryn) 
+- 2020-06-18 Chapter 12 + 13 - OOP base types + S3: [Daryn Ramsden](https://twitter.com/thisisdaryn) | ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Chapter13.html#1) | [Zoom Recording](TODO))
 - 2020-06-25 Chapter 14 - R6:
 - 2020-07-02 Chapter 15 + 16 - S4 + Trade-offs:
 - 2020-07-09 Chapter 17 - Metaprogramming, big picture:
