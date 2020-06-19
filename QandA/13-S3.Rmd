@@ -169,6 +169,29 @@ Now that we've gone through the source code, I don't see where the contrasts att
 
 It is a little misleading to say that factors "have an ... attribute", where I really think he means that "some functions might check if that attribute has been assigned".
 
+
+Make a factor:
+
+```{r}
+f <- factor(c(1,2))
+f
+```
+
+Set contrasts attribute:
+
+```{r}
+f <- C(f)
+f
+```
+
+
+```{r}
+f <- factor(f)
+f
+```
+
+dang't where did those contrasts go!
+
 ## 13.4.1 Generics {-}
 
 :::question

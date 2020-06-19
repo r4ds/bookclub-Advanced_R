@@ -345,26 +345,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb431-1" data-line-number="1">trials &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="op">~</span><span class="st"> </span><span class="kw">t.test</span>(<span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">10</span>), <span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">7</span>)))</a>
 <a class="sourceLine" id="cb431-2" data-line-number="2"><span class="co"># tibble(p_value = map_dbl(trials, &quot;p.value&quot;))</span></a>
 <a class="sourceLine" id="cb431-3" data-line-number="3"><span class="kw">map_dbl</span>(trials, pluck, <span class="st">&quot;p.value&quot;</span>)</a></code></pre></div>
-<pre><code>##   [1] 1.652709e-02 1.414161e-02 3.384521e-01 7.303579e-01 2.325602e-01
-##   [6] 3.379035e-01 8.086606e-02 3.410687e-03 4.154210e-02 1.423251e-02
-##  [11] 6.387847e-02 7.711241e-03 2.419656e-02 2.636332e-01 4.150369e-02
-##  [16] 2.543318e-04 1.643301e-03 1.156470e-01 5.252377e-03 8.078179e-02
-##  [21] 1.319326e-01 4.938726e-03 4.276370e-02 3.640233e-04 2.586697e-04
-##  [26] 9.613165e-03 1.109424e-03 1.038131e-01 3.530449e-03 5.366181e-03
-##  [31] 2.329511e-01 1.553113e-01 1.630496e-01 1.250135e-03 1.700908e-01
-##  [36] 2.283033e-02 7.410347e-01 1.256678e-04 1.490744e-03 1.052015e-02
-##  [41] 1.080730e-01 7.133001e-05 4.839967e-02 7.645556e-04 2.504120e-01
-##  [46] 6.871561e-04 1.975285e-02 3.142486e-03 1.390723e-01 7.423013e-03
-##  [51] 1.867610e-02 1.181899e-01 4.926624e-02 3.134725e-02 1.474295e-01
-##  [56] 2.670157e-02 6.053797e-04 4.004167e-02 3.530382e-03 2.274399e-02
-##  [61] 6.247229e-03 8.733924e-01 3.347666e-03 1.700178e-02 1.649413e-01
-##  [66] 3.773510e-02 1.361698e-01 2.920639e-02 1.422531e-01 5.616216e-01
-##  [71] 7.974840e-02 9.596017e-01 1.866324e-02 1.918619e-01 7.991648e-02
-##  [76] 2.065205e-02 2.472333e-01 2.034566e-03 2.395259e-01 1.088942e-01
-##  [81] 1.036334e-01 6.342129e-02 3.951001e-02 1.038287e-03 4.789647e-04
-##  [86] 2.968864e-03 1.533364e-02 1.352537e-01 1.347492e-01 6.512365e-01
-##  [91] 1.196803e-02 9.964589e-03 1.255617e-02 3.567344e-01 6.486071e-01
-##  [96] 3.465211e-03 2.284328e-02 3.215767e-03 7.924434e-02 3.617076e-03</code></pre>
+<pre><code>##   [1] 2.462525e-02 1.005977e-01 1.132717e-01 1.561649e-03 2.165526e-01
+##   [6] 9.138906e-04 2.561410e-02 2.327803e-02 2.746975e-02 9.548564e-04
+##  [11] 3.398357e-02 5.004561e-01 4.045837e-02 2.640810e-02 3.888606e-02
+##  [16] 1.863196e-03 1.185510e-03 1.486724e-03 5.235390e-02 6.252295e-05
+##  [21] 1.687145e-02 2.620337e-02 2.443387e-04 8.265891e-04 2.019708e-01
+##  [26] 4.335050e-04 1.457437e-02 5.861951e-03 1.257097e-01 3.799655e-02
+##  [31] 4.183111e-01 6.707782e-03 2.117288e-02 6.884010e-02 1.511931e-02
+##  [36] 4.394599e-03 3.823508e-02 2.214454e-02 8.619619e-02 1.292670e-02
+##  [41] 1.070705e-02 4.645733e-03 6.085625e-02 2.583872e-04 1.263708e-01
+##  [46] 5.275759e-03 1.416333e-02 3.563663e-02 3.167807e-02 9.022358e-02
+##  [51] 5.871575e-01 1.002005e-05 3.096512e-01 6.818558e-05 6.717548e-01
+##  [56] 2.319785e-01 1.996380e-01 1.531024e-02 3.144890e-02 1.090325e-03
+##  [61] 2.246263e-04 2.613725e-03 6.774765e-03 2.760170e-01 6.733748e-03
+##  [66] 6.195433e-03 8.739187e-03 5.303124e-02 5.145749e-03 3.272887e-02
+##  [71] 2.977066e-01 1.032990e-01 3.706745e-01 1.236271e-02 1.529694e-02
+##  [76] 5.432334e-02 1.431729e-01 2.312758e-01 4.890068e-01 6.142744e-02
+##  [81] 5.503722e-02 1.805166e-01 6.212614e-02 6.969593e-02 6.734007e-02
+##  [86] 9.497698e-01 3.498682e-02 1.662113e-02 2.250542e-03 1.534992e-03
+##  [91] 1.294554e-02 3.012127e-03 2.752315e-01 1.865852e-02 5.568199e-02
+##  [96] 1.153830e-02 3.492844e-03 2.052474e-02 4.963317e-02 4.978699e-02</code></pre>
 </div>
 <div id="exercise-9" class="section level2 unnumbered">
 <h2>9.2.6.5 Exercise</h2>
@@ -574,12 +574,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb457-4" data-line-number="4">  <span class="dt">times =</span> <span class="dv">100</span></a>
 <a class="sourceLine" id="cb457-5" data-line-number="5">)</a></code></pre></div>
 <pre><code>## Unit: microseconds
-##                         expr      min        lq       mean    median       uq
-##         as_integer_rapply(x)   10.952   15.1525   37.22899   21.8655   25.255
-##  as_integer_recursive_map(x) 1014.418 1132.9045 1427.93153 1270.4985 1545.954
+##                         expr     min       lq       mean   median       uq
+##         as_integer_rapply(x)   9.562   11.779   34.51039   19.061   20.537
+##  as_integer_recursive_map(x) 994.341 1049.226 1208.20334 1079.498 1211.146
 ##       max neval
-##  1584.227   100
-##  5832.662   100</code></pre>
+##  1691.776   100
+##  6029.148   100</code></pre>
 <div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb459-1" data-line-number="1">as_integer_safe &lt;-<span class="st"> </span><span class="cf">function</span>(y) {</a>
 <a class="sourceLine" id="cb459-2" data-line-number="2">  <span class="cf">if</span> (<span class="kw">is.character</span>(y) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">all</span>(<span class="kw">grepl</span>(<span class="st">&quot;^</span><span class="ch">\\</span><span class="st">d+$&quot;</span>, y))) {</a>
 <a class="sourceLine" id="cb459-3" data-line-number="3">    <span class="kw">as.integer</span>(y)</a>
