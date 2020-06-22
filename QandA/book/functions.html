@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-06-17" />
+<meta name="date" content="2020-06-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -273,16 +273,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="base-types.html"><a href="base-types.html#base-types-1"><i class="fa fa-check"></i>12.3 Base types</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="s3.html"><a href="s3.html"><i class="fa fa-check"></i><b>13</b> S3</a><ul>
-<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#introduction-3"><i class="fa fa-check"></i>13.1 Introduction</a></li>
-<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#classes"><i class="fa fa-check"></i>13.3 Classes</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#basics"><i class="fa fa-check"></i>13.2 Basics</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#classes"><i class="fa fa-check"></i>13.3 Classes</a><ul>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#ipa-helper"><i class="fa fa-check"></i>IPA Helper</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#exercises-10"><i class="fa fa-check"></i>13.3.4.3 Exercises</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#exercises-11"><i class="fa fa-check"></i>13.3.4.4 Exercises</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#generics"><i class="fa fa-check"></i>13.4.1 Generics</a></li>
-<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#exercises-12"><i class="fa fa-check"></i>13.4.4.4 Exercises</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#exercises-12"><i class="fa fa-check"></i>13.4.4.5 Exercises</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#object-styles"><i class="fa fa-check"></i>13.5 Object styles</a></li>
-<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#exercise-15"><i class="fa fa-check"></i>13.5.1.1 Exercise</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#inheritance"><i class="fa fa-check"></i>13.6 Inheritance</a></li>
-<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#subclassing"><i class="fa fa-check"></i>13.6.2 Subclassing</a></li>
 <li class="chapter" data-level="13.1" data-path="s3.html"><a href="s3.html#section-1"><i class="fa fa-check"></i><b>13.1</b> 13.4.3.3</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#s3-and-base-types"><i class="fa fa-check"></i>13.7.1 S3 and Base Types</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#internal-generics"><i class="fa fa-check"></i>13.7.3 Internal Generics</a></li>
@@ -442,11 +442,11 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <pre><code>## # A tibble: 5 x 1
 ##      x1
 ##   &lt;dbl&gt;
-## 1 0.830
-## 2 0.925
-## 3 0.903
-## 4 0.481
-## 5 0.354</code></pre>
+## 1 0.608
+## 2 0.367
+## 3 0.189
+## 4 0.120
+## 5 0.169</code></pre>
 </div>
 <div id="a-fresh-start" class="section level2 unnumbered">
 <h2>6.4.3 A fresh start</h2>
@@ -494,7 +494,7 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <a class="sourceLine" id="cb249-8" data-line-number="8">}</a>
 <a class="sourceLine" id="cb249-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb249-10" data-line-number="10"><span class="kw">mega_model</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))</a></code></pre></div>
-<pre><code>##  [1] 272 230 277 228 275 225 286 203 285 217</code></pre>
+<pre><code>##  [1] 234 218 209 227 300 243 299 223 211 293</code></pre>
 </div>
 <div id="promises" class="section level2 unnumbered">
 <h2>6.5.1 Promises</h2>
@@ -741,7 +741,7 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb296-1" data-line-number="1">hist</a></code></pre></div>
 <pre><code>## function (x, ...) 
 ## UseMethod(&quot;hist&quot;)
-## &lt;bytecode: 0x7fc815b61180&gt;
+## &lt;bytecode: 0x7fcbac36fbc8&gt;
 ## &lt;environment: namespace:graphics&gt;</code></pre>
 <p>does not give me the actual contents of the actual function….</p>
 </div>

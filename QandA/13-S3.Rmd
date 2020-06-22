@@ -4,16 +4,14 @@
 library(sloop)
 ```
 
-## 13.1 Introduction {-}
+## 13.2 Basics {-}
 
 :::question
-> S3 is very flexible, which means it allows you to do things that are quite ill-advised
-
-This sounds ominous, like what?
+What's a real use case for `unclass`?
 :::
 
-:::TODO
-:::
+I wanted to pass a paletteer palette to `leaflet::colorNumeric` which ends up calling the S3 method `leaflet:::toPaletteFunc` but that only has methods defined for character function and matrix . The paletteer output is a character vector with class color and so `colorNumeric(palette, domain)` failed. Simple solution: `colorNumeric(unclass(palette), domain)`
+
 
 ## 13.3 Classes {-}
 
@@ -21,29 +19,60 @@ This sounds ominous, like what?
 Can we come up with a simple example for a `constructor`, `validator`, and `helper`?
 :::
 
-:::TODO
-
-#### Constructor {-}
+#### IPA Constructor {-}
 
 Create the custom class
 
-```{#r}
+```{r}
+new_ipa <- function(x = double()) {
+  structure(x, class = "ipa")
+}
 ```
 
-#### Validator {-}
+#### IPA Validator {-}
 
 Function to make sure you can use your custom class
 
-```{#r}
+```{r}
+validate_ipa <- function(x = double()) {
+  stopifnot(is.numeric(x))
+  # has to be at least 15 bitterness
+  stopifnot(x >= 15)
+  x
+}
 ```
 
-#### Helper {-}
+### IPA Helper {-}
 
-Wrapper for constructor to make sure the validation checks pass
+Calls both the validator and the constructor
 
-```{#r}
+```{r}
+ipa <- function(x) {
+  x <- as.numeric(x)
+  # Both helper and valditor
+  x <- new_ipa(x)
+  res <- validate_ipa(x)
+  res
+}
 ```
-:::
+
+#### Test it out!
+
+Fails as expected:
+
+```{r, eval=FALSE}
+ipa(5)
+```
+
+```
+Error in validate_ipa(x) : x >= 15 is not TRUE
+```
+
+But this works!
+
+```{r}
+ipa(50)
+```
 
 ## 13.3.4.3 Exercises {-}
 
@@ -138,8 +167,30 @@ factor(x)
 Now that we've gone through the source code, I don't see where the contrasts attibute comes into play? We can look at the `C()` function but where is this used within `factor()`?
 :::
 
-:::TODO
-:::
+It is a little misleading to say that factors "have an ... attribute", where I really think he means that "some functions might check if that attribute has been assigned".
+
+
+Make a factor:
+
+```{r}
+f <- factor(c(1,2))
+f
+```
+
+Set contrasts attribute:
+
+```{r}
+f <- C(f)
+f
+```
+
+
+```{r}
+f <- factor(f)
+f
+```
+
+dang't where did those contrasts go!
 
 ## 13.4.1 Generics {-}
 
@@ -157,10 +208,48 @@ The book states: "If you wonder why we have to repeat my_new_generic twice, thin
 Can we go over why?
 :::
 
-:::TODO
-:::
+I think he’s referring to the fact that you have to use a string representation inside the UseMethod call.
 
-## 13.4.4.4 Exercises {-}
+I'm guessing part of the answer to this is baked into this warning on the UseMethod function docs:
+
+> Warning: Prior to R 2.1.0 UseMethod accepted a call with no arguments and tried to deduce the generic from the context.
+
+Basically, you're specifying the name of the function and then telling R to go find this generic function's methods. You can't self-reference the name of the generic after it's been assigned to itself?
+
+Maybe the name doesn't exist!
+
+```{r}
+test.default <- function() {
+  "test"
+}
+
+# not sure why you would want to do this, but you can
+(function() {
+  UseMethod("test")
+})()
+```
+
+Also because you might have assigned your generic to a new name, how would it know to use the true "generic" name.
+
+```{r}
+superuglygenericfunction <- function() {
+  UseMethod("superuglygenericfunction")
+}
+
+superuglygenericfunction.default <- function() {
+  "ugh"
+}
+
+nice <- function() {
+  UseMethod("superuglygenericfunction")
+}
+
+nice()
+#> [1] "ugh"
+```
+
+
+## 13.4.4.5 Exercises {-}
 
 :::question
 Can we explain what's happening here in our own words I was a little confused with the solutions manual? `g(x)` uses 1 from the `.default` method but `10` from the generic? Why?
@@ -185,8 +274,27 @@ g(x)
  1 10 
 ```
 
-:::TODO
-:::
+UseMethod creates a new function call with arguments matched as they came in to the generic. Any local variables defined before the call to `UseMethod` are retained (unlike S).
+
+When you call `g(x)` even though you appear to be ignoring it in your definition of `g` and assigning `x <- 10`, when you call `UseMethod` it will basically match the `x` in the `g.default` formals to the `x` that was passed in. The `y` isn't matched to any argument and is retained.
+
+Tyler Grant Smith:m:  13 minutes ago
+ r
+g <- function(x) {
+  x <- 10
+  y <- 10
+  UseMethod("g")
+}
+g.default <- function(x = NULL) c(x = x, y = y)
+x <- 1
+y <- 1
+# this is interesting behavior
+g()
+#>  y 
+#> 10
+g(x)
+#>  x  y 
+#>  1 10
 
 ## 13.5 Object styles {-}
 
@@ -196,17 +304,23 @@ g(x)
 Can we use the `vctrs` package in a concrete example to address some of these fringe cases and reasons why `length(x)` is causing an issue?
 :::
 
-:::TODO
-:::
+An object style is a pattern for structuring your class. You can use any structure you want but these 4 patterns get used very often. Date and factor are both vector style for example: the core data for objects of both types are stored in a single vector. And there are some other context-appropriate things denoted by attributes in each case.
 
-## 13.5.1.1 Exercise {-}
+I don't think length is an issue but when you move away from the vanilla vector style object then the meaning changes. For example, under the hood, a data frame is really a list of vectors. Each of the vectors (columns) has the same length. So if you take the length of a data frame you get the length of the list i.e. the number of columns.
 
-:::question
-Categorise the objects returned by lm(), factor(), table(), as.Date(), as.POSIXct() ecdf(), ordered(), I() into the styles described above.
-:::
+```{r}
+length(mtcars)
+```
 
-:::TODO
-:::
+The result of calling `length` on a data.frame isn't necessarily intuitive: most people would probably say that the number of rows is a more natural value for the length of a data frame.
+
+This is the same for dates: which are actually of length `3` when classes and `9` when unclassed.
+
+```{r}
+x <- as.POSIXlt(ISOdatetime(2020, 1, 1, 0, 0, 1:3))
+length(x)
+length(unclass(x))
+```
 
 ## 13.6 Inheritance {-}
 
@@ -214,17 +328,50 @@ Categorise the objects returned by lm(), factor(), table(), as.Date(), as.POSIXc
 Can we make our own example of a method with inheritance?
 :::
 
-:::TODO
-:::
+Creating an IBU calculator for beer, we can use the `.ipa` method for a beer of class `.wipa`:
 
-## 13.6.2 Subclassing {-}
+```{r}
+library(sloop)
 
-:::question
-Can we in our own words break down what `vctrs::vec_restore` is doing for us? How does `...` allow us to keep the right class on the output?
-:::
+# IBUs are calculated as onces x alpha acid x boil time / constant
+# we're going to use a different constant for IPAs and Stouts
 
-:::TODO
-:::
+
+# generic
+IBU_calculator <- function(x) {
+  UseMethod("IBU_calculator")
+}
+
+# default
+IBU_calculator.default <- function(x){
+  stop("Can only calculate IBU for beers, not ",class(x))
+}
+
+# ipa
+IBU_calculator.ipa <- function(x) {
+  1 * x * 30 / 7.25
+}
+
+# stout
+IBU_calculator.stout <- function(x) {
+  1.5 * x * 30 / 6
+}
+
+#### some beers ####
+ipa_1 <- structure(
+  15, class = c("ipa","beer")
+)
+
+# define a wine to see default dispatch
+wine_1 <- structure(3,class = c("pinot","wine"))
+
+# wipa "inherits" class ipa so we can use that method!
+wipa_1 <- structure(20, class = c("wipa","ipa","beer"))
+
+s3_dispatch(IBU_calculator(ipa_1))
+s3_dispatch(IBU_calculator(wipa_1))
+s3_dispatch(IBU_calculator(wine_1))
+```
 
 ## 13.4.3.3
 
@@ -248,17 +395,25 @@ generic2(structure(list(), class = c("b", "a2")))
 [1] "a2"
 ```
 
+```{r}
+generic2 <- function(x) UseMethod("generic2")
+generic2.a1 <- function(x) { cat("generic2.a1\n"); cat(class(x)) }
+generic2.a2 <- function(x) { cat("generic2.a2\n"); cat(class(x)) }
+generic2.b <- function(x) {
+  cat("generic2.b\n")
+  cat("Regardless of what we do, NextMethod will search for the following", 
+      "classes:\n", paste0(.Class, collapse = ", "), "\n")
+  class(x) <- "a1"
+  NextMethod()
+}
+
+x <- structure(1:1e8, class = c("b", "a2"))
+generic2(x)
+```
+
+
 
 ## 13.7.1 S3 and Base Types {-}
-
-
-:::question
-What exactly is meant by "implicit class"?
-:::
-
-:::TODO
-:::
-
 
 :::question
 WHY isn't the dispatch of mean(x1) determined by its type???
@@ -283,11 +438,18 @@ s3_dispatch(mean(x1))
 => mean.default
 ```
 
-:::TODO
-:::
+```{r}
+methods(mean)
+```
+
+mean doesn't actually have a specific method defined in base R for int or numeric. the default method handles all base types, type checking along the way:
+
+```{r}
+mean.default
+```
+
 
 ## 13.7.3 Internal Generics {-}
-
 
 :::question
 > Defining a single group generic for your class overrides the default behaviour for all of the members of the group.
