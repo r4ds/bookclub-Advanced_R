@@ -1,5 +1,6 @@
 # R6
 
+<<<<<<< HEAD
 ## 14.2 Classes and methods {-}
 
 :::question
@@ -204,3 +205,5 @@ C <- B$clone(deep = FALSE)
 ```
 
 :::
+=======
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8

@@ -367,7 +367,11 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7fedae91cfa8"
+=======
+## [1] "0x7fcbb3873ae8"
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 \begin{Shaded}
@@ -377,7 +381,11 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7fedae91cfa8"
+=======
+## [1] "0x7fcbb3873ae8"
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -389,7 +397,11 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7fedb11c3dc8"
+=======
+## [1] "0x7fcbb372f350"
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 \begin{Shaded}
@@ -399,8 +411,13 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## █ [1:0x7fedb4b54d88] <list> 
 ## └─[2:0x7fedae91cfa8] <dbl>
+=======
+## █ [1:0x7fcbb36b73c0] <list> 
+## └─[2:0x7fcbb3873ae8] <dbl>
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 \begin{Shaded}
@@ -410,7 +427,11 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7fed991f5998"
+=======
+## [1] "0x7fcbb3357660"
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 \begin{Shaded}
@@ -447,7 +468,11 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "<0x7fedb16bb188>"
+=======
+## [1] "<0x7fcbb0a950b8>"
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 \begin{Shaded}
@@ -457,7 +482,11 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## <0x7fedb16bb188>
+=======
+## <0x7fcbb0a950b8>
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 \begin{Shaded}
@@ -467,7 +496,11 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7fedb16bb188"
+=======
+## [1] "0x7fcbb0a950b8"
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -516,7 +549,11 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7fedb1c53788"
+=======
+## [1] "0x7fcbb3f760c8"
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 \begin{Shaded}
@@ -526,7 +563,11 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "<0x7fedb1c53788>"
+=======
+## [1] "<0x7fcbb3f760c8>"
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 \begin{Shaded}
@@ -536,7 +577,11 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## tracemem[0x7fedb1c53788 -> 0x7fedb1abd9c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+=======
+## tracemem[0x7fcbb3f760c8 -> 0x7fcbb568fec8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -632,7 +677,11 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7fedab8e8cd8"
+=======
+## [1] "0x7fcbba27bf88"
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -645,7 +694,11 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7fedaf021088"
+=======
+## [1] "0x7fcbb641a9b8"
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 \begin{Shaded}
@@ -668,7 +721,11 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7fedaf021088"
+=======
+## [1] "0x7fcbb641a9b8"
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 \begin{Shaded}
@@ -678,7 +735,11 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7fedaf021088"
+=======
+## [1] "0x7fcbb641a9b8"
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 \begin{Shaded}
@@ -701,7 +762,11 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7fedaf021088"
+=======
+## [1] "0x7fcbb641a9b8"
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 \begin{Shaded}
@@ -711,7 +776,11 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7fedb16c1458"
+=======
+## [1] "0x7fcbb0a9cf48"
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 \begin{Shaded}
@@ -734,7 +803,11 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] "0x7fedb38805e8"
+=======
+## [1] "0x7fcbbafd5228"
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 \begin{Shaded}
@@ -1883,7 +1956,7 @@ NULL
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Out of range"
+## [1] "In range"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1893,7 +1966,7 @@ NULL
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "Out of range"
+## [1] "In range"
 \end{verbatim}
 
 \texttt{ifelse} explicitly returns its result, whereas \texttt{if} invisibly returns it!
@@ -2535,6 +2608,7 @@ This will work:
 
 \begin{verbatim}
 ## # A tibble: 5 x 1
+<<<<<<< HEAD
 ##      x1
 ##   <dbl>
 ## 1 0.516
@@ -2542,6 +2616,15 @@ This will work:
 ## 3 0.273
 ## 4 0.957
 ## 5 0.943
+=======
+##       x1
+##    <dbl>
+## 1 0.282 
+## 2 0.119 
+## 3 0.0899
+## 4 0.248 
+## 5 0.260
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2615,7 +2698,11 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ##  [1] 218 202 295 243 217 234 270 267 262 292
+=======
+##  [1] 211 223 267 257 264 256 248 259 203 213
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3052,7 +3139,11 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
+<<<<<<< HEAD
 ## <bytecode: 0x7feda9592d80>
+=======
+## <bytecode: 0x7fcbac36fbc8>
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3923,7 +4014,11 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
+<<<<<<< HEAD
 ## <bytecode: 0x7feda826fc90>
+=======
+## <bytecode: 0x7fcbacf6e5b0>
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4061,7 +4156,11 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
+<<<<<<< HEAD
 ## <bytecode: 0x7fedada7ddb8>
+=======
+## <bytecode: 0x7fcbb3f6f5d0>
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4855,22 +4954,35 @@ Given this little example:
 
 \begin{verbatim}
 ## [1] "parent in mid: "
+<<<<<<< HEAD
 ## <environment: 0x7fedae1a5770>
 ## [1] "current in mid: "
 ## <environment: 0x7fedae1a2008>
+=======
+## <environment: 0x7fcbad77c2c0>
+## [1] "current in mid: "
+## <environment: 0x7fcbad77ca68>
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid: "
+<<<<<<< HEAD
 ## <environment: 0x7fedae1690a8>
 ## [1] "current in mid: "
 ## <environment: 0x7feda8f1ead8>
+=======
+## <environment: 0x7fcbad7632f0>
+## [1] "current in mid: "
+## <environment: 0x7fcbb218c008>
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid skip: "
+<<<<<<< HEAD
 ## <environment: 0x7feda8f1ead8>
 ## [1] "current in mid skip: "
 ## <environment: 0x7fedafcf52a0>
@@ -4878,6 +4990,15 @@ Given this little example:
 ## <environment: 0x7fedaf90b690>
 ## [1] "current in mid: "
 ## <environment: 0x7fedaf90af20>
+=======
+## <environment: 0x7fcbb218c008>
+## [1] "current in mid skip: "
+## <environment: 0x7fcb9ccd0570>
+## [1] "parent in mid: "
+## <environment: 0x7fcbb378df60>
+## [1] "current in mid: "
+## <environment: 0x7fcbb378d7f0>
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
@@ -4892,7 +5013,11 @@ Given this little example:
 ## 
 ## [[2]]
 ## [[2]][[1]]
+<<<<<<< HEAD
 ## <environment: 0x7fedafcf52a0>
+=======
+## <environment: 0x7fcb9ccd0570>
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 ## 
 ## 
 ## [[3]]
@@ -5033,6 +5158,7 @@ In order to extract p-values the solution manual suggests using \texttt{map\_dbl
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ##   [1] 8.210461e-04 7.974581e-03 1.213021e-01 2.499589e-02 2.967676e-02
 ##   [6] 9.886691e-02 1.719200e-02 4.840975e-01 1.082767e-02 3.953529e-03
 ##  [11] 3.519013e-01 3.533322e-02 1.280722e-01 3.640843e-02 2.806505e-02
@@ -5053,6 +5179,28 @@ In order to extract p-values the solution manual suggests using \texttt{map\_dbl
 ##  [86] 9.213156e-03 4.238012e-03 1.632529e-01 1.700853e-03 3.325019e-02
 ##  [91] 7.950959e-02 4.439675e-04 5.076055e-02 1.458860e-04 1.603549e-01
 ##  [96] 2.586661e-04 1.899307e-01 3.730829e-02 1.269880e-01 4.407852e-01
+=======
+##   [1] 3.919758e-02 2.725801e-02 2.048084e-03 2.448222e-02 1.797273e-01
+##   [6] 6.427377e-05 1.393028e-02 2.138812e-03 1.711449e-01 7.315840e-02
+##  [11] 8.667070e-04 5.244317e-01 4.204795e-02 7.998506e-01 5.578253e-02
+##  [16] 9.119890e-03 6.746949e-02 2.274410e-02 2.603093e-01 4.101802e-01
+##  [21] 2.987177e-01 3.375709e-03 7.739029e-04 1.634748e-02 2.368118e-02
+##  [26] 3.185381e-04 2.179816e-02 3.879471e-02 7.371905e-03 6.216229e-01
+##  [31] 3.724885e-04 3.442887e-03 4.739013e-04 3.884108e-02 3.574274e-01
+##  [36] 3.350715e-02 1.070812e-04 5.710494e-02 7.082422e-02 1.154981e-01
+##  [41] 1.419777e-03 1.618160e-01 3.794421e-02 1.075079e-02 3.175068e-03
+##  [46] 2.695676e-01 5.300240e-02 3.625895e-01 2.144712e-01 9.471641e-01
+##  [51] 5.420023e-02 4.858520e-04 4.053443e-02 8.663822e-02 1.336489e-02
+##  [56] 4.299275e-03 8.528750e-05 2.478337e-01 1.640155e-02 2.422696e-02
+##  [61] 1.234748e-02 3.089197e-02 4.330778e-01 1.211189e-01 9.201676e-03
+##  [66] 7.468813e-03 3.867998e-04 3.927870e-01 2.352236e-02 1.618903e-01
+##  [71] 7.220395e-02 5.290059e-01 4.420457e-01 1.409987e-01 1.000000e+00
+##  [76] 4.143651e-02 4.210799e-03 2.189676e-01 4.963561e-01 3.100448e-03
+##  [81] 8.475333e-05 3.627546e-02 1.436836e-02 4.084785e-02 3.410959e-02
+##  [86] 3.784247e-02 1.225133e-02 5.828471e-01 7.659134e-02 5.425627e-02
+##  [91] 2.626085e-01 4.357255e-05 2.411695e-02 1.030328e-01 3.048517e-02
+##  [96] 2.906440e-01 1.338102e-02 2.059164e-01 9.418856e-01 3.991968e-02
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 \hypertarget{exercise-9}{%
@@ -5383,12 +5531,21 @@ Answer from \href{https://community.rstudio.com/t/recursive-purrr-mutate-if/1663
 
 \begin{verbatim}
 ## Unit: microseconds
+<<<<<<< HEAD
 ##                         expr      min        lq       mean    median       uq
 ##         as_integer_rapply(x)   10.241   12.9875   35.14539   19.7865   22.983
 ##  as_integer_recursive_map(x) 1030.637 1101.2455 1273.86368 1193.7615 1413.228
 ##       max neval
 ##  1516.983   100
 ##  2247.704   100
+=======
+##                         expr     min       lq       mean   median       uq
+##         as_integer_rapply(x)   9.021   12.212   31.96814   16.291   19.761
+##  as_integer_recursive_map(x) 976.377 1018.712 1084.43230 1050.729 1103.337
+##       max neval
+##  1575.623   100
+##  1365.016   100
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 \begin{Shaded}
@@ -5861,7 +6018,11 @@ Base R contains two function factories, \texttt{approxfun()} and \texttt{ecdf()}
 \end{Shaded}
 
 \begin{verbatim}
+<<<<<<< HEAD
 ## [1] 0.3333333 0.6666667 1.0000000
+=======
+## [1] 0.6666667 0.3333333 1.0000000
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 \hypertarget{exercise-14}{%
@@ -6198,6 +6359,7 @@ Could we create a memoise wrapper that clears the cache when that's a certain nu
 
 \begin{verbatim}
 ## 14,440 B
+<<<<<<< HEAD
 ## 15,328 B
 ## 16,232 B
 ## 17,088 B
@@ -6301,10 +6463,145 @@ Could we create a memoise wrapper that clears the cache when that's a certain nu
 
 \begin{verbatim}
 ## Clearing cache [@30728]
+=======
+## 15,344 B
+## 16,248 B
+## 17,160 B
+## 18,000 B
+## 18,896 B
+## 19,800 B
+## 20,576 B
+## 21,408 B
+## 22,296 B
+## 23,192 B
+## 23,960 B
+## 24,800 B
+## 25,704 B
+## 26,416 B
+## 27,248 B
+## 28,024 B
+## 28,800 B
+## 29,720 B
+## 30,496 B
+\end{verbatim}
+
+\begin{verbatim}
+## Clearing cache [@30496]
+\end{verbatim}
+
+\begin{verbatim}
+## 14,440 B
+## 15,280 B
+## 16,200 B
+## 17,032 B
+## 17,880 B
+## 18,768 B
+## 19,672 B
+## 20,592 B
+## 21,432 B
+## 22,256 B
+## 23,096 B
+## 24,000 B
+## 24,776 B
+## 25,712 B
+## 26,552 B
+## 27,264 B
+## 28,160 B
+## 28,936 B
+## 29,768 B
+## 30,544 B
+\end{verbatim}
+
+\begin{verbatim}
+## Clearing cache [@30544]
+\end{verbatim}
+
+\begin{verbatim}
+## 14,448 B
+## 15,352 B
+## 16,256 B
+## 17,168 B
+## 18,000 B
+## 18,776 B
+## 19,696 B
+## 20,592 B
+## 21,448 B
+## 22,352 B
+## 23,200 B
+## 24,096 B
+## 25,000 B
+## 25,840 B
+## 26,680 B
+## 27,576 B
+## 28,472 B
+## 29,240 B
+## 30,032 B
+\end{verbatim}
+
+\begin{verbatim}
+## Clearing cache [@30032]
+\end{verbatim}
+
+\begin{verbatim}
+## 14,456 B
+## 15,360 B
+## 16,248 B
+## 17,136 B
+## 18,056 B
+## 18,952 B
+## 19,776 B
+## 20,632 B
+## 21,528 B
+## 22,424 B
+## 23,200 B
+## 24,040 B
+## 24,808 B
+## 25,640 B
+## 26,480 B
+## 27,336 B
+## 28,240 B
+## 29,080 B
+## 29,992 B
+## 30,824 B
+\end{verbatim}
+
+\begin{verbatim}
+## Clearing cache [@30824]
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 \begin{verbatim}
 ## 14,432 B
+<<<<<<< HEAD
+=======
+## 15,352 B
+## 16,256 B
+## 17,160 B
+## 17,992 B
+## 18,832 B
+## 19,664 B
+## 20,576 B
+## 21,472 B
+## 22,392 B
+## 23,280 B
+## 24,112 B
+## 25,016 B
+## 25,848 B
+## 26,680 B
+## 27,512 B
+## 28,288 B
+## 29,184 B
+## 29,960 B
+## 30,880 B
+\end{verbatim}
+
+\begin{verbatim}
+## Clearing cache [@30880]
+\end{verbatim}
+
+\begin{verbatim}
+## 14,440 B
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \end{verbatim}
 
 Can we come up with simple example for these function operators?
@@ -6891,6 +7188,7 @@ This is the same for dates: which are actually of length \texttt{3} when classes
 \begin{verbatim}
 ## [1] 3
 \end{verbatim}
+<<<<<<< HEAD
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6898,6 +7196,15 @@ This is the same for dates: which are actually of length \texttt{3} when classes
 \end{Highlighting}
 \end{Shaded}
 
+=======
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(}\KeywordTok{unclass}\NormalTok{(x))}
+\end{Highlighting}
+\end{Shaded}
+
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 \begin{verbatim}
 ## [1] 11
 \end{verbatim}
@@ -7107,7 +7414,11 @@ mean doesn't actually have a specific method defined in base R for int or numeri
 ##     }
 ##     .Internal(mean(x))
 ## }
+<<<<<<< HEAD
 ## <bytecode: 0x7fedae724ac0>
+=======
+## <bytecode: 0x7fcbb33ea4e0>
+>>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
 ## <environment: namespace:base>
 \end{verbatim}
 
