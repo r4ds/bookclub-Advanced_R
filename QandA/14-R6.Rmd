@@ -1,10 +1,192 @@
 # R6
 
-- encapsulated object$method()
-- mutable: reference semantics
+## 14.2 Classes and methods {-}
 
-- in most cases R6 will lead you to non-idiomatic R code ?
+:::question
+> Any ... R6 method called for its side effects ... should return invisible(self).
+
+WHY? What is `invisible(self)` doing in the add function below? I tried removing this line but it doesn't change the output...
+:::
 
 ```{r}
-library(R6)
+Accumulator <- R6Class("Accumulator", list(
+  sum = 0,
+  add = function(x = 1) {
+    self$sum <- self$sum + x 
+    invisible(self)
+  })
+)
+
+x <- Accumulator$new()
 ```
+
+## 14.2.2 Important methods {-}
+
+:::question
+Why don't we need to specifically call `haldey2$print` to see the output below)? Is the print method just a built in output of an `R6` object?
+:::
+ 
+```{r}
+Person <- R6Class("Person", list(
+  name = NULL,
+  age = NA,
+  initialize = function(name, age = NA) {
+    self$name <- name
+    self$age <- age
+  },
+  print = function(...) {
+    cat("Person: \n")
+    cat("  Name: ", self$name, "\n", sep = "")
+    cat("  Age:  ", self$age, "\n", sep = "")
+    #invisible(self)
+  }
+))
+
+hadley2 <- Person$new("Hadley")
+hadley2
+```
+
+
+## Exercises 14.2.6.4 {-} 
+
+:::question
+Why can't we use method chaining to access the current time zone?
+:::
+
+```{r}
+Timezone <- R6Class(
+  classname = "Timezone", 
+  public = list(
+    get = function() {
+      Sys.timezone()
+    },
+    set = function(value) {
+      stopifnot(value %in% OlsonNames())
+      
+      old <- self$get()
+      Sys.setenv(TZ = value)
+      invisible(old)
+    })
+)
+
+tz <- Timezone$new()
+
+old <- tz$set("Antarctica/South_Pole")
+tz$get()
+```
+
+```{r, eval=FALSE}
+tz$set("Antarctica/South_Pole")$get()
+```
+
+```
+Error in tz$set("Antarctica/South_Pole")$get : 
+  $ operator is invalid for atomic vectors
+```
+
+:::TODO
+```{r, eval=FALSE}
+Timezone <- R6Class(
+  classname = "Timezone", 
+  public = list(
+    current_zone = Sys.timezone(),
+    get = function() {
+      Sys.timezone()
+      self$current_zone <- Sys.timezone()
+    },
+    set = function(value) {
+      stopifnot(value %in% OlsonNames())
+      
+      old <- self$get()
+      Sys.setenv(TZ = value)
+      self$current_zone <- Sys.setenv(TZ = value)
+      invisible(old)
+    })
+)
+
+tz <- Timezone$new()
+
+tz$set("Antarctica/South_Pole")$current_zone
+```
+:::
+
+## 14.3.2 Active fields {-}
+
+:::question
+Why can we write over the `$name` but not `$age` methods when both are part of the `active` list?
+:::
+
+```{r, eval=FALSE}
+Person <- R6Class("Person", 
+  private = list(
+    .age = NA,
+    .name = NULL
+  ),
+  active = list(
+    age = function(value) {
+      if (missing(value)) {
+        private$.age
+      } else {
+        stop("`$age` is read only", call. = FALSE)
+      }
+    },
+    name = function(value) {
+      if (missing(value)) {
+        private$.name
+      } else {
+        stopifnot(is.character(value), length(value) == 1)
+        private$.name <- value
+        self
+      }
+    }
+  ),
+  public = list(
+    initialize = function(name, age = NA) {
+      private$.name <- name
+      private$.age <- age
+    }
+  )
+)
+```
+
+```{r}
+hadley4 <- Person$new("Hadley", age = 38)
+hadley4$name <- "Maya"
+hadley4$name
+```
+
+```{r, eval=FALSE}
+hadley4$age <- 20
+```
+
+```
+Error: `$age` is read only
+```
+
+:::TODO
+:::
+
+## 14.4 Reference semantics {-}
+
+:::question
+> $clone() does not recursively clone nested R6 objects. If you want that, you’ll need to use $clone(deep = TRUE).
+
+Can we see this in action using a subclass?
+:::
+
+:::TODO
+```{r}
+A <- R6Class(
+  classname = "A",
+   public = list(
+    field = "foo",
+    method = function() {
+      "bar"
+    }
+  )
+)
+
+B <- A$new()
+C <- B$clone(deep = FALSE)
+```
+:::
