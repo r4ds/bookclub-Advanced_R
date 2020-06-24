@@ -8,7 +8,7 @@
 WHY? What is `invisible(self)` doing in the add function below? I tried removing this line but it doesn't change the output...
 :::
 
-```{r}
+```{r, eval=FALSE}
 Accumulator <- R6Class("Accumulator", list(
   sum = 0,
   add = function(x = 1) {
@@ -26,7 +26,7 @@ x <- Accumulator$new()
 Why don't we need to specifically call `haldey2$print` to see the output below)? Is the print method just a built in output of an `R6` object?
 :::
  
-```{r}
+```{r, eval=FALSE}
 Person <- R6Class("Person", list(
   name = NULL,
   age = NA,
@@ -46,6 +46,11 @@ hadley2 <- Person$new("Hadley")
 hadley2
 ```
 
+```
+Person: 
+  Name: Hadley
+  Age:  NA
+```
 
 ## Exercises 14.2.6.4 {-} 
 
@@ -53,7 +58,7 @@ hadley2
 Why can't we use method chaining to access the current time zone?
 :::
 
-```{r}
+```{r, eval=FALSE}
 Timezone <- R6Class(
   classname = "Timezone", 
   public = list(
@@ -73,6 +78,10 @@ tz <- Timezone$new()
 
 old <- tz$set("Antarctica/South_Pole")
 tz$get()
+```
+
+```
+[1] "America/Los_Angeles"
 ```
 
 ```{r, eval=FALSE}
@@ -149,10 +158,14 @@ Person <- R6Class("Person",
 )
 ```
 
-```{r}
+```{r, eval=FALSE}
 hadley4 <- Person$new("Hadley", age = 38)
 hadley4$name <- "Maya"
 hadley4$name
+```
+
+```
+[1] "Maya"
 ```
 
 ```{r, eval=FALSE}
@@ -175,7 +188,7 @@ Can we see this in action using a subclass?
 :::
 
 :::TODO
-```{r}
+```{r, eval=FALSE}
 A <- R6Class(
   classname = "A",
    public = list(
@@ -189,4 +202,5 @@ A <- R6Class(
 B <- A$new()
 C <- B$clone(deep = FALSE)
 ```
+
 :::
