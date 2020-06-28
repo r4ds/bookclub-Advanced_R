@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-06-19" />
+<meta name="date" content="2020-06-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -288,7 +288,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#internal-generics"><i class="fa fa-check"></i>13.7.3 Internal Generics</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#double-dispatch"><i class="fa fa-check"></i>13.7.4 Double Dispatch</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="r6.html"><a href="r6.html"><i class="fa fa-check"></i><b>14</b> R6</a></li>
+<li class="chapter" data-level="14" data-path="r6.html"><a href="r6.html"><i class="fa fa-check"></i><b>14</b> R6</a><ul>
+<li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#classes-and-methods"><i class="fa fa-check"></i>14.2 Classes and methods</a></li>
+<li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#important-methods"><i class="fa fa-check"></i>14.2.2 Important methods</a></li>
+<li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#exercises-14.2.6.4"><i class="fa fa-check"></i>Exercises 14.2.6.4</a></li>
+<li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#active-fields"><i class="fa fa-check"></i>14.3.2 Active fields</a></li>
+<li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#reference-semantics"><i class="fa fa-check"></i>14.4 Reference semantics</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -494,11 +500,7 @@ and ultimately the delayed binding is realized as a promise with <code>defineVar
 <a class="sourceLine" id="cb358-3" data-line-number="3"><span class="kw">fget</span>(<span class="st">&quot;mean&quot;</span>, <span class="dt">inherits =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## function (x, ...) 
 ## UseMethod(&quot;mean&quot;)
-<<<<<<< HEAD
-## &lt;bytecode: 0x7feda826fc90&gt;
-=======
-## &lt;bytecode: 0x7fcbacf6e5b0&gt;
->>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
+## &lt;bytecode: 0x7fd65ef4a620&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 </div>
 <p>Inherits is an argument that stops the function from performing the recursive action of looking into the parent environment for the name. Inherits is acting like a valve. If false, and the name wasnt found in the current environment, then stop because the next expression searches the parent of env. In the case environment is the empty environment then stop because the empty environment doesnt have a parent.</p>
@@ -610,11 +612,7 @@ and ultimately the delayed binding is realized as a promise with <code>defineVar
 ##     conflicts &lt;- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-<<<<<<< HEAD
-## &lt;bytecode: 0x7fedada7ddb8&gt;
-=======
-## &lt;bytecode: 0x7fcbb3f6f5d0&gt;
->>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
+## &lt;bytecode: 0x7fd6656ff6c8&gt;
 ## &lt;environment: namespace:conflicted&gt;</code></pre>
 </div>
 <div id="call-stacks" class="section level2 unnumbered">

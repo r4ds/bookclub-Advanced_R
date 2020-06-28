@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-06-19" />
+<meta name="date" content="2020-06-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -288,7 +288,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#internal-generics"><i class="fa fa-check"></i>13.7.3 Internal Generics</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#double-dispatch"><i class="fa fa-check"></i>13.7.4 Double Dispatch</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="r6.html"><a href="r6.html"><i class="fa fa-check"></i><b>14</b> R6</a></li>
+<li class="chapter" data-level="14" data-path="r6.html"><a href="r6.html"><i class="fa fa-check"></i><b>14</b> R6</a><ul>
+<li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#classes-and-methods"><i class="fa fa-check"></i>14.2 Classes and methods</a></li>
+<li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#important-methods"><i class="fa fa-check"></i>14.2.2 Important methods</a></li>
+<li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#exercises-14.2.6.4"><i class="fa fa-check"></i>Exercises 14.2.6.4</a></li>
+<li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#active-fields"><i class="fa fa-check"></i>14.3.2 Active fields</a></li>
+<li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#reference-semantics"><i class="fa fa-check"></i>14.4 Reference semantics</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -789,51 +795,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb417-41" data-line-number="41">}</a>
 <a class="sourceLine" id="cb417-42" data-line-number="42"><span class="kw">analyze_text</span>(<span class="kw">list</span>(<span class="st">&quot;CORRECT&quot;</span>, <span class="st">&quot;NOT&quot;</span>, <span class="st">&quot;CORRECT&quot;</span>))</a></code></pre></div>
 <pre><code>## [1] &quot;parent in mid: &quot;
-<<<<<<< HEAD
-## &lt;environment: 0x7fedb0f95da8&gt;
+## &lt;environment: 0x7fd664dd1cb8&gt;
 ## [1] &quot;current in mid: &quot;
-## &lt;environment: 0x7fedb0f95600&gt;
-=======
-## &lt;environment: 0x7fcbb3bad348&gt;
-## [1] &quot;current in mid: &quot;
-## &lt;environment: 0x7fcbb3bceab0&gt;
->>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
+## &lt;environment: 0x7fd664dd1510&gt;
 ## [1] &quot;parent in low: &quot;
 ## &lt;environment: R_GlobalEnv&gt;
 ## [1] &quot;current in low: &quot;
 ## &lt;environment: R_GlobalEnv&gt;
 ## [1] &quot;parent in mid: &quot;
-<<<<<<< HEAD
-## &lt;environment: 0x7fedb0fa86a0&gt;
+## &lt;environment: 0x7fd664de5cf0&gt;
 ## [1] &quot;current in mid: &quot;
-## &lt;environment: 0x7fedae76ccc0&gt;
-=======
-## &lt;environment: 0x7fcbb3bb3380&gt;
-## [1] &quot;current in mid: &quot;
-## &lt;environment: 0x7fcbb5821460&gt;
->>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
+## &lt;environment: 0x7fd664fa2e10&gt;
 ## [1] &quot;parent in low: &quot;
 ## &lt;environment: R_GlobalEnv&gt;
 ## [1] &quot;current in low: &quot;
 ## &lt;environment: R_GlobalEnv&gt;
 ## [1] &quot;parent in mid skip: &quot;
-<<<<<<< HEAD
-## &lt;environment: 0x7fedae76ccc0&gt;
+## &lt;environment: 0x7fd664fa2e10&gt;
 ## [1] &quot;current in mid skip: &quot;
-## &lt;environment: 0x7fedaddfad50&gt;
+## &lt;environment: 0x7fd666d47660&gt;
 ## [1] &quot;parent in mid: &quot;
-## &lt;environment: 0x7fedade03140&gt;
+## &lt;environment: 0x7fd666d4fa50&gt;
 ## [1] &quot;current in mid: &quot;
-## &lt;environment: 0x7fedade068e0&gt;
-=======
-## &lt;environment: 0x7fcbb5821460&gt;
-## [1] &quot;current in mid skip: &quot;
-## &lt;environment: 0x7fcbb5a75e00&gt;
-## [1] &quot;parent in mid: &quot;
-## &lt;environment: 0x7fcbb5a782e0&gt;
-## [1] &quot;current in mid: &quot;
-## &lt;environment: 0x7fcbb5105a80&gt;
->>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
+## &lt;environment: 0x7fd666d4f2e0&gt;
 ## [1] &quot;parent in low: &quot;
 ## &lt;environment: R_GlobalEnv&gt;
 ## [1] &quot;current in low: &quot;
@@ -845,11 +829,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## [[2]]
 ## [[2]][[1]]
-<<<<<<< HEAD
-## &lt;environment: 0x7fedaddfad50&gt;
-=======
-## &lt;environment: 0x7fcbb5a75e00&gt;
->>>>>>> 3332e4fcdb7aeb2165265f2d20f8b8c32f211bd8
+## &lt;environment: 0x7fd666d47660&gt;
 ## 
 ## 
 ## [[3]]

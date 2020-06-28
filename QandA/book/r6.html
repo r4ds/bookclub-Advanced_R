@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-06-25" />
+<meta name="date" content="2020-06-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -325,92 +325,98 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p>WHY? What is <code>invisible(self)</code> doing in the add function below? I tried removing this line but it doesn’t change the output…</p>
 </div>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">Accumulator &lt;-<span class="st"> </span><span class="kw">R6Class</span>(<span class="st">&quot;Accumulator&quot;</span>, <span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="dt">sum =</span> <span class="dv">0</span>,</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="dt">add =</span> <span class="cf">function</span>(<span class="dt">x =</span> <span class="dv">1</span>) {</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">    self<span class="op">$</span>sum &lt;-<span class="st"> </span>self<span class="op">$</span>sum <span class="op">+</span><span class="st"> </span>x </a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="kw">invisible</span>(self)</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">  })</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">)</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">x &lt;-<span class="st"> </span>Accumulator<span class="op">$</span><span class="kw">new</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb594-1" data-line-number="1">Accumulator &lt;-<span class="st"> </span><span class="kw">R6Class</span>(<span class="st">&quot;Accumulator&quot;</span>, <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb594-2" data-line-number="2">  <span class="dt">sum =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb594-3" data-line-number="3">  <span class="dt">add =</span> <span class="cf">function</span>(<span class="dt">x =</span> <span class="dv">1</span>) {</a>
+<a class="sourceLine" id="cb594-4" data-line-number="4">    self<span class="op">$</span>sum &lt;-<span class="st"> </span>self<span class="op">$</span>sum <span class="op">+</span><span class="st"> </span>x </a>
+<a class="sourceLine" id="cb594-5" data-line-number="5">    <span class="kw">invisible</span>(self)</a>
+<a class="sourceLine" id="cb594-6" data-line-number="6">  })</a>
+<a class="sourceLine" id="cb594-7" data-line-number="7">)</a>
+<a class="sourceLine" id="cb594-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb594-9" data-line-number="9">x &lt;-<span class="st"> </span>Accumulator<span class="op">$</span><span class="kw">new</span>()</a></code></pre></div>
+<div class="TODO">
+
+</div>
 </div>
 <div id="important-methods" class="section level2 unnumbered">
 <h2>14.2.2 Important methods</h2>
 <div class="question">
 <p>Why don’t we need to specifically call <code>haldey2$print</code> to see the output below)? Is the print method just a built in output of an <code>R6</code> object?</p>
 </div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">Person &lt;-<span class="st"> </span><span class="kw">R6Class</span>(<span class="st">&quot;Person&quot;</span>, <span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="dt">name =</span> <span class="ot">NULL</span>,</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="dt">age =</span> <span class="ot">NA</span>,</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="dt">initialize =</span> <span class="cf">function</span>(name, <span class="dt">age =</span> <span class="ot">NA</span>) {</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">    self<span class="op">$</span>name &lt;-<span class="st"> </span>name</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">    self<span class="op">$</span>age &lt;-<span class="st"> </span>age</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">  },</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">  <span class="dt">print =</span> <span class="cf">function</span>(...) {</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">    <span class="kw">cat</span>(<span class="st">&quot;Person: </span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">    <span class="kw">cat</span>(<span class="st">&quot;  Name: &quot;</span>, self<span class="op">$</span>name, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">    <span class="kw">cat</span>(<span class="st">&quot;  Age:  &quot;</span>, self<span class="op">$</span>age, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">    <span class="co">#invisible(self)</span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">  }</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">))</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">hadley2 &lt;-<span class="st"> </span>Person<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;Hadley&quot;</span>)</a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">hadley2</a></code></pre></div>
+<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb595-1" data-line-number="1">Person &lt;-<span class="st"> </span><span class="kw">R6Class</span>(<span class="st">&quot;Person&quot;</span>, <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb595-2" data-line-number="2">  <span class="dt">name =</span> <span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb595-3" data-line-number="3">  <span class="dt">age =</span> <span class="ot">NA</span>,</a>
+<a class="sourceLine" id="cb595-4" data-line-number="4">  <span class="dt">initialize =</span> <span class="cf">function</span>(name, <span class="dt">age =</span> <span class="ot">NA</span>) {</a>
+<a class="sourceLine" id="cb595-5" data-line-number="5">    self<span class="op">$</span>name &lt;-<span class="st"> </span>name</a>
+<a class="sourceLine" id="cb595-6" data-line-number="6">    self<span class="op">$</span>age &lt;-<span class="st"> </span>age</a>
+<a class="sourceLine" id="cb595-7" data-line-number="7">  },</a>
+<a class="sourceLine" id="cb595-8" data-line-number="8">  <span class="dt">print =</span> <span class="cf">function</span>(...) {</a>
+<a class="sourceLine" id="cb595-9" data-line-number="9">    <span class="kw">cat</span>(<span class="st">&quot;Person: </span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
+<a class="sourceLine" id="cb595-10" data-line-number="10">    <span class="kw">cat</span>(<span class="st">&quot;  Name: &quot;</span>, self<span class="op">$</span>name, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)</a>
+<a class="sourceLine" id="cb595-11" data-line-number="11">    <span class="kw">cat</span>(<span class="st">&quot;  Age:  &quot;</span>, self<span class="op">$</span>age, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)</a>
+<a class="sourceLine" id="cb595-12" data-line-number="12">    <span class="co">#invisible(self)</span></a>
+<a class="sourceLine" id="cb595-13" data-line-number="13">  }</a>
+<a class="sourceLine" id="cb595-14" data-line-number="14">))</a>
+<a class="sourceLine" id="cb595-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb595-16" data-line-number="16">hadley2 &lt;-<span class="st"> </span>Person<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;Hadley&quot;</span>)</a>
+<a class="sourceLine" id="cb595-17" data-line-number="17">hadley2</a></code></pre></div>
 <pre><code>Person: 
   Name: Hadley
   Age:  NA</code></pre>
+<div class="TODO">
+
+</div>
 </div>
 <div id="exercises-14.2.6.4" class="section level2 unnumbered">
 <h2>Exercises 14.2.6.4</h2>
 <div class="question">
 <p>Why can’t we use method chaining to access the current time zone?</p>
 </div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">Timezone &lt;-<span class="st"> </span><span class="kw">R6Class</span>(</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="dt">classname =</span> <span class="st">&quot;Timezone&quot;</span>, </a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="dt">public =</span> <span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">    <span class="dt">get =</span> <span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">      <span class="kw">Sys.timezone</span>()</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">    },</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">    <span class="dt">set =</span> <span class="cf">function</span>(value) {</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">      <span class="kw">stopifnot</span>(value <span class="op">%in%</span><span class="st"> </span><span class="kw">OlsonNames</span>())</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">      </a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">      old &lt;-<span class="st"> </span>self<span class="op">$</span><span class="kw">get</span>()</a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">      <span class="kw">Sys.setenv</span>(<span class="dt">TZ =</span> value)</a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">      <span class="kw">invisible</span>(old)</a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">    })</a>
-<a class="sourceLine" id="cb4-14" data-line-number="14">)</a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16">tz &lt;-<span class="st"> </span>Timezone<span class="op">$</span><span class="kw">new</span>()</a>
-<a class="sourceLine" id="cb4-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb4-18" data-line-number="18">old &lt;-<span class="st"> </span>tz<span class="op">$</span><span class="kw">set</span>(<span class="st">&quot;Antarctica/South_Pole&quot;</span>)</a>
-<a class="sourceLine" id="cb4-19" data-line-number="19">tz<span class="op">$</span><span class="kw">get</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb597-1" data-line-number="1">Timezone &lt;-<span class="st"> </span><span class="kw">R6Class</span>(</a>
+<a class="sourceLine" id="cb597-2" data-line-number="2">  <span class="dt">classname =</span> <span class="st">&quot;Timezone&quot;</span>, </a>
+<a class="sourceLine" id="cb597-3" data-line-number="3">  <span class="dt">public =</span> <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb597-4" data-line-number="4">    <span class="dt">get =</span> <span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb597-5" data-line-number="5">      <span class="kw">Sys.timezone</span>()</a>
+<a class="sourceLine" id="cb597-6" data-line-number="6">    },</a>
+<a class="sourceLine" id="cb597-7" data-line-number="7">    <span class="dt">set =</span> <span class="cf">function</span>(value) {</a>
+<a class="sourceLine" id="cb597-8" data-line-number="8">      <span class="kw">stopifnot</span>(value <span class="op">%in%</span><span class="st"> </span><span class="kw">OlsonNames</span>())</a>
+<a class="sourceLine" id="cb597-9" data-line-number="9">      </a>
+<a class="sourceLine" id="cb597-10" data-line-number="10">      old &lt;-<span class="st"> </span>self<span class="op">$</span><span class="kw">get</span>()</a>
+<a class="sourceLine" id="cb597-11" data-line-number="11">      <span class="kw">Sys.setenv</span>(<span class="dt">TZ =</span> value)</a>
+<a class="sourceLine" id="cb597-12" data-line-number="12">      <span class="kw">invisible</span>(old)</a>
+<a class="sourceLine" id="cb597-13" data-line-number="13">    })</a>
+<a class="sourceLine" id="cb597-14" data-line-number="14">)</a>
+<a class="sourceLine" id="cb597-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb597-16" data-line-number="16">tz &lt;-<span class="st"> </span>Timezone<span class="op">$</span><span class="kw">new</span>()</a>
+<a class="sourceLine" id="cb597-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb597-18" data-line-number="18">old &lt;-<span class="st"> </span>tz<span class="op">$</span><span class="kw">set</span>(<span class="st">&quot;Antarctica/South_Pole&quot;</span>)</a>
+<a class="sourceLine" id="cb597-19" data-line-number="19">tz<span class="op">$</span><span class="kw">get</span>()</a></code></pre></div>
 <pre><code>[1] &quot;America/Los_Angeles&quot;</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">tz<span class="op">$</span><span class="kw">set</span>(<span class="st">&quot;Antarctica/South_Pole&quot;</span>)<span class="op">$</span><span class="kw">get</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb599-1" data-line-number="1">tz<span class="op">$</span><span class="kw">set</span>(<span class="st">&quot;Antarctica/South_Pole&quot;</span>)<span class="op">$</span><span class="kw">get</span>()</a></code></pre></div>
 <pre><code>Error in tz$set(&quot;Antarctica/South_Pole&quot;)$get : 
   $ operator is invalid for atomic vectors</code></pre>
 <div class="TODO">
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">Timezone &lt;-<span class="st"> </span><span class="kw">R6Class</span>(</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">  <span class="dt">classname =</span> <span class="st">&quot;Timezone&quot;</span>, </a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">  <span class="dt">public =</span> <span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">    <span class="dt">current_zone =</span> <span class="kw">Sys.timezone</span>(),</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">    <span class="dt">get =</span> <span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">      <span class="kw">Sys.timezone</span>()</a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">      self<span class="op">$</span>current_zone &lt;-<span class="st"> </span><span class="kw">Sys.timezone</span>()</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">    },</a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">    <span class="dt">set =</span> <span class="cf">function</span>(value) {</a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">      <span class="kw">stopifnot</span>(value <span class="op">%in%</span><span class="st"> </span><span class="kw">OlsonNames</span>())</a>
-<a class="sourceLine" id="cb8-11" data-line-number="11">      </a>
-<a class="sourceLine" id="cb8-12" data-line-number="12">      old &lt;-<span class="st"> </span>self<span class="op">$</span><span class="kw">get</span>()</a>
-<a class="sourceLine" id="cb8-13" data-line-number="13">      <span class="kw">Sys.setenv</span>(<span class="dt">TZ =</span> value)</a>
-<a class="sourceLine" id="cb8-14" data-line-number="14">      self<span class="op">$</span>current_zone &lt;-<span class="st"> </span><span class="kw">Sys.setenv</span>(<span class="dt">TZ =</span> value)</a>
-<a class="sourceLine" id="cb8-15" data-line-number="15">      <span class="kw">invisible</span>(old)</a>
-<a class="sourceLine" id="cb8-16" data-line-number="16">    })</a>
-<a class="sourceLine" id="cb8-17" data-line-number="17">)</a>
-<a class="sourceLine" id="cb8-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb8-19" data-line-number="19">tz &lt;-<span class="st"> </span>Timezone<span class="op">$</span><span class="kw">new</span>()</a>
-<a class="sourceLine" id="cb8-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb8-21" data-line-number="21">tz<span class="op">$</span><span class="kw">set</span>(<span class="st">&quot;Antarctica/South_Pole&quot;</span>)<span class="op">$</span>current_zone</a></code></pre></div>
+<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb601-1" data-line-number="1">Timezone &lt;-<span class="st"> </span><span class="kw">R6Class</span>(</a>
+<a class="sourceLine" id="cb601-2" data-line-number="2">  <span class="dt">classname =</span> <span class="st">&quot;Timezone&quot;</span>, </a>
+<a class="sourceLine" id="cb601-3" data-line-number="3">  <span class="dt">public =</span> <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb601-4" data-line-number="4">    <span class="dt">current_zone =</span> <span class="kw">Sys.timezone</span>(),</a>
+<a class="sourceLine" id="cb601-5" data-line-number="5">    <span class="dt">get =</span> <span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb601-6" data-line-number="6">      <span class="kw">Sys.timezone</span>()</a>
+<a class="sourceLine" id="cb601-7" data-line-number="7">      self<span class="op">$</span>current_zone &lt;-<span class="st"> </span><span class="kw">Sys.timezone</span>()</a>
+<a class="sourceLine" id="cb601-8" data-line-number="8">    },</a>
+<a class="sourceLine" id="cb601-9" data-line-number="9">    <span class="dt">set =</span> <span class="cf">function</span>(value) {</a>
+<a class="sourceLine" id="cb601-10" data-line-number="10">      <span class="kw">stopifnot</span>(value <span class="op">%in%</span><span class="st"> </span><span class="kw">OlsonNames</span>())</a>
+<a class="sourceLine" id="cb601-11" data-line-number="11">      </a>
+<a class="sourceLine" id="cb601-12" data-line-number="12">      old &lt;-<span class="st"> </span>self<span class="op">$</span><span class="kw">get</span>()</a>
+<a class="sourceLine" id="cb601-13" data-line-number="13">      <span class="kw">Sys.setenv</span>(<span class="dt">TZ =</span> value)</a>
+<a class="sourceLine" id="cb601-14" data-line-number="14">      self<span class="op">$</span>current_zone &lt;-<span class="st"> </span><span class="kw">Sys.setenv</span>(<span class="dt">TZ =</span> value)</a>
+<a class="sourceLine" id="cb601-15" data-line-number="15">      <span class="kw">invisible</span>(old)</a>
+<a class="sourceLine" id="cb601-16" data-line-number="16">    })</a>
+<a class="sourceLine" id="cb601-17" data-line-number="17">)</a>
+<a class="sourceLine" id="cb601-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb601-19" data-line-number="19">tz &lt;-<span class="st"> </span>Timezone<span class="op">$</span><span class="kw">new</span>()</a>
+<a class="sourceLine" id="cb601-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb601-21" data-line-number="21">tz<span class="op">$</span><span class="kw">set</span>(<span class="st">&quot;Antarctica/South_Pole&quot;</span>)<span class="op">$</span>current_zone</a></code></pre></div>
 </div>
 </div>
 <div id="active-fields" class="section level2 unnumbered">
@@ -418,41 +424,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="question">
 <p>Why can we write over the <code>$name</code> but not <code>$age</code> methods when both are part of the <code>active</code> list?</p>
 </div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">Person &lt;-<span class="st"> </span><span class="kw">R6Class</span>(<span class="st">&quot;Person&quot;</span>, </a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">  <span class="dt">private =</span> <span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">    <span class="dt">.age =</span> <span class="ot">NA</span>,</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">    <span class="dt">.name =</span> <span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">  ),</a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">  <span class="dt">active =</span> <span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">    <span class="dt">age =</span> <span class="cf">function</span>(value) {</a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">      <span class="cf">if</span> (<span class="kw">missing</span>(value)) {</a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">        private<span class="op">$</span>.age</a>
-<a class="sourceLine" id="cb9-10" data-line-number="10">      } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb9-11" data-line-number="11">        <span class="kw">stop</span>(<span class="st">&quot;`$age` is read only&quot;</span>, <span class="dt">call. =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb9-12" data-line-number="12">      }</a>
-<a class="sourceLine" id="cb9-13" data-line-number="13">    },</a>
-<a class="sourceLine" id="cb9-14" data-line-number="14">    <span class="dt">name =</span> <span class="cf">function</span>(value) {</a>
-<a class="sourceLine" id="cb9-15" data-line-number="15">      <span class="cf">if</span> (<span class="kw">missing</span>(value)) {</a>
-<a class="sourceLine" id="cb9-16" data-line-number="16">        private<span class="op">$</span>.name</a>
-<a class="sourceLine" id="cb9-17" data-line-number="17">      } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb9-18" data-line-number="18">        <span class="kw">stopifnot</span>(<span class="kw">is.character</span>(value), <span class="kw">length</span>(value) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb9-19" data-line-number="19">        private<span class="op">$</span>.name &lt;-<span class="st"> </span>value</a>
-<a class="sourceLine" id="cb9-20" data-line-number="20">        self</a>
-<a class="sourceLine" id="cb9-21" data-line-number="21">      }</a>
-<a class="sourceLine" id="cb9-22" data-line-number="22">    }</a>
-<a class="sourceLine" id="cb9-23" data-line-number="23">  ),</a>
-<a class="sourceLine" id="cb9-24" data-line-number="24">  <span class="dt">public =</span> <span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb9-25" data-line-number="25">    <span class="dt">initialize =</span> <span class="cf">function</span>(name, <span class="dt">age =</span> <span class="ot">NA</span>) {</a>
-<a class="sourceLine" id="cb9-26" data-line-number="26">      private<span class="op">$</span>.name &lt;-<span class="st"> </span>name</a>
-<a class="sourceLine" id="cb9-27" data-line-number="27">      private<span class="op">$</span>.age &lt;-<span class="st"> </span>age</a>
-<a class="sourceLine" id="cb9-28" data-line-number="28">    }</a>
-<a class="sourceLine" id="cb9-29" data-line-number="29">  )</a>
-<a class="sourceLine" id="cb9-30" data-line-number="30">)</a></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">hadley4 &lt;-<span class="st"> </span>Person<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;Hadley&quot;</span>, <span class="dt">age =</span> <span class="dv">38</span>)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">hadley4<span class="op">$</span>name &lt;-<span class="st"> &quot;Maya&quot;</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">hadley4<span class="op">$</span>name</a></code></pre></div>
+<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb602-1" data-line-number="1">Person &lt;-<span class="st"> </span><span class="kw">R6Class</span>(<span class="st">&quot;Person&quot;</span>, </a>
+<a class="sourceLine" id="cb602-2" data-line-number="2">  <span class="dt">private =</span> <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb602-3" data-line-number="3">    <span class="dt">.age =</span> <span class="ot">NA</span>,</a>
+<a class="sourceLine" id="cb602-4" data-line-number="4">    <span class="dt">.name =</span> <span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb602-5" data-line-number="5">  ),</a>
+<a class="sourceLine" id="cb602-6" data-line-number="6">  <span class="dt">active =</span> <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb602-7" data-line-number="7">    <span class="dt">age =</span> <span class="cf">function</span>(value) {</a>
+<a class="sourceLine" id="cb602-8" data-line-number="8">      <span class="cf">if</span> (<span class="kw">missing</span>(value)) {</a>
+<a class="sourceLine" id="cb602-9" data-line-number="9">        private<span class="op">$</span>.age</a>
+<a class="sourceLine" id="cb602-10" data-line-number="10">      } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb602-11" data-line-number="11">        <span class="kw">stop</span>(<span class="st">&quot;`$age` is read only&quot;</span>, <span class="dt">call. =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb602-12" data-line-number="12">      }</a>
+<a class="sourceLine" id="cb602-13" data-line-number="13">    },</a>
+<a class="sourceLine" id="cb602-14" data-line-number="14">    <span class="dt">name =</span> <span class="cf">function</span>(value) {</a>
+<a class="sourceLine" id="cb602-15" data-line-number="15">      <span class="cf">if</span> (<span class="kw">missing</span>(value)) {</a>
+<a class="sourceLine" id="cb602-16" data-line-number="16">        private<span class="op">$</span>.name</a>
+<a class="sourceLine" id="cb602-17" data-line-number="17">      } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb602-18" data-line-number="18">        <span class="kw">stopifnot</span>(<span class="kw">is.character</span>(value), <span class="kw">length</span>(value) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb602-19" data-line-number="19">        private<span class="op">$</span>.name &lt;-<span class="st"> </span>value</a>
+<a class="sourceLine" id="cb602-20" data-line-number="20">        self</a>
+<a class="sourceLine" id="cb602-21" data-line-number="21">      }</a>
+<a class="sourceLine" id="cb602-22" data-line-number="22">    }</a>
+<a class="sourceLine" id="cb602-23" data-line-number="23">  ),</a>
+<a class="sourceLine" id="cb602-24" data-line-number="24">  <span class="dt">public =</span> <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb602-25" data-line-number="25">    <span class="dt">initialize =</span> <span class="cf">function</span>(name, <span class="dt">age =</span> <span class="ot">NA</span>) {</a>
+<a class="sourceLine" id="cb602-26" data-line-number="26">      private<span class="op">$</span>.name &lt;-<span class="st"> </span>name</a>
+<a class="sourceLine" id="cb602-27" data-line-number="27">      private<span class="op">$</span>.age &lt;-<span class="st"> </span>age</a>
+<a class="sourceLine" id="cb602-28" data-line-number="28">    }</a>
+<a class="sourceLine" id="cb602-29" data-line-number="29">  )</a>
+<a class="sourceLine" id="cb602-30" data-line-number="30">)</a></code></pre></div>
+<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb603-1" data-line-number="1">hadley4 &lt;-<span class="st"> </span>Person<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;Hadley&quot;</span>, <span class="dt">age =</span> <span class="dv">38</span>)</a>
+<a class="sourceLine" id="cb603-2" data-line-number="2">hadley4<span class="op">$</span>name &lt;-<span class="st"> &quot;Maya&quot;</span></a>
+<a class="sourceLine" id="cb603-3" data-line-number="3">hadley4<span class="op">$</span>name</a></code></pre></div>
 <pre><code>[1] &quot;Maya&quot;</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">hadley4<span class="op">$</span>age &lt;-<span class="st"> </span><span class="dv">20</span></a></code></pre></div>
+<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb605-1" data-line-number="1">hadley4<span class="op">$</span>age &lt;-<span class="st"> </span><span class="dv">20</span></a></code></pre></div>
 <pre><code>Error: `$age` is read only</code></pre>
 <div class="TODO">
 
@@ -467,18 +473,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Can we see this in action using a subclass?</p>
 </div>
 <div class="TODO">
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">A &lt;-<span class="st"> </span><span class="kw">R6Class</span>(</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2">  <span class="dt">classname =</span> <span class="st">&quot;A&quot;</span>,</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3">   <span class="dt">public =</span> <span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb14-4" data-line-number="4">    <span class="dt">field =</span> <span class="st">&quot;foo&quot;</span>,</a>
-<a class="sourceLine" id="cb14-5" data-line-number="5">    <span class="dt">method =</span> <span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb14-6" data-line-number="6">      <span class="st">&quot;bar&quot;</span></a>
-<a class="sourceLine" id="cb14-7" data-line-number="7">    }</a>
-<a class="sourceLine" id="cb14-8" data-line-number="8">  )</a>
-<a class="sourceLine" id="cb14-9" data-line-number="9">)</a>
-<a class="sourceLine" id="cb14-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb14-11" data-line-number="11">B &lt;-<span class="st"> </span>A<span class="op">$</span><span class="kw">new</span>()</a>
-<a class="sourceLine" id="cb14-12" data-line-number="12">C &lt;-<span class="st"> </span>B<span class="op">$</span><span class="kw">clone</span>(<span class="dt">deep =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb607-1" data-line-number="1">A &lt;-<span class="st"> </span><span class="kw">R6Class</span>(</a>
+<a class="sourceLine" id="cb607-2" data-line-number="2">  <span class="dt">classname =</span> <span class="st">&quot;A&quot;</span>,</a>
+<a class="sourceLine" id="cb607-3" data-line-number="3">   <span class="dt">public =</span> <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb607-4" data-line-number="4">    <span class="dt">field =</span> <span class="st">&quot;foo&quot;</span>,</a>
+<a class="sourceLine" id="cb607-5" data-line-number="5">    <span class="dt">method =</span> <span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb607-6" data-line-number="6">      <span class="st">&quot;bar&quot;</span></a>
+<a class="sourceLine" id="cb607-7" data-line-number="7">    }</a>
+<a class="sourceLine" id="cb607-8" data-line-number="8">  )</a>
+<a class="sourceLine" id="cb607-9" data-line-number="9">)</a>
+<a class="sourceLine" id="cb607-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb607-11" data-line-number="11">B &lt;-<span class="st"> </span>A<span class="op">$</span><span class="kw">new</span>()</a>
+<a class="sourceLine" id="cb607-12" data-line-number="12">C &lt;-<span class="st"> </span>B<span class="op">$</span><span class="kw">clone</span>(<span class="dt">deep =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 </div>
 
 
