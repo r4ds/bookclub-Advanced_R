@@ -123,7 +123,7 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-06-19}
+\date{2020-06-30}
 
 \begin{document}
 \maketitle
@@ -367,7 +367,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcbb3873ae8"
+## [1] "0x7fd8ca37ec38"
 \end{verbatim}
 
 \begin{Shaded}
@@ -377,7 +377,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcbb3873ae8"
+## [1] "0x7fd8ca37ec38"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -389,7 +389,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcbb372f350"
+## [1] "0x7fd8c5c7c1d8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -399,8 +399,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fcbb36b73c0] <list> 
-## └─[2:0x7fcbb3873ae8] <dbl>
+## █ [1:0x7fd8c5a84ba0] <list> 
+## └─[2:0x7fd8ca37ec38] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -410,7 +410,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcbb3357660"
+## [1] "0x7fd8c5281d20"
 \end{verbatim}
 
 \begin{Shaded}
@@ -447,7 +447,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fcbb0a950b8>"
+## [1] "<0x7fd8cc6fa758>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -457,7 +457,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fcbb0a950b8>
+## <0x7fd8cc6fa758>
 \end{verbatim}
 
 \begin{Shaded}
@@ -467,7 +467,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcbb0a950b8"
+## [1] "0x7fd8cc6fa758"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -516,7 +516,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcbb3f760c8"
+## [1] "0x7fd8c720f0c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -526,7 +526,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fcbb3f760c8>"
+## [1] "<0x7fd8c720f0c8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -536,7 +536,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fcbb3f760c8 -> 0x7fcbb568fec8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7fd8c720f0c8 -> 0x7fd8c70f53c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -632,7 +632,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcbba27bf88"
+## [1] "0x7fd8c6921658"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -645,7 +645,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcbb641a9b8"
+## [1] "0x7fd8c93986b8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -668,7 +668,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcbb641a9b8"
+## [1] "0x7fd8c93986b8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -678,7 +678,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcbb641a9b8"
+## [1] "0x7fd8c93986b8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -701,7 +701,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcbb641a9b8"
+## [1] "0x7fd8c93986b8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -711,7 +711,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcbb0a9cf48"
+## [1] "0x7fd8cc6fa078"
 \end{verbatim}
 
 \begin{Shaded}
@@ -734,7 +734,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcbbafd5228"
+## [1] "0x7fd8cc717ff8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1883,7 +1883,7 @@ NULL
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "In range"
+## [1] "Out of range"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1893,7 +1893,7 @@ NULL
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "In range"
+## [1] "Out of range"
 \end{verbatim}
 
 \texttt{ifelse} explicitly returns its result, whereas \texttt{if} invisibly returns it!
@@ -2535,13 +2535,13 @@ This will work:
 
 \begin{verbatim}
 ## # A tibble: 5 x 1
-##       x1
-##    <dbl>
-## 1 0.282 
-## 2 0.119 
-## 3 0.0899
-## 4 0.248 
-## 5 0.260
+##      x1
+##   <dbl>
+## 1 0.493
+## 2 0.800
+## 3 0.362
+## 4 0.403
+## 5 0.850
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2615,7 +2615,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 211 223 267 257 264 256 248 259 203 213
+##  [1] 213 274 292 238 216 275 257 229 217 298
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3052,7 +3052,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fcbac36fbc8>
+## <bytecode: 0x7fd8bdab5268>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3923,7 +3923,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7fcbacf6e5b0>
+## <bytecode: 0x7fd8c01c0820>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4061,7 +4061,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7fcbb3f6f5d0>
+## <bytecode: 0x7fd8c74c6550>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4855,29 +4855,29 @@ Given this little example:
 
 \begin{verbatim}
 ## [1] "parent in mid: "
-## <environment: 0x7fcbad77c2c0>
+## <environment: 0x7fd8c7163930>
 ## [1] "current in mid: "
-## <environment: 0x7fcbad77ca68>
+## <environment: 0x7fd8c7163188>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid: "
-## <environment: 0x7fcbad7632f0>
+## <environment: 0x7fd8c70183f8>
 ## [1] "current in mid: "
-## <environment: 0x7fcbb218c008>
+## <environment: 0x7fd8c93d9ff0>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid skip: "
-## <environment: 0x7fcbb218c008>
+## <environment: 0x7fd8c93d9ff0>
 ## [1] "current in mid skip: "
-## <environment: 0x7fcb9ccd0570>
+## <environment: 0x7fd8c7d69498>
 ## [1] "parent in mid: "
-## <environment: 0x7fcbb378df60>
+## <environment: 0x7fd8c7d6f888>
 ## [1] "current in mid: "
-## <environment: 0x7fcbb378d7f0>
+## <environment: 0x7fd8c7d6f118>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
@@ -4892,7 +4892,7 @@ Given this little example:
 ## 
 ## [[2]]
 ## [[2]][[1]]
-## <environment: 0x7fcb9ccd0570>
+## <environment: 0x7fd8c7d69498>
 ## 
 ## 
 ## [[3]]
@@ -5033,26 +5033,26 @@ In order to extract p-values the solution manual suggests using \texttt{map\_dbl
 \end{Shaded}
 
 \begin{verbatim}
-##   [1] 3.919758e-02 2.725801e-02 2.048084e-03 2.448222e-02 1.797273e-01
-##   [6] 6.427377e-05 1.393028e-02 2.138812e-03 1.711449e-01 7.315840e-02
-##  [11] 8.667070e-04 5.244317e-01 4.204795e-02 7.998506e-01 5.578253e-02
-##  [16] 9.119890e-03 6.746949e-02 2.274410e-02 2.603093e-01 4.101802e-01
-##  [21] 2.987177e-01 3.375709e-03 7.739029e-04 1.634748e-02 2.368118e-02
-##  [26] 3.185381e-04 2.179816e-02 3.879471e-02 7.371905e-03 6.216229e-01
-##  [31] 3.724885e-04 3.442887e-03 4.739013e-04 3.884108e-02 3.574274e-01
-##  [36] 3.350715e-02 1.070812e-04 5.710494e-02 7.082422e-02 1.154981e-01
-##  [41] 1.419777e-03 1.618160e-01 3.794421e-02 1.075079e-02 3.175068e-03
-##  [46] 2.695676e-01 5.300240e-02 3.625895e-01 2.144712e-01 9.471641e-01
-##  [51] 5.420023e-02 4.858520e-04 4.053443e-02 8.663822e-02 1.336489e-02
-##  [56] 4.299275e-03 8.528750e-05 2.478337e-01 1.640155e-02 2.422696e-02
-##  [61] 1.234748e-02 3.089197e-02 4.330778e-01 1.211189e-01 9.201676e-03
-##  [66] 7.468813e-03 3.867998e-04 3.927870e-01 2.352236e-02 1.618903e-01
-##  [71] 7.220395e-02 5.290059e-01 4.420457e-01 1.409987e-01 1.000000e+00
-##  [76] 4.143651e-02 4.210799e-03 2.189676e-01 4.963561e-01 3.100448e-03
-##  [81] 8.475333e-05 3.627546e-02 1.436836e-02 4.084785e-02 3.410959e-02
-##  [86] 3.784247e-02 1.225133e-02 5.828471e-01 7.659134e-02 5.425627e-02
-##  [91] 2.626085e-01 4.357255e-05 2.411695e-02 1.030328e-01 3.048517e-02
-##  [96] 2.906440e-01 1.338102e-02 2.059164e-01 9.418856e-01 3.991968e-02
+##   [1] 3.758542e-02 1.094180e-01 7.869211e-02 2.408505e-01 4.955103e-02
+##   [6] 1.801812e-01 2.409750e-01 1.851371e-01 4.969286e-01 1.251883e-04
+##  [11] 1.323755e-03 3.048293e-02 4.213103e-02 4.144776e-02 3.088548e-01
+##  [16] 3.627863e-02 1.230448e-02 6.600046e-03 1.921665e-03 2.618736e-01
+##  [21] 3.566106e-02 2.233360e-02 4.002278e-01 4.226542e-01 1.416152e-05
+##  [26] 2.873884e-01 9.835159e-02 1.843470e-02 9.038099e-04 1.089035e-02
+##  [31] 1.056592e-02 1.007978e-01 4.107178e-02 7.374214e-02 9.651085e-02
+##  [36] 1.318240e-03 2.334563e-02 1.418890e-02 4.411802e-03 9.667494e-02
+##  [41] 4.023928e-01 1.493836e-01 8.369015e-02 3.685607e-02 2.649473e-03
+##  [46] 2.059258e-02 3.215104e-01 1.807374e-02 3.332679e-03 5.150559e-02
+##  [51] 5.772430e-01 3.662709e-03 7.639218e-03 1.223449e-01 6.163299e-02
+##  [56] 2.801528e-01 5.191425e-02 1.679743e-03 4.486500e-01 2.774789e-02
+##  [61] 4.897953e-02 1.091534e-01 1.454109e-02 3.080533e-03 7.377456e-02
+##  [66] 7.665222e-02 1.297692e-05 7.812511e-03 3.847988e-02 2.922103e-01
+##  [71] 6.728167e-04 2.265068e-01 1.197280e-01 1.782294e-01 8.657742e-02
+##  [76] 7.470483e-02 6.115043e-02 2.132675e-02 3.756909e-03 8.883268e-02
+##  [81] 3.378971e-02 6.282790e-02 2.659437e-01 7.044417e-02 4.962550e-02
+##  [86] 2.115644e-01 2.999600e-04 8.541729e-02 2.029912e-01 3.873931e-02
+##  [91] 7.608025e-02 9.609612e-02 9.473308e-03 1.094060e-03 7.694148e-03
+##  [96] 6.709752e-03 3.594678e-04 1.258814e-02 4.173227e-02 3.083072e-03
 \end{verbatim}
 
 \hypertarget{exercise-9}{%
@@ -5383,12 +5383,12 @@ Answer from \href{https://community.rstudio.com/t/recursive-purrr-mutate-if/1663
 
 \begin{verbatim}
 ## Unit: microseconds
-##                         expr     min       lq       mean   median       uq
-##         as_integer_rapply(x)   9.021   12.212   31.96814   16.291   19.761
-##  as_integer_recursive_map(x) 976.377 1018.712 1084.43230 1050.729 1103.337
+##                         expr      min        lq       mean    median        uq
+##         as_integer_rapply(x)    9.935   11.9495   32.68785   19.1015   22.4985
+##  as_integer_recursive_map(x) 1024.342 1056.9200 1183.51225 1100.6975 1204.8150
 ##       max neval
-##  1575.623   100
-##  1365.016   100
+##  1505.119   100
+##  2429.407   100
 \end{verbatim}
 
 \begin{Shaded}
@@ -5861,7 +5861,7 @@ Base R contains two function factories, \texttt{approxfun()} and \texttt{ecdf()}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.6666667 0.3333333 1.0000000
+## [1] 1.0000000 0.3333333 0.6666667
 \end{verbatim}
 
 \hypertarget{exercise-14}{%
@@ -6128,7 +6128,7 @@ How do you check how much memory is allocated to memoise's caching?
 \end{Shaded}
 
 \begin{verbatim}
-## 16,216 B
+## 16,224 B
 \end{verbatim}
 
 Could we create a memoise wrapper that clears the cache when that's a certain number?
@@ -6172,139 +6172,132 @@ Could we create a memoise wrapper that clears the cache when that's a certain nu
 \begin{verbatim}
 ## 14,440 B
 ## 15,344 B
-## 16,248 B
-## 17,160 B
-## 18,000 B
-## 18,896 B
-## 19,800 B
-## 20,576 B
-## 21,408 B
-## 22,296 B
-## 23,192 B
-## 23,960 B
-## 24,800 B
-## 25,704 B
-## 26,416 B
-## 27,248 B
-## 28,024 B
-## 28,800 B
-## 29,720 B
-## 30,496 B
+## 16,240 B
+## 17,144 B
+## 18,040 B
+## 18,960 B
+## 19,736 B
+## 20,624 B
+## 21,464 B
+## 22,360 B
+## 23,136 B
+## 24,016 B
+## 24,856 B
+## 25,624 B
+## 26,464 B
+## 27,320 B
+## 28,032 B
+## 28,808 B
+## 29,648 B
+## 30,424 B
 \end{verbatim}
 
 \begin{verbatim}
-## Clearing cache [@30496]
+## Clearing cache [@30424]
 \end{verbatim}
 
 \begin{verbatim}
-## 14,440 B
-## 15,280 B
-## 16,200 B
-## 17,032 B
-## 17,880 B
-## 18,768 B
-## 19,672 B
-## 20,592 B
-## 21,432 B
-## 22,256 B
-## 23,096 B
-## 24,000 B
-## 24,776 B
-## 25,712 B
-## 26,552 B
-## 27,264 B
-## 28,160 B
-## 28,936 B
-## 29,768 B
-## 30,544 B
+## 14,432 B
+## 15,312 B
+## 16,152 B
+## 17,056 B
+## 17,968 B
+## 18,856 B
+## 19,776 B
+## 20,696 B
+## 21,472 B
+## 22,248 B
+## 23,016 B
+## 23,872 B
+## 24,768 B
+## 25,544 B
+## 26,448 B
+## 27,288 B
+## 28,112 B
+## 29,008 B
+## 29,848 B
+## 30,680 B
 \end{verbatim}
 
 \begin{verbatim}
-## Clearing cache [@30544]
-\end{verbatim}
-
-\begin{verbatim}
-## 14,448 B
-## 15,352 B
-## 16,256 B
-## 17,168 B
-## 18,000 B
-## 18,776 B
-## 19,696 B
-## 20,592 B
-## 21,448 B
-## 22,352 B
-## 23,200 B
-## 24,096 B
-## 25,000 B
-## 25,840 B
-## 26,680 B
-## 27,576 B
-## 28,472 B
-## 29,240 B
-## 30,032 B
-\end{verbatim}
-
-\begin{verbatim}
-## Clearing cache [@30032]
+## Clearing cache [@30680]
 \end{verbatim}
 
 \begin{verbatim}
 ## 14,456 B
 ## 15,360 B
-## 16,248 B
-## 17,136 B
-## 18,056 B
-## 18,952 B
-## 19,776 B
-## 20,632 B
-## 21,528 B
-## 22,424 B
-## 23,200 B
-## 24,040 B
-## 24,808 B
-## 25,640 B
-## 26,480 B
-## 27,336 B
-## 28,240 B
-## 29,080 B
-## 29,992 B
-## 30,824 B
+## 16,272 B
+## 17,176 B
+## 18,080 B
+## 18,976 B
+## 19,888 B
+## 20,744 B
+## 21,520 B
+## 22,352 B
+## 23,128 B
+## 23,968 B
+## 24,816 B
+## 25,592 B
+## 26,432 B
+## 27,200 B
+## 27,976 B
+## 28,752 B
+## 29,592 B
+## 30,488 B
 \end{verbatim}
 
 \begin{verbatim}
-## Clearing cache [@30824]
+## Clearing cache [@30488]
+\end{verbatim}
+
+\begin{verbatim}
+## 14,424 B
+## 15,320 B
+## 16,216 B
+## 17,112 B
+## 18,016 B
+## 18,792 B
+## 19,712 B
+## 20,560 B
+## 21,480 B
+## 22,312 B
+## 23,216 B
+## 24,056 B
+## 24,888 B
+## 25,728 B
+## 26,560 B
+## 27,400 B
+## 28,304 B
+## 29,152 B
+## 29,864 B
+## 30,640 B
+\end{verbatim}
+
+\begin{verbatim}
+## Clearing cache [@30640]
 \end{verbatim}
 
 \begin{verbatim}
 ## 14,432 B
-## 15,352 B
-## 16,256 B
-## 17,160 B
-## 17,992 B
-## 18,832 B
-## 19,664 B
-## 20,576 B
-## 21,472 B
-## 22,392 B
-## 23,280 B
-## 24,112 B
-## 25,016 B
-## 25,848 B
-## 26,680 B
-## 27,512 B
-## 28,288 B
-## 29,184 B
-## 29,960 B
-## 30,880 B
-\end{verbatim}
-
-\begin{verbatim}
-## Clearing cache [@30880]
-\end{verbatim}
-
-\begin{verbatim}
-## 14,440 B
+## 15,336 B
+## 16,176 B
+## 17,080 B
+## 17,984 B
+## 18,824 B
+## 19,728 B
+## 20,616 B
+## 21,520 B
+## 22,288 B
+## 23,056 B
+## 23,944 B
+## 24,840 B
+## 25,552 B
+## 26,264 B
+## 27,152 B
+## 27,928 B
+## 28,768 B
+## 29,688 B
+## 30,520 B
 \end{verbatim}
 
 Can we come up with simple example for these function operators?
@@ -7107,7 +7100,7 @@ mean doesn't actually have a specific method defined in base R for int or numeri
 ##     }
 ##     .Internal(mean(x))
 ## }
-## <bytecode: 0x7fcbb33ea4e0>
+## <bytecode: 0x7fd8bee21808>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -7264,6 +7257,269 @@ What is happening here?!
 \KeywordTok{abs}\NormalTok{(x)}
 \end{Highlighting}
 \end{Shaded}
+
+\hypertarget{r6}{%
+\chapter{R6}\label{r6}}
+
+\hypertarget{classes-and-methods}{%
+\section*{14.2 Classes and methods}\label{classes-and-methods}}
+\addcontentsline{toc}{section}{14.2 Classes and methods}
+
+\begin{quote}
+Any \ldots{} R6 method called for its side effects \ldots{} should return invisible(self).
+\end{quote}
+
+WHY? What is \texttt{invisible(self)} doing in the add function below? I tried removing this line but it doesn't change the output\ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Accumulator <-}\StringTok{ }\KeywordTok{R6Class}\NormalTok{(}\StringTok{"Accumulator"}\NormalTok{, }\KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{sum =} \DecValTok{0}\NormalTok{,}
+  \DataTypeTok{add =} \ControlFlowTok{function}\NormalTok{(}\DataTypeTok{x =} \DecValTok{1}\NormalTok{) \{}
+\NormalTok{    self}\OperatorTok{$}\NormalTok{sum <-}\StringTok{ }\NormalTok{self}\OperatorTok{$}\NormalTok{sum }\OperatorTok{+}\StringTok{ }\NormalTok{x }
+    \KeywordTok{invisible}\NormalTok{(self)}
+\NormalTok{  \})}
+\NormalTok{)}
+
+\NormalTok{x <-}\StringTok{ }\NormalTok{Accumulator}\OperatorTok{$}\KeywordTok{new}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Returning \texttt{self} or \texttt{invisible(self)} allows for method chaining. i.e. \texttt{x\$add(1)\$add(2)} can be done rather than \texttt{x\$add(1);\ x\$add(2)}. In the absence of anything better to return, why not return itself
+
+\hypertarget{important-methods}{%
+\section*{14.2.2 Important methods}\label{important-methods}}
+\addcontentsline{toc}{section}{14.2.2 Important methods}
+
+Why don't we need to specifically call \texttt{haldey2\$print} to see the output below)? Is the print method just a built in output of an \texttt{R6} object?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Person <-}\StringTok{ }\KeywordTok{R6Class}\NormalTok{(}\StringTok{"Person"}\NormalTok{, }\KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{name =} \OtherTok{NULL}\NormalTok{,}
+  \DataTypeTok{age =} \OtherTok{NA}\NormalTok{,}
+  \DataTypeTok{initialize =} \ControlFlowTok{function}\NormalTok{(name, }\DataTypeTok{age =} \OtherTok{NA}\NormalTok{) \{}
+\NormalTok{    self}\OperatorTok{$}\NormalTok{name <-}\StringTok{ }\NormalTok{name}
+\NormalTok{    self}\OperatorTok{$}\NormalTok{age <-}\StringTok{ }\NormalTok{age}
+\NormalTok{  \},}
+  \DataTypeTok{print =} \ControlFlowTok{function}\NormalTok{(...) \{}
+    \KeywordTok{cat}\NormalTok{(}\StringTok{"Person: }\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+    \KeywordTok{cat}\NormalTok{(}\StringTok{"  Name: "}\NormalTok{, self}\OperatorTok{$}\NormalTok{name, }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)}
+    \KeywordTok{cat}\NormalTok{(}\StringTok{"  Age:  "}\NormalTok{, self}\OperatorTok{$}\NormalTok{age, }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)}
+    \KeywordTok{invisible}\NormalTok{(self)}
+\NormalTok{  \}}
+\NormalTok{))}
+
+\NormalTok{hadley2 <-}\StringTok{ }\NormalTok{Person}\OperatorTok{$}\KeywordTok{new}\NormalTok{(}\StringTok{"Hadley"}\NormalTok{)}
+\NormalTok{hadley2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Person: 
+  Name: Hadley
+  Age:  NA
+\end{verbatim}
+
+Print is an S3 generic, so when print is implicitly called, it calls the method for the R6 object. The method for the R6 object is ``look for a print function inside the R6 object''
+
+\hypertarget{exercises-14.2.6.4}{%
+\section*{Exercises 14.2.6.4}\label{exercises-14.2.6.4}}
+\addcontentsline{toc}{section}{Exercises 14.2.6.4}
+
+Why can't we use method chaining to access the current time zone?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Timezone <-}\StringTok{ }\KeywordTok{R6Class}\NormalTok{(}
+  \DataTypeTok{classname =} \StringTok{"Timezone"}\NormalTok{, }
+  \DataTypeTok{public =} \KeywordTok{list}\NormalTok{(}
+    \DataTypeTok{get =} \ControlFlowTok{function}\NormalTok{() \{}
+      \KeywordTok{Sys.timezone}\NormalTok{()}
+\NormalTok{    \},}
+    \DataTypeTok{set =} \ControlFlowTok{function}\NormalTok{(value) \{}
+      \KeywordTok{stopifnot}\NormalTok{(value }\OperatorTok{%in%}\StringTok{ }\KeywordTok{OlsonNames}\NormalTok{())}
+      
+\NormalTok{      old <-}\StringTok{ }\NormalTok{self}\OperatorTok{$}\KeywordTok{get}\NormalTok{()}
+      \KeywordTok{Sys.setenv}\NormalTok{(}\DataTypeTok{TZ =}\NormalTok{ value)}
+      \KeywordTok{invisible}\NormalTok{(old)}
+\NormalTok{    \})}
+\NormalTok{)}
+
+\NormalTok{tz <-}\StringTok{ }\NormalTok{Timezone}\OperatorTok{$}\KeywordTok{new}\NormalTok{()}
+
+\NormalTok{old <-}\StringTok{ }\NormalTok{tz}\OperatorTok{$}\KeywordTok{set}\NormalTok{(}\StringTok{"Antarctica/South_Pole"}\NormalTok{)}
+\NormalTok{tz}\OperatorTok{$}\KeywordTok{get}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "America/Los_Angeles"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tz}\OperatorTok{$}\KeywordTok{set}\NormalTok{(}\StringTok{"Antarctica/South_Pole"}\NormalTok{)}\OperatorTok{$}\KeywordTok{get}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Error in tz$set("Antarctica/South_Pole")$get : 
+  $ operator is invalid for atomic vectors
+\end{verbatim}
+
+You're not returning an R6 object in your first ``set'', you're returning a character vector, so you can't find the get method of that character vector
+
+We can return something using the following code:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Timezone <-}\StringTok{ }\KeywordTok{R6Class}\NormalTok{(}
+  \DataTypeTok{classname =} \StringTok{"Timezone"}\NormalTok{, }
+  \DataTypeTok{public =} \KeywordTok{list}\NormalTok{(}
+    \DataTypeTok{get =} \ControlFlowTok{function}\NormalTok{() \{}
+\NormalTok{      self}\OperatorTok{$}\NormalTok{current_zone}
+\NormalTok{    \},}
+    \DataTypeTok{set =} \ControlFlowTok{function}\NormalTok{(v) \{}
+\NormalTok{      self}\OperatorTok{$}\NormalTok{current_zone <-}\StringTok{ }\NormalTok{v}
+      \KeywordTok{invisible}\NormalTok{(self)}
+\NormalTok{    \},}
+    \DataTypeTok{reset =} \ControlFlowTok{function}\NormalTok{() \{}
+      \ControlFlowTok{if}\NormalTok{ (}\OperatorTok{!}\KeywordTok{is.null}\NormalTok{(private}\OperatorTok{$}\NormalTok{.old)) \{}
+\NormalTok{        self}\OperatorTok{$}\NormalTok{current_zone <-}\StringTok{ }\NormalTok{private}\OperatorTok{$}\NormalTok{.old}
+\NormalTok{      \}}
+      \KeywordTok{invisible}\NormalTok{(self)}
+\NormalTok{    \}}
+\NormalTok{  ),}
+  \DataTypeTok{active =} \KeywordTok{list}\NormalTok{(}
+    \DataTypeTok{current_zone =} \ControlFlowTok{function}\NormalTok{(v) \{}
+      \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{missing}\NormalTok{(v)) \{}
+        \KeywordTok{return}\NormalTok{(}\KeywordTok{Sys.timezone}\NormalTok{())}
+\NormalTok{      \}}
+      \KeywordTok{stopifnot}\NormalTok{(v }\OperatorTok{%in%}\StringTok{ }\KeywordTok{OlsonNames}\NormalTok{())}
+\NormalTok{      old <-}\StringTok{ }\KeywordTok{Sys.timezone}\NormalTok{()}
+      \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{Sys.setenv}\NormalTok{(}\DataTypeTok{TZ=}\NormalTok{v)) \{}
+\NormalTok{        private}\OperatorTok{$}\NormalTok{.old <-}\StringTok{ }\NormalTok{old}
+\NormalTok{      \} }\ControlFlowTok{else}\NormalTok{ \{}
+        \KeywordTok{stop}\NormalTok{(}\StringTok{"Unable to set timezone."}\NormalTok{)}
+\NormalTok{      \}}
+      \KeywordTok{invisible}\NormalTok{(self)}
+\NormalTok{    \}}
+\NormalTok{  ),}
+  \DataTypeTok{private =} \KeywordTok{list}\NormalTok{(}
+    \DataTypeTok{.old =} \OtherTok{NULL}
+\NormalTok{  )}
+\NormalTok{)}
+\NormalTok{tz <-}\StringTok{ }\NormalTok{Timezone}\OperatorTok{$}\KeywordTok{new}\NormalTok{()}
+\NormalTok{tz}\OperatorTok{$}\KeywordTok{set}\NormalTok{(}\StringTok{"Antarctica/South_Pole"}\NormalTok{)}\OperatorTok{$}\KeywordTok{get}\NormalTok{()}
+\CommentTok{#> [1] "Antarctica/South_Pole"}
+\NormalTok{tz}\OperatorTok{$}\KeywordTok{reset}\NormalTok{()}\OperatorTok{$}\KeywordTok{get}\NormalTok{()}
+\CommentTok{#> [1] "US/Central"}
+\end{Highlighting}
+\end{Shaded}
+
+That said, not every function should support chaining. Sometimes you want the function to return some value (like \texttt{\$get}) and in these cases, you just won't be able to chain, and that is okay.
+
+\hypertarget{reference-semantics}{%
+\section*{14.4 Reference semantics}\label{reference-semantics}}
+\addcontentsline{toc}{section}{14.4 Reference semantics}
+
+\begin{quote}
+\$clone() does not recursively clone nested R6 objects. If you want that, you'll need to use \$clone(deep = TRUE).
+\end{quote}
+
+Can we see this in action using a subclass?
+
+\hypertarget{this-example-is-taken-from-the-r6-documentation}{%
+\subsubsection*{\texorpdfstring{This example is taken from the \texttt{R6} \href{https://r6.r-lib.org/articles/Introduction.html}{documentation}:}{This example is taken from the R6 documentation:}}\label{this-example-is-taken-from-the-r6-documentation}}
+\addcontentsline{toc}{subsubsection}{This example is taken from the \texttt{R6} \href{https://r6.r-lib.org/articles/Introduction.html}{documentation}:}
+
+Object \texttt{c1} contains \texttt{s}, which we will clone. The original and clone both point to the same object, and by using \texttt{deep\ =\ TRUE} we can modify \texttt{s} in one object without changing it in the other.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Simple <-}\StringTok{ }\KeywordTok{R6Class}\NormalTok{(}\StringTok{"Simple"}\NormalTok{, }\DataTypeTok{public =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{x =} \DecValTok{1}\NormalTok{))}
+
+\NormalTok{Cloneable <-}\StringTok{ }\KeywordTok{R6Class}\NormalTok{(}\StringTok{"Cloneable"}\NormalTok{,}
+  \DataTypeTok{public =} \KeywordTok{list}\NormalTok{(}
+    \DataTypeTok{s =} \OtherTok{NULL}\NormalTok{,}
+    \DataTypeTok{initialize =} \ControlFlowTok{function}\NormalTok{() self}\OperatorTok{$}\NormalTok{s <-}\StringTok{ }\NormalTok{Simple}\OperatorTok{$}\KeywordTok{new}\NormalTok{()}
+\NormalTok{  )}
+\NormalTok{)}
+
+\NormalTok{c1 <-}\StringTok{ }\NormalTok{Cloneable}\OperatorTok{$}\KeywordTok{new}\NormalTok{()}
+\NormalTok{c2 <-}\StringTok{ }\NormalTok{c1}\OperatorTok{$}\KeywordTok{clone}\NormalTok{()}
+
+\CommentTok{# Change c1's `s` field}
+\NormalTok{c1}\OperatorTok{$}\NormalTok{s}\OperatorTok{$}\NormalTok{x <-}\StringTok{ }\DecValTok{2}
+
+\CommentTok{# c2's `s` is the same object, so it reflects the change}
+\NormalTok{c2}\OperatorTok{$}\NormalTok{s}\OperatorTok{$}\NormalTok{x}
+\CommentTok{#> [1] 2}
+
+\NormalTok{c3 <-}\StringTok{ }\NormalTok{c1}\OperatorTok{$}\KeywordTok{clone}\NormalTok{(}\DataTypeTok{deep =} \OtherTok{TRUE}\NormalTok{)}
+
+\CommentTok{# Change c1's `s` field}
+\NormalTok{c1}\OperatorTok{$}\NormalTok{s}\OperatorTok{$}\NormalTok{x <-}\StringTok{ }\DecValTok{3}
+
+\CommentTok{# c2's `s` is different}
+\CommentTok{# if we set deep = FALSE this would be 3!}
+\NormalTok{c3}\OperatorTok{$}\NormalTok{s}\OperatorTok{$}\NormalTok{x}
+\CommentTok{#> [1] 2}
+\end{Highlighting}
+\end{Shaded}
+
+When or why would I set the clone argument to FALSE?
+
+Clone has a large memory footprint so if you're going to create a lot of R6 methods you may want to exclude this!
+
+\hypertarget{s4}{%
+\chapter{S4}\label{s4}}
+
+\hypertarget{basics-1}{%
+\section*{15.2 Basics}\label{basics-1}}
+\addcontentsline{toc}{section}{15.2 Basics}
+
+Broadly, what is a generic and method in S4 and what is their relationship?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{setClass}\NormalTok{(}\StringTok{"Person"}\NormalTok{, }
+  \DataTypeTok{slots =} \KeywordTok{c}\NormalTok{(}
+    \DataTypeTok{name =} \StringTok{"character"}\NormalTok{, }
+    \DataTypeTok{age =} \StringTok{"numeric"}
+\NormalTok{  )}
+\NormalTok{)}
+
+\KeywordTok{setGeneric}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{standardGeneric}\NormalTok{(}\StringTok{"age"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "age"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{setGeneric}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) }\KeywordTok{standardGeneric}\NormalTok{(}\StringTok{"age<-"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "age<-"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\StringTok{"Person"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) x}\OperatorTok{@}\NormalTok{age)}
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\StringTok{"Person"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) \{}
+\NormalTok{  x}\OperatorTok{@}\NormalTok{age <-}\StringTok{ }\NormalTok{value}
+\NormalTok{  x}
+\NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
+
+What is \texttt{standardGeneric} doing in the example above? Is this kind of like creating \texttt{age.default} for \texttt{Person}?
 
 \bibliography{book.bib,packages.bib}
 

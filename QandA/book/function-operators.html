@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-06-19" />
+<meta name="date" content="2020-06-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -288,6 +288,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#internal-generics"><i class="fa fa-check"></i>13.7.3 Internal Generics</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#double-dispatch"><i class="fa fa-check"></i>13.7.4 Double Dispatch</a></li>
 </ul></li>
+<li class="chapter" data-level="14" data-path="r6.html"><a href="r6.html"><i class="fa fa-check"></i><b>14</b> R6</a><ul>
+<li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#classes-and-methods"><i class="fa fa-check"></i>14.2 Classes and methods</a></li>
+<li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#important-methods"><i class="fa fa-check"></i>14.2.2 Important methods</a></li>
+<li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#exercises-14.2.6.4"><i class="fa fa-check"></i>Exercises 14.2.6.4</a></li>
+<li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#reference-semantics"><i class="fa fa-check"></i>14.4 Reference semantics</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="s4.html"><a href="s4.html"><i class="fa fa-check"></i><b>15</b> S4</a><ul>
+<li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#basics-1"><i class="fa fa-check"></i>15.2 Basics</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -322,7 +331,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#gwgkwfvebt .gt_table {
+#idjprtvrph .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -345,7 +354,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-#gwgkwfvebt .gt_heading {
+#idjprtvrph .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -357,7 +366,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#gwgkwfvebt .gt_title {
+#idjprtvrph .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -367,7 +376,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-#gwgkwfvebt .gt_subtitle {
+#idjprtvrph .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -377,13 +386,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-#gwgkwfvebt .gt_bottom_border {
+#idjprtvrph .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gwgkwfvebt .gt_col_headings {
+#idjprtvrph .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -398,7 +407,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#gwgkwfvebt .gt_col_heading {
+#idjprtvrph .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -418,7 +427,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#gwgkwfvebt .gt_column_spanner_outer {
+#idjprtvrph .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -430,15 +439,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-#gwgkwfvebt .gt_column_spanner_outer:first-child {
+#idjprtvrph .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gwgkwfvebt .gt_column_spanner_outer:last-child {
+#idjprtvrph .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gwgkwfvebt .gt_column_spanner {
+#idjprtvrph .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -450,7 +459,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-#gwgkwfvebt .gt_group_heading {
+#idjprtvrph .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -472,7 +481,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#gwgkwfvebt .gt_empty_group_heading {
+#idjprtvrph .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -487,19 +496,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#gwgkwfvebt .gt_striped {
+#idjprtvrph .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gwgkwfvebt .gt_from_md > :first-child {
+#idjprtvrph .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gwgkwfvebt .gt_from_md > :last-child {
+#idjprtvrph .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gwgkwfvebt .gt_row {
+#idjprtvrph .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -518,7 +527,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#gwgkwfvebt .gt_stub {
+#idjprtvrph .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -530,7 +539,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-left: 12px;
 }
 
-#gwgkwfvebt .gt_summary_row {
+#idjprtvrph .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -540,7 +549,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#gwgkwfvebt .gt_first_summary_row {
+#idjprtvrph .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -550,7 +559,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-#gwgkwfvebt .gt_grand_summary_row {
+#idjprtvrph .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -560,7 +569,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#gwgkwfvebt .gt_first_grand_summary_row {
+#idjprtvrph .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -570,7 +579,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-#gwgkwfvebt .gt_table_body {
+#idjprtvrph .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -579,7 +588,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#gwgkwfvebt .gt_footnotes {
+#idjprtvrph .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -593,13 +602,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#gwgkwfvebt .gt_footnote {
+#idjprtvrph .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#gwgkwfvebt .gt_sourcenotes {
+#idjprtvrph .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -613,46 +622,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#gwgkwfvebt .gt_sourcenote {
+#idjprtvrph .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#gwgkwfvebt .gt_left {
+#idjprtvrph .gt_left {
   text-align: left;
 }
 
-#gwgkwfvebt .gt_center {
+#idjprtvrph .gt_center {
   text-align: center;
 }
 
-#gwgkwfvebt .gt_right {
+#idjprtvrph .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gwgkwfvebt .gt_font_normal {
+#idjprtvrph .gt_font_normal {
   font-weight: normal;
 }
 
-#gwgkwfvebt .gt_font_bold {
+#idjprtvrph .gt_font_bold {
   font-weight: bold;
 }
 
-#gwgkwfvebt .gt_font_italic {
+#idjprtvrph .gt_font_italic {
   font-style: italic;
 }
 
-#gwgkwfvebt .gt_super {
+#idjprtvrph .gt_super {
   font-size: 65%;
 }
 
-#gwgkwfvebt .gt_footnote_marks {
+#idjprtvrph .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="gwgkwfvebt" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="idjprtvrph" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
@@ -781,7 +790,7 @@ examples: <code>safely</code>, <code>silently</code>, <code>rate-limity</code> e
 <a class="sourceLine" id="cb503-9" data-line-number="9">d &lt;-<span class="st"> </span><span class="kw">memoised_starwars</span>(<span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb503-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb503-11" data-line-number="11">lobstr<span class="op">::</span><span class="kw">obj_size</span>(<span class="kw">get</span>(<span class="st">&quot;_cache&quot;</span>,<span class="kw">environment</span>(memoised_starwars)))</a></code></pre></div>
-<pre><code>## 16,216 B</code></pre>
+<pre><code>## 16,256 B</code></pre>
 <div class="question">
 <p>Could we create a memoise wrapper that clears the cache when that’s a certain number?</p>
 </div>
@@ -816,110 +825,110 @@ examples: <code>safely</code>, <code>silently</code>, <code>rate-limity</code> e
 <a class="sourceLine" id="cb505-29" data-line-number="29">  <span class="kw">capped_memoised_starwars</span>(i)</a>
 <a class="sourceLine" id="cb505-30" data-line-number="30">  <span class="kw">print</span>(<span class="kw">cache_memory_size</span>(capped_memoised_starwars))</a>
 <a class="sourceLine" id="cb505-31" data-line-number="31">}</a></code></pre></div>
-<pre><code>## 14,456 B
-## 15,368 B
-## 16,264 B
-## 17,112 B
-## 17,952 B
-## 18,792 B
-## 19,680 B
-## 20,520 B
-## 21,408 B
-## 22,120 B
-## 23,040 B
-## 23,944 B
-## 24,776 B
-## 25,616 B
-## 26,456 B
-## 27,296 B
-## 28,128 B
-## 29,032 B
-## 29,808 B
-## 30,696 B</code></pre>
-<pre><code>## Clearing cache [@30696]</code></pre>
+<pre><code>## 14,432 B
+## 15,336 B
+## 16,232 B
+## 17,152 B
+## 18,048 B
+## 18,936 B
+## 19,768 B
+## 20,664 B
+## 21,440 B
+## 22,360 B
+## 23,256 B
+## 24,096 B
+## 25,000 B
+## 25,768 B
+## 26,544 B
+## 27,400 B
+## 28,176 B
+## 29,008 B
+## 29,840 B
+## 30,760 B</code></pre>
+<pre><code>## Clearing cache [@30760]</code></pre>
+<pre><code>## 14,440 B
+## 15,272 B
+## 16,176 B
+## 17,104 B
+## 18,040 B
+## 18,872 B
+## 19,760 B
+## 20,600 B
+## 21,504 B
+## 22,344 B
+## 23,240 B
+## 24,016 B
+## 24,856 B
+## 25,568 B
+## 26,336 B
+## 27,240 B
+## 28,072 B
+## 28,960 B
+## 29,800 B
+## 30,576 B</code></pre>
+<pre><code>## Clearing cache [@30576]</code></pre>
 <pre><code>## 14,440 B
 ## 15,360 B
-## 16,264 B
-## 17,168 B
-## 18,064 B
-## 18,920 B
-## 19,832 B
-## 20,752 B
-## 21,520 B
-## 22,344 B
-## 23,184 B
-## 23,960 B
-## 24,856 B
-## 25,760 B
-## 26,528 B
-## 27,304 B
-## 28,136 B
-## 28,976 B
-## 29,752 B
-## 30,464 B</code></pre>
-<pre><code>## Clearing cache [@30464]</code></pre>
-<pre><code>## 14,456 B
-## 15,344 B
-## 16,264 B
-## 17,168 B
-## 18,088 B
-## 18,880 B
-## 19,768 B
-## 20,672 B
-## 21,592 B
-## 22,480 B
-## 23,320 B
-## 24,144 B
-## 24,920 B
-## 25,752 B
-## 26,584 B
-## 27,360 B
-## 28,136 B
-## 28,976 B
-## 29,816 B
-## 30,648 B</code></pre>
-<pre><code>## Clearing cache [@30648]</code></pre>
-<pre><code>## 14,488 B
-## 15,408 B
-## 16,312 B
-## 17,200 B
-## 18,120 B
-## 19,016 B
-## 19,792 B
-## 20,648 B
-## 21,552 B
-## 22,328 B
-## 23,216 B
-## 24,072 B
-## 24,904 B
-## 25,728 B
-## 26,632 B
-## 27,456 B
-## 28,232 B
+## 16,248 B
+## 17,144 B
+## 18,080 B
+## 18,976 B
+## 19,816 B
+## 20,656 B
+## 21,496 B
+## 22,392 B
+## 23,296 B
+## 24,216 B
+## 25,048 B
+## 25,824 B
+## 26,600 B
+## 27,376 B
+## 28,224 B
 ## 29,056 B
 ## 29,896 B
-## 30,792 B</code></pre>
-<pre><code>## Clearing cache [@30792]</code></pre>
-<pre><code>## 14,456 B
-## 15,344 B
-## 16,168 B
-## 17,064 B
-## 17,984 B
-## 18,816 B
-## 19,592 B
-## 20,528 B
-## 21,368 B
-## 22,264 B
-## 23,040 B
-## 23,896 B
-## 24,672 B
-## 25,584 B
-## 26,424 B
-## 27,264 B
-## 28,104 B
-## 28,880 B
-## 29,784 B
-## 30,496 B</code></pre>
+## 30,608 B</code></pre>
+<pre><code>## Clearing cache [@30608]</code></pre>
+<pre><code>## 14,432 B
+## 15,336 B
+## 16,224 B
+## 17,080 B
+## 17,992 B
+## 18,896 B
+## 19,672 B
+## 20,568 B
+## 21,464 B
+## 22,352 B
+## 23,200 B
+## 24,056 B
+## 24,912 B
+## 25,688 B
+## 26,456 B
+## 27,232 B
+## 28,000 B
+## 28,712 B
+## 29,488 B
+## 30,440 B</code></pre>
+<pre><code>## Clearing cache [@30440]</code></pre>
+<pre><code>## 14,432 B
+## 15,336 B
+## 16,256 B
+## 17,168 B
+## 18,064 B
+## 18,976 B
+## 19,880 B
+## 20,720 B
+## 21,488 B
+## 22,256 B
+## 23,160 B
+## 24,016 B
+## 24,920 B
+## 25,760 B
+## 26,528 B
+## 27,384 B
+## 28,216 B
+## 28,928 B
+## 29,824 B
+## 30,616 B</code></pre>
 <div class="question">
 <p>Can we come up with simple example for these function operators?</p>
 </div>
