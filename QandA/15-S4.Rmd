@@ -1,2 +1,38 @@
 # S4
 
+## 15.2 Basics {-}
+
+:::question
+Broadly, what is a generic and method in S4 and what is their relationship? 
+
+```{r}
+setClass("Person", 
+  slots = c(
+    name = "character", 
+    age = "numeric"
+  )
+)
+
+setGeneric("age", function(x) standardGeneric("age"))
+setGeneric("age<-", function(x, value) standardGeneric("age<-"))
+
+setMethod("age", "Person", function(x) x@age)
+setMethod("age<-", "Person", function(x, value) {
+  x@age <- value
+  x
+})
+```
+:::
+
+
+:::TODO
+:::
+
+:::question
+What is `standardGeneric` doing in the example above? Is this kind of like creating `age.default` for `Person`? 
+:::
+
+:::TODO
+:::
+
+

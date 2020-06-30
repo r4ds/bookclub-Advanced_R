@@ -20,8 +20,7 @@ Accumulator <- R6Class("Accumulator", list(
 x <- Accumulator$new()
 ```
 
-:::TODO
-:::
+Returning `self` or `invisible(self)` allows for method chaining.  i.e. `x$add(1)$add(2)` can be done rather than `x$add(1); x$add(2)`. In the absence of anything better to return, why not return itself
 
 ## 14.2.2 Important methods {-}
 
@@ -41,7 +40,7 @@ Person <- R6Class("Person", list(
     cat("Person: \n")
     cat("  Name: ", self$name, "\n", sep = "")
     cat("  Age:  ", self$age, "\n", sep = "")
-    #invisible(self)
+    invisible(self)
   }
 ))
 
@@ -55,8 +54,7 @@ Person:
   Age:  NA
 ```
 
-:::TODO
-:::
+Print is an S3 generic, so when print is implicitly called, it calls the method for the R6 object. The method for the R6 object is "look for a print function inside the R6 object"
 
 ## Exercises 14.2.6.4 {-} 
 
@@ -99,91 +97,55 @@ Error in tz$set("Antarctica/South_Pole")$get :
   $ operator is invalid for atomic vectors
 ```
 
-:::TODO
+You’re not returning an R6 object in your first “set”, you’re returning a character vector, so you can’t find the get method of that character vector
+
+We can return something using the following code: 
+
 ```{r, eval=FALSE}
 Timezone <- R6Class(
   classname = "Timezone", 
   public = list(
-    current_zone = Sys.timezone(),
     get = function() {
-      Sys.timezone()
-      self$current_zone <- Sys.timezone()
+      self$current_zone
     },
-    set = function(value) {
-      stopifnot(value %in% OlsonNames())
-      
-      old <- self$get()
-      Sys.setenv(TZ = value)
-      self$current_zone <- Sys.setenv(TZ = value)
-      invisible(old)
-    })
-)
-
-tz <- Timezone$new()
-
-tz$set("Antarctica/South_Pole")$current_zone
-```
-:::
-
-## 14.3.2 Active fields {-}
-
-:::question
-Why can we write over the `$name` but not `$age` methods when both are part of the `active` list?
-:::
-
-```{r, eval=FALSE}
-Person <- R6Class("Person", 
-  private = list(
-    .age = NA,
-    .name = NULL
+    set = function(v) {
+      self$current_zone <- v
+      invisible(self)
+    },
+    reset = function() {
+      if (!is.null(private$.old)) {
+        self$current_zone <- private$.old
+      }
+      invisible(self)
+    }
   ),
   active = list(
-    age = function(value) {
-      if (missing(value)) {
-        private$.age
-      } else {
-        stop("`$age` is read only", call. = FALSE)
+    current_zone = function(v) {
+      if (missing(v)) {
+        return(Sys.timezone())
       }
-    },
-    name = function(value) {
-      if (missing(value)) {
-        private$.name
+      stopifnot(v %in% OlsonNames())
+      old <- Sys.timezone()
+      if (Sys.setenv(TZ=v)) {
+        private$.old <- old
       } else {
-        stopifnot(is.character(value), length(value) == 1)
-        private$.name <- value
-        self
+        stop("Unable to set timezone.")
       }
+      invisible(self)
     }
   ),
-  public = list(
-    initialize = function(name, age = NA) {
-      private$.name <- name
-      private$.age <- age
-    }
+  private = list(
+    .old = NULL
   )
 )
+tz <- Timezone$new()
+tz$set("Antarctica/South_Pole")$get()
+#> [1] "Antarctica/South_Pole"
+tz$reset()$get()
+#> [1] "US/Central"
 ```
 
-```{r, eval=FALSE}
-hadley4 <- Person$new("Hadley", age = 38)
-hadley4$name <- "Maya"
-hadley4$name
-```
-
-```
-[1] "Maya"
-```
-
-```{r, eval=FALSE}
-hadley4$age <- 20
-```
-
-```
-Error: `$age` is read only
-```
-
-:::TODO
-:::
+That said, not every function should support chaining. Sometimes you want the function to return some value (like `$get`) and in these cases, you just won't be able to chain, and that is okay.
 
 ## 14.4 Reference semantics {-}
 
@@ -193,22 +155,40 @@ Error: `$age` is read only
 Can we see this in action using a subclass?
 :::
 
-:::TODO
+#### This example is taken from the `R6` [documentation](https://r6.r-lib.org/articles/Introduction.html): {-}
+
+Object `c1` contains `s`, which we will clone. The original and clone both point to the same object, and by using `deep = TRUE` we can modify `s` in one object without changing it in the other. 
+
 ```{r, eval=FALSE}
-A <- R6Class(
-  classname = "A",
-   public = list(
-    field = "foo",
-    method = function() {
-      "bar"
-    }
+Simple <- R6Class("Simple", public = list(x = 1))
+
+Cloneable <- R6Class("Cloneable",
+  public = list(
+    s = NULL,
+    initialize = function() self$s <- Simple$new()
   )
 )
 
-B <- A$new()
-C <- B$clone(deep = FALSE)
+c1 <- Cloneable$new()
+c2 <- c1$clone()
+
+# Change c1's `s` field
+c1$s$x <- 2
+
+# c2's `s` is the same object, so it reflects the change
+c2$s$x
+#> [1] 2
+
+c3 <- c1$clone(deep = TRUE)
+
+# Change c1's `s` field
+c1$s$x <- 3
+
+# c2's `s` is different
+# if we set deep = FALSE this would be 3!
+c3$s$x
+#> [1] 2
 ```
-:::
 
 
 :::question
@@ -216,8 +196,3 @@ When or why would I set the clone argument to FALSE?
 :::
 
 Clone has a large memory footprint so if you're going to create a lot of R6 methods you may want to exclude this!
-
-:::question
-Is R6 "public" related to private/public methods/classes in traditional OO?
-:::
-
