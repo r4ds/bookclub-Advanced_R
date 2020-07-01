@@ -283,7 +283,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#exercises-12"><i class="fa fa-check"></i>13.4.4.5 Exercises</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#object-styles"><i class="fa fa-check"></i>13.5 Object styles</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#inheritance"><i class="fa fa-check"></i>13.6 Inheritance</a></li>
-<li class="chapter" data-level="13.1" data-path="s3.html"><a href="s3.html#section-1"><i class="fa fa-check"></i><b>13.1</b> 13.4.3.3</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#exercises-13"><i class="fa fa-check"></i>13.4.3.3 Exercises</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#s3-and-base-types"><i class="fa fa-check"></i>13.7.1 S3 and Base Types</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#internal-generics"><i class="fa fa-check"></i>13.7.3 Internal Generics</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#double-dispatch"><i class="fa fa-check"></i>13.7.4 Double Dispatch</a></li>
@@ -291,12 +291,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14" data-path="r6.html"><a href="r6.html"><i class="fa fa-check"></i><b>14</b> R6</a><ul>
 <li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#classes-and-methods"><i class="fa fa-check"></i>14.2 Classes and methods</a></li>
 <li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#important-methods"><i class="fa fa-check"></i>14.2.2 Important methods</a></li>
+<li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#classes-and-methods-14.2.3"><i class="fa fa-check"></i>Classes and methods 14.2.3</a></li>
 <li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#exercises-14.2.6.4"><i class="fa fa-check"></i>Exercises 14.2.6.4</a></li>
 <li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#reference-semantics"><i class="fa fa-check"></i>14.4 Reference semantics</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="s4.html"><a href="s4.html"><i class="fa fa-check"></i><b>15</b> S4</a><ul>
 <li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#basics-1"><i class="fa fa-check"></i>15.2 Basics</a></li>
+<li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#exercises-14"><i class="fa fa-check"></i>15.3.6.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#signature"><i class="fa fa-check"></i>Signature</a></li>
+<li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#single-dispatch"><i class="fa fa-check"></i>15.5.1 Single dispatch</a></li>
+<li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#classes-1"><i class="fa fa-check"></i>15.6.1 Classes</a></li>
 </ul></li>
+<li class="chapter" data-level="16" data-path="trade-offs.html"><a href="trade-offs.html"><i class="fa fa-check"></i><b>16</b> Trade-Offs</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -334,37 +340,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="ipa-constructor" class="section level4 unnumbered">
 <h4>IPA Constructor</h4>
 <p>Create the custom class</p>
-<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb531-1" data-line-number="1">new_ipa &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">x =</span> <span class="kw">double</span>()) {</a>
-<a class="sourceLine" id="cb531-2" data-line-number="2">  <span class="kw">structure</span>(x, <span class="dt">class =</span> <span class="st">&quot;ipa&quot;</span>)</a>
-<a class="sourceLine" id="cb531-3" data-line-number="3">}</a></code></pre></div>
+<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb533-1" data-line-number="1">new_ipa &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">x =</span> <span class="kw">double</span>()) {</a>
+<a class="sourceLine" id="cb533-2" data-line-number="2">  <span class="kw">structure</span>(x, <span class="dt">class =</span> <span class="st">&quot;ipa&quot;</span>)</a>
+<a class="sourceLine" id="cb533-3" data-line-number="3">}</a></code></pre></div>
 </div>
 <div id="ipa-validator" class="section level4 unnumbered">
 <h4>IPA Validator</h4>
 <p>Function to make sure you can use your custom class</p>
-<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb532-1" data-line-number="1">validate_ipa &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">x =</span> <span class="kw">double</span>()) {</a>
-<a class="sourceLine" id="cb532-2" data-line-number="2">  <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(x))</a>
-<a class="sourceLine" id="cb532-3" data-line-number="3">  <span class="co"># has to be at least 15 bitterness</span></a>
-<a class="sourceLine" id="cb532-4" data-line-number="4">  <span class="kw">stopifnot</span>(x <span class="op">&gt;=</span><span class="st"> </span><span class="dv">15</span>)</a>
-<a class="sourceLine" id="cb532-5" data-line-number="5">  x</a>
-<a class="sourceLine" id="cb532-6" data-line-number="6">}</a></code></pre></div>
+<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb534-1" data-line-number="1">validate_ipa &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">x =</span> <span class="kw">double</span>()) {</a>
+<a class="sourceLine" id="cb534-2" data-line-number="2">  <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(x))</a>
+<a class="sourceLine" id="cb534-3" data-line-number="3">  <span class="co"># has to be at least 15 bitterness</span></a>
+<a class="sourceLine" id="cb534-4" data-line-number="4">  <span class="kw">stopifnot</span>(x <span class="op">&gt;=</span><span class="st"> </span><span class="dv">15</span>)</a>
+<a class="sourceLine" id="cb534-5" data-line-number="5">  x</a>
+<a class="sourceLine" id="cb534-6" data-line-number="6">}</a></code></pre></div>
 </div>
 <div id="ipa-helper" class="section level3 unnumbered">
 <h3>IPA Helper</h3>
 <p>Calls both the validator and the constructor</p>
-<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb533-1" data-line-number="1">ipa &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb533-2" data-line-number="2">  x &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(x)</a>
-<a class="sourceLine" id="cb533-3" data-line-number="3">  <span class="co"># Both helper and valditor</span></a>
-<a class="sourceLine" id="cb533-4" data-line-number="4">  x &lt;-<span class="st"> </span><span class="kw">new_ipa</span>(x)</a>
-<a class="sourceLine" id="cb533-5" data-line-number="5">  res &lt;-<span class="st"> </span><span class="kw">validate_ipa</span>(x)</a>
-<a class="sourceLine" id="cb533-6" data-line-number="6">  res</a>
-<a class="sourceLine" id="cb533-7" data-line-number="7">}</a></code></pre></div>
+<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb535-1" data-line-number="1">ipa &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb535-2" data-line-number="2">  x &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(x)</a>
+<a class="sourceLine" id="cb535-3" data-line-number="3">  <span class="co"># Both helper and valditor</span></a>
+<a class="sourceLine" id="cb535-4" data-line-number="4">  x &lt;-<span class="st"> </span><span class="kw">new_ipa</span>(x)</a>
+<a class="sourceLine" id="cb535-5" data-line-number="5">  res &lt;-<span class="st"> </span><span class="kw">validate_ipa</span>(x)</a>
+<a class="sourceLine" id="cb535-6" data-line-number="6">  res</a>
+<a class="sourceLine" id="cb535-7" data-line-number="7">}</a></code></pre></div>
 <div id="test-it-out" class="section level4">
 <h4><span class="header-section-number">13.0.0.1</span> Test it out!</h4>
 <p>Fails as expected:</p>
-<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb534-1" data-line-number="1"><span class="kw">ipa</span>(<span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb536-1" data-line-number="1"><span class="kw">ipa</span>(<span class="dv">5</span>)</a></code></pre></div>
 <pre><code>Error in validate_ipa(x) : x &gt;= 15 is not TRUE</code></pre>
 <p>But this works!</p>
-<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb536-1" data-line-number="1"><span class="kw">ipa</span>(<span class="dv">50</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb538-1" data-line-number="1"><span class="kw">ipa</span>(<span class="dv">50</span>)</a></code></pre></div>
 <pre><code>## [1] 50
 ## attr(,&quot;class&quot;)
 ## [1] &quot;ipa&quot;</code></pre>
@@ -376,84 +382,84 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="question">
 <p>Can we go over the factor source code, commenting it line for line?</p>
 </div>
-<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb538-1" data-line-number="1"><span class="co"># using the example:</span></a>
-<a class="sourceLine" id="cb538-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>, <span class="st">&quot;three&quot;</span>, <span class="st">&quot;one&quot;</span>)</a>
-<a class="sourceLine" id="cb538-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb538-4" data-line-number="4">factor &lt;-<span class="st"> </span><span class="cf">function</span> (<span class="dt">x =</span> <span class="kw">character</span>(), levels, <span class="dt">labels =</span> levels, <span class="dt">exclude =</span> <span class="ot">NA</span>, <span class="dt">ordered =</span> <span class="kw">is.ordered</span>(x), <span class="dt">nmax =</span> <span class="ot">NA</span>) {</a>
-<a class="sourceLine" id="cb538-5" data-line-number="5"> </a>
-<a class="sourceLine" id="cb538-6" data-line-number="6">   <span class="co"># if character vector is null set to character()</span></a>
-<a class="sourceLine" id="cb538-7" data-line-number="7">  <span class="cf">if</span> (<span class="kw">is.null</span>(x)) </a>
-<a class="sourceLine" id="cb538-8" data-line-number="8">      x &lt;-<span class="st"> </span><span class="kw">character</span>()</a>
-<a class="sourceLine" id="cb538-9" data-line-number="9">  <span class="co"># nx - names of x</span></a>
-<a class="sourceLine" id="cb538-10" data-line-number="10">  <span class="co"># in our case NULL</span></a>
-<a class="sourceLine" id="cb538-11" data-line-number="11">    nx &lt;-<span class="st"> </span><span class="kw">names</span>(x)</a>
-<a class="sourceLine" id="cb538-12" data-line-number="12">    <span class="co"># we didn&#39;t supply levels so it&#39;s missing</span></a>
-<a class="sourceLine" id="cb538-13" data-line-number="13">    <span class="cf">if</span> (<span class="kw">missing</span>(levels)) {</a>
-<a class="sourceLine" id="cb538-14" data-line-number="14">      <span class="co"># set y to the unique names found in the vector</span></a>
-<a class="sourceLine" id="cb538-15" data-line-number="15">      <span class="co"># nmax by default is NA but this is an argument</span></a>
-<a class="sourceLine" id="cb538-16" data-line-number="16">      <span class="co"># for unique setting the max number of unique values</span></a>
-<a class="sourceLine" id="cb538-17" data-line-number="17">        y &lt;-<span class="st"> </span><span class="kw">unique</span>(x, <span class="dt">nmax =</span> nmax)</a>
-<a class="sourceLine" id="cb538-18" data-line-number="18">        <span class="co"># get the order of the unique values</span></a>
-<a class="sourceLine" id="cb538-19" data-line-number="19">        <span class="co"># defaults to alphabetical</span></a>
-<a class="sourceLine" id="cb538-20" data-line-number="20">        ind &lt;-<span class="st"> </span><span class="kw">order</span>(y)</a>
-<a class="sourceLine" id="cb538-21" data-line-number="21">        <span class="co"># put our vector in order using only unique values</span></a>
-<a class="sourceLine" id="cb538-22" data-line-number="22">        levels &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">as.character</span>(y)[ind])</a>
-<a class="sourceLine" id="cb538-23" data-line-number="23">    }</a>
-<a class="sourceLine" id="cb538-24" data-line-number="24">    <span class="co"># because the function arg is a promise </span></a>
-<a class="sourceLine" id="cb538-25" data-line-number="25">    <span class="co"># we need to eval now to use it? I think?</span></a>
-<a class="sourceLine" id="cb538-26" data-line-number="26">    <span class="kw">force</span>(ordered) <span class="co"># FALSE</span></a>
-<a class="sourceLine" id="cb538-27" data-line-number="27">    <span class="co"># if x isn&#39;t a character string make it one</span></a>
-<a class="sourceLine" id="cb538-28" data-line-number="28">    <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.character</span>(x)) </a>
-<a class="sourceLine" id="cb538-29" data-line-number="29">        x &lt;-<span class="st"> </span><span class="kw">as.character</span>(x)</a>
-<a class="sourceLine" id="cb538-30" data-line-number="30">    <span class="co"># match the number of levels with NAs</span></a>
-<a class="sourceLine" id="cb538-31" data-line-number="31">    <span class="co"># then if they are NA it will resolve to TRUE</span></a>
-<a class="sourceLine" id="cb538-32" data-line-number="32">    <span class="co"># only return the TRUE levels</span></a>
-<a class="sourceLine" id="cb538-33" data-line-number="33">    <span class="co"># this is how we get rid of NAs!</span></a>
-<a class="sourceLine" id="cb538-34" data-line-number="34">    levels &lt;-<span class="st"> </span>levels[<span class="kw">is.na</span>(<span class="kw">match</span>(levels, exclude))]</a>
-<a class="sourceLine" id="cb538-35" data-line-number="35">    <span class="co"># get the ordered levels</span></a>
-<a class="sourceLine" id="cb538-36" data-line-number="36">    f &lt;-<span class="st"> </span><span class="kw">match</span>(x, levels)</a>
-<a class="sourceLine" id="cb538-37" data-line-number="37">    <span class="co"># if the names aren&#39;t null give f those names</span></a>
-<a class="sourceLine" id="cb538-38" data-line-number="38">    <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.null</span>(nx)) </a>
-<a class="sourceLine" id="cb538-39" data-line-number="39">        <span class="kw">names</span>(f) &lt;-<span class="st"> </span>nx</a>
-<a class="sourceLine" id="cb538-40" data-line-number="40">    <span class="co"># if missing levels make levels back into a character string?</span></a>
-<a class="sourceLine" id="cb538-41" data-line-number="41">    <span class="co"># why?</span></a>
-<a class="sourceLine" id="cb538-42" data-line-number="42">    <span class="cf">if</span> (<span class="kw">missing</span>(labels)) {</a>
-<a class="sourceLine" id="cb538-43" data-line-number="43">        <span class="kw">levels</span>(f) &lt;-<span class="st"> </span><span class="kw">as.character</span>(levels)</a>
-<a class="sourceLine" id="cb538-44" data-line-number="44">    }</a>
-<a class="sourceLine" id="cb538-45" data-line-number="45">    <span class="co"># otherwise get the legenth of your labels</span></a>
-<a class="sourceLine" id="cb538-46" data-line-number="46">    <span class="co"># if its the same as the levels</span></a>
-<a class="sourceLine" id="cb538-47" data-line-number="47">    <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb538-48" data-line-number="48">        nlab &lt;-<span class="st"> </span><span class="kw">length</span>(labels)</a>
-<a class="sourceLine" id="cb538-49" data-line-number="49">        <span class="cf">if</span> (nlab <span class="op">==</span><span class="st"> </span><span class="kw">length</span>(levels)) {</a>
-<a class="sourceLine" id="cb538-50" data-line-number="50">            <span class="co"># xlevls is labels as character</span></a>
-<a class="sourceLine" id="cb538-51" data-line-number="51">            <span class="co"># then we get the unique values of that</span></a>
-<a class="sourceLine" id="cb538-52" data-line-number="52">            <span class="co"># and set that to xlevs</span></a>
-<a class="sourceLine" id="cb538-53" data-line-number="53">            nlevs &lt;-<span class="st"> </span><span class="kw">unique</span>(xlevs &lt;-<span class="st"> </span><span class="kw">as.character</span>(labels))</a>
-<a class="sourceLine" id="cb538-54" data-line-number="54">            <span class="co"># this is null</span></a>
-<a class="sourceLine" id="cb538-55" data-line-number="55">            at &lt;-<span class="st"> </span><span class="kw">attributes</span>(f)</a>
-<a class="sourceLine" id="cb538-56" data-line-number="56">            <span class="co"># attr levels</span></a>
-<a class="sourceLine" id="cb538-57" data-line-number="57">            at<span class="op">$</span>levels &lt;-<span class="st"> </span>nlevs</a>
-<a class="sourceLine" id="cb538-58" data-line-number="58">            <span class="co"># match the levels with ordered levels</span></a>
-<a class="sourceLine" id="cb538-59" data-line-number="59">            <span class="co"># and put the levels back in numeric order?</span></a>
-<a class="sourceLine" id="cb538-60" data-line-number="60">            <span class="co"># I think?</span></a>
-<a class="sourceLine" id="cb538-61" data-line-number="61">            f &lt;-<span class="st"> </span><span class="kw">match</span>(xlevs, nlevs)[f]</a>
-<a class="sourceLine" id="cb538-62" data-line-number="62">            <span class="co"># now set the attributes to the numeric levels</span></a>
-<a class="sourceLine" id="cb538-63" data-line-number="63">            <span class="kw">attributes</span>(f) &lt;-<span class="st"> </span>at</a>
-<a class="sourceLine" id="cb538-64" data-line-number="64">        }</a>
-<a class="sourceLine" id="cb538-65" data-line-number="65">        <span class="co"># if you only have one lavel</span></a>
-<a class="sourceLine" id="cb538-66" data-line-number="66">        <span class="cf">else</span> <span class="cf">if</span> (nlab <span class="op">==</span><span class="st"> </span>1L) </a>
-<a class="sourceLine" id="cb538-67" data-line-number="67">            <span class="co"># add numerics to the end of the label?</span></a>
-<a class="sourceLine" id="cb538-68" data-line-number="68">            <span class="kw">levels</span>(f) &lt;-<span class="st"> </span><span class="kw">paste0</span>(labels, <span class="kw">seq_along</span>(levels))</a>
-<a class="sourceLine" id="cb538-69" data-line-number="69">            <span class="co"># otherwise invalid length</span></a>
-<a class="sourceLine" id="cb538-70" data-line-number="70">        <span class="cf">else</span> <span class="kw">stop</span>(<span class="kw">gettextf</span>(<span class="st">&quot;invalid &#39;labels&#39;; length %d should be 1 or %d&quot;</span>, </a>
-<a class="sourceLine" id="cb538-71" data-line-number="71">            nlab, <span class="kw">length</span>(levels)), <span class="dt">domain =</span> <span class="ot">NA</span>)</a>
-<a class="sourceLine" id="cb538-72" data-line-number="72">    }</a>
-<a class="sourceLine" id="cb538-73" data-line-number="73">    <span class="co"># add ordered and factor to f&#39;s class list</span></a>
-<a class="sourceLine" id="cb538-74" data-line-number="74">    <span class="kw">class</span>(f) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="cf">if</span> (ordered) <span class="st">&quot;ordered&quot;</span>, <span class="st">&quot;factor&quot;</span>)</a>
-<a class="sourceLine" id="cb538-75" data-line-number="75">    f</a>
-<a class="sourceLine" id="cb538-76" data-line-number="76">}</a>
-<a class="sourceLine" id="cb538-77" data-line-number="77"></a>
-<a class="sourceLine" id="cb538-78" data-line-number="78"><span class="kw">factor</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb540-1" data-line-number="1"><span class="co"># using the example:</span></a>
+<a class="sourceLine" id="cb540-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>, <span class="st">&quot;three&quot;</span>, <span class="st">&quot;one&quot;</span>)</a>
+<a class="sourceLine" id="cb540-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb540-4" data-line-number="4">factor &lt;-<span class="st"> </span><span class="cf">function</span> (<span class="dt">x =</span> <span class="kw">character</span>(), levels, <span class="dt">labels =</span> levels, <span class="dt">exclude =</span> <span class="ot">NA</span>, <span class="dt">ordered =</span> <span class="kw">is.ordered</span>(x), <span class="dt">nmax =</span> <span class="ot">NA</span>) {</a>
+<a class="sourceLine" id="cb540-5" data-line-number="5"> </a>
+<a class="sourceLine" id="cb540-6" data-line-number="6">   <span class="co"># if character vector is null set to character()</span></a>
+<a class="sourceLine" id="cb540-7" data-line-number="7">  <span class="cf">if</span> (<span class="kw">is.null</span>(x)) </a>
+<a class="sourceLine" id="cb540-8" data-line-number="8">      x &lt;-<span class="st"> </span><span class="kw">character</span>()</a>
+<a class="sourceLine" id="cb540-9" data-line-number="9">  <span class="co"># nx - names of x</span></a>
+<a class="sourceLine" id="cb540-10" data-line-number="10">  <span class="co"># in our case NULL</span></a>
+<a class="sourceLine" id="cb540-11" data-line-number="11">    nx &lt;-<span class="st"> </span><span class="kw">names</span>(x)</a>
+<a class="sourceLine" id="cb540-12" data-line-number="12">    <span class="co"># we didn&#39;t supply levels so it&#39;s missing</span></a>
+<a class="sourceLine" id="cb540-13" data-line-number="13">    <span class="cf">if</span> (<span class="kw">missing</span>(levels)) {</a>
+<a class="sourceLine" id="cb540-14" data-line-number="14">      <span class="co"># set y to the unique names found in the vector</span></a>
+<a class="sourceLine" id="cb540-15" data-line-number="15">      <span class="co"># nmax by default is NA but this is an argument</span></a>
+<a class="sourceLine" id="cb540-16" data-line-number="16">      <span class="co"># for unique setting the max number of unique values</span></a>
+<a class="sourceLine" id="cb540-17" data-line-number="17">        y &lt;-<span class="st"> </span><span class="kw">unique</span>(x, <span class="dt">nmax =</span> nmax)</a>
+<a class="sourceLine" id="cb540-18" data-line-number="18">        <span class="co"># get the order of the unique values</span></a>
+<a class="sourceLine" id="cb540-19" data-line-number="19">        <span class="co"># defaults to alphabetical</span></a>
+<a class="sourceLine" id="cb540-20" data-line-number="20">        ind &lt;-<span class="st"> </span><span class="kw">order</span>(y)</a>
+<a class="sourceLine" id="cb540-21" data-line-number="21">        <span class="co"># put our vector in order using only unique values</span></a>
+<a class="sourceLine" id="cb540-22" data-line-number="22">        levels &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">as.character</span>(y)[ind])</a>
+<a class="sourceLine" id="cb540-23" data-line-number="23">    }</a>
+<a class="sourceLine" id="cb540-24" data-line-number="24">    <span class="co"># because the function arg is a promise </span></a>
+<a class="sourceLine" id="cb540-25" data-line-number="25">    <span class="co"># we need to eval now to use it? I think?</span></a>
+<a class="sourceLine" id="cb540-26" data-line-number="26">    <span class="kw">force</span>(ordered) <span class="co"># FALSE</span></a>
+<a class="sourceLine" id="cb540-27" data-line-number="27">    <span class="co"># if x isn&#39;t a character string make it one</span></a>
+<a class="sourceLine" id="cb540-28" data-line-number="28">    <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.character</span>(x)) </a>
+<a class="sourceLine" id="cb540-29" data-line-number="29">        x &lt;-<span class="st"> </span><span class="kw">as.character</span>(x)</a>
+<a class="sourceLine" id="cb540-30" data-line-number="30">    <span class="co"># match the number of levels with NAs</span></a>
+<a class="sourceLine" id="cb540-31" data-line-number="31">    <span class="co"># then if they are NA it will resolve to TRUE</span></a>
+<a class="sourceLine" id="cb540-32" data-line-number="32">    <span class="co"># only return the TRUE levels</span></a>
+<a class="sourceLine" id="cb540-33" data-line-number="33">    <span class="co"># this is how we get rid of NAs!</span></a>
+<a class="sourceLine" id="cb540-34" data-line-number="34">    levels &lt;-<span class="st"> </span>levels[<span class="kw">is.na</span>(<span class="kw">match</span>(levels, exclude))]</a>
+<a class="sourceLine" id="cb540-35" data-line-number="35">    <span class="co"># get the ordered levels</span></a>
+<a class="sourceLine" id="cb540-36" data-line-number="36">    f &lt;-<span class="st"> </span><span class="kw">match</span>(x, levels)</a>
+<a class="sourceLine" id="cb540-37" data-line-number="37">    <span class="co"># if the names aren&#39;t null give f those names</span></a>
+<a class="sourceLine" id="cb540-38" data-line-number="38">    <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.null</span>(nx)) </a>
+<a class="sourceLine" id="cb540-39" data-line-number="39">        <span class="kw">names</span>(f) &lt;-<span class="st"> </span>nx</a>
+<a class="sourceLine" id="cb540-40" data-line-number="40">    <span class="co"># if missing levels make levels back into a character string?</span></a>
+<a class="sourceLine" id="cb540-41" data-line-number="41">    <span class="co"># why?</span></a>
+<a class="sourceLine" id="cb540-42" data-line-number="42">    <span class="cf">if</span> (<span class="kw">missing</span>(labels)) {</a>
+<a class="sourceLine" id="cb540-43" data-line-number="43">        <span class="kw">levels</span>(f) &lt;-<span class="st"> </span><span class="kw">as.character</span>(levels)</a>
+<a class="sourceLine" id="cb540-44" data-line-number="44">    }</a>
+<a class="sourceLine" id="cb540-45" data-line-number="45">    <span class="co"># otherwise get the legenth of your labels</span></a>
+<a class="sourceLine" id="cb540-46" data-line-number="46">    <span class="co"># if its the same as the levels</span></a>
+<a class="sourceLine" id="cb540-47" data-line-number="47">    <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb540-48" data-line-number="48">        nlab &lt;-<span class="st"> </span><span class="kw">length</span>(labels)</a>
+<a class="sourceLine" id="cb540-49" data-line-number="49">        <span class="cf">if</span> (nlab <span class="op">==</span><span class="st"> </span><span class="kw">length</span>(levels)) {</a>
+<a class="sourceLine" id="cb540-50" data-line-number="50">            <span class="co"># xlevls is labels as character</span></a>
+<a class="sourceLine" id="cb540-51" data-line-number="51">            <span class="co"># then we get the unique values of that</span></a>
+<a class="sourceLine" id="cb540-52" data-line-number="52">            <span class="co"># and set that to xlevs</span></a>
+<a class="sourceLine" id="cb540-53" data-line-number="53">            nlevs &lt;-<span class="st"> </span><span class="kw">unique</span>(xlevs &lt;-<span class="st"> </span><span class="kw">as.character</span>(labels))</a>
+<a class="sourceLine" id="cb540-54" data-line-number="54">            <span class="co"># this is null</span></a>
+<a class="sourceLine" id="cb540-55" data-line-number="55">            at &lt;-<span class="st"> </span><span class="kw">attributes</span>(f)</a>
+<a class="sourceLine" id="cb540-56" data-line-number="56">            <span class="co"># attr levels</span></a>
+<a class="sourceLine" id="cb540-57" data-line-number="57">            at<span class="op">$</span>levels &lt;-<span class="st"> </span>nlevs</a>
+<a class="sourceLine" id="cb540-58" data-line-number="58">            <span class="co"># match the levels with ordered levels</span></a>
+<a class="sourceLine" id="cb540-59" data-line-number="59">            <span class="co"># and put the levels back in numeric order?</span></a>
+<a class="sourceLine" id="cb540-60" data-line-number="60">            <span class="co"># I think?</span></a>
+<a class="sourceLine" id="cb540-61" data-line-number="61">            f &lt;-<span class="st"> </span><span class="kw">match</span>(xlevs, nlevs)[f]</a>
+<a class="sourceLine" id="cb540-62" data-line-number="62">            <span class="co"># now set the attributes to the numeric levels</span></a>
+<a class="sourceLine" id="cb540-63" data-line-number="63">            <span class="kw">attributes</span>(f) &lt;-<span class="st"> </span>at</a>
+<a class="sourceLine" id="cb540-64" data-line-number="64">        }</a>
+<a class="sourceLine" id="cb540-65" data-line-number="65">        <span class="co"># if you only have one lavel</span></a>
+<a class="sourceLine" id="cb540-66" data-line-number="66">        <span class="cf">else</span> <span class="cf">if</span> (nlab <span class="op">==</span><span class="st"> </span>1L) </a>
+<a class="sourceLine" id="cb540-67" data-line-number="67">            <span class="co"># add numerics to the end of the label?</span></a>
+<a class="sourceLine" id="cb540-68" data-line-number="68">            <span class="kw">levels</span>(f) &lt;-<span class="st"> </span><span class="kw">paste0</span>(labels, <span class="kw">seq_along</span>(levels))</a>
+<a class="sourceLine" id="cb540-69" data-line-number="69">            <span class="co"># otherwise invalid length</span></a>
+<a class="sourceLine" id="cb540-70" data-line-number="70">        <span class="cf">else</span> <span class="kw">stop</span>(<span class="kw">gettextf</span>(<span class="st">&quot;invalid &#39;labels&#39;; length %d should be 1 or %d&quot;</span>, </a>
+<a class="sourceLine" id="cb540-71" data-line-number="71">            nlab, <span class="kw">length</span>(levels)), <span class="dt">domain =</span> <span class="ot">NA</span>)</a>
+<a class="sourceLine" id="cb540-72" data-line-number="72">    }</a>
+<a class="sourceLine" id="cb540-73" data-line-number="73">    <span class="co"># add ordered and factor to f&#39;s class list</span></a>
+<a class="sourceLine" id="cb540-74" data-line-number="74">    <span class="kw">class</span>(f) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="cf">if</span> (ordered) <span class="st">&quot;ordered&quot;</span>, <span class="st">&quot;factor&quot;</span>)</a>
+<a class="sourceLine" id="cb540-75" data-line-number="75">    f</a>
+<a class="sourceLine" id="cb540-76" data-line-number="76">}</a>
+<a class="sourceLine" id="cb540-77" data-line-number="77"></a>
+<a class="sourceLine" id="cb540-78" data-line-number="78"><span class="kw">factor</span>(x)</a></code></pre></div>
 </div>
 <div id="exercises-11" class="section level2 unnumbered">
 <h2>13.3.4.4 Exercises</h2>
@@ -462,20 +468,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>It is a little misleading to say that factors “have an … attribute”, where I really think he means that “some functions might check if that attribute has been assigned”.</p>
 <p>Make a factor:</p>
-<div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb539-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb539-2" data-line-number="2">f</a></code></pre></div>
+<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb541-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb541-2" data-line-number="2">f</a></code></pre></div>
 <pre><code>## [1] 1 2
 ## Levels: 1 2</code></pre>
 <p>Set contrasts attribute:</p>
-<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb541-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="kw">C</span>(f)</a>
-<a class="sourceLine" id="cb541-2" data-line-number="2">f</a></code></pre></div>
+<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb543-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="kw">C</span>(f)</a>
+<a class="sourceLine" id="cb543-2" data-line-number="2">f</a></code></pre></div>
 <pre><code>## [1] 1 2
 ## attr(,&quot;contrasts&quot;)
 ##       unordered 
 ## contr.treatment 
 ## Levels: 1 2</code></pre>
-<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb543-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="kw">factor</span>(f)</a>
-<a class="sourceLine" id="cb543-2" data-line-number="2">f</a></code></pre></div>
+<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb545-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="kw">factor</span>(f)</a>
+<a class="sourceLine" id="cb545-2" data-line-number="2">f</a></code></pre></div>
 <pre><code>## [1] 1 2
 ## Levels: 1 2</code></pre>
 <p>dang’t where did those contrasts go!</p>
@@ -484,9 +490,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>13.4.1 Generics</h2>
 <div class="question">
 <p>In the example:</p>
-<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb545-1" data-line-number="1">my_new_generic &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb545-2" data-line-number="2">  <span class="kw">UseMethod</span>(<span class="st">&quot;my_new_generic&quot;</span>)</a>
-<a class="sourceLine" id="cb545-3" data-line-number="3">}</a></code></pre></div>
+<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb547-1" data-line-number="1">my_new_generic &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb547-2" data-line-number="2">  <span class="kw">UseMethod</span>(<span class="st">&quot;my_new_generic&quot;</span>)</a>
+<a class="sourceLine" id="cb547-3" data-line-number="3">}</a></code></pre></div>
 <p>The book states: “If you wonder why we have to repeat my_new_generic twice, think back to Section 6.2.3”</p>
 <p>Can we go over why?</p>
 </div>
@@ -497,48 +503,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p>Basically, you’re specifying the name of the function and then telling R to go find this generic function’s methods. You can’t self-reference the name of the generic after it’s been assigned to itself?</p>
 <p>Maybe the name doesn’t exist!</p>
-<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb546-1" data-line-number="1">test.default &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb546-2" data-line-number="2">  <span class="st">&quot;test&quot;</span></a>
-<a class="sourceLine" id="cb546-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb546-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb546-5" data-line-number="5"><span class="co"># not sure why you would want to do this, but you can</span></a>
-<a class="sourceLine" id="cb546-6" data-line-number="6">(<span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb546-7" data-line-number="7">  <span class="kw">UseMethod</span>(<span class="st">&quot;test&quot;</span>)</a>
-<a class="sourceLine" id="cb546-8" data-line-number="8">})()</a></code></pre></div>
-<pre><code>## [1] &quot;test&quot;</code></pre>
-<p>Also because you might have assigned your generic to a new name, how would it know to use the true “generic” name.</p>
-<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb548-1" data-line-number="1">superuglygenericfunction &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb548-2" data-line-number="2">  <span class="kw">UseMethod</span>(<span class="st">&quot;superuglygenericfunction&quot;</span>)</a>
+<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb548-1" data-line-number="1">test.default &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb548-2" data-line-number="2">  <span class="st">&quot;test&quot;</span></a>
 <a class="sourceLine" id="cb548-3" data-line-number="3">}</a>
 <a class="sourceLine" id="cb548-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb548-5" data-line-number="5">superuglygenericfunction.default &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb548-6" data-line-number="6">  <span class="st">&quot;ugh&quot;</span></a>
-<a class="sourceLine" id="cb548-7" data-line-number="7">}</a>
-<a class="sourceLine" id="cb548-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb548-9" data-line-number="9">nice &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb548-10" data-line-number="10">  <span class="kw">UseMethod</span>(<span class="st">&quot;superuglygenericfunction&quot;</span>)</a>
-<a class="sourceLine" id="cb548-11" data-line-number="11">}</a>
-<a class="sourceLine" id="cb548-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb548-13" data-line-number="13"><span class="kw">nice</span>()</a></code></pre></div>
+<a class="sourceLine" id="cb548-5" data-line-number="5"><span class="co"># not sure why you would want to do this, but you can</span></a>
+<a class="sourceLine" id="cb548-6" data-line-number="6">(<span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb548-7" data-line-number="7">  <span class="kw">UseMethod</span>(<span class="st">&quot;test&quot;</span>)</a>
+<a class="sourceLine" id="cb548-8" data-line-number="8">})()</a></code></pre></div>
+<pre><code>## [1] &quot;test&quot;</code></pre>
+<p>Also because you might have assigned your generic to a new name, how would it know to use the true “generic” name.</p>
+<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb550-1" data-line-number="1">superuglygenericfunction &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb550-2" data-line-number="2">  <span class="kw">UseMethod</span>(<span class="st">&quot;superuglygenericfunction&quot;</span>)</a>
+<a class="sourceLine" id="cb550-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb550-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb550-5" data-line-number="5">superuglygenericfunction.default &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb550-6" data-line-number="6">  <span class="st">&quot;ugh&quot;</span></a>
+<a class="sourceLine" id="cb550-7" data-line-number="7">}</a>
+<a class="sourceLine" id="cb550-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb550-9" data-line-number="9">nice &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb550-10" data-line-number="10">  <span class="kw">UseMethod</span>(<span class="st">&quot;superuglygenericfunction&quot;</span>)</a>
+<a class="sourceLine" id="cb550-11" data-line-number="11">}</a>
+<a class="sourceLine" id="cb550-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb550-13" data-line-number="13"><span class="kw">nice</span>()</a></code></pre></div>
 <pre><code>## [1] &quot;ugh&quot;</code></pre>
-<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb550-1" data-line-number="1"><span class="co">#&gt; [1] &quot;ugh&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb552-1" data-line-number="1"><span class="co">#&gt; [1] &quot;ugh&quot;</span></a></code></pre></div>
 </div>
 <div id="exercises-12" class="section level2 unnumbered">
 <h2>13.4.4.5 Exercises</h2>
 <div class="question">
 <p>Can we explain what’s happening here in our own words I was a little confused with the solutions manual? <code>g(x)</code> uses 1 from the <code>.default</code> method but <code>10</code> from the generic? Why?</p>
 </div>
-<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb551-1" data-line-number="1">g &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb551-2" data-line-number="2">  x &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb551-3" data-line-number="3">  y &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb551-4" data-line-number="4">  <span class="kw">UseMethod</span>(<span class="st">&quot;g&quot;</span>)</a>
-<a class="sourceLine" id="cb551-5" data-line-number="5">}</a>
-<a class="sourceLine" id="cb551-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb551-7" data-line-number="7">g.default &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">c</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)</a>
-<a class="sourceLine" id="cb551-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb551-9" data-line-number="9">x &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb551-10" data-line-number="10">y &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb551-11" data-line-number="11"><span class="kw">g</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb553-1" data-line-number="1">g &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb553-2" data-line-number="2">  x &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb553-3" data-line-number="3">  y &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb553-4" data-line-number="4">  <span class="kw">UseMethod</span>(<span class="st">&quot;g&quot;</span>)</a>
+<a class="sourceLine" id="cb553-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb553-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb553-7" data-line-number="7">g.default &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">c</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)</a>
+<a class="sourceLine" id="cb553-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb553-9" data-line-number="9">x &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb553-10" data-line-number="10">y &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb553-11" data-line-number="11"><span class="kw">g</span>(x)</a></code></pre></div>
 <pre><code> x  y 
  1 10 </code></pre>
 <p>UseMethod creates a new function call with arguments matched as they came in to the generic. Any local variables defined before the call to <code>UseMethod</code> are retained (unlike S).</p>
@@ -571,14 +577,14 @@ g(x)
 </div>
 <p>An object style is a pattern for structuring your class. You can use any structure you want but these 4 patterns get used very often. Date and factor are both vector style for example: the core data for objects of both types are stored in a single vector. And there are some other context-appropriate things denoted by attributes in each case.</p>
 <p>I don’t think length is an issue but when you move away from the vanilla vector style object then the meaning changes. For example, under the hood, a data frame is really a list of vectors. Each of the vectors (columns) has the same length. So if you take the length of a data frame you get the length of the list i.e. the number of columns.</p>
-<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb553-1" data-line-number="1"><span class="kw">length</span>(mtcars)</a></code></pre></div>
+<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb555-1" data-line-number="1"><span class="kw">length</span>(mtcars)</a></code></pre></div>
 <pre><code>## [1] 11</code></pre>
 <p>The result of calling <code>length</code> on a data.frame isn’t necessarily intuitive: most people would probably say that the number of rows is a more natural value for the length of a data frame.</p>
 <p>This is the same for dates: which are actually of length <code>3</code> when classes and <code>9</code> when unclassed.</p>
-<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb555-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">as.POSIXlt</span>(<span class="kw">ISOdatetime</span>(<span class="dv">2020</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb555-2" data-line-number="2"><span class="kw">length</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb557-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">as.POSIXlt</span>(<span class="kw">ISOdatetime</span>(<span class="dv">2020</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb557-2" data-line-number="2"><span class="kw">length</span>(x)</a></code></pre></div>
 <pre><code>## [1] 3</code></pre>
-<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb557-1" data-line-number="1"><span class="kw">length</span>(<span class="kw">unclass</span>(x))</a></code></pre></div>
+<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb559-1" data-line-number="1"><span class="kw">length</span>(<span class="kw">unclass</span>(x))</a></code></pre></div>
 <pre><code>## [1] 11</code></pre>
 </div>
 <div id="inheritance" class="section level2 unnumbered">
@@ -587,85 +593,85 @@ g(x)
 <p>Can we make our own example of a method with inheritance?</p>
 </div>
 <p>Creating an IBU calculator for beer, we can use the <code>.ipa</code> method for a beer of class <code>.wipa</code>:</p>
-<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb559-1" data-line-number="1"><span class="kw">library</span>(sloop)</a>
-<a class="sourceLine" id="cb559-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb559-3" data-line-number="3"><span class="co"># IBUs are calculated as onces x alpha acid x boil time / constant</span></a>
-<a class="sourceLine" id="cb559-4" data-line-number="4"><span class="co"># we&#39;re going to use a different constant for IPAs and Stouts</span></a>
-<a class="sourceLine" id="cb559-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb559-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb559-7" data-line-number="7"><span class="co"># generic</span></a>
-<a class="sourceLine" id="cb559-8" data-line-number="8">IBU_calculator &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb559-9" data-line-number="9">  <span class="kw">UseMethod</span>(<span class="st">&quot;IBU_calculator&quot;</span>)</a>
-<a class="sourceLine" id="cb559-10" data-line-number="10">}</a>
-<a class="sourceLine" id="cb559-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb559-12" data-line-number="12"><span class="co"># default</span></a>
-<a class="sourceLine" id="cb559-13" data-line-number="13">IBU_calculator.default &lt;-<span class="st"> </span><span class="cf">function</span>(x){</a>
-<a class="sourceLine" id="cb559-14" data-line-number="14">  <span class="kw">stop</span>(<span class="st">&quot;Can only calculate IBU for beers, not &quot;</span>,<span class="kw">class</span>(x))</a>
-<a class="sourceLine" id="cb559-15" data-line-number="15">}</a>
-<a class="sourceLine" id="cb559-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb559-17" data-line-number="17"><span class="co"># ipa</span></a>
-<a class="sourceLine" id="cb559-18" data-line-number="18">IBU_calculator.ipa &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb559-19" data-line-number="19">  <span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x <span class="op">*</span><span class="st"> </span><span class="dv">30</span> <span class="op">/</span><span class="st"> </span><span class="fl">7.25</span></a>
-<a class="sourceLine" id="cb559-20" data-line-number="20">}</a>
-<a class="sourceLine" id="cb559-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb559-22" data-line-number="22"><span class="co"># stout</span></a>
-<a class="sourceLine" id="cb559-23" data-line-number="23">IBU_calculator.stout &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb559-24" data-line-number="24">  <span class="fl">1.5</span> <span class="op">*</span><span class="st"> </span>x <span class="op">*</span><span class="st"> </span><span class="dv">30</span> <span class="op">/</span><span class="st"> </span><span class="dv">6</span></a>
-<a class="sourceLine" id="cb559-25" data-line-number="25">}</a>
-<a class="sourceLine" id="cb559-26" data-line-number="26"></a>
-<a class="sourceLine" id="cb559-27" data-line-number="27"><span class="co">#### some beers ####</span></a>
-<a class="sourceLine" id="cb559-28" data-line-number="28">ipa_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">structure</span>(</a>
-<a class="sourceLine" id="cb559-29" data-line-number="29">  <span class="dv">15</span>, <span class="dt">class =</span> <span class="kw">c</span>(<span class="st">&quot;ipa&quot;</span>,<span class="st">&quot;beer&quot;</span>)</a>
-<a class="sourceLine" id="cb559-30" data-line-number="30">)</a>
-<a class="sourceLine" id="cb559-31" data-line-number="31"></a>
-<a class="sourceLine" id="cb559-32" data-line-number="32"><span class="co"># define a wine to see default dispatch</span></a>
-<a class="sourceLine" id="cb559-33" data-line-number="33">wine_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">structure</span>(<span class="dv">3</span>,<span class="dt">class =</span> <span class="kw">c</span>(<span class="st">&quot;pinot&quot;</span>,<span class="st">&quot;wine&quot;</span>))</a>
-<a class="sourceLine" id="cb559-34" data-line-number="34"></a>
-<a class="sourceLine" id="cb559-35" data-line-number="35"><span class="co"># wipa &quot;inherits&quot; class ipa so we can use that method!</span></a>
-<a class="sourceLine" id="cb559-36" data-line-number="36">wipa_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">structure</span>(<span class="dv">20</span>, <span class="dt">class =</span> <span class="kw">c</span>(<span class="st">&quot;wipa&quot;</span>,<span class="st">&quot;ipa&quot;</span>,<span class="st">&quot;beer&quot;</span>))</a>
-<a class="sourceLine" id="cb559-37" data-line-number="37"></a>
-<a class="sourceLine" id="cb559-38" data-line-number="38"><span class="kw">s3_dispatch</span>(<span class="kw">IBU_calculator</span>(ipa_<span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb561-1" data-line-number="1"><span class="kw">library</span>(sloop)</a>
+<a class="sourceLine" id="cb561-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb561-3" data-line-number="3"><span class="co"># IBUs are calculated as onces x alpha acid x boil time / constant</span></a>
+<a class="sourceLine" id="cb561-4" data-line-number="4"><span class="co"># we&#39;re going to use a different constant for IPAs and Stouts</span></a>
+<a class="sourceLine" id="cb561-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb561-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb561-7" data-line-number="7"><span class="co"># generic</span></a>
+<a class="sourceLine" id="cb561-8" data-line-number="8">IBU_calculator &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb561-9" data-line-number="9">  <span class="kw">UseMethod</span>(<span class="st">&quot;IBU_calculator&quot;</span>)</a>
+<a class="sourceLine" id="cb561-10" data-line-number="10">}</a>
+<a class="sourceLine" id="cb561-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb561-12" data-line-number="12"><span class="co"># default</span></a>
+<a class="sourceLine" id="cb561-13" data-line-number="13">IBU_calculator.default &lt;-<span class="st"> </span><span class="cf">function</span>(x){</a>
+<a class="sourceLine" id="cb561-14" data-line-number="14">  <span class="kw">stop</span>(<span class="st">&quot;Can only calculate IBU for beers, not &quot;</span>,<span class="kw">class</span>(x))</a>
+<a class="sourceLine" id="cb561-15" data-line-number="15">}</a>
+<a class="sourceLine" id="cb561-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb561-17" data-line-number="17"><span class="co"># ipa</span></a>
+<a class="sourceLine" id="cb561-18" data-line-number="18">IBU_calculator.ipa &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb561-19" data-line-number="19">  <span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x <span class="op">*</span><span class="st"> </span><span class="dv">30</span> <span class="op">/</span><span class="st"> </span><span class="fl">7.25</span></a>
+<a class="sourceLine" id="cb561-20" data-line-number="20">}</a>
+<a class="sourceLine" id="cb561-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb561-22" data-line-number="22"><span class="co"># stout</span></a>
+<a class="sourceLine" id="cb561-23" data-line-number="23">IBU_calculator.stout &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb561-24" data-line-number="24">  <span class="fl">1.5</span> <span class="op">*</span><span class="st"> </span>x <span class="op">*</span><span class="st"> </span><span class="dv">30</span> <span class="op">/</span><span class="st"> </span><span class="dv">6</span></a>
+<a class="sourceLine" id="cb561-25" data-line-number="25">}</a>
+<a class="sourceLine" id="cb561-26" data-line-number="26"></a>
+<a class="sourceLine" id="cb561-27" data-line-number="27"><span class="co">#### some beers ####</span></a>
+<a class="sourceLine" id="cb561-28" data-line-number="28">ipa_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">structure</span>(</a>
+<a class="sourceLine" id="cb561-29" data-line-number="29">  <span class="dv">15</span>, <span class="dt">class =</span> <span class="kw">c</span>(<span class="st">&quot;ipa&quot;</span>,<span class="st">&quot;beer&quot;</span>)</a>
+<a class="sourceLine" id="cb561-30" data-line-number="30">)</a>
+<a class="sourceLine" id="cb561-31" data-line-number="31"></a>
+<a class="sourceLine" id="cb561-32" data-line-number="32"><span class="co"># define a wine to see default dispatch</span></a>
+<a class="sourceLine" id="cb561-33" data-line-number="33">wine_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">structure</span>(<span class="dv">3</span>,<span class="dt">class =</span> <span class="kw">c</span>(<span class="st">&quot;pinot&quot;</span>,<span class="st">&quot;wine&quot;</span>))</a>
+<a class="sourceLine" id="cb561-34" data-line-number="34"></a>
+<a class="sourceLine" id="cb561-35" data-line-number="35"><span class="co"># wipa &quot;inherits&quot; class ipa so we can use that method!</span></a>
+<a class="sourceLine" id="cb561-36" data-line-number="36">wipa_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">structure</span>(<span class="dv">20</span>, <span class="dt">class =</span> <span class="kw">c</span>(<span class="st">&quot;wipa&quot;</span>,<span class="st">&quot;ipa&quot;</span>,<span class="st">&quot;beer&quot;</span>))</a>
+<a class="sourceLine" id="cb561-37" data-line-number="37"></a>
+<a class="sourceLine" id="cb561-38" data-line-number="38"><span class="kw">s3_dispatch</span>(<span class="kw">IBU_calculator</span>(ipa_<span class="dv">1</span>))</a></code></pre></div>
 <pre><code>## =&gt; IBU_calculator.ipa
 ##    IBU_calculator.beer
 ##  * IBU_calculator.default</code></pre>
-<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb561-1" data-line-number="1"><span class="kw">s3_dispatch</span>(<span class="kw">IBU_calculator</span>(wipa_<span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb563-1" data-line-number="1"><span class="kw">s3_dispatch</span>(<span class="kw">IBU_calculator</span>(wipa_<span class="dv">1</span>))</a></code></pre></div>
 <pre><code>##    IBU_calculator.wipa
 ## =&gt; IBU_calculator.ipa
 ##    IBU_calculator.beer
 ##  * IBU_calculator.default</code></pre>
-<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb563-1" data-line-number="1"><span class="kw">s3_dispatch</span>(<span class="kw">IBU_calculator</span>(wine_<span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb565-1" data-line-number="1"><span class="kw">s3_dispatch</span>(<span class="kw">IBU_calculator</span>(wine_<span class="dv">1</span>))</a></code></pre></div>
 <pre><code>##    IBU_calculator.pinot
 ##    IBU_calculator.wine
 ## =&gt; IBU_calculator.default</code></pre>
 </div>
-<div id="section-1" class="section level2">
-<h2><span class="header-section-number">13.1</span> 13.4.3.3</h2>
+<div id="exercises-13" class="section level2 unnumbered">
+<h2>13.4.3.3 Exercises</h2>
 <div class="question">
 <p>Can we go over why this doesn’t return <code>a1</code>?</p>
 </div>
-<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb565-1" data-line-number="1">generic2 &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">UseMethod</span>(<span class="st">&quot;generic2&quot;</span>)</a>
-<a class="sourceLine" id="cb565-2" data-line-number="2">generic2.a1 &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="st">&quot;a1&quot;</span></a>
-<a class="sourceLine" id="cb565-3" data-line-number="3">generic2.a2 &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="st">&quot;a2&quot;</span></a>
-<a class="sourceLine" id="cb565-4" data-line-number="4">generic2.b &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb565-5" data-line-number="5">  <span class="kw">class</span>(x) &lt;-<span class="st"> &quot;a1&quot;</span></a>
-<a class="sourceLine" id="cb565-6" data-line-number="6">  <span class="kw">NextMethod</span>()</a>
-<a class="sourceLine" id="cb565-7" data-line-number="7">}</a>
-<a class="sourceLine" id="cb565-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb565-9" data-line-number="9"><span class="kw">generic2</span>(<span class="kw">structure</span>(<span class="kw">list</span>(), <span class="dt">class =</span> <span class="kw">c</span>(<span class="st">&quot;b&quot;</span>, <span class="st">&quot;a2&quot;</span>)))</a></code></pre></div>
-<pre><code>[1] &quot;a2&quot;</code></pre>
 <div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb567-1" data-line-number="1">generic2 &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">UseMethod</span>(<span class="st">&quot;generic2&quot;</span>)</a>
-<a class="sourceLine" id="cb567-2" data-line-number="2">generic2.a1 &lt;-<span class="st"> </span><span class="cf">function</span>(x) { <span class="kw">cat</span>(<span class="st">&quot;generic2.a1</span><span class="ch">\n</span><span class="st">&quot;</span>); <span class="kw">cat</span>(<span class="kw">class</span>(x)) }</a>
-<a class="sourceLine" id="cb567-3" data-line-number="3">generic2.a2 &lt;-<span class="st"> </span><span class="cf">function</span>(x) { <span class="kw">cat</span>(<span class="st">&quot;generic2.a2</span><span class="ch">\n</span><span class="st">&quot;</span>); <span class="kw">cat</span>(<span class="kw">class</span>(x)) }</a>
+<a class="sourceLine" id="cb567-2" data-line-number="2">generic2.a1 &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="st">&quot;a1&quot;</span></a>
+<a class="sourceLine" id="cb567-3" data-line-number="3">generic2.a2 &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="st">&quot;a2&quot;</span></a>
 <a class="sourceLine" id="cb567-4" data-line-number="4">generic2.b &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb567-5" data-line-number="5">  <span class="kw">cat</span>(<span class="st">&quot;generic2.b</span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
-<a class="sourceLine" id="cb567-6" data-line-number="6">  <span class="kw">cat</span>(<span class="st">&quot;Regardless of what we do, NextMethod will search for the following&quot;</span>, </a>
-<a class="sourceLine" id="cb567-7" data-line-number="7">      <span class="st">&quot;classes:</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="kw">paste0</span>(.Class, <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
-<a class="sourceLine" id="cb567-8" data-line-number="8">  <span class="kw">class</span>(x) &lt;-<span class="st"> &quot;a1&quot;</span></a>
-<a class="sourceLine" id="cb567-9" data-line-number="9">  <span class="kw">NextMethod</span>()</a>
-<a class="sourceLine" id="cb567-10" data-line-number="10">}</a>
-<a class="sourceLine" id="cb567-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb567-12" data-line-number="12">x &lt;-<span class="st"> </span><span class="kw">structure</span>(<span class="dv">1</span><span class="op">:</span><span class="fl">1e8</span>, <span class="dt">class =</span> <span class="kw">c</span>(<span class="st">&quot;b&quot;</span>, <span class="st">&quot;a2&quot;</span>))</a>
-<a class="sourceLine" id="cb567-13" data-line-number="13"><span class="kw">generic2</span>(x)</a></code></pre></div>
+<a class="sourceLine" id="cb567-5" data-line-number="5">  <span class="kw">class</span>(x) &lt;-<span class="st"> &quot;a1&quot;</span></a>
+<a class="sourceLine" id="cb567-6" data-line-number="6">  <span class="kw">NextMethod</span>()</a>
+<a class="sourceLine" id="cb567-7" data-line-number="7">}</a>
+<a class="sourceLine" id="cb567-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb567-9" data-line-number="9"><span class="kw">generic2</span>(<span class="kw">structure</span>(<span class="kw">list</span>(), <span class="dt">class =</span> <span class="kw">c</span>(<span class="st">&quot;b&quot;</span>, <span class="st">&quot;a2&quot;</span>)))</a></code></pre></div>
+<pre><code>[1] &quot;a2&quot;</code></pre>
+<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb569-1" data-line-number="1">generic2 &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">UseMethod</span>(<span class="st">&quot;generic2&quot;</span>)</a>
+<a class="sourceLine" id="cb569-2" data-line-number="2">generic2.a1 &lt;-<span class="st"> </span><span class="cf">function</span>(x) { <span class="kw">cat</span>(<span class="st">&quot;generic2.a1</span><span class="ch">\n</span><span class="st">&quot;</span>); <span class="kw">cat</span>(<span class="kw">class</span>(x)) }</a>
+<a class="sourceLine" id="cb569-3" data-line-number="3">generic2.a2 &lt;-<span class="st"> </span><span class="cf">function</span>(x) { <span class="kw">cat</span>(<span class="st">&quot;generic2.a2</span><span class="ch">\n</span><span class="st">&quot;</span>); <span class="kw">cat</span>(<span class="kw">class</span>(x)) }</a>
+<a class="sourceLine" id="cb569-4" data-line-number="4">generic2.b &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb569-5" data-line-number="5">  <span class="kw">cat</span>(<span class="st">&quot;generic2.b</span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
+<a class="sourceLine" id="cb569-6" data-line-number="6">  <span class="kw">cat</span>(<span class="st">&quot;Regardless of what we do, NextMethod will search for the following&quot;</span>, </a>
+<a class="sourceLine" id="cb569-7" data-line-number="7">      <span class="st">&quot;classes:</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="kw">paste0</span>(.Class, <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
+<a class="sourceLine" id="cb569-8" data-line-number="8">  <span class="kw">class</span>(x) &lt;-<span class="st"> &quot;a1&quot;</span></a>
+<a class="sourceLine" id="cb569-9" data-line-number="9">  <span class="kw">NextMethod</span>()</a>
+<a class="sourceLine" id="cb569-10" data-line-number="10">}</a>
+<a class="sourceLine" id="cb569-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb569-12" data-line-number="12">x &lt;-<span class="st"> </span><span class="kw">structure</span>(<span class="dv">1</span><span class="op">:</span><span class="fl">1e8</span>, <span class="dt">class =</span> <span class="kw">c</span>(<span class="st">&quot;b&quot;</span>, <span class="st">&quot;a2&quot;</span>))</a>
+<a class="sourceLine" id="cb569-13" data-line-number="13"><span class="kw">generic2</span>(x)</a></code></pre></div>
 <pre><code>## generic2.b
 ## Regardless of what we do, NextMethod will search for the following classes:
 ##  b, a2 
@@ -677,19 +683,19 @@ g(x)
 <div class="question">
 <p>WHY isn’t the dispatch of mean(x1) determined by its type???</p>
 </div>
-<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb569-1" data-line-number="1">x1 &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span></a>
-<a class="sourceLine" id="cb569-2" data-line-number="2"><span class="kw">class</span>(x1)</a></code></pre></div>
+<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb571-1" data-line-number="1">x1 &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span></a>
+<a class="sourceLine" id="cb571-2" data-line-number="2"><span class="kw">class</span>(x1)</a></code></pre></div>
 <pre><code>[1] &quot;integer&quot;</code></pre>
-<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb571-1" data-line-number="1"><span class="kw">s3_dispatch</span>(<span class="kw">mean</span>(x1))</a></code></pre></div>
+<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb573-1" data-line-number="1"><span class="kw">s3_dispatch</span>(<span class="kw">mean</span>(x1))</a></code></pre></div>
 <pre><code>   mean.integer
    mean.numeric
 =&gt; mean.default</code></pre>
-<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb573-1" data-line-number="1"><span class="kw">methods</span>(mean)</a></code></pre></div>
+<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb575-1" data-line-number="1"><span class="kw">methods</span>(mean)</a></code></pre></div>
 <pre><code>## [1] mean.Date        mean.default     mean.difftime    mean.POSIXct    
 ## [5] mean.POSIXlt     mean.quosure*    mean.vctrs_vctr*
 ## see &#39;?methods&#39; for accessing help and source code</code></pre>
 <p>mean doesn’t actually have a specific method defined in base R for int or numeric. the default method handles all base types, type checking along the way:</p>
-<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb575-1" data-line-number="1">mean.default</a></code></pre></div>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb577-1" data-line-number="1">mean.default</a></code></pre></div>
 <pre><code>## function (x, trim = 0, na.rm = FALSE, ...) 
 ## {
 ##     if (!is.numeric(x) &amp;&amp; !is.complex(x) &amp;&amp; !is.logical(x)) {
@@ -714,7 +720,7 @@ g(x)
 ##     }
 ##     .Internal(mean(x))
 ## }
-## &lt;bytecode: 0x7fd8bee21808&gt;
+## &lt;bytecode: 0x7f9e50812fc8&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 </div>
 <div id="internal-generics" class="section level2 unnumbered">
@@ -732,9 +738,9 @@ g(x)
 <h2>13.7.4 Double Dispatch</h2>
 <div class="question">
 <p>What is happening here:</p>
-<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb577-1" data-line-number="1">Ops.foo &lt;-<span class="st"> </span><span class="cf">function</span>(...)  <span class="kw">print</span>(<span class="st">&quot;Called twice for some reason?&quot;</span>)</a>
-<a class="sourceLine" id="cb577-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="kw">structure</span>(<span class="dv">2</span>, <span class="dt">class =</span> <span class="st">&quot;foo&quot;</span>)</a>
-<a class="sourceLine" id="cb577-3" data-line-number="3">x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span></a></code></pre></div>
+<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb579-1" data-line-number="1">Ops.foo &lt;-<span class="st"> </span><span class="cf">function</span>(...)  <span class="kw">print</span>(<span class="st">&quot;Called twice for some reason?&quot;</span>)</a>
+<a class="sourceLine" id="cb579-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="kw">structure</span>(<span class="dv">2</span>, <span class="dt">class =</span> <span class="st">&quot;foo&quot;</span>)</a>
+<a class="sourceLine" id="cb579-3" data-line-number="3">x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span></a></code></pre></div>
 <pre><code>[1] &quot;Called twice for some reason?&quot;
 [1] &quot;Called twice for some reason?&quot;</code></pre>
 </div>
@@ -743,67 +749,67 @@ g(x)
 <p>The book mentions that we can use <code>vctrs::vec_arith</code> to avoid the aboce, but does that pertain to this case? I tried: <code>vctrs::vec_arith(&quot;&gt;&quot;, x, 0)</code> But I think my understanding is still off…</p>
 </div>
 <p>The <code>vec_arith</code> generic will first dispatch on <code>class(x)</code> So, in this case it tries to find <code>vec_arith.foo</code> but we haven’t defined that yet, so it instead finds <code>vec_arith.default</code> which signals the error.</p>
-<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb579-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">structure</span>(<span class="dv">2</span>, <span class="dt">class =</span> <span class="st">&quot;foo&quot;</span>)</a>
-<a class="sourceLine" id="cb579-2" data-line-number="2">x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span></a></code></pre></div>
+<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb581-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">structure</span>(<span class="dv">2</span>, <span class="dt">class =</span> <span class="st">&quot;foo&quot;</span>)</a>
+<a class="sourceLine" id="cb581-2" data-line-number="2">x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span></a></code></pre></div>
 <pre><code>[1] TRUE</code></pre>
-<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb581-1" data-line-number="1"><span class="kw">vec_arith</span>(<span class="st">&quot;&gt;&quot;</span>, x, <span class="dv">0</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb583-1" data-line-number="1"><span class="kw">vec_arith</span>(<span class="st">&quot;&gt;&quot;</span>, x, <span class="dv">0</span>) </a></code></pre></div>
 <pre><code>Error: &lt;foo&gt; &gt; &lt;double&gt; is not permitted
 vec_arith will dispatch to this first, because it finds the &quot;foo&quot; generic</code></pre>
-<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb583-1" data-line-number="1">vec_arith.foo &lt;-<span class="st"> </span><span class="cf">function</span>(op, x, y, ...) {</a>
-<a class="sourceLine" id="cb583-2" data-line-number="2">  <span class="co"># now it will dispath on y, which in this case is a numeric.</span></a>
-<a class="sourceLine" id="cb583-3" data-line-number="3">  <span class="kw">UseMethod</span>(<span class="st">&quot;vec_arith.foo&quot;</span>, y)</a>
-<a class="sourceLine" id="cb583-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb583-5" data-line-number="5"><span class="kw">vec_arith</span>(<span class="st">&quot;&gt;&quot;</span>, x, <span class="dv">0</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb585-1" data-line-number="1">vec_arith.foo &lt;-<span class="st"> </span><span class="cf">function</span>(op, x, y, ...) {</a>
+<a class="sourceLine" id="cb585-2" data-line-number="2">  <span class="co"># now it will dispath on y, which in this case is a numeric.</span></a>
+<a class="sourceLine" id="cb585-3" data-line-number="3">  <span class="kw">UseMethod</span>(<span class="st">&quot;vec_arith.foo&quot;</span>, y)</a>
+<a class="sourceLine" id="cb585-4" data-line-number="4">}</a>
+<a class="sourceLine" id="cb585-5" data-line-number="5"><span class="kw">vec_arith</span>(<span class="st">&quot;&gt;&quot;</span>, x, <span class="dv">0</span>) </a></code></pre></div>
 <pre><code>Error in UseMethod(&quot;vec_arith.foo&quot;, y): no applicable method for &#39;vec_arith.foo&#39; applied to an object of class &quot;c(&#39;double&#39;, &#39;numeric&#39;)&quot;</code></pre>
 <p>Uh oh another error, and this is super confusing because none of our objects are class double. (typeof(x) is “double”). The problem is that vec_arith.foo further dispatches on the second argument and it is looking for <code>vec_arith.numeric</code> or <code>vec_arith.default</code>, but we haven’t defined that yet.</p>
-<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb585-1" data-line-number="1">vec_arith.foo.numeric &lt;-<span class="st"> </span><span class="cf">function</span>(op, x, y, ...) {</a>
-<a class="sourceLine" id="cb585-2" data-line-number="2">  vctrs<span class="op">::</span><span class="kw">vec_arith_base</span>(op, x, y, ...)</a>
-<a class="sourceLine" id="cb585-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb585-4" data-line-number="4"><span class="kw">vec_arith</span>(<span class="st">&quot;&gt;&quot;</span>, x, <span class="dv">0</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb587-1" data-line-number="1">vec_arith.foo.numeric &lt;-<span class="st"> </span><span class="cf">function</span>(op, x, y, ...) {</a>
+<a class="sourceLine" id="cb587-2" data-line-number="2">  vctrs<span class="op">::</span><span class="kw">vec_arith_base</span>(op, x, y, ...)</a>
+<a class="sourceLine" id="cb587-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb587-4" data-line-number="4"><span class="kw">vec_arith</span>(<span class="st">&quot;&gt;&quot;</span>, x, <span class="dv">0</span>)</a></code></pre></div>
 <pre><code>[1] TRUE</code></pre>
-<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb587-1" data-line-number="1"><span class="kw">vec_arith</span>(<span class="st">&quot;&gt;&quot;</span>, <span class="dv">0</span>, x)</a></code></pre></div>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb589-1" data-line-number="1"><span class="kw">vec_arith</span>(<span class="st">&quot;&gt;&quot;</span>, <span class="dv">0</span>, x)</a></code></pre></div>
 <pre><code>Error: &lt;double&gt; &gt; &lt;foo&gt; is not permitted</code></pre>
 <p>now vec_arith will first dispatch on the 0 and scope to vec_arith.numeric which will then try to dispatch to vec_arith.numeric.foo which we havent defined yet.</p>
-<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb589-1" data-line-number="1">vec_arith.numeric.foo &lt;-<span class="st"> </span><span class="cf">function</span>(op, x, y, ...) {</a>
-<a class="sourceLine" id="cb589-2" data-line-number="2">  vctrs<span class="op">::</span><span class="kw">vec_arith_base</span>(op, x, y, ...) </a>
-<a class="sourceLine" id="cb589-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb589-4" data-line-number="4"><span class="kw">vec_arith</span>(<span class="st">&quot;&gt;&quot;</span>, <span class="dv">0</span>, x)</a></code></pre></div>
+<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb591-1" data-line-number="1">vec_arith.numeric.foo &lt;-<span class="st"> </span><span class="cf">function</span>(op, x, y, ...) {</a>
+<a class="sourceLine" id="cb591-2" data-line-number="2">  vctrs<span class="op">::</span><span class="kw">vec_arith_base</span>(op, x, y, ...) </a>
+<a class="sourceLine" id="cb591-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb591-4" data-line-number="4"><span class="kw">vec_arith</span>(<span class="st">&quot;&gt;&quot;</span>, <span class="dv">0</span>, x)</a></code></pre></div>
 <pre><code>[1] FALSE</code></pre>
 <div class="question">
 <p>What is happening here?!</p>
 </div>
-<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb591-1" data-line-number="1">Math.bar &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb591-2" data-line-number="2">  <span class="kw">print</span>(<span class="st">&quot;Math bar&quot;</span>)</a>
-<a class="sourceLine" id="cb591-3" data-line-number="3">  <span class="kw">NextMethod</span>(.Generic)</a>
-<a class="sourceLine" id="cb591-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb591-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb591-6" data-line-number="6">Math.foo &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb591-7" data-line-number="7">  <span class="kw">print</span>(<span class="st">&quot;Math foo&quot;</span>)</a>
-<a class="sourceLine" id="cb591-8" data-line-number="8">  <span class="kw">NextMethod</span>(.Generic)</a>
-<a class="sourceLine" id="cb591-9" data-line-number="9">}</a>
-<a class="sourceLine" id="cb591-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb591-11" data-line-number="11">x &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb591-12" data-line-number="12"><span class="kw">class</span>(x) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;foo&quot;</span>, <span class="st">&quot;bar&quot;</span>, <span class="kw">class</span>(x))</a>
-<a class="sourceLine" id="cb591-13" data-line-number="13"><span class="kw">abs</span>(x)</a>
-<a class="sourceLine" id="cb591-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb591-15" data-line-number="15"><span class="st">`</span><span class="dt">abs.foo</span><span class="st">`</span> &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb591-16" data-line-number="16">  <span class="kw">print</span>(<span class="st">&quot;Generic foo&quot;</span>)</a>
-<a class="sourceLine" id="cb591-17" data-line-number="17">  <span class="kw">NextMethod</span>()</a>
-<a class="sourceLine" id="cb591-18" data-line-number="18">}</a>
-<a class="sourceLine" id="cb591-19" data-line-number="19"><span class="kw">abs</span>(x)</a>
-<a class="sourceLine" id="cb591-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb591-21" data-line-number="21"><span class="st">`</span><span class="dt">abs.bar</span><span class="st">`</span> &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb591-22" data-line-number="22">  <span class="kw">print</span>(<span class="st">&quot;Generic bar&quot;</span>)</a>
-<a class="sourceLine" id="cb591-23" data-line-number="23">  <span class="kw">NextMethod</span>()</a>
-<a class="sourceLine" id="cb591-24" data-line-number="24">}</a>
-<a class="sourceLine" id="cb591-25" data-line-number="25"></a>
-<a class="sourceLine" id="cb591-26" data-line-number="26"><span class="kw">abs</span>(x)</a>
-<a class="sourceLine" id="cb591-27" data-line-number="27"><span class="kw">rm</span>(abs.foo)</a>
-<a class="sourceLine" id="cb591-28" data-line-number="28"><span class="co"># infinite recursion continually calling abs.bar, only calling Math.foo once</span></a>
-<a class="sourceLine" id="cb591-29" data-line-number="29"><span class="kw">abs</span>(x)</a>
-<a class="sourceLine" id="cb591-30" data-line-number="30"><span class="kw">rm</span>(Math.foo)</a>
-<a class="sourceLine" id="cb591-31" data-line-number="31"><span class="co"># back to working</span></a>
-<a class="sourceLine" id="cb591-32" data-line-number="32"><span class="kw">abs</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb593-1" data-line-number="1">Math.bar &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb593-2" data-line-number="2">  <span class="kw">print</span>(<span class="st">&quot;Math bar&quot;</span>)</a>
+<a class="sourceLine" id="cb593-3" data-line-number="3">  <span class="kw">NextMethod</span>(.Generic)</a>
+<a class="sourceLine" id="cb593-4" data-line-number="4">}</a>
+<a class="sourceLine" id="cb593-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb593-6" data-line-number="6">Math.foo &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb593-7" data-line-number="7">  <span class="kw">print</span>(<span class="st">&quot;Math foo&quot;</span>)</a>
+<a class="sourceLine" id="cb593-8" data-line-number="8">  <span class="kw">NextMethod</span>(.Generic)</a>
+<a class="sourceLine" id="cb593-9" data-line-number="9">}</a>
+<a class="sourceLine" id="cb593-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb593-11" data-line-number="11">x &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb593-12" data-line-number="12"><span class="kw">class</span>(x) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;foo&quot;</span>, <span class="st">&quot;bar&quot;</span>, <span class="kw">class</span>(x))</a>
+<a class="sourceLine" id="cb593-13" data-line-number="13"><span class="kw">abs</span>(x)</a>
+<a class="sourceLine" id="cb593-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb593-15" data-line-number="15"><span class="st">`</span><span class="dt">abs.foo</span><span class="st">`</span> &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb593-16" data-line-number="16">  <span class="kw">print</span>(<span class="st">&quot;Generic foo&quot;</span>)</a>
+<a class="sourceLine" id="cb593-17" data-line-number="17">  <span class="kw">NextMethod</span>()</a>
+<a class="sourceLine" id="cb593-18" data-line-number="18">}</a>
+<a class="sourceLine" id="cb593-19" data-line-number="19"><span class="kw">abs</span>(x)</a>
+<a class="sourceLine" id="cb593-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb593-21" data-line-number="21"><span class="st">`</span><span class="dt">abs.bar</span><span class="st">`</span> &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb593-22" data-line-number="22">  <span class="kw">print</span>(<span class="st">&quot;Generic bar&quot;</span>)</a>
+<a class="sourceLine" id="cb593-23" data-line-number="23">  <span class="kw">NextMethod</span>()</a>
+<a class="sourceLine" id="cb593-24" data-line-number="24">}</a>
+<a class="sourceLine" id="cb593-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb593-26" data-line-number="26"><span class="kw">abs</span>(x)</a>
+<a class="sourceLine" id="cb593-27" data-line-number="27"><span class="kw">rm</span>(abs.foo)</a>
+<a class="sourceLine" id="cb593-28" data-line-number="28"><span class="co"># infinite recursion continually calling abs.bar, only calling Math.foo once</span></a>
+<a class="sourceLine" id="cb593-29" data-line-number="29"><span class="kw">abs</span>(x)</a>
+<a class="sourceLine" id="cb593-30" data-line-number="30"><span class="kw">rm</span>(Math.foo)</a>
+<a class="sourceLine" id="cb593-31" data-line-number="31"><span class="co"># back to working</span></a>
+<a class="sourceLine" id="cb593-32" data-line-number="32"><span class="kw">abs</span>(x)</a></code></pre></div>
 <div class="TODO">
 
 </div>

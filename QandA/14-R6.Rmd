@@ -56,6 +56,64 @@ Person:
 
 Print is an S3 generic, so when print is implicitly called, it calls the method for the R6 object. The method for the R6 object is "look for a print function inside the R6 object"
 
+## Classes and methods 14.2.3 {-}
+
+:::question
+Once instantiated, can you add another method to an `R6` object or does the `set` function only work on the `R6` generator?
+:::
+
+Once instantiated the environments are locked (no new bindings).  But, you can fudge with things and still modify existing bindings if you wanted.  But, this is not really something to advocate:
+ 
+```{r, eval=FALSE}
+Beer <- R6::R6Class(
+  'Beer',
+  public = list(
+    abv = 0.05,
+    percent_abv = function() { sprintf('%.1f%%', 100 * self$abv) }
+  )
+)
+class(Beer)
+#> [1] "R6ClassGenerator"
+beer <- Beer$new()
+unlockBinding("percent_abv", beer)
+beer$percent_abv <- function() { cat("h@xed")}
+lockBinding("percent_abv", beer)
+beer$percent_abv()
+```
+```
+[1] "R6ClassGenerator"
+h@xed
+```
+
+You can also set the lock_objects option on the generator to FALSE
+
+```{r}
+Beer <- R6::R6Class(
+  'Beer',
+  public = list(
+    abv = 0.05,
+    percent_abv = function() { sprintf('%.1f%%', 100 * self$abv) }
+  ),
+  lock_objects = FALSE
+)
+beer <- Beer$new()
+beer$rating <- 5
+beer$rating
+```
+
+```
+[1] 5
+```
+
+But this still won't work because the bindings were still locked
+```{r, eval=FALSE}
+beer$percent_abv <- function() { cat("h@xed")}
+```
+
+```
+#> Error in beer$percent_abv <- function() {: cannot change value of locked binding for 'percent_abv'
+```
+
 ## Exercises 14.2.6.4 {-} 
 
 :::question

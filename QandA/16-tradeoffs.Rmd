@@ -1,0 +1,8 @@
+# Trade-Offs
+
+:::question
+Can we make a class using `S3`, `S4`, and `R6` so we can easily directly compare the three, and their generics and methods?
+:::
+
+:::TODO
+:::

@@ -367,7 +367,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fd8ca37ec38"
+## [1] "0x7f9e51390328"
 \end{verbatim}
 
 \begin{Shaded}
@@ -377,7 +377,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fd8ca37ec38"
+## [1] "0x7f9e51390328"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -389,7 +389,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fd8c5c7c1d8"
+## [1] "0x7f9e4dc3b290"
 \end{verbatim}
 
 \begin{Shaded}
@@ -399,8 +399,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fd8c5a84ba0] <list> 
-## └─[2:0x7fd8ca37ec38] <dbl>
+## █ [1:0x7f9e4fd4ad18] <list> 
+## └─[2:0x7f9e51390328] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -410,7 +410,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fd8c5281d20"
+## [1] "0x7f9e4fe98830"
 \end{verbatim}
 
 \begin{Shaded}
@@ -447,7 +447,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fd8cc6fa758>"
+## [1] "<0x7f9e50643978>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -457,7 +457,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fd8cc6fa758>
+## <0x7f9e50643978>
 \end{verbatim}
 
 \begin{Shaded}
@@ -467,7 +467,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fd8cc6fa758"
+## [1] "0x7f9e50643978"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -516,7 +516,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fd8c720f0c8"
+## [1] "0x7f9e550b66c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -526,7 +526,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fd8c720f0c8>"
+## [1] "<0x7f9e550b66c8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -536,7 +536,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fd8c720f0c8 -> 0x7fd8c70f53c8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7f9e550b66c8 -> 0x7f9e56afa248]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -632,7 +632,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fd8c6921658"
+## [1] "0x7f9e52593d98"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -645,7 +645,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fd8c93986b8"
+## [1] "0x7f9e5237b5d8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -668,7 +668,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fd8c93986b8"
+## [1] "0x7f9e5237b5d8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -678,7 +678,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fd8c93986b8"
+## [1] "0x7f9e5237b5d8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -701,7 +701,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fd8c93986b8"
+## [1] "0x7f9e5237b5d8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -711,7 +711,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fd8cc6fa078"
+## [1] "0x7f9e50617248"
 \end{verbatim}
 
 \begin{Shaded}
@@ -734,7 +734,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fd8cc717ff8"
+## [1] "0x7f9e5541dd48"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2537,11 +2537,11 @@ This will work:
 ## # A tibble: 5 x 1
 ##      x1
 ##   <dbl>
-## 1 0.493
-## 2 0.800
-## 3 0.362
-## 4 0.403
-## 5 0.850
+## 1 0.617
+## 2 0.980
+## 3 0.274
+## 4 0.278
+## 5 0.559
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2615,7 +2615,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 213 274 292 238 216 275 257 229 217 298
+##  [1] 288 220 234 239 265 285 275 292 211 241
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3052,7 +3052,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fd8bdab5268>
+## <bytecode: 0x7f9e489cce68>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3923,7 +3923,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7fd8c01c0820>
+## <bytecode: 0x7f9e47fc7620>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4061,7 +4061,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7fd8c74c6550>
+## <bytecode: 0x7f9e519bb7b0>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4855,29 +4855,29 @@ Given this little example:
 
 \begin{verbatim}
 ## [1] "parent in mid: "
-## <environment: 0x7fd8c7163930>
+## <environment: 0x7f9e5022aac0>
 ## [1] "current in mid: "
-## <environment: 0x7fd8c7163188>
+## <environment: 0x7f9e5022a318>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid: "
-## <environment: 0x7fd8c70183f8>
+## <environment: 0x7f9e551c7500>
 ## [1] "current in mid: "
-## <environment: 0x7fd8c93d9ff0>
+## <environment: 0x7f9e52ea6428>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid skip: "
-## <environment: 0x7fd8c93d9ff0>
+## <environment: 0x7f9e52ea6428>
 ## [1] "current in mid skip: "
-## <environment: 0x7fd8c7d69498>
+## <environment: 0x7f9e4a8b9060>
 ## [1] "parent in mid: "
-## <environment: 0x7fd8c7d6f888>
+## <environment: 0x7f9e4a8bf450>
 ## [1] "current in mid: "
-## <environment: 0x7fd8c7d6f118>
+## <environment: 0x7f9e4a8bece0>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
@@ -4892,7 +4892,7 @@ Given this little example:
 ## 
 ## [[2]]
 ## [[2]][[1]]
-## <environment: 0x7fd8c7d69498>
+## <environment: 0x7f9e4a8b9060>
 ## 
 ## 
 ## [[3]]
@@ -5033,26 +5033,26 @@ In order to extract p-values the solution manual suggests using \texttt{map\_dbl
 \end{Shaded}
 
 \begin{verbatim}
-##   [1] 3.758542e-02 1.094180e-01 7.869211e-02 2.408505e-01 4.955103e-02
-##   [6] 1.801812e-01 2.409750e-01 1.851371e-01 4.969286e-01 1.251883e-04
-##  [11] 1.323755e-03 3.048293e-02 4.213103e-02 4.144776e-02 3.088548e-01
-##  [16] 3.627863e-02 1.230448e-02 6.600046e-03 1.921665e-03 2.618736e-01
-##  [21] 3.566106e-02 2.233360e-02 4.002278e-01 4.226542e-01 1.416152e-05
-##  [26] 2.873884e-01 9.835159e-02 1.843470e-02 9.038099e-04 1.089035e-02
-##  [31] 1.056592e-02 1.007978e-01 4.107178e-02 7.374214e-02 9.651085e-02
-##  [36] 1.318240e-03 2.334563e-02 1.418890e-02 4.411802e-03 9.667494e-02
-##  [41] 4.023928e-01 1.493836e-01 8.369015e-02 3.685607e-02 2.649473e-03
-##  [46] 2.059258e-02 3.215104e-01 1.807374e-02 3.332679e-03 5.150559e-02
-##  [51] 5.772430e-01 3.662709e-03 7.639218e-03 1.223449e-01 6.163299e-02
-##  [56] 2.801528e-01 5.191425e-02 1.679743e-03 4.486500e-01 2.774789e-02
-##  [61] 4.897953e-02 1.091534e-01 1.454109e-02 3.080533e-03 7.377456e-02
-##  [66] 7.665222e-02 1.297692e-05 7.812511e-03 3.847988e-02 2.922103e-01
-##  [71] 6.728167e-04 2.265068e-01 1.197280e-01 1.782294e-01 8.657742e-02
-##  [76] 7.470483e-02 6.115043e-02 2.132675e-02 3.756909e-03 8.883268e-02
-##  [81] 3.378971e-02 6.282790e-02 2.659437e-01 7.044417e-02 4.962550e-02
-##  [86] 2.115644e-01 2.999600e-04 8.541729e-02 2.029912e-01 3.873931e-02
-##  [91] 7.608025e-02 9.609612e-02 9.473308e-03 1.094060e-03 7.694148e-03
-##  [96] 6.709752e-03 3.594678e-04 1.258814e-02 4.173227e-02 3.083072e-03
+##   [1] 0.0201080687 0.1246543711 0.8004866983 0.0003882430 0.0506116328
+##   [6] 0.0007571841 0.0262508897 0.0948564906 0.2823909320 0.0947980887
+##  [11] 0.1049527899 0.1500749454 0.0006412530 0.1391824281 0.0067090324
+##  [16] 0.0026893594 0.0043274270 0.0318156289 0.1179573915 0.0791007621
+##  [21] 0.1180358741 0.0367396003 0.0030093418 0.0017278866 0.0033883438
+##  [26] 0.0086849595 0.0004682985 0.2201097989 0.0009273962 0.0050669638
+##  [31] 0.0236213974 0.0028723736 0.0020553226 0.0716251715 0.1723517619
+##  [36] 0.6168224802 0.0074607105 0.0440523219 0.0266370017 0.1565174076
+##  [41] 0.0394167938 0.0478265456 0.0036218016 0.0309201108 0.0143230093
+##  [46] 0.0034472087 0.0013857492 0.6599204512 0.0029231053 0.0178005389
+##  [51] 0.0723190814 0.0627952875 0.1764110274 0.0138513478 0.0947341104
+##  [56] 0.1205175046 0.0421258604 0.0253740588 0.1055445698 0.0278652800
+##  [61] 0.2182369799 0.1994394074 0.1420065152 0.0351444308 0.3820984953
+##  [66] 0.0163775793 0.9317411603 0.1132120602 0.0039212770 0.0005259235
+##  [71] 0.2150008095 0.0159840528 0.3419290869 0.0357021758 0.1001403809
+##  [76] 0.2320966790 0.1413215256 0.1009363834 0.0887649120 0.0020960772
+##  [81] 0.0070751407 0.0324674566 0.1862407385 0.0809755832 0.0275169750
+##  [86] 0.0281964416 0.0001783006 0.0134143528 0.0262717867 0.0019978048
+##  [91] 0.5460546898 0.0606531215 0.0040789809 0.0038698407 0.4579823772
+##  [96] 0.0673655654 0.0607049830 0.8086300476 0.0189400761 0.1274472802
 \end{verbatim}
 
 \hypertarget{exercise-9}{%
@@ -5383,12 +5383,12 @@ Answer from \href{https://community.rstudio.com/t/recursive-purrr-mutate-if/1663
 
 \begin{verbatim}
 ## Unit: microseconds
-##                         expr      min        lq       mean    median        uq
-##         as_integer_rapply(x)    9.935   11.9495   32.68785   19.1015   22.4985
-##  as_integer_recursive_map(x) 1024.342 1056.9200 1183.51225 1100.6975 1204.8150
+##                         expr      min       lq       mean   median       uq
+##         as_integer_rapply(x)    9.552   12.491   34.54824   19.862   22.720
+##  as_integer_recursive_map(x) 1006.231 1077.954 1209.12145 1145.022 1232.914
 ##       max neval
-##  1505.119   100
-##  2429.407   100
+##  1542.655   100
+##  2964.880   100
 \end{verbatim}
 
 \begin{Shaded}
@@ -5861,7 +5861,7 @@ Base R contains two function factories, \texttt{approxfun()} and \texttt{ecdf()}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 1.0000000 0.3333333 0.6666667
+## [1] 1.0000000 0.6666667 0.3333333
 \end{verbatim}
 
 \hypertarget{exercise-14}{%
@@ -6128,7 +6128,7 @@ How do you check how much memory is allocated to memoise's caching?
 \end{Shaded}
 
 \begin{verbatim}
-## 16,224 B
+## 16,248 B
 \end{verbatim}
 
 Could we create a memoise wrapper that clears the cache when that's a certain number?
@@ -6171,133 +6171,133 @@ Could we create a memoise wrapper that clears the cache when that's a certain nu
 
 \begin{verbatim}
 ## 14,440 B
-## 15,344 B
-## 16,240 B
-## 17,144 B
-## 18,040 B
-## 18,960 B
-## 19,736 B
-## 20,624 B
-## 21,464 B
-## 22,360 B
-## 23,136 B
-## 24,016 B
-## 24,856 B
-## 25,624 B
-## 26,464 B
-## 27,320 B
-## 28,032 B
+## 15,336 B
+## 16,256 B
+## 17,096 B
+## 17,992 B
+## 18,896 B
+## 19,816 B
+## 20,648 B
+## 21,552 B
+## 22,384 B
+## 23,152 B
+## 23,928 B
+## 24,768 B
+## 25,672 B
+## 26,440 B
+## 27,208 B
+## 27,976 B
 ## 28,808 B
-## 29,648 B
-## 30,424 B
+## 29,640 B
+## 30,416 B
 \end{verbatim}
 
 \begin{verbatim}
-## Clearing cache [@30424]
+## Clearing cache [@30416]
 \end{verbatim}
 
 \begin{verbatim}
 ## 14,432 B
-## 15,312 B
-## 16,152 B
-## 17,056 B
-## 17,968 B
+## 15,368 B
+## 16,264 B
+## 17,168 B
+## 18,008 B
+## 18,920 B
+## 19,824 B
+## 20,656 B
+## 21,552 B
+## 22,384 B
+## 23,224 B
+## 24,128 B
+## 24,968 B
+## 25,880 B
+## 26,768 B
+## 27,536 B
+## 28,440 B
+## 29,232 B
+## 29,944 B
+## 30,864 B
+\end{verbatim}
+
+\begin{verbatim}
+## Clearing cache [@30864]
+\end{verbatim}
+
+\begin{verbatim}
+## 14,440 B
+## 15,280 B
+## 16,200 B
+## 17,096 B
+## 17,952 B
 ## 18,856 B
 ## 19,776 B
-## 20,696 B
-## 21,472 B
-## 22,248 B
-## 23,016 B
-## 23,872 B
-## 24,768 B
-## 25,544 B
-## 26,448 B
-## 27,288 B
-## 28,112 B
-## 29,008 B
-## 29,848 B
-## 30,680 B
+## 20,688 B
+## 21,528 B
+## 22,432 B
+## 23,264 B
+## 24,160 B
+## 25,000 B
+## 25,768 B
+## 26,544 B
+## 27,384 B
+## 28,160 B
+## 28,936 B
+## 29,776 B
+## 30,664 B
 \end{verbatim}
 
 \begin{verbatim}
-## Clearing cache [@30680]
+## Clearing cache [@30664]
 \end{verbatim}
 
 \begin{verbatim}
-## 14,456 B
-## 15,360 B
-## 16,272 B
+## 14,448 B
+## 15,368 B
+## 16,280 B
 ## 17,176 B
 ## 18,080 B
-## 18,976 B
-## 19,888 B
-## 20,744 B
-## 21,520 B
-## 22,352 B
-## 23,128 B
-## 23,968 B
-## 24,816 B
-## 25,592 B
-## 26,432 B
-## 27,200 B
-## 27,976 B
-## 28,752 B
-## 29,592 B
-## 30,488 B
-\end{verbatim}
-
-\begin{verbatim}
-## Clearing cache [@30488]
-\end{verbatim}
-
-\begin{verbatim}
-## 14,424 B
-## 15,320 B
-## 16,216 B
-## 17,112 B
-## 18,016 B
-## 18,792 B
-## 19,712 B
-## 20,560 B
+## 18,912 B
+## 19,800 B
+## 20,640 B
 ## 21,480 B
-## 22,312 B
-## 23,216 B
-## 24,056 B
-## 24,888 B
-## 25,728 B
+## 22,256 B
+## 23,152 B
+## 24,000 B
+## 24,824 B
+## 25,656 B
 ## 26,560 B
-## 27,400 B
-## 28,304 B
-## 29,152 B
-## 29,864 B
-## 30,640 B
+## 27,328 B
+## 28,168 B
+## 29,024 B
+## 29,800 B
+## 30,656 B
 \end{verbatim}
 
 \begin{verbatim}
-## Clearing cache [@30640]
+## Clearing cache [@30656]
 \end{verbatim}
 
 \begin{verbatim}
-## 14,432 B
-## 15,336 B
-## 16,176 B
-## 17,080 B
-## 17,984 B
-## 18,824 B
-## 19,728 B
-## 20,616 B
-## 21,520 B
-## 22,288 B
-## 23,056 B
+## 14,440 B
+## 15,328 B
+## 16,224 B
+## 17,120 B
+## 18,024 B
+## 18,920 B
+## 19,768 B
+## 20,600 B
+## 21,440 B
+## 22,208 B
+## 23,048 B
 ## 23,944 B
-## 24,840 B
-## 25,552 B
-## 26,264 B
-## 27,152 B
-## 27,928 B
-## 28,768 B
-## 29,688 B
-## 30,520 B
+## 24,768 B
+## 25,608 B
+## 26,400 B
+## 27,112 B
+## 28,032 B
+## 28,856 B
+## 29,624 B
+## 30,480 B
 \end{verbatim}
 
 Can we come up with simple example for these function operators?
@@ -6977,8 +6977,9 @@ Creating an IBU calculator for beer, we can use the \texttt{.ipa} method for a b
 ## => IBU_calculator.default
 \end{verbatim}
 
-\hypertarget{section-1}{%
-\section{13.4.3.3}\label{section-1}}
+\hypertarget{exercises-13}{%
+\section*{13.4.3.3 Exercises}\label{exercises-13}}
+\addcontentsline{toc}{section}{13.4.3.3 Exercises}
 
 Can we go over why this doesn't return \texttt{a1}?
 
@@ -7100,7 +7101,7 @@ mean doesn't actually have a specific method defined in base R for int or numeri
 ##     }
 ##     .Internal(mean(x))
 ## }
-## <bytecode: 0x7fd8bee21808>
+## <bytecode: 0x7f9e50812fc8>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -7323,6 +7324,76 @@ Person:
 
 Print is an S3 generic, so when print is implicitly called, it calls the method for the R6 object. The method for the R6 object is ``look for a print function inside the R6 object''
 
+\hypertarget{classes-and-methods-14.2.3}{%
+\section*{Classes and methods 14.2.3}\label{classes-and-methods-14.2.3}}
+\addcontentsline{toc}{section}{Classes and methods 14.2.3}
+
+Once instantiated, can you add another method to an \texttt{R6} object or does the \texttt{set} function only work on the \texttt{R6} generator?
+
+Once instantiated the environments are locked (no new bindings). But, you can fudge with things and still modify existing bindings if you wanted. But, this is not really something to advocate:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Beer <-}\StringTok{ }\NormalTok{R6}\OperatorTok{::}\KeywordTok{R6Class}\NormalTok{(}
+  \StringTok{'Beer'}\NormalTok{,}
+  \DataTypeTok{public =} \KeywordTok{list}\NormalTok{(}
+    \DataTypeTok{abv =} \FloatTok{0.05}\NormalTok{,}
+    \DataTypeTok{percent_abv =} \ControlFlowTok{function}\NormalTok{() \{ }\KeywordTok{sprintf}\NormalTok{(}\StringTok{'%.1f%%'}\NormalTok{, }\DecValTok{100} \OperatorTok{*}\StringTok{ }\NormalTok{self}\OperatorTok{$}\NormalTok{abv) \}}
+\NormalTok{  )}
+\NormalTok{)}
+\KeywordTok{class}\NormalTok{(Beer)}
+\CommentTok{#> [1] "R6ClassGenerator"}
+\NormalTok{beer <-}\StringTok{ }\NormalTok{Beer}\OperatorTok{$}\KeywordTok{new}\NormalTok{()}
+\KeywordTok{unlockBinding}\NormalTok{(}\StringTok{"percent_abv"}\NormalTok{, beer)}
+\NormalTok{beer}\OperatorTok{$}\NormalTok{percent_abv <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{ }\KeywordTok{cat}\NormalTok{(}\StringTok{"h@xed"}\NormalTok{)\}}
+\KeywordTok{lockBinding}\NormalTok{(}\StringTok{"percent_abv"}\NormalTok{, beer)}
+\NormalTok{beer}\OperatorTok{$}\KeywordTok{percent_abv}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "R6ClassGenerator"
+h@xed
+\end{verbatim}
+
+You can also set the lock\_objects option on the generator to FALSE
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Beer <-}\StringTok{ }\NormalTok{R6}\OperatorTok{::}\KeywordTok{R6Class}\NormalTok{(}
+  \StringTok{'Beer'}\NormalTok{,}
+  \DataTypeTok{public =} \KeywordTok{list}\NormalTok{(}
+    \DataTypeTok{abv =} \FloatTok{0.05}\NormalTok{,}
+    \DataTypeTok{percent_abv =} \ControlFlowTok{function}\NormalTok{() \{ }\KeywordTok{sprintf}\NormalTok{(}\StringTok{'%.1f%%'}\NormalTok{, }\DecValTok{100} \OperatorTok{*}\StringTok{ }\NormalTok{self}\OperatorTok{$}\NormalTok{abv) \}}
+\NormalTok{  ),}
+  \DataTypeTok{lock_objects =} \OtherTok{FALSE}
+\NormalTok{)}
+\NormalTok{beer <-}\StringTok{ }\NormalTok{Beer}\OperatorTok{$}\KeywordTok{new}\NormalTok{()}
+\NormalTok{beer}\OperatorTok{$}\NormalTok{rating <-}\StringTok{ }\DecValTok{5}
+\NormalTok{beer}\OperatorTok{$}\NormalTok{rating}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+\begin{verbatim}
+[1] 5
+\end{verbatim}
+
+But this still won't work because the bindings were still locked
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{beer}\OperatorTok{$}\NormalTok{percent_abv <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{ }\KeywordTok{cat}\NormalTok{(}\StringTok{"h@xed"}\NormalTok{)\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> Error in beer$percent_abv <- function() {: cannot change value of locked binding for 'percent_abv'
+\end{verbatim}
+
 \hypertarget{exercises-14.2.6.4}{%
 \section*{Exercises 14.2.6.4}\label{exercises-14.2.6.4}}
 \addcontentsline{toc}{section}{Exercises 14.2.6.4}
@@ -7520,6 +7591,35 @@ Broadly, what is a generic and method in S4 and what is their relationship?
 \end{Shaded}
 
 What is \texttt{standardGeneric} doing in the example above? Is this kind of like creating \texttt{age.default} for \texttt{Person}?
+
+\hypertarget{exercises-14}{%
+\section*{15.3.6.2 Exercises}\label{exercises-14}}
+\addcontentsline{toc}{section}{15.3.6.2 Exercises}
+
+What is a virtual class and how does it relate to \texttt{setClassUnion} {[}see \texttt{?setClass}{]}
+
+\hypertarget{signature}{%
+\section*{Signature}\label{signature}}
+\addcontentsline{toc}{section}{Signature}
+
+This section is pretty theoretical, can we come up with a beer class, generic, and method to help solidify this?
+
+\hypertarget{single-dispatch}{%
+\section*{15.5.1 Single dispatch}\label{single-dispatch}}
+\addcontentsline{toc}{section}{15.5.1 Single dispatch}
+
+What's a use case in the wild for \texttt{ANY}?
+
+\hypertarget{classes-1}{%
+\section*{15.6.1 Classes}\label{classes-1}}
+\addcontentsline{toc}{section}{15.6.1 Classes}
+
+Does anyone know of a case where you'd need to convert your \texttt{S3} class to an \texttt{S4} class?
+
+\hypertarget{trade-offs}{%
+\chapter{Trade-Offs}\label{trade-offs}}
+
+Can we make a single class with a method in \texttt{S3}, \texttt{S4}, and \texttt{R6} so we can easily directly compare the three?
 
 \bibliography{book.bib,packages.bib}
 

@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="r6.html"/>
-
+<link rel="next" href="trade-offs.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -283,7 +283,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#exercises-12"><i class="fa fa-check"></i>13.4.4.5 Exercises</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#object-styles"><i class="fa fa-check"></i>13.5 Object styles</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#inheritance"><i class="fa fa-check"></i>13.6 Inheritance</a></li>
-<li class="chapter" data-level="13.1" data-path="s3.html"><a href="s3.html#section-1"><i class="fa fa-check"></i><b>13.1</b> 13.4.3.3</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#exercises-13"><i class="fa fa-check"></i>13.4.3.3 Exercises</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#s3-and-base-types"><i class="fa fa-check"></i>13.7.1 S3 and Base Types</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#internal-generics"><i class="fa fa-check"></i>13.7.3 Internal Generics</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#double-dispatch"><i class="fa fa-check"></i>13.7.4 Double Dispatch</a></li>
@@ -291,12 +291,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14" data-path="r6.html"><a href="r6.html"><i class="fa fa-check"></i><b>14</b> R6</a><ul>
 <li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#classes-and-methods"><i class="fa fa-check"></i>14.2 Classes and methods</a></li>
 <li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#important-methods"><i class="fa fa-check"></i>14.2.2 Important methods</a></li>
+<li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#classes-and-methods-14.2.3"><i class="fa fa-check"></i>Classes and methods 14.2.3</a></li>
 <li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#exercises-14.2.6.4"><i class="fa fa-check"></i>Exercises 14.2.6.4</a></li>
 <li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#reference-semantics"><i class="fa fa-check"></i>14.4 Reference semantics</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="s4.html"><a href="s4.html"><i class="fa fa-check"></i><b>15</b> S4</a><ul>
 <li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#basics-1"><i class="fa fa-check"></i>15.2 Basics</a></li>
+<li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#exercises-14"><i class="fa fa-check"></i>15.3.6.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#signature"><i class="fa fa-check"></i>Signature</a></li>
+<li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#single-dispatch"><i class="fa fa-check"></i>15.5.1 Single dispatch</a></li>
+<li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#classes-1"><i class="fa fa-check"></i>15.6.1 Classes</a></li>
 </ul></li>
+<li class="chapter" data-level="16" data-path="trade-offs.html"><a href="trade-offs.html"><i class="fa fa-check"></i><b>16</b> Trade-Offs</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -323,22 +329,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>15.2 Basics</h2>
 <div class="question">
 <p>Broadly, what is a generic and method in S4 and what is their relationship?</p>
-<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb601-1" data-line-number="1"><span class="kw">setClass</span>(<span class="st">&quot;Person&quot;</span>, </a>
-<a class="sourceLine" id="cb601-2" data-line-number="2">  <span class="dt">slots =</span> <span class="kw">c</span>(</a>
-<a class="sourceLine" id="cb601-3" data-line-number="3">    <span class="dt">name =</span> <span class="st">&quot;character&quot;</span>, </a>
-<a class="sourceLine" id="cb601-4" data-line-number="4">    <span class="dt">age =</span> <span class="st">&quot;numeric&quot;</span></a>
-<a class="sourceLine" id="cb601-5" data-line-number="5">  )</a>
-<a class="sourceLine" id="cb601-6" data-line-number="6">)</a>
-<a class="sourceLine" id="cb601-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb601-8" data-line-number="8"><span class="kw">setGeneric</span>(<span class="st">&quot;age&quot;</span>, <span class="cf">function</span>(x) <span class="kw">standardGeneric</span>(<span class="st">&quot;age&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb610-1" data-line-number="1"><span class="kw">setClass</span>(<span class="st">&quot;Person&quot;</span>, </a>
+<a class="sourceLine" id="cb610-2" data-line-number="2">  <span class="dt">slots =</span> <span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb610-3" data-line-number="3">    <span class="dt">name =</span> <span class="st">&quot;character&quot;</span>, </a>
+<a class="sourceLine" id="cb610-4" data-line-number="4">    <span class="dt">age =</span> <span class="st">&quot;numeric&quot;</span></a>
+<a class="sourceLine" id="cb610-5" data-line-number="5">  )</a>
+<a class="sourceLine" id="cb610-6" data-line-number="6">)</a>
+<a class="sourceLine" id="cb610-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb610-8" data-line-number="8"><span class="kw">setGeneric</span>(<span class="st">&quot;age&quot;</span>, <span class="cf">function</span>(x) <span class="kw">standardGeneric</span>(<span class="st">&quot;age&quot;</span>))</a></code></pre></div>
 <pre><code>## [1] &quot;age&quot;</code></pre>
-<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb603-1" data-line-number="1"><span class="kw">setGeneric</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="cf">function</span>(x, value) <span class="kw">standardGeneric</span>(<span class="st">&quot;age&lt;-&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb612-1" data-line-number="1"><span class="kw">setGeneric</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="cf">function</span>(x, value) <span class="kw">standardGeneric</span>(<span class="st">&quot;age&lt;-&quot;</span>))</a></code></pre></div>
 <pre><code>## [1] &quot;age&lt;-&quot;</code></pre>
-<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb605-1" data-line-number="1"><span class="kw">setMethod</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x) x<span class="op">@</span>age)</a>
-<a class="sourceLine" id="cb605-2" data-line-number="2"><span class="kw">setMethod</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x, value) {</a>
-<a class="sourceLine" id="cb605-3" data-line-number="3">  x<span class="op">@</span>age &lt;-<span class="st"> </span>value</a>
-<a class="sourceLine" id="cb605-4" data-line-number="4">  x</a>
-<a class="sourceLine" id="cb605-5" data-line-number="5">})</a></code></pre></div>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb614-1" data-line-number="1"><span class="kw">setMethod</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x) x<span class="op">@</span>age)</a>
+<a class="sourceLine" id="cb614-2" data-line-number="2"><span class="kw">setMethod</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x, value) {</a>
+<a class="sourceLine" id="cb614-3" data-line-number="3">  x<span class="op">@</span>age &lt;-<span class="st"> </span>value</a>
+<a class="sourceLine" id="cb614-4" data-line-number="4">  x</a>
+<a class="sourceLine" id="cb614-5" data-line-number="5">})</a></code></pre></div>
 </div>
 <div class="TODO">
 
@@ -349,7 +355,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="TODO">
 
 </div>
+</div>
+<div id="exercises-14" class="section level2 unnumbered">
+<h2>15.3.6.2 Exercises</h2>
+<div class="question">
+<p>What is a virtual class and how does it relate to <code>setClassUnion</code> [see <code>?setClass</code>]</p>
+</div>
+<div class="TODO">
 
+</div>
+</div>
+<div id="signature" class="section level2 unnumbered">
+<h2>Signature</h2>
+<div class="question">
+<p>This section is pretty theoretical, can we come up with a beer class, generic, and method to help solidify this?</p>
+</div>
+</div>
+<div id="single-dispatch" class="section level2 unnumbered">
+<h2>15.5.1 Single dispatch</h2>
+<div class="question">
+<p>What’s a use case in the wild for <code>ANY</code>?</p>
+</div>
+<div class="TODO">
+
+</div>
+</div>
+<div id="classes-1" class="section level2 unnumbered">
+<h2>15.6.1 Classes</h2>
+<div class="question">
+<p>Does anyone know of a case where you’d need to convert your <code>S3</code> class to an <code>S4</code> class?</p>
+</div>
+<div class="TODO">
+
+</div>
 
 </div>
 </div>
@@ -358,8 +396,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="r6.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="r6.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="trade-offs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
