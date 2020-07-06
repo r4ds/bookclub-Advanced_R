@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-07-02" />
+<meta name="date" content="2020-07-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -300,7 +300,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#exercises-14"><i class="fa fa-check"></i>15.3.6.2 Exercises</a></li>
 <li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#signature"><i class="fa fa-check"></i>Signature</a></li>
 <li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#single-dispatch"><i class="fa fa-check"></i>15.5.1 Single dispatch</a></li>
-<li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#classes-1"><i class="fa fa-check"></i>15.6.1 Classes</a></li>
 </ul></li>
 <li class="chapter" data-level="16" data-path="trade-offs.html"><a href="trade-offs.html"><i class="fa fa-check"></i><b>16</b> Trade-Offs</a><ul>
 <li class="chapter" data-level="16.0.1" data-path="trade-offs.html"><a href="trade-offs.html#using-our-example-from-the-s4-chapter"><i class="fa fa-check"></i><b>16.0.1</b> Using our example from the S4 Chapter:</a></li>
@@ -387,9 +386,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="question">
 <p>What is a virtual class and how does it relate to <code>setClassUnion</code> [see <code>?setClass</code>]</p>
 </div>
-<div class="TODO">
-<p>A virtual class is a class that cannot be instanciated… why would we need this?</p>
-</div>
+<p>A virtual class is a class that cannot be instanciated. Rather than define two of the same methods for two classes, give them both a virtual parent class with the shared method.</p>
 </div>
 <div id="signature" class="section level2 unnumbered">
 <h2>Signature</h2>
@@ -403,15 +400,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>15.5.1 Single dispatch</h2>
 <div class="question">
 <p>What’s a use case in the wild for <code>ANY</code>?</p>
-</div>
-<div class="TODO">
-
-</div>
-</div>
-<div id="classes-1" class="section level2 unnumbered">
-<h2>15.6.1 Classes</h2>
-<div class="question">
-<p>Does anyone know of a case where you’d need to convert your <code>S3</code> class to an <code>S4</code> class?</p>
 </div>
 <div class="TODO">
 

@@ -77,9 +77,7 @@ It’s the same thing as `UseMethod` but for S4
 What is a virtual class and how does it relate to `setClassUnion` [see `?setClass`]
 :::
 
-:::TODO
-A virtual class is a class that cannot be instanciated... why would we need this? 
-:::
+A virtual class is a class that cannot be instanciated. Rather than define two of the same methods for two classes, give them both a virtual parent class with the shared method. 
 
 ## Signature {-}
 
@@ -87,7 +85,7 @@ A virtual class is a class that cannot be instanciated... why would we need this
 In our own words what exactly is a signature? Are there any signatures within our `Person` example? If not can we add one?
 :::
 
-::TODO
+:::TODO
 :::
 
 
@@ -95,15 +93,6 @@ In our own words what exactly is a signature? Are there any signatures within ou
 
 :::question
 What's a use case in the wild for `ANY`? 
-:::
-
-:::TODO
-:::
-
-## 15.6.1 Classes {-}
-
-:::question
-Does anyone know of a case where you'd need to convert your `S3` class to an `S4` class?
 :::
 
 :::TODO
