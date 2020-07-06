@@ -4,7 +4,7 @@ This repo contains 3 main folders:
 
 - QandA: A bookdown of questions (and answers) on the chapters that come up during meetings (or between!). We're also using this to try to answer questions marked "started" in the solutions manual with the potential goal of submitting PRs with our own answers!
 
-- Presentations: each week a presenter will give a talk summarizing the chapter, and discussing applications using the beer dataset. We meet every week at Tuesday, 8:00 PM Using the jisti link via Slack.
+- Presentations: each week a presenter will give a talk summarizing the chapter, and discussing applications using the beer dataset. We meet every week at Thursday, 8:00 PM Eastern on [Zoom](notredame.zoom.us/j/490502945). 
 
 - Data: The dataset we will be using for presentations is on [Beer Production](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-03-31/readme.md) 
 
@@ -26,12 +26,12 @@ All Meetings Scheduled for 8:00 PM Eastern unless otherwise noted
 - 2020-06-11 Chapter 11 - Function operators: [Tony ElHabr](https://twitter.com/TonyElHabr) | ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week11/Chapter11.html#1) | [Zoom Recording](https://www.youtube.com/watch?v=zzUY03gt_pA&feature=youtu.be))
 - 2020-06-18 Chapter 12 + 13 - OOP base types + S3: [Daryn Ramsden](https://twitter.com/thisisdaryn) | ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Advanced_R_12to13_OOP.html#1) | [Zoom Recording](https://www.youtube.com/watch?v=Fy3JF5Em6qY&feature=youtu.be))
 - 2020-06-25 Chapter 14 - R6: Tyler Grant Smith: ([Slides](TODO) | [Zoom Recording](https://www.youtube.com/watch?v=hPjaOdprgow&feature=youtu.be))
-- 2020-07-02 Chapter 15 - S4 + Trade-offs: Pavitra Chakravarty: ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week15/Chapter15.html#1) | [Zoom Recording](TODO))
-- 2020-07-07 Chapter 16 - Trade offs: [Tan Ho](https://twitter.com/_tanho)
+- 2020-06-30 Chapter 15 - S4: Pavitra Chakravarty: ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week15/Chapter15.html#1) | [Zoom Recording](TODO))
+- 2020-07-07 Chapter 16 - Tradeoffs/OOP Wrapup: [Tan Ho](https://twitter.com/_tanho) 
 - 2020-07-14 Chapter 17 - Metaprogramming, big picture:
 - 2020-07-21 Chapter 18 - Expressions:
 - 2020-07-28 Chapter 19 - Quasiquotation:
-- 2020-08-04 Chapter 20 - Evaluation:
+- 2020-07-04 Chapter 20 - Evaluation:
 - 2020-08-11 Chapter 21 - Translating R code:
 - 2020-08-18 Chapter 22 - Debugging:
 - 2020-08-25 Chapter 23 - Measuring performance:
