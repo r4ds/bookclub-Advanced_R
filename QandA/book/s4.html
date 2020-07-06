@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-06-30" />
+<meta name="date" content="2020-07-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -302,7 +302,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#single-dispatch"><i class="fa fa-check"></i>15.5.1 Single dispatch</a></li>
 <li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#classes-1"><i class="fa fa-check"></i>15.6.1 Classes</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="trade-offs.html"><a href="trade-offs.html"><i class="fa fa-check"></i><b>16</b> Trade-Offs</a></li>
+<li class="chapter" data-level="16" data-path="trade-offs.html"><a href="trade-offs.html"><i class="fa fa-check"></i><b>16</b> Trade-Offs</a><ul>
+<li class="chapter" data-level="16.0.1" data-path="trade-offs.html"><a href="trade-offs.html#using-our-example-from-the-s4-chapter"><i class="fa fa-check"></i><b>16.0.1</b> Using our example from the S4 Chapter:</a></li>
+<li class="chapter" data-level="" data-path="trade-offs.html"><a href="trade-offs.html#we-can-do-this-with-s3"><i class="fa fa-check"></i>We can do this with S3:</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -329,32 +332,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>15.2 Basics</h2>
 <div class="question">
 <p>Broadly, what is a generic and method in S4 and what is their relationship?</p>
-<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb610-1" data-line-number="1"><span class="kw">setClass</span>(<span class="st">&quot;Person&quot;</span>, </a>
-<a class="sourceLine" id="cb610-2" data-line-number="2">  <span class="dt">slots =</span> <span class="kw">c</span>(</a>
-<a class="sourceLine" id="cb610-3" data-line-number="3">    <span class="dt">name =</span> <span class="st">&quot;character&quot;</span>, </a>
-<a class="sourceLine" id="cb610-4" data-line-number="4">    <span class="dt">age =</span> <span class="st">&quot;numeric&quot;</span></a>
-<a class="sourceLine" id="cb610-5" data-line-number="5">  )</a>
-<a class="sourceLine" id="cb610-6" data-line-number="6">)</a>
-<a class="sourceLine" id="cb610-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb610-8" data-line-number="8"><span class="kw">setGeneric</span>(<span class="st">&quot;age&quot;</span>, <span class="cf">function</span>(x) <span class="kw">standardGeneric</span>(<span class="st">&quot;age&quot;</span>))</a></code></pre></div>
-<pre><code>## [1] &quot;age&quot;</code></pre>
-<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb612-1" data-line-number="1"><span class="kw">setGeneric</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="cf">function</span>(x, value) <span class="kw">standardGeneric</span>(<span class="st">&quot;age&lt;-&quot;</span>))</a></code></pre></div>
-<pre><code>## [1] &quot;age&lt;-&quot;</code></pre>
-<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb614-1" data-line-number="1"><span class="kw">setMethod</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x) x<span class="op">@</span>age)</a>
-<a class="sourceLine" id="cb614-2" data-line-number="2"><span class="kw">setMethod</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x, value) {</a>
-<a class="sourceLine" id="cb614-3" data-line-number="3">  x<span class="op">@</span>age &lt;-<span class="st"> </span>value</a>
-<a class="sourceLine" id="cb614-4" data-line-number="4">  x</a>
-<a class="sourceLine" id="cb614-5" data-line-number="5">})</a></code></pre></div>
+<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb608-1" data-line-number="1"><span class="kw">setClass</span>(<span class="st">&quot;Person&quot;</span>, </a>
+<a class="sourceLine" id="cb608-2" data-line-number="2">  <span class="dt">slots =</span> <span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb608-3" data-line-number="3">    <span class="dt">name =</span> <span class="st">&quot;character&quot;</span>, </a>
+<a class="sourceLine" id="cb608-4" data-line-number="4">    <span class="dt">age =</span> <span class="st">&quot;numeric&quot;</span></a>
+<a class="sourceLine" id="cb608-5" data-line-number="5">  )</a>
+<a class="sourceLine" id="cb608-6" data-line-number="6">)</a>
+<a class="sourceLine" id="cb608-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb608-8" data-line-number="8"><span class="kw">setGeneric</span>(<span class="st">&quot;age&quot;</span>, <span class="cf">function</span>(x) <span class="kw">standardGeneric</span>(<span class="st">&quot;age&quot;</span>))</a>
+<a class="sourceLine" id="cb608-9" data-line-number="9"><span class="kw">setGeneric</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="cf">function</span>(x, value) <span class="kw">standardGeneric</span>(<span class="st">&quot;age&lt;-&quot;</span>))</a>
+<a class="sourceLine" id="cb608-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb608-11" data-line-number="11"><span class="kw">setMethod</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x) x<span class="op">@</span>age)</a>
+<a class="sourceLine" id="cb608-12" data-line-number="12"><span class="kw">setMethod</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x, value) {</a>
+<a class="sourceLine" id="cb608-13" data-line-number="13">  x<span class="op">@</span>age &lt;-<span class="st"> </span>value</a>
+<a class="sourceLine" id="cb608-14" data-line-number="14">  x</a>
+<a class="sourceLine" id="cb608-15" data-line-number="15">})</a>
+<a class="sourceLine" id="cb608-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb608-17" data-line-number="17">john &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">&quot;Person&quot;</span>, <span class="dt">name =</span> <span class="st">&quot;John Smith&quot;</span>, <span class="dt">age =</span> <span class="dv">12</span>)</a>
+<a class="sourceLine" id="cb608-18" data-line-number="18"><span class="kw">age</span>(john)</a></code></pre></div>
+<pre><code>[1] 12</code></pre>
 </div>
-<div class="TODO">
-
-</div>
+<p>A generic is a function that will dispatch differently based on the class it is applied to. Above we apply the <code>age</code> generic to <code>Person</code> using <code>setMethod</code> but we could create an <code>age</code> method that behaves differently for another class, like dogs (which will add 7 to the supplied age)</p>
+<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb610-1" data-line-number="1"><span class="kw">setClass</span>(<span class="st">&quot;Person&quot;</span>, <span class="dt">slots =</span> <span class="kw">c</span>(<span class="dt">name =</span> <span class="st">&quot;character&quot;</span>,<span class="dt">age =</span> <span class="st">&quot;numeric&quot;</span>))</a>
+<a class="sourceLine" id="cb610-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb610-3" data-line-number="3"><span class="kw">setGeneric</span>(<span class="st">&quot;age&quot;</span>, <span class="cf">function</span>(x) <span class="kw">standardGeneric</span>(<span class="st">&quot;age&quot;</span>))</a>
+<a class="sourceLine" id="cb610-4" data-line-number="4"><span class="kw">setGeneric</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="cf">function</span>(x, value) <span class="kw">standardGeneric</span>(<span class="st">&quot;age&lt;-&quot;</span>))</a>
+<a class="sourceLine" id="cb610-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb610-6" data-line-number="6"><span class="kw">setMethod</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x) x<span class="op">@</span>age)</a>
+<a class="sourceLine" id="cb610-7" data-line-number="7"><span class="kw">setMethod</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x, value) {</a>
+<a class="sourceLine" id="cb610-8" data-line-number="8">  x<span class="op">@</span>age &lt;-<span class="st"> </span>value</a>
+<a class="sourceLine" id="cb610-9" data-line-number="9">  x</a>
+<a class="sourceLine" id="cb610-10" data-line-number="10">})</a>
+<a class="sourceLine" id="cb610-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb610-12" data-line-number="12"><span class="kw">setClass</span>(<span class="st">&quot;Dog&quot;</span>, <span class="dt">slots =</span> <span class="kw">c</span>(<span class="dt">name =</span> <span class="st">&quot;character&quot;</span>,  <span class="dt">age =</span> <span class="st">&quot;numeric&quot;</span>))</a>
+<a class="sourceLine" id="cb610-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb610-14" data-line-number="14"><span class="co"># You want the age generic to automatically return 7x the slot in human years</span></a>
+<a class="sourceLine" id="cb610-15" data-line-number="15"><span class="kw">setMethod</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;Dog&quot;</span>, <span class="cf">function</span>(x) {x<span class="op">@</span>age<span class="op">*</span><span class="dv">7</span>} ) </a>
+<a class="sourceLine" id="cb610-16" data-line-number="16"><span class="kw">setMethod</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="st">&quot;Dog&quot;</span>, <span class="cf">function</span>(x, value) {</a>
+<a class="sourceLine" id="cb610-17" data-line-number="17">  x<span class="op">@</span>age &lt;-<span class="st"> </span>value</a>
+<a class="sourceLine" id="cb610-18" data-line-number="18">  x</a>
+<a class="sourceLine" id="cb610-19" data-line-number="19">})</a>
+<a class="sourceLine" id="cb610-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb610-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb610-22" data-line-number="22">spot &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">&quot;Dog&quot;</span>, <span class="dt">name =</span> <span class="st">&quot;Spot Smith&quot;</span>, <span class="dt">age =</span> <span class="dv">12</span>)</a>
+<a class="sourceLine" id="cb610-23" data-line-number="23"><span class="kw">age</span>(spot)</a></code></pre></div>
+<pre><code>[1] 84</code></pre>
 <div class="question">
-<p>What is <code>standardGeneric</code> doing in the example above? Is this kind of like creating <code>age.default</code> for <code>Person</code>?</p>
+<p>What is <code>standardGeneric</code> doing in the example above?</p>
 </div>
-<div class="TODO">
-
-</div>
+<p>It’s the same thing as <code>UseMethod</code> but for S4</p>
 </div>
 <div id="exercises-14" class="section level2 unnumbered">
 <h2>15.3.6.2 Exercises</h2>
@@ -362,14 +388,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>What is a virtual class and how does it relate to <code>setClassUnion</code> [see <code>?setClass</code>]</p>
 </div>
 <div class="TODO">
-
+<p>A virtual class is a class that cannot be instanciated… why would we need this?</p>
 </div>
 </div>
 <div id="signature" class="section level2 unnumbered">
 <h2>Signature</h2>
 <div class="question">
-<p>This section is pretty theoretical, can we come up with a beer class, generic, and method to help solidify this?</p>
+<p>In our own words what exactly is a signature? Are there any signatures within our <code>Person</code> example? If not can we add one?</p>
 </div>
+<p>::TODO
+:::</p>
 </div>
 <div id="single-dispatch" class="section level2 unnumbered">
 <h2>15.5.1 Single dispatch</h2>

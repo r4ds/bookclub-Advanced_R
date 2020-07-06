@@ -123,7 +123,7 @@
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-06-30}
+\date{2020-07-02}
 
 \begin{document}
 \maketitle
@@ -367,7 +367,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f9e51390328"
+## [1] "0x7ff6560d5c78"
 \end{verbatim}
 
 \begin{Shaded}
@@ -377,7 +377,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f9e51390328"
+## [1] "0x7ff6560d5c78"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -389,7 +389,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f9e4dc3b290"
+## [1] "0x7ff653a9e5f0"
 \end{verbatim}
 
 \begin{Shaded}
@@ -399,8 +399,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7f9e4fd4ad18] <list> 
-## └─[2:0x7f9e51390328] <dbl>
+## █ [1:0x7ff650d17a00] <list> 
+## └─[2:0x7ff6560d5c78] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -410,7 +410,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f9e4fe98830"
+## [1] "0x7ff650c52138"
 \end{verbatim}
 
 \begin{Shaded}
@@ -447,7 +447,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7f9e50643978>"
+## [1] "<0x7ff653365a78>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -457,7 +457,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7f9e50643978>
+## <0x7ff653365a78>
 \end{verbatim}
 
 \begin{Shaded}
@@ -467,7 +467,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f9e50643978"
+## [1] "0x7ff653365a78"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -516,7 +516,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f9e550b66c8"
+## [1] "0x7ff654d27c48"
 \end{verbatim}
 
 \begin{Shaded}
@@ -526,7 +526,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7f9e550b66c8>"
+## [1] "<0x7ff654d27c48>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -536,7 +536,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7f9e550b66c8 -> 0x7f9e56afa248]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7ff654d27c48 -> 0x7ff65a0b7c08]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -632,7 +632,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f9e52593d98"
+## [1] "0x7ff6576a9408"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -645,7 +645,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f9e5237b5d8"
+## [1] "0x7ff656801cc8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -668,7 +668,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f9e5237b5d8"
+## [1] "0x7ff656801cc8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -678,7 +678,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f9e5237b5d8"
+## [1] "0x7ff656801cc8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -701,7 +701,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f9e5237b5d8"
+## [1] "0x7ff656801cc8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -711,7 +711,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f9e50617248"
+## [1] "0x7ff653472788"
 \end{verbatim}
 
 \begin{Shaded}
@@ -734,7 +734,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7f9e5541dd48"
+## [1] "0x7ff65a17f238"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2537,11 +2537,11 @@ This will work:
 ## # A tibble: 5 x 1
 ##      x1
 ##   <dbl>
-## 1 0.617
-## 2 0.980
-## 3 0.274
-## 4 0.278
-## 5 0.559
+## 1 0.596
+## 2 0.479
+## 3 0.358
+## 4 0.406
+## 5 0.687
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2615,7 +2615,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 288 220 234 239 265 285 275 292 211 241
+##  [1] 281 238 246 206 278 283 215 269 273 231
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3052,7 +3052,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7f9e489cce68>
+## <bytecode: 0x7ff64d24cc68>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3923,7 +3923,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7f9e47fc7620>
+## <bytecode: 0x7ff650816c20>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4061,7 +4061,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7f9e519bb7b0>
+## <bytecode: 0x7ff6559b08c8>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4855,29 +4855,29 @@ Given this little example:
 
 \begin{verbatim}
 ## [1] "parent in mid: "
-## <environment: 0x7f9e5022aac0>
+## <environment: 0x7ff656c86780>
 ## [1] "current in mid: "
-## <environment: 0x7f9e5022a318>
+## <environment: 0x7ff656c85fd8>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid: "
-## <environment: 0x7f9e551c7500>
+## <environment: 0x7ff656c93408>
 ## [1] "current in mid: "
-## <environment: 0x7f9e52ea6428>
+## <environment: 0x7ff65b164908>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid skip: "
-## <environment: 0x7f9e52ea6428>
+## <environment: 0x7ff65b164908>
 ## [1] "current in mid skip: "
-## <environment: 0x7f9e4a8b9060>
+## <environment: 0x7ff65673fdb8>
 ## [1] "parent in mid: "
-## <environment: 0x7f9e4a8bf450>
+## <environment: 0x7ff6567461a8>
 ## [1] "current in mid: "
-## <environment: 0x7f9e4a8bece0>
+## <environment: 0x7ff656745a38>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
@@ -4892,7 +4892,7 @@ Given this little example:
 ## 
 ## [[2]]
 ## [[2]][[1]]
-## <environment: 0x7f9e4a8b9060>
+## <environment: 0x7ff65673fdb8>
 ## 
 ## 
 ## [[3]]
@@ -5033,26 +5033,26 @@ In order to extract p-values the solution manual suggests using \texttt{map\_dbl
 \end{Shaded}
 
 \begin{verbatim}
-##   [1] 0.0201080687 0.1246543711 0.8004866983 0.0003882430 0.0506116328
-##   [6] 0.0007571841 0.0262508897 0.0948564906 0.2823909320 0.0947980887
-##  [11] 0.1049527899 0.1500749454 0.0006412530 0.1391824281 0.0067090324
-##  [16] 0.0026893594 0.0043274270 0.0318156289 0.1179573915 0.0791007621
-##  [21] 0.1180358741 0.0367396003 0.0030093418 0.0017278866 0.0033883438
-##  [26] 0.0086849595 0.0004682985 0.2201097989 0.0009273962 0.0050669638
-##  [31] 0.0236213974 0.0028723736 0.0020553226 0.0716251715 0.1723517619
-##  [36] 0.6168224802 0.0074607105 0.0440523219 0.0266370017 0.1565174076
-##  [41] 0.0394167938 0.0478265456 0.0036218016 0.0309201108 0.0143230093
-##  [46] 0.0034472087 0.0013857492 0.6599204512 0.0029231053 0.0178005389
-##  [51] 0.0723190814 0.0627952875 0.1764110274 0.0138513478 0.0947341104
-##  [56] 0.1205175046 0.0421258604 0.0253740588 0.1055445698 0.0278652800
-##  [61] 0.2182369799 0.1994394074 0.1420065152 0.0351444308 0.3820984953
-##  [66] 0.0163775793 0.9317411603 0.1132120602 0.0039212770 0.0005259235
-##  [71] 0.2150008095 0.0159840528 0.3419290869 0.0357021758 0.1001403809
-##  [76] 0.2320966790 0.1413215256 0.1009363834 0.0887649120 0.0020960772
-##  [81] 0.0070751407 0.0324674566 0.1862407385 0.0809755832 0.0275169750
-##  [86] 0.0281964416 0.0001783006 0.0134143528 0.0262717867 0.0019978048
-##  [91] 0.5460546898 0.0606531215 0.0040789809 0.0038698407 0.4579823772
-##  [96] 0.0673655654 0.0607049830 0.8086300476 0.0189400761 0.1274472802
+##   [1] 5.955062e-02 1.387757e-01 8.598264e-02 6.831109e-03 1.190473e-01
+##   [6] 5.177197e-04 5.226859e-03 2.044344e-01 9.770829e-03 1.977998e-03
+##  [11] 3.983556e-02 7.814753e-02 2.643133e-02 9.206507e-05 4.147341e-02
+##  [16] 1.868631e-01 7.963839e-02 6.294134e-03 5.081086e-05 1.408148e-01
+##  [21] 1.618246e-02 3.195607e-02 1.276944e-01 3.613422e-01 3.545707e-04
+##  [26] 4.658851e-02 1.581823e-02 7.151631e-01 6.478437e-04 1.440204e-01
+##  [31] 1.334269e-01 2.993817e-01 3.410178e-02 1.034166e-02 9.139785e-02
+##  [36] 5.056015e-05 3.723963e-03 7.724960e-03 1.467146e-01 5.697286e-04
+##  [41] 9.893340e-04 9.710889e-03 4.472151e-02 8.323941e-02 1.079049e-01
+##  [46] 8.936090e-03 3.494997e-01 6.703474e-02 3.143600e-03 3.810203e-02
+##  [51] 9.968050e-02 6.176943e-02 4.478193e-02 2.348832e-02 1.646332e-01
+##  [56] 9.695523e-04 1.657981e-01 1.042076e-01 2.149362e-02 1.813199e-02
+##  [61] 3.656906e-02 1.906701e-01 4.248346e-01 4.736411e-02 5.899079e-01
+##  [66] 2.101013e-02 7.194178e-03 3.950190e-02 2.674761e-01 3.777639e-03
+##  [71] 1.131719e-01 4.292522e-03 1.807830e-02 6.254010e-03 9.247908e-02
+##  [76] 4.236145e-03 5.749567e-02 2.756633e-02 4.739616e-04 2.674199e-02
+##  [81] 3.322710e-03 1.155423e-01 2.780240e-04 8.665770e-03 6.025364e-03
+##  [86] 1.160451e-01 2.242536e-02 5.460786e-02 3.091997e-03 1.227141e-02
+##  [91] 2.554097e-01 7.710710e-02 4.377025e-01 6.076464e-03 2.376460e-02
+##  [96] 2.724849e-01 5.868181e-02 4.875342e-04 2.302063e-02 2.885370e-03
 \end{verbatim}
 
 \hypertarget{exercise-9}{%
@@ -5383,12 +5383,12 @@ Answer from \href{https://community.rstudio.com/t/recursive-purrr-mutate-if/1663
 
 \begin{verbatim}
 ## Unit: microseconds
-##                         expr      min       lq       mean   median       uq
-##         as_integer_rapply(x)    9.552   12.491   34.54824   19.862   22.720
-##  as_integer_recursive_map(x) 1006.231 1077.954 1209.12145 1145.022 1232.914
+##                         expr      min       lq       mean    median        uq
+##         as_integer_rapply(x)   19.016   35.798   93.97361   41.4155   60.0395
+##  as_integer_recursive_map(x) 1928.015 2420.043 3283.22562 3099.2100 3567.7910
 ##       max neval
-##  1542.655   100
-##  2964.880   100
+##   4699.17   100
+##  10274.13   100
 \end{verbatim}
 
 \begin{Shaded}
@@ -5861,7 +5861,7 @@ Base R contains two function factories, \texttt{approxfun()} and \texttt{ecdf()}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 1.0000000 0.6666667 0.3333333
+## [1] 0.3333333 0.6666667 1.0000000
 \end{verbatim}
 
 \hypertarget{exercise-14}{%
@@ -6128,7 +6128,7 @@ How do you check how much memory is allocated to memoise's caching?
 \end{Shaded}
 
 \begin{verbatim}
-## 16,248 B
+## 16,296 B
 \end{verbatim}
 
 Could we create a memoise wrapper that clears the cache when that's a certain number?
@@ -6170,134 +6170,134 @@ Could we create a memoise wrapper that clears the cache when that's a certain nu
 \end{Shaded}
 
 \begin{verbatim}
-## 14,440 B
-## 15,336 B
-## 16,256 B
+## 14,456 B
+## 15,368 B
+## 16,200 B
 ## 17,096 B
-## 17,992 B
-## 18,896 B
-## 19,816 B
-## 20,648 B
-## 21,552 B
-## 22,384 B
-## 23,152 B
-## 23,928 B
-## 24,768 B
-## 25,672 B
-## 26,440 B
-## 27,208 B
-## 27,976 B
-## 28,808 B
-## 29,640 B
-## 30,416 B
+## 18,016 B
+## 18,848 B
+## 19,688 B
+## 20,584 B
+## 21,472 B
+## 22,240 B
+## 23,080 B
+## 24,000 B
+## 24,856 B
+## 25,696 B
+## 26,472 B
+## 27,248 B
+## 27,960 B
+## 28,816 B
+## 29,672 B
+## 30,504 B
 \end{verbatim}
 
 \begin{verbatim}
-## Clearing cache [@30416]
+## Clearing cache [@30504]
 \end{verbatim}
 
 \begin{verbatim}
 ## 14,432 B
-## 15,368 B
-## 16,264 B
-## 17,168 B
-## 18,008 B
-## 18,920 B
-## 19,824 B
-## 20,656 B
-## 21,552 B
-## 22,384 B
-## 23,224 B
-## 24,128 B
-## 24,968 B
-## 25,880 B
-## 26,768 B
-## 27,536 B
-## 28,440 B
-## 29,232 B
-## 29,944 B
-## 30,864 B
+## 15,320 B
+## 16,160 B
+## 17,064 B
+## 17,968 B
+## 18,888 B
+## 19,728 B
+## 20,560 B
+## 21,400 B
+## 22,288 B
+## 23,120 B
+## 23,976 B
+## 24,752 B
+## 25,528 B
+## 26,376 B
+## 27,144 B
+## 27,976 B
+## 28,744 B
+## 29,600 B
+## 30,376 B
 \end{verbatim}
 
 \begin{verbatim}
-## Clearing cache [@30864]
+## Clearing cache [@30376]
 \end{verbatim}
 
 \begin{verbatim}
 ## 14,440 B
-## 15,280 B
-## 16,200 B
-## 17,096 B
-## 17,952 B
-## 18,856 B
-## 19,776 B
-## 20,688 B
-## 21,528 B
-## 22,432 B
-## 23,264 B
-## 24,160 B
-## 25,000 B
-## 25,768 B
-## 26,544 B
-## 27,384 B
-## 28,160 B
-## 28,936 B
-## 29,776 B
-## 30,664 B
+## 15,344 B
+## 16,184 B
+## 16,952 B
+## 17,840 B
+## 18,744 B
+## 19,520 B
+## 20,440 B
+## 21,328 B
+## 22,104 B
+## 22,944 B
+## 23,776 B
+## 24,624 B
+## 25,456 B
+## 26,360 B
+## 27,256 B
+## 28,096 B
+## 28,992 B
+## 29,848 B
+## 30,680 B
 \end{verbatim}
 
 \begin{verbatim}
-## Clearing cache [@30664]
+## Clearing cache [@30680]
+\end{verbatim}
+
+\begin{verbatim}
+## 14,432 B
+## 15,328 B
+## 16,224 B
+## 17,064 B
+## 17,888 B
+## 18,808 B
+## 19,640 B
+## 20,472 B
+## 21,376 B
+## 22,232 B
+## 23,008 B
+## 23,936 B
+## 24,776 B
+## 25,552 B
+## 26,328 B
+## 27,104 B
+## 27,952 B
+## 28,728 B
+## 29,568 B
+## 30,408 B
+\end{verbatim}
+
+\begin{verbatim}
+## Clearing cache [@30408]
 \end{verbatim}
 
 \begin{verbatim}
 ## 14,448 B
-## 15,368 B
-## 16,280 B
-## 17,176 B
-## 18,080 B
-## 18,912 B
-## 19,800 B
-## 20,640 B
-## 21,480 B
-## 22,256 B
-## 23,152 B
-## 24,000 B
-## 24,824 B
-## 25,656 B
-## 26,560 B
-## 27,328 B
-## 28,168 B
-## 29,024 B
-## 29,800 B
-## 30,656 B
-\end{verbatim}
-
-\begin{verbatim}
-## Clearing cache [@30656]
-\end{verbatim}
-
-\begin{verbatim}
-## 14,440 B
-## 15,328 B
-## 16,224 B
-## 17,120 B
-## 18,024 B
-## 18,920 B
-## 19,768 B
-## 20,600 B
-## 21,440 B
-## 22,208 B
-## 23,048 B
-## 23,944 B
-## 24,768 B
-## 25,608 B
-## 26,400 B
-## 27,112 B
-## 28,032 B
-## 28,856 B
-## 29,624 B
-## 30,480 B
+## 15,352 B
+## 16,248 B
+## 17,160 B
+## 17,992 B
+## 18,768 B
+## 19,672 B
+## 20,560 B
+## 21,408 B
+## 22,312 B
+## 23,200 B
+## 24,120 B
+## 24,952 B
+## 25,720 B
+## 26,432 B
+## 27,264 B
+## 28,104 B
+## 28,880 B
+## 29,592 B
+## 30,496 B
 \end{verbatim}
 
 Can we come up with simple example for these function operators?
@@ -7101,7 +7101,7 @@ mean doesn't actually have a specific method defined in base R for int or numeri
 ##     }
 ##     .Internal(mean(x))
 ## }
-## <bytecode: 0x7f9e50812fc8>
+## <bytecode: 0x7ff652f2f590>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -7563,34 +7563,60 @@ Broadly, what is a generic and method in S4 and what is their relationship?
 \NormalTok{)}
 
 \KeywordTok{setGeneric}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{standardGeneric}\NormalTok{(}\StringTok{"age"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] "age"
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \KeywordTok{setGeneric}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) }\KeywordTok{standardGeneric}\NormalTok{(}\StringTok{"age<-"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{verbatim}
-## [1] "age<-"
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \KeywordTok{setMethod}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\StringTok{"Person"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) x}\OperatorTok{@}\NormalTok{age)}
 \KeywordTok{setMethod}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\StringTok{"Person"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) \{}
 \NormalTok{  x}\OperatorTok{@}\NormalTok{age <-}\StringTok{ }\NormalTok{value}
 \NormalTok{  x}
 \NormalTok{\})}
+
+\NormalTok{john <-}\StringTok{ }\KeywordTok{new}\NormalTok{(}\StringTok{"Person"}\NormalTok{, }\DataTypeTok{name =} \StringTok{"John Smith"}\NormalTok{, }\DataTypeTok{age =} \DecValTok{12}\NormalTok{)}
+\KeywordTok{age}\NormalTok{(john)}
 \end{Highlighting}
 \end{Shaded}
 
-What is \texttt{standardGeneric} doing in the example above? Is this kind of like creating \texttt{age.default} for \texttt{Person}?
+\begin{verbatim}
+[1] 12
+\end{verbatim}
+
+A generic is a function that will dispatch differently based on the class it is applied to. Above we apply the \texttt{age} generic to \texttt{Person} using \texttt{setMethod} but we could create an \texttt{age} method that behaves differently for another class, like dogs (which will add 7 to the supplied age)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{setClass}\NormalTok{(}\StringTok{"Person"}\NormalTok{, }\DataTypeTok{slots =} \KeywordTok{c}\NormalTok{(}\DataTypeTok{name =} \StringTok{"character"}\NormalTok{,}\DataTypeTok{age =} \StringTok{"numeric"}\NormalTok{))}
+
+\KeywordTok{setGeneric}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{standardGeneric}\NormalTok{(}\StringTok{"age"}\NormalTok{))}
+\KeywordTok{setGeneric}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) }\KeywordTok{standardGeneric}\NormalTok{(}\StringTok{"age<-"}\NormalTok{))}
+
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\StringTok{"Person"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) x}\OperatorTok{@}\NormalTok{age)}
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\StringTok{"Person"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) \{}
+\NormalTok{  x}\OperatorTok{@}\NormalTok{age <-}\StringTok{ }\NormalTok{value}
+\NormalTok{  x}
+\NormalTok{\})}
+
+\KeywordTok{setClass}\NormalTok{(}\StringTok{"Dog"}\NormalTok{, }\DataTypeTok{slots =} \KeywordTok{c}\NormalTok{(}\DataTypeTok{name =} \StringTok{"character"}\NormalTok{,  }\DataTypeTok{age =} \StringTok{"numeric"}\NormalTok{))}
+
+\CommentTok{# You want the age generic to automatically return 7x the slot in human years}
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\StringTok{"Dog"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) \{x}\OperatorTok{@}\NormalTok{age}\OperatorTok{*}\DecValTok{7}\NormalTok{\} ) }
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\StringTok{"Dog"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) \{}
+\NormalTok{  x}\OperatorTok{@}\NormalTok{age <-}\StringTok{ }\NormalTok{value}
+\NormalTok{  x}
+\NormalTok{\})}
+
+
+\NormalTok{spot <-}\StringTok{ }\KeywordTok{new}\NormalTok{(}\StringTok{"Dog"}\NormalTok{, }\DataTypeTok{name =} \StringTok{"Spot Smith"}\NormalTok{, }\DataTypeTok{age =} \DecValTok{12}\NormalTok{)}
+\KeywordTok{age}\NormalTok{(spot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 84
+\end{verbatim}
+
+What is \texttt{standardGeneric} doing in the example above?
+
+It's the same thing as \texttt{UseMethod} but for S4
 
 \hypertarget{exercises-14}{%
 \section*{15.3.6.2 Exercises}\label{exercises-14}}
@@ -7598,11 +7624,16 @@ What is \texttt{standardGeneric} doing in the example above? Is this kind of lik
 
 What is a virtual class and how does it relate to \texttt{setClassUnion} {[}see \texttt{?setClass}{]}
 
+A virtual class is a class that cannot be instanciated\ldots{} why would we need this?
+
 \hypertarget{signature}{%
 \section*{Signature}\label{signature}}
 \addcontentsline{toc}{section}{Signature}
 
-This section is pretty theoretical, can we come up with a beer class, generic, and method to help solidify this?
+In our own words what exactly is a signature? Are there any signatures within our \texttt{Person} example? If not can we add one?
+
+::TODO
+:::
 
 \hypertarget{single-dispatch}{%
 \section*{15.5.1 Single dispatch}\label{single-dispatch}}
@@ -7619,7 +7650,151 @@ Does anyone know of a case where you'd need to convert your \texttt{S3} class to
 \hypertarget{trade-offs}{%
 \chapter{Trade-Offs}\label{trade-offs}}
 
-Can we make a single class with a method in \texttt{S3}, \texttt{S4}, and \texttt{R6} so we can easily directly compare the three?
+Can we make a class using \texttt{S3}, \texttt{S4}, and \texttt{R6} so we can easily directly compare the three, and their generics and methods?
+
+\hypertarget{using-our-example-from-the-s4-chapter}{%
+\subsection{Using our example from the S4 Chapter:}\label{using-our-example-from-the-s4-chapter}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{setClass}\NormalTok{(}\StringTok{"Person"}\NormalTok{, }
+  \DataTypeTok{slots =} \KeywordTok{c}\NormalTok{(}
+    \DataTypeTok{name =} \StringTok{"character"}\NormalTok{, }
+    \DataTypeTok{age =} \StringTok{"numeric"}
+\NormalTok{  )}
+\NormalTok{)}
+
+\KeywordTok{setGeneric}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{standardGeneric}\NormalTok{(}\StringTok{"age"}\NormalTok{))}
+\KeywordTok{setGeneric}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) }\KeywordTok{standardGeneric}\NormalTok{(}\StringTok{"age<-"}\NormalTok{))}
+
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\StringTok{"Person"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) x}\OperatorTok{@}\NormalTok{age)}
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\StringTok{"Person"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) \{}
+\NormalTok{  x}\OperatorTok{@}\NormalTok{age <-}\StringTok{ }\NormalTok{value}
+\NormalTok{  x}
+\NormalTok{\})}
+
+\NormalTok{john <-}\StringTok{ }\KeywordTok{new}\NormalTok{(}\StringTok{"Person"}\NormalTok{, }\DataTypeTok{name =} \StringTok{"John Smith"}\NormalTok{, }\DataTypeTok{age =} \DecValTok{12}\NormalTok{)}
+\KeywordTok{age}\NormalTok{(john)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 12
+\end{verbatim}
+
+A generic is a function that will dispatch differently based on the class it is applied to. Above we apply the \texttt{age} generic to \texttt{Person} using \texttt{setMethod} but we could create an \texttt{age} method that behaves differently for another class, like dogs (which will add 7 to the supplied age)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{setClass}\NormalTok{(}\StringTok{"Person"}\NormalTok{, }\DataTypeTok{slots =} \KeywordTok{c}\NormalTok{(}\DataTypeTok{name =} \StringTok{"character"}\NormalTok{,}\DataTypeTok{age =} \StringTok{"numeric"}\NormalTok{))}
+
+\KeywordTok{setGeneric}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{standardGeneric}\NormalTok{(}\StringTok{"age"}\NormalTok{))}
+\KeywordTok{setGeneric}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) }\KeywordTok{standardGeneric}\NormalTok{(}\StringTok{"age<-"}\NormalTok{))}
+
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\StringTok{"Person"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) x}\OperatorTok{@}\NormalTok{age)}
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\StringTok{"Person"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) \{}
+\NormalTok{  x}\OperatorTok{@}\NormalTok{age <-}\StringTok{ }\NormalTok{value}
+\NormalTok{  x}
+\NormalTok{\})}
+
+\KeywordTok{setClass}\NormalTok{(}\StringTok{"Dog"}\NormalTok{, }\DataTypeTok{slots =} \KeywordTok{c}\NormalTok{(}\DataTypeTok{name =} \StringTok{"character"}\NormalTok{,  }\DataTypeTok{age =} \StringTok{"numeric"}\NormalTok{))}
+
+\CommentTok{# You want the age generic to automatically return 7x the slot in human years}
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\StringTok{"Dog"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) \{x}\OperatorTok{@}\NormalTok{age}\OperatorTok{*}\DecValTok{7}\NormalTok{\} ) }
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\StringTok{"Dog"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) \{}
+\NormalTok{  x}\OperatorTok{@}\NormalTok{age <-}\StringTok{ }\NormalTok{value}
+\NormalTok{  x}
+\NormalTok{\})}
+
+
+\NormalTok{spot <-}\StringTok{ }\KeywordTok{new}\NormalTok{(}\StringTok{"Dog"}\NormalTok{, }\DataTypeTok{name =} \StringTok{"Spot Smith"}\NormalTok{, }\DataTypeTok{age =} \DecValTok{12}\NormalTok{)}
+\KeywordTok{age}\NormalTok{(spot)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{we-can-do-this-with-s3}{%
+\subsection*{We can do this with S3:}\label{we-can-do-this-with-s3}}
+\addcontentsline{toc}{subsection}{We can do this with S3:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{johnny <-}\StringTok{ }\KeywordTok{structure}\NormalTok{(}
+  \KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"Johnny Smith"}\NormalTok{,}
+       \DataTypeTok{age =} \DecValTok{12}\NormalTok{),}
+  \DataTypeTok{class =} \StringTok{"s3_human"}\NormalTok{)}
+
+\NormalTok{stripe <-}\StringTok{ }\KeywordTok{structure}\NormalTok{(}
+  \KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"Stripe Smith"}\NormalTok{,}
+       \DataTypeTok{age =} \DecValTok{12}\NormalTok{),}
+  \DataTypeTok{class =} \StringTok{"s3_dog"}\NormalTok{)}
+
+\NormalTok{s3_age <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x)\{}\KeywordTok{UseMethod}\NormalTok{(}\StringTok{"s3_age"}\NormalTok{)\}}
+\NormalTok{s3_age.s3_dog <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x)\{x}\OperatorTok{$}\NormalTok{age}\OperatorTok{*}\DecValTok{7}\NormalTok{\}}
+\NormalTok{s3_age.s3_human <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x)\{x}\OperatorTok{$}\NormalTok{age\}}
+
+\KeywordTok{s3_age}\NormalTok{(johnny)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 12
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{s3_age}\NormalTok{(stripe)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 84
+\end{verbatim}
+
+\hypertarget{and-r6}{%
+\subsubsection*{And R6}\label{and-r6}}
+\addcontentsline{toc}{subsubsection}{And R6}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Person <-}\StringTok{ }\KeywordTok{R6Class}\NormalTok{(}\StringTok{"Person"}\NormalTok{, }\KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{name =} \OtherTok{NULL}\NormalTok{,}
+  \DataTypeTok{age =} \OtherTok{NULL}\NormalTok{,}
+  \DataTypeTok{initialize =} \ControlFlowTok{function}\NormalTok{(name, }\DataTypeTok{age =} \OtherTok{NA}\NormalTok{) \{}
+    \KeywordTok{stopifnot}\NormalTok{(}\KeywordTok{is.character}\NormalTok{(name), }\KeywordTok{length}\NormalTok{(name) }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{)}
+    \KeywordTok{stopifnot}\NormalTok{(}\KeywordTok{is.numeric}\NormalTok{(age), }\KeywordTok{length}\NormalTok{(age) }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{)}
+\NormalTok{    self}\OperatorTok{$}\NormalTok{name <-}\StringTok{ }\NormalTok{name}
+\NormalTok{    self}\OperatorTok{$}\NormalTok{age <-}\StringTok{ }\NormalTok{age}
+\NormalTok{  \}}
+\NormalTok{))}
+
+\NormalTok{john <-}\StringTok{ }\NormalTok{Person}\OperatorTok{$}\KeywordTok{new}\NormalTok{(}\DataTypeTok{name =} \StringTok{"John Smith"}\NormalTok{, }\DataTypeTok{age =} \DecValTok{12}\NormalTok{)}
+\NormalTok{john}\OperatorTok{$}\NormalTok{age}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 12
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Dog <-}\StringTok{ }\KeywordTok{R6Class}\NormalTok{(}
+  \StringTok{"Dog"}\NormalTok{,}
+  \DataTypeTok{inherit =}\NormalTok{ Person,}
+  \DataTypeTok{public =} \KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{initialize =} \ControlFlowTok{function}\NormalTok{(name, }\DataTypeTok{age =} \OtherTok{NA}\NormalTok{) \{}
+\NormalTok{    super}\OperatorTok{$}\KeywordTok{initialize}\NormalTok{(name,age)}
+\NormalTok{    self}\OperatorTok{$}\NormalTok{age <-}\StringTok{ }\NormalTok{age }\OperatorTok{*}\StringTok{ }\DecValTok{7}
+\NormalTok{  \}}
+\NormalTok{))}
+\NormalTok{spot <-}\StringTok{ }\NormalTok{Dog}\OperatorTok{$}\KeywordTok{new}\NormalTok{(}\DataTypeTok{name =} \StringTok{"Spot Smith"}\NormalTok{, }\DataTypeTok{age =} \DecValTok{12}\NormalTok{) }
+\NormalTok{spot}\OperatorTok{$}\NormalTok{age}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 84
+\end{verbatim}
 
 \bibliography{book.bib,packages.bib}
 
