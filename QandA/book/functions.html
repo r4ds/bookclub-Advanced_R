@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-06-30" />
+<meta name="date" content="2020-07-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -283,7 +283,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#exercises-12"><i class="fa fa-check"></i>13.4.4.5 Exercises</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#object-styles"><i class="fa fa-check"></i>13.5 Object styles</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#inheritance"><i class="fa fa-check"></i>13.6 Inheritance</a></li>
-<li class="chapter" data-level="13.1" data-path="s3.html"><a href="s3.html#section-1"><i class="fa fa-check"></i><b>13.1</b> 13.4.3.3</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#exercises-13"><i class="fa fa-check"></i>13.4.3.3 Exercises</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#s3-and-base-types"><i class="fa fa-check"></i>13.7.1 S3 and Base Types</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#internal-generics"><i class="fa fa-check"></i>13.7.3 Internal Generics</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#double-dispatch"><i class="fa fa-check"></i>13.7.4 Double Dispatch</a></li>
@@ -291,11 +291,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14" data-path="r6.html"><a href="r6.html"><i class="fa fa-check"></i><b>14</b> R6</a><ul>
 <li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#classes-and-methods"><i class="fa fa-check"></i>14.2 Classes and methods</a></li>
 <li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#important-methods"><i class="fa fa-check"></i>14.2.2 Important methods</a></li>
+<li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#classes-and-methods-14.2.3"><i class="fa fa-check"></i>Classes and methods 14.2.3</a></li>
 <li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#exercises-14.2.6.4"><i class="fa fa-check"></i>Exercises 14.2.6.4</a></li>
 <li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#reference-semantics"><i class="fa fa-check"></i>14.4 Reference semantics</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="s4.html"><a href="s4.html"><i class="fa fa-check"></i><b>15</b> S4</a><ul>
 <li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#basics-1"><i class="fa fa-check"></i>15.2 Basics</a></li>
+<li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#exercises-14"><i class="fa fa-check"></i>15.3.6.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#signature"><i class="fa fa-check"></i>Signature</a></li>
+<li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#single-dispatch"><i class="fa fa-check"></i>15.5.1 Single dispatch</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="trade-offs.html"><a href="trade-offs.html"><i class="fa fa-check"></i><b>16</b> Trade-Offs</a><ul>
+<li class="chapter" data-level="16.0.1" data-path="trade-offs.html"><a href="trade-offs.html#using-our-example-from-the-s4-chapter"><i class="fa fa-check"></i><b>16.0.1</b> Using our example from the S4 Chapter:</a></li>
+<li class="chapter" data-level="" data-path="trade-offs.html"><a href="trade-offs.html#we-can-do-this-with-s3"><i class="fa fa-check"></i>We can do this with S3:</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -449,13 +457,13 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <a class="sourceLine" id="cb243-9" data-line-number="9"><span class="co">#&gt;     intersect, setdiff, setequal, union</span></a>
 <a class="sourceLine" id="cb243-10" data-line-number="10"><span class="kw">func_1</span>(test_tbl, x1)</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 1
-##       x1
-##    &lt;dbl&gt;
-## 1 0.447 
-## 2 0.747 
-## 3 0.432 
-## 4 0.0701
-## 5 0.319</code></pre>
+##      x1
+##   &lt;dbl&gt;
+## 1 0.463
+## 2 0.943
+## 3 0.954
+## 4 0.971
+## 5 0.633</code></pre>
 </div>
 <div id="a-fresh-start" class="section level2 unnumbered">
 <h2>6.4.3 A fresh start</h2>
@@ -503,7 +511,7 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <a class="sourceLine" id="cb249-8" data-line-number="8">}</a>
 <a class="sourceLine" id="cb249-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb249-10" data-line-number="10"><span class="kw">mega_model</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))</a></code></pre></div>
-<pre><code>##  [1] 221 208 223 246 204 218 265 294 282 256</code></pre>
+<pre><code>##  [1] 241 243 228 246 210 262 266 204 298 272</code></pre>
 </div>
 <div id="promises" class="section level2 unnumbered">
 <h2>6.5.1 Promises</h2>
@@ -750,7 +758,7 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb296-1" data-line-number="1">hist</a></code></pre></div>
 <pre><code>## function (x, ...) 
 ## UseMethod(&quot;hist&quot;)
-## &lt;bytecode: 0x7fd8bdab5268&gt;
+## &lt;bytecode: 0x7f8d7325c668&gt;
 ## &lt;environment: namespace:graphics&gt;</code></pre>
 <p>does not give me the actual contents of the actual function….</p>
 </div>

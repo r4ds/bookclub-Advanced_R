@@ -1,9 +1,10 @@
-# S4
-
-## 15.2 Basics {-}
+# Trade-Offs
 
 :::question
-Broadly, what is a generic and method in S4 and what is their relationship? 
+Can we make a class using `S3`, `S4`, and `R6` so we can easily directly compare the three, and their generics and methods?
+:::
+
+### Using our example from the S4 Chapter:
 
 ```{r, eval=FALSE}
 setClass("Person", 
@@ -29,8 +30,6 @@ age(john)
 ```
 [1] 12
 ```
-
-:::
 
 A generic is a function that will dispatch differently based on the class it is applied to. Above we apply the `age` generic to `Person` using `setMethod` but we could create an `age` method that behaves differently for another class, like dogs (which will add 7 to the supplied age)
 
@@ -61,42 +60,66 @@ spot <- new("Dog", name = "Spot Smith", age = 12)
 age(spot)
 ```
 
+### We can do this with S3: {-}
+
+```{r}
+johnny <- structure(
+  list(name = "Johnny Smith",
+       age = 12),
+  class = "s3_human")
+
+stripe <- structure(
+  list(name = "Stripe Smith",
+       age = 12),
+  class = "s3_dog")
+
+s3_age <- function(x){UseMethod("s3_age")}
+s3_age.s3_dog <- function(x){x$age*7}
+s3_age.s3_human <- function(x){x$age}
+
+s3_age(johnny)
+```
+
+```{r}
+s3_age(stripe)
+```
+
+#### And R6 {-}
+
+```{r, eval=FALSE}
+Person <- R6Class("Person", list(
+  name = NULL,
+  age = NULL,
+  initialize = function(name, age = NA) {
+    stopifnot(is.character(name), length(name) == 1)
+    stopifnot(is.numeric(age), length(age) == 1)
+    self$name <- name
+    self$age <- age
+  }
+))
+
+john <- Person$new(name = "John Smith", age = 12)
+john$age
+```
+
+```
+[1] 12
+```
+
+```{r, eval=FALSE}
+Dog <- R6Class(
+  "Dog",
+  inherit = Person,
+  public = list(
+  initialize = function(name, age = NA) {
+    super$initialize(name,age)
+    self$age <- age * 7
+  }
+))
+spot <- Dog$new(name = "Spot Smith", age = 12) 
+spot$age
+```
 ```
 [1] 84
 ```
-
-:::question
-What is `standardGeneric` doing in the example above?
-:::
-
-It’s the same thing as `UseMethod` but for S4
-
-## 15.3.6.2 Exercises {-}
-
-:::question
-What is a virtual class and how does it relate to `setClassUnion` [see `?setClass`]
-:::
-
-A virtual class is a class that cannot be instanciated. Rather than define two of the same methods for two classes, give them both a virtual parent class with the shared method. 
-
-## Signature {-}
-
-:::question
-In our own words what exactly is a signature? Are there any signatures within our `Person` example? If not can we add one?
-:::
-
-:::TODO
-:::
-
-
-## 15.5.1 Single dispatch {-}
-
-:::question
-What's a use case in the wild for `ANY`? 
-:::
-
-:::TODO
-:::
-
-
 

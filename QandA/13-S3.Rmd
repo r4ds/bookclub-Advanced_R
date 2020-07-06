@@ -373,7 +373,7 @@ s3_dispatch(IBU_calculator(wipa_1))
 s3_dispatch(IBU_calculator(wine_1))
 ```
 
-## 13.4.3.3
+## 13.4.3.3 Exercises {-}
 
 :::question
 Can we go over why this doesn't return `a1`? 
