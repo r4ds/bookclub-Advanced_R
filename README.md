@@ -25,7 +25,7 @@ All Meetings Scheduled for 8:00 PM Eastern unless otherwise noted
 - 2020-06-04 Chapter 10 - [Function factories](https://cran.r-project.org/package=factory): [Jon Harmon](https://twitter.com/jonthegeek) ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week10/Chapter10.html#1) | [Zoom Recording](https://www.youtube.com/watch?v=enI5Ynq6olI))
 - 2020-06-11 Chapter 11 - Function operators: [Tony ElHabr](https://twitter.com/TonyElHabr) | ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week11/Chapter11.html#1) | [Zoom Recording](https://www.youtube.com/watch?v=zzUY03gt_pA&feature=youtu.be))
 - 2020-06-18 Chapter 12 + 13 - OOP base types + S3: [Daryn Ramsden](https://twitter.com/thisisdaryn) | ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Advanced_R_12to13_OOP.html#1) | [Zoom Recording](https://www.youtube.com/watch?v=Fy3JF5Em6qY&feature=youtu.be))
-- 2020-06-25 Chapter 14 - R6: Tyler Grant Smith: ([Slides](TODO) | [Zoom Recording](https://www.youtube.com/watch?v=hPjaOdprgow&feature=youtu.be))
+- 2020-06-25 Chapter 14 - R6: Tyler Grant Smith: ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week12/Chapter14.html#1) | [Zoom Recording](https://www.youtube.com/watch?v=hPjaOdprgow&feature=youtu.be))
 - 2020-06-30 Chapter 15 - S4: Pavitra Chakravarty: ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week15/Chapter15.html#1) | [Zoom Recording](TODO))
 - 2020-07-07 Chapter 16 - Tradeoffs/OOP Wrapup: [Tan Ho](https://twitter.com/_tanho) 
 - 2020-07-14 Chapter 17 - Metaprogramming, big picture:
