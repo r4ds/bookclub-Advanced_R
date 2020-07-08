@@ -4,7 +4,7 @@ This repo contains 3 main folders:
 
 - QandA: A bookdown of questions (and answers) on the chapters that come up during meetings (or between!). We're also using this to try to answer questions marked "started" in the solutions manual with the potential goal of submitting PRs with our own answers!
 
-- Presentations: each week a presenter will give a talk summarizing the chapter, and discussing applications using the beer dataset. We meet every week at Thursday, 8:00 PM Eastern on [Zoom](notredame.zoom.us/j/490502945). 
+- Presentations: each week a presenter will give a talk summarizing the chapter, and discussing applications using the beer dataset. We meet every Tuesday at 8:00 PM Eastern on Zoom. [Join the slack group](https://r4ds.io/join) for the weekly link! 
 
 - Data: The dataset we will be using for presentations is on [Beer Production](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-03-31/readme.md) 
 
