@@ -1,0 +1,120 @@
+---
+title: "Advanced R Ch16 - Tradeoffs"
+author: "@_TanHo"
+date: "2020-07-07"
+institution: ""
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: tan-themer.css
+    chakra: libs/remark.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      comment = "")
+```
+
+# Outline
+
+1) What does Hadley think are the main trade-offs?
+
+2) Dive into ffscrapr, a package I'm working on that uses S3
+
+--
+
+*(and figure out whether I should have used R6/S4 instead...)*
+
+---
+
+# Hadley on S3 vs S4
+
+- S3 is informal, whereas S4 is formal
+
+--
+
+- S3 relies on *conventions* (i.e. informal rules) because it is flexible and easily abused, whereas S4 has *structure* and cannot be as easily abused.
+
+--
+
+- S4 is therefore better in larger, more rigorous projects that are established (i.e. Bioconductor, **DBI**)
+
+---
+
+# Hadley on S3 vs R6
+
+- R6 is encapsulated, whereas S3 is functional
+
+--
+
+- S3 namespacing is global, R6 is local to the object
+
+--
+
+- S3 is functional and therefore feels natural to the average R user, R6 does not
+
+--
+
+- R6 has `state` where S3 does not (accumulator programming/threading state is easy to accomplish in R6 but hard in S3)
+
+---
+
+## ffscrapr
+
+*"An R Client for Fantasy Football League APIs"*
+
+>  The goal of this package is to abstract the code required to call various Fantasy Football APIs (i.e. MFL, Sleeper, Fleaflicker, ESPN, Yahoo, potentially other platforms) and create methods that handles required authentication, forms appropriate calls, and returns tidy and predictable data which can be easily connected to other data sources.
+
+--
+
+In other words, a DBI-like interface where you don't need to know the nuts and bolts of each platform (i.e. MySQL, ODBC, SQL Server, PostgreSQL), and instead just need to know a little about the DBI package to get the data you want. 
+
+--
+
+Code here: [https://github.com/DynastyProcess/ffscrapr](https://github.com/DynastyProcess/ffscrapr)
+
+---
+## ffscrapr - motivations
+
+1) Teach myself about R packages 
+--
+*so that I can start looking at golem with an unbiased opinion*
+
+--
+
+2) Teach myself about unit testing, CI/CD, and CRAN
+
+--
+
+3) Share experience I have in Fantasy Football APIs so that others can build on it without learning the nuts and bolts
+
+--
+
+... and unexpectedly,
+
+4) *Experiment with OOP?*
+
+---
+
+## Live Coding (gulp!)
+
+Some guiding questions: 
+
+- Why S3?
+
+- What does something similar in R6 look like?
+
+- What could R6 do that S3 doesn't? (hint: state)
+
+### Potentially interesting:
+
+- [ffscrapr before I learned anything about S3](https://github.com/DynastyProcess/ffscrapr/blob/75920638e4e8efcc45c5be0c502fa4725f462001/R/generics.R)
+
+- Inspiration:  [DBI](https://github.com/r-dbi/DBI) (which as it turns out is written in S4!)]
+
+- [AzureGraph](https://github.com/Azure/AzureGraph), an R6 implementation of Azure's Microsoft Graph endpoints
