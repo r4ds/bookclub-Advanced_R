@@ -114,12 +114,16 @@
   \thm@postskip=\thm@preskip
 }
 \makeatother
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{longtable}
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
 
 \title{Advanced R Companion}
 \author{R4DS Reading Group}
-\date{2020-05-29}
+\date{2020-07-05}
 
 \begin{document}
 \maketitle
@@ -363,7 +367,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcb1ae10370"
+## [1] "0x7f8d79f81310"
 \end{verbatim}
 
 \begin{Shaded}
@@ -373,7 +377,7 @@ Checking the address for a list and its copy we see they share the same referenc
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcb1ae10370"
+## [1] "0x7f8d79f81310"
 \end{verbatim}
 
 But why isn't this the case for their subsets? Using \texttt{obj\_addr} they have different addresses, but when we look at their references they are the same
@@ -385,7 +389,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcb19f38660"
+## [1] "0x7f8d78d152d8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -395,8 +399,8 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## █ [1:0x7fcb19ef1b60] <list> 
-## └─[2:0x7fcb1ae10370] <dbl>
+## █ [1:0x7f8d78a791c0] <list> 
+## └─[2:0x7f8d79f81310] <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -406,7 +410,7 @@ But why isn't this the case for their subsets? Using \texttt{obj\_addr} they hav
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcb19e418f8"
+## [1] "0x7f8d79061818"
 \end{verbatim}
 
 \begin{Shaded}
@@ -443,7 +447,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fcb192b3cd8>"
+## [1] "<0x7f8d79db09c8>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -453,7 +457,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## <0x7fcb192b3cd8>
+## <0x7f8d79db09c8>
 \end{verbatim}
 
 \begin{Shaded}
@@ -463,7 +467,7 @@ Nothing - it has to do with the printing method:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcb192b3cd8"
+## [1] "0x7f8d79db09c8"
 \end{verbatim}
 
 When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that's optimized behind the scenes?
@@ -512,7 +516,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcb11809408"
+## [1] "0x7f8d7d453e88"
 \end{verbatim}
 
 \begin{Shaded}
@@ -522,7 +526,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "<0x7fcb11809408>"
+## [1] "<0x7f8d7d453e88>"
 \end{verbatim}
 
 \begin{Shaded}
@@ -532,7 +536,7 @@ When we assign the new value as an integer there is no intermediate step. This p
 \end{Shaded}
 
 \begin{verbatim}
-## tracemem[0x7fcb11809408 -> 0x7fcb16cbc808]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
+## tracemem[0x7f8d7d453e88 -> 0x7f8d738a1d88]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir <Anonymous> <Anonymous>
 \end{verbatim}
 
 You can dig into the C code running this:
@@ -628,7 +632,7 @@ Now we can create a vector:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcb1ecd3e88"
+## [1] "0x7f8d79a11cc8"
 \end{verbatim}
 
 Changing a value within it changes its address:
@@ -641,7 +645,7 @@ Changing a value within it changes its address:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcb1ae8dcb8"
+## [1] "0x7f8d78e0d6c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -664,7 +668,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcb1ae8dcb8"
+## [1] "0x7f8d78e0d6c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -674,7 +678,7 @@ We can assign the modified vector to a new name, where \texttt{y} and \texttt{v}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcb1ae8dcb8"
+## [1] "0x7f8d78e0d6c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -697,7 +701,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcb1ae8dcb8"
+## [1] "0x7f8d78e0d6c8"
 \end{verbatim}
 
 \begin{Shaded}
@@ -707,7 +711,7 @@ Now if we modify \texttt{v} it won't point to the same thing as \texttt{y}:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcb1c987bd8"
+## [1] "0x7f8d7998fb88"
 \end{verbatim}
 
 \begin{Shaded}
@@ -730,7 +734,7 @@ But if we now change \texttt{y} to look like \texttt{v}, the original address, i
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "0x7fcb1a142078"
+## [1] "0x7f8d7b27d438"
 \end{verbatim}
 
 \begin{Shaded}
@@ -2531,13 +2535,13 @@ This will work:
 
 \begin{verbatim}
 ## # A tibble: 5 x 1
-##       x1
-##    <dbl>
-## 1 0.792 
-## 2 0.502 
-## 3 0.385 
-## 4 0.803 
-## 5 0.0326
+##      x1
+##   <dbl>
+## 1 0.789
+## 2 0.204
+## 3 0.412
+## 4 0.372
+## 5 0.794
 \end{verbatim}
 
 \hypertarget{a-fresh-start}{%
@@ -2611,7 +2615,7 @@ Maybe a situation where we can give a function default arguments where \texttt{s
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 243 297 225 276 200 292 261 271 244 221
+##  [1] 226 299 279 250 272 228 265 220 293 208
 \end{verbatim}
 
 \hypertarget{promises}{%
@@ -3048,7 +3052,7 @@ I know this isn't exactly needed to answer the question, but how do we access a 
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fcb12207bc8>
+## <bytecode: 0x7f8d7325c668>
 ## <environment: namespace:graphics>
 \end{verbatim}
 
@@ -3666,26 +3670,26 @@ Each package becomes a parent to the global environment. We can inspect local en
 
 \begin{verbatim}
 ##  [[1]] $ <env: global>
-##  [[2]] $ <env: package:openintro>
-##  [[3]] $ <env: package:rlang>
-##  [[4]] $ <env: package:cyclocomp>
-##  [[5]] $ <env: package:lobstr>
-##  [[6]] $ <env: package:kableExtra>
-##  [[7]] $ <env: package:forcats>
-##  [[8]] $ <env: package:stringr>
-##  [[9]] $ <env: package:dplyr>
-## [[10]] $ <env: package:purrr>
-## [[11]] $ <env: package:readr>
-## [[12]] $ <env: package:tidyr>
-## [[13]] $ <env: package:tibble>
-## [[14]] $ <env: package:ggplot2>
-## [[15]] $ <env: package:tidyverse>
-## [[16]] $ <env: package:stats>
-## [[17]] $ <env: package:graphics>
-## [[18]] $ <env: package:grDevices>
-## [[19]] $ <env: package:utils>
-## [[20]] $ <env: package:datasets>
-## ... and 3 more environments
+##  [[2]] $ <env: package:sloop>
+##  [[3]] $ <env: package:memoise>
+##  [[4]] $ <env: package:gt>
+##  [[5]] $ <env: package:openintro>
+##  [[6]] $ <env: package:rlang>
+##  [[7]] $ <env: package:cyclocomp>
+##  [[8]] $ <env: package:lobstr>
+##  [[9]] $ <env: package:kableExtra>
+## [[10]] $ <env: package:forcats>
+## [[11]] $ <env: package:stringr>
+## [[12]] $ <env: package:dplyr>
+## [[13]] $ <env: package:purrr>
+## [[14]] $ <env: package:readr>
+## [[15]] $ <env: package:tidyr>
+## [[16]] $ <env: package:tibble>
+## [[17]] $ <env: package:ggplot2>
+## [[18]] $ <env: package:tidyverse>
+## [[19]] $ <env: package:stats>
+## [[20]] $ <env: package:graphics>
+## ... and 6 more environments
 \end{verbatim}
 
 \hypertarget{super-assignment}{%
@@ -3919,7 +3923,7 @@ I understood the recursion in the prior example, but what is inherits doing here
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7fcb1319a5b0>
+## <bytecode: 0x7f8d75111220>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4057,7 +4061,7 @@ We can use \texttt{conflict\_scout}!
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7fcb19d75cb0>
+## <bytecode: 0x7f8d79d63268>
 ## <environment: namespace:conflicted>
 \end{verbatim}
 
@@ -4851,29 +4855,29 @@ Given this little example:
 
 \begin{verbatim}
 ## [1] "parent in mid: "
-## <environment: 0x7fcb199a8248>
+## <environment: 0x7f8d7f886c10>
 ## [1] "current in mid: "
-## <environment: 0x7fcb199a89f0>
+## <environment: 0x7f8d7f886468>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid: "
-## <environment: 0x7fcb19a4b608>
+## <environment: 0x7f8d7f8977a8>
 ## [1] "current in mid: "
-## <environment: 0x7fcb1b821e60>
+## <environment: 0x7f8d7c438598>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid skip: "
-## <environment: 0x7fcb1b821e60>
+## <environment: 0x7f8d7c438598>
 ## [1] "current in mid skip: "
-## <environment: 0x7fcb1ae92430>
+## <environment: 0x7f8d7e8d4e48>
 ## [1] "parent in mid: "
-## <environment: 0x7fcb1ae435e8>
+## <environment: 0x7f8d7e8e5a38>
 ## [1] "current in mid: "
-## <environment: 0x7fcb1ae43d58>
+## <environment: 0x7f8d7e8e52c8>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
@@ -4888,7 +4892,7 @@ Given this little example:
 ## 
 ## [[2]]
 ## [[2]][[1]]
-## <environment: 0x7fcb1ae92430>
+## <environment: 0x7f8d7e8d4e48>
 ## 
 ## 
 ## [[3]]
@@ -5029,26 +5033,26 @@ In order to extract p-values the solution manual suggests using \texttt{map\_dbl
 \end{Shaded}
 
 \begin{verbatim}
-##   [1] 5.635143e-01 4.784753e-01 1.216148e-01 7.310548e-04 5.717359e-01
-##   [6] 4.113135e-03 1.074937e-01 1.410527e-01 2.185884e-02 7.601042e-02
-##  [11] 1.068610e-02 1.135739e-01 7.241659e-03 2.054861e-01 9.269688e-02
-##  [16] 2.619853e-01 1.197820e-01 1.203064e-02 3.232589e-02 8.653389e-05
-##  [21] 1.916145e-01 1.711711e-02 1.490314e-01 2.178004e-01 2.055051e-01
-##  [26] 2.535498e-03 3.988995e-03 3.024745e-02 1.000000e+00 1.330176e-01
-##  [31] 3.118831e-01 3.709104e-01 5.588820e-02 5.207435e-02 3.936427e-01
-##  [36] 5.454346e-03 2.185002e-02 8.119566e-03 3.501670e-02 2.853775e-02
-##  [41] 5.405546e-01 2.918886e-03 1.097473e-03 9.824198e-02 1.593555e-02
-##  [46] 3.210962e-01 9.890389e-03 1.597857e-02 2.172364e-01 9.874113e-02
-##  [51] 3.314296e-02 1.129102e-01 1.020648e-01 8.240089e-02 3.476941e-03
-##  [56] 2.469711e-03 1.052537e-01 5.862097e-03 9.486169e-02 2.200354e-01
-##  [61] 5.362110e-02 8.781936e-02 5.664556e-03 5.675981e-01 1.035666e-02
-##  [66] 1.382224e-02 5.787710e-03 6.958387e-03 2.964681e-02 1.320918e-04
-##  [71] 2.882801e-02 9.951927e-03 2.739549e-01 2.098790e-02 3.268752e-02
-##  [76] 1.244844e-02 6.430711e-02 2.869838e-01 6.742992e-03 2.281427e-04
-##  [81] 4.213771e-05 4.433497e-03 1.109392e-03 1.275786e-02 4.190870e-02
-##  [86] 3.492255e-01 1.847705e-02 2.258206e-02 7.688949e-02 5.421378e-03
-##  [91] 6.250085e-01 5.396665e-01 1.168024e-01 3.750291e-04 2.144637e-02
-##  [96] 1.070474e-02 6.419642e-03 5.632221e-04 5.086836e-02 1.931307e-01
+##   [1] 1.321795e-02 1.329850e-05 3.291956e-03 2.931116e-02 1.841550e-02
+##   [6] 1.327372e-01 1.073987e-02 2.885801e-01 1.488710e-03 7.439191e-05
+##  [11] 3.790926e-02 1.851887e-01 9.555825e-02 4.516991e-04 1.004091e-01
+##  [16] 1.267900e-02 1.478731e-03 7.709068e-02 1.632915e-01 7.931909e-02
+##  [21] 2.069129e-01 2.816315e-01 2.244290e-02 3.521116e-01 2.803529e-02
+##  [26] 2.739015e-02 1.547018e-01 8.324203e-02 1.742891e-01 7.886805e-02
+##  [31] 1.402617e-03 3.031617e-02 2.227731e-03 3.682478e-02 6.679533e-01
+##  [36] 1.644487e-01 1.944414e-01 4.033080e-02 4.162664e-02 1.288333e-01
+##  [41] 1.371462e-01 1.052355e-01 9.445381e-02 4.175500e-01 6.098749e-02
+##  [46] 8.755767e-02 8.177361e-04 1.782874e-02 2.475038e-01 8.706879e-01
+##  [51] 4.933271e-02 2.363297e-02 1.683557e-02 8.675703e-01 1.623855e-03
+##  [56] 3.117430e-03 1.162186e-01 4.346417e-01 3.705277e-02 1.225296e-04
+##  [61] 2.977202e-03 3.691123e-01 5.466733e-03 5.382310e-01 4.189117e-03
+##  [66] 1.901182e-02 1.376752e-01 1.036990e-01 7.803272e-02 2.072218e-02
+##  [71] 2.417876e-02 1.780644e-01 1.346492e-02 1.057556e-02 1.176019e-01
+##  [76] 3.042564e-02 1.138903e-01 1.238732e-01 1.000000e+00 2.616765e-02
+##  [81] 1.165692e-03 4.556769e-03 7.282267e-02 6.115632e-01 1.144205e-03
+##  [86] 8.643337e-04 2.506306e-01 6.787234e-02 2.236078e-01 9.545052e-02
+##  [91] 4.356129e-03 6.302720e-04 4.515074e-02 1.260581e-01 9.736169e-02
+##  [96] 6.041230e-02 1.822781e-01 3.761682e-02 3.874168e-02 1.027838e-03
 \end{verbatim}
 
 \hypertarget{exercise-9}{%
@@ -5379,12 +5383,12 @@ Answer from \href{https://community.rstudio.com/t/recursive-purrr-mutate-if/1663
 
 \begin{verbatim}
 ## Unit: microseconds
-##                         expr      min       lq       mean    median       uq
-##         as_integer_rapply(x)   11.074   14.592   59.35686   21.4885   25.658
-##  as_integer_recursive_map(x) 1088.225 1187.525 1409.37686 1243.7065 1433.577
+##                         expr      min       lq      mean   median       uq
+##         as_integer_rapply(x)   12.112   16.565  111.3723   27.143   32.173
+##  as_integer_recursive_map(x) 1293.103 1413.005 1961.1740 1681.008 2328.735
 ##       max neval
-##  3703.057   100
-##  4790.720   100
+##  8396.047   100
+##  6794.023   100
 \end{verbatim}
 
 \begin{Shaded}
@@ -5420,6 +5424,2370 @@ Answer from \href{https://community.rstudio.com/t/recursive-purrr-mutate-if/1663
 ## 
 ## $d
 ## [1] 4
+\end{verbatim}
+
+\hypertarget{function-factories}{%
+\chapter{Function factories}\label{function-factories}}
+
+\hypertarget{factory-fundamentals}{%
+\section*{10.2 Factory fundamentals}\label{factory-fundamentals}}
+\addcontentsline{toc}{section}{10.2 Factory fundamentals}
+
+Let's really solidify this statement in our own words using the \texttt{power1} and \texttt{square}/\texttt{cube} example:
+
+\begin{quote}
+The enclosing environment of the manufactured function is an execution environment of the function factory.
+\end{quote}
+
+\includegraphics[width=24.25in]{images/factories1}
+
+\begin{itemize}
+\tightlist
+\item
+  enclosing environment (this is the function environment - like \texttt{square} and \texttt{cube}) {[}in red{]}
+\item
+  execution environment (this is the same environment as above but from the ``perspective'' of \texttt{power1}) {[}in green{]}
+\end{itemize}
+
+\texttt{square} and \texttt{cube} have their own enclosing environments where \texttt{x} is different for each function - but their parent, the environment of \texttt{power1}, is the same.
+
+Because \texttt{power1} is a function, it has its own execution environment which is usually ephemeral but in this case it is the environment of both \texttt{square} and \texttt{cube} -- and that is how the manufactured functions have access to \texttt{exp}.
+
+\hypertarget{forcing-evaluation}{%
+\section*{10.2.3 Forcing evaluation}\label{forcing-evaluation}}
+\addcontentsline{toc}{section}{10.2.3 Forcing evaluation}
+
+I think this force section is trying to convey how we should use force on every argument in the factory's execution environment (here just \texttt{exp}) because you want to avoid lazy eval in the manufactured function's enclosing environment (like how we want to \texttt{force(exp\ =\ 2)} for \texttt{square}) but how does it not just become \texttt{force(exp\ =\ 3)} when we set \texttt{x\ \textless{}-\ 3}?
+
+\hypertarget{without-force}{%
+\section{WITHOUT FORCE}\label{without-force}}
+
+Without \texttt{force}, \texttt{exp} doesn't get evaluated when \texttt{power} is called. \texttt{square} is a promise to create a function to raise its input to the \texttt{exp}'th power. Once \texttt{square} is called, the promise evaluates, and \texttt{square} becomes a function to raise its input to whatever \texttt{exp} was that first time \texttt{square} was called. That's what makes it dangerous; what \texttt{square} does depends on the order in which things are called. Dangers and confusions like this are part of why function factories don't get used that much, despite the fact that they're really quite cool.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{suppressMessages}\NormalTok{(}\KeywordTok{requireNamespace}\NormalTok{(}\StringTok{"pryr"}\NormalTok{))}
+
+\CommentTok{# make sure this isn't already defined}
+\KeywordTok{rm}\NormalTok{(x)}
+
+\NormalTok{power2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(exp) \{}
+  \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"outer execution environment: "}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(}\KeywordTok{environment}\NormalTok{()), }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+  \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"outer enclosure: "}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(}\KeywordTok{parent.env}\NormalTok{(}\KeywordTok{environment}\NormalTok{())), }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+  \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"exp promise info: }\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\KeywordTok{paste0}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(pryr}\OperatorTok{::}\KeywordTok{promise_info}\NormalTok{(exp)), }\DataTypeTok{collapse =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)))}
+\NormalTok{  out <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x_) \{}
+    \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"inner execution environment: "}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(}\KeywordTok{environment}\NormalTok{()), }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+    \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"inner enclosure: "}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(}\KeywordTok{parent.env}\NormalTok{(}\KeywordTok{environment}\NormalTok{())), }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+    \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"exp promise info: }\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\KeywordTok{paste0}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(pryr}\OperatorTok{::}\KeywordTok{promise_info}\NormalTok{(exp)), }\DataTypeTok{collapse =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)))}
+\NormalTok{    x_ }\OperatorTok{^}\StringTok{ }\NormalTok{exp}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\NormalTok{square <-}\StringTok{ }\KeywordTok{power2}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> outer execution environment: <environment: 0x0000000015812568>
+#> outer enclosure: <environment: R_GlobalEnv>
+#> exp promise info: 
+#>  $code
+#>  x
+#>  
+#>  $env
+#>  <environment: R_GlobalEnv>
+#>  
+#>  $evaled
+#>  [1] FALSE
+#>  
+#>  $value
+#>  NULL
+#>  
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{square}\NormalTok{(}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> inner execution environment: <environment: 0x0000000012aee2a8>
+#> inner enclosure: <environment: 0x0000000015812568>
+#> exp promise info: 
+#>  $code
+#>  x
+#>  
+#>  $env
+#>  <environment: R_GlobalEnv>
+#>  
+#>  $evaled
+#>  [1] FALSE
+#>  
+#>  $value
+#>  NULL
+#>  
+#> Error in square(4): object 'x' not found
+\end{verbatim}
+
+The \texttt{exp} promise is looking for \texttt{x} in the enclosure of \texttt{power2} (global) and can't find it.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{2}
+\KeywordTok{square}\NormalTok{(}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> inner execution environment: <environment: 0x0000000017c915d0>
+#> inner enclosure: <environment: 0x0000000015812568>
+#> exp promise info: 
+#>  $code
+#>  x
+#>  
+#>  $env
+#>  <environment: R_GlobalEnv>
+#>  
+#>  $evaled
+#>  [1] FALSE
+#>  
+#>  $value
+#>  NULL
+#>  
+#> Warning in square(4): restarting interrupted promise evaluation
+#> [1] 16
+\end{verbatim}
+
+Notice, that the \texttt{exp} promise still wasn't evaled until the last line, \texttt{x\_\ \^{}\ exp}. The warning is caused by our previous failed attempt to evaluate the promise.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{3}
+\KeywordTok{square}\NormalTok{(}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> inner execution environment: <environment: 0x0000000017d9b270>
+#> inner enclosure: <environment: 0x0000000015812568>
+#> exp promise info: 
+#>  $code
+#>  x
+#>  
+#>  $env
+#>  NULL
+#>  
+#>  $evaled
+#>  [1] TRUE
+#>  
+#>  $value
+#>  [1] 2
+#>  
+#> [1] 25
+# exp was evaled already, so no further warning is produced, and our change to x has no effect.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rm}\NormalTok{(x)}
+\NormalTok{square <-}\StringTok{ }\KeywordTok{power2}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> outer execution environment: <environment: 0x0000000017e96e78>
+#> outer enclosure: <environment: R_GlobalEnv>
+#> exp promise info: 
+#>  $code
+#>  x
+#>  
+#>  $env
+#>  <environment: R_GlobalEnv>
+#>  
+#>  $evaled
+#>  [1] FALSE
+#>  
+#>  $value
+#>  NULL
+#>  
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{environment}\NormalTok{(square)}\OperatorTok{$}\NormalTok{x <-}\StringTok{ }\DecValTok{2}
+\KeywordTok{square}\NormalTok{(}\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> inner execution environment: <environment: 0x0000000017f8a530>
+#> inner enclosure: <environment: 0x0000000017e96e78>
+#> exp promise info: 
+#>  $code
+#>  x
+#>  
+#>  $env
+#>  <environment: R_GlobalEnv>
+#>  
+#>  $evaled
+#>  [1] FALSE
+#>  
+#>  $value
+#>  NULL
+#>  
+#> Error in square(6): object 'x' not found
+\end{verbatim}
+
+Defining \texttt{x} in the function environment doesn't work, because the promise isn't looking for \texttt{x} there
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{power2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(exp) }\ControlFlowTok{function}\NormalTok{(x_) x_ }\OperatorTok{^}\StringTok{ }\NormalTok{exp}
+\CommentTok{# wasn't sure this would work without braces...neat}
+\NormalTok{square <-}\StringTok{ }\KeywordTok{power2}\NormalTok{(x)}
+\KeywordTok{environment}\NormalTok{(square)}\OperatorTok{$}\NormalTok{exp <-}\StringTok{ }\DecValTok{2}
+\KeywordTok{square}\NormalTok{(}\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 36
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{square <-}\StringTok{ }\KeywordTok{power2}\NormalTok{(x)}
+\NormalTok{exp <-}\StringTok{ }\DecValTok{2}
+\KeywordTok{square}\NormalTok{(}\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Error in square(6): object 'x' not found
+\end{verbatim}
+
+This doesn't work because we need to define x within \texttt{environment(power2)\$exp\ \textless{}-\ 2}
+
+\hypertarget{using-force}{%
+\subsection{USING FORCE}\label{using-force}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rm}\NormalTok{(exp)}
+\KeywordTok{rm}\NormalTok{(x, power2, square)}
+
+\NormalTok{power2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(exp) \{}
+  \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"outer execution environment: "}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(}\KeywordTok{environment}\NormalTok{()), }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+  \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"outer enclosure: "}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(}\KeywordTok{parent.env}\NormalTok{(}\KeywordTok{environment}\NormalTok{())), }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+  \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"exp promise info before: }\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\KeywordTok{paste0}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(pryr}\OperatorTok{::}\KeywordTok{promise_info}\NormalTok{(exp)), }\DataTypeTok{collapse =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)))}
+  \KeywordTok{force}\NormalTok{(exp)}
+  \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"exp promise info after: }\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\KeywordTok{paste0}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(pryr}\OperatorTok{::}\KeywordTok{promise_info}\NormalTok{(exp)), }\DataTypeTok{collapse =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)))}
+\NormalTok{  out <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x_) \{}
+    \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"inner execution environment: "}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(}\KeywordTok{environment}\NormalTok{()), }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+    \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"inner enclosure: "}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(}\KeywordTok{parent.env}\NormalTok{(}\KeywordTok{environment}\NormalTok{())), }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+    \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"exp promise info: }\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\KeywordTok{paste0}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(pryr}\OperatorTok{::}\KeywordTok{promise_info}\NormalTok{(exp)), }\DataTypeTok{collapse =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)))}
+\NormalTok{    x_ }\OperatorTok{^}\StringTok{ }\NormalTok{exp}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\NormalTok{square <-}\StringTok{ }\KeywordTok{power2}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> outer execution environment: <environment: 0x00000000184e4e90>
+#> outer enclosure: <environment: R_GlobalEnv>
+#> exp promise info before: 
+#>  $code
+#>  x
+#>  
+#>  $env
+#>  <environment: R_GlobalEnv>
+#>  
+#>  $evaled
+#>  [1] FALSE
+#>  
+#>  $value
+#>  NULL
+#>  
+#> Error in force(exp): object 'x' not found
+# error because x isn't defined
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{2}
+\NormalTok{square <-}\StringTok{ }\KeywordTok{power2}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> outer execution environment: <environment: 0x0000000018cafaf8>
+#> outer enclosure: <environment: R_GlobalEnv>
+#> exp promise info before: 
+#>  $code
+#>  x
+#>  
+#>  $env
+#>  <environment: R_GlobalEnv>
+#>  
+#>  $evaled
+#>  [1] FALSE
+#>  
+#>  $value
+#>  NULL
+#>  exp promise info after: 
+#>  $code
+#>  x
+#>  
+#>  $env
+#>  NULL
+#>  
+#>  $evaled
+#>  [1] TRUE
+#>  
+#>  $value
+#>  [1] 2
+#>  
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{square}\NormalTok{(}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> inner execution environment: <environment: 0x0000000018d55b48>
+#> inner enclosure: <environment: 0x0000000018cafaf8>
+#> exp promise info: 
+#>  $code
+#>  x
+#>  
+#>  $env
+#>  NULL
+#>  
+#>  $evaled
+#>  [1] TRUE
+#>  
+#>  $value
+#>  [1] 2
+#>  
+#> [1] 16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{3}
+\KeywordTok{square}\NormalTok{(}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{garbage-collection}{%
+\section*{10.2.5 garbage collection}\label{garbage-collection}}
+\addcontentsline{toc}{section}{10.2.5 garbage collection}
+
+Does \{factory\} handle the issue of temporary objects in the manufactured function not getting garbage collected?
+
+We don't need to use \texttt{rm} because the execution environment of the factory remains ephemeral (like any other function call).Rather than returning a function wrapped in the execution environment, it returns a function in the caller environment, allowing normal garbage collection to clean up the temporary objects created during creation of the manufactured functions.
+
+\hypertarget{exercise-13}{%
+\section*{10.2.6.2 Exercise}\label{exercise-13}}
+\addcontentsline{toc}{section}{10.2.6.2 Exercise}
+
+Base R contains two function factories, \texttt{approxfun()} and \texttt{ecdf()}. Read their documentation and experiment to figure out what the functions do and what they return.
+
+\hypertarget{approxfun}{%
+\subsubsection*{approxfun}\label{approxfun}}
+\addcontentsline{toc}{subsubsection}{approxfun}
+
+\texttt{approxfun} creates a function (i.e.~mathematical formula) that can be used to find the linear interpolation for any given point, based on the data that was passed into the factory-function at the time it was passed into the function
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x=}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{, }\DataTypeTok{y=}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{)}\OperatorTok{^}\DecValTok{2}\NormalTok{)}
+\NormalTok{dat}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     x   y
+## 1   1   1
+## 2   2   4
+## 3   3   9
+## 4   4  16
+## 5   5  25
+## 6   6  36
+## 7   7  49
+## 8   8  64
+## 9   9  81
+## 10 10 100
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fn <-}\StringTok{ }\KeywordTok{approxfun}\NormalTok{(dat}\OperatorTok{$}\NormalTok{x,dat}\OperatorTok{$}\NormalTok{y)}
+\KeywordTok{fn}\NormalTok{(}\FloatTok{4.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20.5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{10}
+\NormalTok{y <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(x, y, }\DataTypeTok{main =} \StringTok{"approx(.) and approxfun(.)"}\NormalTok{)}
+\KeywordTok{points}\NormalTok{(}\KeywordTok{approx}\NormalTok{(x, y), }\DataTypeTok{col =} \DecValTok{2}\NormalTok{, }\DataTypeTok{pch =} \StringTok{"*"}\NormalTok{)}
+\KeywordTok{points}\NormalTok{(}\KeywordTok{approx}\NormalTok{(x, y, }\DataTypeTok{method =} \StringTok{"constant"}\NormalTok{), }\DataTypeTok{col =} \DecValTok{4}\NormalTok{, }\DataTypeTok{pch =} \StringTok{"*"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{AdvancedR_Companion_files/figure-latex/unnamed-chunk-237-1.pdf}
+
+\hypertarget{ecdf}{%
+\subsubsection*{ECDF}\label{ecdf}}
+\addcontentsline{toc}{subsubsection}{ECDF}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{3}\NormalTok{) }\CommentTok{# 3 random numbers}
+\NormalTok{Fn <-}\StringTok{ }\KeywordTok{ecdf}\NormalTok{(x) }\CommentTok{# create distribution function for each x}
+\KeywordTok{Fn}\NormalTok{(x) }\CommentTok{# apply the distribution function to each number}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.3333333 0.6666667 1.0000000
+\end{verbatim}
+
+\hypertarget{exercise-14}{%
+\section*{10.2.6.3 Exercise}\label{exercise-14}}
+\addcontentsline{toc}{section}{10.2.6.3 Exercise}
+
+How would we make this function using \{factory\}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pick <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(i) \{}
+  \KeywordTok{force}\NormalTok{(i)}
+  \ControlFlowTok{function}\NormalTok{(x) x[[i]]}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(factory)}
+\NormalTok{pick <-}\StringTok{ }\KeywordTok{build_factory}\NormalTok{(}
+  \DataTypeTok{.factory_fun =} \ControlFlowTok{function}\NormalTok{(x) x[[i]],}
+\NormalTok{  i}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{labelling}{%
+\section*{10.3.1 Labelling}\label{labelling}}
+\addcontentsline{toc}{section}{10.3.1 Labelling}
+
+What is the ``factory'' happening here? That we're supplying a function as the \texttt{label} argument? Is \texttt{summarize} also a factory then?
+
+It isn't that the \texttt{ggplot2} functions are factories, it's that they're a great place to use factories. They're actually functionals when you pass in a function, since they're using a function as an argument!
+
+\hypertarget{exercises-8}{%
+\section*{10.3.4 Exercises}\label{exercises-8}}
+\addcontentsline{toc}{section}{10.3.4 Exercises}
+
+Can we use code to answer the question: compare and contrast ggplot2::label\_bquote() with scales::number\_format()
+
+Data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sd <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{15}\NormalTok{)}
+\NormalTok{n <-}\StringTok{ }\DecValTok{100}
+\NormalTok{df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{3} \OperatorTok{*}\StringTok{ }\NormalTok{n, }\DataTypeTok{sd =}\NormalTok{ sd), }\DataTypeTok{sd =} \KeywordTok{rep}\NormalTok{(sd, n))}
+\end{Highlighting}
+\end{Shaded}
+
+Using \texttt{label\_bquote} using \texttt{plotMath} explanation\ldots{}\ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(df, }\KeywordTok{aes}\NormalTok{(x)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{2}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{facet_wrap}\NormalTok{(}\OperatorTok{~}\StringTok{ }\NormalTok{sd, }\DataTypeTok{scales =} \StringTok{"free_x"}\NormalTok{, }\DataTypeTok{labeller =} \KeywordTok{label_bquote}\NormalTok{(alpha }\OperatorTok{^}\StringTok{ }\NormalTok{.(sd))) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \OtherTok{NULL}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{AdvancedR_Companion_files/figure-latex/unnamed-chunk-242-1.pdf}
+
+Using \texttt{number\_format} will \texttt{force} the computation of the parameters, formatting numbers explanation\ldots{}\ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(df, }\KeywordTok{aes}\NormalTok{(x)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{2}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{facet_wrap}\NormalTok{(}\OperatorTok{~}\StringTok{ }\NormalTok{sd, }\DataTypeTok{scales =} \StringTok{"free_x"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \OtherTok{NULL}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}
+  \DataTypeTok{labels =}\NormalTok{ scales}\OperatorTok{::}\KeywordTok{number_format}\NormalTok{(}\DataTypeTok{scale =} \DecValTok{1}\NormalTok{, }\DataTypeTok{suffix =} \StringTok{" K"}\NormalTok{) }
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{AdvancedR_Companion_files/figure-latex/unnamed-chunk-243-1.pdf}
+
+\hypertarget{factories-and-functionals}{%
+\section{10.5 factories and functionals}\label{factories-and-functionals}}
+
+Can we \{factory\} this?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{names <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{square =} \DecValTok{2}\NormalTok{, }
+  \DataTypeTok{cube =} \DecValTok{3}\NormalTok{, }
+  \DataTypeTok{root =} \DecValTok{1}\OperatorTok{/}\DecValTok{2}\NormalTok{, }
+  \DataTypeTok{cuberoot =} \DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{, }
+  \DataTypeTok{reciprocal =} \DecValTok{-1}
+\NormalTok{)}
+\NormalTok{funs <-}\StringTok{ }\NormalTok{purrr}\OperatorTok{::}\KeywordTok{map}\NormalTok{(names, power1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{power4 <-}\StringTok{ }\KeywordTok{build_factory}\NormalTok{(}
+  \DataTypeTok{fun =} \ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{    x }\OperatorTok{^}\StringTok{ }\NormalTok{exponent}
+\NormalTok{  \},}
+\NormalTok{  exponent}
+\NormalTok{)}
+\NormalTok{power_names <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{square =} \DecValTok{2}\NormalTok{,}
+  \DataTypeTok{cube =} \DecValTok{3}\NormalTok{,}
+  \DataTypeTok{root =} \DecValTok{1}\OperatorTok{/}\DecValTok{2}\NormalTok{,}
+  \DataTypeTok{cuberoot =} \DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{,}
+  \DataTypeTok{reciprocal =} \DecValTok{-1}
+\NormalTok{)}
+\NormalTok{powers <-}\StringTok{ }\NormalTok{purrr}\OperatorTok{::}\KeywordTok{map}\NormalTok{(power_names, power4)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{function-operators}{%
+\chapter{Function operators}\label{function-operators}}
+
+\hypertarget{introduction-1}{%
+\section*{11.1 Introduction}\label{introduction-1}}
+\addcontentsline{toc}{section}{11.1 Introduction}
+
+\begin{quote}
+A function operator is a function that takes one (or more) functions as input and returns a function as output
+\end{quote}
+
+\ldots{}How exactly does this definition differ from a function factory?
+
+\captionsetup[table]{labelformat=empty,skip=1pt}
+\begin{longtable}{llll}
+\toprule
+Term & Required Input & Optional Output & Output \\ 
+\midrule
+Functionals & Function & Vector & Vector \\ 
+Function Factory & NA & Vector,Function & Function \\ 
+Function Operator & Function & Function & Function \\ 
+\bottomrule
+\end{longtable}
+
+\begin{quote}
+Function operators are closely related to function factories; indeed they're just a function factory that takes a function as input
+\end{quote}
+
+Can anyone confirm that, by definition, function operators can only take functions as inputs (and not any kind of vector)? Book quote: ``A function operator is a function that takes one (or more) functions as input and returns a function as output.'' If this is true, then something like the following would only be a function factory, not both a function factory and a function operator:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sleepy <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(f, n)\{}
+  \KeywordTok{force}\NormalTok{(f)}
+  \ControlFlowTok{function}\NormalTok{(...)\{}
+    \KeywordTok{cat}\NormalTok{(}
+\NormalTok{      glue}\OperatorTok{::}\KeywordTok{glue}\NormalTok{(}\StringTok{'Sleeping for \{n\} second\{ifelse(n != 1, "s", "")\}.'}\NormalTok{), }
+      \DataTypeTok{sep =} \StringTok{'}\CharTok{\textbackslash{}n}\StringTok{'}
+\NormalTok{    )}
+    \KeywordTok{Sys.sleep}\NormalTok{(n)}
+    \KeywordTok{f}\NormalTok{(...)}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\NormalTok{sleepy_print <-}\StringTok{ }\KeywordTok{sleepy}\NormalTok{(print, }\FloatTok{1.5}\NormalTok{)}
+\KeywordTok{sleepy_print}\NormalTok{(}\StringTok{'hello world'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Sleeping for 1.5 seconds.
+## [1] "hello world"
+\end{verbatim}
+
+Function factories are ``any function that returns a function'' and Hadley uses ``simple'' examples where you pass in a numeric or character to get back a customized function (pass a number to a power function to get a function dedicated to cubes)
+
+Function operators are factories where you pass in a function and modify its behaviour a little, without actually building up the logic for a function from scratch. The operator does not supply the actual meat of the logic.
+examples: \texttt{safely}, \texttt{silently}, \texttt{rate-limity} etc
+
+\hypertarget{purrrsafely}{%
+\section*{11.2.1 purrr::safely}\label{purrrsafely}}
+\addcontentsline{toc}{section}{11.2.1 purrr::safely}
+
+It seems like safely is a condition wrapper - are all conditions a kind of function operator?
+
+\texttt{safely}/\texttt{possibly}/\texttt{quietly} are function operators that are condition-wrappers, but \texttt{tryCatch}/\texttt{withCallingHandlers} are not function operators (they catch the outputs and do X thing but don't actually return a function)
+
+How would we apply \texttt{safely} to find which dataframe in a list of dataframes is causing an error?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+
+\NormalTok{random_starwars <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{ }
+\NormalTok{  starwars }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{sample_n}\NormalTok{(}\DecValTok{50}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(name, height,mass)}
+\NormalTok{\}}
+    
+\NormalTok{broken_starwars <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{()\{ }
+\NormalTok{  starwars }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{sample_n}\NormalTok{(}\DecValTok{50}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(name, height,mass) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{height =} \KeywordTok{as.character}\NormalTok{(height))}
+\NormalTok{\}}
+  
+\NormalTok{list_data <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{a =} \KeywordTok{random_starwars}\NormalTok{(),}
+                  \DataTypeTok{b =} \KeywordTok{random_starwars}\NormalTok{(),}
+                  \DataTypeTok{c =} \KeywordTok{broken_starwars}\NormalTok{(),}
+                  \DataTypeTok{d =} \KeywordTok{random_starwars}\NormalTok{())}
+
+\NormalTok{map_dfr_safely <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(.x, .f, ... ) \{}
+\NormalTok{  results <-}\StringTok{ }\KeywordTok{map}\NormalTok{(.x, }\KeywordTok{safely}\NormalTok{(.f), ...)}
+  \KeywordTok{list}\NormalTok{(}\DataTypeTok{result =} \KeywordTok{bind_rows}\NormalTok{(}\OperatorTok{!!!}\KeywordTok{map}\NormalTok{(results, }\StringTok{"result"}\NormalTok{)), }\DataTypeTok{error =} \KeywordTok{map}\NormalTok{(results, }\StringTok{"error"}\NormalTok{))}
+\NormalTok{\}    }
+
+\KeywordTok{map_dfr_safely}\NormalTok{(list_data, semi_join, filter_starwars, }\DataTypeTok{by =} \KeywordTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{, }\StringTok{"height"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in tbl_vars_dispatch(x): restarting interrupted promise evaluation
+
+## Warning in tbl_vars_dispatch(x): restarting interrupted promise evaluation
+
+## Warning in tbl_vars_dispatch(x): restarting interrupted promise evaluation
+\end{verbatim}
+
+\begin{verbatim}
+## $result
+## # A tibble: 0 x 0
+## 
+## $error
+## $error$a
+## <simpleError in tbl_vars_dispatch(x): object 'filter_starwars' not found>
+## 
+## $error$b
+## <simpleError in tbl_vars_dispatch(x): object 'filter_starwars' not found>
+## 
+## $error$c
+## <simpleError in tbl_vars_dispatch(x): object 'filter_starwars' not found>
+## 
+## $error$d
+## <simpleError in tbl_vars_dispatch(x): object 'filter_starwars' not found>
+\end{verbatim}
+
+\hypertarget{memoise}{%
+\section*{11.2.2 memoise}\label{memoise}}
+\addcontentsline{toc}{section}{11.2.2 memoise}
+
+How do you check how much memory is allocated to memoise's caching?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{random_starwars <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(...)\{ }
+\NormalTok{  starwars }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{sample_n}\NormalTok{(}\DecValTok{3}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(name)\}}
+\NormalTok{memoised_starwars <-}\StringTok{ }\KeywordTok{memoise}\NormalTok{(random_starwars)}
+\NormalTok{a <-}\StringTok{ }\KeywordTok{random_starwars}\NormalTok{()}
+\NormalTok{b <-}\StringTok{ }\KeywordTok{memoised_starwars}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{c <-}\StringTok{ }\KeywordTok{memoised_starwars}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\NormalTok{d <-}\StringTok{ }\KeywordTok{memoised_starwars}\NormalTok{(}\DecValTok{3}\NormalTok{)}
+
+\NormalTok{lobstr}\OperatorTok{::}\KeywordTok{obj_size}\NormalTok{(}\KeywordTok{get}\NormalTok{(}\StringTok{"_cache"}\NormalTok{,}\KeywordTok{environment}\NormalTok{(memoised_starwars)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 16,232 B
+\end{verbatim}
+
+Could we create a memoise wrapper that clears the cache when that's a certain number?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{random_starwars <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(...)\{ }
+\NormalTok{  dplyr}\OperatorTok{::}\NormalTok{starwars }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{sample_n}\NormalTok{(}\DecValTok{3}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(name)}
+\NormalTok{  \}}
+\NormalTok{cache_memory_size <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(f) \{}
+\NormalTok{  cache <-}\StringTok{ }\KeywordTok{get}\NormalTok{(}\StringTok{"_cache"}\NormalTok{, }\KeywordTok{environment}\NormalTok{(f))}
+\NormalTok{  lobstr}\OperatorTok{::}\KeywordTok{obj_size}\NormalTok{(cache)}
+\NormalTok{\}}
+\NormalTok{capped_memoise <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(..., .cache_size) \{}
+  \KeywordTok{force}\NormalTok{(.cache_size)}
+\NormalTok{  .self_ref <-}\StringTok{ }\NormalTok{memoise}\OperatorTok{::}\KeywordTok{memoise}\NormalTok{(...)}
+\NormalTok{  f <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(...) \{}
+\NormalTok{    env <-}\StringTok{ }\KeywordTok{parent.env}\NormalTok{(}\KeywordTok{environment}\NormalTok{())}
+\NormalTok{    cache_size <-}\StringTok{ }\KeywordTok{cache_memory_size}\NormalTok{(env[[}\StringTok{"_self_ref"}\NormalTok{]])}
+    \ControlFlowTok{if}\NormalTok{ (cache_size }\OperatorTok{>}\StringTok{ }\NormalTok{env[[}\StringTok{"_cache_size"}\NormalTok{]]) \{}
+      \KeywordTok{message}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"Clearing cache [@"}\NormalTok{,cache_size,}\StringTok{"]}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
+\NormalTok{      memoise}\OperatorTok{::}\KeywordTok{forget}\NormalTok{(env[[}\StringTok{"_self_ref"}\NormalTok{]])}
+\NormalTok{    \}}
+\NormalTok{    env[[}\StringTok{"_self_ref"}\NormalTok{]](...)}
+\NormalTok{  \}}
+  \KeywordTok{assign}\NormalTok{(}\StringTok{"_cache_size"}\NormalTok{, .cache_size, }\KeywordTok{environment}\NormalTok{(.self_ref))}
+  \KeywordTok{assign}\NormalTok{(}\StringTok{"_self_ref"}\NormalTok{, .self_ref, }\KeywordTok{environment}\NormalTok{(.self_ref))}
+  \KeywordTok{environment}\NormalTok{(f) <-}\StringTok{ }\KeywordTok{environment}\NormalTok{(.self_ref)}
+\NormalTok{  f}
+\NormalTok{\}}
+\NormalTok{capped_memoised_starwars <-}\StringTok{ }\KeywordTok{capped_memoise}\NormalTok{(random_starwars, }\DataTypeTok{.cache_size =} \DecValTok{30000}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{100}\NormalTok{) \{}
+  \KeywordTok{capped_memoised_starwars}\NormalTok{(i)}
+  \KeywordTok{print}\NormalTok{(}\KeywordTok{cache_memory_size}\NormalTok{(capped_memoised_starwars))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 14,424 B
+## 15,328 B
+## 16,240 B
+## 17,144 B
+## 18,056 B
+## 18,904 B
+## 19,736 B
+## 20,576 B
+## 21,352 B
+## 22,192 B
+## 23,120 B
+## 23,960 B
+## 24,792 B
+## 25,688 B
+## 26,528 B
+## 27,384 B
+## 28,096 B
+## 28,936 B
+## 29,776 B
+## 30,544 B
+\end{verbatim}
+
+\begin{verbatim}
+## Clearing cache [@30544]
+\end{verbatim}
+
+\begin{verbatim}
+## 14,448 B
+## 15,352 B
+## 16,248 B
+## 17,168 B
+## 18,064 B
+## 18,976 B
+## 19,880 B
+## 20,776 B
+## 21,608 B
+## 22,440 B
+## 23,272 B
+## 24,168 B
+## 25,008 B
+## 25,848 B
+## 26,624 B
+## 27,464 B
+## 28,240 B
+## 29,072 B
+## 29,864 B
+## 30,768 B
+\end{verbatim}
+
+\begin{verbatim}
+## Clearing cache [@30768]
+\end{verbatim}
+
+\begin{verbatim}
+## 14,456 B
+## 15,360 B
+## 16,200 B
+## 17,104 B
+## 18,024 B
+## 18,880 B
+## 19,728 B
+## 20,568 B
+## 21,400 B
+## 22,296 B
+## 23,208 B
+## 24,032 B
+## 24,856 B
+## 25,712 B
+## 26,552 B
+## 27,344 B
+## 28,176 B
+## 29,016 B
+## 29,920 B
+## 30,824 B
+\end{verbatim}
+
+\begin{verbatim}
+## Clearing cache [@30824]
+\end{verbatim}
+
+\begin{verbatim}
+## 14,432 B
+## 15,328 B
+## 16,224 B
+## 17,056 B
+## 17,960 B
+## 18,864 B
+## 19,800 B
+## 20,592 B
+## 21,360 B
+## 22,248 B
+## 23,088 B
+## 23,928 B
+## 24,704 B
+## 25,480 B
+## 26,320 B
+## 27,208 B
+## 28,000 B
+## 28,888 B
+## 29,720 B
+## 30,432 B
+\end{verbatim}
+
+\begin{verbatim}
+## Clearing cache [@30432]
+\end{verbatim}
+
+\begin{verbatim}
+## 14,432 B
+## 15,328 B
+## 16,248 B
+## 17,136 B
+## 18,024 B
+## 18,920 B
+## 19,824 B
+## 20,600 B
+## 21,432 B
+## 22,328 B
+## 23,104 B
+## 24,016 B
+## 24,840 B
+## 25,672 B
+## 26,528 B
+## 27,304 B
+## 28,016 B
+## 28,912 B
+## 29,688 B
+## 30,400 B
+\end{verbatim}
+
+Can we come up with simple example for these function operators?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}
+  \KeywordTok{c}\NormalTok{(}\FloatTok{0.512}\NormalTok{, }\FloatTok{0.165}\NormalTok{, }\FloatTok{0.717}\NormalTok{),}
+  \KeywordTok{c}\NormalTok{(}\FloatTok{0.064}\NormalTok{, }\FloatTok{0.781}\NormalTok{, }\FloatTok{0.427}\NormalTok{),}
+  \KeywordTok{c}\NormalTok{(}\FloatTok{0.890}\NormalTok{, }\FloatTok{0.785}\NormalTok{, }\FloatTok{0.495}\NormalTok{),}
+  \StringTok{"oops"}
+\NormalTok{)}
+
+\NormalTok{f <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(...) \{}\KeywordTok{sum}\NormalTok{(...)\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{possibly}{%
+\subsubsection*{possibly}\label{possibly}}
+\addcontentsline{toc}{subsubsection}{possibly}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{map_dbl}\NormalTok{(x, }\KeywordTok{possibly}\NormalTok{(f, }\OtherTok{NA}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.394 1.272 2.170    NA
+\end{verbatim}
+
+\hypertarget{quietly}{%
+\subsubsection*{quietly}\label{quietly}}
+\addcontentsline{toc}{subsubsection}{quietly}
+
+Quetly doesn't work on errors, only warnings:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{map}\NormalTok{(x, }\KeywordTok{quietly}\NormalTok{(}\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{tryCatch}\NormalTok{(}\KeywordTok{f}\NormalTok{(x), }\DataTypeTok{error =} \ControlFlowTok{function}\NormalTok{(e) }\KeywordTok{warning}\NormalTok{(e)))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{auto_browser}{%
+\subsubsection*{auto\_browser}\label{auto_browser}}
+\addcontentsline{toc}{subsubsection}{auto\_browser}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{map_dbl}\NormalTok{(x, }\KeywordTok{auto_browse}\NormalTok{(f))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{exercises-9}{%
+\section*{11.2.3.1 Exercises}\label{exercises-9}}
+\addcontentsline{toc}{section}{11.2.3.1 Exercises}
+
+\begin{quote}
+Vectorize() provides a convenient and concise notation to iterate over multiple arguments, but has some major drawbacks that mean you generally shouldn't use it.
+\end{quote}
+
+What are these drawbacks the solution manual is referring to?
+
+\hypertarget{deans-way}{%
+\subsubsection{\texorpdfstring{\href{https://deanattali.com/blog/mutate-non-vectorized/}{Dean's Way}}{Dean's Way}}\label{deans-way}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\NormalTok{patient_name <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(path) \{}
+\NormalTok{  path_list <-}\StringTok{ }\KeywordTok{str_split}\NormalTok{(path, }\StringTok{"/"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{unlist}\NormalTok{()}
+  \KeywordTok{paste}\NormalTok{(path_list[}\KeywordTok{length}\NormalTok{(path_list) }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{], path_list[}\KeywordTok{length}\NormalTok{(path_list)], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{\}}
+
+\CommentTok{# Vectorize it with Vectorize}
+\NormalTok{patient_name_v <-}\StringTok{ }\KeywordTok{Vectorize}\NormalTok{(patient_name)}
+\KeywordTok{patient_name_v}\NormalTok{(}\DataTypeTok{path =} \KeywordTok{c}\NormalTok{(}\StringTok{"some/path/abc/001.txt"}\NormalTok{, }\StringTok{"another/directory/xyz/002.txt"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         some/path/abc/001.txt another/directory/xyz/002.txt 
+##                 "abc_001.txt"                 "xyz_002.txt"
+\end{verbatim}
+
+\hypertarget{jims-way}{%
+\subsubsection{\texorpdfstring{\href{https://www.jimhester.com/post/2018-04-12-vectorize/}{Jim's Way}}{Jim's Way}}\label{jims-way}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{patient_name_best <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(path) \{}
+  \KeywordTok{paste0}\NormalTok{(}\KeywordTok{basename}\NormalTok{(}\KeywordTok{dirname}\NormalTok{(path)), }\StringTok{"_"}\NormalTok{, }\KeywordTok{basename}\NormalTok{(path))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \texttt{SIMPLIFY} logical or character string; attempt to reduce the result to a vector, matrix or higher dimensional array; see the simplify argument of sapply. \textbf{This means the type of the function output depends on the input.}
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{patient_name_v}\NormalTok{(}\StringTok{"some/path/abc/001.txt"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## some/path/abc/001.txt 
+##         "abc_001.txt"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{patient_name_v}\NormalTok{(}\KeywordTok{character}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## named list()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{patient_name_v}\NormalTok{(}\OtherTok{NULL}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## list()
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Vectorize does not generate functions with easily inspect-able code
+\item
+  Vectorize functions use \texttt{do.call()}, which can have unexpected performance consequences
+\item
+  Vectorize does not actually make your code execute faster
+\end{enumerate}
+
+\hypertarget{base-types}{%
+\chapter{Base Types}\label{base-types}}
+
+\hypertarget{introduction-2}{%
+\section*{Introduction}\label{introduction-2}}
+\addcontentsline{toc}{section}{Introduction}
+
+\begin{quote}
+encapsulation: the user doesn't need to worry about details of an object because they are encapsulated behind a standard interface.
+\end{quote}
+
+What is meant here by encapsulation?
+
+Random forests, glm, neural nets are implemented differently internally. But to predict the class for a new sample based on a fitted model, you just use the `predict' generic. You don't need to know how prediction is performed, just that `predict(my\_fit)' makes it happen
+
+\begin{quote}
+This makes {[}RC{]} harder to reason about, but allows them to solve problems that are difficult to solve in the functional OOP style of S3 and S4.
+\end{quote}
+
+Maybe this question is better answered when we finish this section but what are these scenarios in which RC is a better choice than S3 and S4?
+
+\hypertarget{base-types-1}{%
+\section*{12.3 Base types}\label{base-types-1}}
+\addcontentsline{toc}{section}{12.3 Base types}
+
+What is a symbol? How is this different from a character?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{typeof}\NormalTok{(}\KeywordTok{quote}\NormalTok{(a))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "symbol"
+\end{verbatim}
+
+symbol is the difference between: \texttt{"a"} and \texttt{a}. One is a string and the other represents an object in the environment. \textbf{A quoted object is not the same as a string}
+
+\hypertarget{s3}{%
+\chapter{S3}\label{s3}}
+
+\hypertarget{basics}{%
+\section*{13.2 Basics}\label{basics}}
+\addcontentsline{toc}{section}{13.2 Basics}
+
+What's a real use case for \texttt{unclass}?
+
+I wanted to pass a paletteer palette to \texttt{leaflet::colorNumeric} which ends up calling the S3 method \texttt{leaflet:::toPaletteFunc} but that only has methods defined for character function and matrix . The paletteer output is a character vector with class color and so \texttt{colorNumeric(palette,\ domain)} failed. Simple solution: \texttt{colorNumeric(unclass(palette),\ domain)}
+
+\hypertarget{classes}{%
+\section*{13.3 Classes}\label{classes}}
+\addcontentsline{toc}{section}{13.3 Classes}
+
+Can we come up with a simple example for a \texttt{constructor}, \texttt{validator}, and \texttt{helper}?
+
+\hypertarget{ipa-constructor}{%
+\subsubsection*{IPA Constructor}\label{ipa-constructor}}
+\addcontentsline{toc}{subsubsection}{IPA Constructor}
+
+Create the custom class
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{new_ipa <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{double}\NormalTok{()) \{}
+  \KeywordTok{structure}\NormalTok{(x, }\DataTypeTok{class =} \StringTok{"ipa"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ipa-validator}{%
+\subsubsection*{IPA Validator}\label{ipa-validator}}
+\addcontentsline{toc}{subsubsection}{IPA Validator}
+
+Function to make sure you can use your custom class
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{validate_ipa <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{double}\NormalTok{()) \{}
+  \KeywordTok{stopifnot}\NormalTok{(}\KeywordTok{is.numeric}\NormalTok{(x))}
+  \CommentTok{# has to be at least 15 bitterness}
+  \KeywordTok{stopifnot}\NormalTok{(x }\OperatorTok{>=}\StringTok{ }\DecValTok{15}\NormalTok{)}
+\NormalTok{  x}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ipa-helper}{%
+\subsection*{IPA Helper}\label{ipa-helper}}
+\addcontentsline{toc}{subsection}{IPA Helper}
+
+Calls both the validator and the constructor
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ipa <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  x <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(x)}
+  \CommentTok{# Both helper and valditor}
+\NormalTok{  x <-}\StringTok{ }\KeywordTok{new_ipa}\NormalTok{(x)}
+\NormalTok{  res <-}\StringTok{ }\KeywordTok{validate_ipa}\NormalTok{(x)}
+\NormalTok{  res}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{test-it-out}{%
+\subsubsection{Test it out!}\label{test-it-out}}
+
+Fails as expected:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ipa}\NormalTok{(}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Error in validate_ipa(x) : x >= 15 is not TRUE
+\end{verbatim}
+
+But this works!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ipa}\NormalTok{(}\DecValTok{50}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 50
+## attr(,"class")
+## [1] "ipa"
+\end{verbatim}
+
+\hypertarget{exercises-10}{%
+\section*{13.3.4.3 Exercises}\label{exercises-10}}
+\addcontentsline{toc}{section}{13.3.4.3 Exercises}
+
+Can we go over the factor source code, commenting it line for line?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# using the example:}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"one"}\NormalTok{, }\StringTok{"two"}\NormalTok{, }\StringTok{"three"}\NormalTok{, }\StringTok{"one"}\NormalTok{)}
+
+\NormalTok{factor <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{ (}\DataTypeTok{x =} \KeywordTok{character}\NormalTok{(), levels, }\DataTypeTok{labels =}\NormalTok{ levels, }\DataTypeTok{exclude =} \OtherTok{NA}\NormalTok{, }\DataTypeTok{ordered =} \KeywordTok{is.ordered}\NormalTok{(x), }\DataTypeTok{nmax =} \OtherTok{NA}\NormalTok{) \{}
+ 
+   \CommentTok{# if character vector is null set to character()}
+  \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{is.null}\NormalTok{(x)) }
+\NormalTok{      x <-}\StringTok{ }\KeywordTok{character}\NormalTok{()}
+  \CommentTok{# nx - names of x}
+  \CommentTok{# in our case NULL}
+\NormalTok{    nx <-}\StringTok{ }\KeywordTok{names}\NormalTok{(x)}
+    \CommentTok{# we didn't supply levels so it's missing}
+    \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{missing}\NormalTok{(levels)) \{}
+      \CommentTok{# set y to the unique names found in the vector}
+      \CommentTok{# nmax by default is NA but this is an argument}
+      \CommentTok{# for unique setting the max number of unique values}
+\NormalTok{        y <-}\StringTok{ }\KeywordTok{unique}\NormalTok{(x, }\DataTypeTok{nmax =}\NormalTok{ nmax)}
+        \CommentTok{# get the order of the unique values}
+        \CommentTok{# defaults to alphabetical}
+\NormalTok{        ind <-}\StringTok{ }\KeywordTok{order}\NormalTok{(y)}
+        \CommentTok{# put our vector in order using only unique values}
+\NormalTok{        levels <-}\StringTok{ }\KeywordTok{unique}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(y)[ind])}
+\NormalTok{    \}}
+    \CommentTok{# because the function arg is a promise }
+    \CommentTok{# we need to eval now to use it? I think?}
+    \KeywordTok{force}\NormalTok{(ordered) }\CommentTok{# FALSE}
+    \CommentTok{# if x isn't a character string make it one}
+    \ControlFlowTok{if}\NormalTok{ (}\OperatorTok{!}\KeywordTok{is.character}\NormalTok{(x)) }
+\NormalTok{        x <-}\StringTok{ }\KeywordTok{as.character}\NormalTok{(x)}
+    \CommentTok{# match the number of levels with NAs}
+    \CommentTok{# then if they are NA it will resolve to TRUE}
+    \CommentTok{# only return the TRUE levels}
+    \CommentTok{# this is how we get rid of NAs!}
+\NormalTok{    levels <-}\StringTok{ }\NormalTok{levels[}\KeywordTok{is.na}\NormalTok{(}\KeywordTok{match}\NormalTok{(levels, exclude))]}
+    \CommentTok{# get the ordered levels}
+\NormalTok{    f <-}\StringTok{ }\KeywordTok{match}\NormalTok{(x, levels)}
+    \CommentTok{# if the names aren't null give f those names}
+    \ControlFlowTok{if}\NormalTok{ (}\OperatorTok{!}\KeywordTok{is.null}\NormalTok{(nx)) }
+        \KeywordTok{names}\NormalTok{(f) <-}\StringTok{ }\NormalTok{nx}
+    \CommentTok{# if missing levels make levels back into a character string?}
+    \CommentTok{# why?}
+    \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{missing}\NormalTok{(labels)) \{}
+        \KeywordTok{levels}\NormalTok{(f) <-}\StringTok{ }\KeywordTok{as.character}\NormalTok{(levels)}
+\NormalTok{    \}}
+    \CommentTok{# otherwise get the legenth of your labels}
+    \CommentTok{# if its the same as the levels}
+    \ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{        nlab <-}\StringTok{ }\KeywordTok{length}\NormalTok{(labels)}
+        \ControlFlowTok{if}\NormalTok{ (nlab }\OperatorTok{==}\StringTok{ }\KeywordTok{length}\NormalTok{(levels)) \{}
+            \CommentTok{# xlevls is labels as character}
+            \CommentTok{# then we get the unique values of that}
+            \CommentTok{# and set that to xlevs}
+\NormalTok{            nlevs <-}\StringTok{ }\KeywordTok{unique}\NormalTok{(xlevs <-}\StringTok{ }\KeywordTok{as.character}\NormalTok{(labels))}
+            \CommentTok{# this is null}
+\NormalTok{            at <-}\StringTok{ }\KeywordTok{attributes}\NormalTok{(f)}
+            \CommentTok{# attr levels}
+\NormalTok{            at}\OperatorTok{$}\NormalTok{levels <-}\StringTok{ }\NormalTok{nlevs}
+            \CommentTok{# match the levels with ordered levels}
+            \CommentTok{# and put the levels back in numeric order?}
+            \CommentTok{# I think?}
+\NormalTok{            f <-}\StringTok{ }\KeywordTok{match}\NormalTok{(xlevs, nlevs)[f]}
+            \CommentTok{# now set the attributes to the numeric levels}
+            \KeywordTok{attributes}\NormalTok{(f) <-}\StringTok{ }\NormalTok{at}
+\NormalTok{        \}}
+        \CommentTok{# if you only have one lavel}
+        \ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (nlab }\OperatorTok{==}\StringTok{ }\NormalTok{1L) }
+            \CommentTok{# add numerics to the end of the label?}
+            \KeywordTok{levels}\NormalTok{(f) <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(labels, }\KeywordTok{seq_along}\NormalTok{(levels))}
+            \CommentTok{# otherwise invalid length}
+        \ControlFlowTok{else} \KeywordTok{stop}\NormalTok{(}\KeywordTok{gettextf}\NormalTok{(}\StringTok{"invalid 'labels'; length %d should be 1 or %d"}\NormalTok{, }
+\NormalTok{            nlab, }\KeywordTok{length}\NormalTok{(levels)), }\DataTypeTok{domain =} \OtherTok{NA}\NormalTok{)}
+\NormalTok{    \}}
+    \CommentTok{# add ordered and factor to f's class list}
+    \KeywordTok{class}\NormalTok{(f) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\ControlFlowTok{if}\NormalTok{ (ordered) }\StringTok{"ordered"}\NormalTok{, }\StringTok{"factor"}\NormalTok{)}
+\NormalTok{    f}
+\NormalTok{\}}
+
+\KeywordTok{factor}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{exercises-11}{%
+\section*{13.3.4.4 Exercises}\label{exercises-11}}
+\addcontentsline{toc}{section}{13.3.4.4 Exercises}
+
+Now that we've gone through the source code, I don't see where the contrasts attibute comes into play? We can look at the \texttt{C()} function but where is this used within \texttt{factor()}?
+
+It is a little misleading to say that factors ``have an \ldots{} attribute'', where I really think he means that ``some functions might check if that attribute has been assigned''.
+
+Make a factor:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\NormalTok{f}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2
+## Levels: 1 2
+\end{verbatim}
+
+Set contrasts attribute:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f <-}\StringTok{ }\KeywordTok{C}\NormalTok{(f)}
+\NormalTok{f}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2
+## attr(,"contrasts")
+##       unordered 
+## contr.treatment 
+## Levels: 1 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(f)}
+\NormalTok{f}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2
+## Levels: 1 2
+\end{verbatim}
+
+dang't where did those contrasts go!
+
+\hypertarget{generics}{%
+\section*{13.4.1 Generics}\label{generics}}
+\addcontentsline{toc}{section}{13.4.1 Generics}
+
+In the example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my_new_generic <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \KeywordTok{UseMethod}\NormalTok{(}\StringTok{"my_new_generic"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+The book states: ``If you wonder why we have to repeat my\_new\_generic twice, think back to Section 6.2.3''
+
+Can we go over why?
+
+I think he's referring to the fact that you have to use a string representation inside the UseMethod call.
+
+I'm guessing part of the answer to this is baked into this warning on the UseMethod function docs:
+
+\begin{quote}
+Warning: Prior to R 2.1.0 UseMethod accepted a call with no arguments and tried to deduce the generic from the context.
+\end{quote}
+
+Basically, you're specifying the name of the function and then telling R to go find this generic function's methods. You can't self-reference the name of the generic after it's been assigned to itself?
+
+Maybe the name doesn't exist!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{test.default <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+  \StringTok{"test"}
+\NormalTok{\}}
+
+\CommentTok{# not sure why you would want to do this, but you can}
+\NormalTok{(}\ControlFlowTok{function}\NormalTok{() \{}
+  \KeywordTok{UseMethod}\NormalTok{(}\StringTok{"test"}\NormalTok{)}
+\NormalTok{\})()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "test"
+\end{verbatim}
+
+Also because you might have assigned your generic to a new name, how would it know to use the true ``generic'' name.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{superuglygenericfunction <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+  \KeywordTok{UseMethod}\NormalTok{(}\StringTok{"superuglygenericfunction"}\NormalTok{)}
+\NormalTok{\}}
+
+\NormalTok{superuglygenericfunction.default <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+  \StringTok{"ugh"}
+\NormalTok{\}}
+
+\NormalTok{nice <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+  \KeywordTok{UseMethod}\NormalTok{(}\StringTok{"superuglygenericfunction"}\NormalTok{)}
+\NormalTok{\}}
+
+\KeywordTok{nice}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "ugh"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#> [1] "ugh"}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{exercises-12}{%
+\section*{13.4.4.5 Exercises}\label{exercises-12}}
+\addcontentsline{toc}{section}{13.4.4.5 Exercises}
+
+Can we explain what's happening here in our own words I was a little confused with the solutions manual? \texttt{g(x)} uses 1 from the \texttt{.default} method but \texttt{10} from the generic? Why?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  x <-}\StringTok{ }\DecValTok{10}
+\NormalTok{  y <-}\StringTok{ }\DecValTok{10}
+  \KeywordTok{UseMethod}\NormalTok{(}\StringTok{"g"}\NormalTok{)}
+\NormalTok{\}}
+
+\NormalTok{g.default <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{c}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =}\NormalTok{ y)}
+
+\NormalTok{x <-}\StringTok{ }\DecValTok{1}
+\NormalTok{y <-}\StringTok{ }\DecValTok{1}
+\KeywordTok{g}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ x  y 
+ 1 10 
+\end{verbatim}
+
+UseMethod creates a new function call with arguments matched as they came in to the generic. Any local variables defined before the call to \texttt{UseMethod} are retained (unlike S).
+
+When you call \texttt{g(x)} even though you appear to be ignoring it in your definition of \texttt{g} and assigning \texttt{x\ \textless{}-\ 10}, when you call \texttt{UseMethod} it will basically match the \texttt{x} in the \texttt{g.default} formals to the \texttt{x} that was passed in. The \texttt{y} isn't matched to any argument and is retained.
+
+Tyler Grant Smith:m: 13 minutes ago
+r
+g \textless{}- function(x) \{
+x \textless{}- 10
+y \textless{}- 10
+UseMethod(``g'')
+\}
+g.default \textless{}- function(x = NULL) c(x = x, y = y)
+x \textless{}- 1
+y \textless{}- 1
+\# this is interesting behavior
+g()
+\#\textgreater{} y
+\#\textgreater{} 10
+g(x)
+\#\textgreater{} x y
+\#\textgreater{} 1 10
+
+\hypertarget{object-styles}{%
+\section*{13.5 Object styles}\label{object-styles}}
+\addcontentsline{toc}{section}{13.5 Object styles}
+
+\begin{quote}
+Unfortunately, describing the appropriate use of each of these object styles is beyond the scope of this book.
+\end{quote}
+
+Can we use the \texttt{vctrs} package in a concrete example to address some of these fringe cases and reasons why \texttt{length(x)} is causing an issue?
+
+An object style is a pattern for structuring your class. You can use any structure you want but these 4 patterns get used very often. Date and factor are both vector style for example: the core data for objects of both types are stored in a single vector. And there are some other context-appropriate things denoted by attributes in each case.
+
+I don't think length is an issue but when you move away from the vanilla vector style object then the meaning changes. For example, under the hood, a data frame is really a list of vectors. Each of the vectors (columns) has the same length. So if you take the length of a data frame you get the length of the list i.e.~the number of columns.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(mtcars)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 11
+\end{verbatim}
+
+The result of calling \texttt{length} on a data.frame isn't necessarily intuitive: most people would probably say that the number of rows is a more natural value for the length of a data frame.
+
+This is the same for dates: which are actually of length \texttt{3} when classes and \texttt{9} when unclassed.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{as.POSIXlt}\NormalTok{(}\KeywordTok{ISOdatetime}\NormalTok{(}\DecValTok{2020}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\OperatorTok{:}\DecValTok{3}\NormalTok{))}
+\KeywordTok{length}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(}\KeywordTok{unclass}\NormalTok{(x))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 11
+\end{verbatim}
+
+\hypertarget{inheritance}{%
+\section*{13.6 Inheritance}\label{inheritance}}
+\addcontentsline{toc}{section}{13.6 Inheritance}
+
+Can we make our own example of a method with inheritance?
+
+Creating an IBU calculator for beer, we can use the \texttt{.ipa} method for a beer of class \texttt{.wipa}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(sloop)}
+
+\CommentTok{# IBUs are calculated as onces x alpha acid x boil time / constant}
+\CommentTok{# we're going to use a different constant for IPAs and Stouts}
+
+
+\CommentTok{# generic}
+\NormalTok{IBU_calculator <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \KeywordTok{UseMethod}\NormalTok{(}\StringTok{"IBU_calculator"}\NormalTok{)}
+\NormalTok{\}}
+
+\CommentTok{# default}
+\NormalTok{IBU_calculator.default <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x)\{}
+  \KeywordTok{stop}\NormalTok{(}\StringTok{"Can only calculate IBU for beers, not "}\NormalTok{,}\KeywordTok{class}\NormalTok{(x))}
+\NormalTok{\}}
+
+\CommentTok{# ipa}
+\NormalTok{IBU_calculator.ipa <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \DecValTok{1} \OperatorTok{*}\StringTok{ }\NormalTok{x }\OperatorTok{*}\StringTok{ }\DecValTok{30} \OperatorTok{/}\StringTok{ }\FloatTok{7.25}
+\NormalTok{\}}
+
+\CommentTok{# stout}
+\NormalTok{IBU_calculator.stout <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \FloatTok{1.5} \OperatorTok{*}\StringTok{ }\NormalTok{x }\OperatorTok{*}\StringTok{ }\DecValTok{30} \OperatorTok{/}\StringTok{ }\DecValTok{6}
+\NormalTok{\}}
+
+\CommentTok{#### some beers ####}
+\NormalTok{ipa_}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\KeywordTok{structure}\NormalTok{(}
+  \DecValTok{15}\NormalTok{, }\DataTypeTok{class =} \KeywordTok{c}\NormalTok{(}\StringTok{"ipa"}\NormalTok{,}\StringTok{"beer"}\NormalTok{)}
+\NormalTok{)}
+
+\CommentTok{# define a wine to see default dispatch}
+\NormalTok{wine_}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\KeywordTok{structure}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DataTypeTok{class =} \KeywordTok{c}\NormalTok{(}\StringTok{"pinot"}\NormalTok{,}\StringTok{"wine"}\NormalTok{))}
+
+\CommentTok{# wipa "inherits" class ipa so we can use that method!}
+\NormalTok{wipa_}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\KeywordTok{structure}\NormalTok{(}\DecValTok{20}\NormalTok{, }\DataTypeTok{class =} \KeywordTok{c}\NormalTok{(}\StringTok{"wipa"}\NormalTok{,}\StringTok{"ipa"}\NormalTok{,}\StringTok{"beer"}\NormalTok{))}
+
+\KeywordTok{s3_dispatch}\NormalTok{(}\KeywordTok{IBU_calculator}\NormalTok{(ipa_}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## => IBU_calculator.ipa
+##    IBU_calculator.beer
+##  * IBU_calculator.default
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{s3_dispatch}\NormalTok{(}\KeywordTok{IBU_calculator}\NormalTok{(wipa_}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    IBU_calculator.wipa
+## => IBU_calculator.ipa
+##    IBU_calculator.beer
+##  * IBU_calculator.default
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{s3_dispatch}\NormalTok{(}\KeywordTok{IBU_calculator}\NormalTok{(wine_}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    IBU_calculator.pinot
+##    IBU_calculator.wine
+## => IBU_calculator.default
+\end{verbatim}
+
+\hypertarget{exercises-13}{%
+\section*{13.4.3.3 Exercises}\label{exercises-13}}
+\addcontentsline{toc}{section}{13.4.3.3 Exercises}
+
+Can we go over why this doesn't return \texttt{a1}?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{generic2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{UseMethod}\NormalTok{(}\StringTok{"generic2"}\NormalTok{)}
+\NormalTok{generic2.a1 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) }\StringTok{"a1"}
+\NormalTok{generic2.a2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) }\StringTok{"a2"}
+\NormalTok{generic2.b <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \KeywordTok{class}\NormalTok{(x) <-}\StringTok{ "a1"}
+  \KeywordTok{NextMethod}\NormalTok{()}
+\NormalTok{\}}
+
+\KeywordTok{generic2}\NormalTok{(}\KeywordTok{structure}\NormalTok{(}\KeywordTok{list}\NormalTok{(), }\DataTypeTok{class =} \KeywordTok{c}\NormalTok{(}\StringTok{"b"}\NormalTok{, }\StringTok{"a2"}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "a2"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{generic2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{UseMethod}\NormalTok{(}\StringTok{"generic2"}\NormalTok{)}
+\NormalTok{generic2.a1 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{ }\KeywordTok{cat}\NormalTok{(}\StringTok{"generic2.a1}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{); }\KeywordTok{cat}\NormalTok{(}\KeywordTok{class}\NormalTok{(x)) \}}
+\NormalTok{generic2.a2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{ }\KeywordTok{cat}\NormalTok{(}\StringTok{"generic2.a2}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{); }\KeywordTok{cat}\NormalTok{(}\KeywordTok{class}\NormalTok{(x)) \}}
+\NormalTok{generic2.b <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \KeywordTok{cat}\NormalTok{(}\StringTok{"generic2.b}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \KeywordTok{cat}\NormalTok{(}\StringTok{"Regardless of what we do, NextMethod will search for the following"}\NormalTok{, }
+      \StringTok{"classes:}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\KeywordTok{paste0}\NormalTok{(.Class, }\DataTypeTok{collapse =} \StringTok{", "}\NormalTok{), }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \KeywordTok{class}\NormalTok{(x) <-}\StringTok{ "a1"}
+  \KeywordTok{NextMethod}\NormalTok{()}
+\NormalTok{\}}
+
+\NormalTok{x <-}\StringTok{ }\KeywordTok{structure}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\FloatTok{1e8}\NormalTok{, }\DataTypeTok{class =} \KeywordTok{c}\NormalTok{(}\StringTok{"b"}\NormalTok{, }\StringTok{"a2"}\NormalTok{))}
+\KeywordTok{generic2}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## generic2.b
+## Regardless of what we do, NextMethod will search for the following classes:
+##  b, a2 
+## generic2.a2
+## a1
+\end{verbatim}
+
+\hypertarget{s3-and-base-types}{%
+\section*{13.7.1 S3 and Base Types}\label{s3-and-base-types}}
+\addcontentsline{toc}{section}{13.7.1 S3 and Base Types}
+
+WHY isn't the dispatch of mean(x1) determined by its type???
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x1 <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{5}
+\KeywordTok{class}\NormalTok{(x1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "integer"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{s3_dispatch}\NormalTok{(}\KeywordTok{mean}\NormalTok{(x1))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+   mean.integer
+   mean.numeric
+=> mean.default
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{methods}\NormalTok{(mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] mean.Date        mean.default     mean.difftime    mean.POSIXct    
+## [5] mean.POSIXlt     mean.quosure*    mean.vctrs_vctr*
+## see '?methods' for accessing help and source code
+\end{verbatim}
+
+mean doesn't actually have a specific method defined in base R for int or numeric. the default method handles all base types, type checking along the way:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mean.default}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function (x, trim = 0, na.rm = FALSE, ...) 
+## {
+##     if (!is.numeric(x) && !is.complex(x) && !is.logical(x)) {
+##         warning("argument is not numeric or logical: returning NA")
+##         return(NA_real_)
+##     }
+##     if (na.rm) 
+##         x <- x[!is.na(x)]
+##     if (!is.numeric(trim) || length(trim) != 1L) 
+##         stop("'trim' must be numeric of length one")
+##     n <- length(x)
+##     if (trim > 0 && n) {
+##         if (is.complex(x)) 
+##             stop("trimmed means are not defined for complex data")
+##         if (anyNA(x)) 
+##             return(NA_real_)
+##         if (trim >= 0.5) 
+##             return(stats::median(x, na.rm = FALSE))
+##         lo <- floor(n * trim) + 1
+##         hi <- n + 1 - lo
+##         x <- sort.int(x, partial = unique(c(lo, hi)))[lo:hi]
+##     }
+##     .Internal(mean(x))
+## }
+## <bytecode: 0x7f8d78e889d0>
+## <environment: namespace:base>
+\end{verbatim}
+
+\hypertarget{internal-generics}{%
+\section*{13.7.3 Internal Generics}\label{internal-generics}}
+\addcontentsline{toc}{section}{13.7.3 Internal Generics}
+
+\begin{quote}
+Defining a single group generic for your class overrides the default behaviour for all of the members of the group.
+\end{quote}
+
+Does this mean that if I define abs for my class it overrides the behaviour of sign, sqrt and all the others in the Math group?
+
+Essentially, these are all (loosely) math-related functions, so R understands how to do these for anything it can understand as a numeric (somehow). If you're adding a class that isn't handled in one of these numeric-ish ways, you'll need to tell R how to handle the mathematics. You can't make a group like ``Math'', ``Ops'', ``Summary'', or ``Complex'' and expect R to know what it's doing.
+
+If you define \texttt{abs} for your class it won't know how to do the other things. Suppose you defined your own \texttt{min.POSIXct} then when you call \texttt{min(Sys.time())} it will encounter your function, evaluate, and then that is the end. Otherwise, min would call the min Primitive which is implemented in C \href{https://github.com/wch/r-source/blob/bf4cf8912596162a3ae5a2b7da1a74220105b172/src/main/summary.c\#L520}{as found here} and if you trace through that you will see that is where the \texttt{GroupDispatch} is called.
+
+\hypertarget{double-dispatch}{%
+\section*{13.7.4 Double Dispatch}\label{double-dispatch}}
+\addcontentsline{toc}{section}{13.7.4 Double Dispatch}
+
+What is happening here:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Ops.foo <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(...)  }\KeywordTok{print}\NormalTok{(}\StringTok{"Called twice for some reason?"}\NormalTok{)}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{structure}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DataTypeTok{class =} \StringTok{"foo"}\NormalTok{)}
+\NormalTok{x }\OperatorTok{>}\StringTok{ }\DecValTok{0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "Called twice for some reason?"
+[1] "Called twice for some reason?"
+\end{verbatim}
+
+Double dispatch -- where it's calling the same method on x and zero. The inequality needs to convert both to the same class.
+
+The book mentions that we can use \texttt{vctrs::vec\_arith} to avoid the aboce, but does that pertain to this case? I tried: \texttt{vctrs::vec\_arith("\textgreater{}",\ x,\ 0)} But I think my understanding is still off\ldots{}
+
+The \texttt{vec\_arith} generic will first dispatch on \texttt{class(x)} So, in this case it tries to find \texttt{vec\_arith.foo} but we haven't defined that yet, so it instead finds \texttt{vec\_arith.default} which signals the error.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{structure}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DataTypeTok{class =} \StringTok{"foo"}\NormalTok{)}
+\NormalTok{x }\OperatorTok{>}\StringTok{ }\DecValTok{0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{vec_arith}\NormalTok{(}\StringTok{">"}\NormalTok{, x, }\DecValTok{0}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Error: <foo> > <double> is not permitted
+vec_arith will dispatch to this first, because it finds the "foo" generic
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vec_arith.foo <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(op, x, y, ...) \{}
+  \CommentTok{# now it will dispath on y, which in this case is a numeric.}
+  \KeywordTok{UseMethod}\NormalTok{(}\StringTok{"vec_arith.foo"}\NormalTok{, y)}
+\NormalTok{\}}
+\KeywordTok{vec_arith}\NormalTok{(}\StringTok{">"}\NormalTok{, x, }\DecValTok{0}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Error in UseMethod("vec_arith.foo", y): no applicable method for 'vec_arith.foo' applied to an object of class "c('double', 'numeric')"
+\end{verbatim}
+
+Uh oh another error, and this is super confusing because none of our objects are class double. (typeof(x) is ``double''). The problem is that vec\_arith.foo further dispatches on the second argument and it is looking for \texttt{vec\_arith.numeric} or \texttt{vec\_arith.default}, but we haven't defined that yet.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vec_arith.foo.numeric <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(op, x, y, ...) \{}
+\NormalTok{  vctrs}\OperatorTok{::}\KeywordTok{vec_arith_base}\NormalTok{(op, x, y, ...)}
+\NormalTok{\}}
+\KeywordTok{vec_arith}\NormalTok{(}\StringTok{">"}\NormalTok{, x, }\DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{vec_arith}\NormalTok{(}\StringTok{">"}\NormalTok{, }\DecValTok{0}\NormalTok{, x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Error: <double> > <foo> is not permitted
+\end{verbatim}
+
+now vec\_arith will first dispatch on the 0 and scope to vec\_arith.numeric which will then try to dispatch to vec\_arith.numeric.foo which we havent defined yet.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vec_arith.numeric.foo <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(op, x, y, ...) \{}
+\NormalTok{  vctrs}\OperatorTok{::}\KeywordTok{vec_arith_base}\NormalTok{(op, x, y, ...) }
+\NormalTok{\}}
+\KeywordTok{vec_arith}\NormalTok{(}\StringTok{">"}\NormalTok{, }\DecValTok{0}\NormalTok{, x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] FALSE
+\end{verbatim}
+
+What is happening here?!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Math.bar <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \KeywordTok{print}\NormalTok{(}\StringTok{"Math bar"}\NormalTok{)}
+  \KeywordTok{NextMethod}\NormalTok{(.Generic)}
+\NormalTok{\}}
+
+\NormalTok{Math.foo <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \KeywordTok{print}\NormalTok{(}\StringTok{"Math foo"}\NormalTok{)}
+  \KeywordTok{NextMethod}\NormalTok{(.Generic)}
+\NormalTok{\}}
+
+\NormalTok{x <-}\StringTok{ }\DecValTok{1}
+\KeywordTok{class}\NormalTok{(x) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"foo"}\NormalTok{, }\StringTok{"bar"}\NormalTok{, }\KeywordTok{class}\NormalTok{(x))}
+\KeywordTok{abs}\NormalTok{(x)}
+
+\StringTok{`}\DataTypeTok{abs.foo}\StringTok{`}\NormalTok{ <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \KeywordTok{print}\NormalTok{(}\StringTok{"Generic foo"}\NormalTok{)}
+  \KeywordTok{NextMethod}\NormalTok{()}
+\NormalTok{\}}
+\KeywordTok{abs}\NormalTok{(x)}
+
+\StringTok{`}\DataTypeTok{abs.bar}\StringTok{`}\NormalTok{ <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \KeywordTok{print}\NormalTok{(}\StringTok{"Generic bar"}\NormalTok{)}
+  \KeywordTok{NextMethod}\NormalTok{()}
+\NormalTok{\}}
+
+\KeywordTok{abs}\NormalTok{(x)}
+\KeywordTok{rm}\NormalTok{(abs.foo)}
+\CommentTok{# infinite recursion continually calling abs.bar, only calling Math.foo once}
+\KeywordTok{abs}\NormalTok{(x)}
+\KeywordTok{rm}\NormalTok{(Math.foo)}
+\CommentTok{# back to working}
+\KeywordTok{abs}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{r6}{%
+\chapter{R6}\label{r6}}
+
+\hypertarget{classes-and-methods}{%
+\section*{14.2 Classes and methods}\label{classes-and-methods}}
+\addcontentsline{toc}{section}{14.2 Classes and methods}
+
+\begin{quote}
+Any \ldots{} R6 method called for its side effects \ldots{} should return invisible(self).
+\end{quote}
+
+WHY? What is \texttt{invisible(self)} doing in the add function below? I tried removing this line but it doesn't change the output\ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Accumulator <-}\StringTok{ }\KeywordTok{R6Class}\NormalTok{(}\StringTok{"Accumulator"}\NormalTok{, }\KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{sum =} \DecValTok{0}\NormalTok{,}
+  \DataTypeTok{add =} \ControlFlowTok{function}\NormalTok{(}\DataTypeTok{x =} \DecValTok{1}\NormalTok{) \{}
+\NormalTok{    self}\OperatorTok{$}\NormalTok{sum <-}\StringTok{ }\NormalTok{self}\OperatorTok{$}\NormalTok{sum }\OperatorTok{+}\StringTok{ }\NormalTok{x }
+    \KeywordTok{invisible}\NormalTok{(self)}
+\NormalTok{  \})}
+\NormalTok{)}
+
+\NormalTok{x <-}\StringTok{ }\NormalTok{Accumulator}\OperatorTok{$}\KeywordTok{new}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Returning \texttt{self} or \texttt{invisible(self)} allows for method chaining. i.e. \texttt{x\$add(1)\$add(2)} can be done rather than \texttt{x\$add(1);\ x\$add(2)}. In the absence of anything better to return, why not return itself
+
+\hypertarget{important-methods}{%
+\section*{14.2.2 Important methods}\label{important-methods}}
+\addcontentsline{toc}{section}{14.2.2 Important methods}
+
+Why don't we need to specifically call \texttt{haldey2\$print} to see the output below)? Is the print method just a built in output of an \texttt{R6} object?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Person <-}\StringTok{ }\KeywordTok{R6Class}\NormalTok{(}\StringTok{"Person"}\NormalTok{, }\KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{name =} \OtherTok{NULL}\NormalTok{,}
+  \DataTypeTok{age =} \OtherTok{NA}\NormalTok{,}
+  \DataTypeTok{initialize =} \ControlFlowTok{function}\NormalTok{(name, }\DataTypeTok{age =} \OtherTok{NA}\NormalTok{) \{}
+\NormalTok{    self}\OperatorTok{$}\NormalTok{name <-}\StringTok{ }\NormalTok{name}
+\NormalTok{    self}\OperatorTok{$}\NormalTok{age <-}\StringTok{ }\NormalTok{age}
+\NormalTok{  \},}
+  \DataTypeTok{print =} \ControlFlowTok{function}\NormalTok{(...) \{}
+    \KeywordTok{cat}\NormalTok{(}\StringTok{"Person: }\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+    \KeywordTok{cat}\NormalTok{(}\StringTok{"  Name: "}\NormalTok{, self}\OperatorTok{$}\NormalTok{name, }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)}
+    \KeywordTok{cat}\NormalTok{(}\StringTok{"  Age:  "}\NormalTok{, self}\OperatorTok{$}\NormalTok{age, }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)}
+    \KeywordTok{invisible}\NormalTok{(self)}
+\NormalTok{  \}}
+\NormalTok{))}
+
+\NormalTok{hadley2 <-}\StringTok{ }\NormalTok{Person}\OperatorTok{$}\KeywordTok{new}\NormalTok{(}\StringTok{"Hadley"}\NormalTok{)}
+\NormalTok{hadley2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Person: 
+  Name: Hadley
+  Age:  NA
+\end{verbatim}
+
+Print is an S3 generic, so when print is implicitly called, it calls the method for the R6 object. The method for the R6 object is ``look for a print function inside the R6 object''
+
+\hypertarget{classes-and-methods-14.2.3}{%
+\section*{Classes and methods 14.2.3}\label{classes-and-methods-14.2.3}}
+\addcontentsline{toc}{section}{Classes and methods 14.2.3}
+
+Once instantiated, can you add another method to an \texttt{R6} object or does the \texttt{set} function only work on the \texttt{R6} generator?
+
+Once instantiated the environments are locked (no new bindings). But, you can fudge with things and still modify existing bindings if you wanted. But, this is not really something to advocate:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Beer <-}\StringTok{ }\NormalTok{R6}\OperatorTok{::}\KeywordTok{R6Class}\NormalTok{(}
+  \StringTok{'Beer'}\NormalTok{,}
+  \DataTypeTok{public =} \KeywordTok{list}\NormalTok{(}
+    \DataTypeTok{abv =} \FloatTok{0.05}\NormalTok{,}
+    \DataTypeTok{percent_abv =} \ControlFlowTok{function}\NormalTok{() \{ }\KeywordTok{sprintf}\NormalTok{(}\StringTok{'%.1f%%'}\NormalTok{, }\DecValTok{100} \OperatorTok{*}\StringTok{ }\NormalTok{self}\OperatorTok{$}\NormalTok{abv) \}}
+\NormalTok{  )}
+\NormalTok{)}
+\KeywordTok{class}\NormalTok{(Beer)}
+\CommentTok{#> [1] "R6ClassGenerator"}
+\NormalTok{beer <-}\StringTok{ }\NormalTok{Beer}\OperatorTok{$}\KeywordTok{new}\NormalTok{()}
+\KeywordTok{unlockBinding}\NormalTok{(}\StringTok{"percent_abv"}\NormalTok{, beer)}
+\NormalTok{beer}\OperatorTok{$}\NormalTok{percent_abv <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{ }\KeywordTok{cat}\NormalTok{(}\StringTok{"h@xed"}\NormalTok{)\}}
+\KeywordTok{lockBinding}\NormalTok{(}\StringTok{"percent_abv"}\NormalTok{, beer)}
+\NormalTok{beer}\OperatorTok{$}\KeywordTok{percent_abv}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "R6ClassGenerator"
+h@xed
+\end{verbatim}
+
+You can also set the lock\_objects option on the generator to FALSE
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Beer <-}\StringTok{ }\NormalTok{R6}\OperatorTok{::}\KeywordTok{R6Class}\NormalTok{(}
+  \StringTok{'Beer'}\NormalTok{,}
+  \DataTypeTok{public =} \KeywordTok{list}\NormalTok{(}
+    \DataTypeTok{abv =} \FloatTok{0.05}\NormalTok{,}
+    \DataTypeTok{percent_abv =} \ControlFlowTok{function}\NormalTok{() \{ }\KeywordTok{sprintf}\NormalTok{(}\StringTok{'%.1f%%'}\NormalTok{, }\DecValTok{100} \OperatorTok{*}\StringTok{ }\NormalTok{self}\OperatorTok{$}\NormalTok{abv) \}}
+\NormalTok{  ),}
+  \DataTypeTok{lock_objects =} \OtherTok{FALSE}
+\NormalTok{)}
+\NormalTok{beer <-}\StringTok{ }\NormalTok{Beer}\OperatorTok{$}\KeywordTok{new}\NormalTok{()}
+\NormalTok{beer}\OperatorTok{$}\NormalTok{rating <-}\StringTok{ }\DecValTok{5}
+\NormalTok{beer}\OperatorTok{$}\NormalTok{rating}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+\begin{verbatim}
+[1] 5
+\end{verbatim}
+
+But this still won't work because the bindings were still locked
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{beer}\OperatorTok{$}\NormalTok{percent_abv <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{ }\KeywordTok{cat}\NormalTok{(}\StringTok{"h@xed"}\NormalTok{)\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> Error in beer$percent_abv <- function() {: cannot change value of locked binding for 'percent_abv'
+\end{verbatim}
+
+\hypertarget{exercises-14.2.6.4}{%
+\section*{Exercises 14.2.6.4}\label{exercises-14.2.6.4}}
+\addcontentsline{toc}{section}{Exercises 14.2.6.4}
+
+Why can't we use method chaining to access the current time zone?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Timezone <-}\StringTok{ }\KeywordTok{R6Class}\NormalTok{(}
+  \DataTypeTok{classname =} \StringTok{"Timezone"}\NormalTok{, }
+  \DataTypeTok{public =} \KeywordTok{list}\NormalTok{(}
+    \DataTypeTok{get =} \ControlFlowTok{function}\NormalTok{() \{}
+      \KeywordTok{Sys.timezone}\NormalTok{()}
+\NormalTok{    \},}
+    \DataTypeTok{set =} \ControlFlowTok{function}\NormalTok{(value) \{}
+      \KeywordTok{stopifnot}\NormalTok{(value }\OperatorTok{%in%}\StringTok{ }\KeywordTok{OlsonNames}\NormalTok{())}
+      
+\NormalTok{      old <-}\StringTok{ }\NormalTok{self}\OperatorTok{$}\KeywordTok{get}\NormalTok{()}
+      \KeywordTok{Sys.setenv}\NormalTok{(}\DataTypeTok{TZ =}\NormalTok{ value)}
+      \KeywordTok{invisible}\NormalTok{(old)}
+\NormalTok{    \})}
+\NormalTok{)}
+
+\NormalTok{tz <-}\StringTok{ }\NormalTok{Timezone}\OperatorTok{$}\KeywordTok{new}\NormalTok{()}
+
+\NormalTok{old <-}\StringTok{ }\NormalTok{tz}\OperatorTok{$}\KeywordTok{set}\NormalTok{(}\StringTok{"Antarctica/South_Pole"}\NormalTok{)}
+\NormalTok{tz}\OperatorTok{$}\KeywordTok{get}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "America/Los_Angeles"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tz}\OperatorTok{$}\KeywordTok{set}\NormalTok{(}\StringTok{"Antarctica/South_Pole"}\NormalTok{)}\OperatorTok{$}\KeywordTok{get}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Error in tz$set("Antarctica/South_Pole")$get : 
+  $ operator is invalid for atomic vectors
+\end{verbatim}
+
+You're not returning an R6 object in your first ``set'', you're returning a character vector, so you can't find the get method of that character vector
+
+We can return something using the following code:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Timezone <-}\StringTok{ }\KeywordTok{R6Class}\NormalTok{(}
+  \DataTypeTok{classname =} \StringTok{"Timezone"}\NormalTok{, }
+  \DataTypeTok{public =} \KeywordTok{list}\NormalTok{(}
+    \DataTypeTok{get =} \ControlFlowTok{function}\NormalTok{() \{}
+\NormalTok{      self}\OperatorTok{$}\NormalTok{current_zone}
+\NormalTok{    \},}
+    \DataTypeTok{set =} \ControlFlowTok{function}\NormalTok{(v) \{}
+\NormalTok{      self}\OperatorTok{$}\NormalTok{current_zone <-}\StringTok{ }\NormalTok{v}
+      \KeywordTok{invisible}\NormalTok{(self)}
+\NormalTok{    \},}
+    \DataTypeTok{reset =} \ControlFlowTok{function}\NormalTok{() \{}
+      \ControlFlowTok{if}\NormalTok{ (}\OperatorTok{!}\KeywordTok{is.null}\NormalTok{(private}\OperatorTok{$}\NormalTok{.old)) \{}
+\NormalTok{        self}\OperatorTok{$}\NormalTok{current_zone <-}\StringTok{ }\NormalTok{private}\OperatorTok{$}\NormalTok{.old}
+\NormalTok{      \}}
+      \KeywordTok{invisible}\NormalTok{(self)}
+\NormalTok{    \}}
+\NormalTok{  ),}
+  \DataTypeTok{active =} \KeywordTok{list}\NormalTok{(}
+    \DataTypeTok{current_zone =} \ControlFlowTok{function}\NormalTok{(v) \{}
+      \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{missing}\NormalTok{(v)) \{}
+        \KeywordTok{return}\NormalTok{(}\KeywordTok{Sys.timezone}\NormalTok{())}
+\NormalTok{      \}}
+      \KeywordTok{stopifnot}\NormalTok{(v }\OperatorTok{%in%}\StringTok{ }\KeywordTok{OlsonNames}\NormalTok{())}
+\NormalTok{      old <-}\StringTok{ }\KeywordTok{Sys.timezone}\NormalTok{()}
+      \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{Sys.setenv}\NormalTok{(}\DataTypeTok{TZ=}\NormalTok{v)) \{}
+\NormalTok{        private}\OperatorTok{$}\NormalTok{.old <-}\StringTok{ }\NormalTok{old}
+\NormalTok{      \} }\ControlFlowTok{else}\NormalTok{ \{}
+        \KeywordTok{stop}\NormalTok{(}\StringTok{"Unable to set timezone."}\NormalTok{)}
+\NormalTok{      \}}
+      \KeywordTok{invisible}\NormalTok{(self)}
+\NormalTok{    \}}
+\NormalTok{  ),}
+  \DataTypeTok{private =} \KeywordTok{list}\NormalTok{(}
+    \DataTypeTok{.old =} \OtherTok{NULL}
+\NormalTok{  )}
+\NormalTok{)}
+\NormalTok{tz <-}\StringTok{ }\NormalTok{Timezone}\OperatorTok{$}\KeywordTok{new}\NormalTok{()}
+\NormalTok{tz}\OperatorTok{$}\KeywordTok{set}\NormalTok{(}\StringTok{"Antarctica/South_Pole"}\NormalTok{)}\OperatorTok{$}\KeywordTok{get}\NormalTok{()}
+\CommentTok{#> [1] "Antarctica/South_Pole"}
+\NormalTok{tz}\OperatorTok{$}\KeywordTok{reset}\NormalTok{()}\OperatorTok{$}\KeywordTok{get}\NormalTok{()}
+\CommentTok{#> [1] "US/Central"}
+\end{Highlighting}
+\end{Shaded}
+
+That said, not every function should support chaining. Sometimes you want the function to return some value (like \texttt{\$get}) and in these cases, you just won't be able to chain, and that is okay.
+
+\hypertarget{reference-semantics}{%
+\section*{14.4 Reference semantics}\label{reference-semantics}}
+\addcontentsline{toc}{section}{14.4 Reference semantics}
+
+\begin{quote}
+\$clone() does not recursively clone nested R6 objects. If you want that, you'll need to use \$clone(deep = TRUE).
+\end{quote}
+
+Can we see this in action using a subclass?
+
+\hypertarget{this-example-is-taken-from-the-r6-documentation}{%
+\subsubsection*{\texorpdfstring{This example is taken from the \texttt{R6} \href{https://r6.r-lib.org/articles/Introduction.html}{documentation}:}{This example is taken from the R6 documentation:}}\label{this-example-is-taken-from-the-r6-documentation}}
+\addcontentsline{toc}{subsubsection}{This example is taken from the \texttt{R6} \href{https://r6.r-lib.org/articles/Introduction.html}{documentation}:}
+
+Object \texttt{c1} contains \texttt{s}, which we will clone. The original and clone both point to the same object, and by using \texttt{deep\ =\ TRUE} we can modify \texttt{s} in one object without changing it in the other.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Simple <-}\StringTok{ }\KeywordTok{R6Class}\NormalTok{(}\StringTok{"Simple"}\NormalTok{, }\DataTypeTok{public =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{x =} \DecValTok{1}\NormalTok{))}
+
+\NormalTok{Cloneable <-}\StringTok{ }\KeywordTok{R6Class}\NormalTok{(}\StringTok{"Cloneable"}\NormalTok{,}
+  \DataTypeTok{public =} \KeywordTok{list}\NormalTok{(}
+    \DataTypeTok{s =} \OtherTok{NULL}\NormalTok{,}
+    \DataTypeTok{initialize =} \ControlFlowTok{function}\NormalTok{() self}\OperatorTok{$}\NormalTok{s <-}\StringTok{ }\NormalTok{Simple}\OperatorTok{$}\KeywordTok{new}\NormalTok{()}
+\NormalTok{  )}
+\NormalTok{)}
+
+\NormalTok{c1 <-}\StringTok{ }\NormalTok{Cloneable}\OperatorTok{$}\KeywordTok{new}\NormalTok{()}
+\NormalTok{c2 <-}\StringTok{ }\NormalTok{c1}\OperatorTok{$}\KeywordTok{clone}\NormalTok{()}
+
+\CommentTok{# Change c1's `s` field}
+\NormalTok{c1}\OperatorTok{$}\NormalTok{s}\OperatorTok{$}\NormalTok{x <-}\StringTok{ }\DecValTok{2}
+
+\CommentTok{# c2's `s` is the same object, so it reflects the change}
+\NormalTok{c2}\OperatorTok{$}\NormalTok{s}\OperatorTok{$}\NormalTok{x}
+\CommentTok{#> [1] 2}
+
+\NormalTok{c3 <-}\StringTok{ }\NormalTok{c1}\OperatorTok{$}\KeywordTok{clone}\NormalTok{(}\DataTypeTok{deep =} \OtherTok{TRUE}\NormalTok{)}
+
+\CommentTok{# Change c1's `s` field}
+\NormalTok{c1}\OperatorTok{$}\NormalTok{s}\OperatorTok{$}\NormalTok{x <-}\StringTok{ }\DecValTok{3}
+
+\CommentTok{# c2's `s` is different}
+\CommentTok{# if we set deep = FALSE this would be 3!}
+\NormalTok{c3}\OperatorTok{$}\NormalTok{s}\OperatorTok{$}\NormalTok{x}
+\CommentTok{#> [1] 2}
+\end{Highlighting}
+\end{Shaded}
+
+When or why would I set the clone argument to FALSE?
+
+Clone has a large memory footprint so if you're going to create a lot of R6 methods you may want to exclude this!
+
+\hypertarget{s4}{%
+\chapter{S4}\label{s4}}
+
+\hypertarget{basics-1}{%
+\section*{15.2 Basics}\label{basics-1}}
+\addcontentsline{toc}{section}{15.2 Basics}
+
+Broadly, what is a generic and method in S4 and what is their relationship?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{setClass}\NormalTok{(}\StringTok{"Person"}\NormalTok{, }
+  \DataTypeTok{slots =} \KeywordTok{c}\NormalTok{(}
+    \DataTypeTok{name =} \StringTok{"character"}\NormalTok{, }
+    \DataTypeTok{age =} \StringTok{"numeric"}
+\NormalTok{  )}
+\NormalTok{)}
+
+\KeywordTok{setGeneric}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{standardGeneric}\NormalTok{(}\StringTok{"age"}\NormalTok{))}
+\KeywordTok{setGeneric}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) }\KeywordTok{standardGeneric}\NormalTok{(}\StringTok{"age<-"}\NormalTok{))}
+
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\StringTok{"Person"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) x}\OperatorTok{@}\NormalTok{age)}
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\StringTok{"Person"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) \{}
+\NormalTok{  x}\OperatorTok{@}\NormalTok{age <-}\StringTok{ }\NormalTok{value}
+\NormalTok{  x}
+\NormalTok{\})}
+
+\NormalTok{john <-}\StringTok{ }\KeywordTok{new}\NormalTok{(}\StringTok{"Person"}\NormalTok{, }\DataTypeTok{name =} \StringTok{"John Smith"}\NormalTok{, }\DataTypeTok{age =} \DecValTok{12}\NormalTok{)}
+\KeywordTok{age}\NormalTok{(john)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 12
+\end{verbatim}
+
+A generic is a function that will dispatch differently based on the class it is applied to. Above we apply the \texttt{age} generic to \texttt{Person} using \texttt{setMethod} but we could create an \texttt{age} method that behaves differently for another class, like dogs (which will add 7 to the supplied age)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{setClass}\NormalTok{(}\StringTok{"Person"}\NormalTok{, }\DataTypeTok{slots =} \KeywordTok{c}\NormalTok{(}\DataTypeTok{name =} \StringTok{"character"}\NormalTok{,}\DataTypeTok{age =} \StringTok{"numeric"}\NormalTok{))}
+
+\KeywordTok{setGeneric}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{standardGeneric}\NormalTok{(}\StringTok{"age"}\NormalTok{))}
+\KeywordTok{setGeneric}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) }\KeywordTok{standardGeneric}\NormalTok{(}\StringTok{"age<-"}\NormalTok{))}
+
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\StringTok{"Person"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) x}\OperatorTok{@}\NormalTok{age)}
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\StringTok{"Person"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) \{}
+\NormalTok{  x}\OperatorTok{@}\NormalTok{age <-}\StringTok{ }\NormalTok{value}
+\NormalTok{  x}
+\NormalTok{\})}
+
+\KeywordTok{setClass}\NormalTok{(}\StringTok{"Dog"}\NormalTok{, }\DataTypeTok{slots =} \KeywordTok{c}\NormalTok{(}\DataTypeTok{name =} \StringTok{"character"}\NormalTok{,  }\DataTypeTok{age =} \StringTok{"numeric"}\NormalTok{))}
+
+\CommentTok{# You want the age generic to automatically return 7x the slot in human years}
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\StringTok{"Dog"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) \{x}\OperatorTok{@}\NormalTok{age}\OperatorTok{*}\DecValTok{7}\NormalTok{\} ) }
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\StringTok{"Dog"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) \{}
+\NormalTok{  x}\OperatorTok{@}\NormalTok{age <-}\StringTok{ }\NormalTok{value}
+\NormalTok{  x}
+\NormalTok{\})}
+
+
+\NormalTok{spot <-}\StringTok{ }\KeywordTok{new}\NormalTok{(}\StringTok{"Dog"}\NormalTok{, }\DataTypeTok{name =} \StringTok{"Spot Smith"}\NormalTok{, }\DataTypeTok{age =} \DecValTok{12}\NormalTok{)}
+\KeywordTok{age}\NormalTok{(spot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 84
+\end{verbatim}
+
+What is \texttt{standardGeneric} doing in the example above?
+
+It's the same thing as \texttt{UseMethod} but for S4
+
+\hypertarget{exercises-14}{%
+\section*{15.3.6.2 Exercises}\label{exercises-14}}
+\addcontentsline{toc}{section}{15.3.6.2 Exercises}
+
+What is a virtual class and how does it relate to \texttt{setClassUnion} {[}see \texttt{?setClass}{]}
+
+A virtual class is a class that cannot be instanciated. Rather than define two of the same methods for two classes, give them both a virtual parent class with the shared method.
+
+\hypertarget{signature}{%
+\section*{Signature}\label{signature}}
+\addcontentsline{toc}{section}{Signature}
+
+In our own words what exactly is a signature? Are there any signatures within our \texttt{Person} example? If not can we add one?
+
+::TODO
+:::
+
+\hypertarget{single-dispatch}{%
+\section*{15.5.1 Single dispatch}\label{single-dispatch}}
+\addcontentsline{toc}{section}{15.5.1 Single dispatch}
+
+What's a use case in the wild for \texttt{ANY}?
+
+\hypertarget{trade-offs}{%
+\chapter{Trade-Offs}\label{trade-offs}}
+
+Can we make a class using \texttt{S3}, \texttt{S4}, and \texttt{R6} so we can easily directly compare the three, and their generics and methods?
+
+\hypertarget{using-our-example-from-the-s4-chapter}{%
+\subsection{Using our example from the S4 Chapter:}\label{using-our-example-from-the-s4-chapter}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{setClass}\NormalTok{(}\StringTok{"Person"}\NormalTok{, }
+  \DataTypeTok{slots =} \KeywordTok{c}\NormalTok{(}
+    \DataTypeTok{name =} \StringTok{"character"}\NormalTok{, }
+    \DataTypeTok{age =} \StringTok{"numeric"}
+\NormalTok{  )}
+\NormalTok{)}
+
+\KeywordTok{setGeneric}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{standardGeneric}\NormalTok{(}\StringTok{"age"}\NormalTok{))}
+\KeywordTok{setGeneric}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) }\KeywordTok{standardGeneric}\NormalTok{(}\StringTok{"age<-"}\NormalTok{))}
+
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\StringTok{"Person"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) x}\OperatorTok{@}\NormalTok{age)}
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\StringTok{"Person"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) \{}
+\NormalTok{  x}\OperatorTok{@}\NormalTok{age <-}\StringTok{ }\NormalTok{value}
+\NormalTok{  x}
+\NormalTok{\})}
+
+\NormalTok{john <-}\StringTok{ }\KeywordTok{new}\NormalTok{(}\StringTok{"Person"}\NormalTok{, }\DataTypeTok{name =} \StringTok{"John Smith"}\NormalTok{, }\DataTypeTok{age =} \DecValTok{12}\NormalTok{)}
+\KeywordTok{age}\NormalTok{(john)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 12
+\end{verbatim}
+
+A generic is a function that will dispatch differently based on the class it is applied to. Above we apply the \texttt{age} generic to \texttt{Person} using \texttt{setMethod} but we could create an \texttt{age} method that behaves differently for another class, like dogs (which will add 7 to the supplied age)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{setClass}\NormalTok{(}\StringTok{"Person"}\NormalTok{, }\DataTypeTok{slots =} \KeywordTok{c}\NormalTok{(}\DataTypeTok{name =} \StringTok{"character"}\NormalTok{,}\DataTypeTok{age =} \StringTok{"numeric"}\NormalTok{))}
+
+\KeywordTok{setGeneric}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{standardGeneric}\NormalTok{(}\StringTok{"age"}\NormalTok{))}
+\KeywordTok{setGeneric}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) }\KeywordTok{standardGeneric}\NormalTok{(}\StringTok{"age<-"}\NormalTok{))}
+
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\StringTok{"Person"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) x}\OperatorTok{@}\NormalTok{age)}
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\StringTok{"Person"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) \{}
+\NormalTok{  x}\OperatorTok{@}\NormalTok{age <-}\StringTok{ }\NormalTok{value}
+\NormalTok{  x}
+\NormalTok{\})}
+
+\KeywordTok{setClass}\NormalTok{(}\StringTok{"Dog"}\NormalTok{, }\DataTypeTok{slots =} \KeywordTok{c}\NormalTok{(}\DataTypeTok{name =} \StringTok{"character"}\NormalTok{,  }\DataTypeTok{age =} \StringTok{"numeric"}\NormalTok{))}
+
+\CommentTok{# You want the age generic to automatically return 7x the slot in human years}
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\StringTok{"Dog"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) \{x}\OperatorTok{@}\NormalTok{age}\OperatorTok{*}\DecValTok{7}\NormalTok{\} ) }
+\KeywordTok{setMethod}\NormalTok{(}\StringTok{"age<-"}\NormalTok{, }\StringTok{"Dog"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x, value) \{}
+\NormalTok{  x}\OperatorTok{@}\NormalTok{age <-}\StringTok{ }\NormalTok{value}
+\NormalTok{  x}
+\NormalTok{\})}
+
+
+\NormalTok{spot <-}\StringTok{ }\KeywordTok{new}\NormalTok{(}\StringTok{"Dog"}\NormalTok{, }\DataTypeTok{name =} \StringTok{"Spot Smith"}\NormalTok{, }\DataTypeTok{age =} \DecValTok{12}\NormalTok{)}
+\KeywordTok{age}\NormalTok{(spot)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{we-can-do-this-with-s3}{%
+\subsection*{We can do this with S3:}\label{we-can-do-this-with-s3}}
+\addcontentsline{toc}{subsection}{We can do this with S3:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{johnny <-}\StringTok{ }\KeywordTok{structure}\NormalTok{(}
+  \KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"Johnny Smith"}\NormalTok{,}
+       \DataTypeTok{age =} \DecValTok{12}\NormalTok{),}
+  \DataTypeTok{class =} \StringTok{"s3_human"}\NormalTok{)}
+
+\NormalTok{stripe <-}\StringTok{ }\KeywordTok{structure}\NormalTok{(}
+  \KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"Stripe Smith"}\NormalTok{,}
+       \DataTypeTok{age =} \DecValTok{12}\NormalTok{),}
+  \DataTypeTok{class =} \StringTok{"s3_dog"}\NormalTok{)}
+
+\NormalTok{s3_age <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x)\{}\KeywordTok{UseMethod}\NormalTok{(}\StringTok{"s3_age"}\NormalTok{)\}}
+\NormalTok{s3_age.s3_dog <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x)\{x}\OperatorTok{$}\NormalTok{age}\OperatorTok{*}\DecValTok{7}\NormalTok{\}}
+\NormalTok{s3_age.s3_human <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x)\{x}\OperatorTok{$}\NormalTok{age\}}
+
+\KeywordTok{s3_age}\NormalTok{(johnny)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 12
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{s3_age}\NormalTok{(stripe)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 84
+\end{verbatim}
+
+\hypertarget{and-r6}{%
+\subsubsection*{And R6}\label{and-r6}}
+\addcontentsline{toc}{subsubsection}{And R6}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Person <-}\StringTok{ }\KeywordTok{R6Class}\NormalTok{(}\StringTok{"Person"}\NormalTok{, }\KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{name =} \OtherTok{NULL}\NormalTok{,}
+  \DataTypeTok{age =} \OtherTok{NULL}\NormalTok{,}
+  \DataTypeTok{initialize =} \ControlFlowTok{function}\NormalTok{(name, }\DataTypeTok{age =} \OtherTok{NA}\NormalTok{) \{}
+    \KeywordTok{stopifnot}\NormalTok{(}\KeywordTok{is.character}\NormalTok{(name), }\KeywordTok{length}\NormalTok{(name) }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{)}
+    \KeywordTok{stopifnot}\NormalTok{(}\KeywordTok{is.numeric}\NormalTok{(age), }\KeywordTok{length}\NormalTok{(age) }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{)}
+\NormalTok{    self}\OperatorTok{$}\NormalTok{name <-}\StringTok{ }\NormalTok{name}
+\NormalTok{    self}\OperatorTok{$}\NormalTok{age <-}\StringTok{ }\NormalTok{age}
+\NormalTok{  \}}
+\NormalTok{))}
+
+\NormalTok{john <-}\StringTok{ }\NormalTok{Person}\OperatorTok{$}\KeywordTok{new}\NormalTok{(}\DataTypeTok{name =} \StringTok{"John Smith"}\NormalTok{, }\DataTypeTok{age =} \DecValTok{12}\NormalTok{)}
+\NormalTok{john}\OperatorTok{$}\NormalTok{age}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 12
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Dog <-}\StringTok{ }\KeywordTok{R6Class}\NormalTok{(}
+  \StringTok{"Dog"}\NormalTok{,}
+  \DataTypeTok{inherit =}\NormalTok{ Person,}
+  \DataTypeTok{public =} \KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{initialize =} \ControlFlowTok{function}\NormalTok{(name, }\DataTypeTok{age =} \OtherTok{NA}\NormalTok{) \{}
+\NormalTok{    super}\OperatorTok{$}\KeywordTok{initialize}\NormalTok{(name,age)}
+\NormalTok{    self}\OperatorTok{$}\NormalTok{age <-}\StringTok{ }\NormalTok{age }\OperatorTok{*}\StringTok{ }\DecValTok{7}
+\NormalTok{  \}}
+\NormalTok{))}
+\NormalTok{spot <-}\StringTok{ }\NormalTok{Dog}\OperatorTok{$}\KeywordTok{new}\NormalTok{(}\DataTypeTok{name =} \StringTok{"Spot Smith"}\NormalTok{, }\DataTypeTok{age =} \DecValTok{12}\NormalTok{) }
+\NormalTok{spot}\OperatorTok{$}\NormalTok{age}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 84
 \end{verbatim}
 
 \bibliography{book.bib,packages.bib}

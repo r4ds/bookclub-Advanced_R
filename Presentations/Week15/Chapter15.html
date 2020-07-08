@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Chapter 15: S4</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="R4DS Reading Group" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Chapter 15: S4
+## Pavitra Chakravarty
+### R4DS Reading Group
+
+---
+
+
+
+
+
+
+
+&lt;style&gt;
+hide {
+  display: none;
+}
+.remark-slide-content h1 {
+  font-size: 45px;
+}
+h1 {
+  font-size: 2em;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+}
+.remark-slide-content {
+  font-size: 16px
+}
+.remark-code {
+  font-size: 14px;
+}
+code.r {
+  font-size: 14px;
+}
+pre {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.red {
+  color: #FF0000;
+}
+
+.footnote {
+  color: #800020;
+  font-size: 9px;
+}
+
+&lt;/style&gt;
+
+# What are S4 classes?
+
+S4 provides a formal approach to functional OOP. An important new component of S4 is the __slot__, a named component of the object that is accessed using the specialised subsetting operator `@`. 
+
+---
+
+The salient features of S4 are as follows.
+
++ __methods Package__: All functions related to S4 live in the methods package. This package is always available when you're running R interactively
+  
+  + `methods::new()`, `methods::setClass()`, `methods::setGeneric()`, `methods::setMethod()`
+
++ __Accessor Functions__: Enable you to safely get/set slot values
+
+  + `methods::setGeneric()`, `method::getGeneric()`
+
++ __Class Defintion__: Defintion of class using three arguments
+
+  + `class name`
+  + `Named character vector with names and classes of slots: c(name = "character", age = "numeric")`
+  + `prototype with list of default values for each slot`
+
+
+---
+
+# Basics of S4
+
+Creation of class, creations of objects of that class, determine class type, acess slots 
+
+
+```r
+setClass("Person", 
+  slots = c(
+    name = "character", 
+    age = "numeric"
+  )
+)
+
+nostradamus &lt;- new("Person", name = "Nostradamus", age = NA_real_)
+```
+
+Necessity of __accessor__ functions
+
+
+```r
+is(nostradamus)
+nostradamus@name
+slot(nostradamus, "age")
+```
+
+```
+[1] "Person"
+[1] "Nostradamus"
+[1] NA
+```
+
+---
+
+# setGeneric and setMethod
+
+Creating setter/getter functions by creating generics with `setGeneric()`:
+
+
+```r
+setGeneric("age", function(x) standardGeneric("age"))
+setGeneric("age&lt;-", function(x, value) standardGeneric("age&lt;-"))
+```
+
+```
+[1] "age"
+[1] "age&lt;-"
+```
+
+And then defining methods with `setMethod()`:
+
+
+```r
+setMethod("age", "Person", function(x) x@age)
+setMethod("age&lt;-", "Person", function(x, value) {
+  x@age &lt;- value
+  x
+})
+
+age(nostradamus) &lt;- 50
+age(nostradamus)
+```
+
+```
+[1] 50
+```
+
+---
+
+# Classes
+
+The class __name__
+
+A named character vector that describes the names and classes of the 
+  __slots__ (fields)
+  
+A __prototype__, a list of default values for each slot. Optional, but better to do it
+
+
+```r
+setClass("Person", 
+  slots = c(
+    name = "character", 
+    age = "numeric"
+  ), 
+  prototype = list(
+    name = NA_character_,
+    age = NA_real_
+  )
+)
+
+me &lt;- new("Person", name = "Nostradamus")
+str(me)
+```
+
+```
+Formal class 'Person' [package ".GlobalEnv"] with 2 slots
+  ..@ name: chr "Nostradamus"
+  ..@ age : num NA
+```
+
+---
+
+# Inheritance
+
+There is one other important argument to `setClass()`: `contains`. This specifies a class (or classes) to inherit slots and behaviour from. For example, we can create an `Employee` class that inherits from the `Person` class, adding an extra slot that describes their `boss`.
+
+
+```r
+setClass("Employee", 
+  contains = "Person", 
+  slots = c(
+    boss = "Person"
+  ),
+  prototype = list(
+    boss = new("Person")
+  )
+)
+
+str(new("Employee"))
+```
+
+```
+Show in New WindowClear OutputExpand/Collapse Output
+[1] 50
+Show in New WindowClear OutputExpand/Collapse Output
+Formal class 'Person' [package ".GlobalEnv"] with 2 slots
+  ..@ name: chr "Nostradamus"
+  ..@ age : num NA
+Show in New WindowClear OutputExpand/Collapse Output
+Formal class 'Employee' [package ".GlobalEnv"] with 3 slots
+  ..@ boss:Formal class 'Person' [package ".GlobalEnv"] with 2 slots
+  .. .. ..@ name: chr NA
+  .. .. ..@ age : num NA
+  ..@ name: chr NA
+  ..@ age : num NA
+```
+
+To determine what classes an object inherits from, use `is()`:
+
+
+```r
+is(new("Person"))
+is(new("Employee"))
+```
+
+```
+[1] "Person"
+[1] "Employee" "Person"  
+```
+
+To test if an object inherits from a specific class, use the second argument of `is()`:
+
+
+```r
+is(nostradamus, "person")
+```
+
+```
+[1] FALSE
+```
+
+---
+
+# Helper and Validator
+
+---
+
+# Helper
+
+`new()` is a low-level constructor for use by the developer. User-facing classes should always be paired with a user-friendly helper. A helper should always:
+
+Have the same name as the class, e.g. `Person()`.
+
+Finish by calling `methods::new()`.
+
+
+
+```r
+Person &lt;- function(name, age = NA) {
+  age &lt;- as.double(age)
+  
+  new("Person", name = name, age = age)
+}
+
+Person("Nostradamus")
+```
+
+```
+An object of class "Person"
+Slot "name":
+[1] "Nostradamus"
+
+Slot "age":
+[1] NA
+```
+
+---
+
+# Validator
+
+The constructor automatically checks that the slots have correct classes. However, we might want to test that all slots have the same length as we want to store info about multiple people
+
+
+```r
+Person("Nostradamus", age = c(30, 37))
+```
+
+```
+An object of class "Person"
+Slot "name":
+[1] "Nostradamus"
+
+Slot "age":
+[1] 30 37
+```
+
+---
+
+To enforce these additional constraints we write a validator with `setValidity()`. It takes a class and a function that returns `TRUE` if the input is valid, and otherwise returns a character vector describing the problem(s):
+
+
+```r
+setValidity("Person", function(object) {
+  if (length(object@name) != length(object@age)) {
+    "@name and @age must be same length"
+  } else {
+    TRUE
+  }
+})
+
+Person("Nostradamus", age = c(30, 37))
+```
+
+```
+Class "Person" [in ".GlobalEnv"]
+
+Slots:
+                          
+Name:       name       age
+Class: character   numeric
+
+Known Subclasses: "Employee"
+Error in validObject(.Object) : invalid class “Person” object: @name and @age must be same length
+```
+
+---
+
+# Generics and Methods
+
+The job of a generic is to perform method dispatch, i.e. find the specific implementation for the combination of classes passed to the generic. To create a new S4 generic, call `setGeneric()` with a function that calls `standardGeneric()`:
+
+
+```r
+setGeneric("myGeneric", function(x) standardGeneric("myGeneric"))
+```
+
+```
+[1] "myGeneric"
+```
+
+---
+
+# Signature
+
+ `signature` allows you to control the arguments that are used for method dispatch. If `signature` is not supplied, all arguments (apart from `...`) are used
+
+
+```r
+setGeneric("myGeneric", 
+  function(x, ..., verbose = TRUE) standardGeneric("myGeneric"),
+  signature = "x"
+)
+```
+
+```
+[1] "myGeneric"
+```
+
+---
+
+# Methods
+
+A generic isn't useful without some methods, and in S4 you define methods with `setMethod()`. There are three important arguments: the name of the generic, the name of the class, and the method itself. 
+
+
+```r
+setMethod("myGeneric", "Person", function(x) {
+  # method implementation
+})
+```
+
+More formally, the second argument to `setMethod()` is called the __signature__. In S4, unlike S3, the signature can include multiple arguments. This makes method dispatch in S4 substantially more complicated.
+
+---
+
+To list all the methods that belong to a generic, or that are associated with a class, use `methods("generic")` or `methods(class = "class")`; to find the implementation of a specific method, use `selectMethod("generic", "class")`. You can get the arguments by looking at the `args()` of the generic
+
+
+```r
+methods("myGeneric")
+methods(class = "Person")
+selectMethod("myGeneric", "Person")
+args(getGeneric("myGeneric"))
+```
+
+```
+[1] myGeneric,Person-method
+see '?methods' for accessing help and source code
+[1] age       age&lt;-     myGeneric
+see '?methods' for accessing help and source code
+Method Definition:
+
+function (x, ..., verbose = TRUE) 
+{
+    .local &lt;- function (x) 
+    {
+    }
+    .local(x, ...)
+}
+
+Signatures:
+        x       
+target  "Person"
+defined "Person"
+function (x, ..., verbose = TRUE) 
+NULL
+```
+
+---
+
+The show method for the Person class needs to have a single argument `object`:
+
+
+```r
+setMethod("show", "Person", function(object) {
+  cat(is(object)[[1]], "\n",
+      "  Name: ", object@name, "\n",
+      "  Age:  ", object@age, "\n",
+      sep = ""
+  )
+})
+nostradamus
+```
+
+---
+
+
+# Method dispatch
+
+S4 dispatch is complicated because S4 has two important features:
+
+* Multiple inheritance, i.e. a class can have multiple parents, 
+* Multiple dispatch, i.e. a generic can use multiple arguments to pick a method. 
+
+These features make S4 very powerful, but can also make it hard to understand which method will get selected for a given combination of inputs. In practice, keep method dispatch as simple as possible by avoiding multiple inheritance, and reserving multiple dispatch only for where it is absolutely necessary.
+
+ Hadley uses a cool concept to illustrate this - an imaginary __class graph__ based on emoji:
+
+
+&lt;img src="img/emoji.png" width="30%" height="30%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Single dispatch
+
+Let's start with the simplest case: a generic function that dispatches on a single class with a single parent. The method dispatch here is simple so it's a good place to define the graphical conventions we'll use for the more complex cases.
+
+&lt;img src="img/single.png" width="30%" height="30%" style="display: block; margin: auto;" /&gt;
+
+There are two parts to this diagram:
+
+* The top part, `f(...)`, defines the scope of the diagram. Here we have a 
+  generic with one argument, that has a class hierarchy that is three levels 
+  deep.
+  
+* The bottom part is the __method graph__ and  displays all the possible methods 
+  that could be defined. Methods that exist, i.e. that have been defined with 
+  `setMethod()`, have a grey background. 
+  
+---
+
+
+# Multiple Inheritance
+
+S4 dispatch is complicated because S4 has two important features:
+
+* Multiple inheritance, i.e. a class can have multiple parents, 
+* Multiple dispatch, i.e. a generic can use multiple arguments to pick a method. 
+
+These features make S4 very powerful, but can also make it hard to understand which method will get selected for a given combination of inputs. In practice, keep method dispatch as simple as possible by avoiding multiple inheritance, and reserving multiple dispatch only for where it is absolutely necessary.
+
+---
+
+Things get more complicated when the class has multiple parents.
+
+&lt;img src="img/multiple.png" width="30%" height="30%" style="display: block; margin: auto;" /&gt;
+
+The basic process remains the same: you start from the actual class supplied to the generic, then follow the arrows until you find a defined method. The wrinkle is that now there are multiple arrows to follow, so you might find multiple methods. If that happens, you pick the method that is closest, i.e. requires travelling the fewest arrows. 
+
+---
+
+If no method can be found it will be highlighted with a red double outline. What happens if methods are the same distance - an ambiguous method? An __ambiguous__ method will be illustrated with a thick dotted border
+
+&lt;img src="img/multiple-ambig.png" width="30%" height="30%" style="display: block; margin: auto;" /&gt;
+
+---
+
+With multiple inheritances it is hard to simultaneously prevent ambiguity, ensure that every terminal method has an implementation, and minimise the number of defined methods (in order to benefit from OOP). For example, of the six ways to define only two methods for this call, only one is free from problems. 
+
+&lt;img src="img/multiple-all.png" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Multiple dispatch
+
+
+After multiple inheritance, understanding multiple dispatch is straightforward. You follow multiple arrows in the same way as previously, but now each method is specified by two classes (separated by a comma).
+
+&lt;img src="img/single-single.png" width="30%" height="30%" style="display: block; margin: auto;" /&gt;
+
+---
+
+The main difference between multiple inheritance and multiple dispatch is that there are many more arrows to follow. The following diagram shows four defined methods which produce two ambiguous cases:
+
+&lt;img src="img/single-single-ambig.png" width="30%" height="30%" style="display: block; margin: auto;" /&gt;
+
+Multiple dispatch tends to be less tricky to work with than multiple inheritance because there are usually fewer terminal class combinations. In this example, there's only one. That means, at a minimum, you can define a single method and have default behaviour for all inputs.
+
+
+---
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/remark/0.14.0/remark.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
