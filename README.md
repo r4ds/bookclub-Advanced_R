@@ -31,7 +31,7 @@ All Meetings Scheduled for 8:00 PM Eastern unless otherwise noted
 - 2020-07-14 Chapter 17 - Metaprogramming, big picture: [Tony ElHabr](https://twitter.com/TonyElHabr)
 - 2020-07-21 Chapter 18 - Expressions: [Maya Gans](https://maya.rbind.io)
 - 2020-07-28 Chapter 19 - Quasiquotation: [Jon Harmon](https://twitter.com/jonthegeek)
-- 2020-07-04 Chapter 20 - Evaluation:
+- 2020-07-04 Chapter 20 - Evaluation: [Daryn Ramsden](https://twitter.com/thisisdaryn) 
 - 2020-08-11 Chapter 21 - Translating R code:
 - 2020-08-18 Chapter 22 - Debugging:
 - 2020-08-25 Chapter 23 - Measuring performance:
