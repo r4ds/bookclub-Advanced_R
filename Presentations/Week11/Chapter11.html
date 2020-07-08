@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Chapter 11: Function Operators</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="R4DS Reading Group" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Chapter 11: Function Operators
+## Tony ElHabr
+### R4DS Reading Group
+
+---
+
+
+
+
+
+
+
+&lt;style&gt;
+hide {
+  display: none;
+}
+.remark-slide-content h1 {
+  font-size: 45px;
+}
+h1 {
+  font-size: 2em;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+}
+.remark-slide-content {
+  font-size: 16px
+}
+.remark-code {
+  font-size: 14px;
+}
+code.r {
+  font-size: 14px;
+}
+pre {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.red {
+  color: #FF0000;
+}
+
+.footnote {
+  color: #800020;
+  font-size: 9px;
+}
+
+&lt;/style&gt;
+
+# What are function operators (FO)?
+
+Chapter 9 is about functionals. Chapter 10 is about function factories. What makes function operators different?
+
+--
+
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#xvvqmndlrb .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#xvvqmndlrb .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xvvqmndlrb .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#xvvqmndlrb .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#xvvqmndlrb .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xvvqmndlrb .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xvvqmndlrb .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#xvvqmndlrb .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#xvvqmndlrb .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#xvvqmndlrb .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#xvvqmndlrb .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#xvvqmndlrb .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#xvvqmndlrb .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#xvvqmndlrb .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#xvvqmndlrb .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#xvvqmndlrb .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#xvvqmndlrb .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#xvvqmndlrb .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#xvvqmndlrb .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xvvqmndlrb .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#xvvqmndlrb .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xvvqmndlrb .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#xvvqmndlrb .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xvvqmndlrb .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xvvqmndlrb .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#xvvqmndlrb .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xvvqmndlrb .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#xvvqmndlrb .gt_left {
+  text-align: left;
+}
+
+#xvvqmndlrb .gt_center {
+  text-align: center;
+}
+
+#xvvqmndlrb .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#xvvqmndlrb .gt_font_normal {
+  font-weight: normal;
+}
+
+#xvvqmndlrb .gt_font_bold {
+  font-weight: bold;
+}
+
+#xvvqmndlrb .gt_font_italic {
+  font-style: italic;
+}
+
+#xvvqmndlrb .gt_super {
+  font-size: 65%;
+}
+
+#xvvqmndlrb .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="xvvqmndlrb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Term</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Required Input</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Optional Input</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Output</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left">Functionals</td>
+      <td class="gt_row gt_left">Function</td>
+      <td class="gt_row gt_left">Vector</td>
+      <td class="gt_row gt_left">Vector</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Function Factory</td>
+      <td class="gt_row gt_left"></td>
+      <td class="gt_row gt_left">Vector, Function</td>
+      <td class="gt_row gt_left">Function</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Function Operator</td>
+      <td class="gt_row gt_left">Function</td>
+      <td class="gt_row gt_left">Vector</td>
+      <td class="gt_row gt_left">Function</td>
+    </tr>
+  </tbody>
+  
+  
+</table></div>
+
+
+
+--
+
+FOs are probably best studied by thinking about how they operate on functions.
+
++ __Behavioral FO__: Changes the behavior of a function, e.g. logging, running a function only when necessary
+
+  + `memoise::memoise()`
+
++ __Output FO__: Manipulates the output of a function
+
+  + `purrr::possibly()`, `purrr::safely()`, `purrr::quietly()`
+
++ __Input FO__: Maniuplates the input of a function
+
+  + `purrr::partial()`
+
+--
+
+`purrr::safely()` docs: ... "They are all adverbs because they modify the action of a verb (a function)."
+
+---
+
+# Behavior FO Example #1
+
+Now with an additional input, vector `n`
+
+
+```r
+slowly &lt;- function(f, n){
+  force(f)
+  force(n)
+  function(...){
+    stopifnot(is.numeric(n))
+    cat(
+      glue::glue('Sleeping for {n} seconds.'), 
+      sep = '\n'
+    )
+    Sys.sleep(n)
+    f(...)
+  }
+}
+
+purrr::walk(
+  c('hello', 'world'),
+* slowly(cat, 0.1),
+  sep = '\n' # Passed to `f()` via `...`
+)
+```
+
+```
+## Sleeping for 0.1 seconds.
+## hello
+## Sleeping for 0.1 seconds.
+## world
+```
+
+.footnote[
+https://gist.github.com/ColinFay/d32cf4c9c5fb8d849f12a4e98d6c0549
+]
+
+
+---
+
+# Behavioral FO Example #2
+
+
+```r
+twice &lt;- function(f){
+  force(f)
+  function(...){
+    f(...)
+    f(...)
+  }
+}
+
+purrr::walk(
+  c('hello', 'world'), 
+* twice(cat),
+  sep = '\n' # Passed to `f()` via `...`
+)
+```
+
+```
+## hello
+## hello
+## world
+## world
+```
+
+.footnote[
+Inspiration: https://realpython.com/primer-on-python-decorators/
+]
+
+---
+
+# Behavioral FO Example #2
+
+With `python` &lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 448 512"&gt;&lt;path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6zM286.2 404c11.1 0 20.1 9.1 20.1 20.3 0 11.3-9 20.4-20.1 20.4-11 0-20.1-9.2-20.1-20.4.1-11.3 9.1-20.3 20.1-20.3zM167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4zm-6.7-142.6c-11.1 0-20.1-9.1-20.1-20.3.1-11.3 9-20.4 20.1-20.4 11 0 20.1 9.2 20.1 20.4s-9 20.3-20.1 20.3z"/&gt;&lt;/svg&gt;
+
+
+
+
+```python
+def do_twice(f):
+    def wrapper(*args, **kwargs):
+        f(*args, **kwargs)
+        f(*args, **kwargs)
+    return wrapper
+    
+@do_twice
+def say(x):
+    print(x)
+```
+
+
+```python
+list(map(say, ['hello', 'world']))
+```
+
+```
+## hello
+## hello
+## world
+## world
+## [None, None]
+```
+
+
+
+---
+
+# Behavioral FO Example #3
+
+
+```r
+download_beers &lt;- function(name, verbose = TRUE) {
+  base_url &lt;- 'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/'
+  url &lt;- glue::glue('{base_url}{name}.csv')
+  if(verbose) {
+    cat(glue::glue('Downloading {name}.csv'), sep = '\n')
+  }
+  readr::read_csv(url)
+}
+```
+
+
+
+Using `memoise::memoise()` for caching
+
+
+```r
+download_beers_quickly &lt;- memoise::memoise(download_beers)
+
+bench::mark(
+  download_beers('brewer_size', verbose = FALSE),
+  download_beers_quickly('brewer_size', verbose = FALSE)
+) %&gt;% 
+  dplyr::select(expression, min, median)
+```
+
+```
+## # A tibble: 2 x 3
+##   expression                                                  min   median
+##   &lt;bch:expr&gt;                                             &lt;bch:tm&gt; &lt;bch:tm&gt;
+## 1 download_beers("brewer_size", verbose = FALSE)           77.8ms   89.6ms
+## 2 download_beers_quickly("brewer_size", verbose = FALSE)    162us  188.5us
+```
+
+&lt;hide&gt;
+This is useful for scraping... and also a tutorial, where there are repeated actions across code chunks :P.
+Should memoisization be used when scraping? It depends. If the data really won't ever change, then it should be fine.
+&lt;/hide&gt;
+
+---
+
+# Behavioral FO Example #4
+
+Testing the speed of `memoise::memoise()`
+
+
+```r
+# Forgive the contrived function.
+slow_function &lt;- function(x) {
+  Sys.sleep(0.2)
+  x * runif(1)
+}
+fast_function &lt;- memoise::memoise(slow_function)
+```
+
+&lt;br /&gt;
+
+
+
+
+```r
+system.time(slow_function(1))
+```
+
+```
+##    user  system elapsed 
+##    0.00    0.00    0.36
+```
+
+```r
+*system.time(slow_function(1))
+```
+
+```
+##    user  system elapsed 
+##    0.00    0.00    0.21
+```
+
+
+```r
+system.time(fast_function(11))
+```
+
+```
+##    user  system elapsed 
+##    0.00    0.00    0.34
+```
+
+```r
+*system.time(fast_function(11))
+```
+
+```
+##    user  system elapsed 
+##       0       0       0
+```
+
+---
+
+# Behavioral FO Example #4
+
+Even if you've changed the inputs since the most recent call, it will still be fast.
+
+
+```r
+system.time(fast_function(22))
+```
+
+```
+##    user  system elapsed 
+##     0.0     0.0     0.3
+```
+
+```r
+system.time(fast_function(33))
+```
+
+```
+##    user  system elapsed 
+##     0.0     0.0     0.2
+```
+
+```r
+*system.time(fast_function(22))
+```
+
+```
+##    user  system elapsed 
+##       0       0       0
+```
+--
+
+In fact, it remembers everything from the same session (assuming you haven't used `memoise::forget()`).
+
+
+```r
+system.time(fast_function(11))
+```
+
+```
+##    user  system elapsed 
+##       0       0       0
+```
+
+```r
+system.time(fast_function(22))
+```
+
+```
+##    user  system elapsed 
+##       0       0       0
+```
+
+```r
+system.time(fast_function(33))
+```
+
+```
+##    user  system elapsed 
+##       0       0       0
+```
+
+---
+
+# Input FO Example #1
+
+Setting `na.rm = TRUE`
+
+
+```r
+stat_robust &lt;- function(f, ...) {
+  function(...) {
+    f(..., na.rm = TRUE)
+  }
+}
+mean_robust &lt;- stat_robust(mean)
+min_robust &lt;- stat_robust(min)
+quantile_robust &lt;- stat_robust(quantile)
+```
+
+&lt;br /&gt;
+
+--
+
+.pull-left[
+
+```r
+x1 &lt;- 1L:10L
+mean_robust(x1)
+```
+
+```
+## [1] 5.5
+```
+
+```r
+min_robust(x1)
+```
+
+```
+## [1] 1
+```
+
+```r
+quantile_robust(x1, 0.25)
+```
+
+```
+##  25% 
+## 3.25
+```
+]
+
+.pull-right[
+
+```r
+x2 &lt;- x1; x2[1] &lt;- NA
+mean_robust(x2)
+```
+
+```
+## [1] 6
+```
+
+```r
+min_robust(x2)
+```
+
+```
+## [1] 2
+```
+
+```r
+quantile_robust(x2, 0.25)
+```
+
+```
+## 25% 
+##   4
+```
+]
+
+---
+
+# Input FO Example #1
+
+Using `purrr::partial()` to set `na.rm = TRUE`
+
+
+```r
+mean_partial &lt;- partial(mean, na.rm = TRUE)
+min_partial &lt;- partial(min, na.rm = TRUE)
+quantile_partial &lt;- partial(quantile, na.rm = TRUE, ... = )
+```
+
+--
+
+Without `purrr::partial()`
+
+
+```r
+mean_wrapper &lt;- function(...) {
+  mean(..., na.rm = TRUE)
+}
+```
+
+---
+
+# Input FO Example #2
+
+Using the `brewer_size` data set
+
+
+
+
+```r
+brewer_size %&gt;% 
+  summarize_at(
+    vars(total_barrels, total_shipped),
+*   list(mean = mean, mean_robust = mean_robust)
+  ) %&gt;% 
+  mutate_all(
+    ~scales::number(., scale = 1e-3, big.mark = ',', suffix = ' k')
+  ) %&gt;% 
+  glimpse()
+```
+
+```
+## Rows: 1
+## Columns: 4
+## $ total_barrels_mean        &lt;chr&gt; NA
+## $ total_shipped_mean        &lt;chr&gt; NA
+## $ total_barrels_mean_robust &lt;chr&gt; "30,796 k"
+## $ total_shipped_mean_robust &lt;chr&gt; "885 k"
+```
+
+---
+
+# Output FO Example #1
+
+Using `purrr::safely()`
+
+
+
+```r
+download_beers_safely &lt;- purrr::safely(download_beers)
+```
+
+
+```r
+brewing_material &lt;- download_beers_safely('brewing_material') # Oops!
+```
+
+```
+## Downloading brewing_material.csv
+```
+
+```r
+brewing_material
+```
+
+```
+## $result
+## NULL
+## 
+## $error
+## &lt;simpleError in open.connection(con, "rb"): HTTP error 404.&gt;
+```
+
+&lt;br /&gt;
+
+
+```r
+brewing_materials &lt;- download_beers_safely('brewing_materials') # Good
+```
+
+```
+## Downloading brewing_materials.csv
+```
+
+```r
+brewing_materials$result %&gt;% head(5)
+```
+
+```
+## # A tibble: 5 x 9
+##   data_type                material_type   year month type                       month_current month_prior_year ytd_current ytd_prior_year
+##   &lt;chr&gt;                    &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;                              &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;          &lt;dbl&gt;
+## 1 Pounds of Materials Used Grain Products  2008     1 Malt and malt products         374165152        365300134   374165152      365300134
+## 2 Pounds of Materials Used Grain Products  2008     1 Corn and corn products          57563519         41647092    57563519       41647092
+## 3 Pounds of Materials Used Grain Products  2008     1 Rice and rice products          72402143         81050102    72402143       81050102
+## 4 Pounds of Materials Used Grain Products  2008     1 Barley and barley products       3800844          2362162     3800844        2362162
+## 5 Pounds of Materials Used Grain Products  2008     1 Wheat and wheat products         1177186          1195381     1177186        1195381
+```
+
+&lt;hide&gt;
+In a real-world example, it is more likely that the error is with something unexpected on the web-page, not in the user's code.
+&lt;/hide&gt;
+
+---
+
+# Output FO Example #2
+
+Using `purrr::possibly()`
+
+
+
+```r
+download_beers_possibly &lt;- purrr::possibly(download_beers, otherwise = tibble())
+```
+
+
+```r
+brewing_material &lt;- download_beers_possibly('brewing_material') # Oops!
+```
+
+```
+## Downloading brewing_material.csv
+```
+
+```r
+brewing_material
+```
+
+```
+## # A tibble: 0 x 0
+```
+
+&lt;hide&gt;
+`purrr::safely()` also has an `otherwise` argument, but I think it makes more sense to use in conjuction with `possibly()`.
+&lt;/hide&gt;
+
+---
+
+# Output FO Example #3
+
+Using `purrr::quietly()`
+
+
+
+```r
+download_beers_quietly &lt;- purrr::quietly(download_beers)
+```
+
+
+```r
+brewing_materials &lt;- download_beers_quietly('brewing_materials')
+names(brewing_materials)
+```
+
+```
+## [1] "result"   "output"   "warnings" "messages"
+```
+
+```r
+brewing_materials$result %&gt;% head(5)
+```
+
+```
+## # A tibble: 5 x 9
+##   data_type                material_type   year month type                       month_current month_prior_year ytd_current ytd_prior_year
+##   &lt;chr&gt;                    &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;                              &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;          &lt;dbl&gt;
+## 1 Pounds of Materials Used Grain Products  2008     1 Malt and malt products         374165152        365300134   374165152      365300134
+## 2 Pounds of Materials Used Grain Products  2008     1 Corn and corn products          57563519         41647092    57563519       41647092
+## 3 Pounds of Materials Used Grain Products  2008     1 Rice and rice products          72402143         81050102    72402143       81050102
+## 4 Pounds of Materials Used Grain Products  2008     1 Barley and barley products       3800844          2362162     3800844        2362162
+## 5 Pounds of Materials Used Grain Products  2008     1 Wheat and wheat products         1177186          1195381     1177186        1195381
+```
+
+---
+
+# Combining FOs Example
+
+
+```r
+nms &lt;- c('woops', 'brewing_materials', 'beer_taxed', 'brewer_size', 'beer_states') %&gt;% 
+  setNames(., .)
+```
+
+
+```r
+download_beers_nicely &lt;- slowly(download_beers_safely, 0.1)
+beers &lt;- nms %&gt;%
+  map(., 
+*     ~download_beers_nicely(..1) %&gt;%
+        purrr::pluck('result')
+    )
+```
+
+```
+## Sleeping for 0.1 seconds.
+## Downloading woops.csv
+## Sleeping for 0.1 seconds.
+## Downloading brewing_materials.csv
+## Sleeping for 0.1 seconds.
+## Downloading beer_taxed.csv
+## Sleeping for 0.1 seconds.
+## Downloading brewer_size.csv
+## Sleeping for 0.1 seconds.
+## Downloading beer_states.csv
+```
+
+```r
+beers %&gt;% map(dim) %&gt;% str()
+```
+
+```
+## List of 5
+##  $ woops            : NULL
+##  $ brewing_materials: int [1:2] 1440 9
+##  $ beer_taxed       : int [1:2] 1580 10
+##  $ brewer_size      : int [1:2] 137 6
+##  $ beer_states      : int [1:2] 1872 4
+```
+---
+
+# Combining FOs Example
+
+And a real-world use-case for `purrr::reduce()`!
+
+
+```r
+beers %&gt;% 
+  purrr::discard(is.null) %&gt;% 
+  purrr::reduce(dplyr::left_join) %&gt;% 
+  dim()
+```
+
+```
+## [1] 15984    18
+```
+
+---
+
+# FOs in the Wild
+
++ `{scales}` and `{ggplot2}`'s `scale_(color|fill)_*()`
+
++ `{glue}` with it's transformers
+
++ Sparingly in `{styler}` and `{lintr}`
+
+--
+
++ `{plumber}` uses R6 🙀
+
+---
+
+# FIN
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<style>
+.logo {
+  background-image: url(r4ds.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 110px;
+  height: 128px;
+  z-index: 0;
+}
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"></div>';
+  });
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
