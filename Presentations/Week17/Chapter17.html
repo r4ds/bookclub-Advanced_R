@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Chapter 17: Metaprogramming, Big Picture</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="R4DS Reading Group" />
+    <script src="libs/header-attrs-2.3/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Chapter 17: Metaprogramming, Big Picture
+## Tony ElHabr
+### R4DS Reading Group
+
+---
+
+
+
+
+
+
+
+&lt;style&gt;
+hide {
+  display: none;
+}
+.remark-slide-content h1 {
+  font-size: 45px;
+}
+h1 {
+  font-size: 2em;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+}
+.remark-slide-content {
+  font-size: 16px
+}
+.remark-code {
+  font-size: 14px;
+}
+code.r {
+  font-size: 14px;
+}
+pre {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.red {
+  color: #FF0000;
+}
+.blue {
+  color: #0000FF;
+}
+.green {
+  color: #00EE00;
+}
+.footnote {
+  color: #800020;
+  font-size: 10px;
+}
+.aligncenter {
+  text-align: center;
+}
+&lt;/style&gt;
+
+# What is metaprogramming?
+
+&lt;img src="metaprogramming-meme.jpeg" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# What is metaprogramming?
+
+--
+
+Writing programs (or code) that can manipulate other programs (or code).
+
+--
+
+Does metaprogamming == Non Standard Evaluation (NSE)?
+
+&gt; [Metaprogramming] is the idea that code is data that can be inspected and modified programmatically... Closely related to metaprogramming is __non-standard evaluation__, NSE for short. This term, which is commonly used to describe the behaviour of R functions, is problematic.. NSE is actually a property of the argument (or arguments) of a function, so talking about NSE functions is a little sloppy
+
+---
+
+# Big Ideas
+
+--
+
+&lt;img src="big-ideas-meme-1.jpg" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Big Ideas
+
+&lt;img src="big-ideas-meme-2.jpg" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Big Ideas
+
+&lt;img src="big-ideas-meme-3.jpg" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Big Ideas
+
+&lt;img src="big-ideas-meme-4.jpg" width="40%" style="display: block; margin: auto;" /&gt;
+
+--
+
+.footnote[
+References:
+(1) https://rstudio.com/resources/rstudioconf-2018/tidy-eval-programming-with-dplyr-tidyr-and-ggplot2/, (2) https://www.youtube.com/watch?v=nERXS3ssntw, (3) https://www.youtube.com/watch?v=g1h-YDWVRLc
+]
+
+
+---
+
+# 1. R code is a tree
+
+
+&lt;img src="code-tree-meme.jpg" width="38%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# 1. R code is a tree
+
+
+But what does that mean???
+
+--
+
+
+"R code can be described as expressions, which can be drawn as tree."
+
+&lt;!-- &gt; Expressions are also called __abstract syntax trees (ASTs)__ because the structure of code is hierarchical and can be naturally represented as a tree.--&gt;
+
+&gt; An expression is anything that has a value. The simplest expressions are literal values like the number 1, the string "stuff", and the Boolean TRUE. A variable like least is also an expression: its value is whatever the variable currently refers to.
+
+&gt; Complex expressions are built out of simpler expressions: `1 + 2` is an expression that uses `+` to combine 1 and 2, while the expression `c(10, 20, 30)` uses the function `c` to create a vector out of the values 10, 20, 30. Expressions are often drawn as trees.
+
+.footnote[
+https://third-bit.com/2018/11/16/non-standard-evaluation.html
+]
+
+--
+
+
+```r
+lobstr::ast(f(x, 'y', 1))
+```
+
+```
+## o-f 
+## +-x 
+## +-"y" 
+## \-1
+```
+
+--
+
+ASTs are not unique to R. However, R is somewhat unique because of how it provides users the freedom to manipulate the tree.
+
+---
+
+# 1. R code is a tree
+
+Everything is a tree!
+
+--
+
+.pull-left[
+
+Assignment and infix operator (`*`)
+
+
+```r
+x &lt;- 1
+lobstr::ast(y &lt;- 2 * x) 
+```
+
+```
+## o-`&lt;-` 
+## +-y 
+## \-o-`*` 
+##   +-2 
+##   \-x
+```
+
+Control flow statements
+
+
+```r
+lobstr::ast(if(x &gt; 1) y else x)
+```
+
+```
+## o-`if` 
+## +-o-`&gt;` 
+## | +-x 
+## | \-1 
+## +-y 
+## \-x
+```
+
+]
+
+--
+
+.pull-right[
+
+Functions
+
+
+```r
+lobstr::ast(function(x, y) x + y)
+```
+
+```
+## o-`function` 
+## +-o-x = `` 
+## | \-y = `` 
+## +-o-`+` 
+## | +-x 
+## | \-y 
+## \-&lt;inline srcref&gt;
+```
+
+ASTs
+
+
+```r
+lobstr::ast(lobstr::ast(x + y))
+```
+
+```
+## o-o-`::` 
+## | +-lobstr 
+## | \-ast 
+## \-o-`+` 
+##   +-x 
+##   \-y
+```
+]
+
+---
+
+# 2. Capture trees by __quoting__
+
+--
+
+
+```r
+ex1 &lt;- rlang::expr(x + y)
+ex1
+```
+
+```
+## x + y
+```
+
+--
+
+
+```r
+x &lt;- 1
+y &lt;- 2
+eval(ex1)
+```
+
+```
+## [1] 3
+```
+
+
+```r
+lobstr::ast(1 + 2)
+```
+
+```
+## o-`+` 
+## +-1 
+## \-2
+```
+
+---
+
+# 2. Capture trees by __quoting__
+
+--
+
+`rlang::expr` vs. `rlang::enexpr`
+
+--
+
+`rlang::expr` quotes __your__ expression
+
+
+```r
+f1 &lt;- function(z) expr(z)
+f1(a + b)
+```
+
+```
+## z
+```
+
+--
+
+`enexpr` quotes __user's__ expression
+
+
+```r
+f2 &lt;- function(z) enexpr(z)
+f2(a + b)
+```
+
+```
+## a + b
+```
+
+--
+
+`en` = "enriched"
+
+
+---
+
+# 2. Capture trees by __quoting__
+
+
+&lt;img src="expr-enexpr-meme.jpg" width="44%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# 2. Capture trees by __quoting__
+
+
+
+
+&lt;code class ='r hljs remark-code'&gt;mean(&lt;span style='color:blue'&gt;x + y&lt;/span&gt;)&lt;br&gt;&lt;br&gt;library(&lt;span style='color:red'&gt;ggplot2&lt;/span&gt;) &amp;nbsp;&lt;br&gt;&lt;br&gt;# ggplot(&lt;span style='color:blue'&gt;mtcars&lt;/span&gt;, aes(&lt;span style='color:red'&gt;disp&lt;/span&gt;, &lt;span style='color:red'&gt;mpg&lt;/span&gt;)) + geom_point()&lt;br&gt;&lt;br&gt;&lt;span style='color:blue'&gt;mtcars&lt;/span&gt;$&lt;span style='color:red'&gt;disp&lt;/span&gt;&lt;br&gt;&lt;br&gt;&lt;span style='color:red'&gt;z&lt;/span&gt; &lt;- &lt;span style='color:blue'&gt;x + 1&lt;/span&gt;&lt;br&gt;&lt;br&gt;data.frame(&lt;span style='color:red'&gt;z&lt;/span&gt; = &lt;span style='color:blue'&gt;3&lt;/span&gt;)&lt;/code&gt;
+
+.blue[Blue]: Evaluated using usual R rules
+
+.red[Red]: Quoted and evaluated with special rules
+
+---
+
+# 3. Build trees by __unquoting__
+
+--
+
+
+
+```r
+lobstr::ast(eval(!!ex1))
+```
+
+```
+## o-eval 
+## \-o-`+` 
+##   +-x 
+##   \-y
+```
+
+--
+
+
+```r
+ex2 &lt;- rlang::expr(x / !!ex1)
+ex2
+```
+
+```
+## x/(x + y)
+```
+
+--
+
+
+```r
+eval(ex2)
+```
+
+```
+## [1] 0.3333333
+```
+
+--
+
+
+```r
+lobstr::ast(eval(!!ex2))
+```
+
+```
+## o-eval 
+## \-o-`/` 
+##   +-x 
+##   \-o-`+` 
+##     +-x 
+##     \-y
+```
+
+---
+
+# 3. Build trees by __unquoting__
+
+Understanding how to build code trees == success in online arguments.
+
+&lt;img src="pjmdoll-tweet.jpg" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# 3. Build trees by __unquoting__
+
+Understanding how to build code trees == success in online arguments.
+
+&lt;img src="pjmdoll-tweet-w-reply-1.jpg" width="60%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# 3. Build trees by __unquoting__
+
+Understanding how to build code trees == success in online arguments.
+
+&lt;img src="pjmdoll-tweet-w-reply-2.jpg" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# 3. Build trees by __unquoting__
+
+With this knowledge, you can win debates.
+
+
+```r
+ast(x &lt;- 8 / 2 * (2 + 2))
+```
+
+```
+## o-`&lt;-` 
+## +-x 
+## \-o-`*` 
+##   +-o-`/` 
+##   | +-8 
+##   | \-2 
+##   \-o-`(` 
+##     \-o-`+` 
+##       +-2 
+##       \-2
+```
+
+```r
+x
+```
+
+```
+## [1] 1
+```
+
+---
+
+# 4. Capture trees __AND__&lt;br /&gt; environments
+
+--
+
+__quosure__ == closure + quote
+
+--
+
+__Quosures__ aremportant for disambiguating the context in which expressions are evaluated (e.g. a column in a data frame or a variable in the parent environment).
+
+---
+
+# 4. Capture trees __AND__&lt;br /&gt; environments
+
+
+
+Result is `tibble(x = 0, y = 1)`.
+
+
+&lt;code class ='r hljs remark-code'&gt;update &lt;- function(df, col) {&lt;br&gt;&amp;nbsp;&amp;nbsp;&lt;span style='background-color:yellow'&gt;n &lt;- 1&lt;/span&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;col &lt;- &lt;span style='background-color:white'&gt;rlang::enexpr&lt;/span&gt;(col)&lt;br&gt;&amp;nbsp;&amp;nbsp;res &lt;- dplyr::mutate(df, y = !!col)&lt;br&gt;&amp;nbsp;&amp;nbsp;res&lt;br&gt;}&lt;br&gt;&lt;br&gt;df &lt;- tibble::tibble(x = 0)&lt;br&gt;&lt;span style='background-color:pink'&gt;n &lt;- 2&lt;/span&gt;&lt;br&gt;update(df, &lt;span style='background-color:yellow'&gt;x + n&lt;/span&gt;)&lt;/code&gt;
+
+---
+
+# 4. Capture trees __AND__&lt;br /&gt; environments
+
+
+&lt;img src="quosure-incorrect-meme.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# 4. Capture trees __AND__&lt;br /&gt; environments
+
+
+
+Result is `tibble(x = 0, y = 2)`.
+
+
+&lt;code class ='r hljs remark-code'&gt;update &lt;- function(df, col) {&lt;br&gt;&amp;nbsp;&amp;nbsp;&lt;span style='background-color:pink'&gt;n &lt;- 1&lt;/span&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;col &lt;- &lt;span style='background-color:white'&gt;rlang::enquo&lt;/span&gt;(col)&lt;br&gt;&amp;nbsp;&amp;nbsp;res &lt;- dplyr::mutate(df, y = !!col)&lt;br&gt;&amp;nbsp;&amp;nbsp;res&lt;br&gt;}&lt;br&gt;&lt;br&gt;df &lt;- tibble::tibble(x = 0)&lt;br&gt;&lt;span style='background-color:yellow'&gt;n &lt;- 2&lt;/span&gt;&lt;br&gt;update(df, &lt;span style='background-color:yellow'&gt;x + n&lt;/span&gt;)&lt;/code&gt;
+
+---
+
+# 4. Capture trees __AND__&lt;br /&gt; environments
+
+
+&lt;img src="contrived-canonical-example.jpg" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# The Power of Metaprogramming
+
+
+&lt;img src="when-non-tech-people-ask-me-to-describe-my-job.gif" width="44%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# What's next
+
++ Chapter 18: More about R code as a tree
+
++ Chapter 19: More about evaluating (quoting) unevaluated code
+
++ Chapter 20: More about evaluatin (unquoting) captured code
+
+---
+
+# Aside about trees
+
+--
+
+Understanding how "code is a tree" would have helped me with my final project in my Intro to Programming class.
+
+--
+
+.pull-left[
+
+&lt;img src="final-lab-1.jpg" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&gt; Please note that whether you choose to explicitly build a parse tree or not, you will almost certainly have to write your parsing and executing function(s) using recursion. Fortunately, the recursion required to do this is super easy (whether you build a parse tree or not, the recursion is very natural).
+
+&lt;br /&gt;
+
+&gt; Implementing a Parse Tree is optional for Phase A. In Phase B, we will almost certainly mandate that you have a Parse Tree, and for Phase B, the parse trees are decidedly more complicated, since you will have both Expressions to represent and Statements to represent.
+
+]
+
+---
+
+# Aside about trees
+
+
+.pull-left[
+
+&lt;img src="final-lab-2.jpg" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+
+&lt;img src="final-lab-reaction-meme.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<style>
+.logo {
+  background-image: url(r4ds.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 110px;
+  height: 128px;
+  z-index: 0;
+}
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"></div>';
+  });
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
