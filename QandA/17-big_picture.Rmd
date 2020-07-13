@@ -1,2 +1,7 @@
 # 17 Big Picture
 
+## 17.8 Quosures {-}
+
+:::question
+What is meant here by "data mask"
+:::
