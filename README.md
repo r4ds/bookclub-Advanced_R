@@ -1,18 +1,18 @@
 # R4DS [Advanced R](https://adv-r.hadley.nz/) Bookclub
+### Following the Chapters of [Advanced R](https://adv-r.hadley.nz/)
+[Join the slack group](https://r4ds.io/join) for the weekly video-call link! 
 
 This repo contains 3 main folders:
 
 - QandA: A bookdown of questions (and answers) on the chapters that come up during meetings (or between!). We're also using this to try to answer questions marked "started" in the solutions manual with the potential goal of submitting PRs with our own answers!
 
-- Presentations: each week a presenter will give a talk summarizing the chapter, and discussing applications using the beer dataset. We meet every Tuesday at 8:00 PM Eastern on Zoom. [Join the slack group](https://r4ds.io/join) for the weekly link! 
+- Presentations: each week a presenter will give a talk summarizing the chapter and/or discussing practical applications of the topic at hand. 
 
-- Data: The dataset we will be using for presentations is on [Beer Production](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-03-31/readme.md) 
+- Data: Example datasets about [beer production](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-03-31/readme.md) and beer reviews are stored in this folder to help facilitate practical applications!
 
 ## Meeting Schedule 
-### Following the Chapters of [Advanced R](https://adv-r.hadley.nz/) 2nd Edition
 
-
-*Group 1: Tuesdays, 8pm ET*
+*Group 1 (started 2020-04-02) - Tuesdays, 8pm ET*
 <details>
   <summary> Past meetings </summary>
   
@@ -51,3 +51,5 @@ This repo contains 3 main folders:
 - 2020-09-08 Chapter 25 - Rewriting R code in C++:
 
 </details>
+
+*Group 2: Time/start-date still being decided - jump on the Slack channel if you want input!*
