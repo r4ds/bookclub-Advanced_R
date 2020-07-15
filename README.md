@@ -28,7 +28,7 @@ All Meetings Scheduled for 8:00 PM Eastern unless otherwise noted
 - 2020-06-25 Chapter 14 - R6: Tyler Grant Smith: ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Chapter14.html#1) | [Zoom Recording](https://www.youtube.com/watch?v=hPjaOdprgow&feature=youtu.be))
 - 2020-06-30 Chapter 15 - S4: Pavitra Chakravarty: ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week14/Chapter15.html#1) | [Zoom Recording](https://www.youtube.com/watch?v=a1jzpWiksyA&feature=youtu.be))
 - 2020-07-07 Chapter 16 - Tradeoffs/OOP Wrapup: [Tan Ho](https://twitter.com/_tanho) ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week15/AdvR-W15_Tradeoffs.html#1) | [Zoom Recording](https://www.youtube.com/watch?v=W1uc8HbyZvI&feature=youtu.be) | [ffscrapr package](https://github.com/dynastyprocess/ffscrapr))
-- 2020-07-14 Chapter 17 - Metaprogramming, big picture: [Tony ElHabr](https://twitter.com/TonyElHabr)
+- 2020-07-14 Chapter 17 - Metaprogramming, big picture: [Tony ElHabr](https://twitter.com/TonyElHabr) ([Slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week17/Chapter17.html#1) | Zoom Recording)
 - 2020-07-21 Chapter 18 - Expressions: [Maya Gans](https://maya.rbind.io)
 - 2020-07-28 Chapter 19 - Quasiquotation: [Jon Harmon](https://twitter.com/jonthegeek)
 - 2020-08-04 Chapter 20 - Evaluation: [Daryn Ramsden](https://twitter.com/thisisdaryn) 

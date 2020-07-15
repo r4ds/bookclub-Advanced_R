@@ -1,0 +1,644 @@
+---
+title: 'Chapter 17: Metaprogramming, Big Picture'
+subtitle: 'Tony ElHabr'
+author: 'R4DS Reading Group'
+output:
+  xaringan::moon_reader:
+    nature:
+      highlightLines: true
+    lib_dir: libs
+    css: xaringan-themer.css
+    includes:
+      after_body: insert-logo.html
+---
+
+
+```{r setup, include=F}
+knitr::opts_chunk$set(
+  # comment = '',
+  cache = TRUE,
+  cache.lazy = FALSE,
+  include = TRUE,
+  message = FALSE, 
+  warning = FALSE
+)
+```
+
+```{r xaringan-themer, eval=T, echo=F, include=F}
+# xaringan::inf_mr()
+library(xaringanthemer)
+library(tidyverse)
+library(rlang)
+library(lobstr)
+style_mono_light(
+  base_color = '#3092FF',
+  header_font_google = google_font('Josefin Slab'),
+  text_font_google = google_font('Raleway', '300', '300i')
+)
+# # Not working?
+# xaringanExtra::use_logo(
+#   'https://github.com/r4ds/bookclub-Advanced_R/blob/master/Presentations/_template/r4ds.png'
+# )
+```
+
+<style>
+hide {
+  display: none;
+}
+.remark-slide-content h1 {
+  font-size: 45px;
+}
+h1 {
+  font-size: 2em;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+}
+.remark-slide-content {
+  font-size: 16px
+}
+.remark-code {
+  font-size: 14px;
+}
+code.r {
+  font-size: 14px;
+}
+pre {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.red {
+  color: #FF0000;
+}
+.blue {
+  color: #0000FF;
+}
+.green {
+  color: #00EE00;
+}
+.footnote {
+  color: #800020;
+  font-size: 10px;
+}
+.aligncenter {
+  text-align: center;
+}
+.remark-slide-number {
+  display: none;
+}
+</style>
+
+# What is metaprogramming?
+
+--
+
+```{r echo=F, include=T, eval=T, out.width='100%', fig.align='left'}
+knitr::include_graphics('cake-meme-1.JPG')
+```
+
+---
+
+# What is metaprogramming?
+
+```{r echo=F, include=T, eval=T, out.width='100%', fig.align='left'}
+knitr::include_graphics('cake-meme-2.JPG')
+```
+
+---
+
+# What is metaprogramming?
+
+```{r echo=F, include=T, eval=T, out.width='100%', fig.align='left'}
+knitr::include_graphics('cake-meme-3.JPG')
+```
+
+---
+
+# What is metaprogramming?
+
+```{r echo=F, include=T, eval=T, out.width='100%', fig.align='left'}
+knitr::include_graphics('cake-meme-4.JPG')
+```
+
+---
+
+# What is metaprogramming?
+
+--
+
+Writing programs (or code) that can manipulate other programs (or code).
+
+--
+
+Does metaprogamming == __Non Standard Evaluation (NSE)__?
+
+> [Metaprogramming] is the idea that code is data that can be inspected and modified programmatically... Closely related to metaprogramming is __non-standard evaluation__, NSE for short. This term, which is commonly used to describe the behaviour of R functions, is problematic.. NSE is actually a property of the argument (or arguments) of a function, so talking about NSE functions is a little sloppy.
+
+---
+
+# Big Ideas
+
+--
+
+```{r echo=F, include=T, eval=T, out.width='40%', fig.align='center'}
+knitr::include_graphics('big-ideas-meme-1.jpg')
+```
+
+---
+
+# Big Ideas
+
+```{r echo=F, include=T, eval=T, out.width='40%', fig.align='center'}
+knitr::include_graphics('big-ideas-meme-2.jpg')
+```
+
+---
+
+# Big Ideas
+
+```{r echo=F, include=T, eval=T, out.width='40%', fig.align='center'}
+knitr::include_graphics('big-ideas-meme-3.jpg')
+```
+
+---
+
+# Big Ideas
+
+```{r echo=F, include=T, eval=T, out.width='40%', fig.align='center'}
+knitr::include_graphics('big-ideas-meme-4.jpg')
+```
+
+--
+
+.footnote[
+References:
+(1) https://rstudio.com/resources/rstudioconf-2018/tidy-eval-programming-with-dplyr-tidyr-and-ggplot2/, (2) https://www.youtube.com/watch?v=nERXS3ssntw, (3) https://www.youtube.com/watch?v=g1h-YDWVRLc
+]
+
+
+---
+
+# 1. R code is a tree
+
+--
+
+```{r echo=F, include=T, eval=T, out.width='38%', fig.align='center'}
+knitr::include_graphics('code-tree-meme.jpg')
+```
+
+---
+
+# 1. R code is a tree
+
+
+But what does that mean???
+
+--
+
+___"R code can be described as expressions, which can be drawn as trees."___
+
+<!-- > Expressions are also called __abstract syntax trees (ASTs)__ because the structure of code is hierarchical and can be naturally represented as a tree.-->
+
+> An expression is anything that has a value. The simplest expressions are literal values like the number 1, the string "stuff", and the Boolean TRUE. A variable like least is also an expression: its value is whatever the variable currently refers to. Complex expressions are built out of simpler expressions: `1 + 2` is an expression that uses `+` to combine 1 and 2, while the expression `c(10, 20, 30)` uses the function `c` to create a vector out of the values 10, 20, 30. Expressions are often drawn as trees.
+
+.footnote[
+https://third-bit.com/2018/11/16/non-standard-evaluation.html
+]
+
+--
+
+```{r }
+lobstr::ast(f(x, 'y', 1))
+```
+
+--
+
+> Colours will be shown when you call `ast()`, but do not appear in the book for complicated technical reasons.
+
+<!-- ASTs are not unique to R. However, R is somewhat unique because of how it provides users the freedom to manipulate the tree. -->
+
+--
+
+
+```{r echo=F, include=T, eval=T, out.width='100', out.height = '100', fig.align='center'}
+knitr::include_graphics('hw.jpg')
+```
+
+---
+
+# 1. R code is a tree
+
+
+But what does that mean???
+
+___"R code can be described as expressions, which can be drawn as trees."___
+
+
+> An expression is anything that has a value. The simplest expressions are literal values like the number 1, the string "stuff", and the Boolean TRUE. A variable like least is also an expression: its value is whatever the variable currently refers to. Complex expressions are built out of simpler expressions: `1 + 2` is an expression that uses `+` to combine 1 and 2, while the expression `c(10, 20, 30)` uses the function `c` to create a vector out of the values 10, 20, 30. Expressions are often drawn as trees.
+
+.footnote[
+https://third-bit.com/2018/11/16/non-standard-evaluation.html
+]
+
+
+```{r }
+lobstr::ast(f(x, 'y', 1))
+```
+
+> Colours will be shown when you call `ast()`, but do not appear in the book for complicated technical reasons.
+
+
+```{r echo=F, include=T, eval=T, out.width='100', out.height = '100', fig.align='center'}
+knitr::include_graphics('troll-meme.png')
+```
+
+---
+
+# 1. R code is a tree
+
+Everything is a tree!
+
+--
+
+.pull-left[
+
+Assignment and infix operator (`*`)
+
+```{r }
+x <- 1
+lobstr::ast(y <- 2 * x) 
+```
+
+Control flow statements
+
+```{r }
+lobstr::ast(if(x > 1) y else x)
+```
+
+]
+
+--
+
+.pull-right[
+
+Functions
+
+```{r }
+lobstr::ast(function(x, y) x + y)
+```
+
+ASTs
+
+```{r }
+lobstr::ast(lobstr::ast(x + y))
+
+```
+]
+
+---
+
+# 2. Capture trees by __quoting__
+
+--
+
+```{r }
+ex1 <- rlang::expr(x + y)
+ex1
+```
+
+--
+
+```{r }
+x <- 1
+y <- 2
+eval(ex1)
+```
+
+```{r }
+lobstr::ast(1 + 2)
+```
+
+---
+
+# 2. Capture trees by __quoting__
+
+--
+
+`rlang::expr` vs. `rlang::enexpr`
+
+--
+
+`rlang::expr` quotes __your__ expression
+
+```{r }
+f1 <- function(z) expr(z)
+f1(a + b)
+```
+
+--
+
+`enexpr` quotes __user's__ expression
+
+```{r }
+f2 <- function(z) enexpr(z)
+f2(a + b)
+```
+
+--
+
+`en` = "enriched"
+
+
+---
+
+# 2. Capture trees by __quoting__
+
+
+```{r echo=F, include=T, eval=T, out.width='44%', fig.align='center'}
+knitr::include_graphics('expr-enexpr-meme.jpg')
+```
+
+---
+
+# 2. Capture trees by __quoting__
+
+```{r quote-1, include=T, echo=F, eval=F, results='hide', fig.show='hide'}
+mean(x + y)
+
+library(ggplot2)  
+
+# ggplot(mtcars, aes(disp, mpg)) + geom_point()
+
+mtcars$disp
+
+z <- x + 1
+
+data.frame(z = 3)
+```
+
+```{r quote-1-flair, include=T, echo=F, eval=T}
+require(flair)
+# https://github.com/kbodwin/flair/issues/13
+flair::decorate_chunk('quote-1') %>% 
+  flair::flair('x + y', color = 'blue') %>% 
+  flair::flair('ggplot2', color = 'red') %>% 
+  flair::flair('mtcars', color = 'blue') %>% 
+  flair::flair('disp', color = 'red') %>% 
+  flair::flair('mpg', color = 'red') %>% 
+  flair::flair('x + 1', color = 'blue') %>% 
+  flair::flair('z', color = 'red') %>% 
+  flair::flair('3', color = 'blue') %>% 
+  knit_print.with_flair()
+```
+
+.blue[Blue]: Evaluated using usual R rules
+
+.red[Red]: Quoted and evaluated with special rules
+
+---
+
+# 3. Build trees by __unquoting__
+
+--
+
+
+```{r }
+lobstr::ast(eval(!!ex1))
+```
+
+--
+
+```{r }
+ex2 <- rlang::expr(x / !!ex1)
+ex2
+```
+
+--
+
+```{r }
+eval(ex2)
+```
+
+--
+
+```{r }
+lobstr::ast(eval(!!ex2))
+```
+
+---
+
+# 3. Build trees by __unquoting__
+
+```{r msg-1, echo=F, include=T, eval=T, results='asis'}
+cat('Understanding how to build code trees == success in online arguments.')
+```
+
+```{r echo=F, include=T, eval=T, out.width='60%', fig.align='center'}
+knitr::include_graphics('pjmdoll-tweet.jpg')
+```
+
+---
+
+# 3. Build trees by __unquoting__
+
+```{r ref.label='msg-1', echo=F, include=T, eval=T, results='asis'}
+```
+
+```{r echo=F, include=T, eval=T, out.width='60%', fig.align='center'}
+knitr::include_graphics('pjmdoll-tweet-w-reply-1.jpg')
+```
+
+
+---
+
+# 3. Build trees by __unquoting__
+
+```{r ref.label='msg-1', echo=F, include=T, eval=T, results='asis'}
+```
+
+```{r echo=F, include=T, eval=T, out.width='60%', fig.align='center'}
+knitr::include_graphics('pjmdoll-tweet-w-reply-2.jpg')
+```
+
+---
+
+# 3. Build trees by __unquoting__
+
+```{r ref.label='msg-1', echo=F, include=T, eval=T, results='asis'}
+```
+
+<!-- `lobstr::ast()` does not actually evaluate! -->
+
+```{r }
+x <- 8 / 2 * (2 + 2)
+```
+
+```{r }
+lobstr::ast(x <- 8 / 2 * (2 + 2))
+x
+```
+
+
+---
+
+# 4. Capture trees __AND__<br /> environments
+
+--
+
+__quosure__ == closure + quote
+
+--
+
+__Quosures__ aremportant for disambiguating the context in which expressions are evaluated (e.g. a column in a data frame or a variable in the parent environment).
+
+---
+
+# 4. Capture trees __AND__<br /> environments
+
+```{r quosure-1, include=T, echo=F, eval=T, results='hide', fig.show='hide'}
+update <- function(df, col) {
+  n <- 1
+  col <- rlang::enexpr(col)
+  res <- dplyr::mutate(df, y = !!col)
+  res
+}
+
+df <- tibble::tibble(x = 0)
+n <- 2
+update(df, x + n)
+```
+
+Result is `tibble(x = 0, y = 1)`.
+
+```{r quosure-1-flair, include=T, echo=F, eval=T}
+flair::decorate_chunk('quosure-1') %>% 
+  flair::flair('n <- 1', background = 'yellow') %>% 
+  flair::flair('n <- 2', background = 'pink') %>% 
+  flair::flair('x + n', background = 'yellow') %>% 
+  flair::flair('rlang::enexpr', background = 'white') %>% 
+  knit_print.with_flair()
+```
+
+---
+
+# 4. Capture trees __AND__<br /> environments
+
+
+```{r echo=F, include=T, eval=T, out.width='80%', fig.align='center'}
+knitr::include_graphics('quosure-incorrect-meme.png')
+```
+
+---
+
+# 4. Capture trees __AND__<br /> environments
+
+```{r quosure-2, include=T, echo=F, eval=T, results='hide', fig.show='hide'}
+update <- function(df, col) {
+  n <- 1
+  col <- rlang::enquo(col)
+  res <- dplyr::mutate(df, y = !!col)
+  res
+}
+
+df <- tibble::tibble(x = 0)
+n <- 2
+update(df, x + n)
+```
+
+Result is `tibble(x = 0, y = 2)`.
+
+```{r quosure-2-flair, include=T, echo=F, eval=T}
+flair::decorate_chunk('quosure-2') %>% 
+  flair::flair('n <- 1', background = 'pink') %>% 
+  flair::flair('n <- 2', background = 'yellow') %>% 
+  flair::flair('x + n', background = 'yellow') %>% 
+  flair::flair('rlang::enquo', background = 'white') %>% 
+  knit_print.with_flair()
+```
+
+---
+
+# 4. Capture trees __AND__<br /> environments
+
+
+```{r echo=F, include=T, eval=T, out.width='60%', fig.align='center'}
+knitr::include_graphics('contrived-canonical-example.jpg')
+```
+
+---
+
+# The Power of Metaprogramming
+
+--
+
+Metaprogramming is awesome. R is great because of how much control it allows user to have.
+
+--
+
+
+```{r echo=F, include=T, eval=T, out.width='44%', fig.align='center'}
+knitr::include_graphics('when-non-tech-people-ask-me-to-describe-my-job.gif')
+```
+
+---
+
+# What's next
+
++ Chapter 18: More about R code as a tree
+
++ Chapter 19: More about evaluating (quoting) unevaluated code
+
++ Chapter 20: More about evaluating (unquoting) captured code
+
+---
+
+# Aside about trees
+
+--
+
+Understanding how "code is a tree" would have helped me with my final project in my Intro to Programming class.
+
+--
+
+.pull-left[
+
+```{r echo=F, include=T, eval=T, out.width='100%', fig.align='center'}
+knitr::include_graphics('final-lab-1.jpg')
+```
+
+]
+
+.pull-right[
+
+> Please note that whether you choose to explicitly build a parse tree or not, you will almost certainly have to write your parsing and executing function(s) using recursion. Fortunately, the recursion required to do this is super easy (whether you build a parse tree or not, the recursion is very natural).
+
+<br />
+
+> Implementing a Parse Tree is optional for Phase A. In Phase B, we will almost certainly mandate that you have a Parse Tree, and for Phase B, the parse trees are decidedly more complicated, since you will have both Expressions to represent and Statements to represent.
+
+]
+
+---
+
+# Aside about trees
+
+
+.pull-left[
+
+```{r echo=F, include=T, eval=T, out.width='100%', fig.align='center'}
+knitr::include_graphics('final-lab-2.jpg')
+```
+
+]
+
+--
+
+.pull-right[
+
+<br />
+
+```{r echo=F, include=T, eval=T, out.width='90%', fig.align='center'}
+# knitr::include_graphics('final-lab-reaction-meme.png')
+knitr::include_graphics('mario-meme.JPG')
+```
+
+]
