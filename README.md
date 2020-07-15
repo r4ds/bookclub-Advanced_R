@@ -10,9 +10,9 @@ This repo contains 3 main folders:
 
 ## Meeting Schedule 
 ### Following the Chapters of [Advanced R](https://adv-r.hadley.nz/) 2nd Edition
-All Meetings Scheduled for 8:00 PM Eastern unless otherwise noted
 
-*Group 1*
+
+*Group 1: Tuesdays, 8pm ET*
 <details>
   <summary> Past meetings </summary>
   
