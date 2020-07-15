@@ -5,8 +5,8 @@ library(pagedown)
 
 # setwd() to the presentation folder, or else the knit will not work properly!
 
-old_dir <- setwd(here::here("Presentations", "Week11"))
+old_dir <- setwd(here::here("Presentations", "Week17"))
 
-pagedown::chrome_print("Chapter11.Rmd")
+pagedown::chrome_print("Chapter17.Rmd")
 
 setwd(old_dir)

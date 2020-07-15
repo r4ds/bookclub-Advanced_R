@@ -64,11 +64,34 @@ pre {
 .aligncenter {
   text-align: center;
 }
+.remark-slide-number {
+  display: none;
+}
 &lt;/style&gt;
 
 # What is metaprogramming?
 
-&lt;img src="metaprogramming-meme.jpeg" width="60%" style="display: block; margin: auto;" /&gt;
+--
+
+&lt;img src="cake-meme-1.JPG" width="100%" style="display: block; margin: auto auto auto 0;" /&gt;
+
+---
+
+# What is metaprogramming?
+
+&lt;img src="cake-meme-2.JPG" width="100%" style="display: block; margin: auto auto auto 0;" /&gt;
+
+---
+
+# What is metaprogramming?
+
+&lt;img src="cake-meme-3.JPG" width="100%" style="display: block; margin: auto auto auto 0;" /&gt;
+
+---
+
+# What is metaprogramming?
+
+&lt;img src="cake-meme-4.JPG" width="100%" style="display: block; margin: auto auto auto 0;" /&gt;
 
 ---
 
@@ -80,9 +103,9 @@ Writing programs (or code) that can manipulate other programs (or code).
 
 --
 
-Does metaprogamming == Non Standard Evaluation (NSE)?
+Does metaprogamming == __Non Standard Evaluation (NSE)__?
 
-&gt; [Metaprogramming] is the idea that code is data that can be inspected and modified programmatically... Closely related to metaprogramming is __non-standard evaluation__, NSE for short. This term, which is commonly used to describe the behaviour of R functions, is problematic.. NSE is actually a property of the argument (or arguments) of a function, so talking about NSE functions is a little sloppy
+&gt; [Metaprogramming] is the idea that code is data that can be inspected and modified programmatically... Closely related to metaprogramming is __non-standard evaluation__, NSE for short. This term, which is commonly used to describe the behaviour of R functions, is problematic.. NSE is actually a property of the argument (or arguments) of a function, so talking about NSE functions is a little sloppy.
 
 ---
 
@@ -122,6 +145,7 @@ References:
 
 # 1. R code is a tree
 
+--
 
 &lt;img src="code-tree-meme.jpg" width="38%" style="display: block; margin: auto;" /&gt;
 
@@ -134,14 +158,11 @@ But what does that mean???
 
 --
 
-
-"R code can be described as expressions, which can be drawn as tree."
+___"R code can be described as expressions, which can be drawn as trees."___
 
 &lt;!-- &gt; Expressions are also called __abstract syntax trees (ASTs)__ because the structure of code is hierarchical and can be naturally represented as a tree.--&gt;
 
-&gt; An expression is anything that has a value. The simplest expressions are literal values like the number 1, the string "stuff", and the Boolean TRUE. A variable like least is also an expression: its value is whatever the variable currently refers to.
-
-&gt; Complex expressions are built out of simpler expressions: `1 + 2` is an expression that uses `+` to combine 1 and 2, while the expression `c(10, 20, 30)` uses the function `c` to create a vector out of the values 10, 20, 30. Expressions are often drawn as trees.
+&gt; An expression is anything that has a value. The simplest expressions are literal values like the number 1, the string "stuff", and the Boolean TRUE. A variable like least is also an expression: its value is whatever the variable currently refers to. Complex expressions are built out of simpler expressions: `1 + 2` is an expression that uses `+` to combine 1 and 2, while the expression `c(10, 20, 30)` uses the function `c` to create a vector out of the values 10, 20, 30. Expressions are often drawn as trees.
 
 .footnote[
 https://third-bit.com/2018/11/16/non-standard-evaluation.html
@@ -163,7 +184,48 @@ lobstr::ast(f(x, 'y', 1))
 
 --
 
-ASTs are not unique to R. However, R is somewhat unique because of how it provides users the freedom to manipulate the tree.
+&gt; Colours will be shown when you call `ast()`, but do not appear in the book for complicated technical reasons.
+
+&lt;!-- ASTs are not unique to R. However, R is somewhat unique because of how it provides users the freedom to manipulate the tree. --&gt;
+
+--
+
+
+&lt;img src="hw.jpg" width="100" height="100" style="display: block; margin: auto;" /&gt;
+
+---
+
+# 1. R code is a tree
+
+
+But what does that mean???
+
+___"R code can be described as expressions, which can be drawn as trees."___
+
+
+&gt; An expression is anything that has a value. The simplest expressions are literal values like the number 1, the string "stuff", and the Boolean TRUE. A variable like least is also an expression: its value is whatever the variable currently refers to. Complex expressions are built out of simpler expressions: `1 + 2` is an expression that uses `+` to combine 1 and 2, while the expression `c(10, 20, 30)` uses the function `c` to create a vector out of the values 10, 20, 30. Expressions are often drawn as trees.
+
+.footnote[
+https://third-bit.com/2018/11/16/non-standard-evaluation.html
+]
+
+
+
+```r
+lobstr::ast(f(x, 'y', 1))
+```
+
+```
+## o-f 
+## +-x 
+## +-"y" 
+## \-1
+```
+
+&gt; Colours will be shown when you call `ast()`, but do not appear in the book for complicated technical reasons.
+
+
+&lt;img src="troll-meme.png" width="100" height="100" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -435,11 +497,18 @@ Understanding how to build code trees == success in online arguments.
 
 # 3. Build trees by __unquoting__
 
-With this knowledge, you can win debates.
+Understanding how to build code trees == success in online arguments.
+
+&lt;!-- `lobstr::ast()` does not actually evaluate! --&gt;
 
 
 ```r
-ast(x &lt;- 8 / 2 * (2 + 2))
+x &lt;- 8 / 2 * (2 + 2)
+```
+
+
+```r
+lobstr::ast(x &lt;- 8 / 2 * (2 + 2))
 ```
 
 ```
@@ -460,8 +529,9 @@ x
 ```
 
 ```
-## [1] 1
+## [1] 16
 ```
+
 
 ---
 
@@ -515,6 +585,12 @@ Result is `tibble(x = 0, y = 2)`.
 
 # The Power of Metaprogramming
 
+--
+
+Metaprogramming is awesome. R is great because of how much control it allows user to have.
+
+--
+
 
 &lt;img src="when-non-tech-people-ask-me-to-describe-my-job.gif" width="44%" style="display: block; margin: auto;" /&gt;
 
@@ -526,7 +602,7 @@ Result is `tibble(x = 0, y = 2)`.
 
 + Chapter 19: More about evaluating (quoting) unevaluated code
 
-+ Chapter 20: More about evaluatin (unquoting) captured code
++ Chapter 20: More about evaluating (unquoting) captured code
 
 ---
 
@@ -569,7 +645,9 @@ Understanding how "code is a tree" would have helped me with my final project in
 
 .pull-right[
 
-&lt;img src="final-lab-reaction-meme.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;br /&gt;
+
+&lt;img src="mario-meme.JPG" width="90%" style="display: block; margin: auto;" /&gt;
 
 ]
     </textarea>
