@@ -33,7 +33,7 @@ All Meetings Scheduled for 8:00 PM Eastern unless otherwise noted
 - 2020-07-28 Chapter 19 - Quasiquotation: [Jon Harmon](https://twitter.com/jonthegeek)
 - 2020-08-04 Chapter 20 - Evaluation: [Daryn Ramsden](https://twitter.com/thisisdaryn) 
 - 2020-08-11 Chapter 21 - Translating R code:
-- 2020-08-18 Chapter 22 - Debugging:
+- 2020-08-18 Chapter 22 - Debugging: [Tan Ho](https://twitter.com/_tanho)
 - 2020-08-25 Chapter 23 - Measuring performance:
 - 2020-09-01 Chapter 24 - Improving performance:
 - 2020-09-08 Chapter 25 - Rewriting R code in C++:
