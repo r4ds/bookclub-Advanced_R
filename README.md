@@ -1,5 +1,5 @@
 # R4DS [Advanced R](https://adv-r.hadley.nz/) Bookclub
-### Following the Chapters of [Advanced R](https://adv-r.hadley.nz/)
+### Following the chapters of [Advanced R](https://adv-r.hadley.nz/)
 [Join the slack group](https://r4ds.io/join) for the weekly video-call link! 
 
 This repo contains 3 main folders:
