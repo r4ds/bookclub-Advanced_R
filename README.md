@@ -70,7 +70,7 @@ Chapter 9 - Functionals
 
 Chapter 10 - Function factories
 
-- [Jon Harmon](https://twitter.com/jonthegeek) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week10/Chapter10.html#1) | [video](https://www.youtube.com/watch?v=enI5Ynq6olI) | [factory package](https://cran.r-project.org/package=factory))
+- [Jon Harmon](https://twitter.com/jonthegeek) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week10/Chapter10.html#1) | [video](https://www.youtube.com/watch?v=enI5Ynq6olI) | [{factory}](https://cran.r-project.org/package=factory))
 
 Chapter 11 - Function operators
 
@@ -90,10 +90,8 @@ Chapter 15 - S4
 
 Chapter 16 - Tradeoffs/OOP Wrapup
 
-- [Tan Ho](https://twitter.com/_tanho) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week15/AdvR-W15_Tradeoffs.html#1) | [video](https://www.youtube.com/watch?v=W1uc8HbyZvI&feature=youtu.be) | [ffscrapr package](https://github.com/dynastyprocess/ffscrapr))
+- [Tan Ho](https://twitter.com/_tanho) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week15/AdvR-W15_Tradeoffs.html#1) | [video](https://www.youtube.com/watch?v=W1uc8HbyZvI&feature=youtu.be) | [{ffscrapr}](https://github.com/dynastyprocess/ffscrapr))
 
 Chapter 17 - Metaprogramming, big picture
 
 - [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week17/Chapter17.html#1) | video)
-
-</details>
