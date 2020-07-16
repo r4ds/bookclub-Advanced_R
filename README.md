@@ -20,7 +20,7 @@ This repo contains 3 main folders:
 
 
 <details>
-  <summary> Upcoming Meetings </summary>
+  <summary> Future Meetings </summary>
   
 - 2020-08-04 Chapter 20 - Evaluation: [Daryn Ramsden](https://twitter.com/thisisdaryn) 
 - 2020-08-11 Chapter 21 - Translating R code:
