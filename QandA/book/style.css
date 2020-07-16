@@ -40,6 +40,7 @@ div.answer, div.question {
 
 div.TODO {
     padding: 1em;
+    padding-top: 20em;
     margin: 1em 0;
     background-size: 40px;
     background-repeat: no-repeat;
