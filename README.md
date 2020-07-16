@@ -1,7 +1,7 @@
 # R4DS [Advanced R](https://adv-r.hadley.nz/) Bookclub
 A weekly reading group following the chapters of Advanced R by Hadley Wickham (2nd ed)
 
-[Visit the #bookc_club-advanced_r Slack channel](https://r4ds.io/join) to join the video chat! 
+Visit the [#book_club-advanced_r channel](https://r4ds.io/join) on Slack to join the video chat! 
 
 This repo contains 3 main folders:
 
