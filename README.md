@@ -36,9 +36,6 @@ This repo contains 3 main folders:
 
 ### Presentations & Recordings
 
-<details open>
-<summary> </summary>
-
 Chapter 2 - Names and values
 
 - [Asmae Toumi](https://twitter.com/asmae_toumi) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Chap2slides.html#1))
