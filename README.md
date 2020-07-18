@@ -94,4 +94,4 @@ Chapter 16 - Tradeoffs/OOP Wrapup
 
 Chapter 17 - Metaprogramming, big picture
 
-- [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week17/Chapter17.html#1) | video)
+- [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week17/Chapter17.html#1) | [video](https://www.youtube.com/watch?v=10gRbFMoh7g))
