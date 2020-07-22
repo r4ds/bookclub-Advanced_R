@@ -19,19 +19,12 @@ ui <- fluidPage(
            wellPanel(textInput("func", NULL, placeholder = "mean")),
            br(),
            wellPanel(
-             numericInput("n", "Number of Arguments", value = 2, min = 1),
-             fluidRow(
-               column(6, "Arguments"),
-               column(6, "Values")
+            numericInput("n", "Number of Arguments", value = 2, min = 1),
+            fluidRow(
+                column(6, "Arguments"),
+                column(6, "Values")
              ),
-             fluidRow(
-               column(6, textInput("arg1", NULL)),
-               column(6, textInput("val1", NULL))
-             ),
-             fluidRow(
-               column(6, textInput("arg2", NULL)),
-               column(6, textInput("val2", NULL))
-             )
+             uiOutput("arguments")
            )
     ),
     column(6, 
@@ -50,16 +43,33 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   
-  argumentlist <- reactive({
-    list(
-      input$func,
-      expr(!!parse_expr(input$val1)),
-      expr(!!parse_expr(input$val2))
-    ) %>% 
-      setNames(c(".fn", input$arg1, input$arg2))
+  # create arg and val names 
+  # for the number of user selected argument inputs
+  arg_names <- reactive(paste0("arg", seq_len(input$n)))
+  val_names <- reactive(paste0("val", seq_len(input$n)))
+  
+  # render the UI for arg1, arg2 etc etc... and val1, val2 etc etc 
+  output$arguments <- renderUI({
+    fluidRow(
+      column(6, map(arg_names(), ~ textInput(.x, NULL, value = isolate(input[[.x]])) %||% "")),
+      column(6, map(val_names(), ~ textInput(.x, NULL, value = isolate(input[[.x]])) %||% ""))
+    )
   })
   
-
+  argumentlist <- reactive({
+    input_argnames <- map_chr(arg_names(),~input[[.x]])
+    input_valnames <- map_chr(val_names(),~input[[.x]])
+    c(
+      # the function name as a string is fine
+      list(input$func),
+      # now get all the input$val's
+      # and expr(!!parse_expr()) each of them
+      map(input_valnames, ~ expr(!!parse_expr(.x)))
+    ) %>%
+      # set their names to the input$args
+      setNames(c(".fn", input_argnames))
+  })
+ 
   output$expression <- renderPrint({
     do.call(call2, argumentlist(), quote = TRUE)
     })
