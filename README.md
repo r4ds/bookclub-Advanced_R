@@ -15,15 +15,14 @@ This repo contains 3 main folders:
 
 *Group 1 (started 2020-04-02) - Tuesdays, 8pm EDT/EST*
 
-- 2020-07-21 Chapter 18 - Expressions: [Maya Gans](https://maya.rbind.io)
 - 2020-07-28 Chapter 19 - Quasiquotation: [Jon Harmon](https://twitter.com/jonthegeek)
+- 2020-08-04 Chapter 20 - Evaluation: [Daryn Ramsden](https://twitter.com/thisisdaryn) 
+- 2020-08-11 Chapter 21 - Translating R code:
 
 
 <details>
   <summary> Future Meetings </summary>
-  
-- 2020-08-04 Chapter 20 - Evaluation: [Daryn Ramsden](https://twitter.com/thisisdaryn) 
-- 2020-08-11 Chapter 21 - Translating R code:
+
 - 2020-08-18 Chapter 22 - Debugging: [Tan Ho](https://twitter.com/_tanho)
 - 2020-08-25 Chapter 23 - Measuring performance:
 - 2020-09-01 Chapter 24 - Improving performance:
@@ -95,3 +94,6 @@ Chapter 16 - Tradeoffs/OOP Wrapup
 Chapter 17 - Metaprogramming, big picture
 
 - [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week17/Chapter17.html#1) | [video](https://www.youtube.com/watch?v=10gRbFMoh7g))
+
+Chapter 18 - Expressions 
+- [Maya Gans](https://maya.rbind.io) (slides | video | app | repo)
