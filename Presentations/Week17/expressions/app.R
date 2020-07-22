@@ -50,18 +50,14 @@ server <- function(input, output, session) {
   all_formals <- reactive({ get_all_formals(!!input$func) })
   
   observeEvent(input$func, {
-    x <- ifelse(input$func == "", 0, length(formals()$formals))
+    x <- ifelse(input$func == "", 0, length(formals()))
     updateNumericInput(session, inputId = "n", value = x)
   })
 
   # create a list of formals that are not elipse
-  # then TRUE FALSE if it contains an elipse
   formals <- reactive({
     req(all_formals())
-    list(
-      formals = all_formals()[all_formals() != "..."],
-      elipse = "..." %in% all_formals()
-    )
+    all_formals()[all_formals() != "..."]
   })
   
   
@@ -72,7 +68,7 @@ server <- function(input, output, session) {
   output$arguments <- renderUI({
     
     args <- rep(NA, input$n)
-    args <- formals()$formals[1:length(args)]
+    args <- formals()[1:length(args)]
     
     fluidRow(
       column(6, map2(arg_names(), args, function(x,y) textInput(x, NULL, value = y))),

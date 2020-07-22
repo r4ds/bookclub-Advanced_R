@@ -21,9 +21,6 @@ get_all_formals <- function(func) {
     formalArgs(func)
   }
 }
-get_all_formals("mean")
-get_all_formals(mean)
 
-input <- list()
-input$mean <- "mean"
-get_all_formals(!!input$mean)
+# get_all_formals("mean")
+# get_all_formals(mean)
