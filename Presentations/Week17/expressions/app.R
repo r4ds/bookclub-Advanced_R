@@ -49,8 +49,9 @@ server <- function(input, output, session) {
   # grab the formals based on the user specified function
   all_formals <- reactive({ 
     req(input$func)
-    get_all_formals(!!input$func) 
-    })
+    safe_formals <- purrr::safely(get_all_formals)
+    safe_formals(!!input$func)$result
+  })
   
   observeEvent(input$func, {
     x <- ifelse(input$func == "", 0, length(formals()))
