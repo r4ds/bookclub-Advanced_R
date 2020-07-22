@@ -3,6 +3,8 @@ library(purrr)
 library(lobstr)
 library(rlang)
 
+source("get_all_formals.R")
+
 ui <- fluidPage(
   
   includeCSS("styles.css"),
@@ -13,21 +15,22 @@ ui <- fluidPage(
   br(), br(),
   
   fluidRow(
-    column(2,
+    column(4,
            h2("Functions"),
            br(),
            wellPanel(textInput("func", NULL, placeholder = "mean")),
            br(),
            wellPanel(
-            numericInput("n", "Number of Arguments", value = 2, min = 1),
             fluidRow(
+                numericInput("n", "Number of Arguments", value = 2, min = 1),
                 column(6, "Arguments"),
                 column(6, "Values")
              ),
              uiOutput("arguments")
-           )
+           ),
+           textOutput("debug")
     ),
-    column(6, 
+    column(4, 
            h2("Constructed Call"),
            br(),
            wellPanel(verbatimTextOutput("expression"))
@@ -41,21 +44,42 @@ ui <- fluidPage(
 )
 
 
-server <- function(input, output) {
+server <- function(input, output, session) {
   
-  # create arg and val names 
-  # for the number of user selected argument inputs
-  arg_names <- reactive(paste0("arg", seq_len(input$n)))
-  val_names <- reactive(paste0("val", seq_len(input$n)))
+  # grab the formals based on the user specified function
+  all_formals <- reactive({ get_all_formals(!!input$func) })
   
-  # render the UI for arg1, arg2 etc etc... and val1, val2 etc etc 
-  output$arguments <- renderUI({
-    fluidRow(
-      column(6, map(arg_names(), ~ textInput(.x, NULL, value = isolate(input[[.x]])) %||% "")),
-      column(6, map(val_names(), ~ textInput(.x, NULL, value = isolate(input[[.x]])) %||% ""))
+  observeEvent(input$func, {
+    x <- ifelse(input$func == "", 0, length(formals()$formals))
+    updateNumericInput(session, inputId = "n", value = x)
+  })
+
+  # create a list of formals that are not elipse
+  # then TRUE FALSE if it contains an elipse
+  formals <- reactive({
+    req(all_formals())
+    list(
+      formals = all_formals()[all_formals() != "..."],
+      elipse = "..." %in% all_formals()
     )
   })
   
+  
+  arg_names <- reactive(paste0("arg", (seq_len(input$n))))
+  val_names <- reactive(paste0("val", (seq_len(input$n))))
+
+  # render the UI for arg1, arg2 etc etc... and val1, val2 etc etc
+  output$arguments <- renderUI({
+    
+    args <- rep(NA, input$n)
+    args <- formals()$formals[1:length(args)]
+    
+    fluidRow(
+      column(6, map2(arg_names(), args, function(x,y) textInput(x, NULL, value = y))),
+      column(6, map(val_names(), ~ textInput(.x, NULL, value = isolate(input[[.x]])) %||% ""))
+    )
+  })
+
   argumentlist <- reactive({
     input_argnames <- map_chr(arg_names(),~input[[.x]])
     input_valnames <- map_chr(val_names(),~input[[.x]])
@@ -69,11 +93,11 @@ server <- function(input, output) {
       # set their names to the input$args
       setNames(c(".fn", input_argnames))
   })
- 
+
   output$expression <- renderPrint({
     do.call(call2, argumentlist(), quote = TRUE)
     })
-  
+
   output$tree <- renderPrint({
     ast(!! do.call(call2, argumentlist(), quote = TRUE))
   })
