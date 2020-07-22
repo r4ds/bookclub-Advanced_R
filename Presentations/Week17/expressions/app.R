@@ -47,7 +47,10 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   # grab the formals based on the user specified function
-  all_formals <- reactive({ get_all_formals(!!input$func) })
+  all_formals <- reactive({ 
+    req(input$func)
+    get_all_formals(!!input$func) 
+    })
   
   observeEvent(input$func, {
     x <- ifelse(input$func == "", 0, length(formals()))
@@ -66,10 +69,8 @@ server <- function(input, output, session) {
 
   # render the UI for arg1, arg2 etc etc... and val1, val2 etc etc
   output$arguments <- renderUI({
-    
     args <- rep(NA, input$n)
     args <- formals()[1:length(args)]
-    
     fluidRow(
       column(6, map2(arg_names(), args, function(x,y) textInput(x, NULL, value = y))),
       column(6, map(val_names(), ~ textInput(.x, NULL, value = isolate(input[[.x]])) %||% ""))
