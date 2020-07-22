@@ -93,7 +93,7 @@ Chapter 16 - Tradeoffs/OOP Wrapup
 
 Chapter 17 - Metaprogramming, big picture
 
-- [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week17/Chapter17.html#1) | [video](https://www.youtube.com/watch?v=10gRbFMoh7g))
+- [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week16/Chapter17.html#1) | [video](https://www.youtube.com/watch?v=10gRbFMoh7g))
 
 Chapter 18 - Expressions 
-- [Maya Gans](https://maya.rbind.io) (slides | video | app | repo)
+- [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week17/Chapter18.html#1) | [video](https://youtu.be/2NixH3QAerQ) | app | [app code](https://github.com/r4ds/bookclub-Advanced_R/tree/master/Presentations/Week17/expressions))
