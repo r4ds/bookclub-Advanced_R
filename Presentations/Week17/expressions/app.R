@@ -57,6 +57,9 @@ server <- function(input, output) {
   })
   
   argumentlist <- reactive({
+    req(val_names())
+    req(arg_names())
+    eval(expr(req(!!!parse_exprs(paste0("input$", val_names())))))  
     input_argnames <- map_chr(arg_names(),~input[[.x]])
     input_valnames <- map_chr(val_names(),~input[[.x]])
     c(
