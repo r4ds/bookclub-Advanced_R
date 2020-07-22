@@ -21,8 +21,8 @@ ui <- fluidPage(
            wellPanel(textInput("func", NULL, placeholder = "mean")),
            br(),
            wellPanel(
+            numericInput("n", "Number of Arguments", value = 2, min = 1),
             fluidRow(
-                numericInput("n", "Number of Arguments", value = 2, min = 1),
                 column(6, "Arguments"),
                 column(6, "Values")
              ),
