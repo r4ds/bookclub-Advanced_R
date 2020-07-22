@@ -2,6 +2,7 @@ library(shiny)
 library(purrr)
 library(lobstr)
 library(rlang)
+library(tidyverse)
 
 source("get_all_formals.R")
 
@@ -93,10 +94,12 @@ server <- function(input, output, session) {
   })
 
   output$expression <- renderPrint({
+    req(input$func)
     do.call(call2, argumentlist(), quote = TRUE)
     })
 
   output$tree <- renderPrint({
+    req(input$func)
     ast(!! do.call(call2, argumentlist(), quote = TRUE))
   })
   
