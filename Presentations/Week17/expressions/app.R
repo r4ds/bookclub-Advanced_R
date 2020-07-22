@@ -69,7 +69,7 @@ server <- function(input, output) {
       # set their names to the input$args
       setNames(c(".fn", input_argnames))
   })
-  
+ 
   output$expression <- renderPrint({
     do.call(call2, argumentlist(), quote = TRUE)
     })
