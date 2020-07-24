@@ -50,8 +50,11 @@ server <- function(input, output, session) {
   # grab the formals based on the user specified function
   all_formals <- reactive({ 
     req(input$func)
-    safe_formals <- purrr::safely(get_all_formals)
-    safe_formals(!!input$func)$result
+    # if errors, return empty string
+    safe_formals <- purrr::possibly(get_all_formals, "")
+    # there are functions that don't have arguments
+    # like switch, so we'll make an empty field 
+    safe_formals(!!input$func) %||% " "
   })
   
   observeEvent(input$func, {
