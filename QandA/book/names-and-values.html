@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Names and Values | Advanced R Companion</title>
   <meta name="description" content="This is a companion to Advanced R and supplement to Advanced R Solutions." />
-  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Names and Values | Advanced R Companion" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-07-13" />
+<meta name="date" content="2020-07-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -152,7 +152,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#dimensions"><i class="fa fa-check"></i>3.3.3 Dimensions</a></li>
 <li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#s3-atomic-vectors"><i class="fa fa-check"></i>3.4 S3 atomic vectors</a></li>
 <li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#dates"><i class="fa fa-check"></i>3.4.2 Dates</a></li>
-<li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#lists-1"><i class="fa fa-check"></i>3.5.1 Lists</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#lists"><i class="fa fa-check"></i>3.5.1 Lists</a></li>
 <li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#data-frames-and-tibbles"><i class="fa fa-check"></i>3.6.8 Data frames and tibbles</a></li>
 <li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#conclusion"><i class="fa fa-check"></i>Conclusion</a><ul>
 <li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#vectorized"><i class="fa fa-check"></i>VECTORIZED:</a></li>
@@ -162,9 +162,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4" data-path="subsetting.html"><a href="subsetting.html"><i class="fa fa-check"></i><b>4</b> Subsetting</a><ul>
 <li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#introduction"><i class="fa fa-check"></i>4.1 Introduction</a></li>
 <li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#selecting-multiple-elements"><i class="fa fa-check"></i>4.2.1 Selecting multiple elements</a></li>
-<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#lists-2"><i class="fa fa-check"></i>4.2.2 lists</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#lists"><i class="fa fa-check"></i>4.2.2 lists</a></li>
 <li><a href="subsetting.html#section">4.3.1 <code>[[</code></a></li>
-<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#exercise-1"><i class="fa fa-check"></i>4.3.5 Exercise</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercise"><i class="fa fa-check"></i>4.3.5 Exercise</a></li>
 <li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#missing-and-oob"><i class="fa fa-check"></i>4.3.3 Missing and OOB</a><ul>
 <li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#logical-atomic"><i class="fa fa-check"></i>LOGICAL ATOMIC</a></li>
 <li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#list"><i class="fa fa-check"></i>LIST</a></li>
@@ -178,7 +178,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#loops"><i class="fa fa-check"></i>5.3 Loops</a></li>
 <li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#switch-statement"><i class="fa fa-check"></i>5.2.3 switch statement</a></li>
 <li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#common-pitfalls"><i class="fa fa-check"></i>5.3.1 common pitfalls</a></li>
-<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#exercises-1"><i class="fa fa-check"></i>5.3.3.1 Exercises</a><ul>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>5.3.3.1 Exercises</a><ul>
 <li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#assignment-to-a-valid-index"><i class="fa fa-check"></i>Assignment to a valid index</a></li>
 <li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#assignment-to-0"><i class="fa fa-check"></i>Assignment to [0]</a></li>
 <li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#empty-index"><i class="fa fa-check"></i>Empty index</a></li>
@@ -187,12 +187,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#undefined-name"><i class="fa fa-check"></i>Undefined name</a></li>
 <li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#out-of-bounds"><i class="fa fa-check"></i>Out of Bounds</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#conclusion-1"><i class="fa fa-check"></i>Conclusion</a></li>
+<li class="chapter" data-level="" data-path="vectors.html"><a href="vectors.html#conclusion"><i class="fa fa-check"></i>Conclusion</a></li>
 <li class="chapter" data-level="" data-path="control-flow.html"><a href="control-flow.html#complexity"><i class="fa fa-check"></i>Complexity</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>6</b> Functions</a><ul>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#primitives"><i class="fa fa-check"></i>6.2.2 Primitives</a></li>
-<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercises-2"><i class="fa fa-check"></i>6.2.5.1 Exercises</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>6.2.5.1 Exercises</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#function-composition"><i class="fa fa-check"></i>6.3 Function composition</a><ul>
 <li class="chapter" data-level="6.0.1" data-path="functions.html"><a href="functions.html#nested"><i class="fa fa-check"></i><b>6.0.1</b> Nested</a></li>
 <li class="chapter" data-level="6.0.2" data-path="functions.html"><a href="functions.html#intermediate"><i class="fa fa-check"></i><b>6.0.2</b> Intermediate</a></li>
@@ -203,15 +203,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#lazy-evaluation"><i class="fa fa-check"></i>6.5 Lazy evaluation</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#promises"><i class="fa fa-check"></i>6.5.1 Promises</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#default-arguments"><i class="fa fa-check"></i>6.5.2 Default arguments</a></li>
-<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-2"><i class="fa fa-check"></i>6.5.4.3 Exercise</a></li>
-<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-3"><i class="fa fa-check"></i>6.5.4.4 Exercise</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercise"><i class="fa fa-check"></i>6.5.4.3 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-1"><i class="fa fa-check"></i>6.5.4.4 Exercise</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#dot-dot-dot"><i class="fa fa-check"></i>6.6 dot dot dot</a></li>
-<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-4"><i class="fa fa-check"></i>6.6.1.2 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-2"><i class="fa fa-check"></i>6.6.1.2 Exercise</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exit-handlers"><i class="fa fa-check"></i>6.7.4 Exit handlers</a></li>
-<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-5"><i class="fa fa-check"></i>6.7.5.4 Exercise</a></li>
-<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-6"><i class="fa fa-check"></i>6.7.5.5 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-3"><i class="fa fa-check"></i>6.7.5.4 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-4"><i class="fa fa-check"></i>6.7.5.5 Exercise</a></li>
 <li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#replacement-functions"><i class="fa fa-check"></i>6.8.4 Replacement functions</a></li>
-<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-7"><i class="fa fa-check"></i>6.8.6.3 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-5"><i class="fa fa-check"></i>6.8.6.3 Exercise</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="environments.html"><a href="environments.html"><i class="fa fa-check"></i><b>7</b> Environments</a><ul>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#parents"><i class="fa fa-check"></i>7.2.3 Parents</a></li>
@@ -219,7 +219,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#getting-and-setting"><i class="fa fa-check"></i>7.2.5 Getting and setting</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#advanced-bindings"><i class="fa fa-check"></i>7.2.6 Advanced bindings</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#recursing-over-environments"><i class="fa fa-check"></i>7.3 Recursing over environments</a></li>
-<li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#exercises-3"><i class="fa fa-check"></i>7.3.1.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>7.3.1.2 Exercises</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#function-enviornment"><i class="fa fa-check"></i>7.4.2 Function enviornment</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#namespaces"><i class="fa fa-check"></i>7.4.3 Namespaces</a></li>
 <li class="chapter" data-level="" data-path="environments.html"><a href="environments.html#call-stacks"><i class="fa fa-check"></i>7.5 Call stacks</a></li>
@@ -229,25 +229,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#ignoring-conditions"><i class="fa fa-check"></i>8.3 Ignoring conditions</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exiting-handlers"><i class="fa fa-check"></i>8.4.2 Exiting handlers</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#calling-handlers"><i class="fa fa-check"></i>8.4.3 Calling handlers</a></li>
-<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-4"><i class="fa fa-check"></i>8.4.5.2 Exercises</a></li>
-<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-5"><i class="fa fa-check"></i>8.4.5.3 Exercises</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>8.4.5.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-1"><i class="fa fa-check"></i>8.4.5.3 Exercises</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#resignal"><i class="fa fa-check"></i>8.6.3 Resignal</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#record"><i class="fa fa-check"></i>8.6.4 Record</a></li>
-<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-6"><i class="fa fa-check"></i>8.6.6.2 Exercises</a></li>
-<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-7"><i class="fa fa-check"></i>8.6.6.4 Exercises</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-2"><i class="fa fa-check"></i>8.6.6.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-3"><i class="fa fa-check"></i>8.6.6.4 Exercises</a></li>
 <li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#slides"><i class="fa fa-check"></i>Slides</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="functionals.html"><a href="functionals.html"><i class="fa fa-check"></i><b>9</b> Functionals</a><ul>
 <li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#anonymous-functions-and-shortcuts"><i class="fa fa-check"></i>9.2.2 Anonymous functions and shortcuts</a></li>
-<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-8"><i class="fa fa-check"></i>9.2.6.4 Exercise</a></li>
-<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-9"><i class="fa fa-check"></i>9.2.6.5 Exercise</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercise"><i class="fa fa-check"></i>9.2.6.4 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-1"><i class="fa fa-check"></i>9.2.6.5 Exercise</a></li>
 <li><a href="functionals.html#same-type-of-output-as-input-modify">9.4.1 Same type of output as input: <code>modify()</code></a></li>
 <li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#any-number-of-inputs-pmap-and-friends"><i class="fa fa-check"></i>9.4.5 Any number of inputs: pmap() and friends</a></li>
-<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-10"><i class="fa fa-check"></i>9.4.6.2 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-2"><i class="fa fa-check"></i>9.4.6.2 Exercise</a></li>
 <li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#multiple-inputs"><i class="fa fa-check"></i>9.5.4 Multiple inputs</a></li>
-<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-11"><i class="fa fa-check"></i>9.6.3.2 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-3"><i class="fa fa-check"></i>9.6.3.2 Exercise</a></li>
 <li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#matrices-and-arrays"><i class="fa fa-check"></i>9.7.1 Matrices and arrays</a></li>
-<li class="chapter" data-level="" data-path="functionals.html"><a href="functionals.html#exercise-12"><i class="fa fa-check"></i>9.7.3.2 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-4"><i class="fa fa-check"></i>9.7.3.2 Exercise</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="function-factories.html"><a href="function-factories.html"><i class="fa fa-check"></i><b>10</b> Function factories</a><ul>
 <li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#factory-fundamentals"><i class="fa fa-check"></i>10.2 Factory fundamentals</a></li>
@@ -256,20 +256,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.1.1" data-path="function-factories.html"><a href="function-factories.html#using-force"><i class="fa fa-check"></i><b>10.1.1</b> USING FORCE</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#garbage-collection"><i class="fa fa-check"></i>10.2.5 garbage collection</a></li>
-<li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#exercise-13"><i class="fa fa-check"></i>10.2.6.2 Exercise</a></li>
-<li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#exercise-14"><i class="fa fa-check"></i>10.2.6.3 Exercise</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercise"><i class="fa fa-check"></i>10.2.6.2 Exercise</a></li>
+<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#exercise-1"><i class="fa fa-check"></i>10.2.6.3 Exercise</a></li>
 <li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#labelling"><i class="fa fa-check"></i>10.3.1 Labelling</a></li>
-<li class="chapter" data-level="" data-path="function-factories.html"><a href="function-factories.html#exercises-8"><i class="fa fa-check"></i>10.3.4 Exercises</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>10.3.4 Exercises</a></li>
 <li class="chapter" data-level="10.2" data-path="function-factories.html"><a href="function-factories.html#factories-and-functionals"><i class="fa fa-check"></i><b>10.2</b> 10.5 factories and functionals</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="function-operators.html"><a href="function-operators.html"><i class="fa fa-check"></i><b>11</b> Function operators</a><ul>
-<li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#introduction-1"><i class="fa fa-check"></i>11.1 Introduction</a></li>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#introduction"><i class="fa fa-check"></i>11.1 Introduction</a></li>
 <li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#purrrsafely"><i class="fa fa-check"></i>11.2.1 purrr::safely</a></li>
 <li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#memoise"><i class="fa fa-check"></i>11.2.2 memoise</a></li>
-<li class="chapter" data-level="" data-path="function-operators.html"><a href="function-operators.html#exercises-9"><i class="fa fa-check"></i>11.2.3.1 Exercises</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>11.2.3.1 Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="base-types.html"><a href="base-types.html"><i class="fa fa-check"></i><b>12</b> Base Types</a><ul>
-<li class="chapter" data-level="" data-path="base-types.html"><a href="base-types.html#introduction-2"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#introduction"><i class="fa fa-check"></i>Introduction</a></li>
 <li class="chapter" data-level="" data-path="base-types.html"><a href="base-types.html#base-types-1"><i class="fa fa-check"></i>12.3 Base types</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="s3.html"><a href="s3.html"><i class="fa fa-check"></i><b>13</b> S3</a><ul>
@@ -277,13 +277,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#classes"><i class="fa fa-check"></i>13.3 Classes</a><ul>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#ipa-helper"><i class="fa fa-check"></i>IPA Helper</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#exercises-10"><i class="fa fa-check"></i>13.3.4.3 Exercises</a></li>
-<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#exercises-11"><i class="fa fa-check"></i>13.3.4.4 Exercises</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>13.3.4.3 Exercises</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-1"><i class="fa fa-check"></i>13.3.4.4 Exercises</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#generics"><i class="fa fa-check"></i>13.4.1 Generics</a></li>
-<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#exercises-12"><i class="fa fa-check"></i>13.4.4.5 Exercises</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-2"><i class="fa fa-check"></i>13.4.4.5 Exercises</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#object-styles"><i class="fa fa-check"></i>13.5 Object styles</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#inheritance"><i class="fa fa-check"></i>13.6 Inheritance</a></li>
-<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#exercises-13"><i class="fa fa-check"></i>13.4.3.3 Exercises</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-3"><i class="fa fa-check"></i>13.4.3.3 Exercises</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#s3-and-base-types"><i class="fa fa-check"></i>13.7.1 S3 and Base Types</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#internal-generics"><i class="fa fa-check"></i>13.7.3 Internal Generics</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#double-dispatch"><i class="fa fa-check"></i>13.7.4 Double Dispatch</a></li>
@@ -296,8 +296,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="r6.html"><a href="r6.html#reference-semantics"><i class="fa fa-check"></i>14.4 Reference semantics</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="s4.html"><a href="s4.html"><i class="fa fa-check"></i><b>15</b> S4</a><ul>
-<li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#basics-1"><i class="fa fa-check"></i>15.2 Basics</a></li>
-<li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#exercises-14"><i class="fa fa-check"></i>15.3.6.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#basics"><i class="fa fa-check"></i>15.2 Basics</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>15.3.6.2 Exercises</a></li>
 <li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#signature"><i class="fa fa-check"></i>Signature</a></li>
 <li class="chapter" data-level="" data-path="s4.html"><a href="s4.html#single-dispatch"><i class="fa fa-check"></i>15.5.1 Single dispatch</a></li>
 </ul></li>
@@ -308,6 +308,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="17" data-path="big-picture.html"><a href="big-picture.html"><i class="fa fa-check"></i><b>17</b> 17 Big Picture</a><ul>
 <li class="chapter" data-level="" data-path="big-picture.html"><a href="big-picture.html#quosures"><i class="fa fa-check"></i>17.8 Quosures</a></li>
 </ul></li>
+<li class="chapter" data-level="18" data-path="expressions.html"><a href="expressions.html"><i class="fa fa-check"></i><b>18</b> Expressions</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -437,17 +438,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb18-3" data-line-number="3"><span class="kw">identical</span>(lobstr<span class="op">::</span><span class="kw">ref</span>(l1),lobstr<span class="op">::</span><span class="kw">ref</span>(l2))</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">obj_addr</span>(l1[[<span class="dv">1</span>]])</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fda12cc9028&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fb114055980&quot;</code></pre>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">obj_addr</span>(l2[[<span class="dv">1</span>]])</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fda12cc9028&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fb114055980&quot;</code></pre>
 <p>But why isn’t this the case for their subsets? Using <code>obj_addr</code> they have different addresses, but when we look at their references they are the same</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">obj_addr</span>(l1[<span class="dv">1</span>])</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fda10cad630&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fb1134cdd90&quot;</code></pre>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">ref</span>(l1[<span class="dv">1</span>])</a></code></pre></div>
-<pre><code>## █ [1:0x7fda10c35400] &lt;list&gt; 
-## └─[2:0x7fda12cc9028] &lt;dbl&gt;</code></pre>
+<pre><code>## █ [1:0x7fb11345a9a8] &lt;list&gt; 
+## └─[2:0x7fb114055980] &lt;dbl&gt;</code></pre>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">obj_addr</span>(l2[<span class="dv">1</span>])</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fda114a87a0&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fb11334db28&quot;</code></pre>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">identical</span>(lobstr<span class="op">::</span><span class="kw">obj_addr</span>(l1[<span class="dv">1</span>]), lobstr<span class="op">::</span><span class="kw">obj_addr</span>(l2[<span class="dv">1</span>]))</a></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 </div>
@@ -460,11 +461,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Nothing - it has to do with the printing method:</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb34-2" data-line-number="2"><span class="kw">print</span>(<span class="kw">tracemem</span>(x))</a></code></pre></div>
-<pre><code>## [1] &quot;&lt;0x7fda0dc8e358&gt;&quot;</code></pre>
+<pre><code>## [1] &quot;&lt;0x7fb10b1622d8&gt;&quot;</code></pre>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">cat</span>(<span class="kw">tracemem</span>(x))</a></code></pre></div>
-<pre><code>## &lt;0x7fda0dc8e358&gt;</code></pre>
+<pre><code>## &lt;0x7fb10b1622d8&gt;</code></pre>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">obj_addr</span>(x)</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fda0dc8e358&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fb10b1622d8&quot;</code></pre>
 <div class="question">
 <p>When would you prefer a deep copy of a list to a shallow copy? Is this something to consider when writing functions or package development or is this more something that’s optimized behind the scenes?</p>
 </div>
@@ -494,11 +495,11 @@ tracemem[0x7f84b7fe5288 -&gt; 0x7f84bc0817c8]: </code></pre>
 <p>When we assign the new value as an integer there is no intermediate step. This probably means <code>c(1,2, NA)</code> is the intermediate step; creating an intermediate vector that’s the same length of the final product with NA values at all locations that are new or to be changed</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(1L, 2L, 3L)</a>
 <a class="sourceLine" id="cb42-2" data-line-number="2"><span class="kw">obj_addr</span>(x)</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fda0c79fc08&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fb1139123c8&quot;</code></pre>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">tracemem</span>(x)</a></code></pre></div>
-<pre><code>## [1] &quot;&lt;0x7fda0c79fc08&gt;&quot;</code></pre>
+<pre><code>## [1] &quot;&lt;0x7fb1139123c8&gt;&quot;</code></pre>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">x[[<span class="dv">3</span>]] &lt;-<span class="st"> </span>4L</a></code></pre></div>
-<pre><code>## tracemem[0x7fda0c79fc08 -&gt; 0x7fda12d90448]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir &lt;Anonymous&gt; &lt;Anonymous&gt;</code></pre>
+<pre><code>## tracemem[0x7fb1139123c8 -&gt; 0x7fb1138eda08]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt; render_cur_session render_book FUN lapply unlist render_book render_book_script in_dir &lt;Anonymous&gt; &lt;Anonymous&gt;</code></pre>
 <p>You can dig into the C code running this:</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">pryr<span class="op">::</span><span class="kw">show_c_source</span>(<span class="kw">.Internal</span>(<span class="st">&quot;[&lt;-&quot;</span>))</a></code></pre></div>
 </div>
@@ -541,33 +542,33 @@ tracemem[0x7f84b7fe5288 -&gt; 0x7f84bc0817c8]: </code></pre>
 <p>Now we can create a vector:</p>
 <div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1">v &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb57-2" data-line-number="2">(old_address &lt;-<span class="st"> </span>lobstr<span class="op">::</span><span class="kw">obj_addr</span>(v))</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fda150cefa8&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fb1143a2418&quot;</code></pre>
 <p>Changing a value within it changes its address:</p>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1">v[[<span class="dv">3</span>]] &lt;-<span class="st"> </span><span class="dv">4</span></a>
 <a class="sourceLine" id="cb59-2" data-line-number="2">(new_address &lt;-<span class="st"> </span>lobstr<span class="op">::</span><span class="kw">obj_addr</span>(v))</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fda14a5e238&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fb113bec2a8&quot;</code></pre>
 <div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1">old_address <span class="op">==</span><span class="st"> </span>new_address</a></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <p>We can assign the modified vector to a new name, where <code>y</code> and <code>v</code> point to the same thing.</p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1">y &lt;-<span class="st"> </span>v</a>
 <a class="sourceLine" id="cb63-2" data-line-number="2">(y_address &lt;-<span class="st"> </span>lobstr<span class="op">::</span><span class="kw">obj_addr</span>(y))</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fda14a5e238&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fb113bec2a8&quot;</code></pre>
 <div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1">(v_address &lt;-<span class="st"> </span>lobstr<span class="op">::</span><span class="kw">obj_addr</span>(v))</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fda14a5e238&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fb113bec2a8&quot;</code></pre>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1">y_address <span class="op">==</span><span class="st"> </span>v_address</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>Now if we modify <code>v</code> it won’t point to the same thing as <code>y</code>:</p>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1">v[[<span class="dv">3</span>]] &lt;-<span class="st"> </span><span class="dv">3</span></a>
 <a class="sourceLine" id="cb69-2" data-line-number="2">(y_address &lt;-<span class="st"> </span>lobstr<span class="op">::</span><span class="kw">obj_addr</span>(y))</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fda14a5e238&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fb113bec2a8&quot;</code></pre>
 <div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1">(v_address &lt;-<span class="st"> </span>lobstr<span class="op">::</span><span class="kw">obj_addr</span>(v))</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fda13cb2b98&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fb110d8ce08&quot;</code></pre>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1">y_address <span class="op">==</span><span class="st"> </span>v_address</a></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <p>But if we now change <code>y</code> to look like <code>v</code>, the original address, in theory editing y should occur in place, but it doesn’t - the “count does not go back to one”!</p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1">y[[<span class="dv">3</span>]] &lt;-<span class="st"> </span><span class="dv">3</span></a>
 <a class="sourceLine" id="cb75-2" data-line-number="2">(new_y_address &lt;-<span class="st"> </span>lobstr<span class="op">::</span><span class="kw">obj_addr</span>(y))</a></code></pre></div>
-<pre><code>## [1] &quot;0x7fda13fa7458&quot;</code></pre>
+<pre><code>## [1] &quot;0x7fb112db80c8&quot;</code></pre>
 <div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1">new_y_address <span class="op">==</span><span class="st"> </span>y_address</a></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="question">
