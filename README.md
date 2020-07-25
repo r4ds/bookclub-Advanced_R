@@ -31,7 +31,10 @@ This repo contains 3 main folders:
 </details>
 <br>
 
-*Group 2: Time/start-date still being decided - jump on the Slack channel if you want input!*
+*Group 2: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
+
+- 2020-07-30 Chapter 1 - Introduction: [Kevin Kent](https://twitter.com/kevin_m_kent)
+- 2020-08-06 Chapter 2 - Names and values: 
 
 ### Presentations & Recordings
 
