@@ -36,9 +36,17 @@ This repo contains 3 main folders:
 - 2020-07-30 Chapter 1 - Introduction: [Kevin Kent](https://twitter.com/kevin_m_kent)
 - 2020-08-06 Chapter 2 - Names and values: 
 
+<details>
+  <summary> Future Meetings </summary>
+</details>
+
 <hr>
 
 *Group 3 [Europe/Africa]: (TBD!)*
+
+<details>
+  <summary> Future Meetings </summary>
+</details>
 
 <hr>
 
