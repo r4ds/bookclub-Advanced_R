@@ -67,6 +67,11 @@ table.gt_table {
 - Deparsing
 - Evaluating
 
+
+```{r, eval=FALSE}
+ggplot(x = "other_color")
+```
+
 ### *Here's a stab:* 
 
 An **expression** is a list of calls, which can be created through **parsing** text. These expressions can become text again via **deparsing**
