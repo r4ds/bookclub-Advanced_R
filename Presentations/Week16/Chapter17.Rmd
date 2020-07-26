@@ -92,7 +92,7 @@ pre {
 --
 
 ```{r echo=F, include=T, eval=T, out.width='100%', fig.align='left'}
-knitr::include_graphics('cake-meme-1.JPG')
+knitr::include_graphics('img/cake-meme-1.JPG')
 ```
 
 ---
@@ -100,7 +100,7 @@ knitr::include_graphics('cake-meme-1.JPG')
 # What is metaprogramming?
 
 ```{r echo=F, include=T, eval=T, out.width='100%', fig.align='left'}
-knitr::include_graphics('cake-meme-2.JPG')
+knitr::include_graphics('img/cake-meme-2.JPG')
 ```
 
 ---
@@ -108,7 +108,7 @@ knitr::include_graphics('cake-meme-2.JPG')
 # What is metaprogramming?
 
 ```{r echo=F, include=T, eval=T, out.width='100%', fig.align='left'}
-knitr::include_graphics('cake-meme-3.JPG')
+knitr::include_graphics('img/cake-meme-3.JPG')
 ```
 
 ---
@@ -116,7 +116,7 @@ knitr::include_graphics('cake-meme-3.JPG')
 # What is metaprogramming?
 
 ```{r echo=F, include=T, eval=T, out.width='100%', fig.align='left'}
-knitr::include_graphics('cake-meme-4.JPG')
+knitr::include_graphics('img/cake-meme-4.JPG')
 ```
 
 ---
@@ -140,7 +140,7 @@ Does metaprogamming == __Non Standard Evaluation (NSE)__?
 --
 
 ```{r echo=F, include=T, eval=T, out.width='40%', fig.align='center'}
-knitr::include_graphics('big-ideas-meme-1.jpg')
+knitr::include_graphics('img/big-ideas-meme-1.jpg')
 ```
 
 ---
@@ -148,7 +148,7 @@ knitr::include_graphics('big-ideas-meme-1.jpg')
 # Big Ideas
 
 ```{r echo=F, include=T, eval=T, out.width='40%', fig.align='center'}
-knitr::include_graphics('big-ideas-meme-2.jpg')
+knitr::include_graphics('img/big-ideas-meme-2.jpg')
 ```
 
 ---
@@ -156,7 +156,7 @@ knitr::include_graphics('big-ideas-meme-2.jpg')
 # Big Ideas
 
 ```{r echo=F, include=T, eval=T, out.width='40%', fig.align='center'}
-knitr::include_graphics('big-ideas-meme-3.jpg')
+knitr::include_graphics('img/big-ideas-meme-3.jpg')
 ```
 
 ---
@@ -164,7 +164,7 @@ knitr::include_graphics('big-ideas-meme-3.jpg')
 # Big Ideas
 
 ```{r echo=F, include=T, eval=T, out.width='40%', fig.align='center'}
-knitr::include_graphics('big-ideas-meme-4.jpg')
+knitr::include_graphics('img/big-ideas-meme-4.jpg')
 ```
 
 --
@@ -182,7 +182,7 @@ References:
 --
 
 ```{r echo=F, include=T, eval=T, out.width='38%', fig.align='center'}
-knitr::include_graphics('code-tree-meme.jpg')
+knitr::include_graphics('img/code-tree-meme.jpg')
 ```
 
 ---
@@ -220,7 +220,7 @@ lobstr::ast(f(x, 'y', 1))
 
 
 ```{r echo=F, include=T, eval=T, out.width='100', out.height = '100', fig.align='center'}
-knitr::include_graphics('hw.jpg')
+knitr::include_graphics('img/hw.jpg')
 ```
 
 ---
@@ -248,7 +248,7 @@ lobstr::ast(f(x, 'y', 1))
 
 
 ```{r echo=F, include=T, eval=T, out.width='100', out.height = '100', fig.align='center'}
-knitr::include_graphics('troll-meme.png')
+knitr::include_graphics('img/troll-meme.png')
 ```
 
 ---
@@ -354,7 +354,7 @@ f2(a + b)
 
 
 ```{r echo=F, include=T, eval=T, out.width='44%', fig.align='center'}
-knitr::include_graphics('expr-enexpr-meme.jpg')
+knitr::include_graphics('img/expr-enexpr-meme.jpg')
 ```
 
 ---
@@ -433,7 +433,7 @@ cat('Understanding how to build code trees == success in online arguments.')
 ```
 
 ```{r echo=F, include=T, eval=T, out.width='60%', fig.align='center'}
-knitr::include_graphics('pjmdoll-tweet.jpg')
+knitr::include_graphics('img/pjmdoll-tweet.jpg')
 ```
 
 ---
@@ -444,7 +444,7 @@ knitr::include_graphics('pjmdoll-tweet.jpg')
 ```
 
 ```{r echo=F, include=T, eval=T, out.width='60%', fig.align='center'}
-knitr::include_graphics('pjmdoll-tweet-w-reply-1.jpg')
+knitr::include_graphics('img/pjmdoll-tweet-w-reply-1.jpg')
 ```
 
 
@@ -456,7 +456,7 @@ knitr::include_graphics('pjmdoll-tweet-w-reply-1.jpg')
 ```
 
 ```{r echo=F, include=T, eval=T, out.width='60%', fig.align='center'}
-knitr::include_graphics('pjmdoll-tweet-w-reply-2.jpg')
+knitr::include_graphics('img/pjmdoll-tweet-w-reply-2.jpg')
 ```
 
 ---
@@ -524,7 +524,7 @@ flair::decorate_chunk('quosure-1') %>%
 
 
 ```{r echo=F, include=T, eval=T, out.width='80%', fig.align='center'}
-knitr::include_graphics('quosure-incorrect-meme.png')
+knitr::include_graphics('img/quosure-incorrect-meme.png')
 ```
 
 ---
@@ -561,7 +561,7 @@ flair::decorate_chunk('quosure-2') %>%
 
 
 ```{r echo=F, include=T, eval=T, out.width='60%', fig.align='center'}
-knitr::include_graphics('contrived-canonical-example.jpg')
+knitr::include_graphics('img/contrived-canonical-example.jpg')
 ```
 
 ---
@@ -576,7 +576,7 @@ Metaprogramming is awesome. R is great because of how much control it allows use
 
 
 ```{r echo=F, include=T, eval=T, out.width='44%', fig.align='center'}
-knitr::include_graphics('when-non-tech-people-ask-me-to-describe-my-job.gif')
+knitr::include_graphics('img/when-non-tech-people-ask-me-to-describe-my-job.gif')
 ```
 
 ---
@@ -602,7 +602,7 @@ Understanding how "code is a tree" would have helped me with my final project in
 .pull-left[
 
 ```{r echo=F, include=T, eval=T, out.width='100%', fig.align='center'}
-knitr::include_graphics('final-lab-1.jpg')
+knitr::include_graphics('img/final-lab-1.jpg')
 ```
 
 ]
@@ -625,7 +625,7 @@ knitr::include_graphics('final-lab-1.jpg')
 .pull-left[
 
 ```{r echo=F, include=T, eval=T, out.width='100%', fig.align='center'}
-knitr::include_graphics('final-lab-2.jpg')
+knitr::include_graphics('img/final-lab-2.jpg')
 ```
 
 ]
@@ -637,8 +637,8 @@ knitr::include_graphics('final-lab-2.jpg')
 <br />
 
 ```{r echo=F, include=T, eval=T, out.width='90%', fig.align='center'}
-# knitr::include_graphics('final-lab-reaction-meme.png')
-knitr::include_graphics('mario-meme.JPG')
+# knitr::include_graphics('img/final-lab-reaction-meme.png')
+knitr::include_graphics('img/mario-meme.JPG')
 ```
 
 ]
