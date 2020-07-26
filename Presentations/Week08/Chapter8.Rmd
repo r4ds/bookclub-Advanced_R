@@ -18,7 +18,7 @@ library(xaringanthemer)
 library(tidyverse)
 library(rlang)
 library(gt)
-mono_light(
+style_mono_light(
   base_color = "#3092FF",
   header_font_google = google_font("Josefin Slab"),
   text_font_google   = google_font("Raleway", "300", "300i")

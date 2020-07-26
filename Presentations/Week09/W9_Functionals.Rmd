@@ -147,7 +147,7 @@ beers <- beer_reviews %>%
   top_n(5000,review_count) %>%  # Trim to 5000 for app working purposes
   arrange(desc(review_z)) # Fav beers to top, pls!
   
-write_parquet(beers,here::here("Presentations/Week9/data/beers.pdata"))
+write_parquet(beers,here::here("Presentations/Week09/data/beers.pdata"))
 
 ```
 

@@ -4,7 +4,8 @@
     <title>Advanced R by Hadley Wickham</title>
     <meta charset="utf-8" />
     <meta name="author" content="Asmae Toumi" />
-    <meta name="date" content="2020-04-11" />
+    <meta name="date" content="2020-07-26" />
+    <script src="libs/header-attrs-2.3/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
   </head>
@@ -16,7 +17,7 @@ class: center, middle, inverse, title-slide
 ## Chapter 2: Names and Values
 ### Asmae Toumi
 ### <span class="citation">@asmae_toumi</span>
-### 2020-04-11
+### 2020-07-26
 
 ---
 
@@ -54,6 +55,9 @@ To understand how R represents objects, we'll need to install the **lobstr** pac
 
 ```r
 library(lobstr)
+
+# We also install emo because it's fun!
+# devtools::install_github("hadley/emo")
 ```
 
 ---
@@ -110,7 +114,7 @@ obj_addr(x)
 ```
 
 ```
-## [1] "0x1c1a4a496b8"
+## [1] "0x125d01a8"
 ```
 
 
@@ -132,7 +136,7 @@ obj_addr(y)
 ```
 
 ```
-## [1] "0x1c1a4a496b8"
+## [1] "0x125d01a8"
 ```
 
 
@@ -181,7 +185,7 @@ obj_addr(x)
 ```
 
 ```
-## [1] "0x1c1a4a496b8"
+## [1] "0x125d01a8"
 ```
 
 ```r
@@ -189,7 +193,7 @@ obj_addr(y)
 ```
 
 ```
-## [1] "0x1c1a48e8848"
+## [1] "0x13293038"
 ```
 
 
@@ -223,7 +227,7 @@ cat(tracemem(x), "\n")
 ```
 
 ```
-## &lt;000001C1A471EC88&gt;
+## &lt;000000001E0C8120&gt;
 ```
 
 
@@ -272,7 +276,7 @@ obj_addr(list_1)
 ```
 
 ```
-## [1] "0x1c1a418fb18"
+## [1] "0x121f6fc0"
 ```
 
 ```r
@@ -280,7 +284,7 @@ obj_addr(list_2)
 ```
 
 ```
-## [1] "0x1c1a418fb18"
+## [1] "0x121f6fc0"
 ```
 
 
@@ -298,7 +302,7 @@ obj_addr(list_2)
 ```
 
 ```
-## [1] "0x1c1a39bf648"
+## [1] "0x1e482598"
 ```
 
 
@@ -318,15 +322,15 @@ ref(list_1, list_2)
 ```
 
 ```
-## o [1:0x1c1a418fb18] &lt;list&gt; 
-## +-[2:0x1c19e82f910] &lt;dbl&gt; 
-## +-[3:0x1c19e82f980] &lt;dbl&gt; 
-## \-[4:0x1c19e82f9b8] &lt;dbl&gt; 
+## o [1:0x121f6fc0] &lt;list&gt; 
+## +-[2:0x1db8e278] &lt;dbl&gt; 
+## +-[3:0x1db8e240] &lt;dbl&gt; 
+## \-[4:0x1db8e208] &lt;dbl&gt; 
 ##  
-## o [5:0x1c1a39bf648] &lt;list&gt; 
-## +-[2:0x1c19e82f910] 
-## +-[3:0x1c19e82f980] 
-## \-[6:0x1c1a3a3e3b0] &lt;dbl&gt;
+## o [5:0x1e482598] &lt;list&gt; 
+## +-[2:0x1db8e278] 
+## +-[3:0x1db8e240] 
+## \-[6:0x1e289378] &lt;dbl&gt;
 ```
 
 This shows that `list_1` and `list_2` have shared components, namely integers 2 and 3 corresponding to the 2nd and 3rd element in their vectors.
@@ -378,11 +382,11 @@ ref(x, character = T)
 ```
 
 ```
-## o [1:0x1c1a5c5ca20] &lt;chr&gt; 
-## +-[2:0x1c19e830518] &lt;string: "marco"&gt; 
-## +-[3:0x1c19e8305c0] &lt;string: "polo"&gt; 
-## +-[2:0x1c19e830518] 
-## \-[3:0x1c19e8305c0]
+## o [1:0x13428ae0] &lt;chr&gt; 
+## +-[2:0x137efa98] &lt;string: "marco"&gt; 
+## +-[3:0x137ef9f0] &lt;string: "polo"&gt; 
+## +-[2:0x137efa98] 
+## \-[3:0x137ef9f0]
 ```
 
 This is called a **global string pool** where each element of a character vector is a pointer to a *unique string* in the pool. This has implications for how much memory a character vector uses. To find out, use `lobstr::obj_size()`
@@ -442,6 +446,7 @@ Implication: create functions that “remember” their previous state (more on 
 - There is no reason to call `gc()` yourself  unless you *want* to:
   - ask R to return memory to your operating system so other programs can use it, or
   - to know how much memory is currently being used
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

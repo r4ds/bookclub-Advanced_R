@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced R Ch16 - Tradeoffs</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="@_TanHo" />
+    <meta name="date" content="2020-07-07" />
+    <script src="libs/header-attrs-2.3/header-attrs.js"></script>
+    <link rel="stylesheet" href="tan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Advanced R Ch16 - Tradeoffs
+### <span class="citation">@_TanHo</span>
+### 2020-07-07
+
+---
+
+
+
+
+
+# Outline
+
+1) What does Hadley think are the main trade-offs?
+
+2) Dive into ffscrapr, a package I'm working on that uses S3
+
+--
+
+*(and figure out whether I should have used R6/S4 instead...)*
+
+---
+
+# Hadley on S3 vs S4
+
+- S3 is informal, whereas S4 is formal
+
+--
+
+- S3 relies on *conventions* (i.e. informal rules) because it is flexible and easily abused, whereas S4 has *structure* and cannot be as easily abused.
+
+--
+
+- S4 is therefore better in larger, more rigorous projects that are established (i.e. Bioconductor, **DBI**)
+
+---
+
+# Hadley on S3 vs R6
+
+- R6 is encapsulated, whereas S3 is functional
+
+--
+
+- S3 namespacing is global, R6 is local to the object
+
+--
+
+- S3 is functional and therefore feels natural to the average R user, R6 does not
+
+--
+
+- R6 has `state` where S3 does not (accumulator programming/threading state is easy to accomplish in R6 but hard in S3)
+
+---
+
+## ffscrapr
+
+*"An R Client for Fantasy Football League APIs"*
+
+&gt;  The goal of this package is to abstract the code required to call various Fantasy Football APIs (i.e. MFL, Sleeper, Fleaflicker, ESPN, Yahoo, potentially other platforms) and create methods that handles required authentication, forms appropriate calls, and returns tidy and predictable data which can be easily connected to other data sources.
+
+--
+
+In other words, a DBI-like interface where you don't need to know the nuts and bolts of each platform (i.e. MySQL, ODBC, SQL Server, PostgreSQL), and instead just need to know a little about the DBI package to get the data you want. 
+
+--
+
+Code here: [https://github.com/DynastyProcess/ffscrapr](https://github.com/DynastyProcess/ffscrapr)
+
+---
+## ffscrapr - motivations
+
+1) Teach myself about R packages 
+--
+*so that I can start looking at golem with an unbiased opinion*
+
+--
+
+2) Teach myself about unit testing, CI/CD, and CRAN
+
+--
+
+3) Share experience I have in Fantasy Football APIs so that others can build on it without learning the nuts and bolts
+
+--
+
+... and unexpectedly,
+
+4) *Experiment with OOP?*
+
+---
+
+## Live Coding (gulp!)
+
+Some guiding questions: 
+
+- Why S3?
+
+- What does something similar in R6 look like?
+
+- What could R6 do that S3 doesn't? (hint: state)
+
+### Potentially interesting:
+
+- [ffscrapr before I learned anything about S3](https://github.com/DynastyProcess/ffscrapr/blob/75920638e4e8efcc45c5be0c502fa4725f462001/R/generics.R)
+
+- Inspiration:  [DBI](https://github.com/r-dbi/DBI) (which as it turns out is written in S4!)]
+
+- [AzureGraph](https://github.com/Azure/AzureGraph), an R6 implementation of Azure's Microsoft Graph endpoints
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

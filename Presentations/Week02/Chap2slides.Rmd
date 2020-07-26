@@ -45,6 +45,9 @@ To understand how R represents objects, we'll need to install the **lobstr** pac
 
 ```{r eval=TRUE, tidy=FALSE}
 library(lobstr)
+
+# We also install emo because it's fun!
+# devtools::install_github("hadley/emo")
 ```
 
 ---

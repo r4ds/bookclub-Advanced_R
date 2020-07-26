@@ -4,6 +4,7 @@
     <title>Advanced R Chapter 7: Environments</title>
     <meta charset="utf-8" />
     <meta name="author" content="thisisdaryn at gmail dot com" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -13,7 +14,7 @@ class: center, middle, inverse, title-slide
 # Advanced R Chapter 7: Environments
 ## Daryn Ramsden
 ### thisisdaryn at gmail dot com
-### last updated: 2020-05-15
+### last updated: 2020-07-26
 
 ---
 
@@ -98,7 +99,7 @@ brewing_materials = readr::read_csv("https://raw.githubusercontent.com/rfordatas
 beer_taxed = readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/beer_taxed.csv")
 brewer_size = readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/brewer_size.csv")
 beer_states = readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/beer_states.csv")
-beer_reviews = readr::read_csv("https://raw.githubusercontent.com/r4ds/bookclub-Advanced_R/master/data/beer_reviews.csv.gz")
+beer_reviews = readr::read_csv(here::here("data/beer_reviews.csv.gz"))
 ```
 
 
@@ -117,7 +118,7 @@ env_print(beer_env)
 ```
 
 ```
-## &lt;environment: 0x7fe5304231b8&gt;
+## &lt;environment: 0000000013491090&gt;
 ## parent: &lt;environment: global&gt;
 ## bindings:
 ##  * brewing_materials: &lt;tibble&gt;
@@ -184,7 +185,7 @@ env_parent(beer_env2)
 ```
 
 ```
-## &lt;environment: 0x7fe5304231b8&gt;
+## &lt;environment: 0x0000000013491090&gt;
 ```
 
 ```r
@@ -192,7 +193,7 @@ parent.env(beer_env2)
 ```
 
 ```
-## &lt;environment: 0x7fe5304231b8&gt;
+## &lt;environment: 0x0000000013491090&gt;
 ```
 
 
@@ -207,7 +208,7 @@ env_parents(beer_env2)
 ```
 
 ```
-## [[1]]   &lt;env: 0x7fe5304231b8&gt;
+## [[1]]   &lt;env: 0000000013491090&gt;
 ## [[2]] $ &lt;env: global&gt;
 ```
 
@@ -219,7 +220,7 @@ env_parents(beer_env2, last = empty_env())
 ```
 
 ```
-##  [[1]]   &lt;env: 0x7fe5304231b8&gt;
+##  [[1]]   &lt;env: 0000000013491090&gt;
 ##  [[2]] $ &lt;env: global&gt;
 ##  [[3]] $ &lt;env: package:rlang&gt;
 ##  [[4]] $ &lt;env: package:xaringanthemer&gt;
@@ -324,7 +325,7 @@ system.time(print(b))
 
 ```
 ##    user  system elapsed 
-##   0.000   0.000   1.001
+##       0       0       1
 ```
 
 ```r
@@ -355,7 +356,7 @@ z1
 ```
 
 ```
-## [1] 0.2634588
+## [1] 0.008461749
 ```
 
 ```r
@@ -363,7 +364,7 @@ z1
 ```
 
 ```
-## [1] 0.9978509
+## [1] 0.9789811
 ```
 
 Each output triggers a call to `runif`
@@ -593,7 +594,7 @@ plus_one
 
 ```
 ## function(y) x + y
-## &lt;environment: 0x7fe52f77c168&gt;
+## &lt;environment: 0x0000000012f2f160&gt;
 ```
 
 
@@ -674,11 +675,11 @@ f(x = 1)
 ```
 
 ```
-##     █
-##  1. └─global::f(x = 1)
-##  2.   └─global::g(x = 2)
-##  3.     └─global::h(x = 3)
-##  4.       └─lobstr::cst()
+##     x
+##  1. \-global::f(x = 1)
+##  2.   \-global::g(x = 2)
+##  3.     \-global::h(x = 3)
+##  4.       \-lobstr::cst()
 ```
 
 ---
@@ -699,14 +700,14 @@ a(f())
 ```
 
 ```
-##     █
-##  1. ├─global::a(f())
-##  2. │ └─global::b(x)
-##  3. │   └─global::c(x)
-##  4. └─global::f()
-##  5.   └─global::g(x = 2)
-##  6.     └─global::h(x = 3)
-##  7.       └─lobstr::cst()
+##     x
+##  1. +-global::a(f())
+##  2. | \-global::b(x)
+##  3. |   \-global::c(x)
+##  4. \-global::f()
+##  5.   \-global::g(x = 2)
+##  6.     \-global::h(x = 3)
+##  7.       \-lobstr::cst()
 ```
 
 
@@ -788,6 +789,10 @@ Some situations that environments are useful
   * How do you determine the environment from which a function was called?
 
   * How are &lt;- and &lt;&lt;- different?
+
+
+
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="libs/remark.js"></script>

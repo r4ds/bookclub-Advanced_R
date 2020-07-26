@@ -4,7 +4,8 @@
     <title>Advanced R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Tyler Grant Smith" />
-    <meta name="date" content="2020-07-07" />
+    <meta name="date" content="2020-07-26" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="custom.css" type="text/css" />
@@ -17,7 +18,7 @@ class: left, middle, title-slide
 ## Chapter 14 - R6
 ### Tyler Grant Smith
 ### <i class="fab  fa-github "></i> <a href="http://github.com/TylerGrantSmith">TylerGrantSmith</a><br><i class="fab  fa-twitter "></i> <a href="http://twitter.com/TylerGrantS">TylerGrantS</a>
-### 2020-07-07
+### 2020-07-26
 
 ---
 
@@ -46,7 +47,7 @@ background: #f8f8f8
                     These classes allow public and private members, and
                     they support inheritance, even when the classes are
                     defined in different packages.&lt;br&gt;&lt;b&gt;Depends&lt;/b&gt;:            R (&gt;= 3.0)&lt;br&gt;&lt;b&gt;Suggests&lt;/b&gt;:           knitr, microbenchmark, pryr, testthat, ggplot2,
-                    scales&lt;br&gt;&lt;b&gt;License&lt;/b&gt;:            MIT + file LICENSE&lt;br&gt;&lt;b&gt;URL&lt;/b&gt;:                https://r6.r-lib.org, https://github.com/r-lib/R6/&lt;br&gt;&lt;b&gt;LazyData&lt;/b&gt;:           true&lt;br&gt;&lt;b&gt;BugReports&lt;/b&gt;:         https://github.com/r-lib/R6/issues&lt;br&gt;&lt;b&gt;RoxygenNote&lt;/b&gt;:        6.1.1&lt;br&gt;&lt;b&gt;NeedsCompilation&lt;/b&gt;:   no&lt;br&gt;&lt;b&gt;Packaged&lt;/b&gt;:           2019-11-12 20:00:15 UTC; winston&lt;br&gt;&lt;b&gt;Author&lt;/b&gt;:             Winston Chang [aut, cre]&lt;br&gt;&lt;b&gt;Maintainer&lt;/b&gt;:         Winston Chang &lt;winston@stdout.org&gt;&lt;br&gt;&lt;b&gt;Repository&lt;/b&gt;:         CRAN&lt;br&gt;&lt;b&gt;Date/Publication&lt;/b&gt;:   2019-11-12 22:50:03 UTC&lt;br&gt;&lt;b&gt;Built&lt;/b&gt;:              R 3.6.2; ; 2019-12-27 15:17:19 UTC; windows
+                    scales&lt;br&gt;&lt;b&gt;License&lt;/b&gt;:            MIT + file LICENSE&lt;br&gt;&lt;b&gt;URL&lt;/b&gt;:                https://r6.r-lib.org, https://github.com/r-lib/R6/&lt;br&gt;&lt;b&gt;LazyData&lt;/b&gt;:           true&lt;br&gt;&lt;b&gt;BugReports&lt;/b&gt;:         https://github.com/r-lib/R6/issues&lt;br&gt;&lt;b&gt;RoxygenNote&lt;/b&gt;:        6.1.1&lt;br&gt;&lt;b&gt;NeedsCompilation&lt;/b&gt;:   no&lt;br&gt;&lt;b&gt;Packaged&lt;/b&gt;:           2019-11-12 20:00:15 UTC; winston&lt;br&gt;&lt;b&gt;Author&lt;/b&gt;:             Winston Chang [aut, cre]&lt;br&gt;&lt;b&gt;Maintainer&lt;/b&gt;:         Winston Chang &lt;winston@stdout.org&gt;&lt;br&gt;&lt;b&gt;Repository&lt;/b&gt;:         CRAN&lt;br&gt;&lt;b&gt;Date/Publication&lt;/b&gt;:   2019-11-12 22:50:03 UTC&lt;br&gt;&lt;b&gt;Built&lt;/b&gt;:              R 4.0.2; ; 2020-07-21 14:28:09 UTC; windows
 &lt;/div&gt;
 
 ---
@@ -62,7 +63,7 @@ glue("{depends + imports + suggests} packages on CRAN utilize `R6`.")
 ```
 
 ```
-## 319 packages on CRAN utilize `R6`.
+## 321 packages on CRAN utilize `R6`.
 ```
 #### What are they?
 
@@ -77,8 +78,8 @@ pkgsearch::advanced_search(Imports  = "R6", size = 300) %&gt;%
 ```
 
 ```
-## dplyr, testthat, callr, pkgbuild, processx, desc, httr, scales, promises, selectr, httpuv, readr,
-## shiny, dbplyr, progress, crosstalk, roxygen2, rcmdcheck, data.tree, tidygraph
+## dplyr, processx, pkgbuild, testthat, callr, vdiffr, desc, httr, scales, promises, selectr, httpuv,
+## readr, shiny, progress, dbplyr, roxygen2, crosstalk, rcmdcheck, data.tree
 ```
 ---
 class: show-only-last-code-result
@@ -545,7 +546,7 @@ beer &lt;- IPA$new("King Sue")
 ```
 
 ```
-## It's five o'clock somewhere.  Give me a king sue!
+## It's five o'clock somewhere.  Give me a KInG sUe!
 ```
 ---
 # `initialize`
@@ -661,7 +662,7 @@ beer &lt;- IPA$new("Sculpin")
 ```
 
 ```
-## It's five o'clock somewhere.  Give me a sCulPin!
+## It's five o'clock somewhere.  Give me a sCulPIN!
 ```
 
 ```r
@@ -696,7 +697,7 @@ R6:::print.R6
 ##     }
 ##     invisible(x)
 ## }
-## &lt;bytecode: 0x0000000018722768&gt;
+## &lt;bytecode: 0x000000001d6655f8&gt;
 ## &lt;environment: namespace:R6&gt;
 ```
 ]
@@ -972,6 +973,8 @@ I had all intentions of demonstrating how R6 works under-the-hood using fancy di
 Instead, I will monkey around in R.
 
 But, if you are interested and want to hurt your bra: [https://rpubs.com/sumprain/r6](https://rpubs.com/sumprain/r6)
+
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
