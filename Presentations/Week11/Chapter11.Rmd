@@ -94,7 +94,7 @@ functional_programming_summary
 ```
 
 ```{r eval=F, echo=F, include=F}
-gt::gtsave(functional_programming_summary, filename = here::here('Presentations', 'Week1R1', 'functional_programming_summary.png'))
+gt::gtsave(functional_programming_summary, filename = here::here('Presentations', 'Week11', 'functional_programming_summary.png'))
 ```
 
 --
@@ -177,6 +177,11 @@ Inspiration: https://realpython.com/primer-on-python-decorators/
 ---
 
 # Behavioral FO Example #2
+
+```{r install-fontawesome, eval=FALSE, include=FALSE}
+# You only need to do this if you're knitting locally.
+#devtools::install_github("rstudio/fontawesome")
+```
 
 With `python` `r fontawesome::fa('python')`
 

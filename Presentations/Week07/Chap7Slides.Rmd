@@ -24,7 +24,7 @@ knitr::opts_chunk$set(fig.align="center", fig.width=5, fig.height=5, warning = F
 
 ```{r xaringan-themer, include = FALSE}
 library(xaringanthemer)
-duo_accent(
+style_duo_accent(
   primary_color = "ivory",
   secondary_color = "#310A31",
   header_font_google = google_font("Roboto", "400"),
@@ -117,7 +117,7 @@ brewing_materials = readr::read_csv("https://raw.githubusercontent.com/rfordatas
 beer_taxed = readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/beer_taxed.csv")
 brewer_size = readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/brewer_size.csv")
 beer_states = readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/beer_states.csv")
-beer_reviews = readr::read_csv("https://raw.githubusercontent.com/r4ds/bookclub-Advanced_R/master/data/beer_reviews.csv.gz")
+beer_reviews = readr::read_csv(here::here("data/beer_reviews.csv.gz"))
 ```
 
 

@@ -17,7 +17,7 @@ library(rlang)
 library(lobstr)
 library(tidyverse)
 library(gt)
-mono_light(
+style_mono_light(
   base_color = "#3092FF",
   header_font_google = google_font("Josefin Sans"),
   text_font_google   = google_font("Montserrat", "300", "300i"),

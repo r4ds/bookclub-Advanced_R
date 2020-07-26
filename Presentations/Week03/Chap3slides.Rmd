@@ -611,6 +611,6 @@ data.frame(x = 1:2, y = data.frame(a = 3:4, b = 5:6))
 --
 
 ```{r, echo=F, include=T, eval=T, out.width='100%'}
-knitr::include_graphics('../../images/vectors.png')
+knitr::include_graphics('vectors.png')
 ```
 

@@ -31,6 +31,7 @@ options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(message=FALSE, warning=FALSE)
 ```
 ```{r libraries, include=FALSE}
+# devtools::install_github("ropenscilabs/icon")
 suppressPackageStartupMessages({
   library(tidyverse)
   library(R6)

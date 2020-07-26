@@ -11,91 +11,127 @@
  *
  *  Need help? Try:
  *    - vignette(package = "xaringanthemer")
- *    - ?xaringanthemer::write_xaringan_theme
+ *    - ?xaringanthemer::style_xaringan
  *    - xaringan wiki: https://github.com/yihui/xaringan/wiki
  *    - remarkjs wiki: https://github.com/gnab/remark/wiki
  *
+ *  Version: 0.3.0
+ *
  * ------------------------------------------------------- */
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,300i);
-@import url(https://fonts.googleapis.com/css?family=Josefin+Slab);
-@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700);
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,300i&display=swap);
+@import url(https://fonts.googleapis.com/css?family=Josefin+Slab&display=swap);
+@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700&display=swap);
 
+
+:root {
+  /* Fonts */
+  --text-font-family: Raleway;
+  --text-font-is-google: 1;
+  --text-font-family-fallback: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial;
+  --text-font-base: sans-serif;
+  --header-font-family: 'Josefin Slab';
+  --header-font-is-google: 1;
+  --code-font-family: 'Source Code Pro';
+  --code-font-is-google: 1;
+  --base-font-size: 20px;
+  --text-font-size: 1rem;
+  --code-font-size: 0.9rem;
+  --code-inline-font-size: 1em;
+  --header-h1-font-size: 2.75rem;
+  --header-h2-font-size: 2.25rem;
+  --header-h3-font-size: 1.75rem;
+
+  /* Colors */
+  --text-color: #2166B2;
+  --header-color: #3092FF;
+  --background-color: #EAF4FF;
+  --link-color: #3092FF;
+  --text-bold-color: #3092FF;
+  --code-highlight-color: rgba(255,255,0,0.5);
+  --inverse-text-color: #EAF4FF;
+  --inverse-background-color: #3092FF;
+  --inverse-header-color: #EAF4FF;
+  --title-slide-background-color: #3092FF;
+  --title-slide-text-color: #EAF4FF;
+  --header-background-color: #3092FF;
+  --header-background-text-color: #EAF4FF;
+  --base: #3092FF;
+  --white: #EAF4FF;
+  --black: #2166B2;
+}
+
+html {
+  font-size: var(--base-font-size);
+}
 
 body {
-  font-family: Raleway, 'Palatino Linotype', 'Book Antiqua', Palatino, 'Microsoft YaHei', 'Songti SC', serif;
+  font-family: var(--text-font-family), var(--text-font-family-fallback), var(--text-font-base);
   font-weight: 300;
-  color: #2166B2;
+  color: var(--text-color);
 }
 h1, h2, h3 {
-  font-family: Josefin Slab;
-  font-weight: normal;
-  color: #3092FF;
+  font-family: var(--header-font-family);
+  font-weight: 600;
+  color: var(--header-color);
 }
 .remark-slide-content {
-  background-color: #EAF4FF;
-  font-size: 20px;
-  
-  
-  
-  padding: 1em 4em 1em 4em;
+  background-color: var(--background-color);
+  font-size: 1rem;
+  padding: 16px 64px 16px 64px;
+  width: 100%;
+  height: 100%;
 }
 .remark-slide-content h1 {
-    font-size: 55px;
+  font-size: var(--header-h1-font-size);
 }
 .remark-slide-content h2 {
-    font-size: 45px;
+  font-size: var(--header-h2-font-size);
 }
 .remark-slide-content h3 {
-    font-size: 35px;
+  font-size: var(--header-h3-font-size);
 }
 .remark-code, .remark-inline-code {
-  font-family: 'Source Code Pro', 'Lucida Console', Monaco, monospace;
+  font-family: var(--code-font-family), Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
 }
 .remark-code {
-  font-size: 0.9em;
+  font-size: var(--code-font-size);
 }
 .remark-inline-code {
-  font-size: 1em;
+  font-size: var(--code-inline-font-size);
   color: #3092FF;
-  
-  
 }
 .remark-slide-number {
   color: #3092FF;
   opacity: 1;
   font-size: 0.9em;
 }
-strong{color:#3092FF;}
+strong { color: var(--text-bold-color); }
 a, a > code {
-  color: #3092FF;
+  color: var(--link-color);
   text-decoration: none;
 }
 .footnote {
-  
   position: absolute;
-  bottom: 3em;
+  bottom: 60px;
   padding-right: 4em;
   font-size: 0.9em;
 }
 .remark-code-line-highlighted {
-  background-color: rgba(255,255,0,0.5);
+  background-color: var(--code-highlight-color);
 }
 .inverse {
-  background-color: #3092FF;
-  color: #EAF4FF;
+  background-color: var(--inverse-background-color);
+  color: var(--inverse-text-color);
   
 }
 .inverse h1, .inverse h2, .inverse h3 {
-  color: #EAF4FF;
+  color: var(--inverse-header-color);
 }
 .title-slide, .title-slide h1, .title-slide h2, .title-slide h3 {
-  color: #EAF4FF;
+  color: var(--title-slide-text-color);
 }
 .title-slide {
-  background-color: #3092FF;
-  
-  
-  
+  background-color: var(--title-slide-background-color);
 }
 .title-slide .remark-slide-number {
   display: none;
@@ -140,15 +176,21 @@ blockquote {
   border-top: 1px solid #666;
   border-bottom: 1px solid #666;
 }
-.remark-slide table thead th { border-bottom: 1px solid #ddd; }
-th, td { padding: 5px; }
-.remark-slide thead, .remark-slide tfoot, .remark-slide tr:nth-child(even) { background: #D5E9FF }
+.remark-slide table thead th {
+  border-bottom: 1px solid #ddd;
+}
+th, td {
+  padding: 5px;
+}
+.remark-slide thead, .remark-slide tfoot, .remark-slide tr:nth-child(even) {
+  background: #D5E9FF;
+}
 table.dataTable tbody {
-  background-color: #EAF4FF;
-  color: #2166B2;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 table.dataTable.display tbody tr.odd {
-  background-color: #EAF4FF;
+  background-color: var(--background-color);
 }
 table.dataTable.display tbody tr.even {
   background-color: #D5E9FF;
@@ -157,10 +199,27 @@ table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
   background-color: rgba(255, 255, 255, 0.5);
 }
 .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {
-  color: #2166B2;
+  color: var(--text-color);
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button {
-  color: #2166B2 !important;
+  color: var(--text-color) !important;
+}
+
+/* Slide Header Background for h1 elements */
+.remark-slide-content.header_background > h1 {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--header-background-color);
+  color: var(--header-background-text-color);
+  padding: 2rem 64px 1.5rem 64px;
+  margin-top: 0;
+  box-sizing: border-box;
+}
+.remark-slide-content.header_background {
+  padding-top: 7rem;
 }
 
 @page { margin: 0; }
@@ -173,3 +232,23 @@ table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
     left: 0 !important;
   }
 }
+
+.base {
+  color: var(--base);
+}
+.bg-base {
+  background-color: var(--base);
+}
+.white {
+  color: var(--white);
+}
+.bg-white {
+  background-color: var(--white);
+}
+.black {
+  color: var(--black);
+}
+.bg-black {
+  background-color: var(--black);
+}
+

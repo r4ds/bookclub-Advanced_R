@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="author" content="Scott Nestler" />
     <meta name="date" content="2020-04-23" />
+    <script src="Chap4slides_files/header-attrs-2.3/header-attrs.js"></script>
     <link href="Chap4slides_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="Chap4slides_files/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
   </head>
@@ -712,11 +713,11 @@ B[sample(nrow(B)), ]
 
 ```
 ##   year        num      prod
-## 4 2012   4860.000 392294405
 ## 3 2011   4186.000 385493644
-## 1 2009      1.618 393938550
 ## 2 2010 186282.000 390422806
 ## 5 2013     42.000 383994749
+## 1 2009      1.618 393938550
+## 4 2012   4860.000 392294405
 ```
       
 ---
@@ -733,9 +734,9 @@ B[sample(nrow(B), 2), ]
 ```
 
 ```
-##   year  num      prod
-## 5 2013   42 383994749
-## 3 2011 4186 385493644
+##   year        num      prod
+## 2 2010 186282.000 390422806
+## 1 2009      1.618 393938550
 ```
 
 ```r
@@ -744,17 +745,17 @@ B[sample(nrow(B), 10, replace = TRUE), ]
 ```
 
 ```
-##     year        num      prod
-## 2   2010 186282.000 390422806
-## 4   2012   4860.000 392294405
-## 2.1 2010 186282.000 390422806
-## 2.2 2010 186282.000 390422806
-## 3   2011   4186.000 385493644
-## 4.1 2012   4860.000 392294405
-## 3.1 2011   4186.000 385493644
-## 2.3 2010 186282.000 390422806
-## 5   2013     42.000 383994749
-## 1   2009      1.618 393938550
+##     year    num      prod
+## 3   2011   4186 385493644
+## 2   2010 186282 390422806
+## 5   2013     42 383994749
+## 5.1 2013     42 383994749
+## 4   2012   4860 392294405
+## 5.2 2013     42 383994749
+## 2.1 2010 186282 390422806
+## 5.3 2013     42 383994749
+## 3.1 2011   4186 385493644
+## 4.1 2012   4860 392294405
 ```
 
 ```r
@@ -971,7 +972,7 @@ which(x)
 ```
 
 ```
-## [1] 2 6 8
+## [1] 1 2 4
 ```
 
 ```r
@@ -985,7 +986,7 @@ unwhich(which(x), 10)
 ```
 
 ```
-##  [1] FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE
+##  [1]  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
 ```
 
 ---
@@ -1061,6 +1062,8 @@ setdiff(x2, y2) # check it this way
     + `x[-which(y)]` is **not** equivalent to `x[!y]`
     
   + Bottom line:  avoid switching from logical to integer subsetting unless you really want to, like to find the first (last) `TRUE` value.
+    
+        
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
