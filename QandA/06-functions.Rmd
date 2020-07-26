@@ -17,7 +17,7 @@ Primitives are part of R core, and can only be written by the R-core team. At it
 
 You can use Rcpp to include C++ code in your R code, but these aren't Primitives. There are also other techniques which we'll likely see covered in later chapters. Here's an example using Rcpp.
 
-```{r}
+```{r, eval=FALSE}
 Rcpp::cppFunction('#include<string>
   std::string IPA() {
   std::string val = "IPAs suck";	
@@ -25,6 +25,9 @@ Rcpp::cppFunction('#include<string>
   }')
 val <- IPA()
 val
+```
+```
+[1] "IPAs suck"
 ```
 
 :::question

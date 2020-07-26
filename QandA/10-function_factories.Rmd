@@ -1,5 +1,9 @@
 # Function factories
 
+```{r include=FALSE}
+library(ggplot2)
+```
+
 ## 10.2 Factory fundamentals {-}
 
 :::question
