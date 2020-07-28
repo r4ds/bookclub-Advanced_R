@@ -1,0 +1,209 @@
+# Quasiquotation
+
+
+
+## 19.2 Motivation {-}
+
+:::question
+How does `cement` compare to `glue`? Can we look at the source code for quasiquotation and using `{}` for interpolation?
+:::
+
+## 19.3.4 Substitution {-}
+
+:::question
+
+> Is it supplied by the developer of the code or the user of the code? In other words, is it fixed (supplied in the body of the function) or varying (supplied via an argument)?
+
+What are two examples (from the chapter or our own) of the former vs latter
+:::
+
+:::TODO
+XXX
+:::
+
+
+:::question
+Hadley creates a table for quoting expressions using base R and tidy eval, but there isn't really a one to one relationship here. For instance `substitute` is compared to `enexprs` but that fails here?
+
+
+```r
+f4 <- function(x) substitute(x * 2)
+f4(a + b + c)
+
+f5 <- function(x) enexprs(x*2)
+f5(a + b + c)
+```
+:::
+
+:::TODO
+XXX
+:::
+
+## Exercises 19.3.6.5 {-}
+
+:::question
+What does the argument `.named` do in `exprs`? What does "to ensure all dots are named" mean?
+:::
+
+:::TODO
+XXX
+:::
+
+
+## 19.4.6 Polite fiction of !! {-}
+
+:::question
+What exactly is happening here? Why is `y` evaluating to `6`?!
+
+
+```r
+df <- data.frame(x = 1:5)
+y <- 100
+with(df, x + !!y)
+```
+
+```
+## [1] 2 3 4 5 6
+```
+:::
+
+:::TODO
+XXX
+:::
+
+## 19.4.7 Nonstandard ASTs {-}
+
+:::question
+When talking about non-standard ASTs Hadley says:
+
+> These are valid, and occasionally useful, but their correct use is beyond the scope of this book.
+
+What is their correct use?
+:::
+
+:::TODO
+XXX
+:::
+
+## 19.4.8.2 Exercises {-}
+
+:::question
+What exactly is going on here? What is `<inline integer>`?
+
+
+```r
+lobstr::ast(mean(1:10))
+```
+
+```
+## █─mean 
+## └─█─`:` 
+##   ├─1 
+##   └─10
+```
+
+```r
+lobstr::ast(mean(!!(1:10)))
+```
+
+```
+## █─mean 
+## └─<inline integer>
+```
+:::
+
+:::TODO
+XXX
+:::
+
+## Non-quoting {-}
+
+:::question
+What exactly is the difference between "turn quoting off" and "using unquoting" -- maybe to explain this we can we come up with an example for "turning quoting off" when we expect "unquoting" and therefore the operation fails?
+:::
+
+:::TODO
+XXX
+:::
+
+
+## 19.6 (...) {-}
+
+:::question
+Based on [this thread]() it looks like `...` should be the first line of defense before using tidyeval - why?
+
+
+```r
+my_groups <- function(df, ...) {
+  df %>%
+    group_by(...) %>%
+    summarise(n = n())
+}
+
+my_groups <- function(df, col) {
+  df %>%
+    group_by(!!enquo(col)) %>%
+    summarise(n = n())
+}
+
+my_groups(mtcars, vs)
+my_groups(starwars, homeworld)
+```
+:::
+
+:::TODO
+XXX
+:::
+
+:::question
+Can we go over the "spatting" example, I have no idea what this means.
+:::
+
+:::TODO
+:::
+
+## 19.6.2 `exec()` {-}
+
+:::question
+Can we use this function instead of `do.call` in our Expressions shiny app? Do we need to change `argumentlist()` to use `list2` rather than `list`?
+
+
+```r
+do.call(call2, argumentlist(), quote = TRUE)
+```
+:::
+
+:::TODO
+XXX
+:::
+
+## 19.6.3 `dots_list()` {-}
+
+:::question
+This function seems pretty rad, what's a use case for it in the wild?
+:::
+
+:::TODO
+XXX
+:::
+
+## 19.6.4 With base R {-}
+
+:::question
+What is going on with this RCurl example and how does it avoid using `do.call`? Can we find some Hadley source code that uses it since he said he liked it at one point? Why do you think he moved away from it? 
+
+
+```r
+f <- function(..., .dots) {
+  dots <- c(list(...), .dots)
+  # Do something
+}
+```
+:::
+
+:::TODO
+XXX
+:::
+
+
+

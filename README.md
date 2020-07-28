@@ -17,7 +17,7 @@ This repo contains 3 main folders:
 
 - 2020-07-28 Chapter 19 - Quasiquotation: [Jon Harmon](https://twitter.com/jonthegeek)
 - 2020-08-04 Chapter 20 - Evaluation: [Daryn Ramsden](https://twitter.com/thisisdaryn) 
-- 2020-08-11 Chapter 21 - Translating R code:
+- 2020-08-11 Chapter 21 - Translating R code: Pavitra Chakravarty
 
 
 <details>
