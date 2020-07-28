@@ -309,6 +309,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="big-picture.html"><a href="big-picture.html#quosures"><i class="fa fa-check"></i>17.8 Quosures</a></li>
 </ul></li>
 <li class="chapter" data-level="18" data-path="expressions.html"><a href="expressions.html"><i class="fa fa-check"></i><b>18</b> Expressions</a></li>
+<li class="chapter" data-level="19" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>19</b> Quasiquotation</a><ul>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#motivation"><i class="fa fa-check"></i>19.2 Motivation</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#substitution"><i class="fa fa-check"></i>19.3.4 Substitution</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#exercises-19.3.6.5"><i class="fa fa-check"></i>Exercises 19.3.6.5</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#polite-fiction-of"><i class="fa fa-check"></i>19.4.6 Polite fiction of !!</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#nonstandard-asts"><i class="fa fa-check"></i>19.4.7 Nonstandard ASTs</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>19.4.8.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#non-quoting"><i class="fa fa-check"></i>Non-quoting</a></li>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#section"><i class="fa fa-check"></i>19.6 (…)</a></li>
+<li><a href="quasiquotation.html#exec">19.6.2 <code>exec()</code></a></li>
+<li><a href="quasiquotation.html#dots_list">19.6.3 <code>dots_list()</code></a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#with-base-r"><i class="fa fa-check"></i>19.6.4 With base R</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -366,26 +379,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb432-1" data-line-number="1">trials &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="op">~</span><span class="st"> </span><span class="kw">t.test</span>(<span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">10</span>), <span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">7</span>)))</a>
 <a class="sourceLine" id="cb432-2" data-line-number="2"><span class="co"># tibble(p_value = map_dbl(trials, &quot;p.value&quot;))</span></a>
 <a class="sourceLine" id="cb432-3" data-line-number="3"><span class="kw">map_dbl</span>(trials, pluck, <span class="st">&quot;p.value&quot;</span>)</a></code></pre></div>
-<pre><code>##   [1] 2.062994e-01 2.656202e-03 9.869862e-02 1.111896e-02 4.998802e-02
-##   [6] 4.852199e-01 6.352641e-02 2.171846e-01 2.772620e-01 3.130612e-03
-##  [11] 1.141106e-02 1.783812e-02 5.248878e-04 1.646934e-03 1.985667e-02
-##  [16] 1.373107e-01 6.513625e-03 8.278145e-02 4.659237e-01 1.627798e-01
-##  [21] 1.029571e-01 3.042044e-03 5.288394e-02 3.232244e-02 4.259651e-04
-##  [26] 5.596227e-02 5.597744e-02 1.774395e-01 1.636451e-01 7.924494e-02
-##  [31] 6.035838e-01 1.502258e-01 8.574966e-03 2.185532e-01 4.098525e-03
-##  [36] 1.333034e-02 3.255962e-02 3.099614e-01 1.619962e-01 4.509785e-02
-##  [41] 6.403668e-02 3.253381e-03 1.999316e-01 3.018251e-01 3.565044e-03
-##  [46] 1.548815e-03 1.473267e-02 1.137880e-01 2.289857e-03 5.022521e-02
-##  [51] 1.422362e-03 2.780364e-01 8.574682e-02 2.337420e-02 1.851672e-01
-##  [56] 1.903510e-01 5.570752e-02 5.637877e-04 3.412131e-02 1.728738e-02
-##  [61] 7.160224e-02 1.155788e-02 2.254828e-01 1.646095e-02 3.068068e-01
-##  [66] 7.947785e-04 1.992805e-02 1.117677e-02 3.506052e-01 1.039295e-03
-##  [71] 1.663108e-02 4.938718e-02 9.862346e-02 1.125132e-01 7.337682e-03
-##  [76] 2.614433e-03 1.814428e-01 1.560437e-01 3.071539e-02 5.646198e-01
-##  [81] 1.856908e-02 9.741415e-03 1.514065e-02 4.545198e-04 4.815286e-02
-##  [86] 2.842911e-05 3.764131e-02 1.883509e-02 2.179187e-04 1.142526e-02
-##  [91] 1.626232e-03 4.366452e-02 5.676272e-02 1.257044e-02 2.448413e-01
-##  [96] 1.244682e-02 3.749014e-03 1.082631e-01 9.303048e-02 2.719852e-01</code></pre>
+<pre><code>##   [1] 7.203931e-02 4.568146e-03 5.007655e-01 6.343252e-03 1.423054e-02
+##   [6] 5.315940e-02 2.715576e-02 1.424219e-02 5.817160e-02 7.991155e-02
+##  [11] 6.216690e-03 1.159337e-02 1.085913e-01 5.258427e-02 8.325082e-02
+##  [16] 2.267550e-02 6.206424e-04 2.284371e-03 1.683266e-01 3.089020e-01
+##  [21] 2.806224e-01 1.899607e-01 4.089721e-01 9.643883e-02 4.460406e-03
+##  [26] 6.169188e-01 1.672969e-02 5.458877e-03 6.889791e-01 1.124979e-03
+##  [31] 2.660694e-03 1.832886e-01 1.203379e-01 2.036971e-02 8.973111e-02
+##  [36] 4.572525e-02 2.054025e-01 1.730677e-02 1.171284e-01 1.050167e-01
+##  [41] 8.931493e-03 3.038694e-02 8.090362e-02 3.796529e-04 1.415237e-02
+##  [46] 6.112157e-01 1.406835e-02 7.143786e-04 2.910910e-01 1.341228e-02
+##  [51] 8.191158e-04 1.510720e-01 4.637452e-02 7.593661e-03 4.092367e-01
+##  [56] 3.592859e-02 5.233920e-03 3.512233e-03 2.810175e-03 2.272042e-01
+##  [61] 4.077218e-02 7.051215e-01 3.817136e-01 5.029075e-02 6.669789e-01
+##  [66] 3.751109e-02 2.775746e-02 7.167998e-02 1.629734e-01 1.559051e-01
+##  [71] 9.623005e-03 2.236584e-01 4.749233e-01 3.770431e-01 2.467550e-03
+##  [76] 1.063070e-02 3.695870e-04 1.274602e-01 3.736603e-03 1.219075e-01
+##  [81] 3.042719e-01 1.178819e-04 9.016216e-02 5.284849e-01 2.204921e-03
+##  [86] 1.199212e-04 1.157577e-03 2.462498e-01 2.266591e-05 3.444222e-03
+##  [91] 5.144418e-03 1.728197e-03 2.571106e-01 4.501991e-03 5.858044e-02
+##  [96] 1.880003e-02 1.573639e-01 2.425433e-02 4.520227e-03 4.793094e-04</code></pre>
 </div>
 <div id="exercise-1" class="section level2 unnumbered">
 <h2>9.2.6.5 Exercise</h2>
@@ -595,12 +608,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb458-4" data-line-number="4">  <span class="dt">times =</span> <span class="dv">100</span></a>
 <a class="sourceLine" id="cb458-5" data-line-number="5">)</a></code></pre></div>
 <pre><code>## Unit: microseconds
-##                         expr     min       lq       mean    median       uq
-##         as_integer_rapply(x)   9.817   12.004   30.36694   14.7735   20.595
-##  as_integer_recursive_map(x) 972.932 1037.688 1130.04824 1068.2415 1115.756
+##                         expr     min        lq       mean   median        uq
+##         as_integer_rapply(x)   9.752   11.7745   31.58971   18.450   19.9905
+##  as_integer_recursive_map(x) 976.057 1027.4895 1058.79912 1039.714 1070.4145
 ##       max neval
-##  1389.889   100
-##  2692.719   100</code></pre>
+##  1512.252   100
+##  1479.304   100</code></pre>
 <div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb460-1" data-line-number="1">as_integer_safe &lt;-<span class="st"> </span><span class="cf">function</span>(y) {</a>
 <a class="sourceLine" id="cb460-2" data-line-number="2">  <span class="cf">if</span> (<span class="kw">is.character</span>(y) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">all</span>(<span class="kw">grepl</span>(<span class="st">&quot;^</span><span class="ch">\\</span><span class="st">d+$&quot;</span>, y))) {</a>
 <a class="sourceLine" id="cb460-3" data-line-number="3">    <span class="kw">as.integer</span>(y)</a>

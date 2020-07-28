@@ -309,6 +309,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="big-picture.html"><a href="big-picture.html#quosures"><i class="fa fa-check"></i>17.8 Quosures</a></li>
 </ul></li>
 <li class="chapter" data-level="18" data-path="expressions.html"><a href="expressions.html"><i class="fa fa-check"></i><b>18</b> Expressions</a></li>
+<li class="chapter" data-level="19" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>19</b> Quasiquotation</a><ul>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#motivation"><i class="fa fa-check"></i>19.2 Motivation</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#substitution"><i class="fa fa-check"></i>19.3.4 Substitution</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#exercises-19.3.6.5"><i class="fa fa-check"></i>Exercises 19.3.6.5</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#polite-fiction-of"><i class="fa fa-check"></i>19.4.6 Polite fiction of !!</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#nonstandard-asts"><i class="fa fa-check"></i>19.4.7 Nonstandard ASTs</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>19.4.8.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#non-quoting"><i class="fa fa-check"></i>Non-quoting</a></li>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#section"><i class="fa fa-check"></i>19.6 (…)</a></li>
+<li><a href="quasiquotation.html#exec">19.6.2 <code>exec()</code></a></li>
+<li><a href="quasiquotation.html#dots_list">19.6.3 <code>dots_list()</code></a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#with-base-r"><i class="fa fa-check"></i>19.6.4 With base R</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -463,11 +476,11 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <pre><code>## # A tibble: 5 x 1
 ##      x1
 ##   &lt;dbl&gt;
-## 1 0.252
-## 2 0.283
-## 3 0.852
-## 4 0.920
-## 5 0.701</code></pre>
+## 1 0.306
+## 2 0.704
+## 3 0.525
+## 4 0.501
+## 5 0.207</code></pre>
 </div>
 <div id="a-fresh-start" class="section level2 unnumbered">
 <h2>6.4.3 A fresh start</h2>
@@ -515,7 +528,7 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <a class="sourceLine" id="cb249-8" data-line-number="8">}</a>
 <a class="sourceLine" id="cb249-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb249-10" data-line-number="10"><span class="kw">mega_model</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))</a></code></pre></div>
-<pre><code>##  [1] 259 202 250 286 218 282 235 283 287 274</code></pre>
+<pre><code>##  [1] 288 220 274 224 290 233 235 299 287 245</code></pre>
 </div>
 <div id="promises" class="section level2 unnumbered">
 <h2>6.5.1 Promises</h2>
@@ -742,7 +755,7 @@ Error: unexpected &#39;}&#39; in &quot;}&quot;</code></pre>
 <div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb296-1" data-line-number="1">hist</a></code></pre></div>
 <pre><code>## function (x, ...) 
 ## UseMethod(&quot;hist&quot;)
-## &lt;bytecode: 0x7fd265acf4f0&gt;
+## &lt;bytecode: 0x7fe248509ef0&gt;
 ## &lt;environment: namespace:graphics&gt;</code></pre>
 <p>does not give me the actual contents of the actual function….</p>
 </div>

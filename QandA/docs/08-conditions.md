@@ -699,29 +699,29 @@ analyze_text(list("CORRECT", "NOT", "CORRECT"))
 
 ```
 ## [1] "parent in mid: "
-## <environment: 0x7fadc2475ab0>
+## <environment: 0x7fd1c4c3cf08>
 ## [1] "current in mid: "
-## <environment: 0x7fadc246f748>
+## <environment: 0x7fd1c4c3d6b0>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid: "
-## <environment: 0x7fadc24577a8>
+## <environment: 0x7fd1c4c20e00>
 ## [1] "current in mid: "
-## <environment: 0x7fadc84fcff0>
+## <environment: 0x7fd1c8da8fb8>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "parent in mid skip: "
-## <environment: 0x7fadc84fcff0>
+## <environment: 0x7fd1c8da8fb8>
 ## [1] "current in mid skip: "
-## <environment: 0x7fadc8e58260>
+## <environment: 0x7fd1ca139428>
 ## [1] "parent in mid: "
-## <environment: 0x7fadc8e5f190>
+## <environment: 0x7fd1ca140358>
 ## [1] "current in mid: "
-## <environment: 0x7fadc8e62930>
+## <environment: 0x7fd1c8ee14f8>
 ## [1] "parent in low: "
 ## <environment: R_GlobalEnv>
 ## [1] "current in low: "
@@ -736,7 +736,7 @@ analyze_text(list("CORRECT", "NOT", "CORRECT"))
 ## 
 ## [[2]]
 ## [[2]][[1]]
-## <environment: 0x7fadc8e58260>
+## <environment: 0x7fd1ca139428>
 ## 
 ## 
 ## [[3]]

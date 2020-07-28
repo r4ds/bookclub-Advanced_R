@@ -14,7 +14,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#bidqnsvvnz .gt_table {
+#cbzobubbmi .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -37,7 +37,7 @@
   border-left-color: #D3D3D3;
 }
 
-#bidqnsvvnz .gt_heading {
+#cbzobubbmi .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -49,7 +49,7 @@
   border-right-color: #D3D3D3;
 }
 
-#bidqnsvvnz .gt_title {
+#cbzobubbmi .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -59,7 +59,7 @@
   border-bottom-width: 0;
 }
 
-#bidqnsvvnz .gt_subtitle {
+#cbzobubbmi .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -69,13 +69,13 @@
   border-top-width: 0;
 }
 
-#bidqnsvvnz .gt_bottom_border {
+#cbzobubbmi .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bidqnsvvnz .gt_col_headings {
+#cbzobubbmi .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -90,7 +90,7 @@
   border-right-color: #D3D3D3;
 }
 
-#bidqnsvvnz .gt_col_heading {
+#cbzobubbmi .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -110,7 +110,7 @@
   overflow-x: hidden;
 }
 
-#bidqnsvvnz .gt_column_spanner_outer {
+#cbzobubbmi .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -122,15 +122,15 @@
   padding-right: 4px;
 }
 
-#bidqnsvvnz .gt_column_spanner_outer:first-child {
+#cbzobubbmi .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bidqnsvvnz .gt_column_spanner_outer:last-child {
+#cbzobubbmi .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bidqnsvvnz .gt_column_spanner {
+#cbzobubbmi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -142,7 +142,7 @@
   width: 100%;
 }
 
-#bidqnsvvnz .gt_group_heading {
+#cbzobubbmi .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -164,7 +164,7 @@
   vertical-align: middle;
 }
 
-#bidqnsvvnz .gt_empty_group_heading {
+#cbzobubbmi .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -179,19 +179,19 @@
   vertical-align: middle;
 }
 
-#bidqnsvvnz .gt_striped {
+#cbzobubbmi .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bidqnsvvnz .gt_from_md > :first-child {
+#cbzobubbmi .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bidqnsvvnz .gt_from_md > :last-child {
+#cbzobubbmi .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bidqnsvvnz .gt_row {
+#cbzobubbmi .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -210,7 +210,7 @@
   overflow-x: hidden;
 }
 
-#bidqnsvvnz .gt_stub {
+#cbzobubbmi .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -222,7 +222,7 @@
   padding-left: 12px;
 }
 
-#bidqnsvvnz .gt_summary_row {
+#cbzobubbmi .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -232,7 +232,7 @@
   padding-right: 5px;
 }
 
-#bidqnsvvnz .gt_first_summary_row {
+#cbzobubbmi .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -242,7 +242,7 @@
   border-top-color: #D3D3D3;
 }
 
-#bidqnsvvnz .gt_grand_summary_row {
+#cbzobubbmi .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -252,7 +252,7 @@
   padding-right: 5px;
 }
 
-#bidqnsvvnz .gt_first_grand_summary_row {
+#cbzobubbmi .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -262,7 +262,7 @@
   border-top-color: #D3D3D3;
 }
 
-#bidqnsvvnz .gt_table_body {
+#cbzobubbmi .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -271,7 +271,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#bidqnsvvnz .gt_footnotes {
+#cbzobubbmi .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -285,13 +285,13 @@
   border-right-color: #D3D3D3;
 }
 
-#bidqnsvvnz .gt_footnote {
+#cbzobubbmi .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#bidqnsvvnz .gt_sourcenotes {
+#cbzobubbmi .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -305,46 +305,46 @@
   border-right-color: #D3D3D3;
 }
 
-#bidqnsvvnz .gt_sourcenote {
+#cbzobubbmi .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#bidqnsvvnz .gt_left {
+#cbzobubbmi .gt_left {
   text-align: left;
 }
 
-#bidqnsvvnz .gt_center {
+#cbzobubbmi .gt_center {
   text-align: center;
 }
 
-#bidqnsvvnz .gt_right {
+#cbzobubbmi .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bidqnsvvnz .gt_font_normal {
+#cbzobubbmi .gt_font_normal {
   font-weight: normal;
 }
 
-#bidqnsvvnz .gt_font_bold {
+#cbzobubbmi .gt_font_bold {
   font-weight: bold;
 }
 
-#bidqnsvvnz .gt_font_italic {
+#cbzobubbmi .gt_font_italic {
   font-style: italic;
 }
 
-#bidqnsvvnz .gt_super {
+#cbzobubbmi .gt_super {
   font-size: 65%;
 }
 
-#bidqnsvvnz .gt_footnote_marks {
+#cbzobubbmi .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="bidqnsvvnz" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="cbzobubbmi" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
@@ -502,7 +502,7 @@ lobstr::obj_size(get("_cache",environment(memoised_starwars)))
 ```
 
 ```
-## 16,160 B
+## 16,216 B
 ```
 
 :::question
@@ -545,141 +545,134 @@ for (i in 1:100) {
 ```
 
 ```
-## 14,448 B
-## 15,344 B
-## 16,232 B
-## 17,064 B
-## 17,960 B
-## 18,848 B
-## 19,688 B
-## 20,520 B
-## 21,416 B
-## 22,320 B
-## 23,152 B
-## 23,864 B
-## 24,712 B
-## 25,568 B
-## 26,344 B
-## 27,176 B
-## 28,080 B
-## 28,848 B
-## 29,688 B
-## 30,600 B
-```
-
-```
-## Clearing cache [@30600]
-```
-
-```
-## 14,432 B
-## 15,328 B
-## 16,240 B
-## 17,136 B
-## 18,040 B
-## 18,944 B
-## 19,776 B
-## 20,672 B
-## 21,568 B
-## 22,400 B
-## 23,240 B
-## 24,112 B
-## 24,952 B
-## 25,792 B
-## 26,632 B
-## 27,544 B
-## 28,440 B
-## 29,208 B
-## 30,040 B
-```
-
-```
-## Clearing cache [@30040]
-```
-
-```
-## 14,464 B
-## 15,360 B
-## 16,256 B
-## 17,152 B
-## 18,048 B
-## 18,944 B
-## 19,848 B
-## 20,760 B
-## 21,656 B
-## 22,496 B
-## 23,328 B
-## 24,232 B
-## 25,144 B
-## 26,000 B
-## 26,840 B
-## 27,680 B
-## 28,512 B
-## 29,352 B
-## 30,144 B
-```
-
-```
-## Clearing cache [@30144]
-```
-
-```
 ## 14,440 B
-## 15,360 B
-## 16,264 B
-## 17,168 B
-## 18,072 B
-## 18,928 B
-## 19,784 B
-## 20,560 B
-## 21,392 B
-## 22,224 B
-## 23,056 B
-## 23,912 B
-## 24,808 B
-## 25,520 B
-## 26,360 B
-## 27,200 B
-## 28,056 B
-## 28,912 B
-## 29,704 B
-## 30,608 B
+## 15,336 B
+## 16,112 B
+## 17,008 B
+## 17,928 B
+## 18,784 B
+## 19,696 B
+## 20,600 B
+## 21,432 B
+## 22,200 B
+## 22,992 B
+## 23,824 B
+## 24,664 B
+## 25,440 B
+## 26,216 B
+## 27,008 B
+## 27,776 B
+## 28,616 B
+## 29,408 B
+## 30,248 B
 ```
 
 ```
-## Clearing cache [@30608]
+## Clearing cache [@30248]
 ```
 
 ```
 ## 14,432 B
-## 15,336 B
-## 16,256 B
-## 17,160 B
-## 17,992 B
-## 18,888 B
-## 19,728 B
-## 20,616 B
-## 21,512 B
-## 22,424 B
-## 23,264 B
-## 24,120 B
-## 24,832 B
-## 25,664 B
-## 26,568 B
-## 27,424 B
-## 28,200 B
-## 28,976 B
-## 29,816 B
-## 30,528 B
+## 15,264 B
+## 16,168 B
+## 17,080 B
+## 17,920 B
+## 18,824 B
+## 19,592 B
+## 20,448 B
+## 21,288 B
+## 22,120 B
+## 22,960 B
+## 23,848 B
+## 24,640 B
+## 25,536 B
+## 26,424 B
+## 27,216 B
+## 27,992 B
+## 28,848 B
+## 29,744 B
+## 30,520 B
 ```
 
 ```
-## Clearing cache [@30528]
+## Clearing cache [@30520]
 ```
 
 ```
 ## 14,432 B
 ## 15,320 B
+## 16,224 B
+## 17,144 B
+## 18,064 B
+## 18,904 B
+## 19,616 B
+## 20,520 B
+## 21,352 B
+## 22,248 B
+## 23,168 B
+## 24,000 B
+## 24,904 B
+## 25,744 B
+## 26,584 B
+## 27,360 B
+## 28,272 B
+## 28,984 B
+## 29,760 B
+## 30,472 B
+```
+
+```
+## Clearing cache [@30472]
+```
+
+```
+## 14,440 B
+## 15,336 B
+## 16,224 B
+## 17,144 B
+## 17,976 B
+## 18,864 B
+## 19,720 B
+## 20,576 B
+## 21,344 B
+## 22,176 B
+## 23,000 B
+## 23,904 B
+## 24,824 B
+## 25,656 B
+## 26,552 B
+## 27,384 B
+## 28,224 B
+## 29,064 B
+## 29,840 B
+## 30,672 B
+```
+
+```
+## Clearing cache [@30672]
+```
+
+```
+## 14,432 B
+## 15,328 B
+## 16,224 B
+## 17,160 B
+## 17,992 B
+## 18,888 B
+## 19,728 B
+## 20,632 B
+## 21,504 B
+## 22,352 B
+## 23,256 B
+## 24,168 B
+## 24,944 B
+## 25,656 B
+## 26,432 B
+## 27,280 B
+## 28,112 B
+## 28,952 B
+## 29,664 B
+## 30,552 B
 ```
 
 :::question

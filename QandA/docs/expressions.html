@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="big-picture.html"/>
-
+<link rel="next" href="quasiquotation.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -309,6 +309,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="big-picture.html"><a href="big-picture.html#quosures"><i class="fa fa-check"></i>17.8 Quosures</a></li>
 </ul></li>
 <li class="chapter" data-level="18" data-path="expressions.html"><a href="expressions.html"><i class="fa fa-check"></i><b>18</b> Expressions</a></li>
+<li class="chapter" data-level="19" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>19</b> Quasiquotation</a><ul>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#motivation"><i class="fa fa-check"></i>19.2 Motivation</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#substitution"><i class="fa fa-check"></i>19.3.4 Substitution</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#exercises-19.3.6.5"><i class="fa fa-check"></i>Exercises 19.3.6.5</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#polite-fiction-of"><i class="fa fa-check"></i>19.4.6 Polite fiction of !!</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#nonstandard-asts"><i class="fa fa-check"></i>19.4.7 Nonstandard ASTs</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>19.4.8.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#non-quoting"><i class="fa fa-check"></i>Non-quoting</a></li>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#section"><i class="fa fa-check"></i>19.6 (…)</a></li>
+<li><a href="quasiquotation.html#exec">19.6.2 <code>exec()</code></a></li>
+<li><a href="quasiquotation.html#dots_list">19.6.3 <code>dots_list()</code></a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#with-base-r"><i class="fa fa-check"></i>19.6.4 With base R</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -334,17 +347,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="question">
 <p>I understand how we can subset expression calls but why/when would you do that? What is the context for extracting stuff from a function as an expression ?</p>
 <p>Let’s build on this contrived example….</p>
-<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb636-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;important.csv&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb636-2" data-line-number="2">lobstr<span class="op">::</span><span class="kw">ast</span>(<span class="kw">read.table</span>(<span class="st">&quot;important.csv&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>))</a>
-<a class="sourceLine" id="cb636-3" data-line-number="3">x[[<span class="dv">1</span>]]</a></code></pre></div>
+<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb634-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;important.csv&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb634-2" data-line-number="2">lobstr<span class="op">::</span><span class="kw">ast</span>(<span class="kw">read.table</span>(<span class="st">&quot;important.csv&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>))</a>
+<a class="sourceLine" id="cb634-3" data-line-number="3">x[[<span class="dv">1</span>]]</a></code></pre></div>
 <p>Making this an expression, we can use subsetting to shove in <code>read.csv</code> or <code>read.tsv</code> where <code>read.table</code> is?</p>
 </div>
 <p>You might need to do this in order to insert a line of code inside a function call:</p>
-<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb637-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb637-2" data-line-number="2">  <span class="kw">read.table</span>(<span class="st">&quot;important.csv&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb637-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb637-4" data-line-number="4"><span class="kw">body</span>(f)[[<span class="dv">2</span>]][[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">quote</span>(read.csv)</a>
-<a class="sourceLine" id="cb637-5" data-line-number="5">f</a></code></pre></div>
+<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb635-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb635-2" data-line-number="2">  <span class="kw">read.table</span>(<span class="st">&quot;important.csv&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb635-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb635-4" data-line-number="4"><span class="kw">body</span>(f)[[<span class="dv">2</span>]][[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">quote</span>(read.csv)</a>
+<a class="sourceLine" id="cb635-5" data-line-number="5">f</a></code></pre></div>
 <pre><code>## function (x) 
 ## {
 ##     read.csv(&quot;important.csv&quot;, row.names = FALSE)
@@ -352,25 +365,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="question">
 <p>What’s an application for this chapter?</p>
 </div>
-<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb639-1" data-line-number="1"><span class="kw">library</span>(rlang)</a>
-<a class="sourceLine" id="cb639-2" data-line-number="2">replace_sym &lt;-<span class="st"> </span><span class="cf">function</span>(x, sym, replace) {</a>
-<a class="sourceLine" id="cb639-3" data-line-number="3">  <span class="cf">if</span> (<span class="kw">is_symbol</span>(x, <span class="dt">name =</span> sym)) {</a>
-<a class="sourceLine" id="cb639-4" data-line-number="4">    replace</a>
-<a class="sourceLine" id="cb639-5" data-line-number="5">  } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">is_atomic</span>(x)) {</a>
-<a class="sourceLine" id="cb639-6" data-line-number="6">    x</a>
-<a class="sourceLine" id="cb639-7" data-line-number="7">  } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">is_symbol</span>(x)) {</a>
-<a class="sourceLine" id="cb639-8" data-line-number="8">    x</a>
-<a class="sourceLine" id="cb639-9" data-line-number="9">  } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">is_call</span>(x)) {</a>
-<a class="sourceLine" id="cb639-10" data-line-number="10">    <span class="kw">as.call</span>(<span class="kw">lapply</span>(x, replace_sym, sym, replace))</a>
-<a class="sourceLine" id="cb639-11" data-line-number="11">  } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">is.pairlist</span>(x)) {</a>
-<a class="sourceLine" id="cb639-12" data-line-number="12">    <span class="kw">as.pairlist</span>(<span class="kw">lapply</span>(x, replace_sym, sym, replace))</a>
-<a class="sourceLine" id="cb639-13" data-line-number="13">  } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb639-14" data-line-number="14">    <span class="kw">abort</span>(glue<span class="op">::</span><span class="kw">glue</span>(<span class="st">&quot;Don&#39;t know how to handle {as_label(x)}&quot;</span>))</a>
-<a class="sourceLine" id="cb639-15" data-line-number="15">  }</a>
-<a class="sourceLine" id="cb639-16" data-line-number="16">}</a>
-<a class="sourceLine" id="cb639-17" data-line-number="17"><span class="kw">replace_sym</span>(<span class="kw">expr</span>(a <span class="op">+</span><span class="st"> </span>b <span class="op">+</span><span class="st"> </span><span class="dv">1</span>), <span class="st">&quot;b&quot;</span>, <span class="kw">expr</span>(<span class="kw">f</span>(x)))</a></code></pre></div>
+<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb637-1" data-line-number="1"><span class="kw">library</span>(rlang)</a>
+<a class="sourceLine" id="cb637-2" data-line-number="2">replace_sym &lt;-<span class="st"> </span><span class="cf">function</span>(x, sym, replace) {</a>
+<a class="sourceLine" id="cb637-3" data-line-number="3">  <span class="cf">if</span> (<span class="kw">is_symbol</span>(x, <span class="dt">name =</span> sym)) {</a>
+<a class="sourceLine" id="cb637-4" data-line-number="4">    replace</a>
+<a class="sourceLine" id="cb637-5" data-line-number="5">  } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">is_atomic</span>(x)) {</a>
+<a class="sourceLine" id="cb637-6" data-line-number="6">    x</a>
+<a class="sourceLine" id="cb637-7" data-line-number="7">  } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">is_symbol</span>(x)) {</a>
+<a class="sourceLine" id="cb637-8" data-line-number="8">    x</a>
+<a class="sourceLine" id="cb637-9" data-line-number="9">  } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">is_call</span>(x)) {</a>
+<a class="sourceLine" id="cb637-10" data-line-number="10">    <span class="kw">as.call</span>(<span class="kw">lapply</span>(x, replace_sym, sym, replace))</a>
+<a class="sourceLine" id="cb637-11" data-line-number="11">  } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">is.pairlist</span>(x)) {</a>
+<a class="sourceLine" id="cb637-12" data-line-number="12">    <span class="kw">as.pairlist</span>(<span class="kw">lapply</span>(x, replace_sym, sym, replace))</a>
+<a class="sourceLine" id="cb637-13" data-line-number="13">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb637-14" data-line-number="14">    <span class="kw">abort</span>(glue<span class="op">::</span><span class="kw">glue</span>(<span class="st">&quot;Don&#39;t know how to handle {as_label(x)}&quot;</span>))</a>
+<a class="sourceLine" id="cb637-15" data-line-number="15">  }</a>
+<a class="sourceLine" id="cb637-16" data-line-number="16">}</a>
+<a class="sourceLine" id="cb637-17" data-line-number="17"><span class="kw">replace_sym</span>(<span class="kw">expr</span>(a <span class="op">+</span><span class="st"> </span>b <span class="op">+</span><span class="st"> </span><span class="dv">1</span>), <span class="st">&quot;b&quot;</span>, <span class="kw">expr</span>(<span class="kw">f</span>(x)))</a></code></pre></div>
 <pre><code>## a + f(x) + 1</code></pre>
-
 
 </div>
             </section>
@@ -378,8 +390,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="big-picture.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="big-picture.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="quasiquotation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

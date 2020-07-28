@@ -309,6 +309,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="big-picture.html"><a href="big-picture.html#quosures"><i class="fa fa-check"></i>17.8 Quosures</a></li>
 </ul></li>
 <li class="chapter" data-level="18" data-path="expressions.html"><a href="expressions.html"><i class="fa fa-check"></i><b>18</b> Expressions</a></li>
+<li class="chapter" data-level="19" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>19</b> Quasiquotation</a><ul>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#motivation"><i class="fa fa-check"></i>19.2 Motivation</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#substitution"><i class="fa fa-check"></i>19.3.4 Substitution</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#exercises-19.3.6.5"><i class="fa fa-check"></i>Exercises 19.3.6.5</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#polite-fiction-of"><i class="fa fa-check"></i>19.4.6 Polite fiction of !!</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#nonstandard-asts"><i class="fa fa-check"></i>19.4.7 Nonstandard ASTs</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>19.4.8.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#non-quoting"><i class="fa fa-check"></i>Non-quoting</a></li>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#section"><i class="fa fa-check"></i>19.6 (…)</a></li>
+<li><a href="quasiquotation.html#exec">19.6.2 <code>exec()</code></a></li>
+<li><a href="quasiquotation.html#dots_list">19.6.3 <code>dots_list()</code></a></li>
+<li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#with-base-r"><i class="fa fa-check"></i>19.6.4 With base R</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -336,97 +349,97 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="using-our-example-from-the-s4-chapter" class="section level3">
 <h3><span class="header-section-number">16.0.1</span> Using our example from the S4 Chapter:</h3>
-<div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb615-1" data-line-number="1"><span class="kw">setClass</span>(<span class="st">&quot;Person&quot;</span>, </a>
-<a class="sourceLine" id="cb615-2" data-line-number="2">  <span class="dt">slots =</span> <span class="kw">c</span>(</a>
-<a class="sourceLine" id="cb615-3" data-line-number="3">    <span class="dt">name =</span> <span class="st">&quot;character&quot;</span>, </a>
-<a class="sourceLine" id="cb615-4" data-line-number="4">    <span class="dt">age =</span> <span class="st">&quot;numeric&quot;</span></a>
-<a class="sourceLine" id="cb615-5" data-line-number="5">  )</a>
-<a class="sourceLine" id="cb615-6" data-line-number="6">)</a>
-<a class="sourceLine" id="cb615-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb615-8" data-line-number="8"><span class="kw">setGeneric</span>(<span class="st">&quot;age&quot;</span>, <span class="cf">function</span>(x) <span class="kw">standardGeneric</span>(<span class="st">&quot;age&quot;</span>))</a>
-<a class="sourceLine" id="cb615-9" data-line-number="9"><span class="kw">setGeneric</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="cf">function</span>(x, value) <span class="kw">standardGeneric</span>(<span class="st">&quot;age&lt;-&quot;</span>))</a>
-<a class="sourceLine" id="cb615-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb615-11" data-line-number="11"><span class="kw">setMethod</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x) x<span class="op">@</span>age)</a>
-<a class="sourceLine" id="cb615-12" data-line-number="12"><span class="kw">setMethod</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x, value) {</a>
-<a class="sourceLine" id="cb615-13" data-line-number="13">  x<span class="op">@</span>age &lt;-<span class="st"> </span>value</a>
-<a class="sourceLine" id="cb615-14" data-line-number="14">  x</a>
-<a class="sourceLine" id="cb615-15" data-line-number="15">})</a>
-<a class="sourceLine" id="cb615-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb615-17" data-line-number="17">john &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">&quot;Person&quot;</span>, <span class="dt">name =</span> <span class="st">&quot;John Smith&quot;</span>, <span class="dt">age =</span> <span class="dv">12</span>)</a>
-<a class="sourceLine" id="cb615-18" data-line-number="18"><span class="kw">age</span>(john)</a></code></pre></div>
+<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb613-1" data-line-number="1"><span class="kw">setClass</span>(<span class="st">&quot;Person&quot;</span>, </a>
+<a class="sourceLine" id="cb613-2" data-line-number="2">  <span class="dt">slots =</span> <span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb613-3" data-line-number="3">    <span class="dt">name =</span> <span class="st">&quot;character&quot;</span>, </a>
+<a class="sourceLine" id="cb613-4" data-line-number="4">    <span class="dt">age =</span> <span class="st">&quot;numeric&quot;</span></a>
+<a class="sourceLine" id="cb613-5" data-line-number="5">  )</a>
+<a class="sourceLine" id="cb613-6" data-line-number="6">)</a>
+<a class="sourceLine" id="cb613-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb613-8" data-line-number="8"><span class="kw">setGeneric</span>(<span class="st">&quot;age&quot;</span>, <span class="cf">function</span>(x) <span class="kw">standardGeneric</span>(<span class="st">&quot;age&quot;</span>))</a>
+<a class="sourceLine" id="cb613-9" data-line-number="9"><span class="kw">setGeneric</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="cf">function</span>(x, value) <span class="kw">standardGeneric</span>(<span class="st">&quot;age&lt;-&quot;</span>))</a>
+<a class="sourceLine" id="cb613-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb613-11" data-line-number="11"><span class="kw">setMethod</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x) x<span class="op">@</span>age)</a>
+<a class="sourceLine" id="cb613-12" data-line-number="12"><span class="kw">setMethod</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x, value) {</a>
+<a class="sourceLine" id="cb613-13" data-line-number="13">  x<span class="op">@</span>age &lt;-<span class="st"> </span>value</a>
+<a class="sourceLine" id="cb613-14" data-line-number="14">  x</a>
+<a class="sourceLine" id="cb613-15" data-line-number="15">})</a>
+<a class="sourceLine" id="cb613-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb613-17" data-line-number="17">john &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">&quot;Person&quot;</span>, <span class="dt">name =</span> <span class="st">&quot;John Smith&quot;</span>, <span class="dt">age =</span> <span class="dv">12</span>)</a>
+<a class="sourceLine" id="cb613-18" data-line-number="18"><span class="kw">age</span>(john)</a></code></pre></div>
 <pre><code>[1] 12</code></pre>
 <p>A generic is a function that will dispatch differently based on the class it is applied to. Above we apply the <code>age</code> generic to <code>Person</code> using <code>setMethod</code> but we could create an <code>age</code> method that behaves differently for another class, like dogs (which will add 7 to the supplied age)</p>
-<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb617-1" data-line-number="1"><span class="kw">setClass</span>(<span class="st">&quot;Person&quot;</span>, <span class="dt">slots =</span> <span class="kw">c</span>(<span class="dt">name =</span> <span class="st">&quot;character&quot;</span>,<span class="dt">age =</span> <span class="st">&quot;numeric&quot;</span>))</a>
-<a class="sourceLine" id="cb617-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb617-3" data-line-number="3"><span class="kw">setGeneric</span>(<span class="st">&quot;age&quot;</span>, <span class="cf">function</span>(x) <span class="kw">standardGeneric</span>(<span class="st">&quot;age&quot;</span>))</a>
-<a class="sourceLine" id="cb617-4" data-line-number="4"><span class="kw">setGeneric</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="cf">function</span>(x, value) <span class="kw">standardGeneric</span>(<span class="st">&quot;age&lt;-&quot;</span>))</a>
-<a class="sourceLine" id="cb617-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb617-6" data-line-number="6"><span class="kw">setMethod</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x) x<span class="op">@</span>age)</a>
-<a class="sourceLine" id="cb617-7" data-line-number="7"><span class="kw">setMethod</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x, value) {</a>
-<a class="sourceLine" id="cb617-8" data-line-number="8">  x<span class="op">@</span>age &lt;-<span class="st"> </span>value</a>
-<a class="sourceLine" id="cb617-9" data-line-number="9">  x</a>
-<a class="sourceLine" id="cb617-10" data-line-number="10">})</a>
-<a class="sourceLine" id="cb617-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb617-12" data-line-number="12"><span class="kw">setClass</span>(<span class="st">&quot;Dog&quot;</span>, <span class="dt">slots =</span> <span class="kw">c</span>(<span class="dt">name =</span> <span class="st">&quot;character&quot;</span>,  <span class="dt">age =</span> <span class="st">&quot;numeric&quot;</span>))</a>
-<a class="sourceLine" id="cb617-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb617-14" data-line-number="14"><span class="co"># You want the age generic to automatically return 7x the slot in human years</span></a>
-<a class="sourceLine" id="cb617-15" data-line-number="15"><span class="kw">setMethod</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;Dog&quot;</span>, <span class="cf">function</span>(x) {x<span class="op">@</span>age<span class="op">*</span><span class="dv">7</span>} ) </a>
-<a class="sourceLine" id="cb617-16" data-line-number="16"><span class="kw">setMethod</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="st">&quot;Dog&quot;</span>, <span class="cf">function</span>(x, value) {</a>
-<a class="sourceLine" id="cb617-17" data-line-number="17">  x<span class="op">@</span>age &lt;-<span class="st"> </span>value</a>
-<a class="sourceLine" id="cb617-18" data-line-number="18">  x</a>
-<a class="sourceLine" id="cb617-19" data-line-number="19">})</a>
-<a class="sourceLine" id="cb617-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb617-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb617-22" data-line-number="22">spot &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">&quot;Dog&quot;</span>, <span class="dt">name =</span> <span class="st">&quot;Spot Smith&quot;</span>, <span class="dt">age =</span> <span class="dv">12</span>)</a>
-<a class="sourceLine" id="cb617-23" data-line-number="23"><span class="kw">age</span>(spot)</a></code></pre></div>
+<div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb615-1" data-line-number="1"><span class="kw">setClass</span>(<span class="st">&quot;Person&quot;</span>, <span class="dt">slots =</span> <span class="kw">c</span>(<span class="dt">name =</span> <span class="st">&quot;character&quot;</span>,<span class="dt">age =</span> <span class="st">&quot;numeric&quot;</span>))</a>
+<a class="sourceLine" id="cb615-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb615-3" data-line-number="3"><span class="kw">setGeneric</span>(<span class="st">&quot;age&quot;</span>, <span class="cf">function</span>(x) <span class="kw">standardGeneric</span>(<span class="st">&quot;age&quot;</span>))</a>
+<a class="sourceLine" id="cb615-4" data-line-number="4"><span class="kw">setGeneric</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="cf">function</span>(x, value) <span class="kw">standardGeneric</span>(<span class="st">&quot;age&lt;-&quot;</span>))</a>
+<a class="sourceLine" id="cb615-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb615-6" data-line-number="6"><span class="kw">setMethod</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x) x<span class="op">@</span>age)</a>
+<a class="sourceLine" id="cb615-7" data-line-number="7"><span class="kw">setMethod</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="st">&quot;Person&quot;</span>, <span class="cf">function</span>(x, value) {</a>
+<a class="sourceLine" id="cb615-8" data-line-number="8">  x<span class="op">@</span>age &lt;-<span class="st"> </span>value</a>
+<a class="sourceLine" id="cb615-9" data-line-number="9">  x</a>
+<a class="sourceLine" id="cb615-10" data-line-number="10">})</a>
+<a class="sourceLine" id="cb615-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb615-12" data-line-number="12"><span class="kw">setClass</span>(<span class="st">&quot;Dog&quot;</span>, <span class="dt">slots =</span> <span class="kw">c</span>(<span class="dt">name =</span> <span class="st">&quot;character&quot;</span>,  <span class="dt">age =</span> <span class="st">&quot;numeric&quot;</span>))</a>
+<a class="sourceLine" id="cb615-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb615-14" data-line-number="14"><span class="co"># You want the age generic to automatically return 7x the slot in human years</span></a>
+<a class="sourceLine" id="cb615-15" data-line-number="15"><span class="kw">setMethod</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;Dog&quot;</span>, <span class="cf">function</span>(x) {x<span class="op">@</span>age<span class="op">*</span><span class="dv">7</span>} ) </a>
+<a class="sourceLine" id="cb615-16" data-line-number="16"><span class="kw">setMethod</span>(<span class="st">&quot;age&lt;-&quot;</span>, <span class="st">&quot;Dog&quot;</span>, <span class="cf">function</span>(x, value) {</a>
+<a class="sourceLine" id="cb615-17" data-line-number="17">  x<span class="op">@</span>age &lt;-<span class="st"> </span>value</a>
+<a class="sourceLine" id="cb615-18" data-line-number="18">  x</a>
+<a class="sourceLine" id="cb615-19" data-line-number="19">})</a>
+<a class="sourceLine" id="cb615-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb615-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb615-22" data-line-number="22">spot &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">&quot;Dog&quot;</span>, <span class="dt">name =</span> <span class="st">&quot;Spot Smith&quot;</span>, <span class="dt">age =</span> <span class="dv">12</span>)</a>
+<a class="sourceLine" id="cb615-23" data-line-number="23"><span class="kw">age</span>(spot)</a></code></pre></div>
 </div>
 <div id="we-can-do-this-with-s3" class="section level3 unnumbered">
 <h3>We can do this with S3:</h3>
-<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb618-1" data-line-number="1">johnny &lt;-<span class="st"> </span><span class="kw">structure</span>(</a>
-<a class="sourceLine" id="cb618-2" data-line-number="2">  <span class="kw">list</span>(<span class="dt">name =</span> <span class="st">&quot;Johnny Smith&quot;</span>,</a>
-<a class="sourceLine" id="cb618-3" data-line-number="3">       <span class="dt">age =</span> <span class="dv">12</span>),</a>
-<a class="sourceLine" id="cb618-4" data-line-number="4">  <span class="dt">class =</span> <span class="st">&quot;s3_human&quot;</span>)</a>
-<a class="sourceLine" id="cb618-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb618-6" data-line-number="6">stripe &lt;-<span class="st"> </span><span class="kw">structure</span>(</a>
-<a class="sourceLine" id="cb618-7" data-line-number="7">  <span class="kw">list</span>(<span class="dt">name =</span> <span class="st">&quot;Stripe Smith&quot;</span>,</a>
-<a class="sourceLine" id="cb618-8" data-line-number="8">       <span class="dt">age =</span> <span class="dv">12</span>),</a>
-<a class="sourceLine" id="cb618-9" data-line-number="9">  <span class="dt">class =</span> <span class="st">&quot;s3_dog&quot;</span>)</a>
-<a class="sourceLine" id="cb618-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb618-11" data-line-number="11">s3_age &lt;-<span class="st"> </span><span class="cf">function</span>(x){<span class="kw">UseMethod</span>(<span class="st">&quot;s3_age&quot;</span>)}</a>
-<a class="sourceLine" id="cb618-12" data-line-number="12">s3_age.s3_dog &lt;-<span class="st"> </span><span class="cf">function</span>(x){x<span class="op">$</span>age<span class="op">*</span><span class="dv">7</span>}</a>
-<a class="sourceLine" id="cb618-13" data-line-number="13">s3_age.s3_human &lt;-<span class="st"> </span><span class="cf">function</span>(x){x<span class="op">$</span>age}</a>
-<a class="sourceLine" id="cb618-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb618-15" data-line-number="15"><span class="kw">s3_age</span>(johnny)</a></code></pre></div>
+<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb616-1" data-line-number="1">johnny &lt;-<span class="st"> </span><span class="kw">structure</span>(</a>
+<a class="sourceLine" id="cb616-2" data-line-number="2">  <span class="kw">list</span>(<span class="dt">name =</span> <span class="st">&quot;Johnny Smith&quot;</span>,</a>
+<a class="sourceLine" id="cb616-3" data-line-number="3">       <span class="dt">age =</span> <span class="dv">12</span>),</a>
+<a class="sourceLine" id="cb616-4" data-line-number="4">  <span class="dt">class =</span> <span class="st">&quot;s3_human&quot;</span>)</a>
+<a class="sourceLine" id="cb616-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb616-6" data-line-number="6">stripe &lt;-<span class="st"> </span><span class="kw">structure</span>(</a>
+<a class="sourceLine" id="cb616-7" data-line-number="7">  <span class="kw">list</span>(<span class="dt">name =</span> <span class="st">&quot;Stripe Smith&quot;</span>,</a>
+<a class="sourceLine" id="cb616-8" data-line-number="8">       <span class="dt">age =</span> <span class="dv">12</span>),</a>
+<a class="sourceLine" id="cb616-9" data-line-number="9">  <span class="dt">class =</span> <span class="st">&quot;s3_dog&quot;</span>)</a>
+<a class="sourceLine" id="cb616-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb616-11" data-line-number="11">s3_age &lt;-<span class="st"> </span><span class="cf">function</span>(x){<span class="kw">UseMethod</span>(<span class="st">&quot;s3_age&quot;</span>)}</a>
+<a class="sourceLine" id="cb616-12" data-line-number="12">s3_age.s3_dog &lt;-<span class="st"> </span><span class="cf">function</span>(x){x<span class="op">$</span>age<span class="op">*</span><span class="dv">7</span>}</a>
+<a class="sourceLine" id="cb616-13" data-line-number="13">s3_age.s3_human &lt;-<span class="st"> </span><span class="cf">function</span>(x){x<span class="op">$</span>age}</a>
+<a class="sourceLine" id="cb616-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb616-15" data-line-number="15"><span class="kw">s3_age</span>(johnny)</a></code></pre></div>
 <pre><code>## [1] 12</code></pre>
-<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb620-1" data-line-number="1"><span class="kw">s3_age</span>(stripe)</a></code></pre></div>
+<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb618-1" data-line-number="1"><span class="kw">s3_age</span>(stripe)</a></code></pre></div>
 <pre><code>## [1] 84</code></pre>
 <div id="and-r6" class="section level4 unnumbered">
 <h4>And R6</h4>
-<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb622-1" data-line-number="1">Person &lt;-<span class="st"> </span><span class="kw">R6Class</span>(<span class="st">&quot;Person&quot;</span>, <span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb622-2" data-line-number="2">  <span class="dt">name =</span> <span class="ot">NULL</span>,</a>
-<a class="sourceLine" id="cb622-3" data-line-number="3">  <span class="dt">age =</span> <span class="ot">NULL</span>,</a>
-<a class="sourceLine" id="cb622-4" data-line-number="4">  <span class="dt">initialize =</span> <span class="cf">function</span>(name, <span class="dt">age =</span> <span class="ot">NA</span>) {</a>
-<a class="sourceLine" id="cb622-5" data-line-number="5">    <span class="kw">stopifnot</span>(<span class="kw">is.character</span>(name), <span class="kw">length</span>(name) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb622-6" data-line-number="6">    <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(age), <span class="kw">length</span>(age) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb622-7" data-line-number="7">    self<span class="op">$</span>name &lt;-<span class="st"> </span>name</a>
-<a class="sourceLine" id="cb622-8" data-line-number="8">    self<span class="op">$</span>age &lt;-<span class="st"> </span>age</a>
-<a class="sourceLine" id="cb622-9" data-line-number="9">  }</a>
-<a class="sourceLine" id="cb622-10" data-line-number="10">))</a>
-<a class="sourceLine" id="cb622-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb622-12" data-line-number="12">john &lt;-<span class="st"> </span>Person<span class="op">$</span><span class="kw">new</span>(<span class="dt">name =</span> <span class="st">&quot;John Smith&quot;</span>, <span class="dt">age =</span> <span class="dv">12</span>)</a>
-<a class="sourceLine" id="cb622-13" data-line-number="13">john<span class="op">$</span>age</a></code></pre></div>
+<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb620-1" data-line-number="1">Person &lt;-<span class="st"> </span><span class="kw">R6Class</span>(<span class="st">&quot;Person&quot;</span>, <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb620-2" data-line-number="2">  <span class="dt">name =</span> <span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb620-3" data-line-number="3">  <span class="dt">age =</span> <span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb620-4" data-line-number="4">  <span class="dt">initialize =</span> <span class="cf">function</span>(name, <span class="dt">age =</span> <span class="ot">NA</span>) {</a>
+<a class="sourceLine" id="cb620-5" data-line-number="5">    <span class="kw">stopifnot</span>(<span class="kw">is.character</span>(name), <span class="kw">length</span>(name) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb620-6" data-line-number="6">    <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(age), <span class="kw">length</span>(age) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb620-7" data-line-number="7">    self<span class="op">$</span>name &lt;-<span class="st"> </span>name</a>
+<a class="sourceLine" id="cb620-8" data-line-number="8">    self<span class="op">$</span>age &lt;-<span class="st"> </span>age</a>
+<a class="sourceLine" id="cb620-9" data-line-number="9">  }</a>
+<a class="sourceLine" id="cb620-10" data-line-number="10">))</a>
+<a class="sourceLine" id="cb620-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb620-12" data-line-number="12">john &lt;-<span class="st"> </span>Person<span class="op">$</span><span class="kw">new</span>(<span class="dt">name =</span> <span class="st">&quot;John Smith&quot;</span>, <span class="dt">age =</span> <span class="dv">12</span>)</a>
+<a class="sourceLine" id="cb620-13" data-line-number="13">john<span class="op">$</span>age</a></code></pre></div>
 <pre><code>[1] 12</code></pre>
-<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb624-1" data-line-number="1">Dog &lt;-<span class="st"> </span><span class="kw">R6Class</span>(</a>
-<a class="sourceLine" id="cb624-2" data-line-number="2">  <span class="st">&quot;Dog&quot;</span>,</a>
-<a class="sourceLine" id="cb624-3" data-line-number="3">  <span class="dt">inherit =</span> Person,</a>
-<a class="sourceLine" id="cb624-4" data-line-number="4">  <span class="dt">public =</span> <span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb624-5" data-line-number="5">  <span class="dt">initialize =</span> <span class="cf">function</span>(name, <span class="dt">age =</span> <span class="ot">NA</span>) {</a>
-<a class="sourceLine" id="cb624-6" data-line-number="6">    super<span class="op">$</span><span class="kw">initialize</span>(name,age)</a>
-<a class="sourceLine" id="cb624-7" data-line-number="7">    self<span class="op">$</span>age &lt;-<span class="st"> </span>age <span class="op">*</span><span class="st"> </span><span class="dv">7</span></a>
-<a class="sourceLine" id="cb624-8" data-line-number="8">  }</a>
-<a class="sourceLine" id="cb624-9" data-line-number="9">))</a>
-<a class="sourceLine" id="cb624-10" data-line-number="10">spot &lt;-<span class="st"> </span>Dog<span class="op">$</span><span class="kw">new</span>(<span class="dt">name =</span> <span class="st">&quot;Spot Smith&quot;</span>, <span class="dt">age =</span> <span class="dv">12</span>) </a>
-<a class="sourceLine" id="cb624-11" data-line-number="11">spot<span class="op">$</span>age</a></code></pre></div>
+<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb622-1" data-line-number="1">Dog &lt;-<span class="st"> </span><span class="kw">R6Class</span>(</a>
+<a class="sourceLine" id="cb622-2" data-line-number="2">  <span class="st">&quot;Dog&quot;</span>,</a>
+<a class="sourceLine" id="cb622-3" data-line-number="3">  <span class="dt">inherit =</span> Person,</a>
+<a class="sourceLine" id="cb622-4" data-line-number="4">  <span class="dt">public =</span> <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb622-5" data-line-number="5">  <span class="dt">initialize =</span> <span class="cf">function</span>(name, <span class="dt">age =</span> <span class="ot">NA</span>) {</a>
+<a class="sourceLine" id="cb622-6" data-line-number="6">    super<span class="op">$</span><span class="kw">initialize</span>(name,age)</a>
+<a class="sourceLine" id="cb622-7" data-line-number="7">    self<span class="op">$</span>age &lt;-<span class="st"> </span>age <span class="op">*</span><span class="st"> </span><span class="dv">7</span></a>
+<a class="sourceLine" id="cb622-8" data-line-number="8">  }</a>
+<a class="sourceLine" id="cb622-9" data-line-number="9">))</a>
+<a class="sourceLine" id="cb622-10" data-line-number="10">spot &lt;-<span class="st"> </span>Dog<span class="op">$</span><span class="kw">new</span>(<span class="dt">name =</span> <span class="st">&quot;Spot Smith&quot;</span>, <span class="dt">age =</span> <span class="dv">12</span>) </a>
+<a class="sourceLine" id="cb622-11" data-line-number="11">spot<span class="op">$</span>age</a></code></pre></div>
 <pre><code>[1] 84</code></pre>
 
 </div>
