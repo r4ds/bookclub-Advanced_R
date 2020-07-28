@@ -42,7 +42,9 @@ This repo contains 3 main folders:
 
 <hr>
 
-*Group 3 [Europe/Africa]: (TBD!)*
+*Group 3 [Europe/Africa]: (starting 2020-08-04) Tuesdays, 19:15 CET (CEST)*
+- 2020-08-04 Chapter 1 - Introduction [Novica Nakov](https://twitter.com/novicanakov) (probably :))
+- 2020-08-11 Chapter 2 - Names and values: 
 
 <details>
   <summary> Future Meetings </summary>
