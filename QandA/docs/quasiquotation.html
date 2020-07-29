@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-07-28" />
+<meta name="date" content="2020-07-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -390,9 +390,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb654-3" data-line-number="3"><span class="kw">with</span>(df, x <span class="op">+</span><span class="st"> </span><span class="op">!!</span>y)</a></code></pre></div>
 <pre><code>## [1] 2 3 4 5 6</code></pre>
 </div>
-<div class="TODO">
-
-</div>
+<p>Any number that isn’t <code>0</code> is <code>TRUE</code> in R:</p>
+<div class="sourceCode" id="cb656"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb656-1" data-line-number="1"><span class="kw">as.logical</span>(<span class="fl">1.2123</span>)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>So because <code>y==TRUE</code>, <code>with</code> is taking every element in <code>x</code> and adding <code>1</code> to it because once you introduce a <code>+</code> inside <code>with</code> you’re essentially saying <code>as.numeric(TRUE)</code> which is <code>1</code>.</p>
+<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb658-1" data-line-number="1"><span class="kw">with</span>(df, x <span class="op">+</span><span class="st"> </span><span class="ot">TRUE</span>) <span class="op">==</span><span class="st"> </span><span class="kw">with</span>(df, x <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) </a></code></pre></div>
+<pre><code>## [1] TRUE TRUE TRUE TRUE TRUE</code></pre>
+<p><code>!x</code> essentially really means <code>!as.logical(x)</code>, <code>1:5 + x</code> essentially really means <code>1:5 + as.integer(x)</code>, so we end up with <code>1:5 + as.integer(!(!(as.logical(y))))</code></p>
 </div>
 <div id="nonstandard-asts" class="section level2 unnumbered">
 <h2>19.4.7 Nonstandard ASTs</h2>
@@ -409,12 +413,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>19.4.8.2 Exercises</h2>
 <div class="question">
 <p>What exactly is going on here? What is <code>&lt;inline integer&gt;</code>?</p>
-<div class="sourceCode" id="cb656"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb656-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">ast</span>(<span class="kw">mean</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb660-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">ast</span>(<span class="kw">mean</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>))</a></code></pre></div>
 <pre><code>## █─mean 
 ## └─█─`:` 
 ##   ├─1 
 ##   └─10</code></pre>
-<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb658-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">ast</span>(<span class="kw">mean</span>(<span class="op">!!</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)))</a></code></pre></div>
+<div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb662-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">ast</span>(<span class="kw">mean</span>(<span class="op">!!</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)))</a></code></pre></div>
 <pre><code>## █─mean 
 ## └─&lt;inline integer&gt;</code></pre>
 </div>
@@ -431,51 +435,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>19.6 (…)</h2>
 <div class="question">
 <p>Based on <a href="">this thread</a> it looks like <code>...</code> should be the first line of defense before using tidyeval - why?</p>
-<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb660-1" data-line-number="1">my_groups &lt;-<span class="st"> </span><span class="cf">function</span>(df, ...) {</a>
-<a class="sourceLine" id="cb660-2" data-line-number="2">  df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb660-3" data-line-number="3"><span class="st">    </span><span class="kw">group_by</span>(...) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb660-4" data-line-number="4"><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>())</a>
-<a class="sourceLine" id="cb660-5" data-line-number="5">}</a>
-<a class="sourceLine" id="cb660-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb660-7" data-line-number="7">my_groups &lt;-<span class="st"> </span><span class="cf">function</span>(df, col) {</a>
-<a class="sourceLine" id="cb660-8" data-line-number="8">  df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb660-9" data-line-number="9"><span class="st">    </span><span class="kw">group_by</span>(<span class="op">!!</span><span class="kw">enquo</span>(col)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb660-10" data-line-number="10"><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>())</a>
-<a class="sourceLine" id="cb660-11" data-line-number="11">}</a></code></pre></div>
+<div class="sourceCode" id="cb664"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb664-1" data-line-number="1">my_groups &lt;-<span class="st"> </span><span class="cf">function</span>(df, ...) {</a>
+<a class="sourceLine" id="cb664-2" data-line-number="2">  df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb664-3" data-line-number="3"><span class="st">    </span><span class="kw">group_by</span>(...) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb664-4" data-line-number="4"><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>())</a>
+<a class="sourceLine" id="cb664-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb664-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb664-7" data-line-number="7">my_groups &lt;-<span class="st"> </span><span class="cf">function</span>(df, col) {</a>
+<a class="sourceLine" id="cb664-8" data-line-number="8">  df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb664-9" data-line-number="9"><span class="st">    </span><span class="kw">group_by</span>(<span class="op">!!</span><span class="kw">enquo</span>(col)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb664-10" data-line-number="10"><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>())</a>
+<a class="sourceLine" id="cb664-11" data-line-number="11">}</a></code></pre></div>
 </div>
 <p>The first option lets the robust function <code>group_by</code> figure out any quoting. Furthermore, the second option only allows the user to supply a single column to group by and assumes the user is passing in a valid column.</p>
 <div class="question">
 <p>Can we go over the “spatting” example, I have no idea what this means.</p>
 </div>
-<div class="TODO">
-
-</div>
+<p>I think “splatting” is the correct term*. It means taking a single argument in a list and interpreting it as separate arguments. Hadley is referring to the specific use of <code>!!!</code> to unpack a list into function arguments.</p>
+<ul>
+<li>at least googling for “splatting Ruby” gives lots of relevant hits vs “spatting Ruby”</li>
+</ul>
 </div>
 <div id="exec" class="section level2 unnumbered">
 <h2>19.6.2 <code>exec()</code></h2>
 <div class="question">
 <p>Can we use this function instead of <code>do.call</code> in our Expressions shiny app? Do we need to change <code>argumentlist()</code> to use <code>list2</code> rather than <code>list</code>?</p>
-<div class="sourceCode" id="cb661"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb661-1" data-line-number="1"><span class="kw">do.call</span>(call2, <span class="kw">argumentlist</span>(), <span class="dt">quote =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb665"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb665-1" data-line-number="1"><span class="kw">do.call</span>(call2, <span class="kw">argumentlist</span>(), <span class="dt">quote =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 </div>
-<div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb662-1" data-line-number="1"><span class="kw">exec</span>(call2, <span class="op">!!!</span><span class="kw">argumentlist</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb666-1" data-line-number="1"><span class="kw">exec</span>(call2, <span class="op">!!!</span><span class="kw">argumentlist</span>())</a></code></pre></div>
 </div>
 <div id="dots_list" class="section level2 unnumbered">
 <h2>19.6.3 <code>dots_list()</code></h2>
 <div class="question">
 <p>This function seems pretty rad, what’s a use case for it in the wild?</p>
 </div>
-<div class="TODO">
-<p>XXX</p>
-</div>
+<p>We can use this function anytime there’s a use for <code>list2</code>!</p>
 </div>
 <div id="with-base-r" class="section level2 unnumbered">
 <h2>19.6.4 With base R</h2>
 <div class="question">
 <p>What is going on with this RCurl example and how does it avoid using <code>do.call</code>? Can we find some Hadley source code that uses it since he said he liked it at one point? Why do you think he moved away from it?</p>
-<div class="sourceCode" id="cb663"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb663-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="cf">function</span>(..., .dots) {</a>
-<a class="sourceLine" id="cb663-2" data-line-number="2">  dots &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">list</span>(...), .dots)</a>
-<a class="sourceLine" id="cb663-3" data-line-number="3">  <span class="co"># Do something</span></a>
-<a class="sourceLine" id="cb663-4" data-line-number="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb667"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb667-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="cf">function</span>(..., .dots) {</a>
+<a class="sourceLine" id="cb667-2" data-line-number="2">  dots &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">list</span>(...), .dots)</a>
+<a class="sourceLine" id="cb667-3" data-line-number="3">  <span class="co"># Do something</span></a>
+<a class="sourceLine" id="cb667-4" data-line-number="4">}</a></code></pre></div>
 </div>
 <div class="TODO">
 <p>The <code>dots</code> object combines all the arguments passed as dots and the arguments not passed as dots. This gives a lot (perhaps too much) leeway to the user of the function.</p>

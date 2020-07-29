@@ -63,7 +63,6 @@ with(df, x + !!y)
 ```
 :::
 
-:::TODO
 Any number that isn't `0` is `TRUE` in R:
 
 ```{r}
@@ -73,9 +72,10 @@ as.logical(1.2123)
 So because `y==TRUE`, `with` is taking every element in `x` and adding `1` to it because once you introduce a `+` inside `with` you're essentially saying `as.numeric(TRUE)` which is `1`.
 
 ```{r}
-with(df, x + TRUE) == with(df, x + 1)
+with(df, x + TRUE) == with(df, x + 1) 
 ```
-:::
+
+`!x` essentially really means `!as.logical(x)`, `1:5 + x` essentially really means `1:5 + as.integer(x)`, so we end up with `1:5 + as.integer(!(!(as.logical(y))))`
 
 ## 19.4.7 Nonstandard ASTs {-}
 

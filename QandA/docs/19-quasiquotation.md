@@ -66,8 +66,29 @@ with(df, x + !!y)
 ```
 :::
 
-:::TODO
-:::
+Any number that isn't `0` is `TRUE` in R:
+
+
+```r
+as.logical(1.2123)
+```
+
+```
+## [1] TRUE
+```
+
+So because `y==TRUE`, `with` is taking every element in `x` and adding `1` to it because once you introduce a `+` inside `with` you're essentially saying `as.numeric(TRUE)` which is `1`.
+
+
+```r
+with(df, x + TRUE) == with(df, x + 1) 
+```
+
+```
+## [1] TRUE TRUE TRUE TRUE TRUE
+```
+
+`!x` essentially really means `!as.logical(x)`, `1:5 + x` essentially really means `1:5 + as.integer(x)`, so we end up with `1:5 + as.integer(!(!(as.logical(y))))`
 
 ## 19.4.7 Nonstandard ASTs {-}
 
@@ -146,8 +167,9 @@ The first option lets the robust function `group_by` figure out any quoting. Fur
 Can we go over the "spatting" example, I have no idea what this means.
 :::
 
-:::TODO
-:::
+I think "splatting" is the correct term*. It means taking a single argument in a list and interpreting it as separate arguments. Hadley is referring to the specific use of `!!!` to unpack a list into function arguments.
+
+* at least googling for "splatting Ruby" gives lots of relevant hits vs "spatting Ruby"
 
 ## 19.6.2 `exec()` {-}
 
@@ -171,9 +193,7 @@ exec(call2, !!!argumentlist())
 This function seems pretty rad, what's a use case for it in the wild?
 :::
 
-:::TODO
-XXX
-:::
+We can use this function anytime there's a use for `list2`!
 
 ## 19.6.4 With base R {-}
 
@@ -192,6 +212,4 @@ f <- function(..., .dots) {
 :::TODO
 The `dots` object combines all the arguments passed as dots and the arguments not passed as dots. This gives a lot (perhaps too much) leeway to the user of the function.
 :::
-
-
 

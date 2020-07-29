@@ -14,7 +14,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#evovkqsbpc .gt_table {
+#aulovxlsbz .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -37,7 +37,7 @@
   border-left-color: #D3D3D3;
 }
 
-#evovkqsbpc .gt_heading {
+#aulovxlsbz .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -49,7 +49,7 @@
   border-right-color: #D3D3D3;
 }
 
-#evovkqsbpc .gt_title {
+#aulovxlsbz .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -59,7 +59,7 @@
   border-bottom-width: 0;
 }
 
-#evovkqsbpc .gt_subtitle {
+#aulovxlsbz .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -69,13 +69,13 @@
   border-top-width: 0;
 }
 
-#evovkqsbpc .gt_bottom_border {
+#aulovxlsbz .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#evovkqsbpc .gt_col_headings {
+#aulovxlsbz .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -90,7 +90,7 @@
   border-right-color: #D3D3D3;
 }
 
-#evovkqsbpc .gt_col_heading {
+#aulovxlsbz .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -110,7 +110,7 @@
   overflow-x: hidden;
 }
 
-#evovkqsbpc .gt_column_spanner_outer {
+#aulovxlsbz .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -122,15 +122,15 @@
   padding-right: 4px;
 }
 
-#evovkqsbpc .gt_column_spanner_outer:first-child {
+#aulovxlsbz .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#evovkqsbpc .gt_column_spanner_outer:last-child {
+#aulovxlsbz .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#evovkqsbpc .gt_column_spanner {
+#aulovxlsbz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -142,7 +142,7 @@
   width: 100%;
 }
 
-#evovkqsbpc .gt_group_heading {
+#aulovxlsbz .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -164,7 +164,7 @@
   vertical-align: middle;
 }
 
-#evovkqsbpc .gt_empty_group_heading {
+#aulovxlsbz .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -179,19 +179,19 @@
   vertical-align: middle;
 }
 
-#evovkqsbpc .gt_striped {
+#aulovxlsbz .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#evovkqsbpc .gt_from_md > :first-child {
+#aulovxlsbz .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#evovkqsbpc .gt_from_md > :last-child {
+#aulovxlsbz .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#evovkqsbpc .gt_row {
+#aulovxlsbz .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -210,7 +210,7 @@
   overflow-x: hidden;
 }
 
-#evovkqsbpc .gt_stub {
+#aulovxlsbz .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -222,7 +222,7 @@
   padding-left: 12px;
 }
 
-#evovkqsbpc .gt_summary_row {
+#aulovxlsbz .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -232,7 +232,7 @@
   padding-right: 5px;
 }
 
-#evovkqsbpc .gt_first_summary_row {
+#aulovxlsbz .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -242,7 +242,7 @@
   border-top-color: #D3D3D3;
 }
 
-#evovkqsbpc .gt_grand_summary_row {
+#aulovxlsbz .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -252,7 +252,7 @@
   padding-right: 5px;
 }
 
-#evovkqsbpc .gt_first_grand_summary_row {
+#aulovxlsbz .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -262,7 +262,7 @@
   border-top-color: #D3D3D3;
 }
 
-#evovkqsbpc .gt_table_body {
+#aulovxlsbz .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -271,7 +271,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#evovkqsbpc .gt_footnotes {
+#aulovxlsbz .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -285,13 +285,13 @@
   border-right-color: #D3D3D3;
 }
 
-#evovkqsbpc .gt_footnote {
+#aulovxlsbz .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#evovkqsbpc .gt_sourcenotes {
+#aulovxlsbz .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -305,46 +305,46 @@
   border-right-color: #D3D3D3;
 }
 
-#evovkqsbpc .gt_sourcenote {
+#aulovxlsbz .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#evovkqsbpc .gt_left {
+#aulovxlsbz .gt_left {
   text-align: left;
 }
 
-#evovkqsbpc .gt_center {
+#aulovxlsbz .gt_center {
   text-align: center;
 }
 
-#evovkqsbpc .gt_right {
+#aulovxlsbz .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#evovkqsbpc .gt_font_normal {
+#aulovxlsbz .gt_font_normal {
   font-weight: normal;
 }
 
-#evovkqsbpc .gt_font_bold {
+#aulovxlsbz .gt_font_bold {
   font-weight: bold;
 }
 
-#evovkqsbpc .gt_font_italic {
+#aulovxlsbz .gt_font_italic {
   font-style: italic;
 }
 
-#evovkqsbpc .gt_super {
+#aulovxlsbz .gt_super {
   font-size: 65%;
 }
 
-#evovkqsbpc .gt_footnote_marks {
+#aulovxlsbz .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="evovkqsbpc" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="aulovxlsbz" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
@@ -502,7 +502,7 @@ lobstr::obj_size(get("_cache",environment(memoised_starwars)))
 ```
 
 ```
-## 16,224 B
+## 16,256 B
 ```
 
 :::question
@@ -545,134 +545,134 @@ for (i in 1:100) {
 ```
 
 ```
-## 14,432 B
-## 15,336 B
+## 14,456 B
+## 15,360 B
 ## 16,256 B
-## 17,160 B
-## 17,936 B
-## 18,840 B
-## 19,736 B
-## 20,504 B
-## 21,392 B
-## 22,232 B
-## 23,128 B
-## 23,896 B
-## 24,736 B
+## 17,136 B
+## 18,024 B
+## 18,864 B
+## 19,768 B
+## 20,680 B
+## 21,512 B
+## 22,344 B
+## 23,168 B
+## 24,040 B
+## 24,816 B
 ## 25,592 B
-## 26,496 B
+## 26,432 B
 ## 27,336 B
-## 28,192 B
-## 29,048 B
-## 29,888 B
-## 30,600 B
-```
-
-```
-## Clearing cache [@30600]
-```
-
-```
-## 14,432 B
-## 15,328 B
-## 16,248 B
-## 17,144 B
-## 18,000 B
-## 18,880 B
-## 19,720 B
-## 20,560 B
-## 21,352 B
-## 22,272 B
-## 23,112 B
-## 23,888 B
-## 24,784 B
-## 25,624 B
-## 26,392 B
-## 27,224 B
 ## 28,176 B
-## 29,008 B
+## 28,888 B
 ## 29,720 B
-## 30,488 B
+## 30,512 B
 ```
 
 ```
-## Clearing cache [@30488]
-```
-
-```
-## 14,440 B
-## 15,280 B
-## 16,192 B
-## 17,048 B
-## 17,936 B
-## 18,792 B
-## 19,696 B
-## 20,592 B
-## 21,488 B
-## 22,384 B
-## 23,096 B
-## 23,920 B
-## 24,824 B
-## 25,680 B
-## 26,576 B
-## 27,408 B
-## 28,184 B
-## 29,024 B
-## 29,864 B
-## 30,768 B
-```
-
-```
-## Clearing cache [@30768]
-```
-
-```
-## 14,424 B
-## 15,320 B
-## 16,216 B
-## 17,072 B
-## 17,976 B
-## 18,768 B
-## 19,664 B
-## 20,456 B
-## 21,304 B
-## 22,224 B
-## 23,128 B
-## 24,016 B
-## 24,856 B
-## 25,696 B
-## 26,472 B
-## 27,304 B
-## 28,208 B
-## 29,040 B
-## 29,896 B
-## 30,816 B
-```
-
-```
-## Clearing cache [@30816]
+## Clearing cache [@30512]
 ```
 
 ```
 ## 14,440 B
 ## 15,344 B
-## 16,176 B
-## 17,072 B
-## 17,968 B
-## 18,824 B
-## 19,728 B
-## 20,624 B
-## 21,464 B
-## 22,240 B
-## 23,080 B
-## 23,984 B
-## 24,696 B
-## 25,552 B
-## 26,384 B
-## 27,232 B
-## 28,128 B
-## 28,904 B
-## 29,696 B
+## 16,272 B
+## 17,096 B
+## 18,000 B
+## 18,912 B
+## 19,808 B
+## 20,712 B
+## 21,552 B
+## 22,408 B
+## 23,304 B
+## 24,096 B
+## 24,888 B
+## 25,776 B
+## 26,608 B
+## 27,448 B
+## 28,224 B
+## 29,000 B
+## 29,896 B
+## 30,720 B
+```
+
+```
+## Clearing cache [@30720]
+```
+
+```
+## 14,440 B
+## 15,344 B
+## 16,240 B
+## 17,080 B
+## 18,000 B
+## 18,904 B
+## 19,800 B
+## 20,704 B
+## 21,608 B
+## 22,512 B
+## 23,280 B
+## 24,176 B
+## 25,000 B
+## 25,776 B
+## 26,552 B
+## 27,440 B
+## 28,216 B
+## 29,072 B
+## 29,784 B
+## 30,656 B
+```
+
+```
+## Clearing cache [@30656]
+```
+
+```
+## 14,456 B
+## 15,312 B
+## 16,216 B
+## 17,120 B
+## 18,000 B
+## 18,928 B
+## 19,824 B
+## 20,648 B
+## 21,488 B
+## 22,384 B
+## 23,288 B
+## 24,064 B
+## 24,840 B
+## 25,672 B
+## 26,448 B
+## 27,224 B
+## 28,000 B
+## 28,832 B
+## 29,752 B
 ## 30,464 B
+```
+
+```
+## Clearing cache [@30464]
+```
+
+```
+## 14,440 B
+## 15,280 B
+## 16,184 B
+## 17,016 B
+## 17,920 B
+## 18,808 B
+## 19,640 B
+## 20,544 B
+## 21,376 B
+## 22,088 B
+## 22,944 B
+## 23,784 B
+## 24,688 B
+## 25,464 B
+## 26,240 B
+## 27,088 B
+## 27,928 B
+## 28,776 B
+## 29,616 B
+## 30,536 B
 ```
 
 :::question

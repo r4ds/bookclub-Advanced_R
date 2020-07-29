@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-07-28" />
+<meta name="date" content="2020-07-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -379,26 +379,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb432-1" data-line-number="1">trials &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="op">~</span><span class="st"> </span><span class="kw">t.test</span>(<span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">10</span>), <span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">7</span>)))</a>
 <a class="sourceLine" id="cb432-2" data-line-number="2"><span class="co"># tibble(p_value = map_dbl(trials, &quot;p.value&quot;))</span></a>
 <a class="sourceLine" id="cb432-3" data-line-number="3"><span class="kw">map_dbl</span>(trials, pluck, <span class="st">&quot;p.value&quot;</span>)</a></code></pre></div>
-<pre><code>##   [1] 0.0053149559 0.1346402264 0.0043373003 0.0217645134 0.2949973551
-##   [6] 0.0309095384 0.0016061090 0.0079382611 0.0213941611 0.0130021515
-##  [11] 0.0008021811 0.0212454861 0.0289984760 0.0231768233 0.0015179477
-##  [16] 0.2081662147 0.0114855932 0.0035000269 0.0346661980 0.0683048430
-##  [21] 0.7556637390 0.0070137625 0.0128149403 0.1200771039 0.0052944741
-##  [26] 0.1774354255 0.0086028010 0.0156750054 0.9172685227 0.0407192617
-##  [31] 0.0007526492 0.1586972028 0.0694501527 0.0047441610 0.5729474014
-##  [36] 0.0996079364 0.0769021810 0.0037534660 0.0085825112 0.8038636319
-##  [41] 0.0022952141 0.0560480961 0.0671700412 0.0543870336 0.0252581043
-##  [46] 0.2069197426 0.0040964338 0.1727948038 0.0081802271 0.0093066974
-##  [51] 0.0010323133 0.0004107889 0.0028210828 0.0011318172 0.0016051181
-##  [56] 0.0267347222 0.0061765974 0.0877941863 0.1947578047 0.0662400721
-##  [61] 0.0012128969 0.0165560232 0.6537757323 0.4427243943 0.0139966730
-##  [66] 0.0544611948 0.1474727607 0.2152607851 0.8884366579 0.0205156489
-##  [71] 0.0002715596 0.0057054635 0.7332496796 0.0435307476 0.0197135858
-##  [76] 0.0589442713 0.0218246517 0.1784511487 0.0919516710 0.0121888568
-##  [81] 0.0165735113 0.0007586100 0.0719561064 0.0115942524 0.7954378134
-##  [86] 0.1973033040 0.0672458924 0.0375922722 0.2628678120 0.1221160043
-##  [91] 0.0165396558 0.0368765524 0.1113444539 0.0438424517 0.1110556714
-##  [96] 0.1395728963 0.2591473371 0.0487044059 0.0705732157 0.2390978617</code></pre>
+<pre><code>##   [1] 1.467177e-01 1.631601e-02 1.646687e-01 9.163919e-02 2.588025e-03
+##   [6] 3.671768e-04 1.326373e-01 2.415201e-03 1.951764e-01 4.453461e-01
+##  [11] 3.873747e-02 5.025600e-02 1.744465e-01 1.744640e-04 1.141624e-01
+##  [16] 2.924561e-02 1.461477e-01 5.015330e-02 5.204549e-01 4.010427e-02
+##  [21] 1.921040e-02 5.173724e-01 1.441968e-01 3.271005e-02 6.291001e-04
+##  [26] 4.897176e-02 2.136604e-02 1.888038e-02 1.722167e-02 3.082181e-02
+##  [31] 2.207224e-01 1.723092e-01 4.361808e-01 4.110850e-01 9.288312e-02
+##  [36] 2.520482e-02 3.343257e-03 1.559130e-01 5.786706e-01 9.460228e-01
+##  [41] 4.064747e-04 6.177300e-02 3.364193e-02 1.000000e+00 6.706313e-03
+##  [46] 7.100373e-03 1.017233e-01 1.103753e-01 1.619708e-01 3.066111e-01
+##  [51] 1.530086e-01 2.423330e-02 1.896412e-01 4.459793e-04 3.219816e-02
+##  [56] 3.491075e-01 2.663285e-03 1.769795e-03 1.696336e-04 4.590887e-01
+##  [61] 4.485236e-02 6.181813e-02 8.123246e-02 5.893836e-02 4.919135e-02
+##  [66] 1.383207e-01 1.145377e-04 9.548500e-02 1.044178e-01 3.299093e-02
+##  [71] 1.181421e-04 5.498179e-04 3.381780e-02 1.089583e-01 5.949997e-02
+##  [76] 6.664316e-05 1.366975e-02 2.827435e-02 5.077239e-03 6.109345e-02
+##  [81] 1.663925e-02 9.035262e-03 7.126143e-02 9.239111e-01 1.041032e-01
+##  [86] 5.555201e-02 1.695654e-01 2.977811e-02 9.233526e-03 2.220299e-01
+##  [91] 5.677171e-03 5.089366e-01 2.493252e-02 1.152755e-04 1.043541e-01
+##  [96] 1.955277e-01 2.734398e-04 7.797369e-04 1.655106e-02 1.184117e-02</code></pre>
 </div>
 <div id="exercise-1" class="section level2 unnumbered">
 <h2>9.2.6.5 Exercise</h2>
@@ -608,12 +608,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb458-4" data-line-number="4">  <span class="dt">times =</span> <span class="dv">100</span></a>
 <a class="sourceLine" id="cb458-5" data-line-number="5">)</a></code></pre></div>
 <pre><code>## Unit: microseconds
-##                         expr      min       lq       mean    median        uq
-##         as_integer_rapply(x)    9.068   12.192   34.89685   14.7735   21.0065
-##  as_integer_recursive_map(x) 1002.227 1030.282 1122.70040 1080.2445 1144.7670
+##                         expr     min        lq       mean    median       uq
+##         as_integer_rapply(x)   8.887   12.3145   30.07198   18.7255   20.845
+##  as_integer_recursive_map(x) 985.198 1052.6445 1113.99363 1093.8820 1171.673
 ##       max neval
-##  1811.872   100
-##  2006.878   100</code></pre>
+##  1322.944   100
+##  1496.096   100</code></pre>
 <div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb460-1" data-line-number="1">as_integer_safe &lt;-<span class="st"> </span><span class="cf">function</span>(y) {</a>
 <a class="sourceLine" id="cb460-2" data-line-number="2">  <span class="cf">if</span> (<span class="kw">is.character</span>(y) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">all</span>(<span class="kw">grepl</span>(<span class="st">&quot;^</span><span class="ch">\\</span><span class="st">d+$&quot;</span>, y))) {</a>
 <a class="sourceLine" id="cb460-3" data-line-number="3">    <span class="kw">as.integer</span>(y)</a>
