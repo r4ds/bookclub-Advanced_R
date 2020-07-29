@@ -5,7 +5,7 @@ Visit the [#book_club-advanced_r channel](https://r4ds.io/join) on Slack to join
 
 This repo contains 3 main folders:
 
-- QandA: A bookdown of questions (and answers) on the chapters that come up during meetings (or between!). We're also using this to try to answer questions marked "started" in the solutions manual with the potential goal of submitting PRs with our own answers!
+- QandA: A [bookdown collection of chapter questions and answers](https://r4ds.github.io/bookclub-Advanced_R/QandA/docs/welcome.html) that come up during meetings (or between!). We're also using this to try to answer questions marked "started" in the solutions manual with the potential goal of submitting PRs with our own answers!
 
 - Presentations: each week a presenter will give a talk summarizing the chapter and/or discussing practical applications of the topic at hand. 
 
