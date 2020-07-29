@@ -383,6 +383,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb637-16" data-line-number="16">}</a>
 <a class="sourceLine" id="cb637-17" data-line-number="17"><span class="kw">replace_sym</span>(<span class="kw">expr</span>(a <span class="op">+</span><span class="st"> </span>b <span class="op">+</span><span class="st"> </span><span class="dv">1</span>), <span class="st">&quot;b&quot;</span>, <span class="kw">expr</span>(<span class="kw">f</span>(x)))</a></code></pre></div>
 <pre><code>## a + f(x) + 1</code></pre>
+<div class="question">
+<p>Why does the expression jump around between “data” and “values” on the env panel in RStudio? It would be nice if it stayed in the “data” pane so you can inspect it</p>
+</div>
+<div class="question">
+<p>Why doesn’t the last line return true?</p>
+<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb639-1" data-line-number="1">is_assignment &lt;-<span class="st"> </span><span class="cf">function</span>(expr) {</a>
+<a class="sourceLine" id="cb639-2" data-line-number="2">    (expr[[<span class="dv">1</span>]] <span class="op">==</span><span class="st"> &quot;&lt;-&quot;</span> <span class="op">||</span><span class="st"> </span>expr[[<span class="dv">1</span>]] <span class="op">==</span><span class="st"> &quot;=&quot;</span>)</a>
+<a class="sourceLine" id="cb639-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb639-4" data-line-number="4">exprs &lt;-<span class="st"> </span>rlang<span class="op">::</span><span class="kw">parse_exprs</span>(<span class="st">&quot;x &lt;- 1;x = 1&quot;</span>)</a>
+<a class="sourceLine" id="cb639-5" data-line-number="5"><span class="kw">is_assignment</span>(exprs[[<span class="dv">1</span>]])</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb641-1" data-line-number="1"><span class="kw">is_assignment</span>(exprs[[<span class="dv">2</span>]])</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb643-1" data-line-number="1"><span class="kw">is_assignment</span>(<span class="kw">expression</span>(x &lt;-<span class="st"> </span><span class="dv">1</span>)[[<span class="dv">1</span>]])</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb645-1" data-line-number="1"><span class="kw">is_assignment</span>(<span class="kw">expression</span>(<span class="dt">x =</span> <span class="dv">1</span>)[[<span class="dv">1</span>]])</a></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+</div>
+<p>It is interpreting <code>x = 1</code> as an argument to expression. To quote equality you can do <code>parse(text = &quot;x = 1&quot;)</code> and the output will print the same, but it isn’t</p>
+<div class="question">
+<p>Does all this go out the book if someone uses <code>&quot;abc&quot; -&gt; x?</code></p>
+</div>
+<p><code>&quot;abc&quot;-&gt;x</code> is internally parsed as <code>x &lt;- &quot;abc&quot;</code></p>
+<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb647-1" data-line-number="1"><span class="kw">parse</span>(<span class="dt">text =</span> <span class="st">&quot;&#39;xyz&#39; -&gt; x&quot;</span>)[[<span class="dv">1</span>]]</a></code></pre></div>
+<pre><code>## x &lt;- &quot;xyz&quot;</code></pre>
+<div class="question">
+<p>Can you clarify the difference between:
+- call
+- language
+- expression
+- structure</p>
+</div>
+<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb649-1" data-line-number="1"><span class="kw">identical</span>(</a>
+<a class="sourceLine" id="cb649-2" data-line-number="2">  <span class="kw">structure</span>(<span class="kw">expression</span>(a &lt;-<span class="st"> </span><span class="kw">print</span>(<span class="dv">123</span>))),</a>
+<a class="sourceLine" id="cb649-3" data-line-number="3">  <span class="kw">expression</span>(a &lt;-<span class="st"> </span><span class="kw">print</span>(<span class="dv">123</span>))</a>
+<a class="sourceLine" id="cb649-4" data-line-number="4">)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb651"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb651-1" data-line-number="1"><span class="kw">is.language</span>(<span class="kw">expression</span>(a &lt;-<span class="st"> </span><span class="kw">print</span>(<span class="dv">123</span>)))</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="TODO">
+<p>xxx</p>
+</div>
+<div class="question">
+<p>When would I use <code>quote()</code> over <code>expression()</code>?</p>
+</div>
+<p>Hadley advises not to use <code>expression()</code>, because it just makes a vector of expressions. He prefers lists of expressions, which you’d generate interactively with <code>quote()</code> (or inside functions with <code>substitute()</code>). We’ll touch on the borders of this at least tonight.</p>
 
 </div>
             </section>
