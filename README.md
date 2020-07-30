@@ -32,6 +32,11 @@ This repo contains 3 main folders:
 
 - 2020-07-30 Chapter 1 - Introduction: [Kevin Kent](https://twitter.com/kevin_m_kent) ([slides](https://docs.google.com/presentation/d/1oKhqSY6L6yI3yMwB4JB1eduLqu6UWPZ7Y1v32FK042I/edit?usp=sharing))
 - 2020-08-06 Chapter 2 - Names and values: 
+    * What is the difference between an object’s name and its values?
+    * When you modify a vector, when does a copy occur? Are there cases when a copy isn’t created? 
+    * How do you check how much space and object occupies? What kinds of objects occupy the most/least space?
+    * When does R’s garbage collection usually run? How do you manually clean up memory?
+
 
 <details>
   <summary> Future Meetings </summary>
