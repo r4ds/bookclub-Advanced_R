@@ -227,11 +227,11 @@ func_1(test_tbl, x1)
 ## # A tibble: 5 x 1
 ##      x1
 ##   <dbl>
-## 1 0.306
-## 2 0.704
-## 3 0.525
-## 4 0.501
-## 5 0.207
+## 1 0.565
+## 2 0.590
+## 3 0.491
+## 4 0.792
+## 5 0.957
 ```
 
 
@@ -304,7 +304,7 @@ mega_model(c("a", "b", "c"))
 ```
 
 ```
-##  [1] 288 220 274 224 290 233 235 299 287 245
+##  [1] 231 215 300 211 247 246 280 264 219 269
 ```
 
 
@@ -713,7 +713,7 @@ hist
 ```
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fe248509ef0>
+## <bytecode: 0x7fe95a06d6f0>
 ## <environment: namespace:graphics>
 ```
 does not give me the actual contents of the actual function....
