@@ -15,15 +15,12 @@ This repo contains 3 main folders:
 
 *Group 1 (started 2020-04-02) - Tuesdays, 8pm EDT/EST*
 
-- 2020-07-28 Chapter 19 - Quasiquotation: [Jon Harmon](https://twitter.com/jonthegeek)
 - 2020-08-04 Chapter 20 - Evaluation: [Daryn Ramsden](https://twitter.com/thisisdaryn) 
 - 2020-08-11 Chapter 21 - Translating R code: Pavitra Chakravarty
-
+- 2020-08-18 Chapter 22 - Debugging: [Tan Ho](https://twitter.com/_tanho)
 
 <details>
   <summary> Future Meetings </summary>
-
-- 2020-08-18 Chapter 22 - Debugging: [Tan Ho](https://twitter.com/_tanho)
 - 2020-08-25 Chapter 23 - Measuring performance:
 - 2020-09-01 Chapter 24 - Improving performance:
 - 2020-09-08 Chapter 25 - Rewriting R code in C++:
@@ -116,3 +113,7 @@ Chapter 17 - Metaprogramming, big picture
 
 Chapter 18 - Expressions 
 - [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week17/Cohort1/Chapter18.html#1) | [video](https://youtu.be/2NixH3QAerQ) | app | [app code](https://github.com/r4ds/bookclub-Advanced_R/tree/master/Presentations/Week17/Cohort1/expressions))
+
+
+Chapter 19 - Quasiquotation
+- [Jon Harmon](https://twitter.com/jonthegeek) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week18/Cohort1/Chapter19.html#1) | [video](https://youtu.be/tbByqsRRvdE))
