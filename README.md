@@ -39,10 +39,9 @@ This repo contains 3 main folders:
     - When does R’s garbage collection usually run? How do you manually clean up memory?
 </details>
 
-- 2020-08-15 Chapter 3 - Vectors: Vajresh Balaji
-
 <details>
   <summary> Future Meetings </summary>
+- 2020-08-15 Chapter 3 - Vectors: Vajresh Balaji
 </details>
 
 <hr>
