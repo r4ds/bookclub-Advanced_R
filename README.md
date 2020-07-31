@@ -30,7 +30,6 @@ This repo contains 3 main folders:
 
 *Group 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
-- 2020-07-30 Chapter 1 - Introduction: [Kevin Kent](https://twitter.com/kevin_m_kent) ([slides](https://docs.google.com/presentation/d/1oKhqSY6L6yI3yMwB4JB1eduLqu6UWPZ7Y1v32FK042I/edit?usp=sharing))
 - 2020-08-06 Chapter 2 - Names and values: Josh Pohlkamp-Hartt
     * What is the difference between an object’s name and its values?
     * When you modify a vector, when does a copy occur? Are there cases when a copy isn’t created? 
@@ -55,6 +54,9 @@ This repo contains 3 main folders:
 <hr>
 
 ### Presentations & Recordings
+
+Chapter 1 - Introduction
+- [Kevin Kent](https://twitter.com/kevin_m_kent) ([slides](https://docs.google.com/presentation/d/1oKhqSY6L6yI3yMwB4JB1eduLqu6UWPZ7Y1v32FK042I/edit?usp=sharing))
 
 Chapter 2 - Names and values
 
