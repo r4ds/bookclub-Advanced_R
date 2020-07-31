@@ -31,10 +31,14 @@ This repo contains 3 main folders:
 *Group 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
 - 2020-08-06 Chapter 2 - Names and values: Josh Pohlkamp-Hartt
-    * What is the difference between an object’s name and its values?
-    * When you modify a vector, when does a copy occur? Are there cases when a copy isn’t created? 
-    * How do you check how much space and object occupies? What kinds of objects occupy the most/least space?
-    * When does R’s garbage collection usually run? How do you manually clean up memory?
+<details>
+  <summary> Guiding Questions </summary>
+    - What is the difference between an object’s name and its values?
+    - When you modify a vector, when does a copy occur? Are there cases when a copy isn’t created? 
+    - How do you check how much space and object occupies? What kinds of objects occupy the most/least space?
+    - When does R’s garbage collection usually run? How do you manually clean up memory?
+</details>
+
 - 2020-08-15 Chapter 3 - Vectors: Vajresh Balaji
 
 <details>
