@@ -13,7 +13,7 @@ This repo contains 3 main folders:
 
 ### Meeting Schedule 
 
-*Group 1 (started 2020-04-02) - Tuesdays, 8pm EDT/EST*
+*Cohort 1 (started 2020-04-02) - Tuesdays, 8pm EDT/EST*
 
 - 2020-08-04 Chapter 20 - Evaluation: [Daryn Ramsden](https://twitter.com/thisisdaryn) 
 - 2020-08-11 Chapter 21 - Translating R code: Pavitra Chakravarty
@@ -29,7 +29,7 @@ This repo contains 3 main folders:
 </details>
 <hr>
 
-*Group 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
+*Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
 - 2020-08-06 Chapter 2 - Names and values: Josh Pohlkamp-Hartt
 - 2020-08-13 Chapter 3 - Vectors: Vajresh Balaji
@@ -58,7 +58,7 @@ This repo contains 3 main folders:
 
 <hr>
 
-*Group 3 [Europe/Africa]: (starting 2020-08-04) Tuesdays, 19:15 CET (CEST)*
+*Cohort 3 [Europe/Africa]: (starting 2020-08-04) Tuesdays, 19:15 CET (CEST)*
 - 2020-08-04 Chapter 1 - Introduction [Novica Nakov](https://twitter.com/novicanakov) (probably :))
 - 2020-08-11 Chapter 2 - Names and values 
 - 2020-08-18 Chapter 3 - Vectors
