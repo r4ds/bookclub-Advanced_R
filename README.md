@@ -13,7 +13,7 @@ This repo contains 3 main folders:
 
 ### Meeting Schedule 
 
-*Group 1 (started 2020-04-02) - Tuesdays, 8pm EDT/EST*
+*Cohort 1 (started 2020-04-02) - Tuesdays, 8pm EDT/EST*
 
 - 2020-08-04 Chapter 20 - Evaluation: [Daryn Ramsden](https://twitter.com/thisisdaryn) 
 - 2020-08-11 Chapter 21 - Translating R code: Pavitra Chakravarty
@@ -21,6 +21,7 @@ This repo contains 3 main folders:
 
 <details>
   <summary> Future Meetings </summary>
+  
 - 2020-08-25 Chapter 23 - Measuring performance:
 - 2020-09-01 Chapter 24 - Improving performance:
 - 2020-09-08 Chapter 25 - Rewriting R code in C++:
@@ -28,30 +29,48 @@ This repo contains 3 main folders:
 </details>
 <hr>
 
-*Group 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
+*Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
 - 2020-08-06 Chapter 2 - Names and values: Josh Pohlkamp-Hartt
+- 2020-08-13 Chapter 3 - Vectors: Vajresh Balaji
+- 2020-08-20 Chapter 4 - Subsetting
+
 <details>
   <summary> Guiding Questions </summary>
-    - What is the difference between an object’s name and its values?  <br /> 
-    - When you modify a vector, when does a copy occur? Are there cases when a copy isn’t created?  <br /> 
-    - How do you check how much space and object occupies? What kinds of objects occupy the most/least space?  <br /> 
-    - When does R’s garbage collection usually run? How do you manually clean up memory?
+  
+  Week 2
+
+- What is the difference between an object’s name and its values? 
+- When you modify a vector, when does a copy occur? Are there cases when a copy isn’t created? 
+- How do you check how much space and object occupies? What kinds of objects occupy the most/least space? 
+- When does R’s garbage collection usually run? How do you manually clean up memory?
+    
 </details>
 
 <details>
   <summary> Future Meetings </summary>
-- 2020-08-15 Chapter 3 - Vectors: Vajresh Balaji
+
+- 2020-08-27 Chapter 5 - Control Flow
+- 2020-09-03 Chapter 6 - Functions
+- 2020-08-10 Chapter 7 - Environments
+
 </details>
 
 <hr>
 
-*Group 3 [Europe/Africa]: (starting 2020-08-04) Tuesdays, 19:15 CET (CEST)*
+*Cohort 3 [Europe/Africa]: (starting 2020-08-04) Tuesdays, 19:15 CET (CEST)*
 - 2020-08-04 Chapter 1 - Introduction [Novica Nakov](https://twitter.com/novicanakov) (probably :))
-- 2020-08-11 Chapter 2 - Names and values: 
+- 2020-08-11 Chapter 2 - Names and values 
+- 2020-08-18 Chapter 3 - Vectors
 
 <details>
   <summary> Future Meetings </summary>
+
+- 2020-08-25 Chapter 4 - Subsetting
+- 2020-08-27 Chapter 5 - Control Flow
+- 2020-09-03 Chapter 6 - Functions
+- 2020-08-10 Chapter 7 - Environments
+
 </details>
 
 <hr>
@@ -59,7 +78,7 @@ This repo contains 3 main folders:
 ### Presentations & Recordings
 
 Chapter 1 - Introduction
-- [Kevin Kent](https://twitter.com/kevin_m_kent) ([slides](https://docs.google.com/presentation/d/1oKhqSY6L6yI3yMwB4JB1eduLqu6UWPZ7Y1v32FK042I/edit?usp=sharing))
+- [Kevin Kent](https://twitter.com/kevin_m_kent) ([slides](https://docs.google.com/presentation/d/1oKhqSY6L6yI3yMwB4JB1eduLqu6UWPZ7Y1v32FK042I/edit?usp=sharing) | video)
 
 Chapter 2 - Names and values
 
