@@ -58,15 +58,15 @@ This repo contains 3 main folders:
 
 <hr>
 
-*Cohort 3 [Europe/Africa]: (starting 2020-08-04) Tuesdays, 19:15 CET (CEST)*
-- 2020-08-04 Chapter 1 - Introduction [Novica Nakov](https://twitter.com/novicanakov) (probably :))
-- 2020-08-11 Chapter 2 - Names and values 
-- 2020-08-18 Chapter 3 - Vectors
+*Cohort 3 [Europe/Africa]: (started 2020-08-04) Tuesdays, 19:15 CET (CEST)*
+- 2020-08-04 Chapter 1 - Introduction [Novica Nakov](https://twitter.com/novicanakov) 
+- 2020-08-11 Chapter 2 - Names and values [Anna-Leigh] 
+- 2020-08-18 Chapter 3 - Vectors 
+- 2020-08-25 Chapter 4 - Subsetting [Shel] and [Alan Kinene] 
 
 <details>
   <summary> Future Meetings </summary>
 
-- 2020-08-25 Chapter 4 - Subsetting
 - 2020-08-27 Chapter 5 - Control Flow
 - 2020-09-03 Chapter 6 - Functions
 - 2020-08-10 Chapter 7 - Environments
