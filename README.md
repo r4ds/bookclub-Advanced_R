@@ -63,11 +63,11 @@ This repo contains 3 main folders:
 - 2020-08-11 Chapter 2 - Names and values [Anna-Leigh] 
 - 2020-08-18 Chapter 3 - Vectors 
 - 2020-08-25 Chapter 4 - Subsetting [Shel] and [Alan Kinene] 
+- 2020-08-27 Chapter 5 - Control Flow [Megan Stodel]
 
 <details>
   <summary> Future Meetings </summary>
 
-- 2020-08-27 Chapter 5 - Control Flow
 - 2020-09-03 Chapter 6 - Functions
 - 2020-08-10 Chapter 7 - Environments
 
@@ -79,6 +79,7 @@ This repo contains 3 main folders:
 
 Chapter 1 - Introduction
 - [Kevin Kent](https://twitter.com/kevin_m_kent) ([slides](https://docs.google.com/presentation/d/1oKhqSY6L6yI3yMwB4JB1eduLqu6UWPZ7Y1v32FK042I/edit?usp=sharing) | video)
+- [Novica Nakov] ([video](https://www.youtube.com/watch?v=f6PuOnuZWBc))
 
 Chapter 2 - Names and values
 
