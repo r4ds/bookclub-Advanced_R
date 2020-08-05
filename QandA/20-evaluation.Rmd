@@ -285,8 +285,48 @@ Why exactly can't we use `subset` with `map`?
 Why?!
 :::
 
-:::TODO
-:::
+No reason to expect this to work:
+
+```{r, eval=FALSE}
+test <- function(df, expr) {
+  subset(df, expr)
+}
+
+test(mtcars, cyl > 4)
+```
+
+```
+#> Error in eval(e, x, parent.frame()): object 'cyl' not found
+```
+
+substitute only looks at the expression from which it was called. this doesn't work because subset sees `substitute(expr)`, not `cyl > 4`
+
+```{r, eval=FALSE}
+test <- function(df, expr) {
+  subset(df, substitute(expr))
+}
+test(mtcars, cyl > 4)
+```
+
+```
+#> Error in subset.data.frame(df, substitute(expr)): 'subset' must be logical
+```
+
+so instead, we are going to build the call to `subset`, substituting in what was passed as arguments, and then eval the call.
+
+```{r, eval=FALSE}
+test <- function(df, expr) {
+  subset_call <- substitute(subset(df, expr))
+  print(subset_call)
+  eval(subset_call)
+}
+test(mtcars, cyl > 4)
+```
+
+```
+#> subset(mtcars, cyl > 4)
+```
+
 
 ## 20.6.2 `match.call` {-}
 
