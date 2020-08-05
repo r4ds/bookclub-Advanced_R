@@ -3,6 +3,8 @@
 ```{r, include=FALSE}
 library(rlang)
 library(purrr)
+library(dplyr)
+library(palmerpenguins)
 ```
 
 ## 20.1 Introduction {-}
@@ -11,8 +13,8 @@ library(purrr)
 There's an immediate distinction between unquotation (user) and evaluation (developer). What are they?
 :::
 
-:::TODO
-:::
+Unquoting seems to be "evaluate this one part and then return the expression"
+evaluate means "give me the result of this whole expression"
 
 ## 20.2.1 `local` {-}
 
@@ -69,8 +71,7 @@ eval(exp_list)
 I think I understand this issue based on the concrete example but can we summarize the "gotcha" here? Is it that the developer could assume that using `eval` with a quasiquoted function will result in returning the function, but really it evaluates because `srcref` is sneaky?
 :::
 
-:::TODO
-:::
+It's basically that the printing of the function is a lie (because base R doesn't get it). And that's dangerous and confusing, so use rlang to make it not a lie.
 
 ## Exercises 20.2.4.4 {-}
 
@@ -109,7 +110,7 @@ writeLines(
 ## Excercises 20.2.4.5 {-}
 
 :::question
-Can we also go over what is happening in this question and come up with our own solution?
+Can we also go over what is happening in this question?
 
 ```{r, eval=FALSE}
 local3 <- function(expr, envir = new.env()) {
@@ -119,8 +120,7 @@ local3 <- function(expr, envir = new.env()) {
 ```
 :::
 
-:::TODO
-:::
+It creates a new environment with the calling environment as its parent and then evaluates the expression in that environment.
 
 ## 20.3.3 Dots {-}
 
@@ -132,6 +132,7 @@ f <- function(...) {
   x <- 1
   g(..., f = x)
 }
+
 g <- function(...) {
   enquos(...)
 }
@@ -143,6 +144,26 @@ qs
 :::
 
 :::TODO
+As a preliminary, I note that the following code also illustrates the point:
+
+```{r, eval=FALSE}
+f <- function(...) {
+  x <- 1
+  g(..., f = x)
+}
+g <- function(...) {
+  enquos(...)
+}
+x <- 0
+qs <- f(x)
+qs
+```
+
+I think what he's trying to say is that if you didn't have quosures you would have to create a list of environments to match the list of expressions if you wanted your expressions to contain the same names but not necessarily have those names have the same meaning.
+
+But here we have a magical situation where each quosure has the same expression but each environment is different and thus each `x` will be evaluated differently when the time comes.
+
+I think the real barrier to truly getting it is figuring out a plausible example of wanting the same name to have different meanings in your list of expressions.. and I'm at a loss for that at the moment.
 :::
 
 ## 20.3.4 Under the hood {-}
@@ -179,8 +200,7 @@ capture_env(x)  # functions execution environment is captured
 
 :::
 
-:::TODO
-:::
+The `enquo` is capturing the environment of the `x` being passed into enenv, so it returns a different environment (the one inside `capture_env`) than running `enenv(x)` on its own
 
 ## 20.4.1 Basics {-}
 
@@ -188,8 +208,7 @@ capture_env(x)  # functions execution environment is captured
 I am clearly missing something here. What is so special about multiplying across a vector? Is it that data masks allow us to just write `y` instead of `df$y`?
 :::
 
-:::TODO
-:::
+I think the simplicity of the multiplication may be what he's going for: the reader can focus on the language feature provided without the distraction of a complex computation.
 
 ## 20.4.3 `subset` {-}
 
@@ -231,7 +250,7 @@ transform2 <- function(.data, ...) {
     dot <- dots[[i]]
 
     # add column with names equal to argument names
-    # eval_tidy .... TODO
+    # eval_tidy and values (single column) equal to the evaluated quosure (dot)"
     .data[[name]] <- eval_tidy(dot, .data)
   }
 
@@ -307,5 +326,32 @@ df <- data.frame(x = 1:10, y = 5 + 3 * (1:10) + round(rnorm(10), 2))
 (resamp_lm1 <- resample_lm0(y ~ x, data = df))
 ```
 
+I think these two functions should work identically assuming formula and data are the only two inputs that are set by the user. (The results will differ unless a seed is set.)
+
+I suppose the `resample_lm0()` here provides more flexibility to the user (compared to `resample_lm2()`, i.e. the user can specify `resample_data` (since it's an argument) instead of being "forced" to use the custom function `resample()`, which is embedded in the body of `resample_lm2()`. 
+
+Downside to `resample_lm0` is that there might be too much flexibility. Yes, `resample_data` is customizable, but so is `env`. What if the user changes `env = current_env()` to `env = caller_env()`? Then the function breaks.
+
+:::question
+Is the closest equivalent to `deparse(substitute(x))` with rlang `expr_text(enexpr(x))` (assuming this is in a function, hence the `en` in `enexpr`)?
+:::
+
+```{r}
+penguins <- palmerpenguins::penguins
+add_bleh <- function(df, nm = deparse(substitute(df))) {
+  col_out <- sym(sprintf('new_%s_col', nm))
+  df %>% 
+    mutate(!!col_out := 'bleh')
+}
+add_bleh(penguins) %>% slice(1) %>% glimpse()
+```
+
 :::TODO
 :::
+
+:::question
+In [this thread](https://community.rstudio.com/t/quasiquotation-inside-a-formula/14929/11) Lionel says "`enexpr` should almost never be used. So when should it?
+:::
+
+Seems like when wrapping a base NSE function like `lm` or trying to `deparse(substitute(x))` using `rlang`
+
