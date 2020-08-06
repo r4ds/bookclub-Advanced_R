@@ -59,7 +59,7 @@ This repo contains 3 main folders:
 <hr>
 
 *Cohort 3 [Europe/Africa]: (started 2020-08-04) Tuesdays, 19:15 CET (CEST)*
-- 2020-08-11 Chapter 2 - Names and values [Anna-Leigh] 
+- 2020-08-11 Chapter 2 - Names and values [Anna-Leigh] (https://twitter.com/annaleighbrown2)
 - 2020-08-18 Chapter 3 - Vectors 
 - 2020-08-25 Chapter 4 - Subsetting [Shel] and [Alan Kinene] 
 - 2020-08-27 Chapter 5 - Control Flow [Megan Stodel]
