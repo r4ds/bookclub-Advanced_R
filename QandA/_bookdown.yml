@@ -1,6 +1,6 @@
 book_filename: "AdvancedR_Companion"
-language:
-  ui:
-    chapter_name: "Chapter "
-delete_merged_file: true
-output_dir: book
+chapter_name: "Chapter "
+repo: https://github.com/r4ds/bookclub-Advanced_R
+output_dir: docs
+clean: [packages.bib, bookdown.bbl]
+new_session: yes

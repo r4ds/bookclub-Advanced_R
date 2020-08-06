@@ -1,0 +1,646 @@
+---
+title: "Advanced R"
+subtitle: "Chapter 14 - R6"
+author: "Tyler Grant Smith"
+institute: '`r icon::fa("github")`&nbsp;[TylerGrantSmith](http://github.com/TylerGrantSmith)<br>`r icon::fa("twitter")`&nbsp;[TylerGrantS](http://twitter.com/TylerGrantS)'
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["xaringan-themer.css", "custom.css"]
+    lib_dir: libs
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      titleSlideClass: ['left', 'middle']
+    includes:
+      after_body: ["insert-logo.html", "use-fontawesome.html"]
+---
+
+<style>
+.hljs-github .hljs {
+color: #333;
+background: #f8f8f8
+}
+</style>
+
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(message=FALSE, warning=FALSE)
+```
+```{r libraries, include=FALSE}
+#devtools::install_github("ropenscilabs/icon")
+
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(R6)
+  library(glue)
+  library(xaringanthemer)
+  library(tidyverse)
+  library(glue)
+  library(rlang)
+  library(icon)
+  library(emo)
+  requireNamespace("pkgsearch")
+  requireNamespace("snakecase")
+  requireNamespace("testthat")
+})
+```
+
+```{r xaringan-themer, include = FALSE}
+r_icon <- icon::fa_r_project(colour = "#384CB7")
+
+style_duo_accent_inverse(
+  primary_color = "#f04040",
+  secondary_color = "#e8bf3d",
+  header_font_google = google_font("Ubuntu"),
+  text_font_google   = google_font("Merriweather", "300", "300i"),
+  base_font_size     = "18px",
+  code_font_google   = google_font("Fira Code")
+)
+```
+
+# R6
+<div class='container'>
+```{r, results='asis', echo=FALSE}
+info <- library(help = "R6")$info
+cat(paste0(
+  info[[1]] %>% 
+    stringr::str_replace_all("^([^:]*):", "<b>\\1</b>:"),
+  collapse = "<br>"))
+```
+</div>
+
+---
+# R6 in the wild
+
+#### How many?
+```{r}
+depends  <- attr(pkgsearch::advanced_search(Depends  = "R6"), "metadata")$total
+imports  <- attr(pkgsearch::advanced_search(Imports  = "R6"), "metadata")$total
+suggests <- attr(pkgsearch::advanced_search(Suggests = "R6"), "metadata")$total
+glue("{depends + imports + suggests} packages on CRAN utilize `R6`.")
+```
+#### What are they?
+```{r}
+pkgsearch::advanced_search(Imports  = "R6", size = 300) %>% 
+  arrange(-downloads_last_month) %>% 
+  head(20) %>% 
+  pull("package") %>%
+  paste0(collapse = ", ") %>% 
+  strwrap(width = 100) %>% 
+  cli::cat_line()
+```
+---
+class: show-only-last-code-result
+# R6 in the wild
+```{r}
+"testthat" %>% getNamespace() %>% eapply(is.R6Class) %>% flatten_lgl() %>% which() %>% names()
+```
+--
+```{r}
+testthat:::Stack
+```
+---
+class: hide-logo, capsule-slide
+# Encapsulation
+
+- In `S3` methods belong to the `generic`.    
+
+- In `R6` methods belong to the object itself.
+
+---
+# Reference Semantics
+
+
+- Value semantics leads to copy on modification
+- Reference semantics leads to reference change on modification
+
+.pull-left[
+### Value Semanics
+```{r}
+x <- 1
+y <- x
+x <- 2
+y
+```
+
+]
+
+.pull-right[
+### Reference Semantics
+```{r}
+x <- new.env()
+y <- x
+x$a <- 2
+y$a
+```
+]
+-
+
+---
+# Generating a `r emo::ji("beer")` class
+
+The simplest `R6` class:
+```{r highlight.output = c(1)}
+R6::R6Class()
+```
+--
+You should at least provide the first argument, `classname`:
+
+```{r}
+Beer <- R6::R6Class("Beer")
+```
+--
+.pull-left[
+```{r}
+class(Beer)
+```
+.center[**I (kinda) Lied**]
+]
+--
+.pull-right[
+```{r}
+typeof(Beer)
+```
+.center[**Wait...what?**]
+]
+
+---
+# Instantiating a class
+
+```{r}
+Beer <- R6::R6Class("Beer")
+```
+
+Instantiate your class using the generator's `new` method
+```{r}
+beer <- Beer$new()
+beer
+```
+
+We'll talk about cloning later, but you can disable it by passing `cloneable = FALSE` when defining the class
+
+```{r}
+Beer <- R6::R6Class("Beer", cloneable = FALSE)
+Beer$new()
+```
+
+---
+# `public`
+
+The `public` argument to `R6::R6Class` accepts a named list of methods and/or objects.
+
+```{r}
+Beer <- R6::R6Class("Beer", public = list(abv = .05))
+```
+
+.pull-left[ 
+#### External Access
+```{r}
+beer <- Beer$new()
+beer$abv #<<
+```
+]
+.pull-right[
+
+#### Internal access
+```{r}
+Beer <- R6::R6Class(
+  "Beer", 
+  public = list(
+    abv = 0.05,
+    percent_abv = function()  
+      sprintf("%.1f%%", 100 * self$abv) #<<
+  ))
+
+beer <- Beer$new()
+beer$percent_abv()
+```
+]
+
+---
+# Socratic Break
+
+> I've already called created my class generator. Can I modify it?
+
+--
+
+```{r}
+Beer$rating <- 5
+```
+
+> Well that was easy!
+
+--
+
+```{r}
+Beer$new()$rating
+```
+
+> D'oh! I should use the generator's `set` method instead.
+
+--
+
+```{r}
+Beer$set("public", "rating", 5)
+Beer$new()$rating
+```
+
+> Woohoo!
+
+---
+# Inheritance
+Methods and variables defined in one class (the parent) can be accessed in a subclass (the child).
+
+Pass an `R6ClassGenerator` name for the `inherit` parameter of your class call.
+
+```{r, echo=TRUE}
+IPA <- R6::R6Class("IPA", inherit = Beer)
+IPA$new()
+```
+
+**Warning** The name is evaluated in the `parent_env` during instantiation. We will see this later,
+
+
+---
+# Introspection
+
+Instantiated `R6` classes are assigned an `S3` class that reflects its `R6` hierarchy.
+
+```{r, echo=TRUE}
+DoubleIPA <- R6::R6Class("DoubleIPA", inherit = IPA)
+dipa <- DoubleIPA$new()
+
+class(dipa)
+```
+--
+.pull-left[
+Unless you don't want it to do that.
+```{r} 
+NonAlcoholic <- R6::R6Class(
+  "NonAlcoholic", 
+  inherit = Beer, 
+  class = FALSE)
+zima <- NonAlcoholic$new()
+
+class(zima)
+```
+]
+.pull-right[
+.center[![](whywouldyoudothat.gif)]
+]
+
+
+---
+class: show-only-last-code-result
+# `private`
+
+Variables and methods that are part of the internal behavior of the class
+
+Useful to separate the `public` interface, similar to non-exported objects in a package.
+
+```{r}
+Beer$set("private", ".name", "Duff")
+beer_new <- Beer$new()
+beer_new$.name
+```
+--
+.pull-left[
+#### Internal
+Access using `private$`
+```{r}
+Beer$set("public", "get_name", 
+         function() { private$.name })
+beer_new <- Beer$new()
+beer_new$get_name()
+```
+]
+
+.pull-right[
+#### External
+If you just *have* to peek
+```{r}
+beer_new$.__enclos_env__$private$.name
+```
+]
+---
+# `active`
+
+`R6` makes use of `r r_icon`'s `makeActiveBinding` function to add active/lazy/delayed bindings.
+
+- No variable passed `r icon::fa("arrow-right")` Treated like a variable
+
+--
+
+- One variable passed `r icon::fa("arrow-right")` Treated like an assignment
+
+--
+
+- Two variables passed `r icon::fa("arrow-right")` Hey now, let's not get crazy.  
+
+--
+
+.pull-left[
+#### No Variable
+
+```{r error=TRUE}
+Beer$set("active", "name", 
+         function() { private$.name })
+new_beer <- Beer$new()
+new_beer$name
+new_beer$name <- "Duff Lite"
+```
+]
+
+.pull-right[
+#### One Variable
+
+```{r}
+Beer$set("active", "name",
+         function(n) {
+           if (missing(n)) { return(private$.name) } 
+           stopifnot(is.character(n) && length(n) == 1)
+           private$.name <- n
+         },
+         overwrite = TRUE #<<
+)
+new_beer <- Beer$new()
+new_beer$name <- "Duff Life"
+new_beer$name 
+```
+]
+
+---
+# `initialize`
+The `initialize` method is called at the end of the generator's `new` function.
+
+```{r}
+Beer$set("public", "initialize",
+         function(name, rating = 5) {
+           self$name <- name
+           self$rating <- rating
+           cli::cat_line(glue("It's five o'clock somewhere.  Give me a {self$name}!"))
+         })
+
+beer <- Beer$new("Breakfast Stout")
+```
+--
+
+You can call the inherited `initialize` function using `super$`.
+
+```{r}
+IPA$set("public", "initialize",
+        function(name, ...) {
+          name <- snakecase::to_any_case(name, 'random')
+          super$initialize(name, ...)
+        })
+
+beer <- IPA$new("King Sue")
+```
+---
+# `initialize`
+If any public or private fields have reference semantics (other `R6` classes/`environment`s/`data.table`s) then they should be created in the `initialize` method to avoid sharing.
+
+Sometimes, this can be useful.
+.pull-left[ 
+```{r self-counter-code}
+`%||%` <- rlang::`%||%`
+
+SelfCounter <- R6::R6Class(
+  "SelfCounter", 
+  public = list(
+    count_env = new.env(),
+    initialize = function() 
+      self$count_env$counter <- 
+      (self$count_env$counter %||% 0) + 1
+  )
+)
+```
+]
+
+.pull-right[
+```{r}
+SelfCounter$new()$count_env$counter
+SelfCounter$new()$count_env$counter
+SelfCounter$new()$count_env$counter
+```
+]
+
+---
+# `initialize`
+
+.pull-left[
+```{r}
+LessUseful <- R6::R6Class(
+  "LessUseful", 
+  public = list(
+    count_env = NULL,
+    initialize = function() {
+      self$count_env <- new.env()
+      
+      self$count_env$counter <- 
+      (self$count_env$counter %||% 0) + 1
+  })
+)
+
+```
+]
+
+.pull-right[
+```{r}
+LessUseful$new()$count_env$counter
+LessUseful$new()$count_env$counter
+LessUseful$new()$count_env$counter
+```
+]
+
+
+---
+# `finalize`
+The `finalize` method allows a class to clean up after itself.
+e.g., 
+- Close database connections
+
+- Close file connections
+
+- Provide status updates
+
+```{r}
+Beer$set("public", "finalize", function() { cat("Goodnight brew")})
+beer <- IPA$new("Sculpin")
+
+# we hardly knew ye
+rm(beer)
+
+# force a garbage collection to get the finalizer to trigger
+invisible(gc())
+```
+
+
+---
+# `print`
+.pull-left[ 
+```{r}
+R6:::print.R6
+```
+]
+
+.pull-right[ 
+Define your own `print` in the `public` members of your class.
+
+```{r}
+Beer$set(
+  "public", "print", 
+  function(...) { 
+    cat(
+      glue("{self$name}:{strrep('*',self$rating)}")
+    )
+  })
+```
+
+```{r}
+beer <- Beer$new("Duff", 3)
+beer
+```
+]
+
+A `format` generic is also defined for `R6` objects.
+---
+# Cloning
+
+.pull-left[ 
+```{r}
+beer1 <- Beer$new("Duff")
+
+beer2 <- beer1
+
+beer2$name <- "Duff Lite"
+
+beer2
+beer1
+```
+]
+.pull-right[ 
+```{r}
+beer1 <- Beer$new("Duff")
+
+beer2 <- beer1$clone()
+
+beer2$name <- "Duff Lite"
+
+beer2
+beer1
+```
+]
+
+.footnote[Additional option `deep = TRUE` used when you want to make copies of all encapsulated objects that use reference semantics.]
+
+---
+# Bottles
+
+```{r}
+Beer$set("private", ".bottles", 9L)
+
+Beer$set("active", "bottles", function(b) {
+  if (missing(b)) { return(private$.bottles) }
+  private$.bottles <- b
+})
+
+Beer$set("public", "drink", function() {
+  if (self$bottles == 0) 
+    msg <- glue("No more bottles of {self$name} on the wall...\n")
+  else {
+    msg <- glue("{self$bottles} bottle{ifelse(self$bottles>1,'s','')} of {self$name}")
+    msg <- glue("{msg} on the wall. {msg}! Take one down, pass it around.\n")
+    self$bottles <- self$bottles - 1
+  }
+  cli::cat_line(msg)
+  invisible(self)
+})
+
+beer <- Beer$new("Duff")
+```
+
+---
+class: show-only-last-code-result bottles
+
+```{r}
+beer$drink()
+```
+--
+```{r}
+beer$drink()
+```
+--
+```{r}
+beer$drink()
+```
+--
+```{r}
+beer$drink()
+```
+--
+```{r}
+beer$drink()
+```
+--
+```{r}
+beer$drink()
+```
+--
+```{r}
+beer$drink()
+```
+--
+```{r}
+beer$drink()
+```
+--
+```{r}
+beer$drink()
+```
+--
+```{r}
+beer$drink()
+```
+
+---
+class: duffman
+
+# Method chaining
+
+If a method returns `self` then you can chain calls together.
+
+.left-column[ 
+```{r chain-drink, eval=FALSE}
+Beer$
+  new("Duff")$
+  drink()$
+  drink()$
+  drink()$
+  drink()$
+  drink()$
+  drink()$
+  drink()$
+  drink()$
+  drink()$
+  drink()
+```
+]
+
+.right-column[
+```{r chain-drink-out, ref.label='chain-drink', echo=F}
+```
+]
+---
+# Capsule
+
+I had all intentions of demonstrating how R6 works under-the-hood using fancy diagrams like Hadley creates.  
+Instead, I will monkey around in R.
+
+But, if you are interested and want to hurt your bra: [https://rpubs.com/sumprain/r6](https://rpubs.com/sumprain/r6)
+
+

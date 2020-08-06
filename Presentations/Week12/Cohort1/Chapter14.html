@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Tyler Grant Smith" />
+    <meta name="date" content="2020-07-26" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: left, middle, title-slide
+
+# Advanced R
+## Chapter 14 - R6
+### Tyler Grant Smith
+### <i class="fab  fa-github "></i> <a href="http://github.com/TylerGrantSmith">TylerGrantSmith</a><br><i class="fab  fa-twitter "></i> <a href="http://twitter.com/TylerGrantS">TylerGrantS</a>
+### 2020-07-26
+
+---
+
+
+&lt;style&gt;
+.hljs-github .hljs {
+color: #333;
+background: #f8f8f8
+}
+&lt;/style&gt;
+
+
+
+
+
+
+
+# R6
+&lt;div class='container'&gt;
+&lt;b&gt;Package&lt;/b&gt;:            R6&lt;br&gt;&lt;b&gt;Title&lt;/b&gt;:              Encapsulated Classes with Reference Semantics&lt;br&gt;&lt;b&gt;Version&lt;/b&gt;:            2.4.1&lt;br&gt;&lt;b&gt;Authors@R&lt;/b&gt;:          person("Winston", "Chang", role = c("aut", "cre"),
+                    email = "winston@stdout.org")&lt;br&gt;&lt;b&gt;Description&lt;/b&gt;:        Creates classes with reference semantics, similar
+                    to R's built-in reference classes. Compared to
+                    reference classes, R6 classes are simpler and
+                    lighter-weight, and they are not built on S4
+                    classes so they do not require the methods package.
+                    These classes allow public and private members, and
+                    they support inheritance, even when the classes are
+                    defined in different packages.&lt;br&gt;&lt;b&gt;Depends&lt;/b&gt;:            R (&gt;= 3.0)&lt;br&gt;&lt;b&gt;Suggests&lt;/b&gt;:           knitr, microbenchmark, pryr, testthat, ggplot2,
+                    scales&lt;br&gt;&lt;b&gt;License&lt;/b&gt;:            MIT + file LICENSE&lt;br&gt;&lt;b&gt;URL&lt;/b&gt;:                https://r6.r-lib.org, https://github.com/r-lib/R6/&lt;br&gt;&lt;b&gt;LazyData&lt;/b&gt;:           true&lt;br&gt;&lt;b&gt;BugReports&lt;/b&gt;:         https://github.com/r-lib/R6/issues&lt;br&gt;&lt;b&gt;RoxygenNote&lt;/b&gt;:        6.1.1&lt;br&gt;&lt;b&gt;NeedsCompilation&lt;/b&gt;:   no&lt;br&gt;&lt;b&gt;Packaged&lt;/b&gt;:           2019-11-12 20:00:15 UTC; winston&lt;br&gt;&lt;b&gt;Author&lt;/b&gt;:             Winston Chang [aut, cre]&lt;br&gt;&lt;b&gt;Maintainer&lt;/b&gt;:         Winston Chang &lt;winston@stdout.org&gt;&lt;br&gt;&lt;b&gt;Repository&lt;/b&gt;:         CRAN&lt;br&gt;&lt;b&gt;Date/Publication&lt;/b&gt;:   2019-11-12 22:50:03 UTC&lt;br&gt;&lt;b&gt;Built&lt;/b&gt;:              R 4.0.2; ; 2020-07-21 14:28:09 UTC; windows
+&lt;/div&gt;
+
+---
+# R6 in the wild
+
+#### How many?
+
+```r
+depends  &lt;- attr(pkgsearch::advanced_search(Depends  = "R6"), "metadata")$total
+imports  &lt;- attr(pkgsearch::advanced_search(Imports  = "R6"), "metadata")$total
+suggests &lt;- attr(pkgsearch::advanced_search(Suggests = "R6"), "metadata")$total
+glue("{depends + imports + suggests} packages on CRAN utilize `R6`.")
+```
+
+```
+## 321 packages on CRAN utilize `R6`.
+```
+#### What are they?
+
+```r
+pkgsearch::advanced_search(Imports  = "R6", size = 300) %&gt;% 
+  arrange(-downloads_last_month) %&gt;% 
+  head(20) %&gt;% 
+  pull("package") %&gt;%
+  paste0(collapse = ", ") %&gt;% 
+  strwrap(width = 100) %&gt;% 
+  cli::cat_line()
+```
+
+```
+## dplyr, processx, pkgbuild, testthat, callr, vdiffr, desc, httr, scales, promises, selectr, httpuv,
+## readr, shiny, progress, dbplyr, roxygen2, crosstalk, rcmdcheck, data.tree
+```
+---
+class: show-only-last-code-result
+# R6 in the wild
+
+```r
+"testthat" %&gt;% getNamespace() %&gt;% eapply(is.R6Class) %&gt;% flatten_lgl() %&gt;% which() %&gt;% names()
+```
+
+```
+##  [1] "Stack"            "TeamcityReporter" "RstudioReporter"  "StopReporter"    
+##  [5] "MultiReporter"    "SilentReporter"   "Reporter"         "TapReporter"     
+##  [9] "MinimalReporter"  "CheckReporter"    "FailReporter"     "LocationReporter"
+## [13] "ProgressReporter" "JunitReporter"    "ListReporter"     "SummaryReporter" 
+## [17] "DebugReporter"
+```
+--
+
+```r
+testthat:::Stack
+```
+
+```
+## &lt;Stack&gt; object generator
+##   Public:
+##     initialize: function (init = 20L) 
+##     push: function (..., .list = NULL) 
+##     size: function () 
+##     as_list: function () 
+##     clone: function (deep = FALSE) 
+##   Private:
+##     stack: NULL
+##     count: 0
+##     init: 20
+##   Parent env: &lt;environment: namespace:testthat&gt;
+##   Locked objects: TRUE
+##   Locked class: FALSE
+##   Portable: TRUE
+```
+---
+class: hide-logo, capsule-slide
+# Encapsulation
+
+- In `S3` methods belong to the `generic`.    
+
+- In `R6` methods belong to the object itself.
+
+---
+# Reference Semantics
+
+
+- Value semantics leads to copy on modification
+- Reference semantics leads to reference change on modification
+
+.pull-left[
+### Value Semanics
+
+```r
+x &lt;- 1
+y &lt;- x
+x &lt;- 2
+y
+```
+
+```
+## [1] 1
+```
+
+]
+
+.pull-right[
+### Reference Semantics
+
+```r
+x &lt;- new.env()
+y &lt;- x
+x$a &lt;- 2
+y$a
+```
+
+```
+## [1] 2
+```
+]
+-
+
+---
+# Generating a 🍺 class
+
+The simplest `R6` class:
+
+```r
+R6::R6Class()
+```
+
+```
+*## &lt;unnamed&gt; object generator
+##   Public:
+##     clone: function (deep = FALSE) 
+##   Parent env: &lt;environment: R_GlobalEnv&gt;
+##   Locked objects: TRUE
+##   Locked class: FALSE
+##   Portable: TRUE
+```
+--
+You should at least provide the first argument, `classname`:
+
+
+```r
+Beer &lt;- R6::R6Class("Beer")
+```
+--
+.pull-left[
+
+```r
+class(Beer)
+```
+
+```
+## [1] "R6ClassGenerator"
+```
+.center[**I (kinda) Lied**]
+]
+--
+.pull-right[
+
+```r
+typeof(Beer)
+```
+
+```
+## [1] "environment"
+```
+.center[**Wait...what?**]
+]
+
+---
+# Instantiating a class
+
+
+```r
+Beer &lt;- R6::R6Class("Beer")
+```
+
+Instantiate your class using the generator's `new` method
+
+```r
+beer &lt;- Beer$new()
+beer
+```
+
+```
+## &lt;Beer&gt;
+##   Public:
+##     clone: function (deep = FALSE)
+```
+
+We'll talk about cloning later, but you can disable it by passing `cloneable = FALSE` when defining the class
+
+
+```r
+Beer &lt;- R6::R6Class("Beer", cloneable = FALSE)
+Beer$new()
+```
+
+```
+## &lt;Beer&gt;
+##   Public:
+##     :
+```
+
+---
+# `public`
+
+The `public` argument to `R6::R6Class` accepts a named list of methods and/or objects.
+
+
+```r
+Beer &lt;- R6::R6Class("Beer", public = list(abv = .05))
+```
+
+.pull-left[ 
+#### External Access
+
+```r
+beer &lt;- Beer$new()
+*beer$abv
+```
+
+```
+## [1] 0.05
+```
+]
+.pull-right[
+
+#### Internal access
+
+```r
+Beer &lt;- R6::R6Class(
+  "Beer", 
+  public = list(
+    abv = 0.05,
+    percent_abv = function()  
+*     sprintf("%.1f%%", 100 * self$abv)
+  ))
+
+beer &lt;- Beer$new()
+beer$percent_abv()
+```
+
+```
+## [1] "5.0%"
+```
+]
+
+---
+# Socratic Break
+
+&gt; I've already called created my class generator. Can I modify it?
+
+--
+
+
+```r
+Beer$rating &lt;- 5
+```
+
+&gt; Well that was easy!
+
+--
+
+
+```r
+Beer$new()$rating
+```
+
+```
+## NULL
+```
+
+&gt; D'oh! I should use the generator's `set` method instead.
+
+--
+
+
+```r
+Beer$set("public", "rating", 5)
+Beer$new()$rating
+```
+
+```
+## [1] 5
+```
+
+&gt; Woohoo!
+
+---
+# Inheritance
+Methods and variables defined in one class (the parent) can be accessed in a subclass (the child).
+
+Pass an `R6ClassGenerator` name for the `inherit` parameter of your class call.
+
+
+```r
+IPA &lt;- R6::R6Class("IPA", inherit = Beer)
+IPA$new()
+```
+
+```
+## &lt;IPA&gt;
+##   Inherits from: &lt;Beer&gt;
+##   Public:
+##     abv: 0.05
+##     clone: function (deep = FALSE) 
+##     percent_abv: function () 
+##     rating: 5
+```
+
+**Warning** The name is evaluated in the `parent_env` during instantiation. We will see this later,
+
+
+---
+# Introspection
+
+Instantiated `R6` classes are assigned an `S3` class that reflects its `R6` hierarchy.
+
+
+```r
+DoubleIPA &lt;- R6::R6Class("DoubleIPA", inherit = IPA)
+dipa &lt;- DoubleIPA$new()
+
+class(dipa)
+```
+
+```
+## [1] "DoubleIPA" "IPA"       "Beer"      "R6"
+```
+--
+.pull-left[
+Unless you don't want it to do that.
+
+```r
+NonAlcoholic &lt;- R6::R6Class(
+  "NonAlcoholic", 
+  inherit = Beer, 
+  class = FALSE)
+zima &lt;- NonAlcoholic$new()
+
+class(zima)
+```
+
+```
+## [1] "environment"
+```
+]
+.pull-right[
+.center[![](whywouldyoudothat.gif)]
+]
+
+
+---
+class: show-only-last-code-result
+# `private`
+
+Variables and methods that are part of the internal behavior of the class
+
+Useful to separate the `public` interface, similar to non-exported objects in a package.
+
+
+```r
+Beer$set("private", ".name", "Duff")
+beer_new &lt;- Beer$new()
+beer_new$.name
+```
+
+```
+## NULL
+```
+--
+.pull-left[
+#### Internal
+Access using `private$`
+
+```r
+Beer$set("public", "get_name", 
+         function() { private$.name })
+beer_new &lt;- Beer$new()
+beer_new$get_name()
+```
+
+```
+## [1] "Duff"
+```
+]
+
+.pull-right[
+#### External
+If you just *have* to peek
+
+```r
+beer_new$.__enclos_env__$private$.name
+```
+
+```
+## [1] "Duff"
+```
+]
+---
+# `active`
+
+`R6` makes use of <i class="fab  fa-r-project " style="color:#384CB7;"></i>'s `makeActiveBinding` function to add active/lazy/delayed bindings.
+
+- No variable passed <i class="fas  fa-arrow-right "></i> Treated like a variable
+
+--
+
+- One variable passed <i class="fas  fa-arrow-right "></i> Treated like an assignment
+
+--
+
+- Two variables passed <i class="fas  fa-arrow-right "></i> Hey now, let's not get crazy.  
+
+--
+
+.pull-left[
+#### No Variable
+
+
+```r
+Beer$set("active", "name", 
+         function() { private$.name })
+new_beer &lt;- Beer$new()
+new_beer$name
+```
+
+```
+## [1] "Duff"
+```
+
+```r
+new_beer$name &lt;- "Duff Lite"
+```
+
+```
+## Error in (function () : unused argument (base::quote("Duff Lite"))
+```
+]
+
+.pull-right[
+#### One Variable
+
+
+```r
+Beer$set("active", "name",
+         function(n) {
+           if (missing(n)) { return(private$.name) } 
+           stopifnot(is.character(n) &amp;&amp; length(n) == 1)
+           private$.name &lt;- n
+         },
+*        overwrite = TRUE
+)
+new_beer &lt;- Beer$new()
+new_beer$name &lt;- "Duff Life"
+new_beer$name 
+```
+
+```
+## [1] "Duff Life"
+```
+]
+
+---
+# `initialize`
+The `initialize` method is called at the end of the generator's `new` function.
+
+
+```r
+Beer$set("public", "initialize",
+         function(name, rating = 5) {
+           self$name &lt;- name
+           self$rating &lt;- rating
+           cli::cat_line(glue("It's five o'clock somewhere.  Give me a {self$name}!"))
+         })
+
+beer &lt;- Beer$new("Breakfast Stout")
+```
+
+```
+## It's five o'clock somewhere.  Give me a Breakfast Stout!
+```
+--
+
+You can call the inherited `initialize` function using `super$`.
+
+
+```r
+IPA$set("public", "initialize",
+        function(name, ...) {
+          name &lt;- snakecase::to_any_case(name, 'random')
+          super$initialize(name, ...)
+        })
+
+beer &lt;- IPA$new("King Sue")
+```
+
+```
+## It's five o'clock somewhere.  Give me a kinG sue!
+```
+---
+# `initialize`
+If any public or private fields have reference semantics (other `R6` classes/`environment`s/`data.table`s) then they should be created in the `initialize` method to avoid sharing.
+
+Sometimes, this can be useful.
+.pull-left[ 
+
+```r
+`%||%` &lt;- rlang::`%||%`
+
+SelfCounter &lt;- R6::R6Class(
+  "SelfCounter", 
+  public = list(
+    count_env = new.env(),
+    initialize = function() 
+      self$count_env$counter &lt;- 
+      (self$count_env$counter %||% 0) + 1
+  )
+)
+```
+]
+
+.pull-right[
+
+```r
+SelfCounter$new()$count_env$counter
+```
+
+```
+## [1] 1
+```
+
+```r
+SelfCounter$new()$count_env$counter
+```
+
+```
+## [1] 2
+```
+
+```r
+SelfCounter$new()$count_env$counter
+```
+
+```
+## [1] 3
+```
+]
+
+---
+# `initialize`
+
+.pull-left[
+
+```r
+LessUseful &lt;- R6::R6Class(
+  "LessUseful", 
+  public = list(
+    count_env = NULL,
+    initialize = function() {
+      self$count_env &lt;- new.env()
+      
+      self$count_env$counter &lt;- 
+      (self$count_env$counter %||% 0) + 1
+  })
+)
+```
+]
+
+.pull-right[
+
+```r
+LessUseful$new()$count_env$counter
+```
+
+```
+## [1] 1
+```
+
+```r
+LessUseful$new()$count_env$counter
+```
+
+```
+## [1] 1
+```
+
+```r
+LessUseful$new()$count_env$counter
+```
+
+```
+## [1] 1
+```
+]
+
+
+---
+# `finalize`
+The `finalize` method allows a class to clean up after itself.
+e.g., 
+- Close database connections
+
+- Close file connections
+
+- Provide status updates
+
+
+```r
+Beer$set("public", "finalize", function() { cat("Goodnight brew")})
+beer &lt;- IPA$new("Sculpin")
+```
+
+```
+## It's five o'clock somewhere.  Give me a scULpiN!
+```
+
+```r
+# we hardly knew ye
+rm(beer)
+
+# force a garbage collection to get the finalizer to trigger
+invisible(gc())
+```
+
+```
+## Goodnight brew
+```
+
+
+---
+# `print`
+.pull-left[ 
+
+```r
+R6:::print.R6
+```
+
+```
+## function (x, ...) 
+## {
+##     if (is.function(.subset2(x, "print"))) {
+##         .subset2(x, "print")(...)
+##     }
+##     else {
+##         cat(format(x, ...), sep = "\n")
+##     }
+##     invisible(x)
+## }
+## &lt;bytecode: 0x000000001d65b248&gt;
+## &lt;environment: namespace:R6&gt;
+```
+]
+
+.pull-right[ 
+Define your own `print` in the `public` members of your class.
+
+
+```r
+Beer$set(
+  "public", "print", 
+  function(...) { 
+    cat(
+      glue("{self$name}:{strrep('*',self$rating)}")
+    )
+  })
+```
+
+
+```r
+beer &lt;- Beer$new("Duff", 3)
+```
+
+```
+## It's five o'clock somewhere.  Give me a Duff!
+```
+
+```r
+beer
+```
+
+```
+## Duff:***
+```
+]
+
+A `format` generic is also defined for `R6` objects.
+---
+# Cloning
+
+.pull-left[ 
+
+```r
+beer1 &lt;- Beer$new("Duff")
+```
+
+```
+## It's five o'clock somewhere.  Give me a Duff!
+```
+
+```r
+beer2 &lt;- beer1
+
+beer2$name &lt;- "Duff Lite"
+
+beer2
+```
+
+```
+## Duff Lite:*****
+```
+
+```r
+beer1
+```
+
+```
+## Duff Lite:*****
+```
+]
+.pull-right[ 
+
+```r
+beer1 &lt;- Beer$new("Duff")
+```
+
+```
+## It's five o'clock somewhere.  Give me a Duff!
+```
+
+```r
+beer2 &lt;- beer1$clone()
+
+beer2$name &lt;- "Duff Lite"
+
+beer2
+```
+
+```
+## Duff Lite:*****
+```
+
+```r
+beer1
+```
+
+```
+## Duff:*****
+```
+]
+
+.footnote[Additional option `deep = TRUE` used when you want to make copies of all encapsulated objects that use reference semantics.]
+
+---
+# Bottles
+
+
+```r
+Beer$set("private", ".bottles", 9L)
+
+Beer$set("active", "bottles", function(b) {
+  if (missing(b)) { return(private$.bottles) }
+  private$.bottles &lt;- b
+})
+
+Beer$set("public", "drink", function() {
+  if (self$bottles == 0) 
+    msg &lt;- glue("No more bottles of {self$name} on the wall...\n")
+  else {
+    msg &lt;- glue("{self$bottles} bottle{ifelse(self$bottles&gt;1,'s','')} of {self$name}")
+    msg &lt;- glue("{msg} on the wall. {msg}! Take one down, pass it around.\n")
+    self$bottles &lt;- self$bottles - 1
+  }
+  cli::cat_line(msg)
+  invisible(self)
+})
+
+beer &lt;- Beer$new("Duff")
+```
+
+```
+## It's five o'clock somewhere.  Give me a Duff!
+```
+
+---
+class: show-only-last-code-result bottles
+
+
+```r
+beer$drink()
+```
+
+```
+## 9 bottles of Duff on the wall. 9 bottles of Duff! Take one down, pass it around.
+```
+--
+
+```r
+beer$drink()
+```
+
+```
+## 8 bottles of Duff on the wall. 8 bottles of Duff! Take one down, pass it around.
+```
+--
+
+```r
+beer$drink()
+```
+
+```
+## 7 bottles of Duff on the wall. 7 bottles of Duff! Take one down, pass it around.
+```
+--
+
+```r
+beer$drink()
+```
+
+```
+## 6 bottles of Duff on the wall. 6 bottles of Duff! Take one down, pass it around.
+```
+--
+
+```r
+beer$drink()
+```
+
+```
+## 5 bottles of Duff on the wall. 5 bottles of Duff! Take one down, pass it around.
+```
+--
+
+```r
+beer$drink()
+```
+
+```
+## 4 bottles of Duff on the wall. 4 bottles of Duff! Take one down, pass it around.
+```
+--
+
+```r
+beer$drink()
+```
+
+```
+## 3 bottles of Duff on the wall. 3 bottles of Duff! Take one down, pass it around.
+```
+--
+
+```r
+beer$drink()
+```
+
+```
+## 2 bottles of Duff on the wall. 2 bottles of Duff! Take one down, pass it around.
+```
+--
+
+```r
+beer$drink()
+```
+
+```
+## 1 bottle of Duff on the wall. 1 bottle of Duff! Take one down, pass it around.
+```
+--
+
+```r
+beer$drink()
+```
+
+```
+## No more bottles of Duff on the wall...
+```
+
+---
+class: duffman
+
+# Method chaining
+
+If a method returns `self` then you can chain calls together.
+
+.left-column[ 
+
+```r
+Beer$
+  new("Duff")$
+  drink()$
+  drink()$
+  drink()$
+  drink()$
+  drink()$
+  drink()$
+  drink()$
+  drink()$
+  drink()$
+  drink()
+```
+]
+
+.right-column[
+
+```
+## It's five o'clock somewhere.  Give me a Duff!
+## 9 bottles of Duff on the wall. 9 bottles of Duff! Take one down, pass it around.
+## 8 bottles of Duff on the wall. 8 bottles of Duff! Take one down, pass it around.
+## 7 bottles of Duff on the wall. 7 bottles of Duff! Take one down, pass it around.
+## 6 bottles of Duff on the wall. 6 bottles of Duff! Take one down, pass it around.
+## 5 bottles of Duff on the wall. 5 bottles of Duff! Take one down, pass it around.
+## 4 bottles of Duff on the wall. 4 bottles of Duff! Take one down, pass it around.
+## 3 bottles of Duff on the wall. 3 bottles of Duff! Take one down, pass it around.
+## 2 bottles of Duff on the wall. 2 bottles of Duff! Take one down, pass it around.
+## 1 bottle of Duff on the wall. 1 bottle of Duff! Take one down, pass it around.
+## No more bottles of Duff on the wall...
+```
+]
+---
+# Capsule
+
+I had all intentions of demonstrating how R6 works under-the-hood using fancy diagrams like Hadley creates.  
+Instead, I will monkey around in R.
+
+But, if you are interested and want to hurt your bra: [https://rpubs.com/sumprain/r6](https://rpubs.com/sumprain/r6)
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<style>
+.logo {
+  background-image: url(r4dsr6.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 112px;
+  height: 150px;
+  z-index: 0;
+}
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"></div>';
+  });
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
