@@ -15,14 +15,13 @@ This repo contains 3 main folders:
 
 *Cohort 1 (started 2020-04-02) - Tuesdays, 8pm EDT/EST*
 
-- 2020-08-04 Chapter 20 - Evaluation: [Daryn Ramsden](https://twitter.com/thisisdaryn) 
 - 2020-08-11 Chapter 21 - Translating R code: Pavitra Chakravarty
 - 2020-08-18 Chapter 22 - Debugging: [Tan Ho](https://twitter.com/_tanho)
+- 2020-08-25 Chapter 23 - Measuring performance:
 
 <details>
   <summary> Future Meetings </summary>
   
-- 2020-08-25 Chapter 23 - Measuring performance:
 - 2020-09-01 Chapter 24 - Improving performance:
 - 2020-09-08 Chapter 25 - Rewriting R code in C++:
 
@@ -31,12 +30,11 @@ This repo contains 3 main folders:
 
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
-- 2020-08-06 Chapter 2 - Names and values: [Josh Pohlkamp-Hartt](https://twitter.com/jpohlkamphartt)
 - 2020-08-13 Chapter 3 - Vectors: Vajresh Balaji
 - 2020-08-20 Chapter 4 - Subsetting
 
 <details>
-  <summary> Guiding Questions </summary>
+  <summary> Week 2 Guiding Questions </summary>
   
   Week 2
 
@@ -80,12 +78,12 @@ Chapter 1 - Introduction
 
 - Cohort 1: No recording available.
 - Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) ([slides](https://docs.google.com/presentation/d/1oKhqSY6L6yI3yMwB4JB1eduLqu6UWPZ7Y1v32FK042I/edit?usp=sharing) | video)
-- Cohort 3: [Novica Nakov]([video](https://www.youtube.com/watch?v=f6PuOnuZWBc))
+- Cohort 3: [Novica Nakov](https://twitter.com/novicanakov) ([video](https://www.youtube.com/watch?v=f6PuOnuZWBc))
 
 Chapter 2 - Names and values
 
 - Cohort 1: [Asmae Toumi](https://twitter.com/asmae_toumi) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Cohort1/Chap2slides.html#1))
-- Cohort 2: [Josh Pohlkamp-Hartt](https://twitter.com/jpohlkamphartt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Cohort2_America/Chapter2Slides.html#1))
+- Cohort 2: [Josh Pohlkamp-Hartt](https://twitter.com/jpohlkamphartt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Cohort2_America/Chapter2Slides.html#1) | video)
 
 Chapter 3 - Vectors
 
@@ -147,7 +145,10 @@ Chapter 18 - Expressions
 
 - Cohort 1: [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week17/Cohort1/Chapter18.html#1) | [video](https://youtu.be/2NixH3QAerQ) | app | [app code](https://github.com/r4ds/bookclub-Advanced_R/tree/master/Presentations/Week17/Cohort1/expressions))
 
-
 Chapter 19 - Quasiquotation
 
 - Cohort 1: [Jon Harmon](https://twitter.com/jonthegeek) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week18/Cohort1/Chapter19.html#1) | [video](https://youtu.be/tbByqsRRvdE))
+
+Chapter 20 - Evaluation
+
+- Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week19/Cohort1/AdvRChapter20#1) | [video](https://www.youtube.com/watch?v=4En_Ypvtjqw))
