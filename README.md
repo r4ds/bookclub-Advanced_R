@@ -31,7 +31,7 @@ This repo contains 3 main folders:
 
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
-- 2020-08-06 Chapter 2 - Names and values: Josh Pohlkamp-Hartt
+- 2020-08-06 Chapter 2 - Names and values: [Josh Pohlkamp-Hartt](https://twitter.com/jpohlkamphartt)
 - 2020-08-13 Chapter 3 - Vectors: Vajresh Balaji
 - 2020-08-20 Chapter 4 - Subsetting
 
@@ -80,11 +80,12 @@ Chapter 1 - Introduction
 
 - Cohort 1: No recording available.
 - Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) ([slides](https://docs.google.com/presentation/d/1oKhqSY6L6yI3yMwB4JB1eduLqu6UWPZ7Y1v32FK042I/edit?usp=sharing) | video)
-- Cohort 3: [Novica Nakov] ([video](https://www.youtube.com/watch?v=f6PuOnuZWBc))
+- Cohort 3: [Novica Nakov]([video](https://www.youtube.com/watch?v=f6PuOnuZWBc))
 
 Chapter 2 - Names and values
 
 - Cohort 1: [Asmae Toumi](https://twitter.com/asmae_toumi) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Cohort1/Chap2slides.html#1))
+- Cohort 2: [Josh Pohlkamp-Hartt](https://twitter.com/jpohlkamphartt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Cohort2_America/Chapter2Slides.html#1))
 
 Chapter 3 - Vectors
 
