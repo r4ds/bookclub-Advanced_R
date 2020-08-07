@@ -17,7 +17,7 @@ evaluate means "give me the result of this whole expression"
 This is such a cool function - where is it used in the wild?
 :::
 
-When wanting to have variables stored in the environment of a function, or if you want to run an expression that produces bindings, but you dont want those bindings to persist.
+When wanting to have variables stored in the environment of a function, or if you want to run an expression that produces bindings, but you don't want those bindings to persist.
 
 
 ```r
@@ -199,7 +199,7 @@ f
 ```
 ## function (x, y) 
 ## 10 + 20
-## <bytecode: 0x7fae4f1967c8>
+## <bytecode: 0x7fa9f65751c8>
 ```
 
 ```r
@@ -208,7 +208,7 @@ f
 #> <bytecode: 0x000000001421eb90>
 ```
 
-## Excercises 20.2.4.5 {-}
+## 20.2.4.5 Exercises {-}
 
 :::question
 Can we also go over what is happening in `local3`?
@@ -301,7 +301,7 @@ Can we come up with a (broken) example of trying to quasiquote an object of type
 To do this you would need to recreate the way rlang worked when quosures WERE formulas, probably by pulling the commit prior to the rewrite off of github. It looks like the old method would encode the expr as a formula and then overload the tilde operator so that it does tidy eval instead of..whatever it does normally
 :::
 
-## Exercises 20.3.6.2 
+## 20.3.6.2 Exercises {-}
 
 :::question
 What is going on here?? 
@@ -397,7 +397,7 @@ transform2 <- function(.data, ...) {
 ## 20.5.2 Handling ambiguity {-}
 
 :::question
-> vThere are subtle differences in when val is evaluated. If you unquote, val will be early evaluated by enquo(); if you use a pronoun, val will be lazily evaluated by eval_tidy(). These differences are usually unimportant, so pick the form that looks most natural.
+> There are subtle differences in when val is evaluated. If you unquote, val will be early evaluated by enquo(); if you use a pronoun, val will be lazily evaluated by eval_tidy(). These differences are usually unimportant, so pick the form that looks most natural.
 
 Is there a case where this subtle distinction between `.env$val` vs `!!val` matters? 
 

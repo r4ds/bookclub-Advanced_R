@@ -327,10 +327,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="evaluation.html#local">20.2.1 <code>local</code></a></li>
 <li><a href="evaluation.html#source">20.2.2 <code>source</code></a></li>
 <li><a href="evaluation.html#function">20.2.3 <code>function</code></a></li>
-<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#excercises-20.2.4.5"><i class="fa fa-check"></i>Excercises 20.2.4.5</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>20.2.4.5 Exercises</a></li>
 <li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#dots"><i class="fa fa-check"></i>20.3.3 Dots</a></li>
 <li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#under-the-hood"><i class="fa fa-check"></i>20.3.4 Under the hood</a></li>
-<li class="chapter" data-level="20.1" data-path="evaluation.html"><a href="evaluation.html#exercises-20.3.6.2"><i class="fa fa-check"></i><b>20.1</b> Exercises 20.3.6.2</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-1"><i class="fa fa-check"></i>20.3.6.2 Exercises</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#basics"><i class="fa fa-check"></i>20.4.1 Basics</a></li>
 <li><a href="evaluation.html#subset">20.4.3 <code>subset</code></a></li>
 <li><a href="evaluation.html#transform">20.4.5 <code>transform</code></a></li>
@@ -373,7 +373,7 @@ evaluate means “give me the result of this whole expression”</p>
 <div class="question">
 <p>This is such a cool function - where is it used in the wild?</p>
 </div>
-<p>When wanting to have variables stored in the environment of a function, or if you want to run an expression that produces bindings, but you dont want those bindings to persist.</p>
+<p>When wanting to have variables stored in the environment of a function, or if you want to run an expression that produces bindings, but you don’t want those bindings to persist.</p>
 <div class="sourceCode" id="cb668"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb668-1" data-line-number="1">counter &lt;-<span class="st"> </span><span class="kw">local</span>({ </a>
 <a class="sourceLine" id="cb668-2" data-line-number="2">  i &lt;-<span class="st"> </span><span class="dv">0</span>; <span class="cf">function</span>() { </a>
 <a class="sourceLine" id="cb668-3" data-line-number="3">    i &lt;&lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>; <span class="kw">print</span>(i)</a>
@@ -463,13 +463,13 @@ evaluate means “give me the result of this whole expression”</p>
 <a class="sourceLine" id="cb693-4" data-line-number="4">f</a></code></pre></div>
 <pre><code>## function (x, y) 
 ## 10 + 20
-## &lt;bytecode: 0x7fae4f1967c8&gt;</code></pre>
+## &lt;bytecode: 0x7fa9f65751c8&gt;</code></pre>
 <div class="sourceCode" id="cb695"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb695-1" data-line-number="1"><span class="co">#&gt; function (x, y) </span></a>
 <a class="sourceLine" id="cb695-2" data-line-number="2"><span class="co">#&gt; 10 + 20</span></a>
 <a class="sourceLine" id="cb695-3" data-line-number="3"><span class="co">#&gt; &lt;bytecode: 0x000000001421eb90&gt;</span></a></code></pre></div>
 </div>
-<div id="excercises-20.2.4.5" class="section level2 unnumbered">
-<h2>Excercises 20.2.4.5</h2>
+<div id="exercises" class="section level2 unnumbered">
+<h2>20.2.4.5 Exercises</h2>
 <div class="question">
 <p>Can we also go over what is happening in <code>local3</code>?</p>
 </div>
@@ -538,8 +538,8 @@ eval(call, envir = pf)</code></pre>
 <p>To do this you would need to recreate the way rlang worked when quosures WERE formulas, probably by pulling the commit prior to the rewrite off of github. It looks like the old method would encode the expr as a formula and then overload the tilde operator so that it does tidy eval instead of..whatever it does normally</p>
 </div>
 </div>
-<div id="exercises-20.3.6.2" class="section level2">
-<h2><span class="header-section-number">20.1</span> Exercises 20.3.6.2</h2>
+<div id="exercises-1" class="section level2 unnumbered">
+<h2>20.3.6.2 Exercises</h2>
 <div class="question">
 <p>What is going on here??</p>
 <div class="sourceCode" id="cb700"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb700-1" data-line-number="1">enenv &lt;-<span class="st"> </span><span class="cf">function</span>(x){</a>
@@ -616,7 +616,7 @@ eval(call, envir = pf)</code></pre>
 <h2>20.5.2 Handling ambiguity</h2>
 <div class="question">
 <blockquote>
-<p>vThere are subtle differences in when val is evaluated. If you unquote, val will be early evaluated by enquo(); if you use a pronoun, val will be lazily evaluated by eval_tidy(). These differences are usually unimportant, so pick the form that looks most natural.</p>
+<p>There are subtle differences in when val is evaluated. If you unquote, val will be early evaluated by enquo(); if you use a pronoun, val will be lazily evaluated by eval_tidy(). These differences are usually unimportant, so pick the form that looks most natural.</p>
 </blockquote>
 <p>Is there a case where this subtle distinction between <code>.env$val</code> vs <code>!!val</code> matters?</p>
 <div class="sourceCode" id="cb704"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb704-1" data-line-number="1">threshold_prefix &lt;-<span class="st"> </span><span class="cf">function</span>(df, val) {</a>

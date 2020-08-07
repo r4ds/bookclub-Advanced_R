@@ -327,10 +327,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="evaluation.html#local">20.2.1 <code>local</code></a></li>
 <li><a href="evaluation.html#source">20.2.2 <code>source</code></a></li>
 <li><a href="evaluation.html#function">20.2.3 <code>function</code></a></li>
-<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#excercises-20.2.4.5"><i class="fa fa-check"></i>Excercises 20.2.4.5</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>20.2.4.5 Exercises</a></li>
 <li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#dots"><i class="fa fa-check"></i>20.3.3 Dots</a></li>
 <li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#under-the-hood"><i class="fa fa-check"></i>20.3.4 Under the hood</a></li>
-<li class="chapter" data-level="20.1" data-path="evaluation.html"><a href="evaluation.html#exercises-20.3.6.2"><i class="fa fa-check"></i><b>20.1</b> Exercises 20.3.6.2</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-1"><i class="fa fa-check"></i>20.3.6.2 Exercises</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#basics"><i class="fa fa-check"></i>20.4.1 Basics</a></li>
 <li><a href="evaluation.html#subset">20.4.3 <code>subset</code></a></li>
 <li><a href="evaluation.html#transform">20.4.5 <code>transform</code></a></li>
@@ -395,26 +395,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb432-1" data-line-number="1">trials &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="op">~</span><span class="st"> </span><span class="kw">t.test</span>(<span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">10</span>), <span class="kw">rpois</span>(<span class="dv">10</span>, <span class="dv">7</span>)))</a>
 <a class="sourceLine" id="cb432-2" data-line-number="2"><span class="co"># tibble(p_value = map_dbl(trials, &quot;p.value&quot;))</span></a>
 <a class="sourceLine" id="cb432-3" data-line-number="3"><span class="kw">map_dbl</span>(trials, pluck, <span class="st">&quot;p.value&quot;</span>)</a></code></pre></div>
-<pre><code>##   [1] 0.0411947335 0.0043501189 0.1103275050 0.0003532967 0.0492653344
-##   [6] 0.0009967541 0.0197864222 0.0028243183 0.0557567180 0.0079380507
-##  [11] 0.7636987074 0.0275779850 0.0466547136 0.0013719855 0.0003920210
-##  [16] 0.0347838843 0.0244679936 0.0507300151 0.4970313682 0.0071594233
-##  [21] 0.0089757024 0.0049819542 0.2316906023 0.2072054825 0.1514015993
-##  [26] 0.0043125812 0.0033163029 0.0687232362 0.0155124582 0.0031413674
-##  [31] 0.0310239375 0.0070574958 0.0006341262 0.1077098898 0.0680439393
-##  [36] 0.0045202533 0.0457393513 0.0051269195 0.2749018220 0.7240923046
-##  [41] 0.0139495365 0.0243226914 0.0481475567 0.0347405110 0.0019366115
-##  [46] 0.0002516700 0.0984283616 0.4402671123 0.0530285644 0.0321263124
-##  [51] 0.0019470374 0.0106073393 0.0011550932 0.0185909469 0.0102976881
-##  [56] 0.9466962480 0.0816966210 0.0003375249 0.1045725308 0.0069513417
-##  [61] 0.0068169924 0.0023511847 0.0085025083 0.0015899876 0.0080779871
-##  [66] 0.0486877628 0.0002155958 0.0405900430 0.7824672779 0.0900776949
-##  [71] 0.0020648980 0.1552239554 0.1835251879 0.0101087541 0.0241639680
-##  [76] 0.0026775063 0.1033435637 0.2452472905 0.0002717632 0.0299953096
-##  [81] 0.0092709734 0.2652903095 0.0047346349 0.2166343258 0.1171444282
-##  [86] 0.0039794602 0.0088855729 0.0148509237 0.0081816977 0.0905141406
-##  [91] 0.3574094940 0.0624152529 0.1943018389 0.0478161489 0.0498933898
-##  [96] 0.0546230424 0.0047889475 0.0001495084 0.0390844459 0.0009317821</code></pre>
+<pre><code>##   [1] 2.739218e-01 6.139632e-02 1.165830e-01 5.202559e-02 1.725105e-01
+##   [6] 1.385649e-02 2.981656e-02 2.152659e-04 4.511282e-02 7.869211e-02
+##  [11] 8.355263e-02 4.290372e-03 2.509078e-01 4.696820e-03 3.102116e-01
+##  [16] 2.518288e-05 2.400527e-01 1.139784e-01 8.526594e-02 4.911282e-03
+##  [21] 2.572340e-01 9.541620e-01 1.005869e-01 1.753591e-01 2.549974e-03
+##  [26] 1.380303e-01 2.360702e-01 4.029449e-01 4.005911e-03 3.844087e-02
+##  [31] 2.988582e-04 2.642734e-01 7.509228e-03 1.235136e-02 3.154881e-02
+##  [36] 2.152921e-01 8.952472e-03 5.717648e-02 1.677709e-01 1.385123e-01
+##  [41] 1.427929e-01 3.764310e-02 5.814235e-02 2.131785e-02 9.419348e-01
+##  [46] 5.756756e-02 8.057147e-04 6.791498e-02 1.169305e-02 3.070555e-02
+##  [51] 3.696819e-02 3.757368e-02 1.688549e-01 3.645560e-01 2.447565e-01
+##  [56] 2.201290e-03 7.022630e-02 1.842470e-02 9.799376e-03 3.112363e-01
+##  [61] 6.006618e-03 7.877810e-03 3.953348e-05 7.737232e-02 5.756849e-02
+##  [66] 3.299873e-01 8.496124e-01 4.422195e-03 7.613088e-02 8.628590e-04
+##  [71] 1.915404e-02 3.602334e-02 2.733221e-03 7.551280e-01 1.269077e-02
+##  [76] 2.604323e-03 1.614015e-02 8.381094e-03 5.299135e-04 5.015125e-01
+##  [81] 9.555617e-01 2.284899e-01 4.935766e-01 1.088156e-02 1.599013e-02
+##  [86] 6.302145e-03 1.318700e-01 2.251900e-01 8.946498e-03 6.470705e-02
+##  [91] 8.845287e-02 5.974802e-02 2.065166e-01 3.375881e-01 1.445119e-03
+##  [96] 9.854983e-05 1.191442e-02 2.052185e-01 1.658019e-01 2.419066e-03</code></pre>
 </div>
 <div id="exercise-1" class="section level2 unnumbered">
 <h2>9.2.6.5 Exercise</h2>
@@ -624,12 +624,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb458-4" data-line-number="4">  <span class="dt">times =</span> <span class="dv">100</span></a>
 <a class="sourceLine" id="cb458-5" data-line-number="5">)</a></code></pre></div>
 <pre><code>## Unit: microseconds
-##                         expr     min        lq       mean    median       uq
-##         as_integer_rapply(x)   8.924   12.3815   29.89486   18.8835   20.041
-##  as_integer_recursive_map(x) 990.601 1003.1310 1088.14179 1020.7670 1121.885
+##                         expr     min        lq       mean   median        uq
+##         as_integer_rapply(x)   9.250   11.9375   30.64419   18.946   20.8505
+##  as_integer_recursive_map(x) 987.446 1013.4530 1095.12724 1046.131 1133.3715
 ##       max neval
-##  1326.763   100
-##  2082.494   100</code></pre>
+##  1411.057   100
+##  1619.409   100</code></pre>
 <div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb460-1" data-line-number="1">as_integer_safe &lt;-<span class="st"> </span><span class="cf">function</span>(y) {</a>
 <a class="sourceLine" id="cb460-2" data-line-number="2">  <span class="cf">if</span> (<span class="kw">is.character</span>(y) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">all</span>(<span class="kw">grepl</span>(<span class="st">&quot;^</span><span class="ch">\\</span><span class="st">d+$&quot;</span>, y))) {</a>
 <a class="sourceLine" id="cb460-3" data-line-number="3">    <span class="kw">as.integer</span>(y)</a>
