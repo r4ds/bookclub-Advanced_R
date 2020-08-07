@@ -305,7 +305,7 @@ transform2 <- function(.data, ...) {
 ## 20.5.2 Handling ambiguity {-}
 
 :::question
-> vThere are subtle differences in when val is evaluated. If you unquote, val will be early evaluated by enquo(); if you use a pronoun, val will be lazily evaluated by eval_tidy(). These differences are usually unimportant, so pick the form that looks most natural.
+> There are subtle differences in when val is evaluated. If you unquote, val will be early evaluated by enquo(); if you use a pronoun, val will be lazily evaluated by eval_tidy(). These differences are usually unimportant, so pick the form that looks most natural.
 
 Is there a case where this subtle distinction between `.env$val` vs `!!val` matters? 
 

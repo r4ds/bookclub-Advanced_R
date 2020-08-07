@@ -197,7 +197,7 @@ lobstr::obj_addr(l1[[1]])
 ```
 
 ```
-## [1] "0x7f91d0f5fbd8"
+## [1] "0x7ff876ad79d8"
 ```
 
 ```r
@@ -205,7 +205,7 @@ lobstr::obj_addr(l2[[1]])
 ```
 
 ```
-## [1] "0x7f91d0f5fbd8"
+## [1] "0x7ff876ad79d8"
 ```
 
 But why isn't this the case for their subsets? Using `obj_addr` they have different addresses, but when we look at their references they are the same
@@ -216,7 +216,7 @@ lobstr::obj_addr(l1[1])
 ```
 
 ```
-## [1] "0x7f91d3a45af0"
+## [1] "0x7ff876d688f0"
 ```
 
 ```r
@@ -224,8 +224,8 @@ lobstr::ref(l1[1])
 ```
 
 ```
-## █ [1:0x7f91d26df688] <list> 
-## └─[2:0x7f91d0f5fbd8] <dbl>
+## █ [1:0x7ff876d7f488] <list> 
+## └─[2:0x7ff876ad79d8] <dbl>
 ```
 
 ```r
@@ -233,7 +233,7 @@ lobstr::obj_addr(l2[1])
 ```
 
 ```
-## [1] "0x7f91d3df4778"
+## [1] "0x7ff874467978"
 ```
 
 
@@ -272,7 +272,7 @@ print(tracemem(x))
 ```
 
 ```
-## [1] "<0x7f91d41e9ac8>"
+## [1] "<0x7ff8743baac8>"
 ```
 
 ```r
@@ -280,7 +280,7 @@ cat(tracemem(x))
 ```
 
 ```
-## <0x7f91d41e9ac8>
+## <0x7ff8743baac8>
 ```
 
 ```r
@@ -288,7 +288,7 @@ lobstr::obj_addr(x)
 ```
 
 ```
-## [1] "0x7f91d41e9ac8"
+## [1] "0x7ff8743baac8"
 ```
 
 :::question
@@ -338,7 +338,7 @@ obj_addr(x)
 ```
 
 ```
-## [1] "0x7f91d413fd48"
+## [1] "0x7ff876d3cb48"
 ```
 
 ```r
@@ -346,7 +346,7 @@ tracemem(x)
 ```
 
 ```
-## [1] "<0x7f91d413fd48>"
+## [1] "<0x7ff876d3cb48>"
 ```
 
 ```r
@@ -354,7 +354,7 @@ x[[3]] <- 4L
 ```
 
 ```
-## tracemem[0x7f91d413fd48 -> 0x7f91d26f0188]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
+## tracemem[0x7ff876d3cb48 -> 0x7ff876d89f88]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call <Anonymous> evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file <Anonymous> <Anonymous> do.call eval eval eval eval eval.parent local
 ```
 
 You can dig into the C code running this: 
@@ -440,7 +440,7 @@ v <- c(1, 2, 3)
 ```
 
 ```
-## [1] "0x7f91d42c0378"
+## [1] "0x7ff876e704a8"
 ```
 
 Changing a value within it changes its address:
@@ -451,7 +451,7 @@ v[[3]] <- 4
 ```
 
 ```
-## [1] "0x7f91cd824528"
+## [1] "0x7ff872d0a688"
 ```
 
 ```r
@@ -470,7 +470,7 @@ y <- v
 ```
 
 ```
-## [1] "0x7f91cd824528"
+## [1] "0x7ff872d0a688"
 ```
 
 ```r
@@ -478,7 +478,7 @@ y <- v
 ```
 
 ```
-## [1] "0x7f91cd824528"
+## [1] "0x7ff872d0a688"
 ```
 
 ```r
@@ -497,7 +497,7 @@ v[[3]] <- 3
 ```
 
 ```
-## [1] "0x7f91cd824528"
+## [1] "0x7ff872d0a688"
 ```
 
 ```r
@@ -505,7 +505,7 @@ v[[3]] <- 3
 ```
 
 ```
-## [1] "0x7f91d31b9838"
+## [1] "0x7ff874497798"
 ```
 
 ```r
@@ -525,7 +525,7 @@ y[[3]] <- 3
 ```
 
 ```
-## [1] "0x7f91d42ab508"
+## [1] "0x7ff876eea068"
 ```
 
 ```r

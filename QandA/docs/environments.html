@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-08-04" />
+<meta name="date" content="2020-08-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -327,7 +327,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="evaluation.html#local">20.2.1 <code>local</code></a></li>
 <li><a href="evaluation.html#source">20.2.2 <code>source</code></a></li>
 <li><a href="evaluation.html#function">20.2.3 <code>function</code></a></li>
-<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#exercises-20.2.4.4"><i class="fa fa-check"></i>Exercises 20.2.4.4</a></li>
 <li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#excercises-20.2.4.5"><i class="fa fa-check"></i>Excercises 20.2.4.5</a></li>
 <li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#dots"><i class="fa fa-check"></i>20.3.3 Dots</a></li>
 <li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#under-the-hood"><i class="fa fa-check"></i>20.3.4 Under the hood</a></li>
@@ -544,7 +543,7 @@ and ultimately the delayed binding is realized as a promise with <code>defineVar
 <a class="sourceLine" id="cb359-3" data-line-number="3"><span class="kw">fget</span>(<span class="st">&quot;mean&quot;</span>, <span class="dt">inherits =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## function (x, ...) 
 ## UseMethod(&quot;mean&quot;)
-## &lt;bytecode: 0x7f8ed308a5e0&gt;
+## &lt;bytecode: 0x7f8878834378&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 </div>
 <p>Inherits is an argument that stops the function from performing the recursive action of looking into the parent environment for the name. Inherits is acting like a valve. If false, and the name wasnt found in the current environment, then stop because the next expression searches the parent of env. In the case environment is the empty environment then stop because the empty environment doesnt have a parent.</p>
@@ -656,7 +655,7 @@ and ultimately the delayed binding is realized as a promise with <code>defineVar
 ##     conflicts &lt;- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## &lt;bytecode: 0x7f8ed556fb98&gt;
+## &lt;bytecode: 0x7f887e368a18&gt;
 ## &lt;environment: namespace:conflicted&gt;</code></pre>
 </div>
 <div id="call-stacks" class="section level2 unnumbered">

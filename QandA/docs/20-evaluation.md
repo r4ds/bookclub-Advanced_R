@@ -8,38 +8,73 @@
 There's an immediate distinction between unquotation (user) and evaluation (developer). What are they?
 :::
 
-:::TODO
-:::
+Unquoting seems to be "evaluate this one part and then return the expression"
+evaluate means "give me the result of this whole expression"
 
 ## 20.2.1 `local` {-}
 
 :::question
-This is such a cool function - where is it used in the wild? Maybe we can come up with a TidyModels example or something where you'd want to throw away your intermediates? 
+This is such a cool function - where is it used in the wild?
 :::
 
-:::TODO
-:::
-
-:::question
-Can we go over again what is happening in `local2`? Why isn't the environment included as a function argument? Furthermore I'm a little confused by what the function `caller_env()` does.
+When wanting to have variables stored in the environment of a function, or if you want to run an expression that produces bindings, but you dont want those bindings to persist.
 
 
 ```r
-local2 <- function(expr) {
-  env <- env(caller_env())
-  eval(enexpr(expr), env)
+counter <- local({ 
+  i <- 0; function() { 
+    i <<- i + 1; print(i)
+  }
+})
+
+counter()
+```
+
+```
+## [1] 1
+```
+
+```r
+counter()
+```
+
+```
+## [1] 2
+```
+
+```r
+counter()
+```
+
+```
+## [1] 3
+```
+
+We can also wrap `for` loops in a `local` call to avoid the object being iterated over getting assigned to the global environment
+
+
+```r
+f1 <- function(x) {
+  for (x in 1:10) {
+    # do something
+  }
+  x
 }
 
-foo <- local2({
-  x <- 10
-  y <- 200
-  x + y
-})
-```
-:::
+f2 <- function(x) {
+  local({
+    for (x in 1:10) {
+      # do something
+    }
+  })
+  x
+}
 
-:::TODO
-:::
+f1("hello")
+#> [1] 10
+f2("hello")
+#> [1] "hello"
+```
 
 ## 20.2.2 `source` {-}
 
@@ -66,63 +101,147 @@ eval(exp_list)
 ## 20.2.3 `function` {-}
 
 :::question
-I think I understand this issue based on the concrete example but can we summarize the "gotcha" here? Is it that the developer could assume that using `eval` with a quasiquoted function will result in returning the function, but really it evaluates because `srcref` is sneaky?
+I think I understand this issue based on the concrete example but can we summarize the "gotcha" here?
 :::
 
-:::TODO
-:::
-
-## Exercises 20.2.4.4 {-}
-
-:::question
-Can we go over what exactly is happening here in the solutions manual prior to applying a `map`? I don't really understand what this is returning...
+It's basically that the printing of the function is a lie (because base R doesn't get it). And that's dangerous and confusing, so use rlang to make it not a lie.
 
 
 ```r
-source2 <- function(path, env = caller_env()) {
-  file <- paste(readLines(path, warn = FALSE), collapse = "\n")
-  exprs <- parse_exprs(file)
-
-  res <- vector(mode = "list", length = length(exprs))      
-  for (i in seq_along(exprs)) {
-    res[[i]] <- eval(exprs[[i]], env)
-  }
-
-  invisible(res)
-}
-
-tmp_file <- tempfile()
-writeLines(
-  "x <- 1
-   x
-   y <- 2
-   y  # some comment",
-  tmp_file
-)
-
-(source2(tmp_file))
+x <- 10
+y <- 20
+f <- eval(expr(function(x, y) !!x + !!y))
+f
 ```
-:::
 
-:::TODO
-:::
+```
+## function(x, y) !!x + !!y
+```
+
+```r
+f()
+```
+
+```
+## [1] 30
+```
+
+```r
+attributes(f)
+```
+
+```
+## $srcref
+## function(x, y) !!x + !!y
+```
+
+
+```r
+attr(f, "srcref") <- NULL
+f
+```
+
+```
+## function (x, y) 
+## 10 + 20
+```
+
+The REAL function is `10 + 20`, but the initial `srcref` keeps the `!!x` and `!!y`, which is meaningless. This might help explain why there's a problem:
+
+
+```r
+x <- 10
+y <- 20
+f <- eval(expr(function(x, y) !!x + !!y))
+f
+```
+
+```
+## function(x, y) !!x + !!y
+```
+
+```r
+f()
+```
+
+```
+## [1] 30
+```
+
+
+```r
+x <- 2000
+y <- 3000
+f()
+```
+
+```
+## [1] 30
+```
+
+```r
+#> [1] 30
+attributes(f)
+```
+
+```
+## $srcref
+## function(x, y) !!x + !!y
+```
+
+```r
+#> $srcref
+#> function(x, y) !!x + !!y
+attr(f, "srcref") <- NULL
+f
+```
+
+```
+## function (x, y) 
+## 10 + 20
+## <bytecode: 0x7fae4f1967c8>
+```
+
+```r
+#> function (x, y) 
+#> 10 + 20
+#> <bytecode: 0x000000001421eb90>
+```
 
 ## Excercises 20.2.4.5 {-}
 
 :::question
-Can we also go over what is happening in this question and come up with our own solution?
+Can we also go over what is happening in `local3`?
+:::
 
 
 ```r
 local3 <- function(expr, envir = new.env()) {
   call <- substitute(eval(quote(expr), envir))
+  print(call)
   eval(call, envir = parent.frame())
 }
-```
-:::
 
-:::TODO
-:::
+local3({
+  x <- 10
+  x * 2
+})
+
+exists("x")
+```
+
+It creates a new environment with the calling environment as its parent and then evaluates the expression in that environment.
+
+You are evaluating the call in the execution environment of `local3`. Its confusing because it's written as `eval(call, envir = parent.frame())`  but it is important to remember that `parent.frame` is evaluated in the execution environment of eval.
+
+if instead you had:
+
+```
+pf <- parent.frame()
+eval(call, envir = pf)
+```
+
+you would get something else. Because in this case, `parent.frame()` is evaluated in the execution environment of `local3` and thus returns `.GlobalEnv` (presumably you run it from the global env).
 
 ## 20.3.3 Dots {-}
 
@@ -135,6 +254,7 @@ f <- function(...) {
   x <- 1
   g(..., f = x)
 }
+
 g <- function(...) {
   enquos(...)
 }
@@ -146,6 +266,27 @@ qs
 :::
 
 :::TODO
+As a preliminary, I note that the following code also illustrates the point:
+
+
+```r
+f <- function(...) {
+  x <- 1
+  g(..., f = x)
+}
+g <- function(...) {
+  enquos(...)
+}
+x <- 0
+qs <- f(x)
+qs
+```
+
+I think what he's trying to say is that if you didn't have quosures you would have to create a list of environments to match the list of expressions if you wanted your expressions to contain the same names but not necessarily have those names have the same meaning.
+
+But here we have a magical situation where each quosure has the same expression but each environment is different and thus each `x` will be evaluated differently when the time comes.
+
+I think the real barrier to truly getting it is figuring out a plausible example of wanting the same name to have different meanings in your list of expressions.. and I'm at a loss for that at the moment.
 :::
 
 ## 20.3.4 Under the hood {-}
@@ -157,6 +298,7 @@ Can we come up with a (broken) example of trying to quasiquote an object of type
 :::
 
 :::TODO
+To do this you would need to recreate the way rlang worked when quosures WERE formulas, probably by pulling the commit prior to the rewrite off of github. It looks like the old method would encode the expr as a formula and then overload the tilde operator so that it does tidy eval instead of..whatever it does normally
 :::
 
 ## Exercises 20.3.6.2 
@@ -183,8 +325,7 @@ capture_env(x)  # functions execution environment is captured
 
 :::
 
-:::TODO
-:::
+The `enquo` is capturing the environment of the `x` being passed into enenv, so it returns a different environment (the one inside `capture_env`) than running `enenv(x)` on its own
 
 ## 20.4.1 Basics {-}
 
@@ -192,28 +333,37 @@ capture_env(x)  # functions execution environment is captured
 I am clearly missing something here. What is so special about multiplying across a vector? Is it that data masks allow us to just write `y` instead of `df$y`?
 :::
 
-:::TODO
-:::
+I think the simplicity of the multiplication may be what he's going for: the reader can focus on the language feature provided without the distraction of a complex computation.
 
 ## 20.4.3 `subset` {-}
 
 :::question
 What is the `eval_tidy` doing here?
+:::
+
 
 
 ```r
 subset2 <- function(data, rows) {
   rows <- enquo(rows)
+  # creates a quosure out of the enquoted rows
+  # and uses the data as its environment
   rows_val <- eval_tidy(rows, data)
   stopifnot(is.logical(rows_val))
 
+  # then subsets the data
   data[rows_val, , drop = FALSE]
 }
-```
-:::
 
-:::TODO
-:::
+df <- subset2(palmerpenguins::penguins, species == "Adelie")
+table(df$species)
+```
+
+```
+## 
+##    Adelie Chinstrap    Gentoo 
+##       152         0         0
+```
 
 ## 20.4.5 `transform` {-}
 
@@ -221,7 +371,6 @@ subset2 <- function(data, rows) {
 Can we say in words what this one is doing or comment all the lines? 
 :::
 
-:::TODO
 
 ```r
 transform2 <- function(.data, ...) {
@@ -237,21 +386,40 @@ transform2 <- function(.data, ...) {
     dot <- dots[[i]]
 
     # add column with names equal to argument names
-    # eval_tidy .... TODO
+    # eval_tidy and values (single column) equal to the evaluated quosure (dot)"
     .data[[name]] <- eval_tidy(dot, .data)
   }
 
   .data
 }
 ```
-:::
 
 ## 20.5.2 Handling ambiguity {-}
 
 :::question
-> If you unquote, val will be early evaluated by enquo(); if you use a pronoun, val will be lazily evaluated by eval_tidy().
+> vThere are subtle differences in when val is evaluated. If you unquote, val will be early evaluated by enquo(); if you use a pronoun, val will be lazily evaluated by eval_tidy(). These differences are usually unimportant, so pick the form that looks most natural.
 
-What is the case where this subtile distinction between `.env$val` vs `!!val` matters? 
+Is there a case where this subtle distinction between `.env$val` vs `!!val` matters? 
+
+
+```r
+threshold_prefix <- function(df, val) {
+  subset2(df, .data$x >= .env$val)
+}
+
+threshold_bangbang <- function(df, val) {
+  subset2(df, .data$x >= !!val)
+}
+
+df <- data.frame(x = 1:3, val = 9:11)
+threshold_prefix(df, 2) == threshold_bangbang(df, 2)
+```
+
+```
+##      x  val
+## 2 TRUE TRUE
+## 3 TRUE TRUE
+```
 :::
 
 :::TODO
@@ -261,6 +429,33 @@ What is the case where this subtile distinction between `.env$val` vs `!!val` ma
 
 :::question
 Why exactly can't we use `subset` with `map`?
+
+This works, not sure why the book says it wouldn't....
+
+```r
+subset_base <- function(data, rows) {
+  rows <- substitute(rows)
+  rows_val <- eval(rows, data, caller_env())
+  stopifnot(is.logical(rows_val))
+  data[rows_val, , drop = FALSE]
+}
+
+local({
+  zzz <- 2
+  dfs <- list(data.frame(x = 1:3), data.frame(x = 4:6))
+  map(dfs, ~subset_base(.x, x == zzz))
+})
+```
+
+```
+## [[1]]
+##   x
+## 2 2
+## 
+## [[2]]
+## [1] x
+## <0 rows> (or 0-length row.names)
+```
 :::
 
 :::TODO
@@ -272,8 +467,51 @@ Why exactly can't we use `subset` with `map`?
 Why?!
 :::
 
-:::TODO
-:::
+No reason to expect this to work:
+
+
+```r
+test <- function(df, expr) {
+  subset(df, expr)
+}
+
+test(mtcars, cyl > 4)
+```
+
+```
+#> Error in eval(e, x, parent.frame()): object 'cyl' not found
+```
+
+substitute only looks at the expression from which it was called. this doesn't work because subset sees `substitute(expr)`, not `cyl > 4`
+
+
+```r
+test <- function(df, expr) {
+  subset(df, substitute(expr))
+}
+test(mtcars, cyl > 4)
+```
+
+```
+#> Error in subset.data.frame(df, substitute(expr)): 'subset' must be logical
+```
+
+so instead, we are going to build the call to `subset`, substituting in what was passed as arguments, and then eval the call.
+
+
+```r
+test <- function(df, expr) {
+  subset_call <- substitute(subset(df, expr))
+  print(subset_call)
+  eval(subset_call)
+}
+test(mtcars, cyl > 4)
+```
+
+```
+#> subset(mtcars, cyl > 4)
+```
+
 
 ## 20.6.2 `match.call` {-}
 
@@ -315,5 +553,47 @@ df <- data.frame(x = 1:10, y = 5 + 3 * (1:10) + round(rnorm(10), 2))
 (resamp_lm1 <- resample_lm0(y ~ x, data = df))
 ```
 
+I think these two functions should work identically assuming formula and data are the only two inputs that are set by the user. (The results will differ unless a seed is set.)
+
+I suppose the `resample_lm0()` here provides more flexibility to the user (compared to `resample_lm2()`, i.e. the user can specify `resample_data` (since it's an argument) instead of being "forced" to use the custom function `resample()`, which is embedded in the body of `resample_lm2()`. 
+
+Downside to `resample_lm0` is that there might be too much flexibility. Yes, `resample_data` is customizable, but so is `env`. What if the user changes `env = current_env()` to `env = caller_env()`? Then the function breaks.
+
+:::question
+Is the closest equivalent to `deparse(substitute(x))` with rlang `expr_text(enexpr(x))` (assuming this is in a function, hence the `en` in `enexpr`)?
+:::
+
+
+```r
+penguins <- palmerpenguins::penguins
+add_bleh <- function(df, nm = deparse(substitute(df))) {
+  col_out <- sym(sprintf('new_%s_col', nm))
+  df %>% 
+    mutate(!!col_out := 'bleh')
+}
+add_bleh(penguins) %>% slice(1) %>% glimpse()
+```
+
+```
+## Rows: 1
+## Columns: 9
+## $ species           <fct> Adelie
+## $ island            <fct> Torgersen
+## $ bill_length_mm    <dbl> 39.1
+## $ bill_depth_mm     <dbl> 18.7
+## $ flipper_length_mm <int> 181
+## $ body_mass_g       <int> 3750
+## $ sex               <fct> male
+## $ year              <int> 2007
+## $ new_penguins_col  <chr> "bleh"
+```
+
 :::TODO
 :::
+
+:::question
+In [this thread](https://community.rstudio.com/t/quasiquotation-inside-a-formula/14929/11) Lionel says "`enexpr` should almost never be used. So when should it?
+:::
+
+Seems like when wrapping a base NSE function like `lm` or trying to `deparse(substitute(x))` using `rlang`
+
