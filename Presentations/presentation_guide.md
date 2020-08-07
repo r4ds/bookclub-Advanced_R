@@ -16,6 +16,7 @@ Options
     1. Shiny App
     2. Package
     3. Showing something from your own work that has relevance to the concept
+    4. Create a function(s)
 
 Part 2 - Going over questions about the chapter - facilitator led (rest of time) 
 - What perplexed you? What seems inconsistent, made you confused? 
