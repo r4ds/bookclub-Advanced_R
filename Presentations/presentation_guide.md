@@ -1,5 +1,5 @@
 Methods for presenting
-- Xargarian slides (present from your computer, PR to GitHub) 
+- Xaringan slides (present from your computer, PR to GitHub) 
 - Learnr tutorial document (https://rstudio.github.io/learnr/) 
 
 Part 1 - Chapter Presentation (20-30 min, but could last entire time)
@@ -13,12 +13,13 @@ Options
     5. Can involve live coding of example/extensions/exercises 
     6. Can conclude with a big picture diagram, linking the concepts on a high level
 2. Making something that applies the concepts
-    1. Shiny App
-    2. Package
-    3. Showing something from your own work that has relevance to the concept
-    4. Create a function(s)
+    1. Example functions
+    2. Showing something from your own work that has relevance to the concept
+    3. Shiny App
+    4. Package
+  
 
-Part 2 - Going over questions about the chapter - facilitator led (rest of time) 
+Part 2 - Going over questions about the chapter - presenter-led (or facilitator as fallback) for rest of time
 - What perplexed you? What seems inconsistent, made you confused? 
 - Connecting concepts, diagramming 
 - Reviewing exercises in book 
