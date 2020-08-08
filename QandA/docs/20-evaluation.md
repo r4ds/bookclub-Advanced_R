@@ -199,7 +199,7 @@ f
 ```
 ## function (x, y) 
 ## 10 + 20
-## <bytecode: 0x7fa9f65751c8>
+## <bytecode: 0x7f7f25ea2b50>
 ```
 
 ```r
@@ -422,8 +422,22 @@ threshold_prefix(df, 2) == threshold_bangbang(df, 2)
 ```
 :::
 
-:::TODO
-:::
+In the `!!` case, `val` is evaluated early, (inside of `threshold_x`) whereas the `.env` case evaluated later (in the `eval_tidy`)
+
+Tyler Grant Smith:m:  21 minutes ago
+this could cause problems if, for example, the val in threshold_x was altered after subset2 was called, but before the eval_tidy
+
+
+```r
+subset2 <- function(data, rows) {
+  rows <- enquo(rows)
+  # change val from 2 to 3, breaking things
+  env_bind(caller_env(), val = 3)
+  rows_val <- eval_tidy(rows, data)
+  stopifnot(is.logical(rows_val))
+  data[rows_val, , drop = FALSE]
+}
+```
 
 ## 20.6.1 substitute() {-}
 

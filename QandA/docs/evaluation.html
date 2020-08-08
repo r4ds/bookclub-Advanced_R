@@ -463,7 +463,7 @@ evaluate means “give me the result of this whole expression”</p>
 <a class="sourceLine" id="cb693-4" data-line-number="4">f</a></code></pre></div>
 <pre><code>## function (x, y) 
 ## 10 + 20
-## &lt;bytecode: 0x7fa9f65751c8&gt;</code></pre>
+## &lt;bytecode: 0x7f7f25ea2b50&gt;</code></pre>
 <div class="sourceCode" id="cb695"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb695-1" data-line-number="1"><span class="co">#&gt; function (x, y) </span></a>
 <a class="sourceLine" id="cb695-2" data-line-number="2"><span class="co">#&gt; 10 + 20</span></a>
 <a class="sourceLine" id="cb695-3" data-line-number="3"><span class="co">#&gt; &lt;bytecode: 0x000000001421eb90&gt;</span></a></code></pre></div>
@@ -633,27 +633,35 @@ eval(call, envir = pf)</code></pre>
 ## 2 TRUE TRUE
 ## 3 TRUE TRUE</code></pre>
 </div>
-<div class="TODO">
-
-</div>
+<p>In the <code>!!</code> case, <code>val</code> is evaluated early, (inside of <code>threshold_x</code>) whereas the <code>.env</code> case evaluated later (in the <code>eval_tidy</code>)</p>
+<p>Tyler Grant Smith:m: 21 minutes ago
+this could cause problems if, for example, the val in threshold_x was altered after subset2 was called, but before the eval_tidy</p>
+<div class="sourceCode" id="cb706"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb706-1" data-line-number="1">subset2 &lt;-<span class="st"> </span><span class="cf">function</span>(data, rows) {</a>
+<a class="sourceLine" id="cb706-2" data-line-number="2">  rows &lt;-<span class="st"> </span><span class="kw">enquo</span>(rows)</a>
+<a class="sourceLine" id="cb706-3" data-line-number="3">  <span class="co"># change val from 2 to 3, breaking things</span></a>
+<a class="sourceLine" id="cb706-4" data-line-number="4">  <span class="kw">env_bind</span>(<span class="kw">caller_env</span>(), <span class="dt">val =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb706-5" data-line-number="5">  rows_val &lt;-<span class="st"> </span><span class="kw">eval_tidy</span>(rows, data)</a>
+<a class="sourceLine" id="cb706-6" data-line-number="6">  <span class="kw">stopifnot</span>(<span class="kw">is.logical</span>(rows_val))</a>
+<a class="sourceLine" id="cb706-7" data-line-number="7">  data[rows_val, , drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
+<a class="sourceLine" id="cb706-8" data-line-number="8">}</a></code></pre></div>
 </div>
 <div id="substitute" class="section level2 unnumbered">
 <h2>20.6.1 substitute()</h2>
 <div class="question">
 <p>Why exactly can’t we use <code>subset</code> with <code>map</code>?</p>
 <p>This works, not sure why the book says it wouldn’t….</p>
-<div class="sourceCode" id="cb706"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb706-1" data-line-number="1">subset_base &lt;-<span class="st"> </span><span class="cf">function</span>(data, rows) {</a>
-<a class="sourceLine" id="cb706-2" data-line-number="2">  rows &lt;-<span class="st"> </span><span class="kw">substitute</span>(rows)</a>
-<a class="sourceLine" id="cb706-3" data-line-number="3">  rows_val &lt;-<span class="st"> </span><span class="kw">eval</span>(rows, data, <span class="kw">caller_env</span>())</a>
-<a class="sourceLine" id="cb706-4" data-line-number="4">  <span class="kw">stopifnot</span>(<span class="kw">is.logical</span>(rows_val))</a>
-<a class="sourceLine" id="cb706-5" data-line-number="5">  data[rows_val, , drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
-<a class="sourceLine" id="cb706-6" data-line-number="6">}</a>
-<a class="sourceLine" id="cb706-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb706-8" data-line-number="8"><span class="kw">local</span>({</a>
-<a class="sourceLine" id="cb706-9" data-line-number="9">  zzz &lt;-<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb706-10" data-line-number="10">  dfs &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>))</a>
-<a class="sourceLine" id="cb706-11" data-line-number="11">  <span class="kw">map</span>(dfs, <span class="op">~</span><span class="kw">subset_base</span>(.x, x <span class="op">==</span><span class="st"> </span>zzz))</a>
-<a class="sourceLine" id="cb706-12" data-line-number="12">})</a></code></pre></div>
+<div class="sourceCode" id="cb707"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb707-1" data-line-number="1">subset_base &lt;-<span class="st"> </span><span class="cf">function</span>(data, rows) {</a>
+<a class="sourceLine" id="cb707-2" data-line-number="2">  rows &lt;-<span class="st"> </span><span class="kw">substitute</span>(rows)</a>
+<a class="sourceLine" id="cb707-3" data-line-number="3">  rows_val &lt;-<span class="st"> </span><span class="kw">eval</span>(rows, data, <span class="kw">caller_env</span>())</a>
+<a class="sourceLine" id="cb707-4" data-line-number="4">  <span class="kw">stopifnot</span>(<span class="kw">is.logical</span>(rows_val))</a>
+<a class="sourceLine" id="cb707-5" data-line-number="5">  data[rows_val, , drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
+<a class="sourceLine" id="cb707-6" data-line-number="6">}</a>
+<a class="sourceLine" id="cb707-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb707-8" data-line-number="8"><span class="kw">local</span>({</a>
+<a class="sourceLine" id="cb707-9" data-line-number="9">  zzz &lt;-<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb707-10" data-line-number="10">  dfs &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>))</a>
+<a class="sourceLine" id="cb707-11" data-line-number="11">  <span class="kw">map</span>(dfs, <span class="op">~</span><span class="kw">subset_base</span>(.x, x <span class="op">==</span><span class="st"> </span>zzz))</a>
+<a class="sourceLine" id="cb707-12" data-line-number="12">})</a></code></pre></div>
 <pre><code>## [[1]]
 ##   x
 ## 2 2
@@ -672,25 +680,25 @@ eval(call, envir = pf)</code></pre>
 <p>Why?!</p>
 </div>
 <p>No reason to expect this to work:</p>
-<div class="sourceCode" id="cb708"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb708-1" data-line-number="1">test &lt;-<span class="st"> </span><span class="cf">function</span>(df, expr) {</a>
-<a class="sourceLine" id="cb708-2" data-line-number="2">  <span class="kw">subset</span>(df, expr)</a>
-<a class="sourceLine" id="cb708-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb708-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb708-5" data-line-number="5"><span class="kw">test</span>(mtcars, cyl <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb709"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb709-1" data-line-number="1">test &lt;-<span class="st"> </span><span class="cf">function</span>(df, expr) {</a>
+<a class="sourceLine" id="cb709-2" data-line-number="2">  <span class="kw">subset</span>(df, expr)</a>
+<a class="sourceLine" id="cb709-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb709-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb709-5" data-line-number="5"><span class="kw">test</span>(mtcars, cyl <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span>)</a></code></pre></div>
 <pre><code>#&gt; Error in eval(e, x, parent.frame()): object &#39;cyl&#39; not found</code></pre>
 <p>substitute only looks at the expression from which it was called. this doesn’t work because subset sees <code>substitute(expr)</code>, not <code>cyl &gt; 4</code></p>
-<div class="sourceCode" id="cb710"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb710-1" data-line-number="1">test &lt;-<span class="st"> </span><span class="cf">function</span>(df, expr) {</a>
-<a class="sourceLine" id="cb710-2" data-line-number="2">  <span class="kw">subset</span>(df, <span class="kw">substitute</span>(expr))</a>
-<a class="sourceLine" id="cb710-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb710-4" data-line-number="4"><span class="kw">test</span>(mtcars, cyl <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb711"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb711-1" data-line-number="1">test &lt;-<span class="st"> </span><span class="cf">function</span>(df, expr) {</a>
+<a class="sourceLine" id="cb711-2" data-line-number="2">  <span class="kw">subset</span>(df, <span class="kw">substitute</span>(expr))</a>
+<a class="sourceLine" id="cb711-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb711-4" data-line-number="4"><span class="kw">test</span>(mtcars, cyl <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span>)</a></code></pre></div>
 <pre><code>#&gt; Error in subset.data.frame(df, substitute(expr)): &#39;subset&#39; must be logical</code></pre>
 <p>so instead, we are going to build the call to <code>subset</code>, substituting in what was passed as arguments, and then eval the call.</p>
-<div class="sourceCode" id="cb712"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb712-1" data-line-number="1">test &lt;-<span class="st"> </span><span class="cf">function</span>(df, expr) {</a>
-<a class="sourceLine" id="cb712-2" data-line-number="2">  subset_call &lt;-<span class="st"> </span><span class="kw">substitute</span>(<span class="kw">subset</span>(df, expr))</a>
-<a class="sourceLine" id="cb712-3" data-line-number="3">  <span class="kw">print</span>(subset_call)</a>
-<a class="sourceLine" id="cb712-4" data-line-number="4">  <span class="kw">eval</span>(subset_call)</a>
-<a class="sourceLine" id="cb712-5" data-line-number="5">}</a>
-<a class="sourceLine" id="cb712-6" data-line-number="6"><span class="kw">test</span>(mtcars, cyl <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb713"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb713-1" data-line-number="1">test &lt;-<span class="st"> </span><span class="cf">function</span>(df, expr) {</a>
+<a class="sourceLine" id="cb713-2" data-line-number="2">  subset_call &lt;-<span class="st"> </span><span class="kw">substitute</span>(<span class="kw">subset</span>(df, expr))</a>
+<a class="sourceLine" id="cb713-3" data-line-number="3">  <span class="kw">print</span>(subset_call)</a>
+<a class="sourceLine" id="cb713-4" data-line-number="4">  <span class="kw">eval</span>(subset_call)</a>
+<a class="sourceLine" id="cb713-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb713-6" data-line-number="6"><span class="kw">test</span>(mtcars, cyl <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span>)</a></code></pre></div>
 <pre><code>#&gt; subset(mtcars, cyl &gt; 4)</code></pre>
 </div>
 <div id="match.call" class="section level2 unnumbered">
@@ -698,44 +706,44 @@ eval(call, envir = pf)</code></pre>
 <div class="question">
 <p>Can we speak more about the differences in these two functions and their pros and cons?</p>
 </div>
-<div class="sourceCode" id="cb714"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb714-1" data-line-number="1">resample_lm2 &lt;-<span class="st"> </span><span class="cf">function</span>(formula, data, <span class="dt">env =</span> <span class="kw">caller_env</span>()) {</a>
-<a class="sourceLine" id="cb714-2" data-line-number="2">  formula &lt;-<span class="st"> </span><span class="kw">enexpr</span>(formula)</a>
-<a class="sourceLine" id="cb714-3" data-line-number="3">  resample_data &lt;-<span class="st"> </span><span class="kw">resample</span>(data, <span class="dt">n =</span> <span class="kw">nrow</span>(data))</a>
-<a class="sourceLine" id="cb714-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb714-5" data-line-number="5">  lm_env &lt;-<span class="st"> </span><span class="kw">env</span>(env, <span class="dt">resample_data =</span> resample_data)</a>
-<a class="sourceLine" id="cb714-6" data-line-number="6">  lm_call &lt;-<span class="st"> </span><span class="kw">expr</span>(<span class="kw">lm</span>(<span class="op">!!</span>formula, <span class="dt">data =</span> resample_data))</a>
-<a class="sourceLine" id="cb714-7" data-line-number="7">  <span class="kw">expr_print</span>(lm_call)</a>
-<a class="sourceLine" id="cb714-8" data-line-number="8">  <span class="kw">eval</span>(lm_call, lm_env)</a>
-<a class="sourceLine" id="cb714-9" data-line-number="9">}</a>
-<a class="sourceLine" id="cb714-10" data-line-number="10"><span class="kw">resample_lm2</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> df)</a></code></pre></div>
-<div class="sourceCode" id="cb715"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb715-1" data-line-number="1">resample_lm0 &lt;-<span class="st"> </span><span class="cf">function</span>(</a>
-<a class="sourceLine" id="cb715-2" data-line-number="2">  formula, data,</a>
-<a class="sourceLine" id="cb715-3" data-line-number="3">  <span class="dt">resample_data =</span> data[<span class="kw">sample</span>(<span class="kw">nrow</span>(data), <span class="dt">replace =</span> <span class="ot">TRUE</span>), ,</a>
-<a class="sourceLine" id="cb715-4" data-line-number="4">                       <span class="dt">drop =</span> <span class="ot">FALSE</span>],</a>
-<a class="sourceLine" id="cb715-5" data-line-number="5">  <span class="dt">env =</span> <span class="kw">current_env</span>()</a>
-<a class="sourceLine" id="cb715-6" data-line-number="6">) {</a>
-<a class="sourceLine" id="cb715-7" data-line-number="7">  formula &lt;-<span class="st"> </span><span class="kw">enexpr</span>(formula)</a>
-<a class="sourceLine" id="cb715-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb715-9" data-line-number="9">  lm_call &lt;-<span class="st"> </span><span class="kw">expr</span>(<span class="kw">lm</span>(<span class="op">!!</span>formula, <span class="dt">data =</span> resample_data))</a>
-<a class="sourceLine" id="cb715-10" data-line-number="10">  <span class="kw">expr_print</span>(lm_call)</a>
-<a class="sourceLine" id="cb715-11" data-line-number="11">  <span class="kw">eval</span>(lm_call, env)</a>
-<a class="sourceLine" id="cb715-12" data-line-number="12">}</a>
-<a class="sourceLine" id="cb715-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb715-14" data-line-number="14">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">y =</span> <span class="dv">5</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>) <span class="op">+</span><span class="st"> </span><span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">10</span>), <span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb715-15" data-line-number="15">(resamp_lm1 &lt;-<span class="st"> </span><span class="kw">resample_lm0</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> df))</a></code></pre></div>
+<div class="sourceCode" id="cb715"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb715-1" data-line-number="1">resample_lm2 &lt;-<span class="st"> </span><span class="cf">function</span>(formula, data, <span class="dt">env =</span> <span class="kw">caller_env</span>()) {</a>
+<a class="sourceLine" id="cb715-2" data-line-number="2">  formula &lt;-<span class="st"> </span><span class="kw">enexpr</span>(formula)</a>
+<a class="sourceLine" id="cb715-3" data-line-number="3">  resample_data &lt;-<span class="st"> </span><span class="kw">resample</span>(data, <span class="dt">n =</span> <span class="kw">nrow</span>(data))</a>
+<a class="sourceLine" id="cb715-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb715-5" data-line-number="5">  lm_env &lt;-<span class="st"> </span><span class="kw">env</span>(env, <span class="dt">resample_data =</span> resample_data)</a>
+<a class="sourceLine" id="cb715-6" data-line-number="6">  lm_call &lt;-<span class="st"> </span><span class="kw">expr</span>(<span class="kw">lm</span>(<span class="op">!!</span>formula, <span class="dt">data =</span> resample_data))</a>
+<a class="sourceLine" id="cb715-7" data-line-number="7">  <span class="kw">expr_print</span>(lm_call)</a>
+<a class="sourceLine" id="cb715-8" data-line-number="8">  <span class="kw">eval</span>(lm_call, lm_env)</a>
+<a class="sourceLine" id="cb715-9" data-line-number="9">}</a>
+<a class="sourceLine" id="cb715-10" data-line-number="10"><span class="kw">resample_lm2</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> df)</a></code></pre></div>
+<div class="sourceCode" id="cb716"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb716-1" data-line-number="1">resample_lm0 &lt;-<span class="st"> </span><span class="cf">function</span>(</a>
+<a class="sourceLine" id="cb716-2" data-line-number="2">  formula, data,</a>
+<a class="sourceLine" id="cb716-3" data-line-number="3">  <span class="dt">resample_data =</span> data[<span class="kw">sample</span>(<span class="kw">nrow</span>(data), <span class="dt">replace =</span> <span class="ot">TRUE</span>), ,</a>
+<a class="sourceLine" id="cb716-4" data-line-number="4">                       <span class="dt">drop =</span> <span class="ot">FALSE</span>],</a>
+<a class="sourceLine" id="cb716-5" data-line-number="5">  <span class="dt">env =</span> <span class="kw">current_env</span>()</a>
+<a class="sourceLine" id="cb716-6" data-line-number="6">) {</a>
+<a class="sourceLine" id="cb716-7" data-line-number="7">  formula &lt;-<span class="st"> </span><span class="kw">enexpr</span>(formula)</a>
+<a class="sourceLine" id="cb716-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb716-9" data-line-number="9">  lm_call &lt;-<span class="st"> </span><span class="kw">expr</span>(<span class="kw">lm</span>(<span class="op">!!</span>formula, <span class="dt">data =</span> resample_data))</a>
+<a class="sourceLine" id="cb716-10" data-line-number="10">  <span class="kw">expr_print</span>(lm_call)</a>
+<a class="sourceLine" id="cb716-11" data-line-number="11">  <span class="kw">eval</span>(lm_call, env)</a>
+<a class="sourceLine" id="cb716-12" data-line-number="12">}</a>
+<a class="sourceLine" id="cb716-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb716-14" data-line-number="14">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">y =</span> <span class="dv">5</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>) <span class="op">+</span><span class="st"> </span><span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">10</span>), <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb716-15" data-line-number="15">(resamp_lm1 &lt;-<span class="st"> </span><span class="kw">resample_lm0</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> df))</a></code></pre></div>
 <p>I think these two functions should work identically assuming formula and data are the only two inputs that are set by the user. (The results will differ unless a seed is set.)</p>
 <p>I suppose the <code>resample_lm0()</code> here provides more flexibility to the user (compared to <code>resample_lm2()</code>, i.e. the user can specify <code>resample_data</code> (since it’s an argument) instead of being “forced” to use the custom function <code>resample()</code>, which is embedded in the body of <code>resample_lm2()</code>.</p>
 <p>Downside to <code>resample_lm0</code> is that there might be too much flexibility. Yes, <code>resample_data</code> is customizable, but so is <code>env</code>. What if the user changes <code>env = current_env()</code> to <code>env = caller_env()</code>? Then the function breaks.</p>
 <div class="question">
 <p>Is the closest equivalent to <code>deparse(substitute(x))</code> with rlang <code>expr_text(enexpr(x))</code> (assuming this is in a function, hence the <code>en</code> in <code>enexpr</code>)?</p>
 </div>
-<div class="sourceCode" id="cb716"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb716-1" data-line-number="1">penguins &lt;-<span class="st"> </span>palmerpenguins<span class="op">::</span>penguins</a>
-<a class="sourceLine" id="cb716-2" data-line-number="2">add_bleh &lt;-<span class="st"> </span><span class="cf">function</span>(df, <span class="dt">nm =</span> <span class="kw">deparse</span>(<span class="kw">substitute</span>(df))) {</a>
-<a class="sourceLine" id="cb716-3" data-line-number="3">  col_out &lt;-<span class="st"> </span><span class="kw">sym</span>(<span class="kw">sprintf</span>(<span class="st">&#39;new_%s_col&#39;</span>, nm))</a>
-<a class="sourceLine" id="cb716-4" data-line-number="4">  df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb716-5" data-line-number="5"><span class="st">    </span><span class="kw">mutate</span>(<span class="op">!!</span>col_out <span class="op">:</span><span class="er">=</span><span class="st"> &#39;bleh&#39;</span>)</a>
-<a class="sourceLine" id="cb716-6" data-line-number="6">}</a>
-<a class="sourceLine" id="cb716-7" data-line-number="7"><span class="kw">add_bleh</span>(penguins) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">glimpse</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb717"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb717-1" data-line-number="1">penguins &lt;-<span class="st"> </span>palmerpenguins<span class="op">::</span>penguins</a>
+<a class="sourceLine" id="cb717-2" data-line-number="2">add_bleh &lt;-<span class="st"> </span><span class="cf">function</span>(df, <span class="dt">nm =</span> <span class="kw">deparse</span>(<span class="kw">substitute</span>(df))) {</a>
+<a class="sourceLine" id="cb717-3" data-line-number="3">  col_out &lt;-<span class="st"> </span><span class="kw">sym</span>(<span class="kw">sprintf</span>(<span class="st">&#39;new_%s_col&#39;</span>, nm))</a>
+<a class="sourceLine" id="cb717-4" data-line-number="4">  df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb717-5" data-line-number="5"><span class="st">    </span><span class="kw">mutate</span>(<span class="op">!!</span>col_out <span class="op">:</span><span class="er">=</span><span class="st"> &#39;bleh&#39;</span>)</a>
+<a class="sourceLine" id="cb717-6" data-line-number="6">}</a>
+<a class="sourceLine" id="cb717-7" data-line-number="7"><span class="kw">add_bleh</span>(penguins) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">glimpse</span>()</a></code></pre></div>
 <pre><code>## Rows: 1
 ## Columns: 9
 ## $ species           &lt;fct&gt; Adelie
