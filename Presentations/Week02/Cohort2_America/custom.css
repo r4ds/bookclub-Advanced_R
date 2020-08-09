@@ -1,0 +1,23 @@
+/* custom.css */
+.left-code {
+  color: #777;
+  width: 38%;
+  height: 92%;
+  float: left;
+}
+.right-plot {
+  width: 60%;
+  float: right;
+  padding-left: 1%;
+}
+.left-code-wide {
+  color: #777;
+  width: 55%;
+  height: 92%;
+  float: left;
+}
+.right-code-thin {
+  width: 44%;
+  float: right;
+  padding-left: 1%;
+}

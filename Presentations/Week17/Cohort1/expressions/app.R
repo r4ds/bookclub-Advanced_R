@@ -90,7 +90,7 @@ server <- function(input, output, session) {
       list(input$func),
       # now get all the input$val's
       # and expr(!!parse_expr()) each of them
-      map(input_valnames, input_argnames ~ expr(!!parse_expr(.x)))
+      map(input_valnames, ~ expr(!!parse_expr(.x)))
     ) %>%
       # set their names to the input$args
       setNames(c(".fn", input_argnames))
@@ -98,12 +98,12 @@ server <- function(input, output, session) {
 
   output$expression <- renderPrint({
     req(input$func)
-    exec(call2, !!!argumentlist())
+    do.call(call2, argumentlist(), quote = TRUE)
     })
 
   output$tree <- renderPrint({
     req(input$func)
-    ast(!! exec(call2, !!!argumentlist()))
+    ast(!! do.call(call2, argumentlist(), quote = TRUE))
   })
   
 }

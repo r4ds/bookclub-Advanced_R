@@ -1,7 +1,7 @@
 --- 
 title: "Advanced R Companion"
 author: "R4DS Reading Group"
-date: "2020-07-29"
+date: "2020-08-07"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book

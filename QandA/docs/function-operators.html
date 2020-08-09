@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-07-29" />
+<meta name="date" content="2020-08-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -322,6 +322,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="quasiquotation.html#dots_list">19.6.3 <code>dots_list()</code></a></li>
 <li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#with-base-r"><i class="fa fa-check"></i>19.6.4 With base R</a></li>
 </ul></li>
+<li class="chapter" data-level="20" data-path="evaluation.html"><a href="evaluation.html"><i class="fa fa-check"></i><b>20</b> Evaluation</a><ul>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#introduction"><i class="fa fa-check"></i>20.1 Introduction</a></li>
+<li><a href="evaluation.html#local">20.2.1 <code>local</code></a></li>
+<li><a href="evaluation.html#source">20.2.2 <code>source</code></a></li>
+<li><a href="evaluation.html#function">20.2.3 <code>function</code></a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>20.2.4.5 Exercises</a></li>
+<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#dots"><i class="fa fa-check"></i>20.3.3 Dots</a></li>
+<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#under-the-hood"><i class="fa fa-check"></i>20.3.4 Under the hood</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-1"><i class="fa fa-check"></i>20.3.6.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#basics"><i class="fa fa-check"></i>20.4.1 Basics</a></li>
+<li><a href="evaluation.html#subset">20.4.3 <code>subset</code></a></li>
+<li><a href="evaluation.html#transform">20.4.5 <code>transform</code></a></li>
+<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#handling-ambiguity"><i class="fa fa-check"></i>20.5.2 Handling ambiguity</a></li>
+<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#substitute"><i class="fa fa-check"></i>20.6.1 substitute()</a></li>
+<li><a href="evaluation.html#match.call">20.6.2 <code>match.call</code></a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -356,7 +372,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#aulovxlsbz .gt_table {
+#wmfzeacuvh .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -379,7 +395,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-#aulovxlsbz .gt_heading {
+#wmfzeacuvh .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -391,7 +407,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#aulovxlsbz .gt_title {
+#wmfzeacuvh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -401,7 +417,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-#aulovxlsbz .gt_subtitle {
+#wmfzeacuvh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -411,13 +427,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-#aulovxlsbz .gt_bottom_border {
+#wmfzeacuvh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#aulovxlsbz .gt_col_headings {
+#wmfzeacuvh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -432,7 +448,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#aulovxlsbz .gt_col_heading {
+#wmfzeacuvh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -452,7 +468,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#aulovxlsbz .gt_column_spanner_outer {
+#wmfzeacuvh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -464,15 +480,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-#aulovxlsbz .gt_column_spanner_outer:first-child {
+#wmfzeacuvh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#aulovxlsbz .gt_column_spanner_outer:last-child {
+#wmfzeacuvh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#aulovxlsbz .gt_column_spanner {
+#wmfzeacuvh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -484,7 +500,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-#aulovxlsbz .gt_group_heading {
+#wmfzeacuvh .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -506,7 +522,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#aulovxlsbz .gt_empty_group_heading {
+#wmfzeacuvh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -521,19 +537,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#aulovxlsbz .gt_striped {
+#wmfzeacuvh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#aulovxlsbz .gt_from_md > :first-child {
+#wmfzeacuvh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#aulovxlsbz .gt_from_md > :last-child {
+#wmfzeacuvh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#aulovxlsbz .gt_row {
+#wmfzeacuvh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -552,7 +568,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#aulovxlsbz .gt_stub {
+#wmfzeacuvh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -564,7 +580,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-left: 12px;
 }
 
-#aulovxlsbz .gt_summary_row {
+#wmfzeacuvh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -574,7 +590,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#aulovxlsbz .gt_first_summary_row {
+#wmfzeacuvh .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -584,7 +600,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-#aulovxlsbz .gt_grand_summary_row {
+#wmfzeacuvh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -594,7 +610,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#aulovxlsbz .gt_first_grand_summary_row {
+#wmfzeacuvh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -604,7 +620,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-#aulovxlsbz .gt_table_body {
+#wmfzeacuvh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -613,7 +629,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#aulovxlsbz .gt_footnotes {
+#wmfzeacuvh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -627,13 +643,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#aulovxlsbz .gt_footnote {
+#wmfzeacuvh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#aulovxlsbz .gt_sourcenotes {
+#wmfzeacuvh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -647,46 +663,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#aulovxlsbz .gt_sourcenote {
+#wmfzeacuvh .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#aulovxlsbz .gt_left {
+#wmfzeacuvh .gt_left {
   text-align: left;
 }
 
-#aulovxlsbz .gt_center {
+#wmfzeacuvh .gt_center {
   text-align: center;
 }
 
-#aulovxlsbz .gt_right {
+#wmfzeacuvh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#aulovxlsbz .gt_font_normal {
+#wmfzeacuvh .gt_font_normal {
   font-weight: normal;
 }
 
-#aulovxlsbz .gt_font_bold {
+#wmfzeacuvh .gt_font_bold {
   font-weight: bold;
 }
 
-#aulovxlsbz .gt_font_italic {
+#wmfzeacuvh .gt_font_italic {
   font-style: italic;
 }
 
-#aulovxlsbz .gt_super {
+#wmfzeacuvh .gt_super {
   font-size: 65%;
 }
 
-#aulovxlsbz .gt_footnote_marks {
+#wmfzeacuvh .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="aulovxlsbz" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="wmfzeacuvh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
@@ -850,110 +866,110 @@ examples: <code>safely</code>, <code>silently</code>, <code>rate-limity</code> e
 <a class="sourceLine" id="cb506-29" data-line-number="29">  <span class="kw">capped_memoised_starwars</span>(i)</a>
 <a class="sourceLine" id="cb506-30" data-line-number="30">  <span class="kw">print</span>(<span class="kw">cache_memory_size</span>(capped_memoised_starwars))</a>
 <a class="sourceLine" id="cb506-31" data-line-number="31">}</a></code></pre></div>
-<pre><code>## 14,456 B
-## 15,360 B
-## 16,256 B
-## 17,136 B
-## 18,024 B
-## 18,864 B
-## 19,768 B
-## 20,680 B
-## 21,512 B
-## 22,344 B
+<pre><code>## 14,432 B
+## 15,320 B
+## 16,152 B
+## 17,048 B
+## 17,944 B
+## 18,856 B
+## 19,712 B
+## 20,568 B
+## 21,400 B
+## 22,312 B
 ## 23,168 B
-## 24,040 B
-## 24,816 B
-## 25,592 B
-## 26,432 B
-## 27,336 B
-## 28,176 B
-## 28,888 B
-## 29,720 B
-## 30,512 B</code></pre>
-<pre><code>## Clearing cache [@30512]</code></pre>
-<pre><code>## 14,440 B
-## 15,344 B
-## 16,272 B
-## 17,096 B
-## 18,000 B
-## 18,912 B
-## 19,808 B
-## 20,712 B
-## 21,552 B
-## 22,408 B
-## 23,304 B
-## 24,096 B
-## 24,888 B
-## 25,776 B
-## 26,608 B
-## 27,448 B
-## 28,224 B
-## 29,000 B
-## 29,896 B
-## 30,720 B</code></pre>
-<pre><code>## Clearing cache [@30720]</code></pre>
-<pre><code>## 14,440 B
-## 15,344 B
-## 16,240 B
-## 17,080 B
-## 18,000 B
-## 18,904 B
-## 19,800 B
-## 20,704 B
-## 21,608 B
-## 22,512 B
-## 23,280 B
-## 24,176 B
-## 25,000 B
-## 25,776 B
-## 26,552 B
-## 27,440 B
-## 28,216 B
-## 29,072 B
-## 29,784 B
-## 30,656 B</code></pre>
-<pre><code>## Clearing cache [@30656]</code></pre>
+## 24,088 B
+## 24,976 B
+## 25,808 B
+## 26,712 B
+## 27,544 B
+## 28,256 B
+## 29,032 B
+## 29,808 B
+## 30,640 B</code></pre>
+<pre><code>## Clearing cache [@30640]</code></pre>
 <pre><code>## 14,456 B
-## 15,312 B
-## 16,216 B
-## 17,120 B
-## 18,000 B
-## 18,928 B
-## 19,824 B
-## 20,648 B
-## 21,488 B
-## 22,384 B
-## 23,288 B
-## 24,064 B
-## 24,840 B
-## 25,672 B
-## 26,448 B
-## 27,224 B
-## 28,000 B
-## 28,832 B
-## 29,752 B
-## 30,464 B</code></pre>
-<pre><code>## Clearing cache [@30464]</code></pre>
-<pre><code>## 14,440 B
-## 15,280 B
+## 15,344 B
 ## 16,184 B
-## 17,016 B
-## 17,920 B
+## 17,072 B
+## 17,976 B
 ## 18,808 B
 ## 19,640 B
-## 20,544 B
-## 21,376 B
-## 22,088 B
-## 22,944 B
-## 23,784 B
+## 20,416 B
+## 21,248 B
+## 22,080 B
+## 22,920 B
+## 23,776 B
 ## 24,688 B
-## 25,464 B
-## 26,240 B
-## 27,088 B
-## 27,928 B
-## 28,776 B
-## 29,616 B
-## 30,536 B</code></pre>
+## 25,456 B
+## 26,224 B
+## 26,992 B
+## 27,888 B
+## 28,792 B
+## 29,568 B
+## 30,408 B</code></pre>
+<pre><code>## Clearing cache [@30408]</code></pre>
+<pre><code>## 14,432 B
+## 15,328 B
+## 16,224 B
+## 17,136 B
+## 18,032 B
+## 18,808 B
+## 19,688 B
+## 20,456 B
+## 21,360 B
+## 22,200 B
+## 23,120 B
+## 24,040 B
+## 24,816 B
+## 25,656 B
+## 26,568 B
+## 27,344 B
+## 28,120 B
+## 28,896 B
+## 29,672 B
+## 30,440 B</code></pre>
+<pre><code>## Clearing cache [@30440]</code></pre>
+<pre><code>## 14,432 B
+## 15,328 B
+## 16,232 B
+## 17,128 B
+## 17,960 B
+## 18,800 B
+## 19,696 B
+## 20,592 B
+## 21,464 B
+## 22,320 B
+## 23,096 B
+## 23,952 B
+## 24,808 B
+## 25,584 B
+## 26,456 B
+## 27,232 B
+## 28,064 B
+## 28,896 B
+## 29,664 B
+## 30,496 B</code></pre>
+<pre><code>## Clearing cache [@30496]</code></pre>
+<pre><code>## 14,448 B
+## 15,344 B
+## 16,248 B
+## 17,088 B
+## 17,864 B
+## 18,768 B
+## 19,600 B
+## 20,456 B
+## 21,288 B
+## 22,184 B
+## 23,024 B
+## 23,856 B
+## 24,696 B
+## 25,528 B
+## 26,320 B
+## 27,224 B
+## 28,080 B
+## 28,856 B
+## 29,752 B
+## 30,584 B</code></pre>
 <div class="question">
 <p>Can we come up with simple example for these function operators?</p>
 </div>
