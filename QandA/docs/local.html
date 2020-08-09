@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Vectors | Advanced R Companion</title>
+  <title>20.2.1 local | Advanced R Companion</title>
   <meta name="description" content="This is a companion to Advanced R and supplement to Advanced R Solutions." />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Vectors | Advanced R Companion" />
+  <meta property="og:title" content="20.2.1 local | Advanced R Companion" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Vectors | Advanced R Companion" />
+  <meta name="twitter:title" content="20.2.1 local | Advanced R Companion" />
   
   <meta name="twitter:description" content="This is a companion to Advanced R and supplement to Advanced R Solutions." />
   
@@ -24,15 +24,15 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-08-07" />
+<meta name="date" content="2020-08-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="names-and-values.html"/>
-<link rel="next" href="subsetting.html"/>
+<link rel="prev" href="introduction.html"/>
+<link rel="next" href="source.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -322,21 +322,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="quasiquotation.html#dots_list">19.6.3 <code>dots_list()</code></a></li>
 <li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#with-base-r"><i class="fa fa-check"></i>19.6.4 With base R</a></li>
 </ul></li>
-<li class="chapter" data-level="20" data-path="evaluation.html"><a href="evaluation.html"><i class="fa fa-check"></i><b>20</b> Evaluation</a><ul>
+<li class="chapter" data-level="20" data-path="evaluation.html"><a href="evaluation.html"><i class="fa fa-check"></i><b>20</b> Evaluation</a></li>
 <li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#introduction"><i class="fa fa-check"></i>20.1 Introduction</a></li>
-<li><a href="evaluation.html#local">20.2.1 <code>local</code></a></li>
-<li><a href="evaluation.html#source">20.2.2 <code>source</code></a></li>
-<li><a href="evaluation.html#function">20.2.3 <code>function</code></a></li>
-<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>20.2.4.5 Exercises</a></li>
-<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#dots"><i class="fa fa-check"></i>20.3.3 Dots</a></li>
-<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#under-the-hood"><i class="fa fa-check"></i>20.3.4 Under the hood</a></li>
-<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-1"><i class="fa fa-check"></i>20.3.6.2 Exercises</a></li>
+<li><a href="local.html#local">20.2.1 <code>local</code></a></li>
+<li><a href="source.html#source">20.2.2 <code>source</code></a><ul>
+<li><a href="source.html#function">20.2.3 <code>function</code></a></li>
+<li class="chapter" data-level="" data-path="source.html"><a href="source.html"><i class="fa fa-check"></i>Exercises 20.2.4.4</a></li>
+<li class="chapter" data-level="" data-path="source.html"><a href="source.html#excercises-20.2.4.5"><i class="fa fa-check"></i>Excercises 20.2.4.5</a></li>
+<li class="chapter" data-level="" data-path="source.html"><a href="source.html#dots"><i class="fa fa-check"></i>20.3.3 Dots</a></li>
+<li class="chapter" data-level="" data-path="source.html"><a href="source.html#under-the-hood"><i class="fa fa-check"></i>20.3.4 Under the hood</a></li>
+<li class="chapter" data-level="20.1" data-path="source.html"><a href="source.html#exercises-20.3.6.2"><i class="fa fa-check"></i><b>20.1</b> Exercises 20.3.6.2</a></li>
 <li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#basics"><i class="fa fa-check"></i>20.4.1 Basics</a></li>
-<li><a href="evaluation.html#subset">20.4.3 <code>subset</code></a></li>
-<li><a href="evaluation.html#transform">20.4.5 <code>transform</code></a></li>
-<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#handling-ambiguity"><i class="fa fa-check"></i>20.5.2 Handling ambiguity</a></li>
-<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#substitute"><i class="fa fa-check"></i>20.6.1 substitute()</a></li>
-<li><a href="evaluation.html#match.call">20.6.2 <code>match.call</code></a></li>
+<li><a href="source.html#subset">20.4.3 <code>subset</code></a></li>
+<li><a href="source.html#transform">20.4.5 <code>transform</code></a></li>
+<li class="chapter" data-level="" data-path="source.html"><a href="source.html#handling-ambiguity"><i class="fa fa-check"></i>20.5.2 Handling ambiguity</a></li>
+<li class="chapter" data-level="" data-path="source.html"><a href="source.html#substitute"><i class="fa fa-check"></i>20.6.1 substitute()</a></li>
+<li><a href="source.html#match.call">20.6.2 <code>match.call</code></a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -358,231 +359,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="vectors" class="section level1">
-<h1><span class="header-section-number">Chapter 3</span> Vectors</h1>
-<div id="scalars" class="section level2 unnumbered">
-<h2>3.2.1 Scalars</h2>
+<div id="local" class="section level1 unnumbered">
+<h1>20.2.1 <code>local</code></h1>
 <div class="question">
-<p>Can you have <code>NA</code> in vector</p>
+<p>This is such a cool function - where is it used in the wild? Maybe we can come up with a TidyModels example or something where you’d want to throw away your intermediates?</p>
 </div>
-<p>Hell yeah!</p>
-</div>
-<div id="missing-values" class="section level2 unnumbered">
-<h2>3.2.3 Missing values</h2>
-<div class="question">
-<p><code>NA</code> is a ‘sentinel’ value for explicit missingness - what does ‘sentinel’ mean?</p>
-</div>
-<p>A sentinel value (also referred to as a flag value, trip value, rogue value, signal value, or dummy data) is a special value in the context of an algorithm which uses its presence as a condition of termination. Also worth noting two NAs are not equal to each other! For instance, in C++ there’s a special character to identify the end of a string I think another example of a sentinel value might be in surveys where you sometimes see missing data or N/A coded as 999, or 9999 (or maybe just 9)</p>
-<p>Another example of a sentinel value might be in surveys where you sometimes see missing data or <code>N/A</code> coded as <code>999</code>, or <code>9999</code> (or maybe just <code>9</code>). The possible values in a column of data might be:</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1"><span class="kw">factor</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">9</span>), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">9</span>))</a></code></pre></div>
-<p>Sentinels are typically employed in situations where it’s easier/preferable to have a collection of values of the same type - represented internally using the same conventions and requiring the same amount of memory - but you also need a way to indicate a special circumstance. So like in the case of survey data you may, for example, see a variable indicating that an individual is <code>999</code> years old but the correct way to interpret that is that the data was not collected.</p>
-</div>
-<div id="testing-and-coercion" class="section level2 unnumbered">
-<h2>3.2.4 Testing and coercion</h2>
-<div class="question">
-<p>Why does the book warn us against using <code>is.vector()</code>, <code>is.atomic()</code> and <code>is.numeric()</code>? [read docs]</p>
-</div>
-<ul>
-<li><code>is.atomic</code> will also return true if <code>NULL</code></li>
-<li><code>is.numeric</code> tests if integer or double <strong>NOT</strong> factor, Date, POSIXt, difftime</li>
-<li><code>is.vector</code> will return false if it has attributes other than names</li>
-</ul>
-</div>
-<div id="setting-attributes" class="section level2 unnumbered">
-<h2>3.3.1 Setting Attributes</h2>
-<div class="question">
-<p>Working in the medical field I have to import SAS files a lot where the column names have to adhere to specific abbreviations so they’re given a label attribute for their full name. What are some other common uses for attributes?</p>
-</div>
-<p>Hypothesis test attributes!</p>
-</div>
-<div id="setnames" class="section level2 unnumbered">
-<h2>3.3.2 setNames</h2>
-<div class="question">
-<p>We can use <code>setNames</code> to apply different values to each element in a vector. How do we do this for our own custom attribute? The code below does NOT work!</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1">my_vector &lt;-<span class="st"> </span><span class="kw">c</span>(</a>
-<a class="sourceLine" id="cb91-2" data-line-number="2">  <span class="kw">structure</span>(<span class="dv">1</span>, <span class="dt">x =</span> <span class="st">&quot;firstatt_1&quot;</span>),</a>
-<a class="sourceLine" id="cb91-3" data-line-number="3">  <span class="kw">structure</span>(<span class="dv">2</span>, <span class="dt">x =</span> <span class="st">&quot;firstatt_2&quot;</span>), </a>
-<a class="sourceLine" id="cb91-4" data-line-number="4">  <span class="kw">structure</span>(<span class="dv">3</span>, <span class="dt">x =</span> <span class="st">&quot;firstatt_3&quot;</span>)</a>
-<a class="sourceLine" id="cb91-5" data-line-number="5">)</a>
-<a class="sourceLine" id="cb91-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb91-7" data-line-number="7">my_vector &lt;-<span class="st"> </span><span class="kw">setNames</span>(my_vector, <span class="kw">c</span>(<span class="st">&quot;name_1&quot;</span>, <span class="st">&quot;name_2&quot;</span>, <span class="st">&quot;name_3&quot;</span>))</a>
-<a class="sourceLine" id="cb91-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb91-9" data-line-number="9"><span class="co"># mental model: shouldn&#39;t this should return $names and $x?</span></a>
-<a class="sourceLine" id="cb91-10" data-line-number="10"><span class="kw">attributes</span>(my_vector)</a></code></pre></div>
-<pre><code>## $names
-## [1] &quot;name_1&quot; &quot;name_2&quot; &quot;name_3&quot;</code></pre>
-</div>
-<p>As soon as you instantiate a vector the attributes are lost. BUT we can store it as a list <em>within</em> the vector to keep them! We can create a custom attribute function and use that with <code>map</code> to add a list inside our dataframe:</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1">custom_attr &lt;-<span class="st"> </span><span class="cf">function</span>(x, my_attr) {</a>
-<a class="sourceLine" id="cb93-2" data-line-number="2">  <span class="kw">attr</span>(x, <span class="st">&quot;x&quot;</span>) &lt;-<span class="st"> </span>my_attr</a>
-<a class="sourceLine" id="cb93-3" data-line-number="3">  <span class="kw">return</span>(x)</a>
-<a class="sourceLine" id="cb93-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb93-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb93-6" data-line-number="6">as_tb &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb93-7" data-line-number="7"><span class="st">  </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb93-8" data-line-number="8">  <span class="dt">one =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>),</a>
-<a class="sourceLine" id="cb93-9" data-line-number="9">  <span class="dt">x =</span> <span class="kw">c</span>(<span class="st">&quot;att_1&quot;</span>, <span class="st">&quot;att_2&quot;</span>, <span class="st">&quot;att_3&quot;</span>),</a>
-<a class="sourceLine" id="cb93-10" data-line-number="10">  <span class="dt">with_arr =</span> <span class="kw">map2</span>(one, x, <span class="op">~</span><span class="kw">custom_attr</span>(.x, .y))</a>
-<a class="sourceLine" id="cb93-11" data-line-number="11">)</a>
-<a class="sourceLine" id="cb93-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb93-13" data-line-number="13">as_tb<span class="op">$</span>with_arr</a></code></pre></div>
-<pre><code>## [[1]]
-## [1] 1
-## attr(,&quot;x&quot;)
-## [1] &quot;att_1&quot;
-## 
-## [[2]]
-## [1] 2
-## attr(,&quot;x&quot;)
-## [1] &quot;att_2&quot;
-## 
-## [[3]]
-## [1] 3
-## attr(,&quot;x&quot;)
-## [1] &quot;att_3&quot;</code></pre>
-</div>
-<div id="dimensions" class="section level2 unnumbered">
-<h2>3.3.3 Dimensions</h2>
-<div class="question">
-<p>Because <code>NROW</code> and <code>NCOL</code> don’t return <code>NULL</code> on a one dimensional vector they just seem to me as a more flexible option. When do you <em>have</em> to use <code>ncol</code> and <code>nrow</code>?</p>
-</div>
-<p>It <em>may</em> be better practice to always use <code>NROW</code> and <code>NCOL</code>!</p>
-<div class="question">
-<p>As long as the number of rows matches the data frame, it’s also possible to have a matrix or array as a column of a data frame. (This requires a slight extension to our definition of a data frame: it’s not the <code>length()</code> of each column that must be equal, but the <code>NROW()</code>.)</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>),</a>
-<a class="sourceLine" id="cb95-2" data-line-number="2">                 <span class="dt">y =</span> <span class="kw">c</span>(letters[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]))</a>
-<a class="sourceLine" id="cb95-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb95-4" data-line-number="4"><span class="kw">length</span>(df<span class="op">$</span>y) <span class="op">==</span><span class="st"> </span><span class="kw">NROW</span>(df<span class="op">$</span>y)</a></code></pre></div>
-<pre><code>## [1] TRUE</code></pre>
-<p>What’s an example of where <code>length() != NROW()</code></p>
-</div>
-<p>The case of a matrix!</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1">my_matrix &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">6</span></a>
-<a class="sourceLine" id="cb97-2" data-line-number="2"><span class="kw">dim</span>(my_matrix) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb97-3" data-line-number="3">my_matrix</a></code></pre></div>
-<pre><code>##      [,1] [,2]
-## [1,]    1    4
-## [2,]    2    5
-## [3,]    3    6</code></pre>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1"><span class="kw">length</span>(my_matrix) <span class="op">==</span><span class="st"> </span><span class="kw">NROW</span>(my_matrix) <span class="co"># 6 != 3</span></a></code></pre></div>
-<pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1"><span class="kw">length</span>(my_matrix) <span class="op">==</span><span class="st"> </span><span class="kw">NCOL</span>(my_matrix) <span class="co"># 6 != 2</span></a></code></pre></div>
-<pre><code>## [1] FALSE</code></pre>
-<p>The length of the matrix is <code>6</code>, and if we manipulate the dimensions of the matrix we see that the NROW is <code>3</code> and and NCOL is <code>2</code>.</p>
-</div>
-<div id="s3-atomic-vectors" class="section level2 unnumbered">
-<h2>3.4 S3 atomic vectors</h2>
-<div class="question">
-<p>How is data type <code>typeof()</code> different from <code>class()</code>?</p>
-</div>
-<p>Classes are built on top of base types - they’re like special, more specific kinds of types. In fact, if a class isn’t specified then <code>class()</code> will default to either the <code>implicit class</code> or <code>typeof</code>.</p>
-<p>So <code>Date</code>, <code>POSIXct</code>, and <code>difftime</code> are specific kinds of doubles, falling under its umbrella.</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1">lubridate<span class="op">::</span><span class="kw">is.Date</span>(<span class="kw">Sys.Date</span>())</a></code></pre></div>
-<pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" data-line-number="1"><span class="kw">is.double</span>(<span class="kw">Sys.Date</span>())</a></code></pre></div>
-<pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" data-line-number="1">lubridate<span class="op">::</span><span class="kw">is.POSIXct</span>(<span class="kw">Sys.time</span>())</a></code></pre></div>
-<pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" data-line-number="1"><span class="kw">is.double</span>(<span class="kw">Sys.time</span>())</a></code></pre></div>
-<pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb111-1" data-line-number="1">lubridate<span class="op">::</span><span class="kw">is.difftime</span>(<span class="kw">as.difftime</span>(<span class="kw">c</span>(<span class="st">&quot;0:3:20&quot;</span>, <span class="st">&quot;11:23:15&quot;</span>)))</a></code></pre></div>
-<pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" data-line-number="1"><span class="kw">is.double</span>(<span class="kw">as.difftime</span>(<span class="kw">c</span>(<span class="st">&quot;0:3:20&quot;</span>, <span class="st">&quot;11:23:15&quot;</span>)))</a></code></pre></div>
-<pre><code>## [1] TRUE</code></pre>
-<p>But then why does <code>my_factor</code> fail to be recognized under its more general <code>integer</code> umbrella?</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1">my_factor &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))</a>
-<a class="sourceLine" id="cb115-2" data-line-number="2"><span class="kw">is.factor</span>(my_factor)</a></code></pre></div>
-<pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1"><span class="kw">is.integer</span>(my_factor)</a></code></pre></div>
-<pre><code>## [1] FALSE</code></pre>
 <div class="TODO">
-<p>XXX</p>
-</div>
-</div>
-<div id="dates" class="section level2 unnumbered">
-<h2>3.4.2 Dates</h2>
-<div class="question">
-<p>Why are dates calculated from January 1st, 1970?</p>
-</div>
-<p>Unix counts time in seconds since its official “birthday,” – called “epoch” in computing terms – which is Jan. 1, 1970. <a href="https://www.wired.com/2001/09/unix-tick-tocks-to-a-billion/">This article</a> explains that the early Unix engineers picked that date arbitrarily, because they needed to set a uniform date for the start of time, and New Year’s Day, 1970, seemed most convenient.</p>
-</div>
-<div id="lists" class="section level2 unnumbered">
-<h2>3.5.1 Lists</h2>
-<div class="question">
-<p>When should you be using <code>list()</code> instead of <code>c()</code></p>
-</div>
-<p>It’s really contingent on the use case. In the case of adding custom classes it’s worth noting that those are lost once you <code>c()</code> those objects together!</p>
-</div>
-<div id="data-frames-and-tibbles" class="section level2 unnumbered">
-<h2>3.6.8 Data frames and tibbles</h2>
-<div class="question">
-<p>What does ‘lazy’ mean in terms of <code>as_tibble</code>?</p>
-</div>
-<p>Technically <code>lazy evaluation</code> means that expressions are not evaluated when they are bound to variables, but their evaluation is deferred until their results are needed by other computations. In this context though we think Hadley just meant that it’s treated as a character if it “looks and smells like a character”.</p>
-<div class="question">
-<p>The solution manual gives the answer and notes:</p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" data-line-number="1">df_coltypes &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb119-2" data-line-number="2">  <span class="dt">a =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>),</a>
-<a class="sourceLine" id="cb119-3" data-line-number="3">  <span class="dt">b =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>),</a>
-<a class="sourceLine" id="cb119-4" data-line-number="4">  <span class="dt">c =</span> <span class="kw">c</span>(1L, 0L),</a>
-<a class="sourceLine" id="cb119-5" data-line-number="5">  <span class="dt">d =</span> <span class="kw">c</span>(<span class="fl">1.5</span>, <span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb119-6" data-line-number="6">  <span class="dt">e =</span> <span class="kw">c</span>(<span class="st">&quot;one&quot;</span> =<span class="st"> </span><span class="dv">1</span>, <span class="st">&quot;two&quot;</span> =<span class="st"> </span><span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb119-7" data-line-number="7">  <span class="dt">g =</span> <span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;f1&quot;</span>, <span class="st">&quot;f2&quot;</span>)),</a>
-<a class="sourceLine" id="cb119-8" data-line-number="8">  <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb119-9" data-line-number="9">)</a>
-<a class="sourceLine" id="cb119-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb119-11" data-line-number="11"><span class="kw">as.matrix</span>(df_coltypes)</a></code></pre></div>
-<pre><code>##     a   b       c   d     e   g   
-## one &quot;a&quot; &quot;TRUE&quot;  &quot;1&quot; &quot;1.5&quot; &quot;1&quot; &quot;f1&quot;
-## two &quot;b&quot; &quot;FALSE&quot; &quot;0&quot; &quot;2.0&quot; &quot;2&quot; &quot;f2&quot;</code></pre>
-<p>“Note that <code>format()</code> is applied to the characters, which gives surprising results: <code>TRUE</code> is transformed to <code>&quot; TRUE&quot;</code> (starting with a space!).”</p>
-<p>…But where is the <code>format()</code> call happening? I don’t see a space!</p>
-</div>
-<p>After running <code>debug(as.matrix(df_coltypes))</code> and going down a rabbit hole we found this is a bug that has been addressed! <a href="https://github.com/Tazinho/Advanced-R-Solutions/issues/213">See issue here</a></p>
-</div>
-<div id="conclusion" class="section level2 unnumbered">
-<h2>Conclusion</h2>
-<div class="question">
-<p>How does vectorization make your code faster</p>
-</div>
-<p>Taking the example from <a href="https://csgillespie.github.io/efficientR/programming.html#vectorised-code">Efficient R Programming</a>:</p>
-<div id="vectorized" class="section level3 unnumbered">
-<h3>VECTORIZED:</h3>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1"><span class="kw">sum</span>(<span class="kw">log</span>(x))</a></code></pre></div>
-</div>
-<div id="non-vectorized" class="section level3 unnumbered">
-<h3>NON-VECTORIZED:</h3>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1">s &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb122-2" data-line-number="2"><span class="cf">for</span>(x0 <span class="cf">in</span> x) {</a>
-<a class="sourceLine" id="cb122-3" data-line-number="3">  s &lt;-<span class="st"> </span>s <span class="op">+</span><span class="st"> </span><span class="kw">log</span>(x0)</a>
-<a class="sourceLine" id="cb122-4" data-line-number="4">}</a></code></pre></div>
-<p>The vectorized code is faster because it obeys the golden rule of R programming: <em>“access the underlying C/Fortran routines as quickly as possible; the fewer functions calls required to achieve this, the better”</em>.</p>
-<ul>
-<li>Vectorized Version:
-<ol style="list-style-type: decimal">
-<li><code>sum</code> [called once]</li>
-<li><code>log</code> [called once]</li>
-</ol></li>
-<li>Non-vectorized:
-<ol style="list-style-type: decimal">
-<li><code>+</code> [called <code>length(x)</code> times]</li>
-<li><code>log</code> [called <code>length(x)</code> times]</li>
-</ol></li>
-</ul>
-<p>In the vectorised version, there are two primitive function calls: one to <code>log</code> (which performs <code>length(x)</code> steps in the C level) and one to <code>sum</code> (which performs <code>x</code> updates in the C level). So you end up doing a similar number of operations at C level regardless of the route.</p>
-<p>In the non-vectorised form you are passing the logic back and forth between R and C many many times and this is why the non-vectorised form is much slower.</p>
-<p><strong>A vectorized function calls primitives directly, but a loop calls each function <code>length(x)</code> times, and there are <code>1 + length(x)</code> assignments to <code>s</code>. Theres on the order of 3x primitive function calls in the non-vectorised form!!</strong></p>
-<p>Resources:</p>
-<ul>
-<li><p><a href="https://speakerdeck.com/jennybc/row-oriented-workflows-in-r-with-the-tidyverse">Check out Jenny Brian’s slides</a></p></li>
-<li><p><a href="https://www.noamross.net/archives/2014-04-16-vectorization-in-r-why/">Great article by Noam Ross</a></p></li>
-</ul>
-<div class="question">
-<p>Putting it all together in a single diagram:</p>
-</div>
-<p><img src="images/vectors.png" width="952" /></p>
 
 </div>
+<div class="question">
+<p>Can we go over again what is happening in <code>local2</code>? Why isn’t the environment included as a function argument? Furthermore I’m a little confused by what the function <code>caller_env()</code> does.</p>
+<div class="sourceCode" id="cb670"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb670-1" data-line-number="1">local2 &lt;-<span class="st"> </span><span class="cf">function</span>(expr) {</a>
+<a class="sourceLine" id="cb670-2" data-line-number="2">  env &lt;-<span class="st"> </span><span class="kw">env</span>(<span class="kw">caller_env</span>())</a>
+<a class="sourceLine" id="cb670-3" data-line-number="3">  <span class="kw">eval</span>(<span class="kw">enexpr</span>(expr), env)</a>
+<a class="sourceLine" id="cb670-4" data-line-number="4">}</a>
+<a class="sourceLine" id="cb670-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb670-6" data-line-number="6">foo &lt;-<span class="st"> </span><span class="kw">local2</span>({</a>
+<a class="sourceLine" id="cb670-7" data-line-number="7">  x &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb670-8" data-line-number="8">  y &lt;-<span class="st"> </span><span class="dv">200</span></a>
+<a class="sourceLine" id="cb670-9" data-line-number="9">  x <span class="op">+</span><span class="st"> </span>y</a>
+<a class="sourceLine" id="cb670-10" data-line-number="10">})</a></code></pre></div>
+</div>
+<div class="TODO">
+
 </div>
 </div>
             </section>
@@ -590,8 +389,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="names-and-values.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="subsetting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="source.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -622,7 +421,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/03-vectors.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/20-evaluation.Rmd",
 "text": "Edit"
 },
 "history": {
