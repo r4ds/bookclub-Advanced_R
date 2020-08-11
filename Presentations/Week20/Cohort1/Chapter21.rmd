@@ -1,0 +1,345 @@
+---
+title: 'Chapter 21: Translating R Code'
+subtitle: 'Pavitra Chakravarty'
+author: 'R4DS Reading Group'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+---
+
+<style>
+ .remark-code-line {
+   font-size: 11px;
+ }
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  cache = TRUE,
+  cache.lazy = FALSE,
+  include = TRUE,
+  message = FALSE, 
+  warning = FALSE
+)
+```
+
+```{r xaringan-themer, include = FALSE}
+library(xaringanthemer)
+library(methods)
+style_mono_light(
+  base_color = "#3092FF",
+  header_font_google = google_font("Josefin Sans"),
+  text_font_google   = google_font("Montserrat", "300", "300i"),
+  code_font_google   = google_font("Droid Mono"),
+)
+```
+
+<style>
+hide {
+  display: none;
+}
+.remark-slide-content h1 {
+  font-size: 45px;
+}
+h1 {
+  font-size: 2em;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+}
+.remark-slide-content {
+  font-size: 16px
+}
+.remark-code {
+  font-size: 14px;
+}
+code.r {
+  font-size: 14px;
+}
+pre {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.red {
+  color: #FF0000;
+}
+
+.footnote {
+  color: #800020;
+  font-size: 9px;
+}
+
+</style>
+
+# Translating R code {#translation}
+
+```{r, include = FALSE}
+library(dbplyr)
+library(methods)
+library(rlang)
+library(purrr)
+source("dsl-html-attributes.r")
+```
+
+## Introduction
+
+The combination of first-class environments, lexical scoping, and metaprogramming gives us a powerful toolkit for translating R code into other languages. One fully-fledged example of this idea is dbplyr, which powers the database backends for dplyr, allowing you to express data manipulation in R and automatically translate it into SQL. You can see the key idea in  `translate_sql()` which takes R code and returns the equivalent SQL:
+
+```{r}
+translate_sql(x ^ 2)
+translate_sql(x < 5 & !is.na(x))
+translate_sql(!first %in% c("John", "Roger", "Robert"))
+translate_sql(select == 7)
+```
+---
+
+## S3 CLASSES
+
+The easiest way to do this is to create an S3 class that distinguishes between regular text (that needs escaping) and HTML (that doesn't).
+
+```{r escape}
+html <- function(x) structure(x, class = "advr_html")
+
+print.advr_html <- function(x, ...) {
+  out <- paste0("<HTML> ", x)
+  cat(paste(strwrap(out), collapse = "\n"), "\n", sep = "")
+}
+
+html("1")
+```
+
+---
+
+
+We then write an escape generic. It has two important methods:
+
+* `escape.character()` takes a regular character vector and returns an HTML
+  vector with special characters (`&`, `<`, `>`) escaped.
+
+* `escape.advr_html()` leaves already escaped HTML alone.
+
+```{r}
+escape <- function(x) UseMethod("escape")
+
+escape.character <- function(x) {
+  x <- gsub("&", "&amp;", x)
+  x <- gsub("<", "&lt;", x)
+  x <- gsub(">", "&gt;", x)
+
+  html(x)
+}
+
+escape.advr_html <- function(x) x
+```
+
+Some examples
+
+```{r}
+escape("This is some text.")
+escape("x > 1 & y < 2")
+escape(escape("This is some text. 1 > 2"))
+escape(html("<hr />"))
+```
+
+---
+
+## Basic tag functions
+
+Now, lets look at the other tags in a html doc
+
+`<p>`- HTML tag can have both attributes (e.g., id or class) and children (like `<b>` or `<i>`). Given that attributes are named and children are not, it seems natural to use named and unnamed arguments for them respectively. For example, a call to `p()` might look like:
+
+```{r, eval = FALSE}
+p("Some text. ", b(i("some bold italic text")), class = "mypara")
+```
+
+We could list all the possible attributes of the `<p>` tag in the function definition, but that's hard because there are many. Instead, we'll use `...` and separate the components based on whether or not they are named. With this in mind, we create a helper function that wraps around `rlang::list2()`
+
+---
+
+## Lets refer back to 19.6 ... (dot-dot-dot)
+
+One place we could use `list2()` is to create a wrapper around `attributes()` that allows us to set attributes flexibly:
+
+```{r}
+numeric <- function(...) {
+  dots <- list2(...)
+  num <- as.numeric(dots)
+  set_names(num, names(dots))
+}
+
+
+x<-numeric(a=1,b=2,c=3,d=4)
+x
+
+test <-  "q"
+numeric( 1,!!!x,!!test:=9)
+```
+
+---
+
+## Getting back to getting attributes
+
+```{r named}
+dots_partition <- function(...) {
+  dots <- list2(...)
+  
+ if (is.null(names(dots))) {
+  is_named <- rep(FALSE, length(dots))
+} else {
+  is_named <- names(dots) != ""
+}
+  
+  list(
+    named = dots[is_named],
+    unnamed = dots[!is_named]
+  )
+}
+
+str(dots_partition(a = 1, 2, b = 3, 4))
+```
+
+```{r p}
+
+p <- function(...) {
+  dots <- dots_partition(...)
+  attribs <- html_attributes(dots$named)
+  children <- map_chr(dots$unnamed, escape)
+
+  html(paste0(
+    "<p", attribs, ">",
+    paste(children, collapse = ""),
+    "</p>"
+  ))
+}
+
+p("Some text", id = "myid")
+p("Some text", class = "important", `data-value` = 10)
+```
+
+---
+
+## Now for the children tags 
+
+```{r}
+tag <- function(tag) {
+  new_function(
+    exprs(... = ),
+    expr({
+      dots <- dots_partition(...)
+      attribs <- html_attributes(dots$named)
+      children <- map_chr(dots$unnamed, escape)
+
+      html(paste0(
+        !!paste0("<", tag), attribs, ">",
+        paste(children, collapse = ""),
+        !!paste0("</", tag, ">")
+      ))
+    }),
+    caller_env()
+  )
+}
+tag("b")
+```
+
+---
+
+## Void Tags
+
+```{r}
+p <- tag("p")
+b <- tag("b")
+i <- tag("i")
+p("Some text. ", b(i("some bold italic text")), class = "mypara")
+```
+```{r}
+void_tag <- function(tag) {
+  new_function(
+    exprs(... = ),
+    expr({
+      dots <- dots_partition(...)
+      if (length(dots$unnamed) > 0) {
+        abort(!!paste0("<", tag, "> must not have unnamed arguments"))
+      }
+      attribs <- html_attributes(dots$named)
+
+      html(paste0(!!paste0("<", tag), attribs, " />"))
+    }),
+    caller_env()
+  )
+}
+
+img <- void_tag("img")
+img
+img(src = "myimage.png", width = 100, height = 100)
+```
+---
+
+## Lets pull in all tags
+
+```{r}
+tags <- c("a", "abbr", "address", "article", "aside", "audio",
+  "b","bdi", "bdo", "blockquote", "body", "button", "canvas",
+  "caption","cite", "code", "colgroup", "data", "datalist",
+  "dd", "del","details", "dfn", "div", "dl", "dt", "em",
+  "eventsource","fieldset", "figcaption", "figure", "footer",
+  "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header",
+  "hgroup", "html", "i","iframe", "ins", "kbd", "label",
+  "legend", "li", "mark", "map","menu", "meter", "nav",
+  "noscript", "object", "ol", "optgroup", "option", "output",
+  "p", "pre", "progress", "q", "ruby", "rp","rt", "s", "samp",
+  "script", "section", "select", "small", "span", "strong",
+  "style", "sub", "summary", "sup", "table", "tbody", "td",
+  "textarea", "tfoot", "th", "thead", "time", "title", "tr",
+  "u", "ul", "var", "video"
+)
+
+void_tags <- c("area", "base", "br", "col", "command", "embed",
+  "hr", "img", "input", "keygen", "link", "meta", "param",
+  "source", "track", "wbr"
+)
+```
+
+---
+
+## A lot of these tags are the same as base R function
+
+So do not include in global environment or in a package 
+```{r}
+html_tags <- c(
+  tags %>% set_names() %>% map(tag),
+  void_tags %>% set_names() %>% map(void_tag)
+)
+
+```
+---
+
+## Finally the DSL
+
+```{r}
+with_html <- function(code) {
+  code <- enquo(code)
+  eval_tidy(code, html_tags)
+}
+```
+Lets execute our DSL
+
+```{r}
+with_html(
+  body(
+    h1("A heading", id = "first"),
+    p("Some text &", b("some bold text.")),
+    img(src = "myimg.png", width = 100, height = 100)
+  )
+)
+```
+
+```{r}
+with_html(
+  body(
+    title("facebook", lang = "en", dir = "ltr"),
+    p("This is &", b("Facebook")),
+    img(src = "myimg.png", width = 100, height = 100)
+  )
+)
+```

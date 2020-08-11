@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Chapter 21: Translating R Code</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="R4DS Reading Group" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Chapter 21: Translating R Code
+## Pavitra Chakravarty
+### R4DS Reading Group
+
+---
+
+
+&lt;style&gt;
+ .remark-code-line {
+   font-size: 11px;
+ }
+&lt;/style&gt;
+
+
+
+
+
+&lt;style&gt;
+hide {
+  display: none;
+}
+.remark-slide-content h1 {
+  font-size: 45px;
+}
+h1 {
+  font-size: 2em;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+}
+.remark-slide-content {
+  font-size: 16px
+}
+.remark-code {
+  font-size: 14px;
+}
+code.r {
+  font-size: 14px;
+}
+pre {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.red {
+  color: #FF0000;
+}
+
+.footnote {
+  color: #800020;
+  font-size: 9px;
+}
+
+&lt;/style&gt;
+
+# Translating R code {#translation}
+
+
+
+## Introduction
+
+The combination of first-class environments, lexical scoping, and metaprogramming gives us a powerful toolkit for translating R code into other languages. One fully-fledged example of this idea is dbplyr, which powers the database backends for dplyr, allowing you to express data manipulation in R and automatically translate it into SQL. You can see the key idea in  `translate_sql()` which takes R code and returns the equivalent SQL:
+
+
+```r
+translate_sql(x ^ 2)
+```
+
+```
+## &lt;SQL&gt; POWER(`x`, 2.0)
+```
+
+```r
+translate_sql(x &lt; 5 &amp; !is.na(x))
+```
+
+```
+## &lt;SQL&gt; `x` &lt; 5.0 AND NOT(((`x`) IS NULL))
+```
+
+```r
+translate_sql(!first %in% c("John", "Roger", "Robert"))
+```
+
+```
+## &lt;SQL&gt; NOT(`first` IN ('John', 'Roger', 'Robert'))
+```
+
+```r
+translate_sql(select == 7)
+```
+
+```
+## &lt;SQL&gt; `select` = 7.0
+```
+---
+
+## S3 CLASSES
+
+The easiest way to do this is to create an S3 class that distinguishes between regular text (that needs escaping) and HTML (that doesn't).
+
+
+```r
+html &lt;- function(x) structure(x, class = "advr_html")
+
+print.advr_html &lt;- function(x, ...) {
+  out &lt;- paste0("&lt;HTML&gt; ", x)
+  cat(paste(strwrap(out), collapse = "\n"), "\n", sep = "")
+}
+
+html("1")
+```
+
+```
+## &lt;HTML&gt; 1
+```
+
+---
+
+
+We then write an escape generic. It has two important methods:
+
+* `escape.character()` takes a regular character vector and returns an HTML
+  vector with special characters (`&amp;`, `&lt;`, `&gt;`) escaped.
+
+* `escape.advr_html()` leaves already escaped HTML alone.
+
+
+```r
+escape &lt;- function(x) UseMethod("escape")
+
+escape.character &lt;- function(x) {
+  x &lt;- gsub("&amp;", "&amp;amp;", x)
+  x &lt;- gsub("&lt;", "&amp;lt;", x)
+  x &lt;- gsub("&gt;", "&amp;gt;", x)
+
+  html(x)
+}
+
+escape.advr_html &lt;- function(x) x
+```
+
+Some examples
+
+
+```r
+escape("This is some text.")
+```
+
+```
+## &lt;HTML&gt; This is some text.
+```
+
+```r
+escape("x &gt; 1 &amp; y &lt; 2")
+```
+
+```
+## &lt;HTML&gt; x &amp;gt; 1 &amp;amp; y &amp;lt; 2
+```
+
+```r
+escape(escape("This is some text. 1 &gt; 2"))
+```
+
+```
+## &lt;HTML&gt; This is some text. 1 &amp;gt; 2
+```
+
+```r
+escape(html("&lt;hr /&gt;"))
+```
+
+```
+## &lt;HTML&gt; &lt;hr /&gt;
+```
+
+---
+
+## Basic tag functions
+
+Now, lets look at the other tags in a html doc
+
+`&lt;p&gt;`- HTML tag can have both attributes (e.g., id or class) and children (like `&lt;b&gt;` or `&lt;i&gt;`). Given that attributes are named and children are not, it seems natural to use named and unnamed arguments for them respectively. For example, a call to `p()` might look like:
+
+
+```r
+p("Some text. ", b(i("some bold italic text")), class = "mypara")
+```
+
+We could list all the possible attributes of the `&lt;p&gt;` tag in the function definition, but that's hard because there are many. Instead, we'll use `...` and separate the components based on whether or not they are named. With this in mind, we create a helper function that wraps around `rlang::list2()`
+
+---
+
+## Lets refer back to 19.6 ... (dot-dot-dot)
+
+One place we could use `list2()` is to create a wrapper around `attributes()` that allows us to set attributes flexibly:
+
+
+```r
+numeric &lt;- function(...) {
+  dots &lt;- list2(...)
+  num &lt;- as.numeric(dots)
+  set_names(num, names(dots))
+}
+
+
+x&lt;-numeric(a=1,b=2,c=3,d=4)
+x
+```
+
+```
+## a b c d 
+## 1 2 3 4
+```
+
+```r
+test &lt;-  "q"
+numeric( 1,!!!x,!!test:=9)
+```
+
+```
+##   a b c d q 
+## 1 1 2 3 4 9
+```
+
+---
+
+## Getting back to getting attributes
+
+
+```r
+dots_partition &lt;- function(...) {
+  dots &lt;- list2(...)
+  
+ if (is.null(names(dots))) {
+  is_named &lt;- rep(FALSE, length(dots))
+} else {
+  is_named &lt;- names(dots) != ""
+}
+  
+  list(
+    named = dots[is_named],
+    unnamed = dots[!is_named]
+  )
+}
+
+str(dots_partition(a = 1, 2, b = 3, 4))
+```
+
+```
+## List of 2
+##  $ named  :List of 2
+##   ..$ a: num 1
+##   ..$ b: num 3
+##  $ unnamed:List of 2
+##   ..$ : num 2
+##   ..$ : num 4
+```
+
+
+```r
+p &lt;- function(...) {
+  dots &lt;- dots_partition(...)
+  attribs &lt;- html_attributes(dots$named)
+  children &lt;- map_chr(dots$unnamed, escape)
+
+  html(paste0(
+    "&lt;p", attribs, "&gt;",
+    paste(children, collapse = ""),
+    "&lt;/p&gt;"
+  ))
+}
+
+p("Some text", id = "myid")
+```
+
+```
+## &lt;HTML&gt; &lt;p id='myid'&gt;Some text&lt;/p&gt;
+```
+
+```r
+p("Some text", class = "important", `data-value` = 10)
+```
+
+```
+## &lt;HTML&gt; &lt;p class='important' data-value='10'&gt;Some text&lt;/p&gt;
+```
+
+---
+
+## Now for the children tags 
+
+
+```r
+tag &lt;- function(tag) {
+  new_function(
+    exprs(... = ),
+    expr({
+      dots &lt;- dots_partition(...)
+      attribs &lt;- html_attributes(dots$named)
+      children &lt;- map_chr(dots$unnamed, escape)
+
+      html(paste0(
+        !!paste0("&lt;", tag), attribs, "&gt;",
+        paste(children, collapse = ""),
+        !!paste0("&lt;/", tag, "&gt;")
+      ))
+    }),
+    caller_env()
+  )
+}
+tag("b")
+```
+
+```
+## function (...) 
+## {
+##     dots &lt;- dots_partition(...)
+##     attribs &lt;- html_attributes(dots$named)
+##     children &lt;- map_chr(dots$unnamed, escape)
+##     html(paste0("&lt;b", attribs, "&gt;", paste(children, collapse = ""), 
+##         "&lt;/b&gt;"))
+## }
+```
+
+---
+
+## Void Tags
+
+
+```r
+p &lt;- tag("p")
+b &lt;- tag("b")
+i &lt;- tag("i")
+p("Some text. ", b(i("some bold italic text")), class = "mypara")
+```
+
+```
+## &lt;HTML&gt; &lt;p class='mypara'&gt;Some text. &lt;b&gt;&lt;i&gt;some bold italic
+## text&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;
+```
+
+```r
+void_tag &lt;- function(tag) {
+  new_function(
+    exprs(... = ),
+    expr({
+      dots &lt;- dots_partition(...)
+      if (length(dots$unnamed) &gt; 0) {
+        abort(!!paste0("&lt;", tag, "&gt; must not have unnamed arguments"))
+      }
+      attribs &lt;- html_attributes(dots$named)
+
+      html(paste0(!!paste0("&lt;", tag), attribs, " /&gt;"))
+    }),
+    caller_env()
+  )
+}
+
+img &lt;- void_tag("img")
+img
+```
+
+```
+## function (...) 
+## {
+##     dots &lt;- dots_partition(...)
+##     if (length(dots$unnamed) &gt; 0) {
+##         abort("&lt;img&gt; must not have unnamed arguments")
+##     }
+##     attribs &lt;- html_attributes(dots$named)
+##     html(paste0("&lt;img", attribs, " /&gt;"))
+## }
+```
+
+```r
+img(src = "myimage.png", width = 100, height = 100)
+```
+
+```
+## &lt;HTML&gt; &lt;img src='myimage.png' width='100' height='100' /&gt;
+```
+---
+
+## Lets pull in all tags
+
+
+```r
+tags &lt;- c("a", "abbr", "address", "article", "aside", "audio",
+  "b","bdi", "bdo", "blockquote", "body", "button", "canvas",
+  "caption","cite", "code", "colgroup", "data", "datalist",
+  "dd", "del","details", "dfn", "div", "dl", "dt", "em",
+  "eventsource","fieldset", "figcaption", "figure", "footer",
+  "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header",
+  "hgroup", "html", "i","iframe", "ins", "kbd", "label",
+  "legend", "li", "mark", "map","menu", "meter", "nav",
+  "noscript", "object", "ol", "optgroup", "option", "output",
+  "p", "pre", "progress", "q", "ruby", "rp","rt", "s", "samp",
+  "script", "section", "select", "small", "span", "strong",
+  "style", "sub", "summary", "sup", "table", "tbody", "td",
+  "textarea", "tfoot", "th", "thead", "time", "title", "tr",
+  "u", "ul", "var", "video"
+)
+
+void_tags &lt;- c("area", "base", "br", "col", "command", "embed",
+  "hr", "img", "input", "keygen", "link", "meta", "param",
+  "source", "track", "wbr"
+)
+```
+
+---
+
+## A lot of these tags are the same as base R function
+
+So do not include in global environment or in a package 
+
+```r
+html_tags &lt;- c(
+  tags %&gt;% set_names() %&gt;% map(tag),
+  void_tags %&gt;% set_names() %&gt;% map(void_tag)
+)
+```
+---
+
+## Finally the DSL
+
+
+```r
+with_html &lt;- function(code) {
+  code &lt;- enquo(code)
+  eval_tidy(code, html_tags)
+}
+```
+Lets execute our DSL
+
+
+```r
+with_html(
+  body(
+    h1("A heading", id = "first"),
+    p("Some text &amp;", b("some bold text.")),
+    img(src = "myimg.png", width = 100, height = 100)
+  )
+)
+```
+
+```
+## &lt;HTML&gt; &lt;body&gt;&lt;h1 id='first'&gt;A heading&lt;/h1&gt;&lt;p&gt;Some text &amp;amp;&lt;b&gt;some
+## bold text.&lt;/b&gt;&lt;/p&gt;&lt;img src='myimg.png' width='100' height='100'
+## /&gt;&lt;/body&gt;
+```
+
+
+```r
+with_html(
+  body(
+    title("facebook", lang = "en", dir = "ltr"),
+    p("This is &amp;", b("Facebook")),
+    img(src = "myimg.png", width = 100, height = 100)
+  )
+)
+```
+
+```
+## &lt;HTML&gt; &lt;body&gt;&lt;title lang='en' dir='ltr'&gt;facebook&lt;/title&gt;&lt;p&gt;This is
+## &amp;amp;&lt;b&gt;Facebook&lt;/b&gt;&lt;/p&gt;&lt;img src='myimg.png' width='100' height='100'
+## /&gt;&lt;/body&gt;
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
