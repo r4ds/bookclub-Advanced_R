@@ -199,6 +199,10 @@ dots_partition <- function(...) {
 str(dots_partition(a = 1, 2, b = 3, 4))
 ```
 
+---
+
+# `<p></p>` 
+
 ```{r p}
 
 p <- function(...) {
