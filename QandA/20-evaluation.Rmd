@@ -310,6 +310,17 @@ transform2 <- function(.data, ...) {
 Is there a case where this subtle distinction between `.env$val` vs `!!val` matters? 
 
 ```{r}
+subset2 <- function(data, rows) {
+  rows <- enquo(rows)
+  # change val from 2 to 3, breaking things
+  env_bind(caller_env(), val = 3)
+  rows_val <- eval_tidy(rows, data)
+  stopifnot(is.logical(rows_val))
+  data[rows_val, , drop = FALSE]
+}
+```
+
+```{r}
 threshold_prefix <- function(df, val) {
   subset2(df, .data$x >= .env$val)
 }
@@ -323,21 +334,36 @@ threshold_prefix(df, 2) == threshold_bangbang(df, 2)
 ```
 :::
 
-In the `!!` case, `val` is evaluated early, (inside of `threshold_x`) whereas the `.env` case evaluated later (in the `eval_tidy`)
+In the `!!` case, `val` is evaluated early, (inside of `threshold_x`) whereas the `.env` case evaluated later (in the `eval_tidy`). This could cause problems if, for example, the `val` in `threshold_x` was altered after `subset2` was called, but before the `eval_tidy`
 
-Tyler Grant Smith:m:  21 minutes ago
-this could cause problems if, for example, the val in threshold_x was altered after subset2 was called, but before the eval_tidy
+:::question
+Why do we need to `{{ cond }}` in the following part of the chapter?
 
-```{r}
+```{r, eval=FALSE}
 subset2 <- function(data, rows) {
-  rows <- enquo(rows)
-  # change val from 2 to 3, breaking things
-  env_bind(caller_env(), val = 3)
-  rows_val <- eval_tidy(rows, data)
+  rows <- rlang::enquo(rows)
+  rlang::env_bind(rlang::caller_env(), val = 3)
+  rows_val <- rlang::eval_tidy(rows, data)
   stopifnot(is.logical(rows_val))
   data[rows_val, , drop = FALSE]
 }
+
+resample <- function(df, n) {
+  idx <- sample(nrow(df), n, replace = TRUE)
+  df[idx, , drop = FALSE]
+}
+
+subsample <- function(df, cond, n = nrow(df)) {
+  df <- subset2(df, {{cond}})
+  resample(df, n)
+}
+
+df <- data.frame(x = c(1,1,1,2,2), y = 1:5)
+subsample(df, x == 1)
 ```
+:::
+
+When it appears unquoted in the call to `subset2`, it loses its... history, basically. The rlang stuff protects it so R basically doesn't know it exists until it needs to. It keeps its evaluation as lazy as is needed. Because of laziness, `{{ cond }}` gets passed to `subset2`, which ~says "Ok, but what was `cond` when it was passed to you?", and `subsample` ~says "Huh, I dunno, I'll ask my calling environment," and then `x == 1` makes it into `subset2` without being evaluated in the subsample environment. Basically.
 
 ## 20.6.1 substitute() {-}
 
