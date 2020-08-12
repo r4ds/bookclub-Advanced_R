@@ -288,7 +288,7 @@ fget("mean", inherits = TRUE)
 ```
 ## function (x, ...) 
 ## UseMethod("mean")
-## <bytecode: 0x7f8f5c0d5218>
+## <bytecode: 0x7fa7e583f778>
 ## <environment: namespace:base>
 ```
 :::
@@ -426,7 +426,7 @@ conflicted::conflict_scout
 ##     conflicts <- compact(conflicts)
 ##     new_conflict_report(conflicts)
 ## }
-## <bytecode: 0x7f8f6113c388>
+## <bytecode: 0x7fa7e8e27a18>
 ## <environment: namespace:conflicted>
 ```
 

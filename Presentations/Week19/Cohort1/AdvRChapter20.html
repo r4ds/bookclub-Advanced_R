@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced R Chapter 20: Evaluation</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="thisisdaryn at gmail dot com" />
+    <script src="libs/header-attrs-2.3/header-attrs.js"></script>
+    <link href="libs/tile-view-0.0.20/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view-0.0.20/tile-view.js"></script>
+    <link href="libs/panelset-0.0.20/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset-0.0.20/panelset.js"></script>
+    <script src="libs/xaringanExtra-webcam-0.0.1/webcam.js"></script>
+    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"c456af94cff044f58a0fb484e1efc960","expires":14}</script>
+    <script src="libs/himalaya-1.1.0/himalaya.js"></script>
+    <script src="libs/js-cookie-3.0.0/js.cookie.js"></script>
+    <link href="libs/editable-0.0.20/editable.css" rel="stylesheet" />
+    <script src="libs/editable-0.0.20/editable.js"></script>
+    <link href="libs/xaringanExtra-extra-styles-0.0.20/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="libs/switch-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Advanced R Chapter 20: Evaluation
+## Daryn Ramsden
+### thisisdaryn at gmail dot com
+### last updated: 2020-08-06
+
+---
+
+
+
+
+
+## Evaluation: What is this chapter about?
+
+  * **Evaluation**:  evaluating quoted expressions in custom environments to achieve specific goals.
+
+  * The fact that we are customising the environments means all the forms of evaluation we go over are **non-standard**
+  
+  * Particular emphasis is placed on one type of *Non-standard Evaluation (NSE)*, **Tidy Evaluation**
+  
+  * To do *Tidy Evaluation*, we make use of functions in the `rlang` package  
+  
+
+
+---
+## The Basics: `base::eval()`
+
+
+`eval`: evaluates an input expression in an input environment. 
+
+Arguments to `eval`:
+
+  * *expr*: the expression you want to evaluate
+
+  * *envir*: the environment you want to evaluate it in 
+  
+  
+
+```r
+x &lt;- 10
+eval(rlang::expr(x))
+```
+
+```
+[1] 10
+```
+
+```r
+y &lt;- 2
+eval(expr(x + y), env(x = 1000))
+```
+
+```
+[1] 1002
+```
+
+
+---
+### Something to observe
+
+The first argument of `eval` is evaluated not quoted. 
+
+
+
+```r
+eval(print(x + 1), env(x = 1000))
+```
+
+```
+[1] 11
+```
+
+```
+[1] 11
+```
+
+
+```r
+eval(expr(print(x + 1)), env(x = 1000))
+```
+
+```
+[1] 1001
+```
+
+---
+### Application: `local()`
+
+`local()`: a base R function that allows you to carry out a series of steps in new environment.
+
+  * common use case: carrying out a multi-step computation and disposing of intermediate data automatically
+
+
+```r
+not_foo &lt;- local({
+  x &lt;- 10
+  y &lt;- 200
+  x + y
+})
+```
+
+
+---
+### Replicating `local` using `eval`
+
+We can replicate `local`: 
+
+
+```r
+local2 &lt;- function(expr) {
+  env &lt;- env(caller_env())
+  eval(enexpr(expr), env)
+}
+
+foo &lt;- local2({
+  x &lt;- 10
+  y &lt;- 200
+  x + y
+})
+
+foo
+```
+
+```
+[1] 210
+```
+
+
+---
+## Application: replicating `source`
+
+Similarly, we can replicate `source`: 
+
+.panelset[
+.panel[.panel-name[Replicating `source`]
+
+
+```r
+source2 &lt;- function(path, env = caller_env()) {
+  file &lt;- paste(readLines(path, warn = FALSE), collapse = "\n")
+  exprs &lt;- parse_exprs(file)
+
+  res &lt;- NULL
+  for (i in seq_along(exprs)) {
+    res &lt;- eval(exprs[[i]], env)
+  }
+
+  invisible(res)
+}
+```
+
+
+]
+.panel[.panel-name[More concisely]
+
+
+```r
+source3 &lt;- function(file, env = parent.frame()) {
+  lines &lt;- parse(file) # creates an expression vector
+  res &lt;- eval(lines, envir = env)
+  invisible(res)
+}
+```
+
+
+]
+]
+
+
+
+---
+## Quosures: what are they? 
+
+Encapsulation of:
+  * expression
+  
+  * environment
+  
+Coupling is so important that `rlang` provides a composite structure 
+  
+---
+### Quosures:  How do you make them?
+
+`rlang` provides 3 ways:
+
+--
+
+1. `enquo()` and `enquos()` 
+  
+  * this is the best way
+  
+--
+
+2. `rlang::quo()` and `rlang::quos()`
+
+  * these exist to match `expr()` and `exprs()`. 
+  * You probably don't need this
+
+--
+
+3. `new_quosure()`
+
+  * useful for learning
+  * You probably don't need this either
+
+---
+### Examples creating quosures
+
+
+```r
+quosure_create &lt;- function(x) enquo(x)
+quosure_create(a + b)
+```
+
+```
+&lt;quosure&gt;
+expr: ^a + b
+env:  global
+```
+
+
+```r
+quosures_create &lt;- function(x)enquos(x)
+quosures_create(list(x = x ^ 2, y = y ^ 3, z = z ^ 4))
+```
+
+```
+&lt;list_of&lt;quosure&gt;&gt;
+
+[[1]]
+&lt;quosure&gt;
+expr: ^list(x = x^2, y = y^3, z = z^4)
+env:  global
+```
+
+
+---
+### Creating quosures using `quo` and `new_quosure`
+
+
+#### Using `quo`
+
+
+```r
+quo(x + y + z)
+```
+
+```
+&lt;quosure&gt;
+expr: ^x + y + z
+env:  global
+```
+
+#### Using `new_quosure`
+
+
+```r
+new_quosure(expr(x + y), env(x = 1, y = 10))
+```
+
+```
+&lt;quosure&gt;
+expr: ^x + y
+env:  0x7fc82bc14ac8
+```
+
+
+---
+### Quosures: Under the hood 
+
+
+
+```r
+super_quosure &lt;- new_quosure(expr(x + y + z))
+class(super_quosure) # are subclasses of formulas
+```
+
+```
+[1] "quosure" "formula"
+```
+
+
+```r
+is_call(super_quosure) # are call objects
+```
+
+```
+[1] TRUE
+```
+
+
+
+```r
+attr(super_quosure, ".Environment") #have a .Environment attribute
+```
+
+```
+&lt;environment: R_GlobalEnv&gt;
+```
+
+
+
+```r
+get_expr(super_quosure) # an expression can be extracted
+```
+
+```
+x + y + z
+```
+
+```r
+get_env(super_quosure) # an environment can be extracted
+```
+
+```
+&lt;environment: R_GlobalEnv&gt;
+```
+
+
+---
+## Tidy evaluation: What we really came for
+
+A form of NSE utilizing 3 main features:
+
+  * quasiquotation
+    
+    * talked about this last week
+
+
+  * quosures
+
+  
+  * data masks
+  
+    * soon ... 
+
+---
+### `eval_tidy()`: the function that does the work
+
+`eval_tidy` takes two arguments: 
+
+  1. a quosure
+  
+  2. a data mask (data frame): first place to look for variable definitions
+  
+Example: using `eval_tidy` to find the largest penguin (mass) in `palmerpenguins::penguins`:  
+  
+
+```r
+library(palmerpenguins)
+
+penguin_quosure &lt;- quosure_create(max(body_mass_g, na.rm = TRUE))
+
+# Now use the penguins data frame as data mask
+eval_tidy(penguin_quosure, penguins) 
+```
+
+```
+[1] 6300
+```
+
+---
+### Example: replicating `with`
+
+How `with` works:
+
+
+```r
+library(palmerpenguins)
+with(penguins, mean(body_mass_g, na.rm = TRUE))
+```
+
+```
+[1] 4201.754
+```
+
+
+A new version of `with`:
+
+
+```r
+with2 &lt;- function(data, expr) {
+  expr &lt;- enquo(expr)
+  eval_tidy(expr, data)
+}
+```
+
+
+
+```r
+with2(penguins, mean(body_mass_g, na.rm = TRUE))
+```
+
+```
+[1] 4201.754
+```
+
+---
+### Another example: replicating `subset`
+
+
+
+```r
+subset2 &lt;- function(data, rows) {
+  rows &lt;- enquo(rows)
+  rows_val &lt;- eval_tidy(rows, data)
+  stopifnot(is.logical(rows_val))
+
+  data[rows_val, , drop = FALSE]
+}
+
+df &lt;- subset2(penguins, species == "Adelie")
+table(df$species)
+```
+
+```
+
+   Adelie Chinstrap    Gentoo 
+      152         0         0 
+```
+
+
+---
+## Using pronouns to avoid ambiguity
+
+The data mask provides two pronouns: .data and .env.
+
+  * .data$x always refers to x in the data mask.
+  * .env$x always refers to x in the environmen
+
+
+```r
+x &lt;- 1
+df &lt;- data.frame(x = 2)
+```
+
+
+
+```r
+with2(df, .data$x)
+```
+
+```
+[1] 2
+```
+
+
+
+```r
+with2(df, .env$x)
+```
+
+```
+[1] 1
+```
+
+There's no reason that should work. But it does and can be used to avoid ambiguity.
+
+---
+### Why does that work? 
+
+
+  * `.data` and `.env` are actually exported from `rlang`
+  
+    * `.data` retrieves data-variables from the data frame
+    
+    * `.env` retrieves env-variables from the enviroment
+  
+  * They are not real data frames: they just act like them sometimes 
+    
+    * you can't take do `names(.data)` or `map` over it. 
+
+
+---
+### When is tidy evaluation actually beneficial?
+
+A practical example:
+
+
+```r
+resample &lt;- function(df, n) {
+  idx &lt;- sample(nrow(df), n, replace = TRUE)
+  df[idx, , drop = FALSE]
+}
+```
+
+You want to create a new function that resamples and subsamples in a single step
+
+
+---
+### Example continued: 
+
+An approach that does not work:
+
+
+
+```r
+subsample &lt;- function(df, cond, n = nrow(df)) {
+  df &lt;- subset2(df, cond)
+  resample(df, n)
+}
+
+df &lt;- data.frame(x = c(1, 1, 1, 2, 2), y = 1:5)
+subsample(df, x == 1)
+```
+
+```
+    x y
+2   1 2
+3   1 3
+1   1 1
+3.1 1 3
+5   2 5
+```
+
+`subsample()` doesn’t quote any arguments so cond is evaluated normally (not in a data mask), and we get an error when it tries to find a binding for x.
+
+---
+### Example continued 
+
+
+An approach that does work
+
+
+
+```r
+subsample &lt;- function(df, cond, n = nrow(df)) {
+  cond &lt;- enquo(cond)
+
+  df &lt;- subset2(df, !!cond)
+  resample(df, n)
+}
+
+subsample(df, x == 1)
+```
+
+```
+    x y
+1   1 1
+2   1 2
+1.1 1 1
+```
+
+---
+### Tidy evaluation handles ambiguity well 
+
+Consider the function that is meant to find all the rows of df where *x* is at least some threshold value:
+
+
+```r
+threshold_x &lt;- function(df, val) {
+  subset2(df, x &gt;= val)
+}
+```
+
+How can this go wrong?
+
+  * if `val` is in `df`
+  
+  * if `x` is in the calling environment but not in `df`
+  
+---
+### A more robust implementation
+
+Here's a better implementation:
+
+
+```r
+threshold_x &lt;- function(df, val) {
+  subset2(df, .data$x &gt;= .env$val)
+}
+```
+
+
+Case 1: `x` is in the calling environment but not in `df`
+
+
+```r
+no_x &lt;- data.frame(y = 1:3)
+x &lt;- 10
+threshold_x(no_x, 2)
+```
+
+```
+Error: Column `x` not found in `.data`
+```
+
+Case 2: If `val` is in `df`
+
+
+```r
+has_val &lt;- data.frame(x = 1:3, val = 9:11)
+threshold_x(has_val, 2)
+```
+
+```
+  x val
+2 2  10
+3 3  11
+```
+
+
+
+
+
+---
+### NSE in base R 
+
+
+Two common patterns for NSE in base R:
+
+  1. `substitute()` and evaluation in the caller environment using `eval()`
+  
+  2. `match.call()`, call manipulation, and evaluation in the caller environment
+  
+  
+---
+### NSE Using `substitute`
+
+
+`substitute` returns the parse tree for the (unevaluated) expression expr, substituting any variables bound in env.
+
+`eval`: evaluates an R expression. Its arguments are:
+
+  * *expr*: an object to be evaluated.
+
+  * *envir*: the environment in which expr is to be evaluated. May also be NULL, a list, a data frame, a pairlist or an integer as specified to sys.call.
+
+  * *enclos*: Relevant when envir is a (pair)list or a data frame. Specifies the enclosure, i.e., where R looks for objects not found in *envir*.
+  
+---
+### NSE in base example:  
+
+
+How `subset` is used: 
+
+
+```r
+sample_df &lt;- data.frame(a = 1:5, b = 5:1, c = c(5, 3, 1, 4, 1))
+
+
+subset(sample_df, a &gt;= 4)
+```
+
+```
+  a b c
+4 4 2 4
+5 5 1 1
+```
+
+How `subset` is implemented in base 
+
+
+```r
+subset_base &lt;- function(data, rows) {
+  rows &lt;- substitute(rows)
+  rows_val &lt;- eval(rows, data, caller_env())
+  stopifnot(is.logical(rows_val))
+
+  data[rows_val, , drop = FALSE]
+}
+```
+
+---
+### Problems with `base::subset`
+
+  1.  always evaluates rows in the calling environment, but if ... has been used, then the expression might need to be evaluated elsewhere.
+  
+    * this means you cannot reliably work with functionals like `map()` or `lapply()`
+  
+  2. Calling `subset()` from another function requires some care: you have to use substitute() to capture a call to subset() complete expression, and then evaluate
+  
+  3. `eval()` doesn’t provide any pronouns so there’s no way to require part of the expression to come from the data. 
+
+
+---
+### Alternative to `subset`:  Using tidy evaluation
+
+
+```r
+subset_tidy &lt;- function(data, rows) {
+  rows &lt;- enquo(rows)
+  rows_val &lt;- eval_tidy(rows, data)
+  stopifnot(is.logical(rows_val))
+
+  data[rows_val, , drop = FALSE]
+}
+```
+
+
+---
+### NSE with `match.call`: Background
+
+`match.call`: returns a call in which all of the specified arguments are specified by their full names.
+
+
+```r
+my_func &lt;- function(input1, input2){
+  match.call()
+}
+```
+
+
+```r
+my_func(input1 = 1)
+```
+
+```
+my_func(input1 = 1)
+```
+
+
+```r
+my_func(input2 = 1, 2)
+```
+
+```
+my_func(input1 = 2, input2 = 1)
+```
+
+
+```r
+my_func(input3 = 2)
+```
+
+```
+Error in my_func(input3 = 2): unused argument (input3 = 2)
+```
+
+
+
+
+---
+## Using match.call in NSE 
+
+Steps in using `match.call` to do NSE:
+
+  1. Capture the complete call 
+  
+  2. Modify it
+  
+  3. Evaluate the results
+
+---  
+### Example: `write.csv` 
+
+
+
+```r
+write.csv &lt;- function(...) {
+  call &lt;- match.call(write.table, expand.dots = TRUE)
+
+  call[[1]] &lt;- quote(write.table)
+  call$sep &lt;- ","
+  call$dec &lt;- "."
+
+  eval(call, parent.frame())
+}
+```
+
+---
+### Alternate implementation of `write.csv`
+
+It could have been done like this: 
+
+
+```r
+write.csv &lt;- function(...) {
+  write.table(..., sep = ",", dec = ".")
+}
+```
+
+
+
+---
+### Wrapping modeling functions
+
+Simplest possible wrapper:
+
+
+```r
+lm2 &lt;- function(formula, data) {
+  lm(formula, data)
+}
+```
+
+
+
+```r
+lm2(bill_length_mm ~ body_mass_g, penguins)
+```
+
+```
+
+Call:
+lm(formula = formula, data = data)
+
+Coefficients:
+(Intercept)  body_mass_g  
+  26.898872     0.004051  
+```
+
+---
+### A better wrapper function
+
+
+```r
+lm3 &lt;- function(formula, data, env = caller_env()) {
+  formula &lt;- enexpr(formula)
+  data &lt;- enexpr(data)
+
+  lm_call &lt;- expr(lm(!!formula, data = !!data))
+  expr_print(lm_call)
+  eval(lm_call, env)
+}
+
+lm3(bill_length_mm ~ body_mass_g, penguins)
+```
+
+```
+lm(bill_length_mm ~ body_mass_g, data = penguins)
+```
+
+```
+
+Call:
+lm(formula = bill_length_mm ~ body_mass_g, data = penguins)
+
+Coefficients:
+(Intercept)  body_mass_g  
+  26.898872     0.004051  
+```
+
+---
+### Things to note
+
+
+There are 3 key steps: 
+
+  1. capture the unevaluated arguments using `enexpr()`, and capture the caller environment using `caller_env()`.
+
+  2. generate a new expression using `expr()` and unquoting.
+
+  3. evaluate that expression in the caller environment.
+
+Nice side-effect: Unquoting can be used to generate formulas 
+
+
+```r
+y &lt;- expr(bill_length_mm)
+x1 &lt;- expr(body_mass_g)
+x2 &lt;- expr(species)
+lm3(!!y ~ !!x1 + !!x2, penguins)
+```
+
+```
+lm(bill_length_mm ~ body_mass_g + species, data = penguins)
+```
+
+```
+
+Call:
+lm(formula = bill_length_mm ~ body_mass_g + species, data = penguins)
+
+Coefficients:
+     (Intercept)       body_mass_g  speciesChinstrap     speciesGentoo  
+       24.919471          0.003748          9.920884          3.557978  
+```
+
+---
+### Potential problem situation: Mingling objects 
+
+Problem: What if you want a function that resamples before training the model?
+
+
+Something that doesn't work:
+
+```r
+resample_lm0 &lt;- function(formula, data, env = caller_env()) {
+  formula &lt;- enexpr(formula)
+  resample_data &lt;- resample(data, n = nrow(data))
+
+  lm_call &lt;- expr(lm(!!formula, data = resample_data))
+  expr_print(lm_call)
+  eval(lm_call, env)
+}
+
+df &lt;- data.frame(x = 1:10, y = 5 + 3 * (1:10) + round(rnorm(10), 2))
+resample_lm0(y ~ x, data = df)
+```
+
+```
+lm(y ~ x, data = resample_data)
+```
+
+```
+Error in is.data.frame(data): object 'resample_data' not found
+```
+
+`lm_call` and `resample_data` are in different environments. 
+
+
+
+---
+### Example: Approach 1
+
+
+Unquote the data frame into the call:
+
+
+```r
+df &lt;- data.frame(x = 1:10, y = 5 + 3 * (1:10) + round(rnorm(10), 2))
+
+resample_lm1 &lt;- function(formula, data, env = caller_env()) {
+  formula &lt;- enexpr(formula)
+  resample_data &lt;- resample(data, n = nrow(data))
+
+  lm_call &lt;- expr(lm(!!formula, data = !!resample_data))
+  expr_print(lm_call)
+  eval(lm_call, env)
+}
+resample_lm1(y ~ x, data = df)$call
+```
+
+```
+lm(y ~ x, data = &lt;df[,2]&gt;)
+```
+
+```
+lm(formula = y ~ x, data = list(x = c(8L, 4L, 5L, 3L, 9L, 7L, 
+8L, 6L, 1L, 10L), y = c(28.19, 16.37, 18.49, 13.93, 30.69, 25.79, 
+28.19, 23.18, 7.81, 36.09)))
+```
+
+
+
+---
+### Example continued: a cleaner approach
+
+A cleaner approach:
+
+  1. create a new environment that inherits from the caller 
+  
+  2. bind variables that you’ve created inside the function to that environment.
+
+
+
+```r
+resample_lm2 &lt;- function(formula, data, env = caller_env()) {
+  formula &lt;- enexpr(formula)
+  resample_data &lt;- resample(data, n = nrow(data))
+
+  lm_env &lt;- env(env, resample_data = resample_data)
+  lm_call &lt;- expr(lm(!!formula, data = resample_data))
+  expr_print(lm_call)
+  eval(lm_call, lm_env)
+}
+resample_lm2(y ~ x, data = df)
+```
+
+```
+lm(y ~ x, data = resample_data)
+```
+
+```
+
+Call:
+lm(formula = y ~ x, data = resample_data)
+
+Coefficients:
+(Intercept)            x  
+      4.554        2.922  
+```
+
+
+---
+### Abrupt ending: Overall takeaways 
+
+
+  * There are many ways to do non-standard evaluation
+  
+  * Tidy evaluation is a good framework for applying NSE
+
+
+ 
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark.js"></script>
+<script>var slideshow = remark.create({
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<style>
+.topright {
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  height:30px;
+  width:30px;
+  background-image: var(--background-image-url);
+}
+
+</style>
+
+<script>
+function toggleTheme() {
+  var element = document.body;
+  element.classList.toggle("dark-mode");
+}
+
+
+
+document
+  .querySelectorAll('.remark-slide-content').forEach(el => {
+    el.innerHTML +=
+    '<div id="mode_toggle" onclick="toggleTheme();" class="topright"></div>';
+  });
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

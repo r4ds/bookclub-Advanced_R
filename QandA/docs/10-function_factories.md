@@ -404,7 +404,7 @@ Fn(x) # apply the distribution function to each number
 ```
 
 ```
-## [1] 0.3333333 0.6666667 1.0000000
+## [1] 0.3333333 1.0000000 0.6666667
 ```
 
 ## 10.2.6.3 Exercise {-}
