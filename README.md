@@ -83,7 +83,7 @@ Chapter 2 - Names and values
 
 - Cohort 1: [Asmae Toumi](https://twitter.com/asmae_toumi) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Cohort1/Chap2slides.html#1))
 - Cohort 2: [Josh Pohlkamp-Hartt](https://twitter.com/jpohlkamphartt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Cohort2_America/Chapter2Slides.html#1) | video)
-- Cohort 3: [Anna-Leigh Brown](https://twitter.com/annaleighbrown2)([slides](https://docs.google.com/presentation/d/1HNmri86BXWrLThgjECqHOKN7KEab01BTDZCUDT2xUo8/edit?usp=sharing) | [video](https://youtu.be/-bEXdOoxO_E)
+- Cohort 3: [Anna-Leigh Brown](https://twitter.com/annaleighbrown2)([slides](https://docs.google.com/presentation/d/1HNmri86BXWrLThgjECqHOKN7KEab01BTDZCUDT2xUo8/edit?usp=sharing) | [video](https://youtu.be/-bEXdOoxO_E))
 
 Chapter 3 - Vectors
 
