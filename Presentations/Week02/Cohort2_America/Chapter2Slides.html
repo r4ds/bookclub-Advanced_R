@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Josh Pohlkamp-Hartt" />
+    <meta name="date" content="2020-08-05" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Advanced R
+## Chapter 2: Names and Values
+### Josh Pohlkamp-Hartt
+### <span class="citation">@JPohlkampHartt</span>
+### 2020-08-05
+
+---
+
+
+
+
+
+
+# Outline
+
+- The distinction between names and values
+
+- When R makes a copy, and how to track them
+
+- How much memory an object **actually** occupies
+
+- Exceptions to copy-on-modify
+
+- The garbage collector
+
+**Prerequisites**
+
+The **lobstr** package is used to understand the internal representation of R objects.
+
+
+```r
+library(lobstr)
+```
+
+---
+
+
+## Binding basics 
+
+
+Consider this simple example, what is happening?
+
+
+```r
+x &lt;- c(1, 2, 3)
+```
+
+Are we creating x and it has values 1,2,3?
+
+
+--
+
+Not really, it’s more accurate to say that this code is:
+
+- Creating an object, a vector of values, c(1, 2, 3)
+- **binding that object to a name, x**
+
+&lt;img src="binding-1.png" width="178" /&gt;
+
+---
+
+## Binding basics cont.
+
+In fact, you can think of a name as a reference to a value. 
+
+For example, in the following code, we don't copy of the vector c(1, 2, 3), we get another binding to the existing object:
+
+
+```r
+y &lt;- x
+```
+
+We can use `lobstr::obj_addr()` to see these object's identifiers:
+
+.pull-left[
+
+```r
+obj_addr(x)
+```
+
+```
+## [1] "0x7f8d67b643f8"
+```
+
+```r
+obj_addr(y)
+```
+
+```
+## [1] "0x7f8d67b643f8"
+```
+]
+.pull-right[
+&lt;img src="binding-2.png" width="189" /&gt;
+]
+
+---
+
+## Copy-on-modify
+
+What happens to `x` when we modify `y` ?
+
+
+```r
+y[[3]] &lt;- 4
+```
+
+
+--
+
+
+
+```r
+x
+```
+
+```
+## [1] 1 2 3
+```
+
+Changing `y` did not modify `x`.
+
+This is due to a behavior called **copy-on-modify**. 
+
+.pull-left[
+
+```r
+obj_addr(x)
+```
+
+```
+## [1] "0x7f8d67b643f8"
+```
+
+```r
+obj_addr(y)
+```
+
+```
+## [1] "0x7f8d6e054b48"
+```
+]
+.pull-right[
+&lt;img src="binding-3.png" width="178" /&gt;
+]
+---
+## Copy-on-modify cont.
+
+We can use `tracemem()` to track when an object gets copied. It does so by printing the address of the object every time it is copied.
+
+
+```r
+x &lt;- c(1, 2, 3)
+cat(tracemem(x), "\n")
+```
+
+```
+## &lt;0x7f8d67b92b48&gt;
+```
+
+
+```r
+y &lt;- x
+y[[3]] &lt;- 4L
+```
+
+```
+## tracemem[0x7f8d67b92b48 -&gt; 0x7f8d67426f38]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt;
+```
+
+If we modify `y` again, we will not make another copy. That’s because the new object now only has a single name bound to it, `y`, so R applies modify-in-place optimisation.
+
+```r
+y[[3]] &lt;- 5L
+
+untracemem(x)
+```
+
+`untracemem()` is the opposite of tracemem(); it turns tracing off.
+---
+## Copy-on-modify: Lists
+
+It’s not just names that point to values; **elements** of lists do too. 
+
+Consider this list, which is appears similar to the vector above. 
+
+
+```r
+l1 &lt;- list(1, 2, 3)
+```
+
+This list is more complex because instead of storing the values itself, it stores references to them.
+
+&lt;img src="list.png" width="210" /&gt;
+
+--
+
+This is particularly important when we modify a list:
+.pull-left[
+
+```r
+l2 &lt;- l1
+```
+]
+.pull-right[
+&lt;img src="l-modify-1.png" width="157" /&gt;
+]
+---
+## Copy-on-modify: Lists cont.
+
+When modifications are made, the list object and its bindings are copied, but **the values pointed to by the bindings are not**.
+.pull-left[
+
+```r
+l2[[3]] &lt;- 4
+```
+]
+.pull-right[
+&lt;img src="l-modify-2.png" width="148" /&gt;
+]
+
+
+To see values' addresses that are shared across lists, use lobstr::ref().
+
+```r
+ref(l1, l2)
+```
+
+```
+## █ [1:0x7f8d6e7bb4f8] &lt;list&gt; 
+## ├─[2:0x7f8d6e764c10] &lt;dbl&gt; 
+## ├─[3:0x7f8d6e764bd8] &lt;dbl&gt; 
+## └─[4:0x7f8d6e764ba0] &lt;dbl&gt; 
+##  
+## █ [5:0x7f8d6eaa9138] &lt;list&gt; 
+## ├─[2:0x7f8d6e764c10] 
+## ├─[3:0x7f8d6e764bd8] 
+## └─[6:0x7f8d6ea697e0] &lt;dbl&gt;
+```
+
+
+---
+## Copy-on-modify: Data Frames
+Data frames are lists of vectors, so copy-on-modify has important consequences.
+
+
+```r
+d1 &lt;- data.frame(x = c(1, 5, 6),
+                 y = c(2, 4, 3))
+```
+
+
+&lt;img src="dataframe.png" width="184" /&gt;
+
+
+---
+## Copy-on-modify: Data Frames
+
+Data frames are lists of vectors, so copy-on-modify has important consequences.
+
+If we modify a column, only that column needs to be modified; the others will still point to their original references:
+
+.pull-left[
+
+```r
+d2 &lt;- d1
+d2[, 2] &lt;- d2[, 2] * 2
+```
+]
+.pull-right[
+&lt;img src="d-modify-c.png" width="236" /&gt;
+]
+
+
+---
+
+## Copy-on-modify: Data Frames
+
+Data frames are lists of vectors, so copy-on-modify has important consequences.
+
+If we modify a row, every column is modified, which means every column must be copied:
+
+.pull-left[
+
+```r
+d3 &lt;- d1
+d3[1, ] &lt;- d3[1, ] * 3
+```
+]
+.pull-right[
+&lt;img src="d-modify-r.png" width="362" /&gt;
+]
+
+
+---
+
+
+## Copy-on-modify: Character Vectors
+
+R actually uses a **global string pool** where each element of a character vector is a pointer to a *unique string* in the pool:
+
+```r
+x &lt;- c("a", "a", "abc", "d")
+ref(x, character = T)
+```
+
+```
+## █ [1:0x7f8d6e6540f8] &lt;chr&gt; 
+## ├─[2:0x7f8d661b2970] &lt;string: "a"&gt; 
+## ├─[2:0x7f8d661b2970] 
+## ├─[3:0x7f8d6e520a18] &lt;string: "abc"&gt; 
+## └─[4:0x7f8d66402e10] &lt;string: "d"&gt;
+```
+
+This has implications for how much memory a character vector uses. To find out, we use `lobstr::obj_size()`.
+
+.pull-left[
+
+```r
+obj_size(x)
+```
+
+```
+## 248 B
+```
+
+```r
+obj_size("d")
+```
+
+```
+## 112 B
+```
+]
+.pull-right[
+
+```r
+x&lt;-c(x,"d")
+obj_size(x)
+```
+
+```
+## 264 B
+```
+]
+
+---
+# obj_size `\(\neq\)` object.size
+
+When checking object size, `lobstr::obj_size()` will provide a more accurate result.
+
+This is commented on in the documentation for `utils::object.size()`
+
+&gt; "...it should be reasonably accurate for atomic vectors, 
+&gt; but does not detect if elements of a list are shared."
+&gt;
+&gt; &lt;footer&gt;--- ?object.size&lt;/footer&gt;
+
+
+```r
+y &lt;- rep(list(runif(1e4)), 100)
+```
+
+.pull-left[
+
+```r
+obj_size(y)
+```
+
+```
+## 80,896 B
+```
+]
+.pull-right[
+
+```r
+object.size(y)
+```
+
+```
+## 8005648 bytes
+```
+]
+
+---
+## Modify-in-place
+
+Modyfing an R object **usually** creates a copy. The exceptions are:
+
+
+- objects with a **single** binding (as shown earlier)
+
+
+- **Environments**, a special type of object, are **always** modified in place
+
+Implication: we can create functions that “remember” their previous state.
+
+.left-code-wide[
+
+```r
+e1 &lt;- rlang::env(a = 1, b = 2, c = 3)
+e2 &lt;- e1
+```
+&lt;img src="e-modify-1.png" width="204" /&gt;
+]
+.right-code-thin[
+
+```r
+e1$c &lt;- 4
+```
+&lt;img src="e-modify-2.png" width="204" /&gt;
+]
+
+
+---
+## Unbinding and the garbage collector
+
+.pull-left[
+
+```r
+x &lt;- 1:3
+```
+
+```r
+x &lt;- 2:4
+```
+
+```r
+rm(x)
+```
+]
+.pull-right[
+&lt;img src="unbinding-1-3.png" width="133" /&gt;
+]
+
+Objects get deleted thanks to the **garbage collector (GC)** . GC frees up memory by deleting R objects that are no longer used.
+GC runs automatically whenever R needs more memory to create a new object. 
+
+There is no reason to call `gc()` yourself  unless you *want* to:
+  - ask R to return memory to your operating system so other programs can use it, or
+  - to know how much memory is currently being used (use `lobstr::mem_used()`)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+<style>
+.logo {
+  background-image: url(r4ds.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 110px;
+  height: 128px;
+  z-index: 0;
+}
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"></div>';
+  });
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
