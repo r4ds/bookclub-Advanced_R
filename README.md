@@ -30,22 +30,7 @@ This repo contains 3 main folders:
 
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
-<<<<<<< HEAD
-- 2020-08-13 Chapter 3 - Vectors: Vajresh Balaji
 - 2020-08-20 Chapter 4 - Subsetting
-
-<details>
-  <summary> Week 2 Guiding Questions </summary>
-
-  Week 2
-
-- What is the difference between an object’s name and its values?
-- When you modify a vector, when does a copy occur? Are there cases when a copy isn’t created?
-- How do you check how much space and object occupies? What kinds of objects occupy the most/least space?
-- When does R’s garbage collection usually run? How do you manually clean up memory?
-
-</details>
-
 
 <details>
   <summary> Future Meetings </summary>
@@ -78,18 +63,19 @@ This repo contains 3 main folders:
 Chapter 1 - Introduction
 
 - Cohort 1: No recording available.
-- Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) ([slides](https://docs.google.com/presentation/d/1oKhqSY6L6yI3yMwB4JB1eduLqu6UWPZ7Y1v32FK042I/edit?usp=sharing) | video)
+- Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) ([slides](https://docs.google.com/presentation/d/1oKhqSY6L6yI3yMwB4JB1eduLqu6UWPZ7Y1v32FK042I/edit?usp=sharing) | [video](https://www.youtube.com/watch?v=PCG52lU_YlA&t))
 - Cohort 3: [Novica Nakov](https://twitter.com/novicanakov) ([video](https://www.youtube.com/watch?v=f6PuOnuZWBc))
 
 Chapter 2 - Names and values
 
 - Cohort 1: [Asmae Toumi](https://twitter.com/asmae_toumi) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Cohort1/Chap2slides.html#1))
-- Cohort 2: [Josh Pohlkamp-Hartt](https://twitter.com/jpohlkamphartt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Cohort2_America/Chapter2Slides.html#1) | video)
+- Cohort 2: [Josh Pohlkamp-Hartt](https://twitter.com/jpohlkamphartt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Cohort2_America/Chapter2Slides.html#1) | [video](https://www.youtube.com/watch?v=pCiNj2JRK50&t))
 - Cohort 3: [Anna-Leigh Brown](https://twitter.com/annaleighbrown2)([slides](https://docs.google.com/presentation/d/1HNmri86BXWrLThgjECqHOKN7KEab01BTDZCUDT2xUo8/edit?usp=sharing) | [video](https://youtu.be/-bEXdOoxO_E))
 
 Chapter 3 - Vectors
 
 - Cohort 1: [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort1/Chap3slides.html#1) | [video](https://www.youtube.com/watch?v=pQ-xDAPEQaw))
+- Cohort 2: - Vajresh Balaji 
 
 Chapter 4 - Subsetting
 
