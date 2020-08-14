@@ -15,7 +15,6 @@ This repo contains 3 main folders:
 
 *Cohort 1 (started 2020-04-02) - Tuesdays, 8pm EDT/EST*
 
-- 2020-08-11 Chapter 21 - Translating R code: Pavitra Chakravarty
 - 2020-08-18 Chapter 22 - Debugging: [Tan Ho](https://twitter.com/_tanho)
 - 2020-08-25 Chapter 23 - Measuring performance:
 
@@ -152,3 +151,7 @@ Chapter 19 - Quasiquotation
 Chapter 20 - Evaluation
 
 - Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week19/Cohort1/AdvRChapter20#1) | [video](https://www.youtube.com/watch?v=4En_Ypvtjqw))
+
+Chapter 21 - Translating R Code (Domain Specific Languages)
+
+- Cohort 1: Pavitra Chakravarty ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week20/Cohort1/Chapter21.html#1) | video)
