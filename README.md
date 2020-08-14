@@ -30,7 +30,6 @@ This repo contains 3 main folders:
 
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
-- 2020-08-13 Chapter 3 - Vectors: Vajresh Balaji
 - 2020-08-20 Chapter 4 - Subsetting
 
 <details>
@@ -88,6 +87,8 @@ Chapter 2 - Names and values
 Chapter 3 - Vectors
 
 - Cohort 1: [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort1/Chap3slides.html#1) | [video](https://www.youtube.com/watch?v=pQ-xDAPEQaw))
+- Cohort 2: [Vajresh Balaji](https://twitter.com/bvajresh)
+([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort2/Chapter3slides.html#1) | video)
 
 Chapter 4 - Subsetting
 
