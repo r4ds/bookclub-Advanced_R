@@ -30,6 +30,7 @@ This repo contains 3 main folders:
 
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
+<<<<<<< HEAD
 - 2020-08-13 Chapter 3 - Vectors: Vajresh Balaji
 - 2020-08-20 Chapter 4 - Subsetting
 
@@ -44,6 +45,7 @@ This repo contains 3 main folders:
 - When does R’s garbage collection usually run? How do you manually clean up memory?
 
 </details>
+
 
 <details>
   <summary> Future Meetings </summary>
