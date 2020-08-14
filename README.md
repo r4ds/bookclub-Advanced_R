@@ -154,4 +154,4 @@ Chapter 20 - Evaluation
 
 Chapter 21 - Translating R Code (Domain Specific Languages)
 
-- Cohort 1: Pavitra Chakravarty ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week20/Cohort1/Chapter21.html#1) | video)
+- Cohort 1: Pavitra Chakravarty ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week20/Cohort1/Chapter21.html#1) | [video](https://www.youtube.com/watch?v=fixyitpXrwY))
