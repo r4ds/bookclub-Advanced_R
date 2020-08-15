@@ -17,13 +17,14 @@ This repo contains 3 main folders:
 
 - 2020-08-11 Chapter 21 - Translating R code: Pavitra Chakravarty
 - 2020-08-18 Chapter 22 - Debugging: [Tan Ho](https://twitter.com/_tanho)
-- 2020-08-25 Chapter 23 - Measuring performance:
+- 2020-08-25 Metaprogramming review
+- 2020-09-01 Chapter 23 - Measuring performance:
 
 <details>
   <summary> Future Meetings </summary>
   
-- 2020-09-01 Chapter 24 - Improving performance:
-- 2020-09-08 Chapter 25 - Rewriting R code in C++:
+- 2020-09-08 Chapter 24 - Improving performance:
+- 2020-09-15 Chapter 25 - Rewriting R code in C++:
 
 </details>
 <hr>
