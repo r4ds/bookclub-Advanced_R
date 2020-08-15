@@ -31,6 +31,15 @@ This repo contains 3 main folders:
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
 - 2020-08-20 Chapter 4 - Subsetting
+<details>
+  <summary> Chapter 4 Guiding Questions </summary>
+
+- Why are there six methods for subsetting atomic vectors? Are there different use cases or purposes for each? 
+- What are the similarities and differences between subsetting vectors, lists, dataframes, and tibbles? 
+- What is the difference between simplifying and preserving when subsetting? 
+- What are the most common use cases for subsetting? 
+
+</details>
 
 <details>
   <summary> Future Meetings </summary>
