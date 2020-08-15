@@ -1,26 +1,27 @@
 # R4DS [Advanced R](https://adv-r.hadley.nz/) Bookclub
 A weekly reading group following the chapters of Advanced R by Hadley Wickham (2nd ed)
 
-Visit the [#book_club-advanced_r channel](https://r4ds.io/join) on Slack to join the video chat!
+Visit the [#book_club-advanced_r channel](https://r4ds.io/join) on Slack to join the video chat! 
 
 This repo contains 3 main folders:
 
 - QandA: A [bookdown collection of chapter questions and answers](https://r4ds.github.io/bookclub-Advanced_R/QandA/docs/welcome.html) that come up during meetings (or between!). We're also using this to try to answer questions marked "started" in the solutions manual with the potential goal of submitting PRs with our own answers!
 
-- Presentations: each week a presenter will give a talk summarizing the chapter and/or discussing practical applications of the topic at hand.
+- Presentations: each week a presenter will give a talk summarizing the chapter and/or discussing practical applications of the topic at hand. 
 
 - Data: Example datasets about [beer production](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-03-31/readme.md) and beer reviews are stored in this folder to help facilitate practical applications!
 
-### Meeting Schedule
+### Meeting Schedule 
 
 *Cohort 1 (started 2020-04-02) - Tuesdays, 8pm EDT/EST*
 
+- 2020-08-11 Chapter 21 - Translating R code: Pavitra Chakravarty
 - 2020-08-18 Chapter 22 - Debugging: [Tan Ho](https://twitter.com/_tanho)
 - 2020-08-25 Chapter 23 - Measuring performance:
 
 <details>
   <summary> Future Meetings </summary>
-
+  
 - 2020-09-01 Chapter 24 - Improving performance:
 - 2020-09-08 Chapter 25 - Rewriting R code in C++:
 
@@ -30,18 +31,6 @@ This repo contains 3 main folders:
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
 - 2020-08-20 Chapter 4 - Subsetting
-
-<details>
-  <summary> Week 2 Guiding Questions </summary>
-
-  Week 2
-
-- What is the difference between an object’s name and its values?
-- When you modify a vector, when does a copy occur? Are there cases when a copy isn’t created?
-- How do you check how much space and object occupies? What kinds of objects occupy the most/least space?
-- When does R’s garbage collection usually run? How do you manually clean up memory?
-
-</details>
 
 <details>
   <summary> Future Meetings </summary>
@@ -54,9 +43,10 @@ This repo contains 3 main folders:
 
 <hr>
 
-*Cohort 3 [Europe/Africa]: (started 2020-08-04) Tuesdays, 19:30 CET (CEST)*
-- 2020-08-18 Chapter 3 - Vectors
-- 2020-08-25 Chapter 4 - Subsetting [Shel] and [Alan Kinene]
+*Cohort 3 [Europe/Africa]: (started 2020-08-04) Tuesdays, 19:15 CET (CEST)*
+- 2020-08-11 Chapter 2 - Names and values [Anna-Leigh](https://twitter.com/annaleighbrown2)
+- 2020-08-18 Chapter 3 - Vectors 
+- 2020-08-25 Chapter 4 - Subsetting [Shel] and [Alan Kinene] 
 - 2020-08-27 Chapter 5 - Control Flow [Megan Stodel]
 
 <details>
@@ -74,19 +64,18 @@ This repo contains 3 main folders:
 Chapter 1 - Introduction
 
 - Cohort 1: No recording available.
-- Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) ([slides](https://docs.google.com/presentation/d/1oKhqSY6L6yI3yMwB4JB1eduLqu6UWPZ7Y1v32FK042I/edit?usp=sharing) | video)
+- Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) ([slides](https://docs.google.com/presentation/d/1oKhqSY6L6yI3yMwB4JB1eduLqu6UWPZ7Y1v32FK042I/edit?usp=sharing) | [video](https://www.youtube.com/watch?v=PCG52lU_YlA&t))
 - Cohort 3: [Novica Nakov](https://twitter.com/novicanakov) ([video](https://www.youtube.com/watch?v=f6PuOnuZWBc))
 
 Chapter 2 - Names and values
 
 - Cohort 1: [Asmae Toumi](https://twitter.com/asmae_toumi) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Cohort1/Chap2slides.html#1))
-- Cohort 2: [Josh Pohlkamp-Hartt](https://twitter.com/jpohlkamphartt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Cohort2_America/Chapter2Slides.html#1) | video)
-- Cohort 3: [Anna-Leigh Brown](https://twitter.com/annaleighbrown2)([slides](https://docs.google.com/presentation/d/1HNmri86BXWrLThgjECqHOKN7KEab01BTDZCUDT2xUo8/edit?usp=sharing) | [video](https://youtu.be/-bEXdOoxO_E))
+- Cohort 2: [Josh Pohlkamp-Hartt](https://twitter.com/jpohlkamphartt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Cohort2_America/Chapter2Slides.html#1) | [video](https://www.youtube.com/watch?v=pCiNj2JRK50&t))
 
 Chapter 3 - Vectors
 
 - Cohort 1: [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort1/Chap3slides.html#1) | [video](https://www.youtube.com/watch?v=pQ-xDAPEQaw))
-- Cohort 2: [Vajresh Balaji](https://twitter.com/bvajresh) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort2/Chapter3Slides.html#1) | video)
+- Cohort 2: Vajresh Balaji
 
 Chapter 4 - Subsetting
 
@@ -140,7 +129,7 @@ Chapter 17 - Metaprogramming, big picture
 
 - Cohort 1: [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week16/Cohort1/Chapter17.html#1) | [video](https://www.youtube.com/watch?v=10gRbFMoh7g))
 
-Chapter 18 - Expressions
+Chapter 18 - Expressions 
 
 - Cohort 1: [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week17/Cohort1/Chapter18.html#1) | [video](https://youtu.be/2NixH3QAerQ) | app | [app code](https://github.com/r4ds/bookclub-Advanced_R/tree/master/Presentations/Week17/Cohort1/expressions))
 
@@ -151,7 +140,3 @@ Chapter 19 - Quasiquotation
 Chapter 20 - Evaluation
 
 - Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week19/Cohort1/AdvRChapter20#1) | [video](https://www.youtube.com/watch?v=4En_Ypvtjqw))
-
-Chapter 21 - Translating R Code (Domain Specific Languages)
-
-- Cohort 1: Pavitra Chakravarty ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week20/Cohort1/Chapter21.html#1) | [video](https://www.youtube.com/watch?v=fixyitpXrwY))
