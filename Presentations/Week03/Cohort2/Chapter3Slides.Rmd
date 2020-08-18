@@ -1,0 +1,235 @@
+---
+title: "Advanced R"
+subtitle: "Chapter 3: Vectors"
+author: "Vajresh Balaji"
+institute: "@bvajresh"
+date: " `r Sys.Date()` "
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+---
+
+
+```{r xaringan-themer, include = FALSE}
+library(xaringanthemer)
+style_mono_light(
+  base_color = "#3092FF",
+  header_font_google = google_font("Josefin Sans"),
+  text_font_google   = google_font("Montserrat", "300", "300i"),
+  code_font_google   = google_font("Droid Mono"),
+)
+```
+
+# Outline
+
+- 3.2  Atomic Vectors
+- 3.3 Attributes
+- 3.4 S3 Atomic Vectors
+- 3.5 Lists
+- 3.6 Dataframes and Tibbles
+- 3.7 NULL
+
+---
+## Vectors
+ - 2 types of vectors
+  - Atomic
+  - List
+
+---
+## Atomic Vectors
+- 4 common types
+```{r}
+    a <- c(1,2,3,4) #Integer
+    b <- c(TRUE, FALSE, T, F) #Logical
+    c <- c(1.2, 2.3, 5.0) #Double
+    d <- c("apple", "banana") #Character
+``` 
+- Rare types of Atomic Vectors: Raw and Complex
+
+---
+## Missing Values
+
+- R uses `NA` to represent missing values.
+```{r}
+x <- c(NA, 5, NA, 10)
+x == NA
+```
+
+- Use `is.na()` to check for missing values
+```{r}
+is.na(x)
+```
+
+---
+## Testing
+- Type of vectors can be tested with `is.*()` function.
+- `is.logical()`, `is.integer()`, `is.double()`, and `is.character()`
+- Avoid using `is.vector()`, `is.atomic()`, and `is.numeric()`
+
+---
+## Coercion
+- For atomic vectors, type is a property of the entire vector.
+- When attempting to combine different types of elements, they will be *coerced* in a fixed order.
+- character -> double -> integer -> logical
+
+```{r}
+str(c("a", 1))
+```
+- Coercion happens automatically. 
+```{r}
+x <- c(FALSE, FALSE, TRUE)
+as.numeric(x)
+
+sum(x) #Total number of TRUEs
+```
+- Using `as.*()` allows us to deliberately coerce. 
+  - `as.logical()`,`as.integer()`, `as.double()` and `as.character()`
+
+---
+## Attributes
+- Attributes can be added to atomic vectors to build data structures like Arrays, Matrices, Factors or date-times.
+- They can be individually set and retrieved using `attr()`
+```{r}
+car = "CR-V"
+attr(car,'manufacturer') <- 'Honda'
+attr(car, 'manufacturer')
+```
+- Set multiple attributes using
+```{r}
+car2 <- structure("Model S", manufacturer = "Tesla", year = 2020)
+```
+
+- You can retrieve multiple attributes by using
+```{r}
+attributes(car2)
+```
+---
+
+## Names
+
+```{r}
+x <- c(apple = 'a', banana = 'b') # 1
+x
+y <- c('a', 'b')
+names(y) <- c('apple', 'banana') # 2
+y
+setNames(y, c('apple', 'banana')) # 3
+```
+
+<small>Source: TonyElHabr Chapter 3 slide 8</small>
+---
+## Dimensions
+- Allows vector to behave like a matrix or an array.
+```{r}
+a <- matrix(1:6, nrow = 2, ncol = 3)
+a
+b <- matrix(1:6, c(1, 3, 2))
+b
+```
+
+---
+## Unusual Behaviour
+- Vectors without `dim` are thought of as 1-dimensionals but are `NULL`
+- Matrices with 1 row or col and 1-dimensional arrays print the same but behave differently
+- Use `str()` to reveal the differences.
+
+---
+## S3 Atomic Vectors
+- Objects that have a `class` attribute. 
+- 4 types of S3 vectors
+  - factor (categorical)
+  - Date (date)
+  - POSIXct (date-time)
+  - duration (difftime)
+
+---
+## Factors
+- Vectors that only contain pre-defined values
+- Used for Categorical Data
+```{r}
+sex_char <- c("m", "m", "m")
+sex_factor <- factor(sex_char, levels = c("m", "f"))
+table(sex_factor)
+
+
+grade <- ordered(c("b", "b", "a", "c"), levels = c("c", "b", "a"))
+grade
+```
+- Many base R functions automatically convert character vectors into factors.
+- Use `stringsAsFactors = FALSE` to supress this behaviour.
+
+---
+
+### Dates, POSIXct & Duration
+- All built on top of double vectors.
+- Dates
+```{r}
+today <- Sys.Date()
+typeof(today)
+attributes(today)
+```
+- Date-times
+  - Two types of storing date-time: POSIXct & POSIXlt
+  - Underlying value represents number of seconds since Jan 1, 1970.
+  - `tzone` attribute
+
+---
+
+- Duration
+  - Amount of time between date/date-time pairs. 
+  - Stored in `difftimes`
+  - `units` attribute to determine how integer should be interpreted.
+```{r}
+one_week_1 <- as.difftime(1, units = "weeks")
+one_week_1
+typeof(one_week_1)
+attributes(one_week_1)
+```
+---
+
+## Lists
+- Can be of any atomic type or contain other lists.
+```{r}
+    e <- list(1, TRUE, 1.2, "apple", list(2, 4, 6))
+```
+- Elements of a list are references.
+- `c()` combines several lists into one if there given a combination of atomic vectors and lists.
+```{r}
+l4 <- list(list(1, 2), c(3, 4))
+str(l4)
+```
+
+---
+## Data Frames
+- S3 Vectors that are built on top of lists. 
+```{r}
+df1 <- data.frame(x = 1:3, y = letters[1:3])
+typeof(df1)
+attributes(df1)
+```
+- Constraint
+  - Length of each vector must be the same
+
+---
+## Tibble
+- Share the same structure as data frames
+- class vectors are longer
+- Default behaviour: `stringsAsFactors = FALSE`
+- Discourages rownames
+- "Nicer" Printing
+
+---
+
+## NULL
+- NULL has a unique type
+```{r}
+typeof(NULL)
+length(NULL)
+```
+- Common uses
+  - Represent an empty vector
+```{r}
+c()
+```
+  - Represent an absent vector
