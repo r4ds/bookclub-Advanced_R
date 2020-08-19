@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-08-07" />
+<meta name="date" content="2020-08-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -308,7 +308,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="17" data-path="big-picture.html"><a href="big-picture.html"><i class="fa fa-check"></i><b>17</b> 17 Big Picture</a><ul>
 <li class="chapter" data-level="" data-path="big-picture.html"><a href="big-picture.html#quosures"><i class="fa fa-check"></i>17.8 Quosures</a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="expressions.html"><a href="expressions.html"><i class="fa fa-check"></i><b>18</b> Expressions</a></li>
+<li class="chapter" data-level="18" data-path="expressions.html"><a href="expressions.html"><i class="fa fa-check"></i><b>18</b> Expressions</a><ul>
+<li class="chapter" data-level="" data-path="expressions.html"><a href="expressions.html#recursive-functions"><i class="fa fa-check"></i>18.5 Recursive functions</a></li>
+</ul></li>
 <li class="chapter" data-level="19" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>19</b> Quasiquotation</a><ul>
 <li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#motivation"><i class="fa fa-check"></i>19.2 Motivation</a></li>
 <li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#substitution"><i class="fa fa-check"></i>19.3.4 Substitution</a></li>
@@ -337,6 +339,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#handling-ambiguity"><i class="fa fa-check"></i>20.5.2 Handling ambiguity</a></li>
 <li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#substitute"><i class="fa fa-check"></i>20.6.1 substitute()</a></li>
 <li><a href="evaluation.html#match.call">20.6.2 <code>match.call</code></a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="translating-r-code.html"><a href="translating-r-code.html"><i class="fa fa-check"></i><b>21</b> Translating R Code</a><ul>
+<li class="chapter" data-level="" data-path="translating-r-code.html"><a href="translating-r-code.html#basic-tag-functions"><i class="fa fa-check"></i>21.2.3 Basic tag functions</a></li>
+<li class="chapter" data-level="" data-path="translating-r-code.html"><a href="translating-r-code.html#tag-functions"><i class="fa fa-check"></i>21.2.4 Tag functions</a></li>
+<li class="chapter" data-level="21.1" data-path="translating-r-code.html"><a href="translating-r-code.html#to_math"><i class="fa fa-check"></i><b>21.1</b> 21.3.3 <code>to_math()</code></a></li>
+<li class="chapter" data-level="21.2" data-path="subsetting.html"><a href="subsetting.html#section"><i class="fa fa-check"></i><b>21.2</b> 21.3.5</a></li>
+<li class="chapter" data-level="21.3" data-path="translating-r-code.html"><a href="translating-r-code.html#unknown-functions"><i class="fa fa-check"></i><b>21.3</b> 21.3.6 Unknown functions</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="debugging.html"><a href="debugging.html"><i class="fa fa-check"></i><b>22</b> Debugging</a><ul>
+<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#lazy-evaluation"><i class="fa fa-check"></i>22.3 Lazy evaluation</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#broswer"><i class="fa fa-check"></i>22.4.1 broswer</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#breakpoints"><i class="fa fa-check"></i>22.4.2.1 Breakpoints</a></li>
+<li class="chapter" data-level="22.1" data-path="debugging.html"><a href="debugging.html#recover"><i class="fa fa-check"></i><b>22.1</b> 22.4.2.2 <code>recover</code></a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#debug"><i class="fa fa-check"></i>22.4.2.3 debug</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#non-interactive-debugging"><i class="fa fa-check"></i>22.5 Non-interactive debugging</a></li>
+<li><a href="debugging.html#dump.frames">22.5.1 <code>dump.frames</code></a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -370,56 +388,56 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div class="question">
 <p>I love the idea of creating templates then shoving in code using <code>!!</code> can we create a template that inserts a filtering statement into our tidypipeline?</p>
-<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb624-1" data-line-number="1"><span class="co"># this is my template</span></a>
-<a class="sourceLine" id="cb624-2" data-line-number="2">iris <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb624-3" data-line-number="3"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb624-4" data-line-number="4"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb624-5" data-line-number="5"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_point</span>()</a>
-<a class="sourceLine" id="cb624-6" data-line-number="6"><span class="co"># somehow insert this into the template at line 2</span></a>
-<a class="sourceLine" id="cb624-7" data-line-number="7">dplyr<span class="op">::</span><span class="kw">filter</span>(Sepal.Length <span class="op">&gt;</span><span class="st"> </span><span class="fl">4.5</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb624-8" data-line-number="8"><span class="co"># to create something prettier than </span></a>
-<a class="sourceLine" id="cb624-9" data-line-number="9"><span class="cf">if</span> (x <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) {</a>
-<a class="sourceLine" id="cb624-10" data-line-number="10">  iris <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb624-11" data-line-number="11"><span class="st">    </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Sepal.Length <span class="op">&gt;</span><span class="st"> </span><span class="fl">4.5</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb624-12" data-line-number="12"><span class="st">    </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb624-13" data-line-number="13"><span class="st">    </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb624-14" data-line-number="14"><span class="st">    </span>ggplot2<span class="op">::</span><span class="kw">geom_point</span>()</a>
-<a class="sourceLine" id="cb624-15" data-line-number="15">} <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb624-16" data-line-number="16">  iris <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb624-17" data-line-number="17"><span class="st">    </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb624-18" data-line-number="18"><span class="st">    </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb624-19" data-line-number="19"><span class="st">    </span>ggplot2<span class="op">::</span><span class="kw">geom_point</span>()</a>
-<a class="sourceLine" id="cb624-20" data-line-number="20">}</a></code></pre></div>
+<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb626-1" data-line-number="1"><span class="co"># this is my template</span></a>
+<a class="sourceLine" id="cb626-2" data-line-number="2">iris <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb626-3" data-line-number="3"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb626-4" data-line-number="4"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb626-5" data-line-number="5"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_point</span>()</a>
+<a class="sourceLine" id="cb626-6" data-line-number="6"><span class="co"># somehow insert this into the template at line 2</span></a>
+<a class="sourceLine" id="cb626-7" data-line-number="7">dplyr<span class="op">::</span><span class="kw">filter</span>(Sepal.Length <span class="op">&gt;</span><span class="st"> </span><span class="fl">4.5</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb626-8" data-line-number="8"><span class="co"># to create something prettier than </span></a>
+<a class="sourceLine" id="cb626-9" data-line-number="9"><span class="cf">if</span> (x <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) {</a>
+<a class="sourceLine" id="cb626-10" data-line-number="10">  iris <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb626-11" data-line-number="11"><span class="st">    </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Sepal.Length <span class="op">&gt;</span><span class="st"> </span><span class="fl">4.5</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb626-12" data-line-number="12"><span class="st">    </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb626-13" data-line-number="13"><span class="st">    </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb626-14" data-line-number="14"><span class="st">    </span>ggplot2<span class="op">::</span><span class="kw">geom_point</span>()</a>
+<a class="sourceLine" id="cb626-15" data-line-number="15">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb626-16" data-line-number="16">  iris <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb626-17" data-line-number="17"><span class="st">    </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb626-18" data-line-number="18"><span class="st">    </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb626-19" data-line-number="19"><span class="st">    </span>ggplot2<span class="op">::</span><span class="kw">geom_point</span>()</a>
+<a class="sourceLine" id="cb626-20" data-line-number="20">}</a></code></pre></div>
 </div>
-<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb625-1" data-line-number="1">customizable_iris &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">pipeline_insertion =</span> <span class="ot">NULL</span>){</a>
-<a class="sourceLine" id="cb625-2" data-line-number="2">  dt &lt;-<span class="st"> </span>rlang<span class="op">::</span><span class="kw">expr</span>(iris)</a>
-<a class="sourceLine" id="cb625-3" data-line-number="3">  pi &lt;-<span class="st"> </span>rlang<span class="op">::</span><span class="kw">enexpr</span>(pipeline_insertion)</a>
-<a class="sourceLine" id="cb625-4" data-line-number="4">  <span class="cf">if</span> (<span class="op">!</span>rlang<span class="op">::</span><span class="kw">is_null</span>(pi))</a>
-<a class="sourceLine" id="cb625-5" data-line-number="5">    dt &lt;-<span class="st"> </span>rlang<span class="op">::</span><span class="kw">expr</span>(<span class="op">!!</span>dt <span class="op">%&gt;%</span><span class="st"> </span><span class="op">!!</span>pi)</a>
-<a class="sourceLine" id="cb625-6" data-line-number="6">  rlang<span class="op">::</span><span class="kw">expr</span>(</a>
-<a class="sourceLine" id="cb625-7" data-line-number="7">    <span class="op">!!</span>dt <span class="op">%&gt;%</span><span class="st">  </span></a>
-<a class="sourceLine" id="cb625-8" data-line-number="8"><span class="st">      </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb625-9" data-line-number="9"><span class="st">      </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb625-10" data-line-number="10"><span class="st">      </span>ggplot2<span class="op">::</span><span class="kw">geom_point</span>()</a>
-<a class="sourceLine" id="cb625-11" data-line-number="11">  )</a>
-<a class="sourceLine" id="cb625-12" data-line-number="12">}</a>
-<a class="sourceLine" id="cb625-13" data-line-number="13">(x &lt;-<span class="st"> </span><span class="kw">customizable_iris</span>(dplyr<span class="op">::</span><span class="kw">filter</span>(Sepal.Length <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>)))</a></code></pre></div>
+<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb627-1" data-line-number="1">customizable_iris &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">pipeline_insertion =</span> <span class="ot">NULL</span>){</a>
+<a class="sourceLine" id="cb627-2" data-line-number="2">  dt &lt;-<span class="st"> </span>rlang<span class="op">::</span><span class="kw">expr</span>(iris)</a>
+<a class="sourceLine" id="cb627-3" data-line-number="3">  pi &lt;-<span class="st"> </span>rlang<span class="op">::</span><span class="kw">enexpr</span>(pipeline_insertion)</a>
+<a class="sourceLine" id="cb627-4" data-line-number="4">  <span class="cf">if</span> (<span class="op">!</span>rlang<span class="op">::</span><span class="kw">is_null</span>(pi))</a>
+<a class="sourceLine" id="cb627-5" data-line-number="5">    dt &lt;-<span class="st"> </span>rlang<span class="op">::</span><span class="kw">expr</span>(<span class="op">!!</span>dt <span class="op">%&gt;%</span><span class="st"> </span><span class="op">!!</span>pi)</a>
+<a class="sourceLine" id="cb627-6" data-line-number="6">  rlang<span class="op">::</span><span class="kw">expr</span>(</a>
+<a class="sourceLine" id="cb627-7" data-line-number="7">    <span class="op">!!</span>dt <span class="op">%&gt;%</span><span class="st">  </span></a>
+<a class="sourceLine" id="cb627-8" data-line-number="8"><span class="st">      </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb627-9" data-line-number="9"><span class="st">      </span>ggplot2<span class="op">::</span><span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb627-10" data-line-number="10"><span class="st">      </span>ggplot2<span class="op">::</span><span class="kw">geom_point</span>()</a>
+<a class="sourceLine" id="cb627-11" data-line-number="11">  )</a>
+<a class="sourceLine" id="cb627-12" data-line-number="12">}</a>
+<a class="sourceLine" id="cb627-13" data-line-number="13">(x &lt;-<span class="st"> </span><span class="kw">customizable_iris</span>(dplyr<span class="op">::</span><span class="kw">filter</span>(Sepal.Length <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>)))</a></code></pre></div>
 <pre><code>## iris %&gt;% dplyr::filter(Sepal.Length &gt; 5) %&gt;% ggplot2::ggplot() + 
 ##     ggplot2::aes(x = Sepal.Length, y = Sepal.Width) + ggplot2::geom_point()</code></pre>
-<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb627-1" data-line-number="1">rlang<span class="op">::</span><span class="kw">eval_bare</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb629-1" data-line-number="1">rlang<span class="op">::</span><span class="kw">eval_bare</span>(x)</a></code></pre></div>
 <p><img src="17-big_picture_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>Any valid r code can be converted into an expression or list of expressions, and expressions can be patched together using this unquoting (forcing) procedure.</p>
 <p>Probably best thoguht of in terms of the tree structure, by replacing one node with another expression:</p>
-<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb628-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">ast</span>(a <span class="op">+</span><span class="st"> </span>b)</a></code></pre></div>
+<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb630-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">ast</span>(a <span class="op">+</span><span class="st"> </span>b)</a></code></pre></div>
 <pre><code>## █─`+` 
 ## ├─a 
 ## └─b</code></pre>
-<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb630-1" data-line-number="1">b &lt;-<span class="st"> </span>rlang<span class="op">::</span><span class="kw">expr</span>(x <span class="op">+</span><span class="st"> </span>y)</a>
-<a class="sourceLine" id="cb630-2" data-line-number="2">lobstr<span class="op">::</span><span class="kw">ast</span>(<span class="op">!!</span>b)</a></code></pre></div>
+<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb632-1" data-line-number="1">b &lt;-<span class="st"> </span>rlang<span class="op">::</span><span class="kw">expr</span>(x <span class="op">+</span><span class="st"> </span>y)</a>
+<a class="sourceLine" id="cb632-2" data-line-number="2">lobstr<span class="op">::</span><span class="kw">ast</span>(<span class="op">!!</span>b)</a></code></pre></div>
 <pre><code>## █─`+` 
 ## ├─x 
 ## └─y</code></pre>
-<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb632-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">ast</span>(a <span class="op">+</span><span class="st"> </span><span class="op">!!</span>b)</a></code></pre></div>
+<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb634-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">ast</span>(a <span class="op">+</span><span class="st"> </span><span class="op">!!</span>b)</a></code></pre></div>
 <pre><code>## █─`+` 
 ## ├─a 
 ## └─█─`+` 

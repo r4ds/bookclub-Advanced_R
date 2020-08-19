@@ -24,7 +24,7 @@ This is such a cool function - where is it used in the wild?
 
 When wanting to have variables stored in the environment of a function, or if you want to run an expression that produces bindings, but you don't want those bindings to persist.
 
-```{r}
+```{r, eval=FALSE}
 counter <- local({ 
   i <- 0; function() { 
     i <<- i + 1; print(i)
@@ -34,6 +34,12 @@ counter <- local({
 counter()
 counter()
 counter()
+```
+
+```
+[1] 1
+[1] 2
+[1] 3
 ```
 
 We can also wrap `for` loops in a `local` call to avoid the object being iterated over getting assigned to the global environment
@@ -89,7 +95,7 @@ I think I understand this issue based on the concrete example but can we summari
 
 It's basically that the printing of the function is a lie (because base R doesn't get it). And that's dangerous and confusing, so use rlang to make it not a lie.
 
-```{r}
+```{r, eval=FALSE}
 x <- 10
 y <- 20
 f <- eval(expr(function(x, y) !!x + !!y))
@@ -98,14 +104,14 @@ f()
 attributes(f)
 ```
 
-```{r}
+```{r,eval=FALSE}
 attr(f, "srcref") <- NULL
 f
 ```
 
 The REAL function is `10 + 20`, but the initial `srcref` keeps the `!!x` and `!!y`, which is meaningless. This might help explain why there's a problem:
 
-```{r}
+```{r,eval=FALSE}
 x <- 10
 y <- 20
 f <- eval(expr(function(x, y) !!x + !!y))
@@ -113,7 +119,7 @@ f
 f()
 ```
 
-```{r}
+```{r, eval=FALSE}
 x <- 2000
 y <- 3000
 f()
@@ -258,7 +264,7 @@ What is the `eval_tidy` doing here?
 :::
 
 
-```{r}
+```{r, eval=FALSE}
 subset2 <- function(data, rows) {
   rows <- enquo(rows)
   # creates a quosure out of the enquoted rows
@@ -309,7 +315,7 @@ transform2 <- function(.data, ...) {
 
 Is there a case where this subtle distinction between `.env$val` vs `!!val` matters? 
 
-```{r}
+```{r, eval=FALSE}
 subset2 <- function(data, rows) {
   rows <- enquo(rows)
   # change val from 2 to 3, breaking things
@@ -320,7 +326,7 @@ subset2 <- function(data, rows) {
 }
 ```
 
-```{r}
+```{r, eval=FALSE}
 threshold_prefix <- function(df, val) {
   subset2(df, .data$x >= .env$val)
 }
@@ -371,7 +377,7 @@ When it appears unquoted in the call to `subset2`, it loses its... history, basi
 Why exactly can't we use `subset` with `map`?
 
 This works, not sure why the book says it wouldn't....
-```{r}
+```{r,eval=FALSE}
 subset_base <- function(data, rows) {
   rows <- substitute(rows)
   rows_val <- eval(rows, data, caller_env())
@@ -506,3 +512,48 @@ In [this thread](https://community.rstudio.com/t/quasiquotation-inside-a-formula
 
 Seems like when wrapping a base NSE function like `lm` or trying to `deparse(substitute(x))` using `rlang`
 
+:::question
+How do you capture the unquoting operator !! without evaluating it in the rlang framework:
+
+```{r, eval=FALSE}
+reflect_lang <- function(lang) {
+  r <- rlang::enexpr(lang)
+  r
+}
+
+reflect_lang(x+y)
+```
+
+```
+x + y
+```
+
+```{r, eval=FALSE}
+reflect_lang(!!x)
+```
+
+```
+# Error in rlang::enexpr(lang): object 'x' not found
+```
+
+```{r,eval=FALSE}
+reflect_lang(quote(!!x))
+```
+
+```
+# Error in rlang::enexpr(lang): object 'x' not found
+```
+
+Desired output: `!!x`
+:::
+
+```{r, eval=FALSE}
+reflect_rlang <- function(expr) {
+  substitute(expr)
+}
+reflect_rlang(!!x) 
+```
+
+```
+!!x
+```

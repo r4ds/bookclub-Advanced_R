@@ -28,26 +28,14 @@ counter <- local({
 })
 
 counter()
-```
-
-```
-## [1] 1
-```
-
-```r
+counter()
 counter()
 ```
 
 ```
-## [1] 2
-```
-
-```r
-counter()
-```
-
-```
-## [1] 3
+[1] 1
+[1] 2
+[1] 3
 ```
 
 We can also wrap `for` loops in a `local` call to avoid the object being iterated over getting assigned to the global environment
@@ -112,38 +100,14 @@ x <- 10
 y <- 20
 f <- eval(expr(function(x, y) !!x + !!y))
 f
-```
-
-```
-## function(x, y) !!x + !!y
-```
-
-```r
 f()
-```
-
-```
-## [1] 30
-```
-
-```r
 attributes(f)
-```
-
-```
-## $srcref
-## function(x, y) !!x + !!y
 ```
 
 
 ```r
 attr(f, "srcref") <- NULL
 f
-```
-
-```
-## function (x, y) 
-## 10 + 20
 ```
 
 The REAL function is `10 + 20`, but the initial `srcref` keeps the `!!x` and `!!y`, which is meaningless. This might help explain why there's a problem:
@@ -154,18 +118,7 @@ x <- 10
 y <- 20
 f <- eval(expr(function(x, y) !!x + !!y))
 f
-```
-
-```
-## function(x, y) !!x + !!y
-```
-
-```r
 f()
-```
-
-```
-## [1] 30
 ```
 
 
@@ -173,36 +126,12 @@ f()
 x <- 2000
 y <- 3000
 f()
-```
-
-```
-## [1] 30
-```
-
-```r
 #> [1] 30
 attributes(f)
-```
-
-```
-## $srcref
-## function(x, y) !!x + !!y
-```
-
-```r
 #> $srcref
 #> function(x, y) !!x + !!y
 attr(f, "srcref") <- NULL
 f
-```
-
-```
-## function (x, y) 
-## 10 + 20
-## <bytecode: 0x7f7f25ea2b50>
-```
-
-```r
 #> function (x, y) 
 #> 10 + 20
 #> <bytecode: 0x000000001421eb90>
@@ -359,12 +288,6 @@ df <- subset2(palmerpenguins::penguins, species == "Adelie")
 table(df$species)
 ```
 
-```
-## 
-##    Adelie Chinstrap    Gentoo 
-##       152         0         0
-```
-
 ## 20.4.5 `transform` {-}
 
 :::question
@@ -403,6 +326,18 @@ Is there a case where this subtle distinction between `.env$val` vs `!!val` matt
 
 
 ```r
+subset2 <- function(data, rows) {
+  rows <- enquo(rows)
+  # change val from 2 to 3, breaking things
+  env_bind(caller_env(), val = 3)
+  rows_val <- eval_tidy(rows, data)
+  stopifnot(is.logical(rows_val))
+  data[rows_val, , drop = FALSE]
+}
+```
+
+
+```r
 threshold_prefix <- function(df, val) {
   subset2(df, .data$x >= .env$val)
 }
@@ -414,30 +349,39 @@ threshold_bangbang <- function(df, val) {
 df <- data.frame(x = 1:3, val = 9:11)
 threshold_prefix(df, 2) == threshold_bangbang(df, 2)
 ```
-
-```
-##      x  val
-## 2 TRUE TRUE
-## 3 TRUE TRUE
-```
 :::
 
-In the `!!` case, `val` is evaluated early, (inside of `threshold_x`) whereas the `.env` case evaluated later (in the `eval_tidy`)
+In the `!!` case, `val` is evaluated early, (inside of `threshold_x`) whereas the `.env` case evaluated later (in the `eval_tidy`). This could cause problems if, for example, the `val` in `threshold_x` was altered after `subset2` was called, but before the `eval_tidy`
 
-Tyler Grant Smith:m:  21 minutes ago
-this could cause problems if, for example, the val in threshold_x was altered after subset2 was called, but before the eval_tidy
+:::question
+Why do we need to `{{ cond }}` in the following part of the chapter?
 
 
 ```r
 subset2 <- function(data, rows) {
-  rows <- enquo(rows)
-  # change val from 2 to 3, breaking things
-  env_bind(caller_env(), val = 3)
-  rows_val <- eval_tidy(rows, data)
+  rows <- rlang::enquo(rows)
+  rlang::env_bind(rlang::caller_env(), val = 3)
+  rows_val <- rlang::eval_tidy(rows, data)
   stopifnot(is.logical(rows_val))
   data[rows_val, , drop = FALSE]
 }
+
+resample <- function(df, n) {
+  idx <- sample(nrow(df), n, replace = TRUE)
+  df[idx, , drop = FALSE]
+}
+
+subsample <- function(df, cond, n = nrow(df)) {
+  df <- subset2(df, {{cond}})
+  resample(df, n)
+}
+
+df <- data.frame(x = c(1,1,1,2,2), y = 1:5)
+subsample(df, x == 1)
 ```
+:::
+
+When it appears unquoted in the call to `subset2`, it loses its... history, basically. The rlang stuff protects it so R basically doesn't know it exists until it needs to. It keeps its evaluation as lazy as is needed. Because of laziness, `{{ cond }}` gets passed to `subset2`, which ~says "Ok, but what was `cond` when it was passed to you?", and `subsample` ~says "Huh, I dunno, I'll ask my calling environment," and then `x == 1` makes it into `subset2` without being evaluated in the subsample environment. Basically.
 
 ## 20.6.1 substitute() {-}
 
@@ -459,16 +403,6 @@ local({
   dfs <- list(data.frame(x = 1:3), data.frame(x = 4:6))
   map(dfs, ~subset_base(.x, x == zzz))
 })
-```
-
-```
-## [[1]]
-##   x
-## 2 2
-## 
-## [[2]]
-## [1] x
-## <0 rows> (or 0-length row.names)
 ```
 :::
 
@@ -611,3 +545,52 @@ In [this thread](https://community.rstudio.com/t/quasiquotation-inside-a-formula
 
 Seems like when wrapping a base NSE function like `lm` or trying to `deparse(substitute(x))` using `rlang`
 
+:::question
+How do you capture the unquoting operator !! without evaluating it in the rlang framework:
+
+
+```r
+reflect_lang <- function(lang) {
+  r <- rlang::enexpr(lang)
+  r
+}
+
+reflect_lang(x+y)
+```
+
+```
+x + y
+```
+
+
+```r
+reflect_lang(!!x)
+```
+
+```
+# Error in rlang::enexpr(lang): object 'x' not found
+```
+
+
+```r
+reflect_lang(quote(!!x))
+```
+
+```
+# Error in rlang::enexpr(lang): object 'x' not found
+```
+
+Desired output: `!!x`
+:::
+
+
+```r
+reflect_rlang <- function(expr) {
+  substitute(expr)
+}
+reflect_rlang(!!x) 
+```
+
+```
+!!x
+```

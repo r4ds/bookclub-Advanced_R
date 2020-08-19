@@ -5,16 +5,49 @@
 :::question
 Why do we use `list2` here and not just `list` when they have the same output?
 
-```{r}
+
+```r
 list(a = 1, 2, b = 3, 4)
+```
+
+```
+## $a
+## [1] 1
+## 
+## [[2]]
+## [1] 2
+## 
+## $b
+## [1] 3
+## 
+## [[4]]
+## [1] 4
+```
+
+```r
 rlang::list2(a = 1, 2, b = 3, 4)
+```
+
+```
+## $a
+## [1] 1
+## 
+## [[2]]
+## [1] 2
+## 
+## $b
+## [1] 3
+## 
+## [[4]]
+## [1] 4
 ```
 :::
 
 
 `list2` supports "tidy dots" and unquote splicing. Most of the time it won't make a difference, but there are instances where using `list2` does matter:
 
-```{r}
+
+```r
 library(rlang)
 dots_partition <- function(...) {
   # create a list of arguments
@@ -40,14 +73,38 @@ dots_partition <- function(...) {
 ```
 
 
-```{r}
+
+```r
 dots_partition(list(letters = letters))
+```
+
+```
+## $named
+## list()
+## 
+## $unnamed
+## $unnamed[[1]]
+## $unnamed[[1]]$letters
+##  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"
+## [20] "t" "u" "v" "w" "x" "y" "z"
 ```
 
 When we use `list` here the letters come back as unnamed elements, but if we use `!!!` with `list2` we return the letters as named arguments
 
-```{r}
+
+```r
 dots_partition(!!!list(letters = letters))
+```
+
+```
+## $named
+## $named$letters
+##  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"
+## [20] "t" "u" "v" "w" "x" "y" "z"
+## 
+## 
+## $unnamed
+## named list()
 ```
 
 ## 21.2.4 Tag functions {-}
@@ -57,7 +114,8 @@ Can we explain this function?
 :::
  
 
-```{r}
+
+```r
 tag <- function(tag) {
   new_function(
     # what is this line doing?
@@ -78,7 +136,17 @@ tag <- function(tag) {
 }
 
 tag("b")
+```
 
+```
+## function (...) 
+## {
+##     dots <- dots_partition(...)
+##     attribs <- html_attributes(dots$named)
+##     children <- map_chr(dots$unnamed, escape)
+##     html(paste0("<b", attribs, ">", paste(children, collapse = ""), 
+##         "</b>"))
+## }
 ```
 
 `expr(... = )` creates an expression with the argument name `...` with an empty values.
@@ -93,8 +161,8 @@ Hadley uses `eval_bare` which is described as:
 Why use this instead of `tidy_eval`?
 :::
 
-```{r, eval=FALSE}
 
+```r
 # eval the latex class expression
 # in the latex environment
 to_math <- function(x) {
@@ -120,7 +188,8 @@ print.advr_latex <- function(x) {
 :::question
 The following code below uses `switch_expr`... is this not an rlang function? What about `flat_map_chr`? (And what does this function do?)
 
-```{r, eval=FALSE}
+
+```r
 all_names_rec <- function(x) {
   rlang:::switch_expr(x,
     constant = character(),
@@ -154,12 +223,17 @@ function (.x, ...)
 
 In Chapter 18 Hadley defines the `flat_map_chr` function that....
 
-```{r}
+
+```r
 flat_map_chr <- function(.x, .f, ...) {
   purrr::flatten_chr(purrr::map(.x, .f, ...))
 }
 
 flat_map_chr(letters[1:3], ~ rep(., sample(3, 1)))
+```
+
+```
+## [1] "a" "a" "a" "b" "c" "c"
 ```
 :::
 
