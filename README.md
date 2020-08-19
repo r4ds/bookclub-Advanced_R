@@ -15,17 +15,12 @@ This repo contains 3 main folders:
 
 *Cohort 1 (started 2020-04-02) - Tuesdays, 8pm EDT/EST*
 
-- 2020-08-18 Chapter 22 - Debugging: [Tan Ho](https://twitter.com/_tanho)
 - 2020-08-25 Metaprogramming review
 - 2020-09-01 Chapter 23 - Measuring performance:
-
-<details>
-  <summary> Future Meetings </summary>
-  
 - 2020-09-08 Chapter 24 - Improving performance:
 - 2020-09-15 Chapter 25 - Rewriting R code in C++:
+- 2020-09-22 Recap
 
-</details>
 <hr>
 
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
@@ -156,3 +151,6 @@ Chapter 20 - Evaluation
 Chapter 21 - Translating R Code (Domain Specific Languages)
 
 - Cohort 1: Pavitra Chakravarty ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week20/Cohort1/Chapter21.html#1) | [video](https://www.youtube.com/watch?v=fixyitpXrwY))
+
+Chapter 22 - Debugging: 
+- Cohort 1: [Tan Ho](https://twitter.com/_tanho) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week21/Cohort1/AdvR_Ch22_Debugging) | video)
