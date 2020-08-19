@@ -4,14 +4,13 @@
     <title>AdvR Chapter 22: Debugging</title>
     <meta charset="utf-8" />
     <meta name="author" content="Tan Ho (@_TanHo)" />
-    <script src="libs/header-attrs-2.3/header-attrs.js"></script>
     <link href="libs/tile-view-0.1.0/tile-view.css" rel="stylesheet" />
     <script src="libs/tile-view-0.1.0/tile-view.js"></script>
     <link href="libs/panelset-0.1.0/panelset.css" rel="stylesheet" />
     <script src="libs/panelset-0.1.0/panelset.js"></script>
     <script src="libs/xaringanExtra-webcam-0.0.1/webcam.js"></script>
     <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x86d59dcfd294dfe8fe56c39f7e7536f","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"afc15536460844dda9327e51acd470db","expires":14}</script>
     <script src="libs/himalaya-1.1.0/himalaya.js"></script>
     <script src="libs/js-cookie-3.0.0/js.cookie.js"></script>
     <link href="libs/editable-0.1.0/editable.css" rel="stylesheet" />
@@ -25,7 +24,7 @@ class: center, middle, inverse, title-slide
 
 # AdvR Chapter 22: Debugging
 ### Tan Ho (<span class="citation">@_TanHo</span>)
-### Last Updated: 2020-08-17
+### Last Updated: 2020-08-18
 
 ---
 
@@ -51,19 +50,31 @@ class: center, middle, inverse, title-slide
 
 ## Preface
 
-This "talk" stands on the shoulders of giants:
+There are some excellent talks on debugging (some are better on debugging than Adv R itself!)
 
 - Jenny Bryan's ["Object of type closure is not subsettable"](https://github.com/jennybc/debugging#readme) talk from rstudio::conf 2020
-- Jenny Bryan and Jim Hester's book: ["What They Forgot to Teach You About R"](https://rstats.wtf/) Ch11 (as well as `1:seq_len(book)` etc)
+- Jenny Bryan and Jim Hester's book: ["What They Forgot to Teach You About R"](https://rstats.wtf/) Ch11
 - Hadley's video on a [minimal reprex for a shiny app](https://www.youtube.com/watch?v=9w8ANOAlWy4) 
 --
 ` &lt;- insanely useful!`
 
 --
 
-and I suggest that you revisit these resources if you're looking for more of a talk or text-based content on debugging.
+and I suggest that you visit these resources later if you're looking for more of a talk or text-based content on debugging.
 
-Meanwhile, let's dive into applying some of these methods in, you guessed it, a live-coding session!
+---
+
+## Today's Plan
+
+We've all "read" the chapter, so I'll (obviously) take the liberty to live-code some debugging. Along the way, we'll try to hit: 
+
+- traceback
+- print debugging
+- browser()
+- debug/debugonce/undebug
+- options(error = recover)
+
+by looking through some examples, a few contrived, a few less-contrived, and lastly (possibly?) a Shiny app?
 
 ---
 ## Examples, easy mode
@@ -73,8 +84,8 @@ Let's use one of the canned examples from rstats.wtf to get us started.
 
 ```r
 usethis::use_course("rstd.io/wtf-debugging")
+# Example 1: Spartan
 ```
-
 
 ---
 ## Examples, AdvR mode
@@ -120,6 +131,9 @@ subsample(df, x == 1)
 
 ---
 
+## Debug a Shiny app?
+
+I can do this too if people are keen!
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="libs/remark.js"></script>
