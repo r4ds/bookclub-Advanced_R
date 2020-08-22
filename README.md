@@ -16,8 +16,8 @@ This repo contains 3 main folders:
 *Cohort 1 (started 2020-04-02) - Tuesdays, 8pm EDT/EST*
 
 - 2020-08-18 Chapter 22 - Debugging: [Tan Ho](https://twitter.com/_tanho)
-- 2020-08-25 Metaprogramming review
-- 2020-08-25 Chapter 23 - Measuring performance:
+- 2020-08-25 Metaprogramming review: [Jon Harmon](https://twitter.com/JonTheGeek)
+- 2020-09-01 Chapter 23 - Measuring performance:
 
 <details>
   <summary> Future Meetings </summary>
