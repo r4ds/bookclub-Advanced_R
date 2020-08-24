@@ -15,7 +15,7 @@ This repo contains 3 main folders:
 
 *Cohort 1 (started 2020-04-02) - Tuesdays, 8pm EDT/EST*
 
-- 2020-08-25 Metaprogramming review
+- 2020-08-25 Metaprogramming review: [Jon Harmon](https://twitter.com/JonTheGeek)
 - 2020-09-01 Chapter 23 - Measuring performance:
 - 2020-09-08 Chapter 24 - Improving performance:
 - 2020-09-15 Chapter 25 - Rewriting R code in C++:
@@ -83,6 +83,7 @@ Chapter 3 - Vectors
 
 - Cohort 1: [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort1/Chap3slides.html#1) | [video](https://www.youtube.com/watch?v=pQ-xDAPEQaw))
 - Cohort 2: [Vajresh Balaji](https://twitter.com/bvajresh) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort2/Chapter3Slides.html#1) | video)
+- Cohort 3: [Orry Messer](https://twitter.com/orrymr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort3/Chapter_3.html#1) | [video](https://www.youtube.com/watch?v=9E4RlbW8vxU))
 
 Chapter 4 - Subsetting
 
