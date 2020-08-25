@@ -42,7 +42,7 @@ This repo contains 3 main folders:
 <details>
   <summary> Future Meetings </summary>
 
-- 2020-08-27 Chapter 5 - Control Flow
+- 2020-08-27 Chapter 5 - Control Flow [Erick Knackstedt](https://twitter.com/Eknackstedt)
 - 2020-09-03 Chapter 6 - Functions [Meenakshi Kushwaha](https://twitter.com/envhealthspeak)
 - 2020-08-10 Chapter 7 - Environments
 
