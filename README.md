@@ -15,18 +15,12 @@ This repo contains 3 main folders:
 
 *Cohort 1 (started 2020-04-02) - Tuesdays, 8pm EDT/EST*
 
-- 2020-08-11 Chapter 21 - Translating R code: Pavitra Chakravarty
-- 2020-08-18 Chapter 22 - Debugging: [Tan Ho](https://twitter.com/_tanho)
-- 2020-08-25 Metaprogramming review
+- 2020-08-25 Metaprogramming review: [Jon Harmon](https://twitter.com/JonTheGeek)
 - 2020-09-01 Chapter 23 - Measuring performance:
-
-<details>
-  <summary> Future Meetings </summary>
-  
 - 2020-09-08 Chapter 24 - Improving performance:
 - 2020-09-15 Chapter 25 - Rewriting R code in C++:
+- 2020-09-22 Recap
 
-</details>
 <hr>
 
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
@@ -45,25 +39,23 @@ This repo contains 3 main folders:
 <details>
   <summary> Future Meetings </summary>
 
-- 2020-08-27 Chapter 5 - Control Flow
-- 2020-09-03 Chapter 6 - Functions
+- 2020-08-27 Chapter 5 - Control Flow [Erick Knackstedt](https://twitter.com/Eknackstedt)
+- 2020-09-03 Chapter 6 - Functions [Meenakshi Kushwaha](https://twitter.com/envhealthspeak)
 - 2020-08-10 Chapter 7 - Environments
 
 </details>
 
 <hr>
 
-*Cohort 3 [Europe/Africa]: (started 2020-08-04) Tuesdays, 19:15 CET (CEST)*
-- 2020-08-11 Chapter 2 - Names and values [Anna-Leigh](https://twitter.com/annaleighbrown2)
-- 2020-08-18 Chapter 3 - Vectors 
-- 2020-08-25 Chapter 4 - Subsetting [Shel] and [Alan Kinene] 
-- 2020-08-27 Chapter 5 - Control Flow [Megan Stodel]
+*Cohort 3 [Europe/Africa]: (started 2020-08-04) Tuesdays, 19:30 CET (CEST)*
+- 2020-09-01 Chapter 5 - Control Flow [Megan Stodel]
+- 2020-09-08 Chapter 6 - Functions [Novica Nakov]
+- 2020-09-15 Chapter 7 - Environments
 
 <details>
   <summary> Future Meetings </summary>
 
-- 2020-09-03 Chapter 6 - Functions
-- 2020-08-10 Chapter 7 - Environments
+
 
 </details>
 
@@ -95,13 +87,16 @@ Chapter 2 - Names and values
 Chapter 3 - Vectors
 
 - Cohort 1: [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort1/Chap3slides.html#1) | [video](https://www.youtube.com/watch?v=pQ-xDAPEQaw))
-- Cohort 2: Vajresh Balaji
+- Cohort 2: [Vajresh Balaji](https://twitter.com/bvajresh) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort2/Chapter3Slides.html#1) | video)
+- Cohort 3: [Orry Messer](https://twitter.com/orrymr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort3/Chapter_3.html#1) | [video](https://www.youtube.com/watch?v=9E4RlbW8vxU))
 
 Chapter 4 - Subsetting
 
 - Cohort 1: [Scott Nestler](https://twitter.com/ScottNestler) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week04/Cohort1/Chap4slides.html#1) | [video](https://www.youtube.com/watch?v=eLMpCc0t1cg))
+- Cohort 2: ...
+- Cohort 3: Shel and Alan ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week04/Cohort3/chapter4.html#1) | [video](https://www.youtube.com/watch?v=CvvXkXiF3Ig))
 
-Chapter 5 - Control flow
+Chapter 5 - Control flow 
 
 - Cohort 1: [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week05/Cohort1/Chapter5.html#1) | [video](https://www.youtube.com/watch?v=96eY6YS_3hU))
 
@@ -160,3 +155,10 @@ Chapter 19 - Quasiquotation
 Chapter 20 - Evaluation
 
 - Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week19/Cohort1/AdvRChapter20#1) | [video](https://www.youtube.com/watch?v=4En_Ypvtjqw))
+
+Chapter 21 - Translating R Code (Domain Specific Languages)
+
+- Cohort 1: Pavitra Chakravarty ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week20/Cohort1/Chapter21.html#1) | [video](https://www.youtube.com/watch?v=fixyitpXrwY))
+
+Chapter 22 - Debugging: 
+- Cohort 1: [Tan Ho](https://twitter.com/_tanho) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week21/Cohort1/AdvR_Ch22_Debugging) | [video](https://www.youtube.com/watch?v=ROMefwMuqXU))

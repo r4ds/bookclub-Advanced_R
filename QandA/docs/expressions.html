@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-08-07" />
+<meta name="date" content="2020-08-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -308,7 +308,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="17" data-path="big-picture.html"><a href="big-picture.html"><i class="fa fa-check"></i><b>17</b> 17 Big Picture</a><ul>
 <li class="chapter" data-level="" data-path="big-picture.html"><a href="big-picture.html#quosures"><i class="fa fa-check"></i>17.8 Quosures</a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="expressions.html"><a href="expressions.html"><i class="fa fa-check"></i><b>18</b> Expressions</a></li>
+<li class="chapter" data-level="18" data-path="expressions.html"><a href="expressions.html"><i class="fa fa-check"></i><b>18</b> Expressions</a><ul>
+<li class="chapter" data-level="" data-path="expressions.html"><a href="expressions.html#recursive-functions"><i class="fa fa-check"></i>18.5 Recursive functions</a></li>
+</ul></li>
 <li class="chapter" data-level="19" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>19</b> Quasiquotation</a><ul>
 <li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#motivation"><i class="fa fa-check"></i>19.2 Motivation</a></li>
 <li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#substitution"><i class="fa fa-check"></i>19.3.4 Substitution</a></li>
@@ -338,6 +340,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#substitute"><i class="fa fa-check"></i>20.6.1 substitute()</a></li>
 <li><a href="evaluation.html#match.call">20.6.2 <code>match.call</code></a></li>
 </ul></li>
+<li class="chapter" data-level="21" data-path="translating-r-code.html"><a href="translating-r-code.html"><i class="fa fa-check"></i><b>21</b> Translating R Code</a><ul>
+<li class="chapter" data-level="" data-path="translating-r-code.html"><a href="translating-r-code.html#basic-tag-functions"><i class="fa fa-check"></i>21.2.3 Basic tag functions</a></li>
+<li class="chapter" data-level="" data-path="translating-r-code.html"><a href="translating-r-code.html#tag-functions"><i class="fa fa-check"></i>21.2.4 Tag functions</a></li>
+<li class="chapter" data-level="21.1" data-path="translating-r-code.html"><a href="translating-r-code.html#to_math"><i class="fa fa-check"></i><b>21.1</b> 21.3.3 <code>to_math()</code></a></li>
+<li class="chapter" data-level="21.2" data-path="subsetting.html"><a href="subsetting.html#section"><i class="fa fa-check"></i><b>21.2</b> 21.3.5</a></li>
+<li class="chapter" data-level="21.3" data-path="translating-r-code.html"><a href="translating-r-code.html#unknown-functions"><i class="fa fa-check"></i><b>21.3</b> 21.3.6 Unknown functions</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="debugging.html"><a href="debugging.html"><i class="fa fa-check"></i><b>22</b> Debugging</a><ul>
+<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#lazy-evaluation"><i class="fa fa-check"></i>22.3 Lazy evaluation</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#broswer"><i class="fa fa-check"></i>22.4.1 broswer</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#breakpoints"><i class="fa fa-check"></i>22.4.2.1 Breakpoints</a></li>
+<li class="chapter" data-level="22.1" data-path="debugging.html"><a href="debugging.html#recover"><i class="fa fa-check"></i><b>22.1</b> 22.4.2.2 <code>recover</code></a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#debug"><i class="fa fa-check"></i>22.4.2.3 debug</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#non-interactive-debugging"><i class="fa fa-check"></i>22.5 Non-interactive debugging</a></li>
+<li><a href="debugging.html#dump.frames">22.5.1 <code>dump.frames</code></a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -363,17 +381,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="question">
 <p>I understand how we can subset expression calls but why/when would you do that? What is the context for extracting stuff from a function as an expression ?</p>
 <p>Let’s build on this contrived example….</p>
-<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb634-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;important.csv&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb634-2" data-line-number="2">lobstr<span class="op">::</span><span class="kw">ast</span>(<span class="kw">read.table</span>(<span class="st">&quot;important.csv&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>))</a>
-<a class="sourceLine" id="cb634-3" data-line-number="3">x[[<span class="dv">1</span>]]</a></code></pre></div>
+<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb636-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;important.csv&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb636-2" data-line-number="2">lobstr<span class="op">::</span><span class="kw">ast</span>(<span class="kw">read.table</span>(<span class="st">&quot;important.csv&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>))</a>
+<a class="sourceLine" id="cb636-3" data-line-number="3">x[[<span class="dv">1</span>]]</a></code></pre></div>
 <p>Making this an expression, we can use subsetting to shove in <code>read.csv</code> or <code>read.tsv</code> where <code>read.table</code> is?</p>
 </div>
 <p>You might need to do this in order to insert a line of code inside a function call:</p>
-<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb635-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb635-2" data-line-number="2">  <span class="kw">read.table</span>(<span class="st">&quot;important.csv&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb635-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb635-4" data-line-number="4"><span class="kw">body</span>(f)[[<span class="dv">2</span>]][[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">quote</span>(read.csv)</a>
-<a class="sourceLine" id="cb635-5" data-line-number="5">f</a></code></pre></div>
+<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb637-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb637-2" data-line-number="2">  <span class="kw">read.table</span>(<span class="st">&quot;important.csv&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb637-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb637-4" data-line-number="4"><span class="kw">body</span>(f)[[<span class="dv">2</span>]][[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">quote</span>(read.csv)</a>
+<a class="sourceLine" id="cb637-5" data-line-number="5">f</a></code></pre></div>
 <pre><code>## function (x) 
 ## {
 ##     read.csv(&quot;important.csv&quot;, row.names = FALSE)
@@ -381,40 +399,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="question">
 <p>What’s an application for this chapter?</p>
 </div>
-<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb637-1" data-line-number="1"><span class="kw">library</span>(rlang)</a>
-<a class="sourceLine" id="cb637-2" data-line-number="2">replace_sym &lt;-<span class="st"> </span><span class="cf">function</span>(x, sym, replace) {</a>
-<a class="sourceLine" id="cb637-3" data-line-number="3">  <span class="cf">if</span> (<span class="kw">is_symbol</span>(x, <span class="dt">name =</span> sym)) {</a>
-<a class="sourceLine" id="cb637-4" data-line-number="4">    replace</a>
-<a class="sourceLine" id="cb637-5" data-line-number="5">  } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">is_atomic</span>(x)) {</a>
-<a class="sourceLine" id="cb637-6" data-line-number="6">    x</a>
-<a class="sourceLine" id="cb637-7" data-line-number="7">  } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">is_symbol</span>(x)) {</a>
-<a class="sourceLine" id="cb637-8" data-line-number="8">    x</a>
-<a class="sourceLine" id="cb637-9" data-line-number="9">  } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">is_call</span>(x)) {</a>
-<a class="sourceLine" id="cb637-10" data-line-number="10">    <span class="kw">as.call</span>(<span class="kw">lapply</span>(x, replace_sym, sym, replace))</a>
-<a class="sourceLine" id="cb637-11" data-line-number="11">  } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">is.pairlist</span>(x)) {</a>
-<a class="sourceLine" id="cb637-12" data-line-number="12">    <span class="kw">as.pairlist</span>(<span class="kw">lapply</span>(x, replace_sym, sym, replace))</a>
-<a class="sourceLine" id="cb637-13" data-line-number="13">  } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb637-14" data-line-number="14">    <span class="kw">abort</span>(glue<span class="op">::</span><span class="kw">glue</span>(<span class="st">&quot;Don&#39;t know how to handle {as_label(x)}&quot;</span>))</a>
-<a class="sourceLine" id="cb637-15" data-line-number="15">  }</a>
-<a class="sourceLine" id="cb637-16" data-line-number="16">}</a>
-<a class="sourceLine" id="cb637-17" data-line-number="17"><span class="kw">replace_sym</span>(<span class="kw">expr</span>(a <span class="op">+</span><span class="st"> </span>b <span class="op">+</span><span class="st"> </span><span class="dv">1</span>), <span class="st">&quot;b&quot;</span>, <span class="kw">expr</span>(<span class="kw">f</span>(x)))</a></code></pre></div>
+<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb639-1" data-line-number="1"><span class="kw">library</span>(rlang)</a>
+<a class="sourceLine" id="cb639-2" data-line-number="2">replace_sym &lt;-<span class="st"> </span><span class="cf">function</span>(x, sym, replace) {</a>
+<a class="sourceLine" id="cb639-3" data-line-number="3">  <span class="cf">if</span> (<span class="kw">is_symbol</span>(x, <span class="dt">name =</span> sym)) {</a>
+<a class="sourceLine" id="cb639-4" data-line-number="4">    replace</a>
+<a class="sourceLine" id="cb639-5" data-line-number="5">  } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">is_atomic</span>(x)) {</a>
+<a class="sourceLine" id="cb639-6" data-line-number="6">    x</a>
+<a class="sourceLine" id="cb639-7" data-line-number="7">  } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">is_symbol</span>(x)) {</a>
+<a class="sourceLine" id="cb639-8" data-line-number="8">    x</a>
+<a class="sourceLine" id="cb639-9" data-line-number="9">  } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">is_call</span>(x)) {</a>
+<a class="sourceLine" id="cb639-10" data-line-number="10">    <span class="kw">as.call</span>(<span class="kw">lapply</span>(x, replace_sym, sym, replace))</a>
+<a class="sourceLine" id="cb639-11" data-line-number="11">  } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">is.pairlist</span>(x)) {</a>
+<a class="sourceLine" id="cb639-12" data-line-number="12">    <span class="kw">as.pairlist</span>(<span class="kw">lapply</span>(x, replace_sym, sym, replace))</a>
+<a class="sourceLine" id="cb639-13" data-line-number="13">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb639-14" data-line-number="14">    <span class="kw">abort</span>(glue<span class="op">::</span><span class="kw">glue</span>(<span class="st">&quot;Don&#39;t know how to handle {as_label(x)}&quot;</span>))</a>
+<a class="sourceLine" id="cb639-15" data-line-number="15">  }</a>
+<a class="sourceLine" id="cb639-16" data-line-number="16">}</a>
+<a class="sourceLine" id="cb639-17" data-line-number="17"><span class="kw">replace_sym</span>(<span class="kw">expr</span>(a <span class="op">+</span><span class="st"> </span>b <span class="op">+</span><span class="st"> </span><span class="dv">1</span>), <span class="st">&quot;b&quot;</span>, <span class="kw">expr</span>(<span class="kw">f</span>(x)))</a></code></pre></div>
 <pre><code>## a + f(x) + 1</code></pre>
 <div class="question">
 <p>Why does the expression jump around between “data” and “values” on the env panel in RStudio? It would be nice if it stayed in the “data” pane so you can inspect it</p>
 </div>
 <div class="question">
 <p>Why doesn’t the last line return true?</p>
-<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb639-1" data-line-number="1">is_assignment &lt;-<span class="st"> </span><span class="cf">function</span>(expr) {</a>
-<a class="sourceLine" id="cb639-2" data-line-number="2">    (expr[[<span class="dv">1</span>]] <span class="op">==</span><span class="st"> &quot;&lt;-&quot;</span> <span class="op">||</span><span class="st"> </span>expr[[<span class="dv">1</span>]] <span class="op">==</span><span class="st"> &quot;=&quot;</span>)</a>
-<a class="sourceLine" id="cb639-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb639-4" data-line-number="4">exprs &lt;-<span class="st"> </span>rlang<span class="op">::</span><span class="kw">parse_exprs</span>(<span class="st">&quot;x &lt;- 1;x = 1&quot;</span>)</a>
-<a class="sourceLine" id="cb639-5" data-line-number="5"><span class="kw">is_assignment</span>(exprs[[<span class="dv">1</span>]])</a></code></pre></div>
+<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb641-1" data-line-number="1">is_assignment &lt;-<span class="st"> </span><span class="cf">function</span>(expr) {</a>
+<a class="sourceLine" id="cb641-2" data-line-number="2">    (expr[[<span class="dv">1</span>]] <span class="op">==</span><span class="st"> &quot;&lt;-&quot;</span> <span class="op">||</span><span class="st"> </span>expr[[<span class="dv">1</span>]] <span class="op">==</span><span class="st"> &quot;=&quot;</span>)</a>
+<a class="sourceLine" id="cb641-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb641-4" data-line-number="4">exprs &lt;-<span class="st"> </span>rlang<span class="op">::</span><span class="kw">parse_exprs</span>(<span class="st">&quot;x &lt;- 1;x = 1&quot;</span>)</a>
+<a class="sourceLine" id="cb641-5" data-line-number="5"><span class="kw">is_assignment</span>(exprs[[<span class="dv">1</span>]])</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb641-1" data-line-number="1"><span class="kw">is_assignment</span>(exprs[[<span class="dv">2</span>]])</a></code></pre></div>
+<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb643-1" data-line-number="1"><span class="kw">is_assignment</span>(exprs[[<span class="dv">2</span>]])</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb643-1" data-line-number="1"><span class="kw">is_assignment</span>(<span class="kw">expression</span>(x &lt;-<span class="st"> </span><span class="dv">1</span>)[[<span class="dv">1</span>]])</a></code></pre></div>
+<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb645-1" data-line-number="1"><span class="kw">is_assignment</span>(<span class="kw">expression</span>(x &lt;-<span class="st"> </span><span class="dv">1</span>)[[<span class="dv">1</span>]])</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb645-1" data-line-number="1"><span class="kw">is_assignment</span>(<span class="kw">expression</span>(<span class="dt">x =</span> <span class="dv">1</span>)[[<span class="dv">1</span>]])</a></code></pre></div>
+<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb647-1" data-line-number="1"><span class="kw">is_assignment</span>(<span class="kw">expression</span>(<span class="dt">x =</span> <span class="dv">1</span>)[[<span class="dv">1</span>]])</a></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 </div>
 <p>It is interpreting <code>x = 1</code> as an argument to expression. To quote equality you can do <code>parse(text = &quot;x = 1&quot;)</code> and the output will print the same, but it isn’t</p>
@@ -422,7 +440,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Does all this go out the book if someone uses <code>&quot;abc&quot; -&gt; x?</code></p>
 </div>
 <p><code>&quot;abc&quot;-&gt;x</code> is internally parsed as <code>x &lt;- &quot;abc&quot;</code></p>
-<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb647-1" data-line-number="1"><span class="kw">parse</span>(<span class="dt">text =</span> <span class="st">&quot;&#39;xyz&#39; -&gt; x&quot;</span>)[[<span class="dv">1</span>]]</a></code></pre></div>
+<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb649-1" data-line-number="1"><span class="kw">parse</span>(<span class="dt">text =</span> <span class="st">&quot;&#39;xyz&#39; -&gt; x&quot;</span>)[[<span class="dv">1</span>]]</a></code></pre></div>
 <pre><code>## x &lt;- &quot;xyz&quot;</code></pre>
 <div class="question">
 <p>Can you clarify the difference between:
@@ -431,12 +449,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 - expression
 - structure</p>
 </div>
-<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb649-1" data-line-number="1"><span class="kw">identical</span>(</a>
-<a class="sourceLine" id="cb649-2" data-line-number="2">  <span class="kw">structure</span>(<span class="kw">expression</span>(a &lt;-<span class="st"> </span><span class="kw">print</span>(<span class="dv">123</span>))),</a>
-<a class="sourceLine" id="cb649-3" data-line-number="3">  <span class="kw">expression</span>(a &lt;-<span class="st"> </span><span class="kw">print</span>(<span class="dv">123</span>))</a>
-<a class="sourceLine" id="cb649-4" data-line-number="4">)</a></code></pre></div>
+<div class="sourceCode" id="cb651"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb651-1" data-line-number="1"><span class="kw">identical</span>(</a>
+<a class="sourceLine" id="cb651-2" data-line-number="2">  <span class="kw">structure</span>(<span class="kw">expression</span>(a &lt;-<span class="st"> </span><span class="kw">print</span>(<span class="dv">123</span>))),</a>
+<a class="sourceLine" id="cb651-3" data-line-number="3">  <span class="kw">expression</span>(a &lt;-<span class="st"> </span><span class="kw">print</span>(<span class="dv">123</span>))</a>
+<a class="sourceLine" id="cb651-4" data-line-number="4">)</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb651"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb651-1" data-line-number="1"><span class="kw">is.language</span>(<span class="kw">expression</span>(a &lt;-<span class="st"> </span><span class="kw">print</span>(<span class="dv">123</span>)))</a></code></pre></div>
+<div class="sourceCode" id="cb653"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb653-1" data-line-number="1"><span class="kw">is.language</span>(<span class="kw">expression</span>(a &lt;-<span class="st"> </span><span class="kw">print</span>(<span class="dv">123</span>)))</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="TODO">
 <p>xxx</p>
@@ -445,7 +463,72 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>When would I use <code>quote()</code> over <code>expression()</code>?</p>
 </div>
 <p>Hadley advises not to use <code>expression()</code>, because it just makes a vector of expressions. He prefers lists of expressions, which you’d generate interactively with <code>quote()</code> (or inside functions with <code>substitute()</code>). We’ll touch on the borders of this at least tonight.</p>
+<div id="recursive-functions" class="section level2 unnumbered">
+<h2>18.5 Recursive functions</h2>
+<div class="question">
+<p>What is the <code>...</code> allowing for in the recurisve switch function?</p>
+<div class="sourceCode" id="cb655"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb655-1" data-line-number="1">switch_expr &lt;-<span class="st"> </span><span class="cf">function</span>(x, ...) {</a>
+<a class="sourceLine" id="cb655-2" data-line-number="2">  <span class="cf">switch</span>(<span class="kw">expr_type</span>(x),</a>
+<a class="sourceLine" id="cb655-3" data-line-number="3">    ...,</a>
+<a class="sourceLine" id="cb655-4" data-line-number="4">    <span class="kw">stop</span>(<span class="st">&quot;Don&#39;t know how to handle type &quot;</span>, <span class="kw">typeof</span>(x), <span class="dt">call. =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb655-5" data-line-number="5">  )</a>
+<a class="sourceLine" id="cb655-6" data-line-number="6">}</a></code></pre></div>
+</div>
+<div class="TODO">
 
+</div>
+<div class="question">
+<p>Can we go over this function in words? Specifically how <code>some</code> works and where/how to recursion is occuring</p>
+<div class="sourceCode" id="cb656"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb656-1" data-line-number="1">logical_abbr_rec &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb656-2" data-line-number="2">  <span class="kw">switch_expr</span>(x,</a>
+<a class="sourceLine" id="cb656-3" data-line-number="3">    <span class="co"># Base cases</span></a>
+<a class="sourceLine" id="cb656-4" data-line-number="4">    <span class="dt">constant =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb656-5" data-line-number="5">    <span class="dt">symbol =</span> <span class="kw">as_string</span>(x) <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;F&quot;</span>, <span class="st">&quot;T&quot;</span>),</a>
+<a class="sourceLine" id="cb656-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb656-7" data-line-number="7">    <span class="co"># Recursive cases</span></a>
+<a class="sourceLine" id="cb656-8" data-line-number="8">    <span class="dt">call =</span> ,</a>
+<a class="sourceLine" id="cb656-9" data-line-number="9">    <span class="dt">pairlist =</span> purrr<span class="op">::</span><span class="kw">some</span>(x, logical_abbr_rec)</a>
+<a class="sourceLine" id="cb656-10" data-line-number="10">  )</a>
+<a class="sourceLine" id="cb656-11" data-line-number="11">}</a></code></pre></div>
+</div>
+<div class="TODO">
+
+</div>
+<div class="question">
+<p>I have a vauge understanding of this code but I’d like to comment it out line by line and explain it in english</p>
+<div class="sourceCode" id="cb657"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb657-1" data-line-number="1">find_assign_call &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb657-2" data-line-number="2">  <span class="cf">if</span> (<span class="kw">is_call</span>(x, <span class="st">&quot;&lt;-&quot;</span>) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">is_symbol</span>(x[[<span class="dv">2</span>]])) {</a>
+<a class="sourceLine" id="cb657-3" data-line-number="3">    lhs &lt;-<span class="st"> </span><span class="kw">as_string</span>(x[[<span class="dv">2</span>]])</a>
+<a class="sourceLine" id="cb657-4" data-line-number="4">    children &lt;-<span class="st"> </span><span class="kw">as.list</span>(x)[<span class="op">-</span><span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb657-5" data-line-number="5">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb657-6" data-line-number="6">    lhs &lt;-<span class="st"> </span><span class="kw">character</span>()</a>
+<a class="sourceLine" id="cb657-7" data-line-number="7">    children &lt;-<span class="st"> </span><span class="kw">as.list</span>(x)</a>
+<a class="sourceLine" id="cb657-8" data-line-number="8">  }</a>
+<a class="sourceLine" id="cb657-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb657-10" data-line-number="10">  <span class="kw">c</span>(lhs, <span class="kw">flat_map_chr</span>(children, find_assign_rec))</a>
+<a class="sourceLine" id="cb657-11" data-line-number="11">}</a>
+<a class="sourceLine" id="cb657-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb657-13" data-line-number="13">find_assign_rec &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb657-14" data-line-number="14">  <span class="kw">switch_expr</span>(x,</a>
+<a class="sourceLine" id="cb657-15" data-line-number="15">    <span class="co"># Base cases</span></a>
+<a class="sourceLine" id="cb657-16" data-line-number="16">    <span class="dt">constant =</span> ,</a>
+<a class="sourceLine" id="cb657-17" data-line-number="17">    <span class="dt">symbol =</span> <span class="kw">character</span>(),</a>
+<a class="sourceLine" id="cb657-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb657-19" data-line-number="19">    <span class="co"># Recursive cases</span></a>
+<a class="sourceLine" id="cb657-20" data-line-number="20">    <span class="dt">pairlist =</span> <span class="kw">flat_map_chr</span>(x, find_assign_rec),</a>
+<a class="sourceLine" id="cb657-21" data-line-number="21">    <span class="dt">call =</span> <span class="kw">find_assign_call</span>(x)</a>
+<a class="sourceLine" id="cb657-22" data-line-number="22">  )</a>
+<a class="sourceLine" id="cb657-23" data-line-number="23">}</a>
+<a class="sourceLine" id="cb657-24" data-line-number="24"></a>
+<a class="sourceLine" id="cb657-25" data-line-number="25"><span class="kw">find_assign</span>(a &lt;-<span class="st"> </span>b &lt;-<span class="st"> </span>c &lt;-<span class="st"> </span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb657-26" data-line-number="26"><span class="co">#&gt; [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</span></a>
+<a class="sourceLine" id="cb657-27" data-line-number="27"><span class="kw">find_assign</span>(<span class="kw">system.time</span>(x &lt;-<span class="st"> </span><span class="kw">print</span>(y &lt;-<span class="st"> </span><span class="dv">5</span>)))</a></code></pre></div>
+</div>
+<div class="TODO">
+
+</div>
+
+</div>
 </div>
             </section>
 

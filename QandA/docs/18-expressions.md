@@ -162,3 +162,83 @@ When would I use `quote()` over `expression()`?
 :::
 
 Hadley advises not to use `expression()`, because it just makes a vector of expressions. He prefers lists of expressions, which you'd generate interactively with `quote()` (or inside functions with `substitute()`). We'll touch on the borders of this at least tonight.
+
+## 18.5 Recursive functions {-}
+
+:::question
+What is the `...` allowing for in the recurisve switch function? 
+
+
+```r
+switch_expr <- function(x, ...) {
+  switch(expr_type(x),
+    ...,
+    stop("Don't know how to handle type ", typeof(x), call. = FALSE)
+  )
+}
+```
+:::
+
+:::TODO
+:::
+
+:::question
+Can we go over this function in words? Specifically how `some` works and where/how to recursion is occuring
+
+
+```r
+logical_abbr_rec <- function(x) {
+  switch_expr(x,
+    # Base cases
+    constant = FALSE,
+    symbol = as_string(x) %in% c("F", "T"),
+
+    # Recursive cases
+    call = ,
+    pairlist = purrr::some(x, logical_abbr_rec)
+  )
+}
+```
+:::
+
+:::TODO
+:::
+
+:::question
+I have a vauge understanding of this code but I'd like to comment it out line by line and explain it in english
+
+
+```r
+find_assign_call <- function(x) {
+  if (is_call(x, "<-") && is_symbol(x[[2]])) {
+    lhs <- as_string(x[[2]])
+    children <- as.list(x)[-1]
+  } else {
+    lhs <- character()
+    children <- as.list(x)
+  }
+
+  c(lhs, flat_map_chr(children, find_assign_rec))
+}
+
+find_assign_rec <- function(x) {
+  switch_expr(x,
+    # Base cases
+    constant = ,
+    symbol = character(),
+
+    # Recursive cases
+    pairlist = flat_map_chr(x, find_assign_rec),
+    call = find_assign_call(x)
+  )
+}
+
+find_assign(a <- b <- c <- 1)
+#> [1] "a" "b" "c"
+find_assign(system.time(x <- print(y <- 5)))
+```
+:::
+
+:::TODO
+:::
+
