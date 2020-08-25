@@ -71,18 +71,19 @@ Chapter 1 - Introduction
 
 Chapter 2 - Names and values
 
-- Cohort 1: [Asmae Toumi](https://twitter.com/asmae_toumi) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Cohort1/Chap2slides.html#1))
-- Cohort 2: [Josh Pohlkamp-Hartt](https://twitter.com/jpohlkamphartt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Cohort2_America/Chapter2Slides.html#1) | [video](https://www.youtube.com/watch?v=pCiNj2JRK50&t))
 <details>
-  <summary> Guiding Questions </summary>
+  <summary> Guiding Questions (questioning) </summary>
 
 - What is the difference between an object’s name and its values?
 - When you modify a vector, when does a copy occur? Are there cases when a copy isn’t created?
 - How do you check how much space and object occupies? What kinds of objects occupy the most/least space?
 - When does R’s garbage collection usually run? How do you manually clean up memory?
 
-
 </details>
+
+- Cohort 1: [Asmae Toumi](https://twitter.com/asmae_toumi) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Cohort1/Chap2slides.html#1))
+- Cohort 2: [Josh Pohlkamp-Hartt](https://twitter.com/jpohlkamphartt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Cohort2_America/Chapter2Slides.html#1) | [video](https://www.youtube.com/watch?v=pCiNj2JRK50&t))
+- Cohort 3: [Anna-Leigh Brown](https://twitter.com/annaleighbrown2)([slides](https://docs.google.com/presentation/d/1HNmri86BXWrLThgjECqHOKN7KEab01BTDZCUDT2xUo8/edit?usp=sharing) | [video](https://youtu.be/-bEXdOoxO_E))
 
 Chapter 3 - Vectors
 
