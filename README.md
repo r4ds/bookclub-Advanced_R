@@ -51,15 +51,14 @@ This repo contains 3 main folders:
 <hr>
 
 *Cohort 3 [Europe/Africa]: (started 2020-08-04) Tuesdays, 19:30 CET (CEST)*
-- 2020-08-18 Chapter 3 - Vectors
-- 2020-08-25 Chapter 4 - Subsetting [Shel] and [Alan Kinene]
-- 2020-08-27 Chapter 5 - Control Flow [Megan Stodel]
+- 2020-09-01 Chapter 5 - Control Flow [Megan Stodel]
+- 2020-09-08 Chapter 6 - Functions [Novica Nakov]
+- 2020-09-15 Chapter 7 - Environments
 
 <details>
   <summary> Future Meetings </summary>
 
-- 2020-09-03 Chapter 6 - Functions
-- 2020-08-10 Chapter 7 - Environments
+
 
 </details>
 
@@ -88,7 +87,7 @@ Chapter 3 - Vectors
 Chapter 4 - Subsetting
 
 - Cohort 1: [Scott Nestler](https://twitter.com/ScottNestler) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week04/Cohort1/Chap4slides.html#1) | [video](https://www.youtube.com/watch?v=eLMpCc0t1cg))
-
+- Cohort 3: [video](https://www.youtube.com/watch?v=CvvXkXiF3Ig)
 Chapter 5 - Control flow
 
 - Cohort 1: [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week05/Cohort1/Chapter5.html#1) | [video](https://www.youtube.com/watch?v=96eY6YS_3hU))
