@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Alan Kinene @alankinene    &amp;   Shel Kariuki @Shel_Kariuki" />
+    <script src="libs/header-attrs-2.2/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Advanced R
+## Chapter 4: Subsetting
+### Alan Kinene <span class="citation">@alankinene</span> <br><br> &amp; <br><br>Shel Kariuki <span class="citation">@Shel_Kariuki</span>
+### 2020/08/25
+
+---
+
+
+
+
+
+
+class: middle
+# Outline
+  
+- Section 4.1: Introduction 
+
+- Section 4.2: Selecting multiple elements
+
+- Section 4.3: Selecting a single element
+--
+
+- Section 4.4: Subsetting and assignment
+
+- Section 4.5: Applications (Using subsetting to solve problems)
+
+---
+class: middle  
+# Introduction 
+- Interrelated concepts to internalise:
+  + There are 3 subsetting operators:  `[[`, `[`, and `$`
+  
+  + Subsetting operators interact differently with various vector types (e.g. atomic vectors, lists, factors, matrices, and data frames)
+  
+  + Subsetting and assignment can be combined ("subsassignment")
+  
+&gt; Subsetting complements structure, or `str()`, which shows you *all* the pieces of an object, but subsetting lets you pull out only the pieces you are interested in.
+  
+&gt; Often useful to use RStudio Viewer, with `View(my_object)` to know which pieces you want to subset
+
+---
+class: center, middle, inverse
+# 4.2: Selecting multiple elements
+
+---
+class: middle
+# Subsetting atomic vectors
+&gt; Use `[` to select any number of elements from a vector.
+
+--
+
+Assume we have a simple vector: `x &lt;- c(2.1, 4.2, 3.3, 5.4)`
+
+
+
++  Positive integers return elements at the specified positions:
+
+```r
+x[c(3, 1)]
+```
+
+```
+## [1] 3.3 2.1
+```
++  Negative integers exclude elements at the specified positions:
+
+```r
+x[-c(3, 1)]
+```
+
+```
+## [1] 4.2 5.4
+```
+---
+class: middle
+# Subsetting atomic vectors
+
++  Logical vectors select elements where the corresponding logical value is `TRUE`
+
+```r
+x[c(TRUE, TRUE, FALSE, FALSE)]
+```
+
+```
+## [1] 2.1 4.2
+```
+
+```r
+x[x &gt; 3]
+```
+
+```
+## [1] 4.2 3.3 5.4
+```
+&gt;  `x[c(TRUE, FALSE)]` is equivalent to `x[c(TRUE, FALSE, TRUE, FALSE)]`
+
++  Nothing returns the original vector.
+
+```r
+x[]
+```
+
+```
+## [1] 2.1 4.2 3.3 5.4
+```
+---
+class: middle
++  Zero returns a zero-length vector.
+
+```r
+x[0]
+```
+
+```
+## numeric(0)
+```
++ Named vector
+
+```r
+(y &lt;- setNames(x, letters[1:4]))
+```
+
+```
+##   a   b   c   d 
+## 2.1 4.2 3.3 5.4
+```
+
+```r
+y[c("d", "c", "a")]
+```
+
+```
+##   d   c   a 
+## 5.4 3.3 2.1
+```
+---
+class: middle
+
+# Subsetting lists
+
+* Subsetting a list works in the same way as subsetting an atomic vector.
+* Using `[` always returns a list
+
+* `[[` and `$`, as described in *Section 4.3*, let you pull out elements of a list.
+---
+class: middle
+#  Subsetting matrices and arrays
+
+&gt; The most common way of subsetting matrices (2D) and arrays (&gt;2D) is a simple generalisation of 1D subsetting 
+
+#### Subset with multiple vectors.
+
+```r
+a &lt;- matrix(1:9, nrow = 3)
+colnames(a) &lt;- c("A", "B", "C")
+```
+.pull-left[
+
+```r
+a[1:2, ]
+```
+
+```
+##      A B C
+## [1,] 1 4 7
+## [2,] 2 5 8
+```
+]
+
+.pull-right[
+
+```r
+a[c(TRUE, FALSE, TRUE), 
+  c("B", "A")]
+```
+
+```
+##      B A
+## [1,] 4 1
+## [2,] 6 3
+```
+]
+---
+#  Subsetting matrices and arrays
+Consider the matrix below:
+
+```r
+(vals = matrix(1:25, ncol = 5, byrow = TRUE))
+```
+
+```
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    2    3    4    5
+## [2,]    6    7    8    9   10
+## [3,]   11   12   13   14   15
+## [4,]   16   17   18   19   20
+## [5,]   21   22   23   24   25
+```
+
+.pull-left[
+####*Subset with a single vector*
+
+```r
+vals[c(4, 15)]
+```
+
+```
+## [1] 16 23
+```
+]
+
+.pull-right[
+#### *Subset with a matrix*
+
+```r
+select &lt;- matrix(ncol = 2, byrow = TRUE, c(
+  1, 1,
+  3, 1,
+  2, 4
+))
+vals[select]
+```
+
+```
+## [1]  1 11  9
+```
+]
+---
+class: middle
+# Subsetting data frames and tibbles
++ Data frames have the characteristics of both lists and matrices.
+
++ When subsetting with a single index, they behave like lists and index the columns, so `df[1:2]` selects the first two columns.
+
++ When subsetting with two indices, they behave like matrices, so `df[1:3, ]` selects the first three rows (and all the columns
+
+&gt; Given `df &lt;- data.frame(x = 1:3, y = 3:1, z = letters[1:3])` what is the output for:&lt;br&gt; 
+`df[df$x == 2, ]`,&lt;br&gt; `df[c("x", "z")]`, &lt;br&gt; `df[, c("x", "z")]`,&lt;br&gt;  `str(df["x"])`, and &lt;br&gt;`str(df[, "x"])`?
+
+---
+# Preserving dimensionality
+
+&gt; By default, subsetting a matrix or data frame with a single number, **a single name**, or **a logical vector** containing a single `TRUE`, will simplify the returned output, i.e. it will return an object with lower dimensionality.
+
+&gt; To preserve the original dimensionality, you must use `drop = FALSE`
+
+.pull-left[
+####*For matrices and arrays, any &lt;br&gt; dimensions with length 1 will &lt;br&gt;be dropped:*
+
+```r
+a &lt;- matrix(1:4, nrow = 2)
+str(a[1, ])
+```
+
+```
+##  int [1:2] 1 3
+```
+
+```r
+str(a[1, , drop = FALSE])
+```
+
+```
+##  int [1, 1:2] 1 3
+```
+]
+
+.pull-right[
+####*Data frames with a single column &lt;br&gt; will return just that column*
+
+```r
+df &lt;- data.frame(a = 1:2, b = 1:2)
+str(df[, "a"])
+```
+
+```
+##  int [1:2] 1 2
+```
+
+```r
+str(df[, "a", drop = FALSE])
+```
+
+```
+## 'data.frame':	2 obs. of  1 variable:
+##  $ a: int  1 2
+```
+]
+
+---
+class: middle
+# 4.3: Selecting a single element
+&gt; There are two other subsetting operators: `[[` and `$`.&lt;br&gt; `[[` is used for extracting single items, while `x$y` is a useful shorthand for `x[["y"]]`
+
+---
+class: middle
+# Use of `[[`
+
++ Primary use case for `[[` is when working with lists, as you get a list back.
+  
+  &gt; If list x is a train carrying objects, then `x[[5]]` is the object in car `5`; `x[4:6]` is a train of cars `4-6`.— @RLangTip
+  
+
+```r
+x &lt;- list(1:3, "a", 4:6)
+```
+
+---
+# Use of `[[`
+&lt;center&gt;
+&lt;img src="img/train.png" width="60%" /&gt;
+
+&lt;img src="img/train-single.png" width="60%" /&gt;
+&lt;/center&gt;
+
+---
+# Use of `[[`
+&lt;center&gt;
+&lt;img src="img/train.png" width="60%" /&gt;
+
+&lt;img src="img/train-many.png" width="60%" /&gt;
+&lt;/center&gt;
+
++ If you use a vector with `[[`, it will subset recursively, i.e. `x[[c(1, 2)]]` is equivalent to `x[[1]][[2]]`.
+---
+class: middle
+# Use of `$`
+
++ `$` is a shorthand operator: `x$y` is roughly equivalent to `x[["y"]]`. 
++ Often used to access variables in a data frame, as in mtcars$cyl or diamonds$carat. 
++ One common mistake with `$` is to use it when you have the name of a column stored in a variable:
+&gt; If `var &lt;- "cyl"`, `mtcars$var` doesn't work because it is translated to `mtcars[["var"]]`. Instead use `mtcars[[var]]`
+
+---
+# Use of `$`
+
++ The one important difference between `$` and `[[` is that `$` does (left-to-right) partial matching.
+
+
+```r
+x &lt;- list(abc = 1)
+x$a
+```
+
+```
+## [1] 1
+```
+
+```r
+x[["a"]]
+```
+
+```
+## NULL
+```
+
++ You can avoid this behaviour:
+
+
+```r
+options(warnPartialMatchDollar = TRUE)
+x$a
+```
+
+```
+## [1] 1
+```
+
+&gt; **Remember:** For data frames, you can also avoid this problem by using tibbles, which never do partial matching.
+
+---
+class: middle
+# Using @ and slot()
+
++ Two additional subsetting operators, which are needed for S4 objects: 
+  1. `@` (equivalent to `$`)
+  2. `slot()` (equivalent to `[[`). 
+  
+&gt; `@` is more restrictive than `$` in that it will return an error if the slot does not exist.
+
+---
+class: center
+background-image:url("img/exercises.jpg")
+# Exercises
+&lt;br&gt;
+# .
+&lt;br&gt;
+# .
+&lt;br&gt;
+# .
+---
+
+# 4.4: Subsetting and assignment
+
+Subassignment: Combining subsetting operators with assignments to modify selected values in an input vector.
+
+The basic form is `x[i] &lt;- value`
+
+Ensure that:
+
+- `length(value)` == `length(x[i])`
+
+
+```r
+# wafanyikazi$new_var &lt;- 1:10000
+
+# Error in `$&lt;-.data.frame`(`*tmp*`, new_var, value = 1:10000) : 
+  #replacement has 10000 rows, data has 500
+```
+
+- `i` is unique
+
+---
+
+To remove a component, use `x[[i]] &lt;- NULL`
+
+
+```r
+departments &lt;- list("data", "operations", "finance")
+departments
+```
+
+```
+## [[1]]
+## [1] "data"
+## 
+## [[2]]
+## [1] "operations"
+## 
+## [[3]]
+## [1] "finance"
+```
+
+```r
+departments[[3]] &lt;- NULL
+departments
+```
+
+```
+## [[1]]
+## [1] "data"
+## 
+## [[2]]
+## [1] "operations"
+```
+
+
+
+To add a literal NULL, use `x[i] &lt;- list(NULL)`
+
+
+```r
+departments[3] &lt;- list(NULL)
+departments
+```
+
+```
+## [[1]]
+## [1] "data"
+## 
+## [[2]]
+## [1] "operations"
+## 
+## [[3]]
+## NULL
+```
+
+---
+# 4.5: Applications (Using subsetting to solve problems)
+
+- Lookup tables (character subsetting)
+--
+
+
+- Matching and merging by hand (integer subsetting)
+--
+
+
+- Random samples and bootstraps (integer subsetting)
+--
+
+
+- Ordering (integer subsetting)
+--
+
+
+- Expanding aggregated counts (integer subsetting)
+--
+
+
+- Removing columns from data frames (character )
+--
+
+
+- Selecting rows based on a condition (logical subsetting)
+--
+
+
+- Boolean algebra versus sets (logical and integer )
+
+---
+##4.5.1 Lookup tables (character subsetting)
+Character matching
+
+
+```r
+x &lt;- c("m", "f", "u", "f", "f", "m", "m")
+
+lookup &lt;- c(m = "Male", f = "Female", u = NA)
+
+lookup[x] ## Is this the same as saying look for x in the vector lookup? Is it also the same as using an ifelse function? 
+```
+
+```
+##        m        f        u        f        f        m        m 
+##   "Male" "Female"       NA "Female" "Female"   "Male"   "Male"
+```
+
+We can exclude names in the results using:
+
+
+```r
+unname(lookup[x])
+```
+
+```
+## [1] "Male"   "Female" NA       "Female" "Female" "Male"   "Male"
+```
+
+---
+##4.5.2 Matching and merging by hand (integer subsetting)
+
+
+```r
+grades &lt;- c(1, 2, 2, 3, 1)
+
+info &lt;- data.frame(
+  grade = 3:1,
+  desc = c("Excellent", "Good", "Poor"),
+  fail = c(F, F, T)
+)
+
+head(info)
+```
+
+```
+##   grade      desc  fail
+## 1     3 Excellent FALSE
+## 2     2      Good FALSE
+## 3     1      Poor  TRUE
+```
+
+Assuming we want to duplicate the info table so that we have a row for each value in grades. 
+
+`match(needles, haystack)` // look for (needles, haystack)
+---
+
+What is the position of the needles [grades elements : (1,2,2,3,1)] in the haystack [info$grade: (3,2,1)]
+
+
+
+```r
+id &lt;- match(grades, info$grade)
+id
+```
+
+```
+## [1] 3 2 2 1 3
+```
+
+```r
+info[id, ]
+```
+
+```
+##     grade      desc  fail
+## 3       1      Poor  TRUE
+## 2       2      Good FALSE
+## 2.1     2      Good FALSE
+## 1       3 Excellent FALSE
+## 3.1     1      Poor  TRUE
+```
+
+When matching on multiple columns, you will need to first collapse them into a single column (with e.g `interaction()`). 
+
+
+```r
+## insert intersection code here
+```
+
+But dplyr{} `*_join()` functions would be your best friends at this point
+---
+##4.5.3 Random samples and bootstraps (integer subsetting)
+
+Using integer indices to randomly sample or bootstrap a vector or data frame.
+
+Use `sample(n)` to generate a random permutation of `1:n`, and then use the results to subset the values
+
+Simulate a dataframe
+
+
+```r
+df = data.frame(names = c("John", "Teresa", "Shel", "Christine", "Brenda"),
+                gender = c("M", "F", "F", "F", "F"),
+                rshp = c("Father", "Mother", "Self", "Sister", "Sister"))
+df
+```
+
+```
+##       names gender   rshp
+## 1      John      M Father
+## 2    Teresa      F Mother
+## 3      Shel      F   Self
+## 4 Christine      F Sister
+## 5    Brenda      F Sister
+```
+
+---
+
+Reorder the dataframe randomly
+
+
+```r
+df[sample(nrow(df)), ]
+```
+
+```
+##       names gender   rshp
+## 1      John      M Father
+## 5    Brenda      F Sister
+## 4 Christine      F Sister
+## 3      Shel      F   Self
+## 2    Teresa      F Mother
+```
+
+Select two random rows
+
+
+```r
+df[sample(nrow(df), 2), ]
+```
+
+```
+##    names gender   rshp
+## 5 Brenda      F Sister
+## 3   Shel      F   Self
+```
+
+Select 7 bootstrap replicates
+
+
+```r
+df[sample(nrow(df), 7, replace = T), ]
+```
+
+```
+##      names gender   rshp
+## 5   Brenda      F Sister
+## 3     Shel      F   Self
+## 5.1 Brenda      F Sister
+## 3.1   Shel      F   Self
+## 3.2   Shel      F   Self
+## 1     John      M Father
+## 1.1   John      M Father
+```
+
+---
+##4.5.4 Ordering (integer subsetting)
+
+`order()` takes a vector as its input and returns an integer vector describing how to order the subsetted vector
+
+
+```r
+fam &lt;- c("John", "Teresa", "Shel", "Christine", "Brenda")
+
+order(fam) ## orders alphabetically (in ascending order by default)
+```
+
+```
+## [1] 5 4 1 3 2
+```
+
+```r
+fam[order(fam)]
+```
+
+```
+## [1] "Brenda"    "Christine" "John"      "Shel"      "Teresa"
+```
+
+```r
+## We can also order the vector in ascending order
+
+fam[order(fam, decreasing = T)]
+```
+
+```
+## [1] "Teresa"    "Shel"      "John"      "Christine" "Brenda"
+```
+
+_NB: By default, any missing values will be put at the end of the vector; however, you can remove them with `na.last = NA` or put them at the front with `na.last = FALSE`._
+
+
+```r
+# us &lt;- c("Me", "You", NA)
+# us[order(us)]
+# us[order(us, na.last = FALSE)]
+```
+
+---
+
+Using `order()` to order values in a variable, or variables themselves, in a dataframe
+
+
+```r
+# Randomly reorder df
+df2 &lt;- df[sample(nrow(df)), 3:1]
+df2
+```
+
+```
+##     rshp gender     names
+## 4 Sister      F Christine
+## 2 Mother      F    Teresa
+## 3   Self      F      Shel
+## 1 Father      M      John
+## 5 Sister      F    Brenda
+```
+
+```r
+# Order by one variable
+df[order(df$gender), ]
+```
+
+```
+##       names gender   rshp
+## 2    Teresa      F Mother
+## 3      Shel      F   Self
+## 4 Christine      F Sister
+## 5    Brenda      F Sister
+## 1      John      M Father
+```
+---
+
+
+```r
+# Order the variables themselves
+df[, order(names(df))]
+```
+
+```
+##   gender     names   rshp
+## 1      M      John Father
+## 2      F    Teresa Mother
+## 3      F      Shel   Self
+## 4      F Christine Sister
+## 5      F    Brenda Sister
+```
+
+_You can sort vectors directly with `sort()`, or similarly `dplyr::arrange()`, to sort a data frame._
+---
+##4.5.5 Expanding aggregated counts (integer subsetting)
+
+
+```r
+df &lt;- data.frame(x = c(2, 4, 1), y = c(9, 11, 6), n = c(3, 5, 1))
+df
+```
+
+```
+##   x  y n
+## 1 2  9 3
+## 2 4 11 5
+## 3 1  6 1
+```
+
+```r
+rep(1:nrow(df), df$n)
+```
+
+```
+## [1] 1 1 1 2 2 2 2 2 3
+```
+
+```r
+df[rep(1:nrow(df), df$n), ]
+```
+
+```
+##     x  y n
+## 1   2  9 3
+## 1.1 2  9 3
+## 1.2 2  9 3
+## 2   4 11 5
+## 2.1 4 11 5
+## 2.2 4 11 5
+## 2.3 4 11 5
+## 2.4 4 11 5
+## 3   1  6 1
+```
+
+---
+##4.5.6 Removing columns from data frames (character )
+
+Method 1: Set individual columns to NULL
+
+
+```r
+df = data.frame(names = c("John", "Teresa", "Shel", "Christine", "Brenda"),
+                gender = c("M", "F", "F", "F", "F"),
+                rshp = c("Father", "Mother", "Self", "Sister", "Sister"))
+df
+```
+
+```
+##       names gender   rshp
+## 1      John      M Father
+## 2    Teresa      F Mother
+## 3      Shel      F   Self
+## 4 Christine      F Sister
+## 5    Brenda      F Sister
+```
+
+```r
+## create a copy of the dataframe
+df2 &lt;- df
+
+## drop a column
+df2$gender &lt;- NULL
+df2
+```
+
+```
+##       names   rshp
+## 1      John Father
+## 2    Teresa Mother
+## 3      Shel   Self
+## 4 Christine Sister
+## 5    Brenda Sister
+```
+
+---
+
+Method 2: Subset to return only the columns you want
+
+
+```r
+df[c("names", "rshp")]
+```
+
+```
+##       names   rshp
+## 1      John Father
+## 2    Teresa Mother
+## 3      Shel   Self
+## 4 Christine Sister
+## 5    Brenda Sister
+```
+
+Method 3: Use set operations to work out which columns to keep. This is useful when you only know the columns that you don't want. 
+
+
+```r
+to_keep &lt;- setdiff(names(df), "gender")
+to_keep
+```
+
+```
+## [1] "names" "rshp"
+```
+
+```r
+df[to_keep]
+```
+
+```
+##       names   rshp
+## 1      John Father
+## 2    Teresa Mother
+## 3      Shel   Self
+## 4 Christine Sister
+## 5    Brenda Sister
+```
+
+---
+##4.5.7 Selecting rows based on a condition (logical subsetting)
+
+
+```r
+library(rChambua)
+head(wafanyikazi, n=3)
+```
+
+```
+##     Sid Gender Age       Department   Role Income Marital_Status  County
+## 1 10715   Male  31          Finance    Mid   5991         Single  Kisumu
+## 2 17041   Male  48 Research Analyst Junior   3387       Divorced   Wajir
+## 3 16232   Male  35       Operations Junior   3170        Married Mombasa
+##   Leave_Days Promotion
+## 1         11        No
+## 2          8       Yes
+## 3          0        No
+```
+Select all juniors
+
+
+```r
+df1 &lt;- wafanyikazi[wafanyikazi$Role == "Junior",]
+head(df1, 3)
+```
+
+```
+##     Sid Gender Age       Department   Role Income Marital_Status  County
+## 2 17041   Male  48 Research Analyst Junior   3387       Divorced   Wajir
+## 3 16232   Male  35       Operations Junior   3170        Married Mombasa
+## 5 13463 Female  43        Associate Junior   1651        Married Nairobi
+##   Leave_Days Promotion
+## 2          8       Yes
+## 3          0        No
+## 5          2       Yes
+```
+
+---
+
+Select females who come from Nyeri county
+
+```r
+df2 &lt;- wafanyikazi[wafanyikazi$Gender == "Female" &amp; 
+                     wafanyikazi$County == "Nyeri",]
+head(df2, 3)
+```
+
+```
+##      Sid Gender Age Department   Role Income Marital_Status County Leave_Days
+## 4  19576 Female  41    Finance Senior   5557        Married  Nyeri          8
+## 34 18997 Female  32  Associate Senior   5340         Single  Nyeri         14
+## 67 19891 Female  48 Operations Senior   9029        Married  Nyeri         14
+##    Promotion
+## 4         No
+## 34        No
+## 67        No
+```
+
+**De Morgan’s laws:**
+
+- `!(X &amp; Y)` is the same as `!X | !Y`
+
+- `!(X | Y)` is the same as `!X &amp; !Y`
+---
+
+##4.5.8 Boolean algebra versus sets (logical and integer )
+
+Two types of subsetting.
+
+- integer subsetting: (set operations)
+  - Effective when you want to find the first (or last) TRUE and
+  
+  - You have very few TRUEs and very many FALSEs; a set representation may be faster and require less storage.
+
+- logical subsetting: (Boolean algebra)
+
+`which()` allows you to convert a Boolean representation to an integer representation.
+
+
+```r
+which(df$names %in% "John")
+```
+
+```
+## [1] 1
+```
+
+---
+
+You can create a function that does the reverse i.e. converts an integer representation to a Boolean representation.
+
+Do we really need to do this?
+
+
+```r
+unwhich &lt;- function(x, n) {
+  out &lt;- rep_len(FALSE, n)
+  out[x] &lt;- TRUE
+  out
+}
+unwhich(which(df$names %in% "John"), length(df$names))
+```
+
+```
+## [1]  TRUE FALSE FALSE FALSE FALSE
+```
+
+When we can just do this?
+
+
+```r
+df$names %in% "John"
+```
+
+```
+## [1]  TRUE FALSE FALSE FALSE FALSE
+```
+
+---
+
+## Relationship between Boolean and set operations.
+
+Create two logical vectors (x1 , y1) and their integer equivalents (x2, y2)
+
+```r
+(x1 &lt;- 1:10 %% 2 == 0)
+```
+
+```
+##  [1] FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE
+```
+
+```r
+(x2 &lt;- which(x1))
+```
+
+```
+## [1]  2  4  6  8 10
+```
+
+```r
+(y1 &lt;- 1:10 %% 5 == 0)
+```
+
+```
+##  [1] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE
+```
+
+```r
+(y2 &lt;- which(y1))
+```
+
+```
+## [1]  5 10
+```
+
+---
+
+### X &amp; Y &lt;-&gt; intersect(x, y)
+
+```r
+x1 &amp; y1
+```
+
+```
+##  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+```
+
+```r
+intersect(x2, y2)
+```
+
+```
+## [1] 10
+```
+
+--
+### X | Y &lt;-&gt; union(x, y)
+
+
+```r
+x1 | y1
+```
+
+```
+##  [1] FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE
+```
+
+```r
+union(x2, y2)
+```
+
+```
+## [1]  2  4  6  8 10  5
+```
+
+---
+### X &amp; !Y &lt;-&gt; setdiff(x, y)
+
+
+```r
+x1 &amp; !y1
+```
+
+```
+##  [1] FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE
+```
+
+```r
+setdiff(x2, y2)
+```
+
+```
+## [1] 2 4 6 8
+```
+
+--
+
+### xor(X, Y) &lt;-&gt; setdiff(union(x, y), intersect(x, y))
+
+
+
+```r
+xor(x1, y1)
+```
+
+```
+##  [1] FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE FALSE
+```
+
+```r
+setdiff(union(x2, y2), intersect(x2, y2))
+```
+
+```
+## [1] 2 4 6 8 5
+```
+
+---
+# Exercises
+
+* How would you randomly permute the columns of a data frame? (This is an important technique in random forests.) Can you simultaneously permute the rows and columns in one step?
+
+--
+
+
+```r
+# Read in the data
+df &lt;- rChambua::wafanyikazi
+head(df1, n=3)
+```
+
+```
+##     Sid Gender Age       Department   Role Income Marital_Status  County
+## 2 17041   Male  48 Research Analyst Junior   3387       Divorced   Wajir
+## 3 16232   Male  35       Operations Junior   3170        Married Mombasa
+## 5 13463 Female  43        Associate Junior   1651        Married Nairobi
+##   Leave_Days Promotion
+## 2          8       Yes
+## 3          0        No
+## 5          2       Yes
+```
+
+---
+
+
+```r
+# Permutate columns
+df1 &lt;- df[,sample(names(df))]
+head(df1, n=3)
+```
+
+```
+##     Role Marital_Status Leave_Days Gender   Sid Promotion       Department
+## 1    Mid         Single         11   Male 10715        No          Finance
+## 2 Junior       Divorced          8   Male 17041       Yes Research Analyst
+## 3 Junior        Married          0   Male 16232        No       Operations
+##    County Age Income
+## 1  Kisumu  31   5991
+## 2   Wajir  48   3387
+## 3 Mombasa  35   3170
+```
+
+--
+
+```r
+# Permutate rows and columns
+df2 &lt;- df[sample(nrow(df)),sample(names(df))]
+head(df2, n=3)
+```
+
+```
+##     Leave_Days   Role Marital_Status Age Income   Sid Promotion Gender  County
+## 224         20 Junior        Married  33   7727 17704       Yes   Male Nairobi
+## 405         18 Senior       Divorced  30   6425 17770        No   Male    Lamu
+## 463         11 Junior       Divorced  29   3604 15549       Yes Female   Taita
+##     Department
+## 224    Finance
+## 405       Data
+## 463  Associate
+```
+
+---
+
+* How would you select a random sample of m rows from a data frame? What if the sample had to be contiguous (i.e., with an initial row, a final row, and every row in between)?
+
+--
+
+
+```r
+# Generate a vector of the first and last row ids
+first_last_ids &lt;- c(1,nrow(df))
+first_last_ids
+```
+
+```
+## [1]   1 500
+```
+
+--
+
+```r
+# Sample m (2) rows from the dataframe, excluding the first and last rows
+original_ids &lt;- 1:nrow(df)
+
+other_ids &lt;- sample(original_ids[!original_ids %in% first_last_ids] , 2)
+other_ids
+```
+
+```
+## [1] 289 488
+```
+
+--
+
+```r
+# Combine the first, last and the rows in between
+final_ids &lt;- c(first_last_ids[1], other_ids, first_last_ids[2])
+final_ids
+```
+
+```
+## [1]   1 289 488 500
+```
+
+---
+
+```r
+# Call the data, with only these specific rows
+df3 &lt;- df[final_ids,]
+df3
+```
+
+```
+##       Sid Gender Age Department   Role Income Marital_Status    County
+## 1   10715   Male  31    Finance    Mid   5991         Single    Kisumu
+## 289 14070   Male  24    Finance Junior   9680         Single Kirinyaga
+## 488 19363 Female  38  Associate Junior   8378       Divorced     Nyeri
+## 500 16114 Female  22    Finance Junior   2736       Divorced   Mombasa
+##     Leave_Days Promotion
+## 1           11        No
+## 289          2       Yes
+## 488          0        No
+## 500         24       Yes
+```
+
+---
+
+* How could you put the columns in a data frame in alphabetical order?
+
+--
+
+
+```r
+df4 &lt;- df[,order(names(df))]
+head(df4)
+```
+
+```
+##   Age  County       Department Gender Income Leave_Days Marital_Status
+## 1  31  Kisumu          Finance   Male   5991         11         Single
+## 2  48   Wajir Research Analyst   Male   3387          8       Divorced
+## 3  35 Mombasa       Operations   Male   3170          0        Married
+## 4  41   Nyeri          Finance Female   5557          8        Married
+## 5  43 Nairobi        Associate Female   1651          2        Married
+## 6  30   Taita          Finance Female   6859          9         Single
+##   Promotion   Role   Sid
+## 1        No    Mid 10715
+## 2       Yes Junior 17041
+## 3        No Junior 16232
+## 4        No Senior 19576
+## 5       Yes Junior 13463
+## 6       Yes Junior 19788
+```
+
+---
+
+# Discussion
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="img/subset-removebg-preview.png" alt="..." width="70%" /&gt;
+&lt;p class="caption"&gt;...&lt;/p&gt;
+&lt;/div&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+<style>
+.logo {
+  background-image: url(r4ds.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 110px;
+  height: 128px;
+  z-index: 0;
+}
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"></div>';
+  });
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
