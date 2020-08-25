@@ -90,6 +90,8 @@ Chapter 4 - Subsetting
 - Cohort 2: ...
 - Cohort 3: ... [video](https://www.youtube.com/watch?v=CvvXkXiF3Ig)
 
+Chapter 5 - Control flow 
+
 - Cohort 1: [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week05/Cohort1/Chapter5.html#1) | [video](https://www.youtube.com/watch?v=96eY6YS_3hU))
 
 Chapter 6 - Functions
