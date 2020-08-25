@@ -88,7 +88,7 @@ Chapter 4 - Subsetting
 
 - Cohort 1: [Scott Nestler](https://twitter.com/ScottNestler) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week04/Cohort1/Chap4slides.html#1) | [video](https://www.youtube.com/watch?v=eLMpCc0t1cg))
 - Cohort 2: ...
-- Cohort 3: ... [video](https://www.youtube.com/watch?v=CvvXkXiF3Ig)
+- Cohort 3: Shel and Alan ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week04/Cohort3/chapter4.html#1) | [video](https://www.youtube.com/watch?v=CvvXkXiF3Ig))
 
 Chapter 5 - Control flow 
 
