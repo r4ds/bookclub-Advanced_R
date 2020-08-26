@@ -15,10 +15,9 @@ This repo contains 3 main folders:
 
 *Cohort 1 (started 2020-04-02) - Tuesdays, 8pm EDT/EST*
 
-- 2020-09-01 Chapter 23 - Measuring performance:
-- 2020-09-08 Chapter 24 - Improving performance:
-- 2020-09-15 Chapter 25 - Rewriting R code in C++:
-- 2020-09-22 Recap
+- 2020-09-01 Chapter 23/24 - Measuring & improving performance: Jonathan Leslie
+- 2020-09-08 Chapter 25 - Rewriting R code in C++: [Daryn Ramsden](https://twitter.com/thisisdaryn)
+- 2020-09-15 Recap, next steps
 
 <hr>
 
