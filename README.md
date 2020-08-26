@@ -9,7 +9,7 @@ This repo contains 3 main folders:
 
 - Presentations: each week a presenter will give a talk summarizing the chapter and/or discussing practical applications of the topic at hand. [Here is a (WIP) guide](https://github.com/tanho63/bookclub-template/blob/master/Presentations/PresentationGuide.md) for first-time presenters :sunglasses:
 
-- Data: Example datasets are stored in this folder to help facilitate practical applications - including [beer production](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-03-31/readme.md), beer reviews, and coffee production!
+- Data: Example datasets are stored in this folder to help facilitate practical applications - including [beer production](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-03-31/readme.md) and [beer reviews](https://www.kaggle.com/rdoume/beerreviews)!
 
 ### Meeting Schedule 
 
