@@ -7,7 +7,7 @@ This repo contains 3 main folders:
 
 - QandA: A [bookdown collection of chapter questions and answers](https://r4ds.github.io/bookclub-Advanced_R/QandA/docs/welcome.html) that come up during meetings (or between!). We're also using this to try to answer questions marked "started" in the solutions manual with the potential goal of submitting PRs with our own answers!
 
-- Presentations: each week a presenter will give a talk summarizing the chapter and/or discussing practical applications of the topic at hand. [Here is a (WIP) guide](https://github.com/tanho63/bookclub-template/blob/master/Presentations/PresentationGuide.md) for first-time presenters :sunglasses:
+- Presentations: each week a presenter will give a talk summarizing the chapter and/or discussing practical applications of the topic at hand. [Here is a (WIP) guide](https://github.com/r4ds/bookclub-template/blob/master/Presentations/PresentationGuide.md) for first-time presenters :sunglasses:
 
 - Data: Example datasets are stored in this folder to help facilitate practical applications - including [beer production](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-03-31/readme.md) and [beer reviews](https://www.kaggle.com/rdoume/beerreviews)!
 
