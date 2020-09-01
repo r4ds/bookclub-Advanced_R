@@ -48,9 +48,9 @@ This repo contains 3 main folders:
 
 *Cohort 3 [Europe/Africa]: (started 2020-08-04) Tuesdays, 19:30 CET (CEST)*
 
-- 2020-09-08 Chapter 6 - Functions [Novica Nakov]
-- 2020-09-15 Chapter 7 - Environments [AL Brown]
-- 2020-09-22 Chapter 8 - Conditions [Shel Kariuki]
+- 2020-09-08 Chapter 6 - Functions: Novica Nakov
+- 2020-09-15 Chapter 7 - Environments: AL Brown
+- 2020-09-22 Chapter 8 - Conditions: Shel Kariuki
 - 2020-09-29 Recap week
 
 <details>
