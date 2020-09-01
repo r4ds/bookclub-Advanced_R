@@ -47,9 +47,11 @@ This repo contains 3 main folders:
 <hr>
 
 *Cohort 3 [Europe/Africa]: (started 2020-08-04) Tuesdays, 19:30 CET (CEST)*
-- 2020-09-01 Chapter 5 - Control Flow: [Megan Stodel]
-- 2020-09-08 Chapter 6 - Functions: [Novica Nakov]
-- 2020-09-15 Chapter 7 - Environments
+
+- 2020-09-08 Chapter 6 - Functions [Novica Nakov]
+- 2020-09-15 Chapter 7 - Environments [AL Brown]
+- 2020-09-22 Chapter 8 - Conditions [Shel Kariuki]
+- 2020-09-29 Recap week
 
 <details>
   <summary> Future Meetings </summary>
@@ -99,6 +101,8 @@ Chapter 4 - Subsetting
 Chapter 5 - Control flow 
 
 - Cohort 1: [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week05/Cohort1/Chapter5.html#1) | [video](https://www.youtube.com/watch?v=96eY6YS_3hU))
+
+- Cohort 3: [Megan Stodel]() ([slides]() | [video](https://www.youtube.com/watch?v=u6UMGWDuxDE))
 
 Chapter 6 - Functions
 
