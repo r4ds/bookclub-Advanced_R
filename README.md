@@ -164,7 +164,7 @@ Chapter 21 - Translating R Code (Domain Specific Languages)
 - Cohort 1: Pavitra Chakravarty ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week20/Cohort1/Chapter21.html#1) | [video](https://www.youtube.com/watch?v=fixyitpXrwY))
 
 Metaprogramming Review
-- Cohort 1: [Jon Harmon](https://twitter.com/JonTheGeek) (slides | video)
+- Cohort 1: [Jon Harmon](https://twitter.com/JonTheGeek) (slides | [video](https://www.youtube.com/watch?v=h3RNPyhIjas))
 
 Chapter 22 - Debugging: 
 - Cohort 1: [Tan Ho](https://twitter.com/_tanho) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week21/Cohort1/AdvR_Ch22_Debugging) | [video](https://www.youtube.com/watch?v=ROMefwMuqXU))
