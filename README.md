@@ -103,7 +103,7 @@ Chapter 5 - Control flow
 
 - Cohort 1: [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week05/Cohort1/Chapter5.html#1) | [video](https://www.youtube.com/watch?v=96eY6YS_3hU))
 
-- Cohort 3: [Megan Stodel]() ([slides]() | [video](https://www.youtube.com/watch?v=u6UMGWDuxDE))
+- Cohort 3: [Megan Stodel](www.meganstodel.com) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week05/Cohort3/Control-Flow.pdf) | [video](https://www.youtube.com/watch?v=u6UMGWDuxDE))
 
 Chapter 6 - Functions
 
