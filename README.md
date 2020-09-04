@@ -22,24 +22,16 @@ This repo contains 3 main folders:
 
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
-- 2020-08-20 Chapter 4 - Subsetting
+- 2020-08-20 Chapter 4 - Subsetting: Mike Jeziorski
 - 2020-08-27 Chapter 5 - Control Flow: [Erick Knackstedt](https://twitter.com/Eknackstedt)
-- 2020-09-03 Chapter 6 - Functions: [Meenakshi Kushwaha](https://twitter.com/envhealthspeak)
-- 2020-08-10 Chapter 7 - Environments
-
-<details>
-  <summary> Chapter 4 Guiding Questions </summary>
-
-- Why are there six methods for subsetting atomic vectors? Are there different use cases or purposes for each? 
-- What are the similarities and differences between subsetting vectors, lists, dataframes, and tibbles? 
-- What is the difference between simplifying and preserving when subsetting? 
-- What are the most common use cases for subsetting? 
-
-</details>
+- 2020-09-10 Chapter 6 - Functions: [Meenakshi Kushwaha](https://twitter.com/envhealthspeak)
+- 2020-09-17 Chapter 7 - Environments
 
 <details>
   <summary> Future Meetings </summary>
 
+- 2020-09-24 Chapter 8
+- 2020-10-01 Chapter 9
 
 </details>
 
@@ -94,8 +86,8 @@ Chapter 3 - Vectors
 Chapter 4 - Subsetting
 
 - Cohort 1: [Scott Nestler](https://twitter.com/ScottNestler) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week04/Cohort1/Chap4slides.html#1) | [video](https://www.youtube.com/watch?v=eLMpCc0t1cg))
-- Cohort 2: ...
-- Cohort 3: Shel and Alan ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week04/Cohort3/chapter4.html#1) | [video](https://www.youtube.com/watch?v=CvvXkXiF3Ig))
+- Cohort 2: Mike Jeziorski
+- Cohort 3: Shelmith Kariuki and Alan Kinene ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week04/Cohort3/chapter4.html#1) | [video](https://www.youtube.com/watch?v=CvvXkXiF3Ig))
 
 Chapter 5 - Control flow 
 
