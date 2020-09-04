@@ -15,8 +15,6 @@ This repo contains 3 main folders:
 
 *Cohort 1 (started 2020-04-02) - Tuesdays, 8pm EDT/EST*
 
-- 2020-09-01 Chapter 23/24 - Measuring & improving performance: [Jonathan
-  Leslie](https://twitter.com/jlesliedata)
 - 2020-09-08 Chapter 25 - Rewriting R code in C++: [Daryn Ramsden](https://twitter.com/thisisdaryn)
 - 2020-09-15 Recap, next steps
 
@@ -166,7 +164,10 @@ Chapter 21 - Translating R Code (Domain Specific Languages)
 - Cohort 1: Pavitra Chakravarty ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week20/Cohort1/Chapter21.html#1) | [video](https://www.youtube.com/watch?v=fixyitpXrwY))
 
 Metaprogramming Review
-- Cohort 1: [Jon Harmon](https://twitter.com/JonTheGeek) (slides | video)
+- Cohort 1: [Jon Harmon](https://twitter.com/JonTheGeek) (slides | [video](https://www.youtube.com/watch?v=h3RNPyhIjas))
 
 Chapter 22 - Debugging: 
 - Cohort 1: [Tan Ho](https://twitter.com/_tanho) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week21/Cohort1/AdvR_Ch22_Debugging) | [video](https://www.youtube.com/watch?v=ROMefwMuqXU))
+
+Chapter 23 / 24 - Measuring & Improving Performance:
+- Cohort 1: [Jonathan Leslie](https://twitter.com/jlesliedata) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week23/Cohort1/Chapters23-24.html) | video)
