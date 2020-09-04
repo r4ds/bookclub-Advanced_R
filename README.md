@@ -163,3 +163,7 @@ Chapter 22 - Debugging:
 
 Chapter 23 / 24 - Measuring & Improving Performance:
 - Cohort 1: [Jonathan Leslie](https://twitter.com/jlesliedata) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week23/Cohort1/Chapters23-24.html) | video)
+
+Chapter 25: Rcpp
+
+Book Recap
