@@ -162,7 +162,7 @@ Chapter 22 - Debugging:
 - Cohort 1: [Tan Ho](https://twitter.com/_tanho) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week21/Cohort1/AdvR_Ch22_Debugging) | [video](https://www.youtube.com/watch?v=ROMefwMuqXU))
 
 Chapter 23 / 24 - Measuring & Improving Performance:
-- Cohort 1: [Jonathan Leslie](https://twitter.com/jlesliedata) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week23/Cohort1/Chapters23-24.html) | video)
+- Cohort 1: [Jonathan Leslie](https://twitter.com/jlesliedata) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week23/Cohort1/Chapters23-24.html) | [video](https://www.youtube.com/watch?v=YngflemRSD0))
 
 Chapter 25: Rcpp
 
