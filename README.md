@@ -98,6 +98,7 @@ Chapter 5 - Control flow
 Chapter 6 - Functions
 
 - Cohort 1: [Asmae Toumi](https://twitter.com/asmae_toumi) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week06/Cohort1/Chap6slides.html#1) | [video](https://youtu.be/UwzGhMndWzs))
+- Cohort 3: [Novica Nakov](https://twitter.com/novicanakov) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week06/Cohort3/Chap6slides.html#1) | [video]())
 
 Chapter 7 - Environments
 
