@@ -15,9 +15,7 @@ This repo contains 3 main folders:
 
 *Cohort 1 (started 2020-04-02) - Tuesdays, 8pm EDT/EST*
 
-- 2020-09-08 Chapter 25 - Rewriting R code in C++: [Daryn Ramsden](https://twitter.com/thisisdaryn)
 - 2020-09-15 Recap, next steps
-
 <hr>
 
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
@@ -39,16 +37,13 @@ This repo contains 3 main folders:
 
 *Cohort 3 [Europe/Africa]: (started 2020-08-04) Tuesdays, 19:30 CET (CEST)*
 
-- 2020-09-08 Chapter 6 - Functions: Novica Nakov
 - 2020-09-15 Chapter 7 - Environments: AL Brown
 - 2020-09-22 Chapter 8 - Conditions: Shel Kariuki
 - 2020-09-29 Recap week
 
 <details>
   <summary> Future Meetings </summary>
-
-
-
+  
 </details>
 
 <hr>
@@ -166,5 +161,6 @@ Chapter 23 / 24 - Measuring & Improving Performance:
 - Cohort 1: [Jonathan Leslie](https://twitter.com/jlesliedata) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week23/Cohort1/Chapters23-24.html) | [video](https://www.youtube.com/watch?v=YngflemRSD0))
 
 Chapter 25: Rcpp
+- Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn) (slides | video)
 
 Book Recap
