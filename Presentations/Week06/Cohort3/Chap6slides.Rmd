@@ -1,0 +1,262 @@
+---
+title: "Advanced R bookclub - Chapter 6: Functions"
+author: "novica"
+date: "9/8/2020"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Functions (whoohooo)
+
+
+```{r, echo = FALSE, message = FALSE}
+coffee_ratings <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-07/coffee_ratings.csv', )
+
+library(tidyverse)
+```
+
+
+
+Function: Something you can use when you have to write the same code more than once.
+
+Longest chapter so far, and scariest! :)
+
+A lot of __We’ll come back to this idea in Section__.
+
+
+## Function fundamentals
+
+
+Functions have three parts, `formals()`, `body()`, and `environment()`.
+
+The `body()` shows only the code, but you can get the comments too with the `srcref` attribute.
+
+How come? Functions are objects and have attributes like any other object in R (remember chapter 3.3?). 
+
+
+## Function fundamentals (2)
+
+```{r, function_example}
+
+avg_points <- function(species){
+  
+  avg <-  coffee_ratings %>% 
+  filter(species == species) %>% 
+  summarise(mean = mean(total_cup_points))
+  
+  return(avg)
+}
+
+#avg_points("Arabica")
+```
+```
+avg_points <- function(species){
+  
+  avg <-  coffee_ratings %>% 
+  filter(species == species) %>% 
+  summarise(mean = mean(total_cup_points))
+  
+  return(avg)
+}
+```
+
+
+## Function fundamentals (3)
+
+```
+formals(avg_points)
+body(avg_points)
+environment(avg_points)
+attr(avg_points, "srcref")
+```
+
+## Function fundamentals (4)
+
+Anonymous functions. Wow. Sometimes I struggle a lot with these. 
+
+When coming up for a name for a simple function is not worth it (apparently), an anonymous function is born. Example (from the book):
+
+`lapply(mtcars, function(x) length(unique(x)))`
+
+The function here is `function(x) length(unique(x))` and can be rewritten with a name:
+
+```
+uniq_len <- function(x) {
+  length(unique(x))
+}
+```
+
+## Function fundamentals (5)
+
+Beside the usual `function(args)`, you can invoke functions if the arguments are contained in the data structure with `do.call()`:  
+
+```
+
+args <- unique(coffee_ratings$species) %>% 
+  `[[`(1) %>% 
+  as.list()
+  
+  
+  
+do.call(avg_points, args)
+
+```
+
+First time doing this. :)
+
+## Function composition (straight from the book :))
+
+
+Nested calls are hard to read:
+
+```
+# anonymous functions whohoo!
+square <- function(x) x^2
+
+deviation <- function(x) x - mean(x)
+
+x <- runif(100)
+
+sqrt(mean(square(deviation(x))))
+```
+
+## Function composition (straight from the book :)) (2)
+
+
+A lot of intermediate results:
+
+```
+
+out <- deviation(x)
+out <- square(out)
+out <- mean(out)
+out <- sqrt(out)
+out
+```
+
+## Function composition (straight from the book :)) (3)
+
+The pipe to confuse everyone who is not familiar with the `tidyverse`: 
+
+```
+#library(magrittr)
+
+x %>%
+  deviation() %>%
+  square() %>%
+  mean() %>%
+  sqrt()
+```
+
+## Lexical scoping
+
+What?! 
+
+But it seems is just a fancy name for things we already know.
+
+1. Functions looks for names inside, before looking outside.
+
+2. Except when the name is a variable.
+
+3. Functions don't remember.
+
+4. Functions don't look for values until they are run.
+
+
+## Lazy evaluation
+
+I __think__ this is somewhat connected to the fourth point of lexical scoping part in the sense that functions are only evaluated if accessed, and functions don't look for values until run. 
+
+## Lazy evaluation (2)
+
+Promises(?)
+
+
+## Lazy evaluation (3)
+
+Default arguments and missing arguments.
+
+Functions can have a default argument, I've seen this and used it. :)
+
+`missing` can be used to check if an argument is missing and provide a default value to it. Which, doesn't make much sense, because the function can have a default argument.
+
+
+## ... (dot-dot-dot)
+
+To add any number of additional arguments to a function.
+
+Useful when maybe you don't know the number of needed arguments.
+
+Example:
+
+```
+i01 <- function(y, z) {
+  list(y = y, z = z)
+}
+
+i02 <- function(x, ...) {
+  i01(...)
+}
+
+str(i02(x = 1, y = 2, z = 3))
+#> List of 2
+#>  $ y: num 2
+#>  $ z: num 3
+```
+
+## Exiting a function
+
+1. With or without return
+
+2. Invisibility (`<-` most famous function that returns an invisible value)
+
+3. `stop()` to stop a function with an error.
+
+4. Exit handlers(?)
+
+## Function forms
+
+A lot of things that don't look like functions are actually functions in R.  
+
+Like `[[`, `<-` and `+`. 
+
+There are four types of function forms
+
+Prefix: the function name comes before its arguments (as most would assume).
+
+TIL that you can also specify arguments:
+
+By position, like `help(mean)`.
+Using partial matching, like `help(top = mean)`.
+By name, like `help(topic = mean)`.
+
+
+
+## Fucntion forms (2)
+
+
+1. infix: the function name comes in between its arguments (common in math operators and user-defined functions)
+
+2. replacement: functions that replace values by assignment, like names(df) <- c("a", "b", "c").
+
+3. special: functions like [[, if, and for.
+
+But all functions can be rewritten to prefix form
+
+
+## Function forms (3)
+
+```
+x + y
+`+`(x, y)
+
+names(df) <- c("x", "y", "z")
+`names<-`(df, c("x", "y", "z"))
+
+for(i in 1:10) print(i)
+`for`(i, 1:10, print(i))
+```
