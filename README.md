@@ -161,6 +161,6 @@ Chapter 23 / 24 - Measuring & Improving Performance:
 - Cohort 1: [Jonathan Leslie](https://twitter.com/jlesliedata) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week23/Cohort1/Chapters23-24.html) | [video](https://www.youtube.com/watch?v=YngflemRSD0))
 
 Chapter 25: Rcpp
-- Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn) (slides | video)
+- Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week24/Cohort1/Chapter25.html) | video)
 
 Book Recap
