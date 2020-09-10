@@ -1,0 +1,622 @@
+---
+title: "Advanced R: Chapter 25 code"
+author: ""
+date: "last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    highlight: haddock
+    theme: readable
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      message = FALSE,
+                      warning = FALSE,
+                      comment = "")
+```
+
+## 25.1 Introduction 
+
+## 25.2 Getting Started with C++ 
+
+```{r}
+library(Rcpp)
+
+cppFunction('int add(int x, int y, int z) {
+  int sum = x + y + z;
+  return sum;
+}')
+
+```
+
+
+```{r}
+add
+```
+
+
+```{r}
+add(1729, 101, 99)
+```
+
+
+```{r}
+
+```
+
+
+### No inputs scalar outputs 
+
+```{}
+one <- function() 1L
+```
+
+```{Rcpp}
+int one() {
+  return 1;
+}
+```
+
+
+```{r}
+cppFunction('int one() {
+  return 1;
+}')
+
+one()
+```
+
+### Scalar input, scalar output
+
+```{r}
+signR <- function(x) {
+  if (x > 0) {
+    1
+  } else if (x == 0) {
+    0
+  } else {
+    -1
+  }
+}
+
+cppFunction('int signC(int x) {
+  if (x > 0) {
+    return 1;
+  } else if (x == 0) {
+    return 0;
+  } else {
+    return -1;
+  }
+}')
+```
+
+### Vector input, scalar output 
+
+```{r}
+sumR <- function(x) {
+  total <- 0
+  for (i in seq_along(x)) {
+    total <- total + x[i]
+  }
+  total
+}
+```
+
+
+
+```{r}
+cppFunction('double sumC(NumericVector x) {
+  int n = x.size();
+  double total = 0;
+  for(int i = 0; i < n; ++i) {
+    total += x[i];
+  }
+  return total;
+}')
+```
+
+
+### Vector input, vector output 
+```{r}
+pdistR <- function(x, ys) {
+  sqrt((x - ys) ^ 2)
+}
+```
+
+
+```{r}
+cppFunction('NumericVector pdistC(double x, NumericVector ys) {
+  int n = ys.size();
+  NumericVector out(n);
+
+  for(int i = 0; i < n; ++i) {
+    out[i] = sqrt(pow(ys[i] - x, 2.0));
+  }
+  return out;
+}')
+```
+
+
+### Using source cpp
+
+
+```{Rcpp}
+#include <Rcpp.h>
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+double meanC(NumericVector x) {
+  int n = x.size();
+  double total = 0;
+
+  for(int i = 0; i < n; ++i) {
+    total += x[i];
+  }
+  return total / n;
+}
+
+```
+
+
+```{r}
+meanC(c(1:10,99,2701))
+```
+
+
+
+
+
+
+## 25.3 Other Classes
+
+### 25.3.1 Lists and data frames
+
+```{Rcpp}
+#include <Rcpp.h>
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+double mpe(List mod) {
+  if (!mod.inherits("lm")) stop("Input must be a linear model");
+
+  NumericVector resid = as<NumericVector>(mod["residuals"]);
+  NumericVector fitted = as<NumericVector>(mod["fitted.values"]);
+
+  int n = resid.size();
+  double err = 0;
+  for(int i = 0; i < n; ++i) {
+    err += resid[i] / (fitted[i] + resid[i]);
+  }
+  return err / n;
+}
+```
+
+
+```{r}
+mod <- lm(mpg ~ wt, data = mtcars)
+mpe(mod)
+```
+
+### 25.3.2 Functions
+
+```{Rcpp}
+#include <Rcpp.h>
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+RObject callWithOne(Function f) {
+  return f(1);
+}
+```
+
+
+```{r}
+callWithOne(function(x) x + 1)
+```
+```{r}
+callWithOne(paste)
+```
+
+
+```{r eval = FALSE}
+f("y", 1);
+```
+
+
+```{r eval = FALSE}
+f(_["x"] = "y", _["value"] = 1);
+```
+
+
+### 25.3.3 Attributes
+
+```{Rcpp}
+#include <Rcpp.h>
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+NumericVector attribs() {
+  NumericVector out = NumericVector::create(1, 2, 3);
+
+  out.names() = CharacterVector::create("a", "b", "c");
+  out.attr("my-attr") = "my-value";
+  out.attr("class") = "my-class";
+
+  return out;
+}
+```
+
+
+## 25.4 Missing Values 
+
+
+
+
+
+### 25.4.1 Scalars
+
+```{Rcpp}
+#include <Rcpp.h>
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+List scalar_missings() {
+  int int_s = NA_INTEGER;
+  String chr_s = NA_STRING;
+  bool lgl_s = NA_LOGICAL;
+  double num_s = NA_REAL;
+
+  return List::create(int_s, chr_s, lgl_s, num_s);
+}
+```
+
+
+```{r}
+str(scalar_missings())
+```
+
+#### 25.4.1.1 Integers
+
+#### 25.4.1.2 Doubles
+
+
+
+```{r}
+evalCpp("NAN == 1")
+```
+
+```{r}
+evalCpp("NAN < 1")
+```
+
+```{r}
+evalCpp("NAN > 1")
+```
+
+
+```{r}
+evalCpp("NAN == NAN")
+```
+
+Be careful with booleans 
+```{r}
+evalCpp("NAN && TRUE")
+```
+
+```{r}
+evalCpp("NAN || FALSE")
+```
+
+In numeric contexts, NaN will propagate NAs
+
+```{r}
+evalCpp("NAN + 1")
+```
+
+```{r}
+evalCpp("NAN - 1")
+```
+
+```{r}
+evalCpp("NAN / 1")
+```
+
+```{r}
+evalCpp("NAN * 1")
+```
+
+
+### 25.4.2 Strings
+
+
+### 25.4.3 Booleans
+
+### 25.4.4 Vectors
+
+
+## 25.5 Standard Template Library
+
+### 25.5.1 Using iterators
+
+```{Rcpp}
+#include <Rcpp.h>
+
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+double sum3(NumericVector x) {
+  double total = 0;
+  
+  NumericVector::iterator it;
+  for(it = x.begin(); it != x.end(); ++it) {
+    total += *it;
+  }
+  return total;
+}
+```
+
+
+```{Rcpp}
+#include <numeric>
+#include <Rcpp.h>
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+double sum5(NumericVector x) {
+  return std::accumulate(x.begin(), x.end(), 0.0);
+}
+```
+
+
+### 25.5.2 Algorithms 
+
+```{Rcpp}
+#include <algorithm>
+#include <Rcpp.h>
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+IntegerVector findInterval2(NumericVector x, NumericVector breaks) {
+  IntegerVector out(x.size());
+
+  NumericVector::iterator it, pos;
+  IntegerVector::iterator out_it;
+
+  for(it = x.begin(), out_it = out.begin(); it != x.end(); 
+      ++it, ++out_it) {
+    pos = std::upper_bound(breaks.begin(), breaks.end(), *it);
+    *out_it = std::distance(breaks.begin(), pos);
+  }
+
+  return out;
+}
+```
+
+
+### 25.5.3 Data structures
+
+
+### 25.5.4 Vectors
+
+```{Rcpp}
+#include <Rcpp.h>
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+List rleC(NumericVector x) {
+  std::vector<int> lengths;
+  std::vector<double> values;
+
+  // Initialise first value
+  int i = 0;
+  double prev = x[0];
+  values.push_back(prev);
+  lengths.push_back(1);
+
+  NumericVector::iterator it;
+  for(it = x.begin() + 1; it != x.end(); ++it) {
+    if (prev == *it) {
+      lengths[i]++;
+    } else {
+      values.push_back(*it);
+      lengths.push_back(1);
+
+      i++;
+      prev = *it;
+    }
+  }
+
+  return List::create(
+    _["lengths"] = lengths, 
+    _["values"] = values
+  );
+}
+```
+
+
+### 25.5.5 Sets
+
+```{Rcpp}
+// [[Rcpp::plugins(cpp11)]]
+#include <Rcpp.h>
+#include <unordered_set>
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+LogicalVector duplicatedC(IntegerVector x) {
+  std::unordered_set<int> seen;
+  int n = x.size();
+  LogicalVector out(n);
+
+  for (int i = 0; i < n; ++i) {
+    out[i] = !seen.insert(x[i]).second;
+  }
+
+  return out;
+}
+```
+
+
+### 25.5.6 Map
+
+```{Rcpp}
+#include <Rcpp.h>
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+std::map<double, int> tableC(NumericVector x) {
+  std::map<double, int> counts;
+
+  int n = x.size();
+  for (int i = 0; i < n; i++) {
+    counts[x[i]]++;
+  }
+
+  return counts;
+}
+```
+
+
+## 25.6 Case Studies
+
+### 25.6.1 Gibbs sampler
+
+
+```{r}
+gibbs_r <- function(N, thin) {
+  mat <- matrix(nrow = N, ncol = 2)
+  x <- y <- 0
+
+  for (i in 1:N) {
+    for (j in 1:thin) {
+      x <- rgamma(1, 3, y * y + 4)
+      y <- rnorm(1, 1 / (x + 1), 1 / sqrt(2 * (x + 1)))
+    }
+    mat[i, ] <- c(x, y)
+  }
+  mat
+}
+```
+
+
+```{Rcpp}
+#include <Rcpp.h>
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+NumericMatrix gibbs_cpp(int N, int thin) {
+  NumericMatrix mat(N, 2);
+  double x = 0, y = 0;
+
+  for(int i = 0; i < N; i++) {
+    for(int j = 0; j < thin; j++) {
+      x = rgamma(1, 3, 1 / (y * y + 4))[0];
+      y = rnorm(1, 1 / (x + 1), 1 / sqrt(2 * (x + 1)))[0];
+    }
+    mat(i, 0) = x;
+    mat(i, 1) = y;
+  }
+
+  return(mat);
+}
+```
+
+```{r}
+bench::mark(
+  gibbs_r(100, 10),
+  gibbs_cpp(100, 10),
+  check = FALSE
+)
+```
+
+
+### 25.6.2 R vectorisation versus C++ vectorisation
+
+
+```{r}
+vacc1a <- function(age, female, ily) {
+  p <- 0.25 + 0.3 * 1 / (1 - exp(0.04 * age)) + 0.1 * ily
+  p <- p * if (female) 1.25 else 0.75
+  p <- max(0, p)
+  p <- min(1, p)
+  p
+}
+```
+
+
+
+```{r}
+vacc1 <- function(age, female, ily) {
+  n <- length(age)
+  out <- numeric(n)
+  for (i in seq_len(n)) {
+    out[i] <- vacc1a(age[i], female[i], ily[i])
+  }
+  out
+}
+```
+
+
+
+
+```{r}
+vacc2 <- function(age, female, ily) {
+  p <- 0.25 + 0.3 * 1 / (1 - exp(0.04 * age)) + 0.1 * ily
+  p <- p * ifelse(female, 1.25, 0.75)
+  p <- pmax(0, p)
+  p <- pmin(1, p)
+  p
+}
+```
+
+```{Rcpp}
+#include <Rcpp.h>
+using namespace Rcpp;
+
+double vacc3a(double age, bool female, bool ily){
+  double p = 0.25 + 0.3 * 1 / (1 - exp(0.04 * age)) + 0.1 * ily;
+  p = p * (female ? 1.25 : 0.75);
+  p = std::max(p, 0.0);
+  p = std::min(p, 1.0);
+  return p;
+}
+
+// [[Rcpp::export]]
+NumericVector vacc3(NumericVector age, LogicalVector female, 
+                    LogicalVector ily) {
+  int n = age.size();
+  NumericVector out(n);
+
+  for(int i = 0; i < n; ++i) {
+    out[i] = vacc3a(age[i], female[i], ily[i]);
+  }
+
+  return out;
+}
+```
+
+```{r}
+n <- 1000
+age <- rnorm(n, mean = 50, sd = 10)
+female <- sample(c(T, F), n, rep = TRUE)
+ily <- sample(c(T, F), n, prob = c(0.8, 0.2), rep = TRUE)
+
+stopifnot(
+  all.equal(vacc1(age, female, ily), vacc2(age, female, ily)),
+  all.equal(vacc1(age, female, ily), vacc3(age, female, ily))
+)
+```
+
+```{r}
+bench::mark(
+  vacc1 = vacc1(age, female, ily),
+  vacc2 = vacc2(age, female, ily),
+  vacc3 = vacc3(age, female, ily)
+)
+```
+
+## 25.7 Using Rcpp in a package

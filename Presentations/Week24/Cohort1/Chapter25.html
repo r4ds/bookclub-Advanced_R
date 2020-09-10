@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Daryn Ramsden" />
+    <script src="libs/header-attrs-2.3/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Advanced R
+## Chapter 25: Rewriting R code in C++
+### Daryn Ramsden
+
+---
+
+
+
+
+
+
+### Sad reality: sometimes R won't cut it
+
+#### When can C++ help the R programmer?
+
+
+  * Loops that can’t be easily vectorised because subsequent iterations depend on previous ones.
+
+  * Recursive functions, or problems which involve calling functions millions of times. The overhead of calling a function in C++ is much lower than in R.
+
+  * Problems that require advanced data structures and algorithms that R doesn’t provide. 
+  
+
+
+  
+---
+### Rcpp: The best way to use C++ 
+
+
+
+
+```r
+library(Rcpp)
+```
+
+Key functions in `Rcpp`:
+  * `cppFunction`
+  
+  * `sourceCpp`
+  
+  
+---
+### Detour: If you really want an `Rcpp` tutorial
+
+
+Dirk Eddelbuettel's `Rcpp` tutorial at useR! 2020 (h/t: Pavitra)
+
+&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/57H34Njrns4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
+
+
+  
+---
+### Using `cppFunction`
+
+Just put the whole C++ function in a string and pass it to `cppFunction`
+
+
+```r
+cppFunction('int add(int x, int y, int z) {
+  int sum = x + y + z;
+  return sum;
+}')
+
+add(1729, 99, 14)
+```
+
+```
+## [1] 1842
+```
+
+
+---
+### An example R function vs C++ implementation 
+
+
+```r
+fibonacci_r &lt;- function(n){
+  
+  if(n &lt; 2) return(n)
+  
+  return (fibonacci_r(n-1) + fibonacci_r(n-2))
+  
+}
+```
+
+
+```r
+cppFunction("int fibonacci_cpp(int n){
+  
+  if (n &lt; 2) return n;
+  
+  return fibonacci_cpp(n-1) + fibonacci_cpp(n-2);
+  
+}")
+```
+
+
+```r
+bench::mark(fibonacci_r(10), fibonacci_cpp(10))
+```
+
+```
+## # A tibble: 2 x 6
+##   expression             min   median `itr/sec` mem_alloc `gc/sec`
+##   &lt;bch:expr&gt;        &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
+## 1 fibonacci_r(10)    60.36µs  66.55µs    14535.    3.31MB     23.2
+## 2 fibonacci_cpp(10)   1.63µs   3.26µs   313664.    2.49KB      0
+```
+
+---
+### Using `sourceCPP`
+
+`sourceCpp` reads a C++ file and exports functions for use in R 
+
+To use `sourceCpp`, start your standalone C++ file with:
+
+
+```cpp
+#include &lt;Rcpp.h&gt;
+using namespace Rcpp;
+```
+
+And before each function you want to export:
+
+```cpp
+// [[Rcpp::export]]
+```
+
+---
+### Really useful: the vector classes
+
+`Rcpp` provides C++ vector types corresponding to the main vector types in R 
+
+  * `IntegerVector` 
+  * `NumericVector` 
+  * `LogicalVector` 
+  * `CharacterVector`
+
+
+
+---
+### Example using `NumericVector`
+
+
+```cpp
+#include &lt;Rcpp.h&gt;
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+double meanC(NumericVector x) {
+  int n = x.size();
+  double total = 0;
+
+  for(int i = 0; i &lt; n; ++i) {
+    total += x[i];
+  }
+  return total / n;
+}
+
+/*** R
+x &lt;- runif(1e5)
+bench::mark(
+  mean(x),
+  meanC(x)
+)
+*/
+```
+
+---
+### Benchmarking against `mean`
+
+
+
+```r
+x &lt;- runif(1e5)
+bench::mark(
+  mean(x),
+  meanC(x)
+)
+```
+
+```
+## # A tibble: 2 x 6
+##   expression      min   median `itr/sec` mem_alloc `gc/sec`
+##   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
+## 1 mean(x)       170µs    171µs     5388.        0B        0
+## 2 meanC(x)      113µs    114µs     8291.    2.49KB        0
+```
+
+---
+### Other types
+
+`Rcpp` also has types for the following R entities
+  
+  * `List`  
+  
+  * `DataFrame`
+  
+  * `Function`
+  
+  
+  
+---
+### Attributes
+
+
+The attributes of an R object can be queried using the `.attr()` method of the corresponding Rcpp object.
+
+
+An example of using `.attr()`
+
+```cpp
+#include &lt;Rcpp.h&gt;
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+NumericVector attribs() {
+  NumericVector out = NumericVector::create(1, 2, 3);
+
+  out.names() = CharacterVector::create("a", "b", "c");
+  out.attr("my-attr") = "my-value";
+  out.attr("class") = "my-class";
+
+  return out;
+}
+```
+
+
+
+
+
+---
+### Missing values: scalars
+
+`NA` corresponds to a different C++ constant for each underlying scalar type:
+
+
+```r
+cppFunction("
+List scalar_missings() {
+  int int_s = NA_INTEGER;
+  String chr_s = NA_STRING;
+  bool lgl_s = NA_LOGICAL;
+  double num_s = NA_REAL;
+
+  return List::create(int_s, chr_s, lgl_s, num_s);
+}
+")
+```
+
+
+```r
+str(scalar_missings())
+```
+
+```
+## List of 4
+##  $ : int NA
+##  $ : chr NA
+##  $ : logi TRUE
+##  $ : num NA
+```
+
+
+Looks mostly good. But there are some pesky details in section 25.4 (I'm going to pretend they don't exist.)
+
+
+---
+### Missing values: vectors
+
+With vectors, you need to use a missing value specific to the type of vector, `NA_REAL`, `NA_INTEGER`, `NA_LOGICAL`, `NA_STRING`:
+
+
+
+```r
+cppFunction("List missing_sampler() {
+  return List::create(
+    NumericVector::create(NA_REAL),
+    IntegerVector::create(NA_INTEGER),
+    LogicalVector::create(NA_LOGICAL),
+    CharacterVector::create(NA_STRING)
+  );
+}")
+```
+
+
+
+```r
+str(missing_sampler())
+```
+
+```
+## List of 4
+##  $ : num NA
+##  $ : int NA
+##  $ : logi NA
+##  $ : chr NA
+```
+
+
+---
+### Standard Template Library 
+
+The STL:
+
+  * a really extensive C++ software library
+  
+  * has 4 components:
+    * algorithms
+    
+    * containers
+    
+    * functions 
+    
+    * iterators
+    
+Note: this is not exactly the same thing as the **C++ Standard Library**
+
+
+---
+### Detour: if you really want to learn the STL 
+
+You can learn the STL from STL (video 1 of n):
+
+&lt;iframe src="https://channel9.msdn.com/Series/C9-Lectures-Stephan-T-Lavavej-Standard-Template-Library-STL-/C9-Lectures-Introduction-to-STL-with-Stephan-T-Lavavej/player" width="720" height="405" allowFullScreen frameBorder="0" title="C9 Lectures: Stephan T. Lavavej - Standard Template Library (STL), 1 of n - Microsoft Channel 9 Video"&gt;&lt;/iframe&gt;
+
+You will truly get the STL if you get to the end of this series.
+
+---
+### Iterators 
+
+C++ has many iterator types. 
+
+Key features of iterators are:
+
+  * Advance with `++`.
+  
+  * Get the value they refer to, or dereference, with `*`.
+
+  * Compare with `==` 
+  
+  
+
+
+---
+### Example using iterator features
+
+
+
+```cpp
+#include &lt;Rcpp.h&gt;
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+double sum3(NumericVector x) {
+  double total = 0;
+  
+  NumericVector::iterator it;
+  for(it = x.begin(); it != x.end(); ++it) {
+    total += *it;
+  }
+  return total;
+}
+```
+
+
+```r
+sum3(c(1,12,201,2001))
+```
+
+```
+## [1] 2215
+```
+
+---
+### Algorithms
+
+The STL also has a lot of efficiently implemented algorithms. 
+
+The following code uses the `std::upper_bound` algorithm from the STL to create a function  that takes two arguments a vector of values and a vector of breaks, and locates the bin that each x falls into.
+
+
+```cpp
+#include &lt;algorithm&gt;
+#include &lt;Rcpp.h&gt;
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+IntegerVector findInterval2(NumericVector x, NumericVector breaks) {
+  IntegerVector out(x.size());
+
+  NumericVector::iterator it, pos;
+  IntegerVector::iterator out_it;
+
+  for(it = x.begin(), out_it = out.begin(); it != x.end(); 
+      ++it, ++out_it) {
+    pos = std::upper_bound(breaks.begin(), breaks.end(), *it);
+    *out_it = std::distance(breaks.begin(), pos);
+  }
+
+  return out;
+}
+```
+
+
+---
+### Particularly useful STL data structures
+
+
+  * `vector`: similar to an R vector. But more efficient. Templated.
+  
+  * `set`: maintain a set of unique values. Good when you need to identify if you have seen a particular value already
+    * `std::set`
+    
+    * `std::unordered_set`
+  
+  * `map`: data structure containing (key,value) pairs aka dictionaries. 
+
+  
+
+
+---
+### Using `Rcpp` in a package 
+
+Two simple steps:
+
+  * In DESCRIPTION add
+
+
+```r
+LinkingTo: Rcpp
+Imports: Rcpp
+```
+
+
+  * Make sure your NAMESPACE includes:
+
+
+```r
+useDynLib(mypackage)
+importFrom(Rcpp, sourceCpp)
+```
+
+The only thing left is the actual code. 
+
+
+---
+### The end 
+
+I have tried to read this book on multiple occasions. And failed. 
+
+
+So I am glad that I saw this tweet:
+
+&lt;blockquote class="twitter-tweet"&gt;&lt;p lang="en" dir="ltr"&gt;neRds! i joined a bookclub going through Hadley Wickham&amp;#39;s Advanced R book every thursday at 6pm. im presenting chapter 2 this week. if u wanna join us DM me&lt;/p&gt;&amp;mdash; Asmae Toumi (@asmae_toumi) &lt;a href="https://twitter.com/asmae_toumi/status/1247203272496209923?ref_src=twsrc%5Etfw"&gt;April 6, 2020&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src="https://platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<style>
+.logo {
+  background-image: url(r4ds.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 110px;
+  height: 128px;
+  z-index: 0;
+}
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"></div>';
+  });
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
