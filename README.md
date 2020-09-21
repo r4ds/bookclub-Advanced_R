@@ -9,12 +9,14 @@ This repo contains 3 main folders:
 
 - Presentations: each week a presenter will give a talk summarizing the chapter and/or discussing practical applications of the topic at hand. [Here is a (WIP) guide](https://github.com/r4ds/bookclub-template/blob/master/Presentations/PresentationGuide.md) for first-time presenters :sunglasses:
 
-- Data: Example datasets are stored in this folder to help facilitate practical applications - including [beer production](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-03-31/readme.md) and [beer reviews](https://www.kaggle.com/rdoume/beerreviews)!
+- Data: Example datasets are stored in this folder to help facilitate practical applications - including [beer production](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-03-31/readme.md) and [beer reviews](https://www.kaggle.com/rdoume/beerreviews). Feel free to add your own!
+
+#### Some helpful links: 
+- GitHub navigation: [GitHub Web Editor](https://youtu.be/d41oc2OMAuI) | [GitHub Local Setup](https://www.youtube.com/watch?v=hNUNPkoledI)
 
 ### Meeting Schedule 
 
 *Cohort 1 (started 2020-04-02) - Tuesdays, 8pm EDT/EST*
-
 - 2020-09-22 Recap, next steps
 <hr>
 
