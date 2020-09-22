@@ -93,12 +93,13 @@ Chapter 5 - Control flow
 Chapter 6 - Functions
 
 - Cohort 1: [Asmae Toumi](https://twitter.com/asmae_toumi) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week06/Cohort1/Chap6slides.html#1) | [video](https://youtu.be/UwzGhMndWzs))
-- Cohort 2: [Meenakshi Kushwaha](https://twitter.com/envhealthspeak)
+- Cohort 2: [Meenakshi Kushwaha](https://twitter.com/envhealthspeak)([video](https://www.youtube.com/watch?v=51PMEM4Efb8)) 
 - Cohort 3: [Novica Nakov](https://twitter.com/novicanakov) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week06/Cohort3/Chap6slides.html#1) | [video]())
 
 Chapter 7 - Environments
 
 - Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn)  ([slides](https://r4dscommunity.shinyapps.io/environments/) | [static slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week07/Cohort1/Chap7Slides.html#1) | [video](https://www.youtube.com/watch?v=mk7iu1-P8ZU))
+- Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) | [video](https://www.youtube.com/watch?v=syRMRYKN30k)
 - Cohort 3: [Anna-Leigh Brown](https://twitter.com/annaleighbrown2) (slides|video)
 
 Chapter 8 - Conditions
