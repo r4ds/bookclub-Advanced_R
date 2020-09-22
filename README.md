@@ -99,7 +99,7 @@ Chapter 6 - Functions
 Chapter 7 - Environments
 
 - Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn)  ([slides](https://r4dscommunity.shinyapps.io/environments/) | [static slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week07/Cohort1/Chap7Slides.html#1) | [video](https://www.youtube.com/watch?v=mk7iu1-P8ZU))
-- Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) | [video](https://www.youtube.com/watch?v=syRMRYKN30k)
+- Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) | ([video](https://www.youtube.com/watch?v=syRMRYKN30k))
 - Cohort 3: [Anna-Leigh Brown](https://twitter.com/annaleighbrown2) (slides|video)
 
 Chapter 8 - Conditions
