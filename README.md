@@ -42,16 +42,17 @@ This repo contains 3 main folders:
 
 *Cohort 3 [Europe/Africa]: (started 2020-08-04) Tuesdays, 19:30 CET (CEST)*
 
-- 2020-09-15 Chapter 7 - Environments: AL Brown
-- 2020-09-22 Chapter 8 - Conditions: Shel Kariuki
-- 2020-09-29 Recap week
+- 2020-09-29 Chapter 7 - Environments: AL Brown
+- 2020-10-06 Chapter 8 - Conditions: Shel Kariuki
+- 2020-10-13 Recap week
 
 <details>
   <summary> Future Meetings </summary>
   
-- 2020-10-06 Chapter 9
-- 2020-10-13 Chapter 10
-- 2020-10-20 Chapter 11
+- 2020-10-20 Chapter 9
+- 2020-10-27 Chapter 10
+- 2020-11-03 Chapter 11
+
   
 </details>
 
