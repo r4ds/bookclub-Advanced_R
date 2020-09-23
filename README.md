@@ -165,7 +165,7 @@ Chapter 23 / 24 - Measuring & Improving Performance:
 
 Chapter 25: Rcpp
 
-- Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week24/Cohort1/Chapter25.html) | video)
+- Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week24/Cohort1/Chapter25.html) | [video](https://youtu.be/2JDeacWl1DM))
 
 Book Recap
 
