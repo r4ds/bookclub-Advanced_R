@@ -1,5 +1,5 @@
-# R4DS [Advanced R](https://adv-r.hadley.nz/) Bookclub
-A weekly reading group following the chapters of Advanced R by Hadley Wickham (2nd ed)
+# R4DS Advanced R Bookclub
+A weekly reading group following the chapters of [Advanced R by Hadley Wickham (2nd ed)](https://adv-r.hadley.nz/)
 
 Visit the [#book_club-advanced_r channel](https://r4ds.io/join) on Slack to join the video chat! 
 
@@ -15,10 +15,6 @@ This repo contains 3 main folders:
 - GitHub navigation: [GitHub Web Editor](https://youtu.be/d41oc2OMAuI) | [GitHub Local Setup](https://www.youtube.com/watch?v=hNUNPkoledI)
 
 ### Meeting Schedule 
-
-*Cohort 1 (started 2020-04-02) - Tuesdays, 8pm EDT/EST*
-- 2020-09-22 Recap, next steps
-<hr>
 
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
@@ -156,15 +152,21 @@ Chapter 21 - Translating R Code (Domain Specific Languages)
 - Cohort 1: Pavitra Chakravarty ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week20/Cohort1/Chapter21.html#1) | [video](https://www.youtube.com/watch?v=fixyitpXrwY))
 
 Metaprogramming Review
+
 - Cohort 1: [Jon Harmon](https://twitter.com/JonTheGeek) (slides | [video](https://www.youtube.com/watch?v=h3RNPyhIjas))
 
 Chapter 22 - Debugging: 
+
 - Cohort 1: [Tan Ho](https://twitter.com/_tanho) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week21/Cohort1/AdvR_Ch22_Debugging) | [video](https://www.youtube.com/watch?v=ROMefwMuqXU))
 
 Chapter 23 / 24 - Measuring & Improving Performance:
+
 - Cohort 1: [Jonathan Leslie](https://twitter.com/jlesliedata) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week23/Cohort1/Chapters23-24.html) | [video](https://www.youtube.com/watch?v=YngflemRSD0))
 
 Chapter 25: Rcpp
+
 - Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week24/Cohort1/Chapter25.html) | video)
 
 Book Recap
+
+- Cohort 1: [Video](https://www.youtube.com/watch?v=sLWCelHpcqc), Code: [Tan](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week25/Cohort1/Tan-TIL.html) | [Tony](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week25/Cohort1/Tony-Timely.html) | Tyler ([mask](https://github.com/TylerGrantSmith/mask/tree/rewrite/R) | [purrgress](https://github.com/TylerGrantSmith/purrrgress) | [colonoscopy](https://github.com/TylerGrantSmith/colonoscopy))
