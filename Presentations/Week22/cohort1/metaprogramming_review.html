@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jon Harmon" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Advanced R
+## Metaprogramming Review
+### Jon Harmon
+
+---
+
+
+
+
+
+
+# Learning Objectives: Ch. 17
+
+- 17.2 Understand that code in R is data.
+- 17.3 Recognize an **abstract syntax tree** as a representation of a function call.
+- 17.4 Understand that R code can write code.
+- 17.5 Remember that `base::eval` executes expressions in environments.
+- 17.6 Understand that environments can customize evaluation.
+- 17.7 Understand that `rlang::eval_tidy` lets you use data frames like environments.
+- 17.8 Recall that **quosures** bind together an expression with an environment.
+
+--
+## ✔️
+
+---
+
+# Learning Objectives: Ch. 18
+
+- 18.2 Translate between ASTs and R code.
+- 18.3 Define the expression subtypes (other than pairlist).
+- 18.4 Describe the grammar used by R's parser to translate code to expressions.
+- 18.5 Write recursive functions to walk the AST.
+- 18.6 Define the expression subtypes.
+
+---
+
+# Learning Objectives: Ch. 18
+
+- 18.2 Translate between ASTs and R code.
+
+
+```r
+lobstr::ast({`+` = `-`; 1} + (100 + 1) + 1)
+```
+
+```
+## o-`+` 
+## +-o-`+` 
+## | +-o-`{` 
+## | | +-o-`=` 
+## | | | +-`+` 
+## | | | \-`-` 
+## | | \-1 
+## | \-o-`(` 
+## |   \-o-`+` 
+## |     +-100 
+## |     \-1 
+## \-1
+```
+
+```r
+{`+` = `-`; 1} + (100 + 1) + 1
+```
+
+```
+## [1] 101
+```
+
+---
+
+# Learning Objectives: Ch. 18
+
+- 18.3 Define the expression subtypes (other than pairlist).
+ - **Constants:** NULL &amp; length-1 atomic vectors.
+ - **Symbols:** Names of things, such as `x`, `mtcars`, or `mean`.
+ - **Calls:** A captured function... call. Special type of list.
+ - Symbols and calls are captured with `rlang::expr`.
+
+---
+
+# Learning Objectives: Ch. 18
+
+- 18.4 Describe the grammar used by R's parser to translate code to expressions.
+ - **Precedence:** Like math, use () when confusing.
+ - **Associativity:** Pretend parentheses are around the left set, except for ^ and &lt;-.
+ - You can translate **(parse)** strings to code with rlang &amp; base but you shouldn't.
+
+---
+
+# Learning Objectives: Ch. 18
+
+- 18.5 Write recursive functions to walk the AST.
+ - Copy `expr_type`, `switch_expr`, `flat_map_chr` from book.
+ - Fill in a `switch_expr` skeleton depending on usecase.
+ 
+ 
+ ```r
+ lobstr:::ast_tree
+ ```
+ 
+ ```
+ ## function (x, layout = box_chars()) 
+ ## {
+ ##     if (is_quosure(x)) {
+ ##         x &lt;- quo_squash(x)
+ ##     }
+ ##     if (rlang::is_syntactic_literal(x)) {
+ ##         return(ast_leaf_constant(x))
+ ##     }
+ ##     else if (is_symbol(x)) {
+ ##         return(ast_leaf_symbol(x))
+ ##     }
+ ##     else if (!is.pairlist(x) &amp;&amp; !is.call(x)) {
+ ##         return(paste0("&lt;inline ", paste0(class(x), collapse = "/"), 
+ ##             "&gt;"))
+ ##     }
+ ##     subtrees &lt;- lapply(x, ast_tree, layout = layout)
+ ##     subtrees &lt;- name_subtree(subtrees)
+ ##     n &lt;- length(x)
+ ##     if (n == 0) {
+ ##         character()
+ ##     }
+ ##     else if (n == 1) {
+ ##         str_indent(subtrees[[1]], paste0(layout$n, layout$h), 
+ ##             "  ")
+ ##     }
+ ##     else {
+ ##         c(str_indent(subtrees[[1]], paste0(layout$n, layout$h), 
+ ##             paste0(layout$v, " ")), unlist(lapply(subtrees[-c(1, 
+ ##             n)], str_indent, paste0(layout$j, layout$h), paste0(layout$v, 
+ ##             " "))), str_indent(subtrees[[n]], paste0(layout$l, 
+ ##             layout$h), "  "))
+ ##     }
+ ## }
+ ## &lt;bytecode: 0x0000000016459908&gt;
+ ## &lt;environment: namespace:lobstr&gt;
+ ```
+
+---
+
+# Learning Objectives: Ch. 18
+
+- 18.6 Define the (remaining) expression subtypes.
+ - **Pairlists:** `mean %&gt;% rlang::fn_fmls() %&gt;% class()`
+ - **Missing arguments:** Use `rlang::missing_arg()` and `rlang::maybe_missing` if you need to explicitly pass missing args.
+ - **Expression vectors:** These exist but you probably don't need to care.
+
+---
+
+# Learning Objectives: Ch. 19
+
+- 19.2 Define quasiquotation.
+- 19.3 Quote expressions in rlang and base R.
+- 19.4 Selectively unquote parts of an expression during quotation.
+- 19.5 Describe the types of non-quoting used in base R.
+- 19.6 Mix `...` and lists to supply arguments to functions.
+- 19.7 Use rlang's quasiquotation functions to generate code.
+- 19.8 Describe the history of quasiquotation.
+
+---
+
+# Learning Objectives: Ch. 19
+
+- 19.2 Define quasiquotation.
+ - Quotation with selective unquoting.
+
+---
+
+# Learning Objectives: Ch. 19
+
+- 19.3 Quote expressions in rlang and base R.
+
+**rlang quasiquoting functions**
+
+|      | Command line | In functions   |
+|------|--------------|----------------|
+| One  | `expr()`     | `enexpr()`     |
+| Many | `exprs()`    | `enexprs()`    |
+
+**base R quoting functions**
+
+|      | Command line | In functions                 |
+|------|--------------|------------------------------|
+| One  | `quote()`    | `substitute()`               |
+| Many | `alist()`    | `as.list(substitute(...()))` |
+
+---
+
+# Learning Objectives: Ch. 19
+
+- 19.4 Selectively unquote parts of an expression during quotation.
+ - `!!` to unquote one thing
+ - `!!!` to unquote many (often dots)
+
+---
+
+# Learning Objectives: Ch. 19
+
+- 19.5 Describe the types of non-quoting used in base R.
+ - `bquote` exists.
+ - **Quoting/non-quoting function pairs:** `$` &amp; `[`
+ - **Quoting/non-quoting argument pairs:** `rm` quotes `...`, doesn't quote `list`
+ - **Argument controls quoting:** `library(pkg)` vs `library(pkg, character.only = TRUE)`.
+ - **Quoting if evaluation fails:** `help` tries to quote then unquotes if that fails.
+ - **plotting functions:** Follow the "standard non-standard evaluation rules."
+
+---
+
+# Learning Objectives: Ch. 19
+
+- 19.6 Mix `...` and lists to supply arguments to functions.
+ - `rlang::exec` vs `base::do.call`
+
+---
+
+# Learning Objectives: Ch. 19
+
+- 19.7 Use rlang's quasiquotation functions to generate code.
+
+
+```r
+intercept &lt;- 10
+coefs &lt;- c(x1 = 5, x2 = -4)
+
+summands &lt;- c(intercept,
+  purrr::map2(
+    .x = rlang::syms(names(coefs)),
+    .y = coefs,
+    .f = ~ rlang::expr(!!.x * !!.y)
+  )
+)
+
+eq &lt;- purrr::reduce(.x = summands, .f = ~rlang::expr(!!.x + !!.y))
+eq
+```
+
+```
+## 10 + x1 * 5 + x2 * -4
+```
+
+```r
+rlang::eval_tidy(eq, list(x1 = 1:10, x2 = 10:1))
+```
+
+```
+##  [1]  45  36  27  18   9   0  -9 -18 -27 -36
+```
+
+---
+
+# Learning Objectives: Ch. 20
+
+- 20.2 Use `base::eval` to process expressions.
+- 20.3 Use `rlang::eval_tidy` to evaluate quosures.
+- 20.4 Use data masks to provide variable definitions for tidy evaluation.
+- 20.5 Avoid errors when working with functions that use tidy evaluation.
+- 20.6 Remember the caveats of working with evaluation in base R.
+
+---
+
+# Learning Objectives: Ch. 21
+
+- 21.2 Generate functions to translate another language into R functions.
+- 21.3 Walk the AST to translate R expressions to another language.
+
+---
+
+`\(L_{A}T_{E}\chi\)`
+`\(\LaTeX\)`
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+<style>
+.logo {
+  background-image: url(r4ds.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 110px;
+  height: 128px;
+  z-index: 0;
+}
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"></div>';
+  });
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
