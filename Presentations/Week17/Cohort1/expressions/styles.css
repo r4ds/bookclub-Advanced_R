@@ -20,7 +20,7 @@ p {
   box-shadow: 0 0 10px #e17f93;
 }
 
-pre {
-  background-color: #e17f93 !important;
-  color: white !important;
+#tree, #expressions {
+  background-color: #e17f93;
+  color: white;
 }
