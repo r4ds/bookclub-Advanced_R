@@ -137,7 +137,7 @@ Chapter 17 - Metaprogramming, big picture
 
 Chapter 18 - Expressions 
 
-- Cohort 1: [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week17/Cohort1/Chapter18.html#1) | [video](https://youtu.be/2NixH3QAerQ) | app | [app code](https://github.com/r4ds/bookclub-Advanced_R/tree/master/Presentations/Week17/Cohort1/expressions))
+- Cohort 1: [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week17/Cohort1/Chapter18.html#1) | [video](https://youtu.be/2NixH3QAerQ) | [app](https://r4dscommunity.shinyapps.io/adv_r-expressions/) | [app code](https://github.com/r4ds/bookclub-Advanced_R/tree/master/Presentations/Week17/Cohort1/expressions))
 
 Chapter 19 - Quasiquotation
 
@@ -153,7 +153,7 @@ Chapter 21 - Translating R Code (Domain Specific Languages)
 
 Metaprogramming Review
 
-- Cohort 1: [Jon Harmon](https://twitter.com/JonTheGeek) (slides | [video](https://www.youtube.com/watch?v=h3RNPyhIjas))
+- Cohort 1: [Jon Harmon](https://twitter.com/JonTheGeek) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week22/cohort1/metaprogramming_review.html#1) | [video](https://www.youtube.com/watch?v=h3RNPyhIjas))
 
 Chapter 22 - Debugging: 
 
