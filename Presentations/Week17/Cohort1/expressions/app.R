@@ -108,6 +108,4 @@ server <- function(input, output, session) {
   
 }
 
-# This display.mode setting isn't working but I'm leaving it for someone to
-# hopefully improve upon in the future.
-shinyApp(ui = ui, server = server, options = list(display.mode = "showcase"))
+shinyApp(ui = ui, server = server)
