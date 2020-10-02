@@ -106,6 +106,7 @@ Chapter 8 - Conditions
 Chapter 9 - Functionals
 
 - Cohort 1: [Tan Ho](https://twitter.com/_tanho) ([video](https://youtu.be/o0a6aJ4kCkU) | [LearnR lesson](https://apps.tanho.ca/app_direct/advr_w9_learnr/) | [example app](https://apps.tanho.ca/app_direct/advr_w9_app/) | [app code](https://github.com/r4ds/bookclub-Advanced_R/tree/master/Presentations/Week09/Cohort1/))
+- Cohort 2: Jake Riley ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week09/Cohort2/AdvRchap09.html) | video )
 
 Chapter 10 - Function factories
 
