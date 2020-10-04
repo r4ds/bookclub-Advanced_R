@@ -18,9 +18,6 @@ This repo contains 3 main folders:
 
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
-- 2020-08-20 Chapter 4 - Subsetting: Mike Jeziorski
-- 2020-08-27 Chapter 5 - Control Flow: [Erick Knackstedt](https://twitter.com/Eknackstedt)
-- 2020-09-17 Chapter 6 - Functions: [Meenakshi Kushwaha](https://twitter.com/envhealthspeak)
 - 2020-09-24 Chapter 7 - Environments
 - 2020-10-01 Chapter 8
 - 2020-10-08 Chapter 9
@@ -49,6 +46,23 @@ This repo contains 3 main folders:
 - 2020-10-27 Chapter 10
 - 2020-11-03 Chapter 11
 
+  
+</details>
+
+<hr>
+
+*Cohort 4 (started 2020-10-05) Mondays, 17:00 ET*
+
+- 2020-10-05 Chapter 1 - Introduction: Emily Wissel
+- 2020-10-12 Chapter 2 - Names/Values
+- 2020-10-19 Chapter 3 - Vectors
+
+<details>
+  <summary> Future Meetings </summary>
+  
+- 2020-10-26 Chapter 4 - Subsetting
+- 2020-11-02 Chapter 5 - Control Flow
+- 2020-11-09 Chapter 6 - Functions
   
 </details>
 
