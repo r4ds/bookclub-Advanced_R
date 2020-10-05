@@ -14,7 +14,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#xipvgdramf .gt_table {
+#uaaqfzvwxb .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -37,7 +37,7 @@
   border-left-color: #D3D3D3;
 }
 
-#xipvgdramf .gt_heading {
+#uaaqfzvwxb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -49,7 +49,7 @@
   border-right-color: #D3D3D3;
 }
 
-#xipvgdramf .gt_title {
+#uaaqfzvwxb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -59,7 +59,7 @@
   border-bottom-width: 0;
 }
 
-#xipvgdramf .gt_subtitle {
+#uaaqfzvwxb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -69,13 +69,13 @@
   border-top-width: 0;
 }
 
-#xipvgdramf .gt_bottom_border {
+#uaaqfzvwxb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xipvgdramf .gt_col_headings {
+#uaaqfzvwxb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -90,7 +90,7 @@
   border-right-color: #D3D3D3;
 }
 
-#xipvgdramf .gt_col_heading {
+#uaaqfzvwxb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -110,7 +110,7 @@
   overflow-x: hidden;
 }
 
-#xipvgdramf .gt_column_spanner_outer {
+#uaaqfzvwxb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -122,15 +122,15 @@
   padding-right: 4px;
 }
 
-#xipvgdramf .gt_column_spanner_outer:first-child {
+#uaaqfzvwxb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xipvgdramf .gt_column_spanner_outer:last-child {
+#uaaqfzvwxb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xipvgdramf .gt_column_spanner {
+#uaaqfzvwxb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -142,7 +142,7 @@
   width: 100%;
 }
 
-#xipvgdramf .gt_group_heading {
+#uaaqfzvwxb .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -164,7 +164,7 @@
   vertical-align: middle;
 }
 
-#xipvgdramf .gt_empty_group_heading {
+#uaaqfzvwxb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -179,19 +179,19 @@
   vertical-align: middle;
 }
 
-#xipvgdramf .gt_striped {
+#uaaqfzvwxb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xipvgdramf .gt_from_md > :first-child {
+#uaaqfzvwxb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xipvgdramf .gt_from_md > :last-child {
+#uaaqfzvwxb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xipvgdramf .gt_row {
+#uaaqfzvwxb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -210,7 +210,7 @@
   overflow-x: hidden;
 }
 
-#xipvgdramf .gt_stub {
+#uaaqfzvwxb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -222,7 +222,7 @@
   padding-left: 12px;
 }
 
-#xipvgdramf .gt_summary_row {
+#uaaqfzvwxb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -232,7 +232,7 @@
   padding-right: 5px;
 }
 
-#xipvgdramf .gt_first_summary_row {
+#uaaqfzvwxb .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -242,7 +242,7 @@
   border-top-color: #D3D3D3;
 }
 
-#xipvgdramf .gt_grand_summary_row {
+#uaaqfzvwxb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -252,7 +252,7 @@
   padding-right: 5px;
 }
 
-#xipvgdramf .gt_first_grand_summary_row {
+#uaaqfzvwxb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -262,7 +262,7 @@
   border-top-color: #D3D3D3;
 }
 
-#xipvgdramf .gt_table_body {
+#uaaqfzvwxb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -271,7 +271,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#xipvgdramf .gt_footnotes {
+#uaaqfzvwxb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -285,13 +285,13 @@
   border-right-color: #D3D3D3;
 }
 
-#xipvgdramf .gt_footnote {
+#uaaqfzvwxb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#xipvgdramf .gt_sourcenotes {
+#uaaqfzvwxb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -305,52 +305,52 @@
   border-right-color: #D3D3D3;
 }
 
-#xipvgdramf .gt_sourcenote {
+#uaaqfzvwxb .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#xipvgdramf .gt_left {
+#uaaqfzvwxb .gt_left {
   text-align: left;
 }
 
-#xipvgdramf .gt_center {
+#uaaqfzvwxb .gt_center {
   text-align: center;
 }
 
-#xipvgdramf .gt_right {
+#uaaqfzvwxb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xipvgdramf .gt_font_normal {
+#uaaqfzvwxb .gt_font_normal {
   font-weight: normal;
 }
 
-#xipvgdramf .gt_font_bold {
+#uaaqfzvwxb .gt_font_bold {
   font-weight: bold;
 }
 
-#xipvgdramf .gt_font_italic {
+#uaaqfzvwxb .gt_font_italic {
   font-style: italic;
 }
 
-#xipvgdramf .gt_super {
+#uaaqfzvwxb .gt_super {
   font-size: 65%;
 }
 
-#xipvgdramf .gt_footnote_marks {
+#uaaqfzvwxb .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="xipvgdramf" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="uaaqfzvwxb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Term</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Required Input</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Optional Output</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Optional Input</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Output</th>
     </tr>
   </thead>
@@ -502,7 +502,7 @@ lobstr::obj_size(get("_cache",environment(memoised_starwars)))
 ```
 
 ```
-## 16,184 B
+## 16,232 B
 ```
 
 :::question
@@ -545,141 +545,134 @@ for (i in 1:100) {
 ```
 
 ```
-## 14,440 B
-## 15,336 B
-## 16,240 B
-## 17,152 B
-## 18,040 B
-## 18,944 B
-## 19,848 B
-## 20,704 B
-## 21,472 B
-## 22,384 B
-## 23,288 B
-## 24,200 B
-## 24,992 B
-## 25,704 B
-## 26,624 B
-## 27,464 B
-## 28,176 B
-## 28,952 B
-## 29,872 B
-## 30,648 B
-```
-
-```
-## Clearing cache [@30648]
-```
-
-```
-## 14,440 B
-## 15,336 B
-## 16,176 B
-## 17,096 B
-## 17,952 B
-## 18,848 B
-## 19,776 B
-## 20,672 B
-## 21,504 B
-## 22,344 B
-## 23,240 B
-## 24,032 B
-## 24,928 B
-## 25,752 B
-## 26,656 B
-## 27,488 B
-## 28,320 B
-## 29,176 B
-## 29,952 B
-## 30,792 B
-```
-
-```
-## Clearing cache [@30792]
-```
-
-```
-## 14,440 B
-## 15,352 B
-## 16,272 B
-## 17,104 B
-## 18,024 B
-## 18,928 B
-## 19,768 B
-## 20,680 B
-## 21,520 B
-## 22,296 B
-## 23,192 B
-## 23,904 B
-## 24,680 B
-## 25,512 B
-## 26,344 B
-## 27,056 B
-## 27,896 B
-## 28,736 B
-## 29,448 B
-## 30,160 B
-```
-
-```
-## Clearing cache [@30160]
-```
-
-```
-## 14,440 B
-## 15,336 B
-## 16,232 B
-## 17,128 B
-## 18,016 B
+## 14,472 B
+## 15,392 B
+## 16,280 B
+## 17,176 B
+## 18,080 B
 ## 18,920 B
-## 19,832 B
-## 20,752 B
-## 21,544 B
-## 22,384 B
-## 23,288 B
-## 24,208 B
-## 25,104 B
-## 25,880 B
-## 26,800 B
-## 27,656 B
-## 28,496 B
-## 29,352 B
-## 30,128 B
-```
-
-```
-## Clearing cache [@30128]
-```
-
-```
-## 14,440 B
-## 15,328 B
-## 16,232 B
-## 17,128 B
-## 18,032 B
-## 18,928 B
 ## 19,760 B
-## 20,592 B
-## 21,488 B
-## 22,384 B
-## 23,224 B
-## 23,936 B
-## 24,712 B
-## 25,608 B
-## 26,440 B
-## 27,296 B
-## 28,216 B
-## 29,048 B
-## 29,760 B
-## 30,536 B
+## 20,672 B
+## 21,576 B
+## 22,408 B
+## 23,240 B
+## 24,080 B
+## 24,920 B
+## 25,816 B
+## 26,592 B
+## 27,488 B
+## 28,264 B
+## 29,032 B
+## 29,864 B
+## 30,776 B
 ```
 
 ```
-## Clearing cache [@30536]
+## Clearing cache [@30776]
+```
+
+```
+## 14,432 B
+## 15,344 B
+## 16,232 B
+## 17,136 B
+## 17,968 B
+## 18,808 B
+## 19,704 B
+## 20,624 B
+## 21,464 B
+## 22,240 B
+## 23,136 B
+## 23,912 B
+## 24,752 B
+## 25,528 B
+## 26,320 B
+## 27,176 B
+## 27,952 B
+## 28,728 B
+## 29,504 B
+## 30,344 B
+```
+
+```
+## Clearing cache [@30344]
+```
+
+```
+## 14,432 B
+## 15,344 B
+## 16,184 B
+## 17,088 B
+## 17,928 B
+## 18,784 B
+## 19,624 B
+## 20,464 B
+## 21,352 B
+## 22,256 B
+## 23,088 B
+## 23,984 B
+## 24,760 B
+## 25,680 B
+## 26,520 B
+## 27,408 B
+## 28,184 B
+## 29,056 B
+## 29,896 B
+## 30,736 B
+```
+
+```
+## Clearing cache [@30736]
+```
+
+```
+## 14,432 B
+## 15,328 B
+## 16,240 B
+## 17,080 B
+## 18,000 B
+## 18,896 B
+## 19,720 B
+## 20,560 B
+## 21,456 B
+## 22,312 B
+## 23,152 B
+## 23,992 B
+## 24,824 B
+## 25,600 B
+## 26,368 B
+## 27,200 B
+## 28,104 B
+## 28,816 B
+## 29,656 B
+## 30,544 B
+```
+
+```
+## Clearing cache [@30544]
 ```
 
 ```
 ## 14,424 B
+## 15,320 B
+## 16,232 B
+## 17,152 B
+## 18,048 B
+## 18,920 B
+## 19,752 B
+## 20,584 B
+## 21,424 B
+## 22,136 B
+## 22,976 B
+## 23,752 B
+## 24,584 B
+## 25,424 B
+## 26,200 B
+## 27,040 B
+## 27,952 B
+## 28,792 B
+## 29,632 B
+## 30,536 B
 ```
 
 :::question
