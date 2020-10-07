@@ -120,6 +120,103 @@ length(my_matrix) == NCOL(my_matrix) # 6 != 2
 
 The length of the matrix is `6`, and if we manipulate the dimensions of the matrix we see that the NROW is `3` and and NCOL is `2`.
 
+:::question
+Are there any differences in practice between a matrix and 2 x 2 array?
+:::
+
+One of the changes in R 4 was something about making 2d arrays exactly the same thing as a matrix.
+
+Just to propose a small edit: a matrix and a similar dimension array (with 3rd dimension=1)? I think the subsetting of the columns and rows is the main difference. For starters, I have also created some simple examples but with 2x3:
+
+```{r}
+(a_matrix <- matrix(1:6, nrow = 2, ncol = 3))
+```
+
+```{r}
+(an_array <- array(1:12, c(2, 3))) # this actually creates a class of matrix
+```
+
+```{r}
+(one_d_array<-array(1:12, c(2, 3, 1)))
+```
+
+Let us do some testing with subsetting starting with the two matrices, one created using `matrix()` and the other using `array()`:
+
+
+#### Subsetting first entry {-}
+
+```{r}
+a_matrix[1]
+an_array[1]
+a_matrix[1] == an_array[1]
+```
+
+#### Subsetting columns {-}
+
+```{r}
+a_matrix[,1]
+an_array[,1]
+a_matrix[,1] == an_array[,1]
+```
+
+The subsetting for single entries also seems to work with the 2x2 array (with 3rd dimension = 1):
+
+```{r}
+a_matrix[1]
+one_d_array[1]
+a_matrix[4]
+one_d_array[4]
+```
+
+However, problems arise when we try to subset columns and rows. objects of class array require a different kind of subseting:
+
+```{r}
+a_matrix[,1]
+```
+
+```{r, eval=FALSE}
+one_d_array[,1]
+```
+
+```
+Error in one_d_array[, 1] : incorrect number of dimensions
+```
+
+```{r, eval=FALSE}
+a_matrix[1, ]
+```
+
+```
+[1] 1 3 5
+```
+```{r, eval=FALSE}
+one_d_array[1, ]
+```
+
+```
+Error in one_d_array[1, ] : incorrect number of dimensions
+```
+
+To subset for this array class, we need to first access the specific 2x3 matrix, for example:
+
+```{r}
+one_d_array[,,1]
+```
+
+Look at this quick check:
+
+```{r, eval=FALSE}
+one_d_array == a_matrix
+```
+
+```
+Error in one_d_array == a_matrix : non-conformable arrays
+```
+
+```{r}
+one_d_array[,,1] == a_matrix
+```
+
 ## 3.4 S3 atomic vectors {-}
 
 :::question

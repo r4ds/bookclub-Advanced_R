@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-08-18" />
+<meta name="date" content="2020-10-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -355,6 +355,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#debug"><i class="fa fa-check"></i>22.4.2.3 debug</a></li>
 <li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#non-interactive-debugging"><i class="fa fa-check"></i>22.5 Non-interactive debugging</a></li>
 <li><a href="debugging.html#dump.frames">22.5.1 <code>dump.frames</code></a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#debug-pipe"><i class="fa fa-check"></i>Debug Pipe</a></li>
+<li class="chapter" data-level="22.2" data-path="debugging.html"><a href="debugging.html#edic-code-from-another-function"><i class="fa fa-check"></i><b>22.2</b> Edic Code from Another function</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#bonus-tip"><i class="fa fa-check"></i>Bonus tip</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html"><i class="fa fa-check"></i>Measuring performance</a><ul>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#introduction"><i class="fa fa-check"></i>23.1 Introduction</a></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html#profiling"><i class="fa fa-check"></i>23.2 Profiling</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>23.4.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html#microbenchmarking"><i class="fa fa-check"></i>23.3 Microbenchmarking</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html"><i class="fa fa-check"></i>Improving performance</a><ul>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#existing-solutions"><i class="fa fa-check"></i>24.3 Existing solutions</a></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#vectorize"><i class="fa fa-check"></i>24.5 Vectorize</a></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#other-techniques"><i class="fa fa-check"></i>24.8 Other Techniques</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -382,7 +396,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>21.2.3 Basic tag functions</h2>
 <div class="question">
 <p>Why do we use <code>list2</code> here and not just <code>list</code> when they have the same output?</p>
-<div class="sourceCode" id="cb711"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb711-1" data-line-number="1"><span class="kw">list</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dv">2</span>, <span class="dt">b =</span> <span class="dv">3</span>, <span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb751"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb751-1" data-line-number="1"><span class="kw">list</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dv">2</span>, <span class="dt">b =</span> <span class="dv">3</span>, <span class="dv">4</span>)</a></code></pre></div>
 <pre><code>## $a
 ## [1] 1
 ## 
@@ -394,7 +408,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## [[4]]
 ## [1] 4</code></pre>
-<div class="sourceCode" id="cb713"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb713-1" data-line-number="1">rlang<span class="op">::</span><span class="kw">list2</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dv">2</span>, <span class="dt">b =</span> <span class="dv">3</span>, <span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb753"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb753-1" data-line-number="1">rlang<span class="op">::</span><span class="kw">list2</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dv">2</span>, <span class="dt">b =</span> <span class="dv">3</span>, <span class="dv">4</span>)</a></code></pre></div>
 <pre><code>## $a
 ## [1] 1
 ## 
@@ -408,29 +422,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [1] 4</code></pre>
 </div>
 <p><code>list2</code> supports “tidy dots” and unquote splicing. Most of the time it won’t make a difference, but there are instances where using <code>list2</code> does matter:</p>
-<div class="sourceCode" id="cb715"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb715-1" data-line-number="1"><span class="kw">library</span>(rlang)</a>
-<a class="sourceLine" id="cb715-2" data-line-number="2">dots_partition &lt;-<span class="st"> </span><span class="cf">function</span>(...) {</a>
-<a class="sourceLine" id="cb715-3" data-line-number="3">  <span class="co"># create a list of arguments</span></a>
-<a class="sourceLine" id="cb715-4" data-line-number="4">  <span class="co"># why list2 and not regular list?</span></a>
-<a class="sourceLine" id="cb715-5" data-line-number="5">  <span class="co"># are the same...</span></a>
-<a class="sourceLine" id="cb715-6" data-line-number="6">  dots &lt;-<span class="st"> </span><span class="kw">list2</span>(...)</a>
-<a class="sourceLine" id="cb715-7" data-line-number="7">  <span class="co"># if there are no names in the whole list</span></a>
-<a class="sourceLine" id="cb715-8" data-line-number="8">  <span class="cf">if</span> (<span class="kw">is.null</span>(<span class="kw">names</span>(dots))) {</a>
-<a class="sourceLine" id="cb715-9" data-line-number="9">    <span class="co"># rep FALSE for the length of dots</span></a>
-<a class="sourceLine" id="cb715-10" data-line-number="10">    is_named &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">FALSE</span>, <span class="kw">length</span>(dots))</a>
-<a class="sourceLine" id="cb715-11" data-line-number="11">  } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb715-12" data-line-number="12">    <span class="co"># create boolean vector</span></a>
-<a class="sourceLine" id="cb715-13" data-line-number="13">    <span class="co"># if arg in list is named or not</span></a>
-<a class="sourceLine" id="cb715-14" data-line-number="14">    is_named &lt;-<span class="st"> </span><span class="kw">names</span>(dots) <span class="op">!=</span><span class="st"> &quot;&quot;</span></a>
-<a class="sourceLine" id="cb715-15" data-line-number="15">  }</a>
-<a class="sourceLine" id="cb715-16" data-line-number="16">  <span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb715-17" data-line-number="17">    <span class="co"># subeset where is_named is true</span></a>
-<a class="sourceLine" id="cb715-18" data-line-number="18">    <span class="dt">named =</span> dots[is_named],</a>
-<a class="sourceLine" id="cb715-19" data-line-number="19">    <span class="co"># subset where is_named is false</span></a>
-<a class="sourceLine" id="cb715-20" data-line-number="20">    <span class="dt">unnamed =</span> dots[<span class="op">!</span>is_named]</a>
-<a class="sourceLine" id="cb715-21" data-line-number="21">  )</a>
-<a class="sourceLine" id="cb715-22" data-line-number="22">}</a></code></pre></div>
-<div class="sourceCode" id="cb716"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb716-1" data-line-number="1"><span class="kw">dots_partition</span>(<span class="kw">list</span>(<span class="dt">letters =</span> letters))</a></code></pre></div>
+<div class="sourceCode" id="cb755"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb755-1" data-line-number="1"><span class="kw">library</span>(rlang)</a>
+<a class="sourceLine" id="cb755-2" data-line-number="2">dots_partition &lt;-<span class="st"> </span><span class="cf">function</span>(...) {</a>
+<a class="sourceLine" id="cb755-3" data-line-number="3">  <span class="co"># create a list of arguments</span></a>
+<a class="sourceLine" id="cb755-4" data-line-number="4">  <span class="co"># why list2 and not regular list?</span></a>
+<a class="sourceLine" id="cb755-5" data-line-number="5">  <span class="co"># are the same...</span></a>
+<a class="sourceLine" id="cb755-6" data-line-number="6">  dots &lt;-<span class="st"> </span><span class="kw">list2</span>(...)</a>
+<a class="sourceLine" id="cb755-7" data-line-number="7">  <span class="co"># if there are no names in the whole list</span></a>
+<a class="sourceLine" id="cb755-8" data-line-number="8">  <span class="cf">if</span> (<span class="kw">is.null</span>(<span class="kw">names</span>(dots))) {</a>
+<a class="sourceLine" id="cb755-9" data-line-number="9">    <span class="co"># rep FALSE for the length of dots</span></a>
+<a class="sourceLine" id="cb755-10" data-line-number="10">    is_named &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">FALSE</span>, <span class="kw">length</span>(dots))</a>
+<a class="sourceLine" id="cb755-11" data-line-number="11">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb755-12" data-line-number="12">    <span class="co"># create boolean vector</span></a>
+<a class="sourceLine" id="cb755-13" data-line-number="13">    <span class="co"># if arg in list is named or not</span></a>
+<a class="sourceLine" id="cb755-14" data-line-number="14">    is_named &lt;-<span class="st"> </span><span class="kw">names</span>(dots) <span class="op">!=</span><span class="st"> &quot;&quot;</span></a>
+<a class="sourceLine" id="cb755-15" data-line-number="15">  }</a>
+<a class="sourceLine" id="cb755-16" data-line-number="16">  <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb755-17" data-line-number="17">    <span class="co"># subeset where is_named is true</span></a>
+<a class="sourceLine" id="cb755-18" data-line-number="18">    <span class="dt">named =</span> dots[is_named],</a>
+<a class="sourceLine" id="cb755-19" data-line-number="19">    <span class="co"># subset where is_named is false</span></a>
+<a class="sourceLine" id="cb755-20" data-line-number="20">    <span class="dt">unnamed =</span> dots[<span class="op">!</span>is_named]</a>
+<a class="sourceLine" id="cb755-21" data-line-number="21">  )</a>
+<a class="sourceLine" id="cb755-22" data-line-number="22">}</a></code></pre></div>
+<div class="sourceCode" id="cb756"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb756-1" data-line-number="1"><span class="kw">dots_partition</span>(<span class="kw">list</span>(<span class="dt">letters =</span> letters))</a></code></pre></div>
 <pre><code>## $named
 ## list()
 ## 
@@ -440,7 +454,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot; &quot;r&quot; &quot;s&quot;
 ## [20] &quot;t&quot; &quot;u&quot; &quot;v&quot; &quot;w&quot; &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
 <p>When we use <code>list</code> here the letters come back as unnamed elements, but if we use <code>!!!</code> with <code>list2</code> we return the letters as named arguments</p>
-<div class="sourceCode" id="cb718"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb718-1" data-line-number="1"><span class="kw">dots_partition</span>(<span class="op">!!!</span><span class="kw">list</span>(<span class="dt">letters =</span> letters))</a></code></pre></div>
+<div class="sourceCode" id="cb758"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb758-1" data-line-number="1"><span class="kw">dots_partition</span>(<span class="op">!!!</span><span class="kw">list</span>(<span class="dt">letters =</span> letters))</a></code></pre></div>
 <pre><code>## $named
 ## $named$letters
 ##  [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot; &quot;r&quot; &quot;s&quot;
@@ -455,26 +469,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="question">
 <p>Can we explain this function?</p>
 </div>
-<div class="sourceCode" id="cb720"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb720-1" data-line-number="1">tag &lt;-<span class="st"> </span><span class="cf">function</span>(tag) {</a>
-<a class="sourceLine" id="cb720-2" data-line-number="2">  <span class="kw">new_function</span>(</a>
-<a class="sourceLine" id="cb720-3" data-line-number="3">    <span class="co"># what is this line doing?</span></a>
-<a class="sourceLine" id="cb720-4" data-line-number="4">    <span class="co"># even Hadley calls it weird!</span></a>
-<a class="sourceLine" id="cb720-5" data-line-number="5">    <span class="kw">exprs</span>(<span class="dt">... =</span> ),</a>
-<a class="sourceLine" id="cb720-6" data-line-number="6">    <span class="kw">expr</span>({</a>
-<a class="sourceLine" id="cb720-7" data-line-number="7">      dots &lt;-<span class="st"> </span><span class="kw">dots_partition</span>(...)</a>
-<a class="sourceLine" id="cb720-8" data-line-number="8">      attribs &lt;-<span class="st"> </span><span class="kw">html_attributes</span>(dots<span class="op">$</span>named)</a>
-<a class="sourceLine" id="cb720-9" data-line-number="9">      children &lt;-<span class="st"> </span><span class="kw">map_chr</span>(dots<span class="op">$</span>unnamed, escape)</a>
-<a class="sourceLine" id="cb720-10" data-line-number="10">      <span class="kw">html</span>(<span class="kw">paste0</span>(</a>
-<a class="sourceLine" id="cb720-11" data-line-number="11">        <span class="op">!!</span><span class="kw">paste0</span>(<span class="st">&quot;&lt;&quot;</span>, tag), attribs, <span class="st">&quot;&gt;&quot;</span>,</a>
-<a class="sourceLine" id="cb720-12" data-line-number="12">        <span class="kw">paste</span>(children, <span class="dt">collapse =</span> <span class="st">&quot;&quot;</span>),</a>
-<a class="sourceLine" id="cb720-13" data-line-number="13">        <span class="op">!!</span><span class="kw">paste0</span>(<span class="st">&quot;&lt;/&quot;</span>, tag, <span class="st">&quot;&gt;&quot;</span>)</a>
-<a class="sourceLine" id="cb720-14" data-line-number="14">      ))</a>
-<a class="sourceLine" id="cb720-15" data-line-number="15">    }),</a>
-<a class="sourceLine" id="cb720-16" data-line-number="16">    <span class="kw">caller_env</span>()</a>
-<a class="sourceLine" id="cb720-17" data-line-number="17">  )</a>
-<a class="sourceLine" id="cb720-18" data-line-number="18">}</a>
-<a class="sourceLine" id="cb720-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb720-20" data-line-number="20"><span class="kw">tag</span>(<span class="st">&quot;b&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb760"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb760-1" data-line-number="1">tag &lt;-<span class="st"> </span><span class="cf">function</span>(tag) {</a>
+<a class="sourceLine" id="cb760-2" data-line-number="2">  <span class="kw">new_function</span>(</a>
+<a class="sourceLine" id="cb760-3" data-line-number="3">    <span class="co"># what is this line doing?</span></a>
+<a class="sourceLine" id="cb760-4" data-line-number="4">    <span class="co"># even Hadley calls it weird!</span></a>
+<a class="sourceLine" id="cb760-5" data-line-number="5">    <span class="kw">exprs</span>(<span class="dt">... =</span> ),</a>
+<a class="sourceLine" id="cb760-6" data-line-number="6">    <span class="kw">expr</span>({</a>
+<a class="sourceLine" id="cb760-7" data-line-number="7">      dots &lt;-<span class="st"> </span><span class="kw">dots_partition</span>(...)</a>
+<a class="sourceLine" id="cb760-8" data-line-number="8">      attribs &lt;-<span class="st"> </span><span class="kw">html_attributes</span>(dots<span class="op">$</span>named)</a>
+<a class="sourceLine" id="cb760-9" data-line-number="9">      children &lt;-<span class="st"> </span><span class="kw">map_chr</span>(dots<span class="op">$</span>unnamed, escape)</a>
+<a class="sourceLine" id="cb760-10" data-line-number="10">      <span class="kw">html</span>(<span class="kw">paste0</span>(</a>
+<a class="sourceLine" id="cb760-11" data-line-number="11">        <span class="op">!!</span><span class="kw">paste0</span>(<span class="st">&quot;&lt;&quot;</span>, tag), attribs, <span class="st">&quot;&gt;&quot;</span>,</a>
+<a class="sourceLine" id="cb760-12" data-line-number="12">        <span class="kw">paste</span>(children, <span class="dt">collapse =</span> <span class="st">&quot;&quot;</span>),</a>
+<a class="sourceLine" id="cb760-13" data-line-number="13">        <span class="op">!!</span><span class="kw">paste0</span>(<span class="st">&quot;&lt;/&quot;</span>, tag, <span class="st">&quot;&gt;&quot;</span>)</a>
+<a class="sourceLine" id="cb760-14" data-line-number="14">      ))</a>
+<a class="sourceLine" id="cb760-15" data-line-number="15">    }),</a>
+<a class="sourceLine" id="cb760-16" data-line-number="16">    <span class="kw">caller_env</span>()</a>
+<a class="sourceLine" id="cb760-17" data-line-number="17">  )</a>
+<a class="sourceLine" id="cb760-18" data-line-number="18">}</a>
+<a class="sourceLine" id="cb760-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb760-20" data-line-number="20"><span class="kw">tag</span>(<span class="st">&quot;b&quot;</span>)</a></code></pre></div>
 <pre><code>## function (...) 
 ## {
 ##     dots &lt;- dots_partition(...)
@@ -494,21 +508,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p>Why use this instead of <code>tidy_eval</code>?</p>
 </div>
-<div class="sourceCode" id="cb722"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb722-1" data-line-number="1"><span class="co"># eval the latex class expression</span></a>
-<a class="sourceLine" id="cb722-2" data-line-number="2"><span class="co"># in the latex environment</span></a>
-<a class="sourceLine" id="cb722-3" data-line-number="3">to_math &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb722-4" data-line-number="4">  expr &lt;-<span class="st"> </span><span class="kw">enexpr</span>(x)</a>
-<a class="sourceLine" id="cb722-5" data-line-number="5">  out &lt;-<span class="st"> </span><span class="kw">eval_bare</span>(expr, <span class="kw">latex_env</span>(expr))</a>
-<a class="sourceLine" id="cb722-6" data-line-number="6">  <span class="kw">latex</span>(out)</a>
-<a class="sourceLine" id="cb722-7" data-line-number="7">}</a>
-<a class="sourceLine" id="cb722-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb722-9" data-line-number="9"><span class="co"># create the latex class expression</span></a>
-<a class="sourceLine" id="cb722-10" data-line-number="10">latex &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">structure</span>(x, <span class="dt">class =</span> <span class="st">&quot;advr_latex&quot;</span>)</a>
-<a class="sourceLine" id="cb722-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb722-12" data-line-number="12"><span class="co"># print the latex expression</span></a>
-<a class="sourceLine" id="cb722-13" data-line-number="13">print.advr_latex &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb722-14" data-line-number="14">  <span class="kw">cat</span>(<span class="st">&quot;&lt;LATEX&gt; &quot;</span>, x, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)</a>
-<a class="sourceLine" id="cb722-15" data-line-number="15">}</a></code></pre></div>
+<div class="sourceCode" id="cb762"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb762-1" data-line-number="1"><span class="co"># eval the latex class expression</span></a>
+<a class="sourceLine" id="cb762-2" data-line-number="2"><span class="co"># in the latex environment</span></a>
+<a class="sourceLine" id="cb762-3" data-line-number="3">to_math &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb762-4" data-line-number="4">  expr &lt;-<span class="st"> </span><span class="kw">enexpr</span>(x)</a>
+<a class="sourceLine" id="cb762-5" data-line-number="5">  out &lt;-<span class="st"> </span><span class="kw">eval_bare</span>(expr, <span class="kw">latex_env</span>(expr))</a>
+<a class="sourceLine" id="cb762-6" data-line-number="6">  <span class="kw">latex</span>(out)</a>
+<a class="sourceLine" id="cb762-7" data-line-number="7">}</a>
+<a class="sourceLine" id="cb762-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb762-9" data-line-number="9"><span class="co"># create the latex class expression</span></a>
+<a class="sourceLine" id="cb762-10" data-line-number="10">latex &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">structure</span>(x, <span class="dt">class =</span> <span class="st">&quot;advr_latex&quot;</span>)</a>
+<a class="sourceLine" id="cb762-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb762-12" data-line-number="12"><span class="co"># print the latex expression</span></a>
+<a class="sourceLine" id="cb762-13" data-line-number="13">print.advr_latex &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb762-14" data-line-number="14">  <span class="kw">cat</span>(<span class="st">&quot;&lt;LATEX&gt; &quot;</span>, x, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)</a>
+<a class="sourceLine" id="cb762-15" data-line-number="15">}</a></code></pre></div>
 <div class="TODO">
 
 </div>
@@ -517,22 +531,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">21.2</span> 21.3.5</h2>
 <div class="question">
 <p>The following code below uses <code>switch_expr</code>… is this not an rlang function? What about <code>flat_map_chr</code>? (And what does this function do?)</p>
-<div class="sourceCode" id="cb723"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb723-1" data-line-number="1">all_names_rec &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb723-2" data-line-number="2">  rlang<span class="op">:::</span><span class="kw">switch_expr</span>(x,</a>
-<a class="sourceLine" id="cb723-3" data-line-number="3">    <span class="dt">constant =</span> <span class="kw">character</span>(),</a>
-<a class="sourceLine" id="cb723-4" data-line-number="4">    <span class="dt">symbol =</span>   <span class="kw">as.character</span>(x),</a>
-<a class="sourceLine" id="cb723-5" data-line-number="5">    <span class="co"># we get all the expr arguments</span></a>
-<a class="sourceLine" id="cb723-6" data-line-number="6">    <span class="co"># and remove the first element because that is the call</span></a>
-<a class="sourceLine" id="cb723-7" data-line-number="7">    <span class="co"># as per subsetting chapter 18.3.3.1</span></a>
-<a class="sourceLine" id="cb723-8" data-line-number="8">    <span class="dt">call =</span>  <span class="kw">flat_map_chr</span>(<span class="kw">as.list</span>(x[<span class="op">-</span><span class="dv">1</span>]), all_names)</a>
-<a class="sourceLine" id="cb723-9" data-line-number="9">  )</a>
-<a class="sourceLine" id="cb723-10" data-line-number="10">}</a>
-<a class="sourceLine" id="cb723-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb723-12" data-line-number="12">all_names &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb723-13" data-line-number="13">  <span class="kw">unique</span>(<span class="kw">all_names_rec</span>(x))</a>
-<a class="sourceLine" id="cb723-14" data-line-number="14">}</a>
-<a class="sourceLine" id="cb723-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb723-16" data-line-number="16"><span class="kw">all_names</span>(<span class="kw">expr</span>(x <span class="op">+</span><span class="st"> </span>y <span class="op">+</span><span class="st"> </span><span class="kw">f</span>(a, b, c, <span class="dv">10</span>)))</a></code></pre></div>
+<div class="sourceCode" id="cb763"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb763-1" data-line-number="1">all_names_rec &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb763-2" data-line-number="2">  rlang<span class="op">:::</span><span class="kw">switch_expr</span>(x,</a>
+<a class="sourceLine" id="cb763-3" data-line-number="3">    <span class="dt">constant =</span> <span class="kw">character</span>(),</a>
+<a class="sourceLine" id="cb763-4" data-line-number="4">    <span class="dt">symbol =</span>   <span class="kw">as.character</span>(x),</a>
+<a class="sourceLine" id="cb763-5" data-line-number="5">    <span class="co"># we get all the expr arguments</span></a>
+<a class="sourceLine" id="cb763-6" data-line-number="6">    <span class="co"># and remove the first element because that is the call</span></a>
+<a class="sourceLine" id="cb763-7" data-line-number="7">    <span class="co"># as per subsetting chapter 18.3.3.1</span></a>
+<a class="sourceLine" id="cb763-8" data-line-number="8">    <span class="dt">call =</span>  <span class="kw">flat_map_chr</span>(<span class="kw">as.list</span>(x[<span class="op">-</span><span class="dv">1</span>]), all_names)</a>
+<a class="sourceLine" id="cb763-9" data-line-number="9">  )</a>
+<a class="sourceLine" id="cb763-10" data-line-number="10">}</a>
+<a class="sourceLine" id="cb763-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb763-12" data-line-number="12">all_names &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb763-13" data-line-number="13">  <span class="kw">unique</span>(<span class="kw">all_names_rec</span>(x))</a>
+<a class="sourceLine" id="cb763-14" data-line-number="14">}</a>
+<a class="sourceLine" id="cb763-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb763-16" data-line-number="16"><span class="kw">all_names</span>(<span class="kw">expr</span>(x <span class="op">+</span><span class="st"> </span>y <span class="op">+</span><span class="st"> </span><span class="kw">f</span>(a, b, c, <span class="dv">10</span>)))</a></code></pre></div>
 </div>
 <div class="TODO">
 <p><code>switch_expr</code> is an rlang internal, <code>rlang:::switch_expr</code> that ….</p>
@@ -543,12 +557,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 &lt;bytecode: 0x7fdba4adc070&gt;
 &lt;environment: namespace:rlang&gt;</code></pre>
 <p>In Chapter 18 Hadley defines the <code>flat_map_chr</code> function that….</p>
-<div class="sourceCode" id="cb725"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb725-1" data-line-number="1">flat_map_chr &lt;-<span class="st"> </span><span class="cf">function</span>(.x, .f, ...) {</a>
-<a class="sourceLine" id="cb725-2" data-line-number="2">  purrr<span class="op">::</span><span class="kw">flatten_chr</span>(purrr<span class="op">::</span><span class="kw">map</span>(.x, .f, ...))</a>
-<a class="sourceLine" id="cb725-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb725-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb725-5" data-line-number="5"><span class="kw">flat_map_chr</span>(letters[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], <span class="op">~</span><span class="st"> </span><span class="kw">rep</span>(., <span class="kw">sample</span>(<span class="dv">3</span>, <span class="dv">1</span>)))</a></code></pre></div>
-<pre><code>## [1] &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;c&quot;</code></pre>
+<div class="sourceCode" id="cb765"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb765-1" data-line-number="1">flat_map_chr &lt;-<span class="st"> </span><span class="cf">function</span>(.x, .f, ...) {</a>
+<a class="sourceLine" id="cb765-2" data-line-number="2">  purrr<span class="op">::</span><span class="kw">flatten_chr</span>(purrr<span class="op">::</span><span class="kw">map</span>(.x, .f, ...))</a>
+<a class="sourceLine" id="cb765-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb765-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb765-5" data-line-number="5"><span class="kw">flat_map_chr</span>(letters[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], <span class="op">~</span><span class="st"> </span><span class="kw">rep</span>(., <span class="kw">sample</span>(<span class="dv">3</span>, <span class="dv">1</span>)))</a></code></pre></div>
+<pre><code>## [1] &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;c&quot;</code></pre>
 </div>
 </div>
 <div id="unknown-functions" class="section level2">

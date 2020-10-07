@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-08-18" />
+<meta name="date" content="2020-10-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="translating-r-code.html"/>
-
+<link rel="next" href="measuring-performance.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -355,6 +355,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#debug"><i class="fa fa-check"></i>22.4.2.3 debug</a></li>
 <li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#non-interactive-debugging"><i class="fa fa-check"></i>22.5 Non-interactive debugging</a></li>
 <li><a href="debugging.html#dump.frames">22.5.1 <code>dump.frames</code></a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#debug-pipe"><i class="fa fa-check"></i>Debug Pipe</a></li>
+<li class="chapter" data-level="22.2" data-path="debugging.html"><a href="debugging.html#edic-code-from-another-function"><i class="fa fa-check"></i><b>22.2</b> Edic Code from Another function</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#bonus-tip"><i class="fa fa-check"></i>Bonus tip</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html"><i class="fa fa-check"></i>Measuring performance</a><ul>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#introduction"><i class="fa fa-check"></i>23.1 Introduction</a></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html#profiling"><i class="fa fa-check"></i>23.2 Profiling</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>23.4.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html#microbenchmarking"><i class="fa fa-check"></i>23.3 Microbenchmarking</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html"><i class="fa fa-check"></i>Improving performance</a><ul>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#existing-solutions"><i class="fa fa-check"></i>24.3 Existing solutions</a></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#vectorize"><i class="fa fa-check"></i>24.5 Vectorize</a></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#other-techniques"><i class="fa fa-check"></i>24.8 Other Techniques</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -378,23 +392,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="debugging" class="section level1">
 <h1><span class="header-section-number">Chapter 22</span> Debugging</h1>
+<p>Resources on debugging:</p>
+<ul>
+<li><a href="https://rstats.wtf/index.html" class="uri">https://rstats.wtf/index.html</a></li>
+<li><a href="https://stackoverflow.com/questions/12807237/undebug-all-functions" class="uri">https://stackoverflow.com/questions/12807237/undebug-all-functions</a></li>
+</ul>
 <div id="lazy-evaluation" class="section level2 unnumbered">
 <h2>22.3 Lazy evaluation</h2>
 <div class="question">
 <p><code>rlang::last_trace()</code> in the example doesn’t show anything informative, really. What is this function and when is it helpful?</p>
 </div>
-<div class="TODO">
-
-</div>
+<p>It’s weird how in the book it says
+&gt; Error: Can’t show last error because no error was recorded yet</p>
+<p>That’s not what you get in RStudio, but is what you get with a reprex….</p>
+<p><code>rlang::last_trace</code> prints the traceback/call stack in reverse order, but more visibly displays branching AST:</p>
+<div class="sourceCode" id="cb768"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb768-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="cf">function</span>(a) <span class="kw">g</span>(a)</a>
+<a class="sourceLine" id="cb768-2" data-line-number="2">g &lt;-<span class="st"> </span><span class="cf">function</span>(b) <span class="kw">h</span>(b)</a>
+<a class="sourceLine" id="cb768-3" data-line-number="3">h &lt;-<span class="st"> </span><span class="cf">function</span>(c) <span class="kw">i</span>(c)</a>
+<a class="sourceLine" id="cb768-4" data-line-number="4">i &lt;-<span class="st"> </span><span class="cf">function</span>(d) {</a>
+<a class="sourceLine" id="cb768-5" data-line-number="5">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.numeric</span>(d)) {</a>
+<a class="sourceLine" id="cb768-6" data-line-number="6">    <span class="kw">stop</span>(<span class="st">&quot;`d` must be numeric&quot;</span>, <span class="dt">call. =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb768-7" data-line-number="7">  }</a>
+<a class="sourceLine" id="cb768-8" data-line-number="8">  d <span class="op">+</span><span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb768-9" data-line-number="9">}</a>
+<a class="sourceLine" id="cb768-10" data-line-number="10">j &lt;-<span class="st"> </span><span class="cf">function</span>() <span class="kw">k</span>()</a>
+<a class="sourceLine" id="cb768-11" data-line-number="11">k &lt;-<span class="st"> </span><span class="cf">function</span>() <span class="kw">stop</span>(<span class="st">&quot;Oops!&quot;</span>, <span class="dt">call. =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb768-12" data-line-number="12"><span class="kw">f</span>(<span class="kw">j</span>())</a></code></pre></div>
+<pre><code>#&gt; Error: Oops!
+#&gt; Backtrace:
+#&gt;  1. rlang::with_abort(f(j()))
+#&gt;  7. global::j()
+#&gt;  8. global::k()</code></pre>
+<div class="sourceCode" id="cb770"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb770-1" data-line-number="1">rlang<span class="op">::</span><span class="kw">with_abort</span>(<span class="kw">f</span>(<span class="kw">j</span>()))</a></code></pre></div>
+<pre><code>#&gt; Error: Oops!
+#&gt; Backtrace:
+#&gt;  1. rlang::with_abort(f(j()))
+#&gt;  7. global::j()
+#&gt;  8. global::k()</code></pre>
+<div class="sourceCode" id="cb772"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb772-1" data-line-number="1">rlang<span class="op">::</span><span class="kw">last_trace</span>()</a></code></pre></div>
+<pre><code>#&gt; &lt;error/rlang_error&gt;
+#&gt; Oops!
+#&gt; Backtrace:
+#&gt; x
+#&gt; 1. +-rlang::with_abort(f(j()))
+#&gt; 2. | \-base::withCallingHandlers(...)
+#&gt; 3. +-global::f(j())
+#&gt; 4. | \-global::g(a)
+#&gt; 5. |   \-global::h(b)
+#&gt; 6. |     \-global::i(c)
+#&gt; 7. \-global::j()
+#&gt; 8.   \-global::k()</code></pre>
+<p>The errors render like how it does in the book if I use a reprex, but I get more verbose output in RStudio, which I’ve copy-pasted above. Not sure if this has to do with my options and/or RStudio settings. But i think it’s useful to see how <code>rlang::last_trace()</code> prints more detailed output like this.</p>
 </div>
 <div id="broswer" class="section level2 unnumbered">
 <h2>22.4.1 broswer</h2>
 <div class="question">
 <p>Can we create a video or gif using <code>browser</code>?</p>
 </div>
-<div class="TODO">
-
-</div>
+<p><img src="images/debugging/browser.gif" style="display: block; margin: auto;" /></p>
 </div>
 <div id="breakpoints" class="section level2 unnumbered">
 <h2>22.4.2.1 Breakpoints</h2>
@@ -404,9 +459,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p>What are these fringe situations?</p>
 </div>
-<div class="TODO">
-
-</div>
+<p>They don’t work in non-saved files, or Shiny Apps</p>
 <div class="question">
 <p>Can we create a video or gif using <code>breakpoints</code>?</p>
 </div>
@@ -446,31 +499,95 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p>What is this? When is it useful?</p>
 </div>
-<div class="TODO">
-
-</div>
+<p>This statement really seems not fully fleshed out… it provides no explanation what the function is and why it is “helpful” and he demonstrates it with the use of some anonymous function</p>
 </div>
 <div id="dump.frames" class="section level2 unnumbered">
 <h2>22.5.1 <code>dump.frames</code></h2>
 <div class="question">
 <p>Can we run this chunk, maybe also making a gif?</p>
-<div class="sourceCode" id="cb728"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb728-1" data-line-number="1"> <span class="co"># In batch R process ----</span></a>
-<a class="sourceLine" id="cb728-2" data-line-number="2">dump_and_quit &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb728-3" data-line-number="3">  <span class="co"># Save debugging info to file last.dump.rda</span></a>
-<a class="sourceLine" id="cb728-4" data-line-number="4">  <span class="kw">dump.frames</span>(<span class="dt">to.file =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb728-5" data-line-number="5">  <span class="co"># Quit R with error status</span></a>
-<a class="sourceLine" id="cb728-6" data-line-number="6">  <span class="kw">q</span>(<span class="dt">status =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb728-7" data-line-number="7">}</a>
-<a class="sourceLine" id="cb728-8" data-line-number="8"><span class="kw">options</span>(<span class="dt">error =</span> dump_and_quit)</a>
-<a class="sourceLine" id="cb728-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb728-10" data-line-number="10"><span class="co"># In a later interactive session ----</span></a>
-<a class="sourceLine" id="cb728-11" data-line-number="11"><span class="kw">load</span>(<span class="st">&quot;last.dump.rda&quot;</span>)</a>
-<a class="sourceLine" id="cb728-12" data-line-number="12"><span class="kw">debugger</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb774"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb774-1" data-line-number="1"> <span class="co"># In batch R process ----</span></a>
+<a class="sourceLine" id="cb774-2" data-line-number="2">dump_and_quit &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb774-3" data-line-number="3">  <span class="co"># Save debugging info to file last.dump.rda</span></a>
+<a class="sourceLine" id="cb774-4" data-line-number="4">  <span class="kw">dump.frames</span>(<span class="dt">to.file =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb774-5" data-line-number="5">  <span class="co"># Quit R with error status</span></a>
+<a class="sourceLine" id="cb774-6" data-line-number="6">  <span class="kw">q</span>(<span class="dt">status =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb774-7" data-line-number="7">}</a>
+<a class="sourceLine" id="cb774-8" data-line-number="8"><span class="kw">options</span>(<span class="dt">error =</span> dump_and_quit)</a>
+<a class="sourceLine" id="cb774-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb774-10" data-line-number="10"><span class="co"># In a later interactive session ----</span></a>
+<a class="sourceLine" id="cb774-11" data-line-number="11"><span class="kw">load</span>(<span class="st">&quot;last.dump.rda&quot;</span>)</a>
+<a class="sourceLine" id="cb774-12" data-line-number="12"><span class="kw">debugger</span>()</a></code></pre></div>
 </div>
 <div class="TODO">
 
 </div>
+</div>
+<div id="debug-pipe" class="section level2 unnumbered">
+<h2>Debug Pipe</h2>
+<pre><code># debug pipe
+`%d&gt;%` &lt;- function(e1, e2) {
+  x &lt;- as.character(substitute(e2)[[1]])
+  debugonce(get(x, parent.frame()))
+  eval(substitute(e1 %&gt;% e2), parent.frame())
+}
 
+mtcars %&gt;% 
+  select(mpg, cyl) %d&gt;%   # debug group_by
+  group_by(cyl) %&gt;% 
+  summarise(mpg = mean(mpg))
+
+mtcars %&gt;% 
+  select(mpg, cyl) %d&gt;%   # debug group_by
+  group_by(cyl) %&gt;% 
+  summarise(mpg = mean(mpg))
+#&gt; debugging in: group_by(., cyl)
+#&gt; debug: {
+#&gt;     UseMethod(&quot;group_by&quot;)
+#&gt; }
+#&gt; debug: UseMethod(&quot;group_by&quot;)
+#&gt; debugging in: group_by.data.frame(., cyl)
+#&gt; debug: {
+#&gt;     groups &lt;- group_by_prepare(.data, ..., .add = .add)
+#&gt;     grouped_df(groups$data, groups$group_names, .drop)
+#&gt; }
+#&gt; debug: groups &lt;- group_by_prepare(.data, ..., .add = .add)
+#&gt; debug: grouped_df(groups$data, groups$group_names, .drop)
+#&gt; exiting from: group_by.data.frame(., cyl)
+#&gt; exiting from: group_by(., cyl)
+#&gt; `summarise()` ungrouping output (override with `.groups` argument)
+#&gt; # A tibble: 3 x 2
+#&gt;     cyl   mpg
+#&gt;   &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1     4  26.7
+#&gt; 2     6  19.7
+#&gt; 3     8  15.1</code></pre>
+</div>
+<div id="edic-code-from-another-function" class="section level2">
+<h2><span class="header-section-number">22.2</span> Edic Code from Another function</h2>
+<pre><code>library(ggplot2)
+# imagine we want to edit ggplot2::aes
+# copied from the console and then edited
+aes &lt;- function (x, y, ...) 
+{
+  message(&quot;In my new aes&quot;) #added this
+  exprs &lt;- enquos(x = x, y = y, ..., .ignore_empty = &quot;none&quot;) # changed .ignore_empty
+  aes &lt;- new_aes(exprs, env = parent.frame())
+  rename_aes(aes)
+}
+# crap!  My function doesn&#39;t know how to find the non-exported ggplot2 functions
+ggplot(mtcars) + aes(x = mpg, y = cyl) + geom_point()
+#&gt; In my new aes
+#&gt; Error in new_aes(exprs, env = parent.frame()): could not find function &quot;new_aes&quot;
+# we can fix that!
+environment(aes) &lt;- asNamespace(&quot;ggplot2&quot;)
+# success!
+ggplot(mtcars) + aes(x = mpg, y = cyl) + geom_point()
+#&gt; In my new aes
+![](https://i.imgur.com/GSYX1sa.png)</code></pre>
+</div>
+<div id="bonus-tip" class="section level2 unnumbered">
+<h2>Bonus tip</h2>
+<p>Be careful if you have variables named <code>f</code> <code>n</code> <code>s</code> or <code>c</code> while debugging. I very often will want to investigate them by just running e.g. <code>&gt; f</code> in the console, expecting it to print <code>f</code>. but instead it finishes the current loop. <code>print(f)</code> instead!</p>
 
 </div>
 </div>
@@ -479,8 +596,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="translating-r-code.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="translating-r-code.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="measuring-performance.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

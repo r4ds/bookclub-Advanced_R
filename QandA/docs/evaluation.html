@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-08-18" />
+<meta name="date" content="2020-10-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -355,6 +355,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#debug"><i class="fa fa-check"></i>22.4.2.3 debug</a></li>
 <li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#non-interactive-debugging"><i class="fa fa-check"></i>22.5 Non-interactive debugging</a></li>
 <li><a href="debugging.html#dump.frames">22.5.1 <code>dump.frames</code></a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#debug-pipe"><i class="fa fa-check"></i>Debug Pipe</a></li>
+<li class="chapter" data-level="22.2" data-path="debugging.html"><a href="debugging.html#edic-code-from-another-function"><i class="fa fa-check"></i><b>22.2</b> Edic Code from Another function</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#bonus-tip"><i class="fa fa-check"></i>Bonus tip</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html"><i class="fa fa-check"></i>Measuring performance</a><ul>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#introduction"><i class="fa fa-check"></i>23.1 Introduction</a></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html#profiling"><i class="fa fa-check"></i>23.2 Profiling</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>23.4.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html#microbenchmarking"><i class="fa fa-check"></i>23.3 Microbenchmarking</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html"><i class="fa fa-check"></i>Improving performance</a><ul>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#existing-solutions"><i class="fa fa-check"></i>24.3 Existing solutions</a></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#vectorize"><i class="fa fa-check"></i>24.5 Vectorize</a></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#other-techniques"><i class="fa fa-check"></i>24.8 Other Techniques</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -392,52 +406,52 @@ evaluate means “give me the result of this whole expression”</p>
 <p>This is such a cool function - where is it used in the wild?</p>
 </div>
 <p>When wanting to have variables stored in the environment of a function, or if you want to run an expression that produces bindings, but you don’t want those bindings to persist.</p>
-<div class="sourceCode" id="cb673"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb673-1" data-line-number="1">counter &lt;-<span class="st"> </span><span class="kw">local</span>({ </a>
-<a class="sourceLine" id="cb673-2" data-line-number="2">  i &lt;-<span class="st"> </span><span class="dv">0</span>; <span class="cf">function</span>() { </a>
-<a class="sourceLine" id="cb673-3" data-line-number="3">    i &lt;&lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>; <span class="kw">print</span>(i)</a>
-<a class="sourceLine" id="cb673-4" data-line-number="4">  }</a>
-<a class="sourceLine" id="cb673-5" data-line-number="5">})</a>
-<a class="sourceLine" id="cb673-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb673-7" data-line-number="7"><span class="kw">counter</span>()</a>
-<a class="sourceLine" id="cb673-8" data-line-number="8"><span class="kw">counter</span>()</a>
-<a class="sourceLine" id="cb673-9" data-line-number="9"><span class="kw">counter</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb713"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb713-1" data-line-number="1">counter &lt;-<span class="st"> </span><span class="kw">local</span>({ </a>
+<a class="sourceLine" id="cb713-2" data-line-number="2">  i &lt;-<span class="st"> </span><span class="dv">0</span>; <span class="cf">function</span>() { </a>
+<a class="sourceLine" id="cb713-3" data-line-number="3">    i &lt;&lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>; <span class="kw">print</span>(i)</a>
+<a class="sourceLine" id="cb713-4" data-line-number="4">  }</a>
+<a class="sourceLine" id="cb713-5" data-line-number="5">})</a>
+<a class="sourceLine" id="cb713-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb713-7" data-line-number="7"><span class="kw">counter</span>()</a>
+<a class="sourceLine" id="cb713-8" data-line-number="8"><span class="kw">counter</span>()</a>
+<a class="sourceLine" id="cb713-9" data-line-number="9"><span class="kw">counter</span>()</a></code></pre></div>
 <pre><code>[1] 1
 [1] 2
 [1] 3</code></pre>
 <p>We can also wrap <code>for</code> loops in a <code>local</code> call to avoid the object being iterated over getting assigned to the global environment</p>
-<div class="sourceCode" id="cb675"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb675-1" data-line-number="1">f1 &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb675-2" data-line-number="2">  <span class="cf">for</span> (x <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>) {</a>
-<a class="sourceLine" id="cb675-3" data-line-number="3">    <span class="co"># do something</span></a>
-<a class="sourceLine" id="cb675-4" data-line-number="4">  }</a>
-<a class="sourceLine" id="cb675-5" data-line-number="5">  x</a>
-<a class="sourceLine" id="cb675-6" data-line-number="6">}</a>
-<a class="sourceLine" id="cb675-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb675-8" data-line-number="8">f2 &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb675-9" data-line-number="9">  <span class="kw">local</span>({</a>
-<a class="sourceLine" id="cb675-10" data-line-number="10">    <span class="cf">for</span> (x <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>) {</a>
-<a class="sourceLine" id="cb675-11" data-line-number="11">      <span class="co"># do something</span></a>
-<a class="sourceLine" id="cb675-12" data-line-number="12">    }</a>
-<a class="sourceLine" id="cb675-13" data-line-number="13">  })</a>
-<a class="sourceLine" id="cb675-14" data-line-number="14">  x</a>
-<a class="sourceLine" id="cb675-15" data-line-number="15">}</a>
-<a class="sourceLine" id="cb675-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb675-17" data-line-number="17"><span class="kw">f1</span>(<span class="st">&quot;hello&quot;</span>)</a>
-<a class="sourceLine" id="cb675-18" data-line-number="18"><span class="co">#&gt; [1] 10</span></a>
-<a class="sourceLine" id="cb675-19" data-line-number="19"><span class="kw">f2</span>(<span class="st">&quot;hello&quot;</span>)</a>
-<a class="sourceLine" id="cb675-20" data-line-number="20"><span class="co">#&gt; [1] &quot;hello&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb715"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb715-1" data-line-number="1">f1 &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb715-2" data-line-number="2">  <span class="cf">for</span> (x <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>) {</a>
+<a class="sourceLine" id="cb715-3" data-line-number="3">    <span class="co"># do something</span></a>
+<a class="sourceLine" id="cb715-4" data-line-number="4">  }</a>
+<a class="sourceLine" id="cb715-5" data-line-number="5">  x</a>
+<a class="sourceLine" id="cb715-6" data-line-number="6">}</a>
+<a class="sourceLine" id="cb715-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb715-8" data-line-number="8">f2 &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb715-9" data-line-number="9">  <span class="kw">local</span>({</a>
+<a class="sourceLine" id="cb715-10" data-line-number="10">    <span class="cf">for</span> (x <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>) {</a>
+<a class="sourceLine" id="cb715-11" data-line-number="11">      <span class="co"># do something</span></a>
+<a class="sourceLine" id="cb715-12" data-line-number="12">    }</a>
+<a class="sourceLine" id="cb715-13" data-line-number="13">  })</a>
+<a class="sourceLine" id="cb715-14" data-line-number="14">  x</a>
+<a class="sourceLine" id="cb715-15" data-line-number="15">}</a>
+<a class="sourceLine" id="cb715-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb715-17" data-line-number="17"><span class="kw">f1</span>(<span class="st">&quot;hello&quot;</span>)</a>
+<a class="sourceLine" id="cb715-18" data-line-number="18"><span class="co">#&gt; [1] 10</span></a>
+<a class="sourceLine" id="cb715-19" data-line-number="19"><span class="kw">f2</span>(<span class="st">&quot;hello&quot;</span>)</a>
+<a class="sourceLine" id="cb715-20" data-line-number="20"><span class="co">#&gt; [1] &quot;hello&quot;</span></a></code></pre></div>
 </div>
 <div id="source" class="section level2 unnumbered">
 <h2>20.2.2 <code>source</code></h2>
 <div class="question">
 <p>Expression vectors get a shout out again (they are an aside in the Expression chapter) and while Hadley advises against introducing another data structure, I wanted to make sure my high level understanding was correct: eval can be vectorized if the input is of type <code>expression vector</code> [but not if it’s of type <code>list</code>]?</p>
 </div>
-<div class="sourceCode" id="cb676"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb676-1" data-line-number="1">exp_vec &lt;-<span class="st"> </span><span class="kw">expression</span>(x &lt;-<span class="st"> </span><span class="dv">4</span>, x)</a>
-<a class="sourceLine" id="cb676-2" data-line-number="2"><span class="kw">eval</span>(exp_vec)</a></code></pre></div>
-<div class="sourceCode" id="cb677"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb677-1" data-line-number="1">exp_list &lt;-<span class="st"> </span><span class="kw">list2</span>(</a>
-<a class="sourceLine" id="cb677-2" data-line-number="2">  rlang<span class="op">::</span><span class="kw">expr</span>(x &lt;-<span class="st"> </span><span class="dv">4</span>),</a>
-<a class="sourceLine" id="cb677-3" data-line-number="3">  rlang<span class="op">::</span><span class="kw">expr</span>(x)</a>
-<a class="sourceLine" id="cb677-4" data-line-number="4">)</a>
-<a class="sourceLine" id="cb677-5" data-line-number="5"><span class="kw">eval</span>(exp_list)</a></code></pre></div>
+<div class="sourceCode" id="cb716"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb716-1" data-line-number="1">exp_vec &lt;-<span class="st"> </span><span class="kw">expression</span>(x &lt;-<span class="st"> </span><span class="dv">4</span>, x)</a>
+<a class="sourceLine" id="cb716-2" data-line-number="2"><span class="kw">eval</span>(exp_vec)</a></code></pre></div>
+<div class="sourceCode" id="cb717"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb717-1" data-line-number="1">exp_list &lt;-<span class="st"> </span><span class="kw">list2</span>(</a>
+<a class="sourceLine" id="cb717-2" data-line-number="2">  rlang<span class="op">::</span><span class="kw">expr</span>(x &lt;-<span class="st"> </span><span class="dv">4</span>),</a>
+<a class="sourceLine" id="cb717-3" data-line-number="3">  rlang<span class="op">::</span><span class="kw">expr</span>(x)</a>
+<a class="sourceLine" id="cb717-4" data-line-number="4">)</a>
+<a class="sourceLine" id="cb717-5" data-line-number="5"><span class="kw">eval</span>(exp_list)</a></code></pre></div>
 </div>
 <div id="function" class="section level2 unnumbered">
 <h2>20.2.3 <code>function</code></h2>
@@ -445,50 +459,50 @@ evaluate means “give me the result of this whole expression”</p>
 <p>I think I understand this issue based on the concrete example but can we summarize the “gotcha” here?</p>
 </div>
 <p>It’s basically that the printing of the function is a lie (because base R doesn’t get it). And that’s dangerous and confusing, so use rlang to make it not a lie.</p>
-<div class="sourceCode" id="cb678"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb678-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb678-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="dv">20</span></a>
-<a class="sourceLine" id="cb678-3" data-line-number="3">f &lt;-<span class="st"> </span><span class="kw">eval</span>(<span class="kw">expr</span>(<span class="cf">function</span>(x, y) <span class="op">!!</span>x <span class="op">+</span><span class="st"> </span><span class="op">!!</span>y))</a>
-<a class="sourceLine" id="cb678-4" data-line-number="4">f</a>
-<a class="sourceLine" id="cb678-5" data-line-number="5"><span class="kw">f</span>()</a>
-<a class="sourceLine" id="cb678-6" data-line-number="6"><span class="kw">attributes</span>(f)</a></code></pre></div>
-<div class="sourceCode" id="cb679"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb679-1" data-line-number="1"><span class="kw">attr</span>(f, <span class="st">&quot;srcref&quot;</span>) &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb679-2" data-line-number="2">f</a></code></pre></div>
+<div class="sourceCode" id="cb718"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb718-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb718-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="dv">20</span></a>
+<a class="sourceLine" id="cb718-3" data-line-number="3">f &lt;-<span class="st"> </span><span class="kw">eval</span>(<span class="kw">expr</span>(<span class="cf">function</span>(x, y) <span class="op">!!</span>x <span class="op">+</span><span class="st"> </span><span class="op">!!</span>y))</a>
+<a class="sourceLine" id="cb718-4" data-line-number="4">f</a>
+<a class="sourceLine" id="cb718-5" data-line-number="5"><span class="kw">f</span>()</a>
+<a class="sourceLine" id="cb718-6" data-line-number="6"><span class="kw">attributes</span>(f)</a></code></pre></div>
+<div class="sourceCode" id="cb719"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb719-1" data-line-number="1"><span class="kw">attr</span>(f, <span class="st">&quot;srcref&quot;</span>) &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb719-2" data-line-number="2">f</a></code></pre></div>
 <p>The REAL function is <code>10 + 20</code>, but the initial <code>srcref</code> keeps the <code>!!x</code> and <code>!!y</code>, which is meaningless. This might help explain why there’s a problem:</p>
-<div class="sourceCode" id="cb680"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb680-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb680-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="dv">20</span></a>
-<a class="sourceLine" id="cb680-3" data-line-number="3">f &lt;-<span class="st"> </span><span class="kw">eval</span>(<span class="kw">expr</span>(<span class="cf">function</span>(x, y) <span class="op">!!</span>x <span class="op">+</span><span class="st"> </span><span class="op">!!</span>y))</a>
-<a class="sourceLine" id="cb680-4" data-line-number="4">f</a>
-<a class="sourceLine" id="cb680-5" data-line-number="5"><span class="kw">f</span>()</a></code></pre></div>
-<div class="sourceCode" id="cb681"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb681-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">2000</span></a>
-<a class="sourceLine" id="cb681-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="dv">3000</span></a>
-<a class="sourceLine" id="cb681-3" data-line-number="3"><span class="kw">f</span>()</a>
-<a class="sourceLine" id="cb681-4" data-line-number="4"><span class="co">#&gt; [1] 30</span></a>
-<a class="sourceLine" id="cb681-5" data-line-number="5"><span class="kw">attributes</span>(f)</a>
-<a class="sourceLine" id="cb681-6" data-line-number="6"><span class="co">#&gt; $srcref</span></a>
-<a class="sourceLine" id="cb681-7" data-line-number="7"><span class="co">#&gt; function(x, y) !!x + !!y</span></a>
-<a class="sourceLine" id="cb681-8" data-line-number="8"><span class="kw">attr</span>(f, <span class="st">&quot;srcref&quot;</span>) &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb681-9" data-line-number="9">f</a>
-<a class="sourceLine" id="cb681-10" data-line-number="10"><span class="co">#&gt; function (x, y) </span></a>
-<a class="sourceLine" id="cb681-11" data-line-number="11"><span class="co">#&gt; 10 + 20</span></a>
-<a class="sourceLine" id="cb681-12" data-line-number="12"><span class="co">#&gt; &lt;bytecode: 0x000000001421eb90&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb720"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb720-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb720-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="dv">20</span></a>
+<a class="sourceLine" id="cb720-3" data-line-number="3">f &lt;-<span class="st"> </span><span class="kw">eval</span>(<span class="kw">expr</span>(<span class="cf">function</span>(x, y) <span class="op">!!</span>x <span class="op">+</span><span class="st"> </span><span class="op">!!</span>y))</a>
+<a class="sourceLine" id="cb720-4" data-line-number="4">f</a>
+<a class="sourceLine" id="cb720-5" data-line-number="5"><span class="kw">f</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb721"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb721-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">2000</span></a>
+<a class="sourceLine" id="cb721-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="dv">3000</span></a>
+<a class="sourceLine" id="cb721-3" data-line-number="3"><span class="kw">f</span>()</a>
+<a class="sourceLine" id="cb721-4" data-line-number="4"><span class="co">#&gt; [1] 30</span></a>
+<a class="sourceLine" id="cb721-5" data-line-number="5"><span class="kw">attributes</span>(f)</a>
+<a class="sourceLine" id="cb721-6" data-line-number="6"><span class="co">#&gt; $srcref</span></a>
+<a class="sourceLine" id="cb721-7" data-line-number="7"><span class="co">#&gt; function(x, y) !!x + !!y</span></a>
+<a class="sourceLine" id="cb721-8" data-line-number="8"><span class="kw">attr</span>(f, <span class="st">&quot;srcref&quot;</span>) &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb721-9" data-line-number="9">f</a>
+<a class="sourceLine" id="cb721-10" data-line-number="10"><span class="co">#&gt; function (x, y) </span></a>
+<a class="sourceLine" id="cb721-11" data-line-number="11"><span class="co">#&gt; 10 + 20</span></a>
+<a class="sourceLine" id="cb721-12" data-line-number="12"><span class="co">#&gt; &lt;bytecode: 0x000000001421eb90&gt;</span></a></code></pre></div>
 </div>
 <div id="exercises" class="section level2 unnumbered">
 <h2>20.2.4.5 Exercises</h2>
 <div class="question">
 <p>Can we also go over what is happening in <code>local3</code>?</p>
 </div>
-<div class="sourceCode" id="cb682"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb682-1" data-line-number="1">local3 &lt;-<span class="st"> </span><span class="cf">function</span>(expr, <span class="dt">envir =</span> <span class="kw">new.env</span>()) {</a>
-<a class="sourceLine" id="cb682-2" data-line-number="2">  call &lt;-<span class="st"> </span><span class="kw">substitute</span>(<span class="kw">eval</span>(<span class="kw">quote</span>(expr), envir))</a>
-<a class="sourceLine" id="cb682-3" data-line-number="3">  <span class="kw">print</span>(call)</a>
-<a class="sourceLine" id="cb682-4" data-line-number="4">  <span class="kw">eval</span>(call, <span class="dt">envir =</span> <span class="kw">parent.frame</span>())</a>
-<a class="sourceLine" id="cb682-5" data-line-number="5">}</a>
-<a class="sourceLine" id="cb682-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb682-7" data-line-number="7"><span class="kw">local3</span>({</a>
-<a class="sourceLine" id="cb682-8" data-line-number="8">  x &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb682-9" data-line-number="9">  x <span class="op">*</span><span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb682-10" data-line-number="10">})</a>
-<a class="sourceLine" id="cb682-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb682-12" data-line-number="12"><span class="kw">exists</span>(<span class="st">&quot;x&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb722"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb722-1" data-line-number="1">local3 &lt;-<span class="st"> </span><span class="cf">function</span>(expr, <span class="dt">envir =</span> <span class="kw">new.env</span>()) {</a>
+<a class="sourceLine" id="cb722-2" data-line-number="2">  call &lt;-<span class="st"> </span><span class="kw">substitute</span>(<span class="kw">eval</span>(<span class="kw">quote</span>(expr), envir))</a>
+<a class="sourceLine" id="cb722-3" data-line-number="3">  <span class="kw">print</span>(call)</a>
+<a class="sourceLine" id="cb722-4" data-line-number="4">  <span class="kw">eval</span>(call, <span class="dt">envir =</span> <span class="kw">parent.frame</span>())</a>
+<a class="sourceLine" id="cb722-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb722-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb722-7" data-line-number="7"><span class="kw">local3</span>({</a>
+<a class="sourceLine" id="cb722-8" data-line-number="8">  x &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb722-9" data-line-number="9">  x <span class="op">*</span><span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb722-10" data-line-number="10">})</a>
+<a class="sourceLine" id="cb722-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb722-12" data-line-number="12"><span class="kw">exists</span>(<span class="st">&quot;x&quot;</span>)</a></code></pre></div>
 <p>It creates a new environment with the calling environment as its parent and then evaluates the expression in that environment.</p>
 <p>You are evaluating the call in the execution environment of <code>local3</code>. Its confusing because it’s written as <code>eval(call, envir = parent.frame())</code> but it is important to remember that <code>parent.frame</code> is evaluated in the execution environment of eval.</p>
 <p>if instead you had:</p>
@@ -500,31 +514,31 @@ eval(call, envir = pf)</code></pre>
 <h2>20.3.3 Dots</h2>
 <div class="question">
 <p>I have no idea what’s happening in this section. Can we go over the point/what this code is showing us?</p>
-<div class="sourceCode" id="cb684"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb684-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="cf">function</span>(...) {</a>
-<a class="sourceLine" id="cb684-2" data-line-number="2">  x &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb684-3" data-line-number="3">  <span class="kw">g</span>(..., <span class="dt">f =</span> x)</a>
-<a class="sourceLine" id="cb684-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb684-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb684-6" data-line-number="6">g &lt;-<span class="st"> </span><span class="cf">function</span>(...) {</a>
-<a class="sourceLine" id="cb684-7" data-line-number="7">  <span class="kw">enquos</span>(...)</a>
-<a class="sourceLine" id="cb684-8" data-line-number="8">}</a>
-<a class="sourceLine" id="cb684-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb684-10" data-line-number="10">x &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb684-11" data-line-number="11">qs &lt;-<span class="st"> </span><span class="kw">f</span>(<span class="dt">global =</span> x)</a>
-<a class="sourceLine" id="cb684-12" data-line-number="12">qs</a></code></pre></div>
+<div class="sourceCode" id="cb724"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb724-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="cf">function</span>(...) {</a>
+<a class="sourceLine" id="cb724-2" data-line-number="2">  x &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb724-3" data-line-number="3">  <span class="kw">g</span>(..., <span class="dt">f =</span> x)</a>
+<a class="sourceLine" id="cb724-4" data-line-number="4">}</a>
+<a class="sourceLine" id="cb724-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb724-6" data-line-number="6">g &lt;-<span class="st"> </span><span class="cf">function</span>(...) {</a>
+<a class="sourceLine" id="cb724-7" data-line-number="7">  <span class="kw">enquos</span>(...)</a>
+<a class="sourceLine" id="cb724-8" data-line-number="8">}</a>
+<a class="sourceLine" id="cb724-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb724-10" data-line-number="10">x &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb724-11" data-line-number="11">qs &lt;-<span class="st"> </span><span class="kw">f</span>(<span class="dt">global =</span> x)</a>
+<a class="sourceLine" id="cb724-12" data-line-number="12">qs</a></code></pre></div>
 </div>
 <div class="TODO">
 <p>As a preliminary, I note that the following code also illustrates the point:</p>
-<div class="sourceCode" id="cb685"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb685-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="cf">function</span>(...) {</a>
-<a class="sourceLine" id="cb685-2" data-line-number="2">  x &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb685-3" data-line-number="3">  <span class="kw">g</span>(..., <span class="dt">f =</span> x)</a>
-<a class="sourceLine" id="cb685-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb685-5" data-line-number="5">g &lt;-<span class="st"> </span><span class="cf">function</span>(...) {</a>
-<a class="sourceLine" id="cb685-6" data-line-number="6">  <span class="kw">enquos</span>(...)</a>
-<a class="sourceLine" id="cb685-7" data-line-number="7">}</a>
-<a class="sourceLine" id="cb685-8" data-line-number="8">x &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb685-9" data-line-number="9">qs &lt;-<span class="st"> </span><span class="kw">f</span>(x)</a>
-<a class="sourceLine" id="cb685-10" data-line-number="10">qs</a></code></pre></div>
+<div class="sourceCode" id="cb725"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb725-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="cf">function</span>(...) {</a>
+<a class="sourceLine" id="cb725-2" data-line-number="2">  x &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb725-3" data-line-number="3">  <span class="kw">g</span>(..., <span class="dt">f =</span> x)</a>
+<a class="sourceLine" id="cb725-4" data-line-number="4">}</a>
+<a class="sourceLine" id="cb725-5" data-line-number="5">g &lt;-<span class="st"> </span><span class="cf">function</span>(...) {</a>
+<a class="sourceLine" id="cb725-6" data-line-number="6">  <span class="kw">enquos</span>(...)</a>
+<a class="sourceLine" id="cb725-7" data-line-number="7">}</a>
+<a class="sourceLine" id="cb725-8" data-line-number="8">x &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb725-9" data-line-number="9">qs &lt;-<span class="st"> </span><span class="kw">f</span>(x)</a>
+<a class="sourceLine" id="cb725-10" data-line-number="10">qs</a></code></pre></div>
 <p>I think what he’s trying to say is that if you didn’t have quosures you would have to create a list of environments to match the list of expressions if you wanted your expressions to contain the same names but not necessarily have those names have the same meaning.</p>
 <p>But here we have a magical situation where each quosure has the same expression but each environment is different and thus each <code>x</code> will be evaluated differently when the time comes.</p>
 <p>I think the real barrier to truly getting it is figuring out a plausible example of wanting the same name to have different meanings in your list of expressions.. and I’m at a loss for that at the moment.</p>
@@ -546,19 +560,19 @@ eval(call, envir = pf)</code></pre>
 <h2>20.3.6.2 Exercises</h2>
 <div class="question">
 <p>What is going on here??</p>
-<div class="sourceCode" id="cb686"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb686-1" data-line-number="1">enenv &lt;-<span class="st"> </span><span class="cf">function</span>(x){</a>
-<a class="sourceLine" id="cb686-2" data-line-number="2">  <span class="kw">get_env</span>(<span class="kw">enquo</span>(x))</a>
-<a class="sourceLine" id="cb686-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb686-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb686-5" data-line-number="5"><span class="co"># Test</span></a>
-<a class="sourceLine" id="cb686-6" data-line-number="6">capture_env &lt;-<span class="st"> </span><span class="cf">function</span>(x){</a>
-<a class="sourceLine" id="cb686-7" data-line-number="7">  <span class="kw">enenv</span>(x)</a>
-<a class="sourceLine" id="cb686-8" data-line-number="8">}</a>
-<a class="sourceLine" id="cb686-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb686-10" data-line-number="10"><span class="kw">enenv</span>(x)</a>
-<a class="sourceLine" id="cb686-11" data-line-number="11"><span class="co">#&gt; &lt;environment: R_GlobalEnv&gt;</span></a>
-<a class="sourceLine" id="cb686-12" data-line-number="12"><span class="kw">capture_env</span>(x)  <span class="co"># functions execution environment is captured</span></a>
-<a class="sourceLine" id="cb686-13" data-line-number="13"><span class="co">#&gt; &lt;environment: 0x60a2538&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb726"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb726-1" data-line-number="1">enenv &lt;-<span class="st"> </span><span class="cf">function</span>(x){</a>
+<a class="sourceLine" id="cb726-2" data-line-number="2">  <span class="kw">get_env</span>(<span class="kw">enquo</span>(x))</a>
+<a class="sourceLine" id="cb726-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb726-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb726-5" data-line-number="5"><span class="co"># Test</span></a>
+<a class="sourceLine" id="cb726-6" data-line-number="6">capture_env &lt;-<span class="st"> </span><span class="cf">function</span>(x){</a>
+<a class="sourceLine" id="cb726-7" data-line-number="7">  <span class="kw">enenv</span>(x)</a>
+<a class="sourceLine" id="cb726-8" data-line-number="8">}</a>
+<a class="sourceLine" id="cb726-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb726-10" data-line-number="10"><span class="kw">enenv</span>(x)</a>
+<a class="sourceLine" id="cb726-11" data-line-number="11"><span class="co">#&gt; &lt;environment: R_GlobalEnv&gt;</span></a>
+<a class="sourceLine" id="cb726-12" data-line-number="12"><span class="kw">capture_env</span>(x)  <span class="co"># functions execution environment is captured</span></a>
+<a class="sourceLine" id="cb726-13" data-line-number="13"><span class="co">#&gt; &lt;environment: 0x60a2538&gt;</span></a></code></pre></div>
 </div>
 <p>The <code>enquo</code> is capturing the environment of the <code>x</code> being passed into enenv, so it returns a different environment (the one inside <code>capture_env</code>) than running <code>enenv(x)</code> on its own</p>
 </div>
@@ -574,44 +588,44 @@ eval(call, envir = pf)</code></pre>
 <div class="question">
 <p>What is the <code>eval_tidy</code> doing here?</p>
 </div>
-<div class="sourceCode" id="cb687"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb687-1" data-line-number="1">subset2 &lt;-<span class="st"> </span><span class="cf">function</span>(data, rows) {</a>
-<a class="sourceLine" id="cb687-2" data-line-number="2">  rows &lt;-<span class="st"> </span><span class="kw">enquo</span>(rows)</a>
-<a class="sourceLine" id="cb687-3" data-line-number="3">  <span class="co"># creates a quosure out of the enquoted rows</span></a>
-<a class="sourceLine" id="cb687-4" data-line-number="4">  <span class="co"># and uses the data as its environment</span></a>
-<a class="sourceLine" id="cb687-5" data-line-number="5">  rows_val &lt;-<span class="st"> </span><span class="kw">eval_tidy</span>(rows, data)</a>
-<a class="sourceLine" id="cb687-6" data-line-number="6">  <span class="kw">stopifnot</span>(<span class="kw">is.logical</span>(rows_val))</a>
-<a class="sourceLine" id="cb687-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb687-8" data-line-number="8">  <span class="co"># then subsets the data</span></a>
-<a class="sourceLine" id="cb687-9" data-line-number="9">  data[rows_val, , drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
-<a class="sourceLine" id="cb687-10" data-line-number="10">}</a>
-<a class="sourceLine" id="cb687-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb687-12" data-line-number="12">df &lt;-<span class="st"> </span><span class="kw">subset2</span>(palmerpenguins<span class="op">::</span>penguins, species <span class="op">==</span><span class="st"> &quot;Adelie&quot;</span>)</a>
-<a class="sourceLine" id="cb687-13" data-line-number="13"><span class="kw">table</span>(df<span class="op">$</span>species)</a></code></pre></div>
+<div class="sourceCode" id="cb727"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb727-1" data-line-number="1">subset2 &lt;-<span class="st"> </span><span class="cf">function</span>(data, rows) {</a>
+<a class="sourceLine" id="cb727-2" data-line-number="2">  rows &lt;-<span class="st"> </span><span class="kw">enquo</span>(rows)</a>
+<a class="sourceLine" id="cb727-3" data-line-number="3">  <span class="co"># creates a quosure out of the enquoted rows</span></a>
+<a class="sourceLine" id="cb727-4" data-line-number="4">  <span class="co"># and uses the data as its environment</span></a>
+<a class="sourceLine" id="cb727-5" data-line-number="5">  rows_val &lt;-<span class="st"> </span><span class="kw">eval_tidy</span>(rows, data)</a>
+<a class="sourceLine" id="cb727-6" data-line-number="6">  <span class="kw">stopifnot</span>(<span class="kw">is.logical</span>(rows_val))</a>
+<a class="sourceLine" id="cb727-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb727-8" data-line-number="8">  <span class="co"># then subsets the data</span></a>
+<a class="sourceLine" id="cb727-9" data-line-number="9">  data[rows_val, , drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
+<a class="sourceLine" id="cb727-10" data-line-number="10">}</a>
+<a class="sourceLine" id="cb727-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb727-12" data-line-number="12">df &lt;-<span class="st"> </span><span class="kw">subset2</span>(palmerpenguins<span class="op">::</span>penguins, species <span class="op">==</span><span class="st"> &quot;Adelie&quot;</span>)</a>
+<a class="sourceLine" id="cb727-13" data-line-number="13"><span class="kw">table</span>(df<span class="op">$</span>species)</a></code></pre></div>
 </div>
 <div id="transform" class="section level2 unnumbered">
 <h2>20.4.5 <code>transform</code></h2>
 <div class="question">
 <p>Can we say in words what this one is doing or comment all the lines?</p>
 </div>
-<div class="sourceCode" id="cb688"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb688-1" data-line-number="1">transform2 &lt;-<span class="st"> </span><span class="cf">function</span>(.data, ...) {</a>
-<a class="sourceLine" id="cb688-2" data-line-number="2">  </a>
-<a class="sourceLine" id="cb688-3" data-line-number="3">  <span class="co"># create quosures for all the supplied arguments and values</span></a>
-<a class="sourceLine" id="cb688-4" data-line-number="4">  dots &lt;-<span class="st"> </span><span class="kw">enquos</span>(...)</a>
-<a class="sourceLine" id="cb688-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb688-6" data-line-number="6">  <span class="co"># for all argument value pairs</span></a>
-<a class="sourceLine" id="cb688-7" data-line-number="7">  <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_along</span>(dots)) {</a>
-<a class="sourceLine" id="cb688-8" data-line-number="8">    <span class="co"># get the names of the arguments</span></a>
-<a class="sourceLine" id="cb688-9" data-line-number="9">    name &lt;-<span class="st"> </span><span class="kw">names</span>(dots)[[i]]</a>
-<a class="sourceLine" id="cb688-10" data-line-number="10">    <span class="co"># get their values</span></a>
-<a class="sourceLine" id="cb688-11" data-line-number="11">    dot &lt;-<span class="st"> </span>dots[[i]]</a>
-<a class="sourceLine" id="cb688-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb688-13" data-line-number="13">    <span class="co"># add column with names equal to argument names</span></a>
-<a class="sourceLine" id="cb688-14" data-line-number="14">    <span class="co"># eval_tidy and values (single column) equal to the evaluated quosure (dot)&quot;</span></a>
-<a class="sourceLine" id="cb688-15" data-line-number="15">    .data[[name]] &lt;-<span class="st"> </span><span class="kw">eval_tidy</span>(dot, .data)</a>
-<a class="sourceLine" id="cb688-16" data-line-number="16">  }</a>
-<a class="sourceLine" id="cb688-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb688-18" data-line-number="18">  .data</a>
-<a class="sourceLine" id="cb688-19" data-line-number="19">}</a></code></pre></div>
+<div class="sourceCode" id="cb728"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb728-1" data-line-number="1">transform2 &lt;-<span class="st"> </span><span class="cf">function</span>(.data, ...) {</a>
+<a class="sourceLine" id="cb728-2" data-line-number="2">  </a>
+<a class="sourceLine" id="cb728-3" data-line-number="3">  <span class="co"># create quosures for all the supplied arguments and values</span></a>
+<a class="sourceLine" id="cb728-4" data-line-number="4">  dots &lt;-<span class="st"> </span><span class="kw">enquos</span>(...)</a>
+<a class="sourceLine" id="cb728-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb728-6" data-line-number="6">  <span class="co"># for all argument value pairs</span></a>
+<a class="sourceLine" id="cb728-7" data-line-number="7">  <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_along</span>(dots)) {</a>
+<a class="sourceLine" id="cb728-8" data-line-number="8">    <span class="co"># get the names of the arguments</span></a>
+<a class="sourceLine" id="cb728-9" data-line-number="9">    name &lt;-<span class="st"> </span><span class="kw">names</span>(dots)[[i]]</a>
+<a class="sourceLine" id="cb728-10" data-line-number="10">    <span class="co"># get their values</span></a>
+<a class="sourceLine" id="cb728-11" data-line-number="11">    dot &lt;-<span class="st"> </span>dots[[i]]</a>
+<a class="sourceLine" id="cb728-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb728-13" data-line-number="13">    <span class="co"># add column with names equal to argument names</span></a>
+<a class="sourceLine" id="cb728-14" data-line-number="14">    <span class="co"># eval_tidy and values (single column) equal to the evaluated quosure (dot)&quot;</span></a>
+<a class="sourceLine" id="cb728-15" data-line-number="15">    .data[[name]] &lt;-<span class="st"> </span><span class="kw">eval_tidy</span>(dot, .data)</a>
+<a class="sourceLine" id="cb728-16" data-line-number="16">  }</a>
+<a class="sourceLine" id="cb728-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb728-18" data-line-number="18">  .data</a>
+<a class="sourceLine" id="cb728-19" data-line-number="19">}</a></code></pre></div>
 </div>
 <div id="handling-ambiguity" class="section level2 unnumbered">
 <h2>20.5.2 Handling ambiguity</h2>
@@ -620,48 +634,48 @@ eval(call, envir = pf)</code></pre>
 <p>There are subtle differences in when val is evaluated. If you unquote, val will be early evaluated by enquo(); if you use a pronoun, val will be lazily evaluated by eval_tidy(). These differences are usually unimportant, so pick the form that looks most natural.</p>
 </blockquote>
 <p>Is there a case where this subtle distinction between <code>.env$val</code> vs <code>!!val</code> matters?</p>
-<div class="sourceCode" id="cb689"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb689-1" data-line-number="1">subset2 &lt;-<span class="st"> </span><span class="cf">function</span>(data, rows) {</a>
-<a class="sourceLine" id="cb689-2" data-line-number="2">  rows &lt;-<span class="st"> </span><span class="kw">enquo</span>(rows)</a>
-<a class="sourceLine" id="cb689-3" data-line-number="3">  <span class="co"># change val from 2 to 3, breaking things</span></a>
-<a class="sourceLine" id="cb689-4" data-line-number="4">  <span class="kw">env_bind</span>(<span class="kw">caller_env</span>(), <span class="dt">val =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb689-5" data-line-number="5">  rows_val &lt;-<span class="st"> </span><span class="kw">eval_tidy</span>(rows, data)</a>
-<a class="sourceLine" id="cb689-6" data-line-number="6">  <span class="kw">stopifnot</span>(<span class="kw">is.logical</span>(rows_val))</a>
-<a class="sourceLine" id="cb689-7" data-line-number="7">  data[rows_val, , drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
-<a class="sourceLine" id="cb689-8" data-line-number="8">}</a></code></pre></div>
-<div class="sourceCode" id="cb690"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb690-1" data-line-number="1">threshold_prefix &lt;-<span class="st"> </span><span class="cf">function</span>(df, val) {</a>
-<a class="sourceLine" id="cb690-2" data-line-number="2">  <span class="kw">subset2</span>(df, .data<span class="op">$</span>x <span class="op">&gt;=</span><span class="st"> </span>.env<span class="op">$</span>val)</a>
-<a class="sourceLine" id="cb690-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb690-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb690-5" data-line-number="5">threshold_bangbang &lt;-<span class="st"> </span><span class="cf">function</span>(df, val) {</a>
-<a class="sourceLine" id="cb690-6" data-line-number="6">  <span class="kw">subset2</span>(df, .data<span class="op">$</span>x <span class="op">&gt;=</span><span class="st"> </span><span class="op">!!</span>val)</a>
-<a class="sourceLine" id="cb690-7" data-line-number="7">}</a>
-<a class="sourceLine" id="cb690-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb690-9" data-line-number="9">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">val =</span> <span class="dv">9</span><span class="op">:</span><span class="dv">11</span>)</a>
-<a class="sourceLine" id="cb690-10" data-line-number="10"><span class="kw">threshold_prefix</span>(df, <span class="dv">2</span>) <span class="op">==</span><span class="st"> </span><span class="kw">threshold_bangbang</span>(df, <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb729"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb729-1" data-line-number="1">subset2 &lt;-<span class="st"> </span><span class="cf">function</span>(data, rows) {</a>
+<a class="sourceLine" id="cb729-2" data-line-number="2">  rows &lt;-<span class="st"> </span><span class="kw">enquo</span>(rows)</a>
+<a class="sourceLine" id="cb729-3" data-line-number="3">  <span class="co"># change val from 2 to 3, breaking things</span></a>
+<a class="sourceLine" id="cb729-4" data-line-number="4">  <span class="kw">env_bind</span>(<span class="kw">caller_env</span>(), <span class="dt">val =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb729-5" data-line-number="5">  rows_val &lt;-<span class="st"> </span><span class="kw">eval_tidy</span>(rows, data)</a>
+<a class="sourceLine" id="cb729-6" data-line-number="6">  <span class="kw">stopifnot</span>(<span class="kw">is.logical</span>(rows_val))</a>
+<a class="sourceLine" id="cb729-7" data-line-number="7">  data[rows_val, , drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
+<a class="sourceLine" id="cb729-8" data-line-number="8">}</a></code></pre></div>
+<div class="sourceCode" id="cb730"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb730-1" data-line-number="1">threshold_prefix &lt;-<span class="st"> </span><span class="cf">function</span>(df, val) {</a>
+<a class="sourceLine" id="cb730-2" data-line-number="2">  <span class="kw">subset2</span>(df, .data<span class="op">$</span>x <span class="op">&gt;=</span><span class="st"> </span>.env<span class="op">$</span>val)</a>
+<a class="sourceLine" id="cb730-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb730-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb730-5" data-line-number="5">threshold_bangbang &lt;-<span class="st"> </span><span class="cf">function</span>(df, val) {</a>
+<a class="sourceLine" id="cb730-6" data-line-number="6">  <span class="kw">subset2</span>(df, .data<span class="op">$</span>x <span class="op">&gt;=</span><span class="st"> </span><span class="op">!!</span>val)</a>
+<a class="sourceLine" id="cb730-7" data-line-number="7">}</a>
+<a class="sourceLine" id="cb730-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb730-9" data-line-number="9">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">val =</span> <span class="dv">9</span><span class="op">:</span><span class="dv">11</span>)</a>
+<a class="sourceLine" id="cb730-10" data-line-number="10"><span class="kw">threshold_prefix</span>(df, <span class="dv">2</span>) <span class="op">==</span><span class="st"> </span><span class="kw">threshold_bangbang</span>(df, <span class="dv">2</span>)</a></code></pre></div>
 </div>
 <p>In the <code>!!</code> case, <code>val</code> is evaluated early, (inside of <code>threshold_x</code>) whereas the <code>.env</code> case evaluated later (in the <code>eval_tidy</code>). This could cause problems if, for example, the <code>val</code> in <code>threshold_x</code> was altered after <code>subset2</code> was called, but before the <code>eval_tidy</code></p>
 <div class="question">
 <p>Why do we need to <code>{{ cond }}</code> in the following part of the chapter?</p>
-<div class="sourceCode" id="cb691"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb691-1" data-line-number="1">subset2 &lt;-<span class="st"> </span><span class="cf">function</span>(data, rows) {</a>
-<a class="sourceLine" id="cb691-2" data-line-number="2">  rows &lt;-<span class="st"> </span>rlang<span class="op">::</span><span class="kw">enquo</span>(rows)</a>
-<a class="sourceLine" id="cb691-3" data-line-number="3">  rlang<span class="op">::</span><span class="kw">env_bind</span>(rlang<span class="op">::</span><span class="kw">caller_env</span>(), <span class="dt">val =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb691-4" data-line-number="4">  rows_val &lt;-<span class="st"> </span>rlang<span class="op">::</span><span class="kw">eval_tidy</span>(rows, data)</a>
-<a class="sourceLine" id="cb691-5" data-line-number="5">  <span class="kw">stopifnot</span>(<span class="kw">is.logical</span>(rows_val))</a>
-<a class="sourceLine" id="cb691-6" data-line-number="6">  data[rows_val, , drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
-<a class="sourceLine" id="cb691-7" data-line-number="7">}</a>
-<a class="sourceLine" id="cb691-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb691-9" data-line-number="9">resample &lt;-<span class="st"> </span><span class="cf">function</span>(df, n) {</a>
-<a class="sourceLine" id="cb691-10" data-line-number="10">  idx &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(df), n, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb691-11" data-line-number="11">  df[idx, , drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
-<a class="sourceLine" id="cb691-12" data-line-number="12">}</a>
-<a class="sourceLine" id="cb691-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb691-14" data-line-number="14">subsample &lt;-<span class="st"> </span><span class="cf">function</span>(df, cond, <span class="dt">n =</span> <span class="kw">nrow</span>(df)) {</a>
-<a class="sourceLine" id="cb691-15" data-line-number="15">  df &lt;-<span class="st"> </span><span class="kw">subset2</span>(df, {{cond}})</a>
-<a class="sourceLine" id="cb691-16" data-line-number="16">  <span class="kw">resample</span>(df, n)</a>
-<a class="sourceLine" id="cb691-17" data-line-number="17">}</a>
-<a class="sourceLine" id="cb691-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb691-19" data-line-number="19">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>), <span class="dt">y =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb691-20" data-line-number="20"><span class="kw">subsample</span>(df, x <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb731"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb731-1" data-line-number="1">subset2 &lt;-<span class="st"> </span><span class="cf">function</span>(data, rows) {</a>
+<a class="sourceLine" id="cb731-2" data-line-number="2">  rows &lt;-<span class="st"> </span>rlang<span class="op">::</span><span class="kw">enquo</span>(rows)</a>
+<a class="sourceLine" id="cb731-3" data-line-number="3">  rlang<span class="op">::</span><span class="kw">env_bind</span>(rlang<span class="op">::</span><span class="kw">caller_env</span>(), <span class="dt">val =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb731-4" data-line-number="4">  rows_val &lt;-<span class="st"> </span>rlang<span class="op">::</span><span class="kw">eval_tidy</span>(rows, data)</a>
+<a class="sourceLine" id="cb731-5" data-line-number="5">  <span class="kw">stopifnot</span>(<span class="kw">is.logical</span>(rows_val))</a>
+<a class="sourceLine" id="cb731-6" data-line-number="6">  data[rows_val, , drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
+<a class="sourceLine" id="cb731-7" data-line-number="7">}</a>
+<a class="sourceLine" id="cb731-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb731-9" data-line-number="9">resample &lt;-<span class="st"> </span><span class="cf">function</span>(df, n) {</a>
+<a class="sourceLine" id="cb731-10" data-line-number="10">  idx &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(df), n, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb731-11" data-line-number="11">  df[idx, , drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
+<a class="sourceLine" id="cb731-12" data-line-number="12">}</a>
+<a class="sourceLine" id="cb731-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb731-14" data-line-number="14">subsample &lt;-<span class="st"> </span><span class="cf">function</span>(df, cond, <span class="dt">n =</span> <span class="kw">nrow</span>(df)) {</a>
+<a class="sourceLine" id="cb731-15" data-line-number="15">  df &lt;-<span class="st"> </span><span class="kw">subset2</span>(df, {{cond}})</a>
+<a class="sourceLine" id="cb731-16" data-line-number="16">  <span class="kw">resample</span>(df, n)</a>
+<a class="sourceLine" id="cb731-17" data-line-number="17">}</a>
+<a class="sourceLine" id="cb731-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb731-19" data-line-number="19">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>), <span class="dt">y =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb731-20" data-line-number="20"><span class="kw">subsample</span>(df, x <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
 </div>
 <p>When it appears unquoted in the call to <code>subset2</code>, it loses its… history, basically. The rlang stuff protects it so R basically doesn’t know it exists until it needs to. It keeps its evaluation as lazy as is needed. Because of laziness, <code>{{ cond }}</code> gets passed to <code>subset2</code>, which ~says “Ok, but what was <code>cond</code> when it was passed to you?”, and <code>subsample</code> ~says “Huh, I dunno, I’ll ask my calling environment,” and then <code>x == 1</code> makes it into <code>subset2</code> without being evaluated in the subsample environment. Basically.</p>
 </div>
@@ -670,18 +684,18 @@ eval(call, envir = pf)</code></pre>
 <div class="question">
 <p>Why exactly can’t we use <code>subset</code> with <code>map</code>?</p>
 <p>This works, not sure why the book says it wouldn’t….</p>
-<div class="sourceCode" id="cb692"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb692-1" data-line-number="1">subset_base &lt;-<span class="st"> </span><span class="cf">function</span>(data, rows) {</a>
-<a class="sourceLine" id="cb692-2" data-line-number="2">  rows &lt;-<span class="st"> </span><span class="kw">substitute</span>(rows)</a>
-<a class="sourceLine" id="cb692-3" data-line-number="3">  rows_val &lt;-<span class="st"> </span><span class="kw">eval</span>(rows, data, <span class="kw">caller_env</span>())</a>
-<a class="sourceLine" id="cb692-4" data-line-number="4">  <span class="kw">stopifnot</span>(<span class="kw">is.logical</span>(rows_val))</a>
-<a class="sourceLine" id="cb692-5" data-line-number="5">  data[rows_val, , drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
-<a class="sourceLine" id="cb692-6" data-line-number="6">}</a>
-<a class="sourceLine" id="cb692-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb692-8" data-line-number="8"><span class="kw">local</span>({</a>
-<a class="sourceLine" id="cb692-9" data-line-number="9">  zzz &lt;-<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb692-10" data-line-number="10">  dfs &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>))</a>
-<a class="sourceLine" id="cb692-11" data-line-number="11">  <span class="kw">map</span>(dfs, <span class="op">~</span><span class="kw">subset_base</span>(.x, x <span class="op">==</span><span class="st"> </span>zzz))</a>
-<a class="sourceLine" id="cb692-12" data-line-number="12">})</a></code></pre></div>
+<div class="sourceCode" id="cb732"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb732-1" data-line-number="1">subset_base &lt;-<span class="st"> </span><span class="cf">function</span>(data, rows) {</a>
+<a class="sourceLine" id="cb732-2" data-line-number="2">  rows &lt;-<span class="st"> </span><span class="kw">substitute</span>(rows)</a>
+<a class="sourceLine" id="cb732-3" data-line-number="3">  rows_val &lt;-<span class="st"> </span><span class="kw">eval</span>(rows, data, <span class="kw">caller_env</span>())</a>
+<a class="sourceLine" id="cb732-4" data-line-number="4">  <span class="kw">stopifnot</span>(<span class="kw">is.logical</span>(rows_val))</a>
+<a class="sourceLine" id="cb732-5" data-line-number="5">  data[rows_val, , drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
+<a class="sourceLine" id="cb732-6" data-line-number="6">}</a>
+<a class="sourceLine" id="cb732-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb732-8" data-line-number="8"><span class="kw">local</span>({</a>
+<a class="sourceLine" id="cb732-9" data-line-number="9">  zzz &lt;-<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb732-10" data-line-number="10">  dfs &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>))</a>
+<a class="sourceLine" id="cb732-11" data-line-number="11">  <span class="kw">map</span>(dfs, <span class="op">~</span><span class="kw">subset_base</span>(.x, x <span class="op">==</span><span class="st"> </span>zzz))</a>
+<a class="sourceLine" id="cb732-12" data-line-number="12">})</a></code></pre></div>
 </div>
 <div class="TODO">
 
@@ -693,25 +707,25 @@ eval(call, envir = pf)</code></pre>
 <p>Why?!</p>
 </div>
 <p>No reason to expect this to work:</p>
-<div class="sourceCode" id="cb693"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb693-1" data-line-number="1">test &lt;-<span class="st"> </span><span class="cf">function</span>(df, expr) {</a>
-<a class="sourceLine" id="cb693-2" data-line-number="2">  <span class="kw">subset</span>(df, expr)</a>
-<a class="sourceLine" id="cb693-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb693-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb693-5" data-line-number="5"><span class="kw">test</span>(mtcars, cyl <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb733"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb733-1" data-line-number="1">test &lt;-<span class="st"> </span><span class="cf">function</span>(df, expr) {</a>
+<a class="sourceLine" id="cb733-2" data-line-number="2">  <span class="kw">subset</span>(df, expr)</a>
+<a class="sourceLine" id="cb733-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb733-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb733-5" data-line-number="5"><span class="kw">test</span>(mtcars, cyl <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span>)</a></code></pre></div>
 <pre><code>#&gt; Error in eval(e, x, parent.frame()): object &#39;cyl&#39; not found</code></pre>
 <p>substitute only looks at the expression from which it was called. this doesn’t work because subset sees <code>substitute(expr)</code>, not <code>cyl &gt; 4</code></p>
-<div class="sourceCode" id="cb695"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb695-1" data-line-number="1">test &lt;-<span class="st"> </span><span class="cf">function</span>(df, expr) {</a>
-<a class="sourceLine" id="cb695-2" data-line-number="2">  <span class="kw">subset</span>(df, <span class="kw">substitute</span>(expr))</a>
-<a class="sourceLine" id="cb695-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb695-4" data-line-number="4"><span class="kw">test</span>(mtcars, cyl <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb735"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb735-1" data-line-number="1">test &lt;-<span class="st"> </span><span class="cf">function</span>(df, expr) {</a>
+<a class="sourceLine" id="cb735-2" data-line-number="2">  <span class="kw">subset</span>(df, <span class="kw">substitute</span>(expr))</a>
+<a class="sourceLine" id="cb735-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb735-4" data-line-number="4"><span class="kw">test</span>(mtcars, cyl <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span>)</a></code></pre></div>
 <pre><code>#&gt; Error in subset.data.frame(df, substitute(expr)): &#39;subset&#39; must be logical</code></pre>
 <p>so instead, we are going to build the call to <code>subset</code>, substituting in what was passed as arguments, and then eval the call.</p>
-<div class="sourceCode" id="cb697"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb697-1" data-line-number="1">test &lt;-<span class="st"> </span><span class="cf">function</span>(df, expr) {</a>
-<a class="sourceLine" id="cb697-2" data-line-number="2">  subset_call &lt;-<span class="st"> </span><span class="kw">substitute</span>(<span class="kw">subset</span>(df, expr))</a>
-<a class="sourceLine" id="cb697-3" data-line-number="3">  <span class="kw">print</span>(subset_call)</a>
-<a class="sourceLine" id="cb697-4" data-line-number="4">  <span class="kw">eval</span>(subset_call)</a>
-<a class="sourceLine" id="cb697-5" data-line-number="5">}</a>
-<a class="sourceLine" id="cb697-6" data-line-number="6"><span class="kw">test</span>(mtcars, cyl <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb737"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb737-1" data-line-number="1">test &lt;-<span class="st"> </span><span class="cf">function</span>(df, expr) {</a>
+<a class="sourceLine" id="cb737-2" data-line-number="2">  subset_call &lt;-<span class="st"> </span><span class="kw">substitute</span>(<span class="kw">subset</span>(df, expr))</a>
+<a class="sourceLine" id="cb737-3" data-line-number="3">  <span class="kw">print</span>(subset_call)</a>
+<a class="sourceLine" id="cb737-4" data-line-number="4">  <span class="kw">eval</span>(subset_call)</a>
+<a class="sourceLine" id="cb737-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb737-6" data-line-number="6"><span class="kw">test</span>(mtcars, cyl <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span>)</a></code></pre></div>
 <pre><code>#&gt; subset(mtcars, cyl &gt; 4)</code></pre>
 </div>
 <div id="match.call" class="section level2 unnumbered">
@@ -719,44 +733,44 @@ eval(call, envir = pf)</code></pre>
 <div class="question">
 <p>Can we speak more about the differences in these two functions and their pros and cons?</p>
 </div>
-<div class="sourceCode" id="cb699"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb699-1" data-line-number="1">resample_lm2 &lt;-<span class="st"> </span><span class="cf">function</span>(formula, data, <span class="dt">env =</span> <span class="kw">caller_env</span>()) {</a>
-<a class="sourceLine" id="cb699-2" data-line-number="2">  formula &lt;-<span class="st"> </span><span class="kw">enexpr</span>(formula)</a>
-<a class="sourceLine" id="cb699-3" data-line-number="3">  resample_data &lt;-<span class="st"> </span><span class="kw">resample</span>(data, <span class="dt">n =</span> <span class="kw">nrow</span>(data))</a>
-<a class="sourceLine" id="cb699-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb699-5" data-line-number="5">  lm_env &lt;-<span class="st"> </span><span class="kw">env</span>(env, <span class="dt">resample_data =</span> resample_data)</a>
-<a class="sourceLine" id="cb699-6" data-line-number="6">  lm_call &lt;-<span class="st"> </span><span class="kw">expr</span>(<span class="kw">lm</span>(<span class="op">!!</span>formula, <span class="dt">data =</span> resample_data))</a>
-<a class="sourceLine" id="cb699-7" data-line-number="7">  <span class="kw">expr_print</span>(lm_call)</a>
-<a class="sourceLine" id="cb699-8" data-line-number="8">  <span class="kw">eval</span>(lm_call, lm_env)</a>
-<a class="sourceLine" id="cb699-9" data-line-number="9">}</a>
-<a class="sourceLine" id="cb699-10" data-line-number="10"><span class="kw">resample_lm2</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> df)</a></code></pre></div>
-<div class="sourceCode" id="cb700"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb700-1" data-line-number="1">resample_lm0 &lt;-<span class="st"> </span><span class="cf">function</span>(</a>
-<a class="sourceLine" id="cb700-2" data-line-number="2">  formula, data,</a>
-<a class="sourceLine" id="cb700-3" data-line-number="3">  <span class="dt">resample_data =</span> data[<span class="kw">sample</span>(<span class="kw">nrow</span>(data), <span class="dt">replace =</span> <span class="ot">TRUE</span>), ,</a>
-<a class="sourceLine" id="cb700-4" data-line-number="4">                       <span class="dt">drop =</span> <span class="ot">FALSE</span>],</a>
-<a class="sourceLine" id="cb700-5" data-line-number="5">  <span class="dt">env =</span> <span class="kw">current_env</span>()</a>
-<a class="sourceLine" id="cb700-6" data-line-number="6">) {</a>
-<a class="sourceLine" id="cb700-7" data-line-number="7">  formula &lt;-<span class="st"> </span><span class="kw">enexpr</span>(formula)</a>
-<a class="sourceLine" id="cb700-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb700-9" data-line-number="9">  lm_call &lt;-<span class="st"> </span><span class="kw">expr</span>(<span class="kw">lm</span>(<span class="op">!!</span>formula, <span class="dt">data =</span> resample_data))</a>
-<a class="sourceLine" id="cb700-10" data-line-number="10">  <span class="kw">expr_print</span>(lm_call)</a>
-<a class="sourceLine" id="cb700-11" data-line-number="11">  <span class="kw">eval</span>(lm_call, env)</a>
-<a class="sourceLine" id="cb700-12" data-line-number="12">}</a>
-<a class="sourceLine" id="cb700-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb700-14" data-line-number="14">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">y =</span> <span class="dv">5</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>) <span class="op">+</span><span class="st"> </span><span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">10</span>), <span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb700-15" data-line-number="15">(resamp_lm1 &lt;-<span class="st"> </span><span class="kw">resample_lm0</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> df))</a></code></pre></div>
+<div class="sourceCode" id="cb739"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb739-1" data-line-number="1">resample_lm2 &lt;-<span class="st"> </span><span class="cf">function</span>(formula, data, <span class="dt">env =</span> <span class="kw">caller_env</span>()) {</a>
+<a class="sourceLine" id="cb739-2" data-line-number="2">  formula &lt;-<span class="st"> </span><span class="kw">enexpr</span>(formula)</a>
+<a class="sourceLine" id="cb739-3" data-line-number="3">  resample_data &lt;-<span class="st"> </span><span class="kw">resample</span>(data, <span class="dt">n =</span> <span class="kw">nrow</span>(data))</a>
+<a class="sourceLine" id="cb739-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb739-5" data-line-number="5">  lm_env &lt;-<span class="st"> </span><span class="kw">env</span>(env, <span class="dt">resample_data =</span> resample_data)</a>
+<a class="sourceLine" id="cb739-6" data-line-number="6">  lm_call &lt;-<span class="st"> </span><span class="kw">expr</span>(<span class="kw">lm</span>(<span class="op">!!</span>formula, <span class="dt">data =</span> resample_data))</a>
+<a class="sourceLine" id="cb739-7" data-line-number="7">  <span class="kw">expr_print</span>(lm_call)</a>
+<a class="sourceLine" id="cb739-8" data-line-number="8">  <span class="kw">eval</span>(lm_call, lm_env)</a>
+<a class="sourceLine" id="cb739-9" data-line-number="9">}</a>
+<a class="sourceLine" id="cb739-10" data-line-number="10"><span class="kw">resample_lm2</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> df)</a></code></pre></div>
+<div class="sourceCode" id="cb740"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb740-1" data-line-number="1">resample_lm0 &lt;-<span class="st"> </span><span class="cf">function</span>(</a>
+<a class="sourceLine" id="cb740-2" data-line-number="2">  formula, data,</a>
+<a class="sourceLine" id="cb740-3" data-line-number="3">  <span class="dt">resample_data =</span> data[<span class="kw">sample</span>(<span class="kw">nrow</span>(data), <span class="dt">replace =</span> <span class="ot">TRUE</span>), ,</a>
+<a class="sourceLine" id="cb740-4" data-line-number="4">                       <span class="dt">drop =</span> <span class="ot">FALSE</span>],</a>
+<a class="sourceLine" id="cb740-5" data-line-number="5">  <span class="dt">env =</span> <span class="kw">current_env</span>()</a>
+<a class="sourceLine" id="cb740-6" data-line-number="6">) {</a>
+<a class="sourceLine" id="cb740-7" data-line-number="7">  formula &lt;-<span class="st"> </span><span class="kw">enexpr</span>(formula)</a>
+<a class="sourceLine" id="cb740-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb740-9" data-line-number="9">  lm_call &lt;-<span class="st"> </span><span class="kw">expr</span>(<span class="kw">lm</span>(<span class="op">!!</span>formula, <span class="dt">data =</span> resample_data))</a>
+<a class="sourceLine" id="cb740-10" data-line-number="10">  <span class="kw">expr_print</span>(lm_call)</a>
+<a class="sourceLine" id="cb740-11" data-line-number="11">  <span class="kw">eval</span>(lm_call, env)</a>
+<a class="sourceLine" id="cb740-12" data-line-number="12">}</a>
+<a class="sourceLine" id="cb740-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb740-14" data-line-number="14">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">y =</span> <span class="dv">5</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>) <span class="op">+</span><span class="st"> </span><span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">10</span>), <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb740-15" data-line-number="15">(resamp_lm1 &lt;-<span class="st"> </span><span class="kw">resample_lm0</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> df))</a></code></pre></div>
 <p>I think these two functions should work identically assuming formula and data are the only two inputs that are set by the user. (The results will differ unless a seed is set.)</p>
 <p>I suppose the <code>resample_lm0()</code> here provides more flexibility to the user (compared to <code>resample_lm2()</code>, i.e. the user can specify <code>resample_data</code> (since it’s an argument) instead of being “forced” to use the custom function <code>resample()</code>, which is embedded in the body of <code>resample_lm2()</code>.</p>
 <p>Downside to <code>resample_lm0</code> is that there might be too much flexibility. Yes, <code>resample_data</code> is customizable, but so is <code>env</code>. What if the user changes <code>env = current_env()</code> to <code>env = caller_env()</code>? Then the function breaks.</p>
 <div class="question">
 <p>Is the closest equivalent to <code>deparse(substitute(x))</code> with rlang <code>expr_text(enexpr(x))</code> (assuming this is in a function, hence the <code>en</code> in <code>enexpr</code>)?</p>
 </div>
-<div class="sourceCode" id="cb701"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb701-1" data-line-number="1">penguins &lt;-<span class="st"> </span>palmerpenguins<span class="op">::</span>penguins</a>
-<a class="sourceLine" id="cb701-2" data-line-number="2">add_bleh &lt;-<span class="st"> </span><span class="cf">function</span>(df, <span class="dt">nm =</span> <span class="kw">deparse</span>(<span class="kw">substitute</span>(df))) {</a>
-<a class="sourceLine" id="cb701-3" data-line-number="3">  col_out &lt;-<span class="st"> </span><span class="kw">sym</span>(<span class="kw">sprintf</span>(<span class="st">&#39;new_%s_col&#39;</span>, nm))</a>
-<a class="sourceLine" id="cb701-4" data-line-number="4">  df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb701-5" data-line-number="5"><span class="st">    </span><span class="kw">mutate</span>(<span class="op">!!</span>col_out <span class="op">:</span><span class="er">=</span><span class="st"> &#39;bleh&#39;</span>)</a>
-<a class="sourceLine" id="cb701-6" data-line-number="6">}</a>
-<a class="sourceLine" id="cb701-7" data-line-number="7"><span class="kw">add_bleh</span>(penguins) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">glimpse</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb741"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb741-1" data-line-number="1">penguins &lt;-<span class="st"> </span>palmerpenguins<span class="op">::</span>penguins</a>
+<a class="sourceLine" id="cb741-2" data-line-number="2">add_bleh &lt;-<span class="st"> </span><span class="cf">function</span>(df, <span class="dt">nm =</span> <span class="kw">deparse</span>(<span class="kw">substitute</span>(df))) {</a>
+<a class="sourceLine" id="cb741-3" data-line-number="3">  col_out &lt;-<span class="st"> </span><span class="kw">sym</span>(<span class="kw">sprintf</span>(<span class="st">&#39;new_%s_col&#39;</span>, nm))</a>
+<a class="sourceLine" id="cb741-4" data-line-number="4">  df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb741-5" data-line-number="5"><span class="st">    </span><span class="kw">mutate</span>(<span class="op">!!</span>col_out <span class="op">:</span><span class="er">=</span><span class="st"> &#39;bleh&#39;</span>)</a>
+<a class="sourceLine" id="cb741-6" data-line-number="6">}</a>
+<a class="sourceLine" id="cb741-7" data-line-number="7"><span class="kw">add_bleh</span>(penguins) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">glimpse</span>()</a></code></pre></div>
 <pre><code>## Rows: 1
 ## Columns: 9
 ## $ species           &lt;fct&gt; Adelie
@@ -777,23 +791,23 @@ eval(call, envir = pf)</code></pre>
 <p>Seems like when wrapping a base NSE function like <code>lm</code> or trying to <code>deparse(substitute(x))</code> using <code>rlang</code></p>
 <div class="question">
 <p>How do you capture the unquoting operator !! without evaluating it in the rlang framework:</p>
-<div class="sourceCode" id="cb703"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb703-1" data-line-number="1">reflect_lang &lt;-<span class="st"> </span><span class="cf">function</span>(lang) {</a>
-<a class="sourceLine" id="cb703-2" data-line-number="2">  r &lt;-<span class="st"> </span>rlang<span class="op">::</span><span class="kw">enexpr</span>(lang)</a>
-<a class="sourceLine" id="cb703-3" data-line-number="3">  r</a>
-<a class="sourceLine" id="cb703-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb703-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb703-6" data-line-number="6"><span class="kw">reflect_lang</span>(x<span class="op">+</span>y)</a></code></pre></div>
+<div class="sourceCode" id="cb743"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb743-1" data-line-number="1">reflect_lang &lt;-<span class="st"> </span><span class="cf">function</span>(lang) {</a>
+<a class="sourceLine" id="cb743-2" data-line-number="2">  r &lt;-<span class="st"> </span>rlang<span class="op">::</span><span class="kw">enexpr</span>(lang)</a>
+<a class="sourceLine" id="cb743-3" data-line-number="3">  r</a>
+<a class="sourceLine" id="cb743-4" data-line-number="4">}</a>
+<a class="sourceLine" id="cb743-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb743-6" data-line-number="6"><span class="kw">reflect_lang</span>(x<span class="op">+</span>y)</a></code></pre></div>
 <pre><code>x + y</code></pre>
-<div class="sourceCode" id="cb705"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb705-1" data-line-number="1"><span class="kw">reflect_lang</span>(<span class="op">!!</span>x)</a></code></pre></div>
+<div class="sourceCode" id="cb745"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb745-1" data-line-number="1"><span class="kw">reflect_lang</span>(<span class="op">!!</span>x)</a></code></pre></div>
 <pre><code># Error in rlang::enexpr(lang): object &#39;x&#39; not found</code></pre>
-<div class="sourceCode" id="cb707"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb707-1" data-line-number="1"><span class="kw">reflect_lang</span>(<span class="kw">quote</span>(<span class="op">!!</span>x))</a></code></pre></div>
+<div class="sourceCode" id="cb747"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb747-1" data-line-number="1"><span class="kw">reflect_lang</span>(<span class="kw">quote</span>(<span class="op">!!</span>x))</a></code></pre></div>
 <pre><code># Error in rlang::enexpr(lang): object &#39;x&#39; not found</code></pre>
 <p>Desired output: <code>!!x</code></p>
 </div>
-<div class="sourceCode" id="cb709"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb709-1" data-line-number="1">reflect_rlang &lt;-<span class="st"> </span><span class="cf">function</span>(expr) {</a>
-<a class="sourceLine" id="cb709-2" data-line-number="2">  <span class="kw">substitute</span>(expr)</a>
-<a class="sourceLine" id="cb709-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb709-4" data-line-number="4"><span class="kw">reflect_rlang</span>(<span class="op">!!</span>x) </a></code></pre></div>
+<div class="sourceCode" id="cb749"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb749-1" data-line-number="1">reflect_rlang &lt;-<span class="st"> </span><span class="cf">function</span>(expr) {</a>
+<a class="sourceLine" id="cb749-2" data-line-number="2">  <span class="kw">substitute</span>(expr)</a>
+<a class="sourceLine" id="cb749-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb749-4" data-line-number="4"><span class="kw">reflect_rlang</span>(<span class="op">!!</span>x) </a></code></pre></div>
 <pre><code>!!x</code></pre>
 
 </div>
