@@ -1,7 +1,7 @@
 # R4DS Advanced R Bookclub
 A weekly reading group following the chapters of [Advanced R by Hadley Wickham (2nd ed)](https://adv-r.hadley.nz/)
 
-Visit the [#book_club-advanced_r channel](https://r4ds.io/join) on Slack to join the video chat! 
+Visit the [#book_club-advanced_r channel](https://r4ds.io/join) on Slack to join the video chat!
 
 This repo contains 3 main folders:
 
@@ -11,10 +11,10 @@ This repo contains 3 main folders:
 
 - Data: Example datasets are stored in this folder to help facilitate practical applications - including [beer production](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-03-31/readme.md) and [beer reviews](https://www.kaggle.com/rdoume/beerreviews). Feel free to add your own!
 
-#### Some helpful links: 
+#### Some helpful links:
 - GitHub navigation: [GitHub Web Editor](https://youtu.be/d41oc2OMAuI) | [GitHub Local Setup](https://www.youtube.com/watch?v=hNUNPkoledI)
 
-### Meeting Schedule 
+### Meeting Schedule
 
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
@@ -35,18 +35,17 @@ This repo contains 3 main folders:
 
 *Cohort 3 [Europe/Africa]: (started 2020-08-04) Tuesdays, 19:30 CET (CEST)*
 
-- 2020-09-29 Chapter 7 - Environments: AL Brown
 - 2020-10-06 Chapter 8 - Conditions: Shel Kariuki
 - 2020-10-13 Recap week
 
 <details>
   <summary> Future Meetings </summary>
-  
+
 - 2020-10-20 Chapter 9
 - 2020-10-27 Chapter 10
 - 2020-11-03 Chapter 11
 
-  
+
 </details>
 
 <hr>
@@ -59,11 +58,11 @@ This repo contains 3 main folders:
 
 <details>
   <summary> Future Meetings </summary>
-  
+
 - 2020-10-26 Chapter 4 - Subsetting
 - 2020-11-02 Chapter 5 - Control Flow
 - 2020-11-09 Chapter 6 - Functions
-  
+
 </details>
 
 <hr>
@@ -94,7 +93,7 @@ Chapter 4 - Subsetting
 - Cohort 2: Mike Jeziorski (slides | [video](https://www.youtube.com/watch?v=Mhq-TX4eA64))
 - Cohort 3: Shelmith Kariuki and Alan Kinene ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week04/Cohort3/chapter4.html#1) | [video](https://www.youtube.com/watch?v=CvvXkXiF3Ig))
 
-Chapter 5 - Control flow 
+Chapter 5 - Control flow
 
 - Cohort 1: [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week05/Cohort1/Chapter5.html#1) | [video](https://www.youtube.com/watch?v=96eY6YS_3hU))
 - Cohort 2: [Erick Knackstedt](https://twitter.com/Eknackstedt) (slides | [video](https://www.youtube.com/watch?v=x5I_uHnMxIk))
@@ -103,14 +102,14 @@ Chapter 5 - Control flow
 Chapter 6 - Functions
 
 - Cohort 1: [Asmae Toumi](https://twitter.com/asmae_toumi) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week06/Cohort1/Chap6slides.html#1) | [video](https://youtu.be/UwzGhMndWzs))
-- Cohort 2: [Meenakshi Kushwaha](https://twitter.com/envhealthspeak)([video](https://www.youtube.com/watch?v=51PMEM4Efb8)) 
+- Cohort 2: [Meenakshi Kushwaha](https://twitter.com/envhealthspeak)([video](https://www.youtube.com/watch?v=51PMEM4Efb8))
 - Cohort 3: [Novica Nakov](https://twitter.com/novicanakov) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week06/Cohort3/Chap6slides.html#1) | [video]())
 
 Chapter 7 - Environments
 
 - Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn)  ([slides](https://r4dscommunity.shinyapps.io/environments/) | [static slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week07/Cohort1/Chap7Slides.html#1) | [video](https://www.youtube.com/watch?v=mk7iu1-P8ZU))
 - Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) | ([video](https://www.youtube.com/watch?v=syRMRYKN30k))
-- Cohort 3: [Anna-Leigh Brown](https://twitter.com/annaleighbrown2) (slides|video)
+- Cohort 3: [Anna-Leigh Brown](https://twitter.com/annaleighbrown2) ([slides] | [static slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week07/Cohort3/Environments/Environments.html)|[video](https://youtu.be/fW7Di01gLhw))
 
 Chapter 8 - Conditions
 
@@ -150,7 +149,7 @@ Chapter 17 - Metaprogramming, big picture
 
 - Cohort 1: [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week16/Cohort1/Chapter17.html#1) | [video](https://www.youtube.com/watch?v=10gRbFMoh7g))
 
-Chapter 18 - Expressions 
+Chapter 18 - Expressions
 
 - Cohort 1: [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week17/Cohort1/Chapter18.html#1) | [video](https://youtu.be/2NixH3QAerQ) | [app](https://r4dscommunity.shinyapps.io/adv_r-expressions/) | [app code](https://github.com/r4ds/bookclub-Advanced_R/tree/master/Presentations/Week17/Cohort1/expressions))
 
@@ -170,7 +169,7 @@ Metaprogramming Review
 
 - Cohort 1: [Jon Harmon](https://twitter.com/JonTheGeek) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week22/cohort1/metaprogramming_review.html#1) | [video](https://www.youtube.com/watch?v=h3RNPyhIjas))
 
-Chapter 22 - Debugging: 
+Chapter 22 - Debugging:
 
 - Cohort 1: [Tan Ho](https://twitter.com/_tanho) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week21/Cohort1/AdvR_Ch22_Debugging) | [video](https://www.youtube.com/watch?v=ROMefwMuqXU))
 
