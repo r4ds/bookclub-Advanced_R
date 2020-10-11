@@ -84,7 +84,7 @@ Chapter 2 - Names and values
 Chapter 3 - Vectors
 
 - Cohort 1: [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort1/Chap3slides.html#1) | [video](https://www.youtube.com/watch?v=pQ-xDAPEQaw))
-- Cohort 2: [Vajresh Balaji](https://twitter.com/bvajresh) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort2/Chapter3Slides.html#1) | video)
+- Cohort 2: [Vajresh Balaji](https://twitter.com/bvajresh) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort2/Chapter3Slides.html#1) | [video - Part 1](https://www.youtube.com/watch?v=EuNFK3Ob1QQ) | [video - Part 2](https://www.youtube.com/watch?v=Da6TodA0O9Q&feature=youtu.be))
 - Cohort 3: [Orry Messer](https://twitter.com/orrymr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort3/Chapter_3.html#1) | [video](https://www.youtube.com/watch?v=9E4RlbW8vxU))
 
 Chapter 4 - Subsetting
@@ -108,22 +108,24 @@ Chapter 6 - Functions
 Chapter 7 - Environments
 
 - Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn)  ([slides](https://r4dscommunity.shinyapps.io/environments/) | [static slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week07/Cohort1/Chap7Slides.html#1) | [video](https://www.youtube.com/watch?v=mk7iu1-P8ZU))
-- Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) | ([video](https://www.youtube.com/watch?v=syRMRYKN30k))
+- Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) ([slides](https://github.com/r4ds/bookclub-Advanced_R/blob/main/Presentations/Week07/Cohort2/2020_09_17_advancedR_environments.html) | ([video](https://www.youtube.com/watch?v=syRMRYKN30k))
 - Cohort 3: [Anna-Leigh Brown](https://twitter.com/annaleighbrown2) ([slides] | [static slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week07/Cohort3/Environments/Environments.html)|[video](https://youtu.be/fW7Di01gLhw))
 
 Chapter 8 - Conditions
 
 - Cohort 1: [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week08/Cohort1/Chapter8.html#1) | [video](https://www.youtube.com/watch?v=mwiNe083DLU))
+- Cohort 2: [Abby Vander Linden](https://twitter.com/nopeantelope?lang=en) ([video](https://youtu.be/ZFUr7YRSu2o))
 - Cohort 3: Shel Kariuki (slides | video)
 
 Chapter 9 - Functionals
 
 - Cohort 1: [Tan Ho](https://twitter.com/_tanho) ([video](https://youtu.be/o0a6aJ4kCkU) | [LearnR lesson](https://apps.tanho.ca/app_direct/advr_w9_learnr/) | [example app](https://apps.tanho.ca/app_direct/advr_w9_app/) | [app code](https://github.com/r4ds/bookclub-Advanced_R/tree/master/Presentations/Week09/Cohort1/))
-- Cohort 2: Jake Riley ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week09/Cohort2/AdvRchap09.html) | video )
+- Cohort 2: Jake Riley ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week09/Cohort2/AdvRchap09.html) | [video](https://youtu.be/YrZ13_4vUMw))
 
 Chapter 10 - Function factories
 
 - Cohort 1: [Jon Harmon](https://twitter.com/jonthegeek) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week10/Cohort1/Chapter10.html#1) | [video](https://www.youtube.com/watch?v=enI5Ynq6olI) | [{factory}](https://cran.r-project.org/package=factory))
+- Cohort 2: Jorge Mendes ([video](https://youtu.be/U-CoF7MCik0))
 
 Chapter 11 - Function operators
 
