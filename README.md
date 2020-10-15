@@ -27,7 +27,7 @@ This repo contains 3 main folders:
 
 - 2020-10-15 Chapter 10
 - 2020-10-22 Chapter 11
-- 2020-10-29 Chapter 12
+- 2020-10-29 Chapter 12 - Chris Yarrison
 
 </details>
 
