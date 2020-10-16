@@ -18,8 +18,7 @@ This repo contains 3 main folders:
 
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
-- 2020-10-15 Chapter 10 - Jorge Mendes (?)
-- 2020-10-22 Chapter 11 ?
+- 2020-10-22 Chapter 11 - Kevin Kent
 - 2020-10-29 Chapter 12 and 13 - Chris Yarrison
 - 2020-11-05 Chapter 14 - Ezra Porter
 
