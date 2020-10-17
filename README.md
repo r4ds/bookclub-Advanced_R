@@ -33,16 +33,16 @@ This repo contains 3 main folders:
 
 *Cohort 3 [Europe/Africa]: (started 2020-08-04) Tuesdays, 19:30 CET (CEST)*
 
-- 2020-10-06 Chapter 8 - Conditions: Shel Kariuki
-- 2020-10-13 Recap week
+- 2020-10-20 Chapter 9: Functionals - Anne Hoffrichter
+- 2020-10-27 Chapter 10: Function factories - Sam Bryce-Smith
+- 2020-11-03 Chapter 11: Function operators
 
 <details>
   <summary> Future Meetings </summary>
 
-- 2020-10-20 Chapter 9
-- 2020-10-27 Chapter 10
-- 2020-11-03 Chapter 11
-
+- 2020-11-10 Section 2 Recap
+- 2020-11-17 Chapter 12
+- 2020-11-24 Chapter 13
 
 </details>
 
@@ -50,16 +50,16 @@ This repo contains 3 main folders:
 
 *Cohort 4 (started 2020-10-05) Mondays, 17:00 ET*
 
-- 2020-10-05 Chapter 1 - Introduction: Emily Wissel
-- 2020-10-12 Chapter 2 - Names/Values
 - 2020-10-19 Chapter 3 - Vectors
+- 2020-10-26 Chapter 4 - Subsetting
+- 2020-11-02 Chapter 5 - Control Flow
 
 <details>
   <summary> Future Meetings </summary>
 
-- 2020-10-26 Chapter 4 - Subsetting
-- 2020-11-02 Chapter 5 - Control Flow
 - 2020-11-09 Chapter 6 - Functions
+- 2020-11-16 Chapter 7 - Environments
+- 2020-11-23 Chapter 8 - Conditions
 
 </details>
 
@@ -72,17 +72,19 @@ Chapter 1 - Introduction
 - Cohort 1: No materials/recording available
 - Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) ([slides](https://docs.google.com/presentation/d/1oKhqSY6L6yI3yMwB4JB1eduLqu6UWPZ7Y1v32FK042I/edit?usp=sharing) | [video](https://www.youtube.com/watch?v=PCG52lU_YlA&t))
 - Cohort 3: [Novica Nakov](https://twitter.com/novicanakov) ([video](https://www.youtube.com/watch?v=f6PuOnuZWBc))
+- Cohort 4: Emily Wissel (SLIDES | [video](https://youtu.be/qDaJvX-Mpls))
 
 Chapter 2 - Names and values
 
 - Cohort 1: [Asmae Toumi](https://twitter.com/asmae_toumi) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Cohort1/Chap2slides.html#1))
 - Cohort 2: [Josh Pohlkamp-Hartt](https://twitter.com/jpohlkamphartt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Cohort2_America/Chapter2Slides.html#1) | [video](https://www.youtube.com/watch?v=pCiNj2JRK50&t))
 - Cohort 3: [Anna-Leigh Brown](https://twitter.com/annaleighbrown2) ([slides](https://docs.google.com/presentation/d/1HNmri86BXWrLThgjECqHOKN7KEab01BTDZCUDT2xUo8/edit?usp=sharing) | [video](https://youtu.be/-bEXdOoxO_E))
+- Cohort 4: Camilo Strange (SLIDES | [video](https://youtu.be/gcVU_F-L6zY))
 
 Chapter 3 - Vectors
 
 - Cohort 1: [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort1/Chap3slides.html#1) | [video](https://www.youtube.com/watch?v=pQ-xDAPEQaw))
-- Cohort 2: [Vajresh Balaji](https://twitter.com/bvajresh) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort2/Chapter3Slides.html#1) | [video - Part 1](https://www.youtube.com/watch?v=EuNFK3Ob1QQ) | [video - Part 2](https://www.youtube.com/watch?v=Da6TodA0O9Q&feature=youtu.be))
+- Cohort 2: [Vajresh Balaji](https://twitter.com/bvajresh) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort2/Chapter3Slides.html#1) | [video](https://youtu.be/CpLM6SdpTFY))
 - Cohort 3: [Orry Messer](https://twitter.com/orrymr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort3/Chapter_3.html#1) | [video](https://www.youtube.com/watch?v=9E4RlbW8vxU))
 
 Chapter 4 - Subsetting
@@ -113,7 +115,11 @@ Chapter 8 - Conditions
 
 - Cohort 1: [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week08/Cohort1/Chapter8.html#1) | [video](https://www.youtube.com/watch?v=mwiNe083DLU))
 - Cohort 2: [Abby Vander Linden](https://twitter.com/nopeantelope?lang=en) ([video](https://youtu.be/ZFUr7YRSu2o))
-- Cohort 3: Shel Kariuki (slides | video)
+- Cohort 3: [Shel Kariuki](https://twitter.com/Shel_Kariuki) (SLIDES | [video](https://youtu.be/UZhrsVz6wi0))
+
+Section 1 - Foundations (Recap)
+
+- Cohort 3: Anna-Leigh Brown (SLIDES | [video](https://youtu.be/Wt7p71_BuYY)
 
 Chapter 9 - Functionals
 
