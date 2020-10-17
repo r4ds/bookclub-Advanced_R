@@ -72,6 +72,7 @@ Chapter 1 - Introduction
 - Cohort 1: No materials/recording available
 - Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) ([slides](https://docs.google.com/presentation/d/1oKhqSY6L6yI3yMwB4JB1eduLqu6UWPZ7Y1v32FK042I/edit?usp=sharing) | [video](https://www.youtube.com/watch?v=PCG52lU_YlA&t))
 - Cohort 3: [Novica Nakov](https://twitter.com/novicanakov) ([video](https://www.youtube.com/watch?v=f6PuOnuZWBc))
+- Cohort 4: Emily Wissel (SLIDES | [video](https://youtu.be/qDaJvX-Mpls))
 
 Chapter 2 - Names and values
 
