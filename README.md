@@ -33,16 +33,16 @@ This repo contains 3 main folders:
 
 *Cohort 3 [Europe/Africa]: (started 2020-08-04) Tuesdays, 19:30 CET (CEST)*
 
-- 2020-10-06 Chapter 8 - Conditions: Shel Kariuki
-- 2020-10-13 Recap week
+- 2020-10-20 Chapter 9: Functionals - Anne Hoffrichter
+- 2020-10-27 Chapter 10: Function factories - Sam Bryce-Smith
+- 2020-11-03 Chapter 11: Function operators
 
 <details>
   <summary> Future Meetings </summary>
 
-- 2020-10-20 Chapter 9
-- 2020-10-27 Chapter 10
-- 2020-11-03 Chapter 11
-
+- 2020-11-10 Section 2 Recap
+- 2020-11-17 Chapter 12
+- 2020-11-24 Chapter 13
 
 </details>
 
@@ -114,7 +114,11 @@ Chapter 8 - Conditions
 
 - Cohort 1: [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week08/Cohort1/Chapter8.html#1) | [video](https://www.youtube.com/watch?v=mwiNe083DLU))
 - Cohort 2: [Abby Vander Linden](https://twitter.com/nopeantelope?lang=en) ([video](https://youtu.be/ZFUr7YRSu2o))
-- Cohort 3: Shel Kariuki (slides | video)
+- Cohort 3: [Shel Kariuki](https://twitter.com/Shel_Kariuki) (SLIDES | [video](https://youtu.be/UZhrsVz6wi0))
+
+Section 1 - Foundations (Recap)
+
+- Cohort 3: Anna-Leigh Brown (SLIDES | [video](https://youtu.be/Wt7p71_BuYY)
 
 Chapter 9 - Functionals
 
