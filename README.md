@@ -51,7 +51,7 @@ This repo contains 3 main folders:
 *Cohort 4 (started 2020-10-05) Mondays, 17:00 ET*
 
 - 2020-10-05 Chapter 1 - Introduction: Emily Wissel
-- 2020-10-12 Chapter 2 - Names/Values
+- 2020-10-12 Chapter 2 - Names/Values: Camilo Strange
 - 2020-10-19 Chapter 3 - Vectors
 
 <details>
@@ -78,6 +78,7 @@ Chapter 2 - Names and values
 - Cohort 1: [Asmae Toumi](https://twitter.com/asmae_toumi) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Cohort1/Chap2slides.html#1))
 - Cohort 2: [Josh Pohlkamp-Hartt](https://twitter.com/jpohlkamphartt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week02/Cohort2_America/Chapter2Slides.html#1) | [video](https://www.youtube.com/watch?v=pCiNj2JRK50&t))
 - Cohort 3: [Anna-Leigh Brown](https://twitter.com/annaleighbrown2) ([slides](https://docs.google.com/presentation/d/1HNmri86BXWrLThgjECqHOKN7KEab01BTDZCUDT2xUo8/edit?usp=sharing) | [video](https://youtu.be/-bEXdOoxO_E))
+- Cohort 4: Camilo Strange (SLIDES | [video](https://youtu.be/gcVU_F-L6zY))
 
 Chapter 3 - Vectors
 
