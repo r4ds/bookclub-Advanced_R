@@ -83,7 +83,7 @@ Chapter 2 - Names and values
 Chapter 3 - Vectors
 
 - Cohort 1: [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort1/Chap3slides.html#1) | [video](https://www.youtube.com/watch?v=pQ-xDAPEQaw))
-- Cohort 2: [Vajresh Balaji](https://twitter.com/bvajresh) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort2/Chapter3Slides.html#1) | [video - Part 1](https://www.youtube.com/watch?v=EuNFK3Ob1QQ) | [video - Part 2](https://www.youtube.com/watch?v=Da6TodA0O9Q&feature=youtu.be))
+- Cohort 2: [Vajresh Balaji](https://twitter.com/bvajresh) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort2/Chapter3Slides.html#1) | [video](https://youtu.be/CpLM6SdpTFY))
 - Cohort 3: [Orry Messer](https://twitter.com/orrymr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort3/Chapter_3.html#1) | [video](https://www.youtube.com/watch?v=9E4RlbW8vxU))
 
 Chapter 4 - Subsetting
