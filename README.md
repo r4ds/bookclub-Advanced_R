@@ -18,14 +18,24 @@ This repo contains 3 main folders:
 
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
-- 2020-10-22 Chapter 11 - Kevin Kent
-- 2020-10-29 Chapter 12 and 13 - Chris Yarrison
-- 2020-11-05 Chapter 14 - Ezra Porter
-
+- 2020-10-29 Chapters 12 & 13: Base types & S3 - Chris Yarrison
+- 2020-11-05 Chapter 14: R6 - Ezra Porter
+- 2020-11-12 Chapter 15: S4
 
 <details>
   <summary> Future Meetings </summary>
 
+- 2020-11-19 Chapter 16: Trade-offs & OOP Recap
+- 2020-12-03 Chapter 17: Big picture (of Metaprogramming)
+- 2020-12-10 Chapter 18: Expressions
+- 2020-12-17 Chapter 19: Quasiquotation
+- 2021-01-07 Chapter 20: Evaluation
+- 2021-01-14 Chapter 21: Translating R code
+- 2021-01-21 Metaprogramming Recap
+- 2021-01-28 Chapter 22: Debugging
+- 2021-02-04 Chapters 23 & 24: Measuring & Improving performance
+- 2021-02-11 Chapter 25 Rewriting R code in C++
+- 2021-02-18 Book Recap and Reflection
 
 </details>
 
@@ -33,16 +43,27 @@ This repo contains 3 main folders:
 
 *Cohort 3 [Europe/Africa]: (started 2020-08-04) Tuesdays, 19:30 CET (CEST)*
 
-- 2020-10-20 Chapter 9: Functionals - Anne Hoffrichter
 - 2020-10-27 Chapter 10: Function factories - Sam Bryce-Smith
 - 2020-11-03 Chapter 11: Function operators
+- 2020-11-10 Section 2 Recap
 
 <details>
   <summary> Future Meetings </summary>
 
-- 2020-11-10 Section 2 Recap
-- 2020-11-17 Chapter 12
-- 2020-11-24 Chapter 13
+- 2020-11-17 Chapters 12 & 13: Base types & S3
+- 2020-11-24 Chapter 14: R6
+- 2020-12-01 Chapter 15: S4
+- 2020-12-08 Chapter 16: Trade-offs & Section 3 Recap
+- 2020-12-15 Chapter 17: Big picture (of Metaprogramming)
+- 2020-12-22 Chapter 18: Expressions
+- 2020-12-29 Chapter 19: Quasiquotation
+- 2021-01-05 Chapter 20: Evaluation
+- 2021-01-12 Chapter 21: Translating R code
+- 2021-01-19 Section 4 Recap
+- 2021-01-26 Chapter 22: Debugging
+- 2021-02-02 Chapters 23 & 24: Measuring & Improving performance
+- 2021-02-09 Chapter 25 Rewriting R code in C++
+- 2021-02-16 Book Recap and Reflection
 
 </details>
 
@@ -125,6 +146,7 @@ Chapter 9 - Functionals
 
 - Cohort 1: [Tan Ho](https://twitter.com/_tanho) ([video](https://youtu.be/o0a6aJ4kCkU) | [LearnR lesson](https://apps.tanho.ca/app_direct/advr_w9_learnr/) | [example app](https://apps.tanho.ca/app_direct/advr_w9_app/) | [app code](https://github.com/r4ds/bookclub-Advanced_R/tree/master/Presentations/Week09/Cohort1/))
 - Cohort 2: Jake Riley ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week09/Cohort2/AdvRchap09.html) | [video](https://youtu.be/YrZ13_4vUMw))
+- Cohort 3: Anne Hoffrichter (SLIDES | [video](https://youtu.be/DUHXo527mHs)
 
 Chapter 10 - Function factories
 
@@ -134,6 +156,7 @@ Chapter 10 - Function factories
 Chapter 11 - Function operators
 
 - Cohort 1: [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week11/Cohort1/Chapter11.html#1) | [video](https://www.youtube.com/watch?v=zzUY03gt_pA&feature=youtu.be))
+- Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) (SLIDES) | ([video](https://youtu.be/fD1QJB2pHik))
 
 Chapter 12 + 13 - OOP base types + S3
 
