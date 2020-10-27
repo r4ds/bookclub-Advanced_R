@@ -1,0 +1,585 @@
+---
+title: "Advanced R"
+subtitle: "Chapter 8: Conditions"
+author: "Shel Kariuki @Shel_Kariuki"
+date: "2020/10/05"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    includes:
+      after_body: insert-logo.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = TRUE)
+```
+
+```{r xaringan-themer, include = FALSE}
+library(xaringanthemer)
+library(xaringan)
+library(tibble)
+style_mono_light(
+  base_color = "#2e78c9",  #"#3092FF",
+  header_font_google = google_font("Josefin Sans"),
+  text_font_google   = google_font("Montserrat", "100", "100i"),
+  code_font_google   = google_font("Droid Mono")
+)
+```
+
+
+# Outline
+  
+- Section 8.1: Introduction 
+
+--
+
+- Section 8.2: Signalling conditions
+
+--
+
+- Section 8.3: Ignoring conditions
+
+--
+
+- Section 8.4: Handling conditions
+
+--
+
+- Section 8.5: Custom conditions
+
+--
+
+- Section 8.6: Applications
+
+--
+
+- Section 8.7: Quizzes
+
+
+---
+
+# 8.1: Introduction
+
+The **condition system** provides a paired set of tools that allow the author of a function to:
+
+  - indicate that something unusual is happening, 
+
+  - and the user of that function to deal with it.
+
+The function author signals conditions with functions like `stop()` (for errors), `warning()` (for warnings), and `message()`
+
+Then the function user can handle them with functions like `tryCatch()` and `withCallingHandlers()`
+---
+# 8.2: Signalling conditions
+
+There are three conditions that can be signaled in code:
+
+  - `Errors`: They indicate that the function cannot execute at its current state.
+  
+  - `Warnings`:  Indicates that something has gone wrong, but that the function has kind of recovered (or has it?????)
+  
+  - `Messages`: They give more information of actions that are performed on behalf of the user.
+
+
+```{r, error = TRUE}
+stop("Hi there, I am an error.")
+
+warning("Hi there, be careful when you see me")
+
+message("I am better than them, aint I?")
+```
+---
+## 8.2.1 Errors
+
+In base R, errors are signalled by `stop()`.
+
+```{r, error = TRUE}
+my_function1 <- function()stop("Error! Error! Error!")
+
+my_function1()
+
+```
+
+```{r, error = TRUE}
+my_function1 <- function() stop("Error! Error! Error!", call. = FALSE)
+
+my_function1()
+
+```
+
+In rlang, they are signalled by `rlang::abort()`
+
+```{r, error = TRUE}
+my_function3 <- function()rlang::abort("rlang's error handling")
+
+my_function3()
+
+```
+
+---
+> You cannot have multiple error signals in one function.
+
+```{r, error = TRUE}
+my_function123 <- function(){
+  
+  stop("Error! Error! Error!")
+  
+  stop("Error! Error! Error!", call. = FALSE)
+  
+  rlang::abort("rlang's error handling")
+}
+
+my_function123()
+
+```
+
+---
+## 8.2.2 Warnings
+Indicates that something has gone wrong, but the function has kind of recovered.
+
+Unlike errors, you can have multiple warnings from a single function call.
+
+```{r}
+my_function4a <- function(){
+ cat("R4DS Cohort 3") 
+ warning("I am the first warning")
+ cat("R4DS Cohort 3 again")
+ warning("I am the second warning")
+}
+
+my_function4a()
+```
+
+> By default, **warnings are cached and printed only when control returns to the top level**.
+
+---
+
+One can control this behaviour with the `warn` option
+
+  - `options(warn = 0)`: default
+ 
+  
+  - `options(warn = 1)`: makes warnings appear immediately.
+  
+```{r, error = TRUE}
+options(warn = 1)
+
+my_function4b <- function(){
+ cat("R4DS Cohort 4") 
+ warning("I am the first warning")
+ 
+cat("R4DS Cohort 4")
+ warning("I am the second warning")
+}
+
+my_function4b()
+
+```  
+  
+  - `options(warn = 2)`: turns warnings into errors
+  
+---
+> We can set warnings in rlang with `rlang::warn()`
+
+```{r}
+my_function4c <- function() rlang::warn("This is also a warning")
+
+my_function4c()
+```
+
+> Some warnings should be more of errors than warnings
+
+```{r}
+my_vec1 <- c(15, 16, 35, "50+")
+as.numeric(my_vec1)
+
+my_vec2 <- c(15, 16, 35, "5 7")
+as.numeric(my_vec2)
+```
+
+---
+
+## 8.2.3 Messages
+
+Messages are signalled by `message()`.
+
+They are informational; use them to tell the user that you’ve done something on their behalf.
+
+Use messages to provide just enough information so the user knows what’s going on, **but not so much that they’re overwhelmed**
+
+```{r}
+library(rKenyaCensus)
+```
+
+Generally any function that produces a message should have some way to suppress it.
+
+One can use `suppressMessages()`
+
+Comparison between `cat()` and `message()`
+
+  - `cat()`:  used when the primary role of the function is to print to the console.  Used when the user asks for something to be printed. 
+  
+  - `message()`: as a side-channel to print to the console when the primary purpose of the function is something else. Used when the developer elects to print something.
+  
+---
+
+```{r}
+my_func5 <- function(){
+  
+  cat("I want my function to print this")
+  
+  message("This function contains a message.")
+  
+}
+my_func5()
+```
+
+---
+# 8.3: Signalling conditions
+
+The simplest way of handling conditions in R is to simply ignore them:
+
+  - Ignore errors with `try()`.
+
+> `try()` allows execution to continue even after an error has occurred.
+
+```{r, error = TRUE}
+my_func6a <- function(x,y){
+  x+y
+  cat("Nairobi is the capital city of Kenya")
+}
+my_func6a(2)
+```
+
+```{r, error = TRUE}
+my_func6b <- function(x,y){
+  
+  try(x+y)
+  cat("Nairobi is the capital city of Kenya")
+}
+my_func6b(2)
+```
+---
+
+Unlike errors, messages and warnings don’t terminate execution.
+
+  - Ignore warnings with `suppressWarnings()`
+  
+```{r}
+suppressWarnings(warning("I am a warning, but I am just about to be supressed")) 
+```
+ 
+  - Ignore messages with `suppressMessages()`
+
+```{r}
+suppressMessages({
+  
+  message("I am a message, but I am just bout to be supressed")
+  
+  6^2
+    
+  })
+
+```
+
+---
+# 8.4: Handling conditions
+
+Every condition has default behaviour: 
+
+> **errors** stop execution and return to the top level
+
+> **warnings** are captured and displayed in aggregate
+
+> **messages** are displayed immediately 
+
+**Condition handlers** allow us to **temporarily override or supplement the default behaviour**.
+
+`tryCatch()` and `withCallingHandlers()` allow us to register handlers, functions that take the signalled condition as their single argument.
+
+`tryCatch()` defines exiting handlers; after the condition is handled, control returns to the context where `tryCatch()` was called. This makes `tryCatch()` most suitable for working with **errors** and **interrupts**, as these have to exit anyway.
+
+`withCallingHandlers()` defines calling handlers; after the condition is captured control returns to the context where the condition was signalled. This makes it most suitable for working with **non-error conditions**
+
+---
+
+## 8.4.1 Condition objects
+
+Built-in conditions are lists with two elements:
+
+  -   **message**, a length-1 character vector containing the text to display to a user. To extract the message, use `conditionMessage(cnd)`.
+
+  -   **call**, the call which triggered the condition. We extract it using `conditionCall(cnd)`.
+  
+```{r, error = TRUE}
+cnd <- rlang::catch_cnd(stop("This is an error!!"))
+str(cnd)
+```
+
+---
+
+
+## 8.4.2 Exiting handlers: `tryCatch()`
+
+`tryCatch()` registers exiting handlers, so it is used to handle error conditions.
+
+>Exiting handlers because they cause code to exit once the condition has been caught.
+
+Syntax: `tryCatch(my_code,my_error_function)`
+                
+`my_code` : piece of code we are working on.
+
+`my_error_function`: function that contains the code to run when an error is thrown
+
+```{r, error=TRUE}
+my_code <- function(x, y){
+  
+  x+y
+}
+
+my_code(2,"Shel")
+```
+---
+
+The handler functions are called with a single argument, the condition object (`cnd`).
+
+```{r, }
+
+my_func <- function(x, y){
+
+  tryCatch(
+    
+    x+y,
+    
+    error = function(cnd) cat("An error has occured")
+  
+  )
+}
+
+my_func(2,"Shel")
+```
+
+---
+
+## 8.4.3 Calling handlers: `withCallingHandlers()`
+
+`withCallingHandlers()` sets up calling handlers: code execution continues normally once the handler returns
+
+```{r}
+my_func2 <- function(){
+  
+  withCallingHandlers(
+    
+   message("Omg!!, I now get why this book is titled 'Advanced R'"),
+    
+    message = function(cnd){
+      
+    message("This package contains a message, please read it carefully")
+      
+    }
+  )
+}
+
+my_func2()
+
+
+```
+
+
+---
+
+```{r}
+my_func3 <- function(){
+  
+  withCallingHandlers(
+    
+    as.numeric(c(2,3,"5 6")
+               ),
+    
+    warning = function(cnd){
+      
+    warning("A warning has been signalled!!!", call. = FALSE)
+    }
+  )
+}
+
+my_func3()
+```
+
+---
+
+**??muffle**
+
+---
+
+## 8.4.4 Call stacks
+
+---
+## 8.4.5 Exercise
+
+---
+# 8.5: Custom conditions
+
+One of the challenges of error handling in R is that most functions generate one of the built-in conditions, which contain only a message and a call
+
+We can create custom conditions that can contain additional metadata.
+
+`rlang::abort()` makes this very easy as you can supply a custom .subclass and additional metadata.
+---
+## 8.5.1 Motivation
+
+```{r}
+my_func <- function(){
+  
+    as.numeric(c(34, 56, "7 13"))
+}
+my_func()
+
+```
+
+```{r}
+my_func <- function(x){
+  withCallingHandlers(
+    as.numeric(x),
+    
+    warning = function(cnd){
+    if(is.character(x)){
+      warning("There is a character value in your vector")
+    }
+  }
+)
+}
+my_func(c("7 13"))
+
+```
+
+> Custom conditions are more likely to guide the user towards a correct fix.
+
+> However, they’re no better if you want to programmatically handle the errors: all the useful metadata about the error is jammed into a single string.
+
+---
+## 8.5.2 Signalling
+
+
+```{r, error=TRUE}
+
+my_func <- function(x, y){
+
+  2 + x + y
+}
+
+my_func(3, "3")
+
+```
+
+```{r, error=TRUE}
+
+my_func <- function(x, y){
+  
+  if(is.character(x) | is.character(y)){
+    
+    rlang::abort("One of the arguments that you have provided is a character")
+  }
+  2 + x + y
+}
+
+my_func(3, "3")
+
+```
+---
+
+```{r, error=TRUE}
+
+my_func <- function(x, y){
+  
+  if(is.character(x) | is.character(y)){
+    rlang::abort(glue::glue({y}, " is a character"))
+  }
+  2 + x + y
+}
+
+my_func(3, "3")
+
+```
+
+```{r, error=TRUE}
+my_func <- function(x, y){
+  
+  if(is.character(x) & !is.character(y)){
+    rlang::abort(glue::glue({y}, " is a character input."))
+  }else
+    if(is.character(y) & !is.character(x)){
+     rlang::abort(glue::glue({y}, " is a character input.")) 
+    }else
+      if(is.character(x) & is.character(y)){
+     rlang::abort(glue::glue({x}, " and " ,{y}, " are characters inputs.")) 
+    }
+  2 + x + y
+}
+
+my_func("3", "10")
+
+```
+
+
+---
+## 8.5.3 Handling
+
+---
+## 8.5.4 Exercises
+
+---
+# 8.6 Applications
+
+## 8.6.1  Failure value
+
+```{r}
+fail_with <- function(x,y, value = NULL) {
+  tryCatch(
+    error = function(cnd) value,
+    x * y 
+  )
+}
+
+fail_with(2,"3", "You must have insert a character value")
+```
+
+
+
+---
+## 8.6.2  Success and failure values
+
+```{r}
+do_with <- function(x,y, value = NULL) {
+  tryCatch(
+    error = function(cnd) value,
+    {
+      x * y
+      cat("Your inputs are perfect\n\n")
+      
+    }
+    
+  )
+}
+
+do_with(2,3, "You must have insert a character value")
+```
+
+---
+## 8.6.3 Resignal
+
+---
+## 8.6.4 Record
+
+---
+## 8.6.5 No default behaviour
+
+---
+## 8.6.6 Exercises
+
+---
+
+
+  
+  
