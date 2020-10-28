@@ -1,0 +1,46 @@
+---
+title: "Advanced R"
+subtitle: "Chapter 5"
+author: "Roberto Villegas-Diaz (@villegar)"
+output:
+  xaringan::moon_reader:
+    nature:
+      highlightLines: true
+    lib_dir: libs
+    css: xaringan-themer.css
+    includes:
+      after_body: insert-logo.html
+---
+
+
+```{r xaringan-themer, include = FALSE}
+# library(xaringanthemer)
+xaringanthemer::style_mono_light(
+  base_color = "#3092FF",
+  header_font_google = xaringanthemer::google_font("Josefin Sans"),
+  text_font_google   = xaringanthemer::google_font("Montserrat", "300", "300i"),
+  code_font_google   = xaringanthemer::google_font("Droid Mono")
+)
+# library(tidyverse)
+`%>%` <- dplyr::`%>%`
+```
+
+# Overview
+
+5.1 Introduction
+
+5.2 Choices
+
+5.3 Loops
+
+---
+
+# 5.1 Introduction
+
+---
+
+# 5.2 Choices
+
+---
+
+# 5.3 Loops
