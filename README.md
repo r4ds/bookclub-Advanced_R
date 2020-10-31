@@ -107,12 +107,14 @@ Chapter 3 - Vectors
 - Cohort 1: [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort1/Chap3slides.html#1) | [video](https://www.youtube.com/watch?v=pQ-xDAPEQaw))
 - Cohort 2: [Vajresh Balaji](https://twitter.com/bvajresh) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort2/Chapter3Slides.html#1) | [video](https://youtu.be/CpLM6SdpTFY))
 - Cohort 3: [Orry Messer](https://twitter.com/orrymr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort3/Chapter_3.html#1) | [video](https://www.youtube.com/watch?v=9E4RlbW8vxU))
+- Cohort 4: Emily Wissel
 
 Chapter 4 - Subsetting
 
 - Cohort 1: [Scott Nestler](https://twitter.com/ScottNestler) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week04/Cohort1/Chap4slides.html#1) | [video](https://www.youtube.com/watch?v=eLMpCc0t1cg))
 - Cohort 2: Mike Jeziorski (slides | [video](https://www.youtube.com/watch?v=Mhq-TX4eA64))
 - Cohort 3: Shelmith Kariuki and Alan Kinene ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week04/Cohort3/chapter4.html#1) | [video](https://www.youtube.com/watch?v=CvvXkXiF3Ig))
+- Cohort 4: Emily Wissel (SLIDES | [video](https://youtu.be/Hxghhpe9fYs)
 
 Chapter 5 - Control flow
 
@@ -161,6 +163,7 @@ Chapter 11 - Function operators
 Chapter 12 + 13 - OOP base types + S3
 
 - Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week12/Cohort1/Advanced_R_12to13_OOP.html#1) | [video](https://www.youtube.com/watch?v=Fy3JF5Em6qY&feature=youtu.be))
+- Cohort 2: Chris Yarrison (SLIDES | [video](https://youtu.be/9GkgNC15EAw))
 
 Chapter 14 - R6
 
