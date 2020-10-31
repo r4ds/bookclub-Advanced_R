@@ -18,14 +18,13 @@ This repo contains 3 main folders:
 
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
-- 2020-10-29 Chapters 12 & 13: Base types & S3 - Chris Yarrison
 - 2020-11-05 Chapter 14: R6 - Ezra Porter
 - 2020-11-12 Chapter 15: S4
+- 2020-11-19 Chapter 16: Trade-offs & OOP Recap
 
 <details>
   <summary> Future Meetings </summary>
 
-- 2020-11-19 Chapter 16: Trade-offs & OOP Recap
 - 2020-12-03 Chapter 17: Big picture (of Metaprogramming)
 - 2020-12-10 Chapter 18: Expressions
 - 2020-12-17 Chapter 19: Quasiquotation
@@ -43,14 +42,13 @@ This repo contains 3 main folders:
 
 *Cohort 3 [Europe/Africa]: (started 2020-08-04) Tuesdays, 19:30 CET (CEST)*
 
-- 2020-10-27 Chapter 10: Function factories - Sam Bryce-Smith
 - 2020-11-03 Chapter 11: Function operators
 - 2020-11-10 Section 2 Recap
+- 2020-11-17 Chapters 12 & 13: Base types & S3
 
 <details>
   <summary> Future Meetings </summary>
 
-- 2020-11-17 Chapters 12 & 13: Base types & S3
 - 2020-11-24 Chapter 14: R6
 - 2020-12-01 Chapter 15: S4
 - 2020-12-08 Chapter 16: Trade-offs & Section 3 Recap
@@ -71,15 +69,13 @@ This repo contains 3 main folders:
 
 *Cohort 4 (started 2020-10-05) Mondays, 17:00 ET*
 
-- 2020-10-19 Chapter 3 - Vectors
-- 2020-10-26 Chapter 4 - Subsetting
 - 2020-11-02 Chapter 5 - Control Flow
+- 2020-11-09 Chapter 6 - Functions
+- 2020-11-16 Chapter 7 - Environments
 
 <details>
   <summary> Future Meetings </summary>
 
-- 2020-11-09 Chapter 6 - Functions
-- 2020-11-16 Chapter 7 - Environments
 - 2020-11-23 Chapter 8 - Conditions
 
 </details>
@@ -107,12 +103,14 @@ Chapter 3 - Vectors
 - Cohort 1: [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort1/Chap3slides.html#1) | [video](https://www.youtube.com/watch?v=pQ-xDAPEQaw))
 - Cohort 2: [Vajresh Balaji](https://twitter.com/bvajresh) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort2/Chapter3Slides.html#1) | [video](https://youtu.be/CpLM6SdpTFY))
 - Cohort 3: [Orry Messer](https://twitter.com/orrymr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week03/Cohort3/Chapter_3.html#1) | [video](https://www.youtube.com/watch?v=9E4RlbW8vxU))
+- Cohort 4: Emily Wissel
 
 Chapter 4 - Subsetting
 
 - Cohort 1: [Scott Nestler](https://twitter.com/ScottNestler) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week04/Cohort1/Chap4slides.html#1) | [video](https://www.youtube.com/watch?v=eLMpCc0t1cg))
 - Cohort 2: Mike Jeziorski (slides | [video](https://www.youtube.com/watch?v=Mhq-TX4eA64))
 - Cohort 3: Shelmith Kariuki and Alan Kinene ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week04/Cohort3/chapter4.html#1) | [video](https://www.youtube.com/watch?v=CvvXkXiF3Ig))
+- Cohort 4: Emily Wissel (SLIDES | [video](https://youtu.be/Hxghhpe9fYs)
 
 Chapter 5 - Control flow
 
@@ -161,6 +159,7 @@ Chapter 11 - Function operators
 Chapter 12 + 13 - OOP base types + S3
 
 - Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week12/Cohort1/Advanced_R_12to13_OOP.html#1) | [video](https://www.youtube.com/watch?v=Fy3JF5Em6qY&feature=youtu.be))
+- Cohort 2: Chris Yarrison (SLIDES | [video](https://youtu.be/9GkgNC15EAw))
 
 Chapter 14 - R6
 
