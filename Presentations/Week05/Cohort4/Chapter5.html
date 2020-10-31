@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Roberto Villegas-Diaz (@villegar)" />
+    <meta name="date" content="2020-11-02" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Advanced R
+## Chapter 5: Control flow
+### Roberto Villegas-Diaz (<span class="citation">@villegar</span>)
+### 2020-11-02
+
+---
+
+
+
+
+
+## Overview
+
+&lt;!-- 5.1 Introduction --&gt;
+
+5.2 Choices
+
+- `if` ... `else`
+- `if` ... `else if` ... `else`
+- `ifelse`
+- `switch`
+
+5.3 Loops
+
+- `for`
+- `while`
+
+&lt;!-- --- --&gt;
+
+&lt;!-- # 5.1 Introduction --&gt;
+
+---
+
+## 5.2 Choices
+.center[
+![choices](images/choices-choices-everywhere-dmfs4h.jpg)
+]
+
+
+```r
+if (condition) true_action
+if (contition) true_action else false_action
+```
+
+---
+## 5.2 Choices (2)
+.pull-left[
+__Test for `N` conditions__
+
+__(Efficient way)__
+
+```r
+if (condition1) {
+  true_action1 
+} else if(condition2) {
+  true_action2 
+} 
+# ...
+else if(conditionN) {
+  true_actionN 
+} else { 
+  false_action
+}
+```
+]
+.pull-right[
+__Test for `N` conditions__
+
+__(don't do this, please)__
+
+```r
+if (condition1) {
+  true_action1 
+} 
+
+if(condition2) {
+  true_action2
+}
+# ...
+if(conditionN) {
+  true_actionN 
+}
+```
+]
+---
+## 5.2 Choices (3)
+### Example: Grades
+
+```r
+grade &lt;- function(x) {
+  if (x &gt;= 90) {
+    "A"
+  } else if (x &gt;= 80) {
+    "B"
+  } else if (x &gt;= 70) {
+    "C"
+  } else {
+    "F"
+  }
+}
+
+grade(99)
+```
+
+```
+## [1] "A"
+```
+
+```r
+grade(50)
+```
+
+```
+## [1] "F"
+```
+---
+
+## 5.2 Choices (4)
+
+### 5.2.1 Invalid inputs
+"The condition should evaluate to a **single** `TRUE` or `FALSE`".
+
+
+```r
+if ("x") 1
+if (logical()) 1
+if (NA) 1
+```
+
+Except, logical vectors of length &gt; 1:
+
+```r
+if (c(TRUE, TRUE, FALSE)) 1
+```
+---
+
+## 5.2 Choices (5)
+### 5.2.2 Vectorised `if` (aka `ifelse`)
+
+
+```r
+x &lt;- 1:5
+ifelse(x %% 2 == 0, "even", "odd")
+```
+
+```
+## [1] "odd"  "even" "odd"  "even" "odd"
+```
+
+--
+### Bonus: `dplyr::case_when`
+
+```r
+dplyr::case_when(
+  x %% 2 == 0 ~ "even",
+  x %% 2 != 0 ~ "odd"
+)
+```
+
+```
+## [1] "odd"  "even" "odd"  "even" "odd"
+```
+---
+
+## 5.2 Choices (6)
+### 5.2.3 Fancy "`if`-chain" (aka `switch`)
+.pull-left[
+
+```r
+x_option &lt;- function(x) {
+  if (x == "a") {
+    "option 1"
+  } else if (x == "b") {
+    "option 2"
+  } else if (x == "c") {
+    "option 3"
+  } else {
+    stop("Invalid value")
+  }
+}
+```
+]
+
+.pull-right[
+
+```r
+x_option &lt;- function(x) {
+  switch(x, 
+         a = "option 1",
+         b = "option 2",
+         c = "option 3",
+         stop("Invalid value"))
+}
+```
+]
+
+.footnote[
+If multiple inputs have the same output, the RHS can be empty.
+]
+---
+
+## 5.2 Choices (7)
+### 5.2.4 Exercises
+---
+
+## 5.3 Loops
+
+---
+
+## Quiz
+
+* What is the difference between `if` and `ifelse()`?
+
+* In the following code, what will the value of `y` be if `x` is `TRUE`? What 
+if `x` is `FALSE`? What if `x` is `NA`?
+
+
+```r
+y &lt;- if (x) 3
+```
+
+`x = TRUE`
+
+```r
+if (TRUE) 3
+```
+
+```
+## [1] 3
+```
+
+--
+
+`x = FALSE`
+
+```r
+if (FALSE) 3
+```
+
+--
+
+`x = NA`
+
+```r
+if (NA) 3
+```
+
+---
+* What does `switch("x", x =, y = 2, z = 3)` return?
+--
+
+```r
+switch("x", x =, y = 2, z = 3)
+```
+
+```
+## [1] 2
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<style>
+.logo {
+  background-image: url(images/r4ds.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 110px;
+  height: 128px;
+  z-index: 0;
+}
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"></div>';
+  });
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
