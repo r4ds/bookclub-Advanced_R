@@ -24,8 +24,6 @@ class: center, middle, inverse, title-slide
 
 ## Overview
 
-&lt;!-- 5.1 Introduction --&gt;
-
 5.2 Choices
 
 - `if` ... `else`
@@ -38,10 +36,6 @@ class: center, middle, inverse, title-slide
 - `for`
 - `while`
 - `repeat`
-
-&lt;!-- --- --&gt;
-
-&lt;!-- # 5.1 Introduction --&gt;
 
 ---
 
@@ -203,6 +197,14 @@ x_option &lt;- function(x) {
          a = "option 1",
          b = "option 2",
          c = "option 3",
+         stop("Invalid value"))
+}
+
+legs &lt;- function(x) {
+  switch(x, 
+         cat = ,
+         dog = 4,
+         human = 2,
          stop("Invalid value"))
 }
 ```
@@ -426,7 +428,8 @@ for (i in 1:3) {
 }
 ```
 ---
-## Summary
+## Conclusion
+Can we put these concepts together in diagram form? Let’s work on improving these schematics!
 .center[
 ![recap](images/controlflow.png)
 ]

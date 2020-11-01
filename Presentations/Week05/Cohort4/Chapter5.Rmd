@@ -15,15 +15,12 @@ output:
 
 
 ```{r xaringan-themer, include = FALSE}
-# library(xaringanthemer)
 xaringanthemer::style_mono_light(
   base_color = "#3092FF",
   header_font_google = xaringanthemer::google_font("Josefin Sans"),
   text_font_google   = xaringanthemer::google_font("Montserrat", "300", "300i"),
   code_font_google   = xaringanthemer::google_font("Droid Mono")
 )
-# library(tidyverse)
-`%>%` <- dplyr::`%>%`
 
 knitr::opts_chunk$set(
   eval = FALSE
@@ -31,8 +28,6 @@ knitr::opts_chunk$set(
 ```
 
 ## Overview
-
-<!-- 5.1 Introduction -->
 
 5.2 Choices
 
@@ -46,10 +41,6 @@ knitr::opts_chunk$set(
 - `for`
 - `while`
 - `repeat`
-
-<!-- --- -->
-
-<!-- # 5.1 Introduction -->
 
 ---
 
@@ -182,6 +173,14 @@ x_option <- function(x) {
          a = "option 1",
          b = "option 2",
          c = "option 3",
+         stop("Invalid value"))
+}
+
+legs <- function(x) {
+  switch(x, 
+         cat = ,
+         dog = 4,
+         human = 2,
          stop("Invalid value"))
 }
 ```
@@ -355,7 +354,8 @@ for (i in 1:3) {
 }
 ```
 ---
-## Summary
+## Conclusion
+Can we put these concepts together in diagram form? Let’s work on improving these schematics!
 .center[
 ![recap](images/controlflow.png)
 ]
