@@ -37,6 +37,7 @@ class: center, middle, inverse, title-slide
 
 - `for`
 - `while`
+- `repeat`
 
 &lt;!-- --- --&gt;
 
@@ -214,10 +215,221 @@ If multiple inputs have the same output, the RHS can be empty.
 
 ## 5.2 Choices (7)
 ### 5.2.4 Exercises
+
+* What type of vector does each of the following calls to `ifelse` return?
+
+```r
+ifelse(TRUE, "yes", "no")
+ifelse(FALSE, "yes", "no")
+ifelse(NA, "yes", "no")
+```
+
+* Why does the following code work?
+
+```r
+x &lt;- 1:10
+if (length(x)) "not empty" else "empty"
+```
+
+```
+## [1] "not empty"
+```
+--
+
+```r
+x &lt;- numeric()
+if (length(x)) "not empty" else "empty"
+```
+
+```
+## [1] "empty"
+```
 ---
 
 ## 5.3 Loops
+.center[
+![loops-meme](images/you-like-loops.jpg)
+]
 
+
+```r
+for (item in vector) perform_action
+while(condition) action
+repeat(action)
+```
+---
+
+## 5.3 Loops (2)
+### `for` loops
+
+```r
+for (i in 1:3) {
+  print(i)
+}
+```
+
+Terminate loop:
+- `next` exists current iteration
+
+```r
+for (i in 1:10) {
+  if (i %% 2 == 0)
+    next
+  print(i)
+}
+```
+--
+
+```
+## [1] 1
+## [1] 3
+## [1] 5
+## [1] 7
+## [1] 9
+```
+---
+
+## 5.3 Loops (3)
+Terminate loop (cont.):
+- `break` exits the entire loop
+
+```r
+for (i in 1:10) {
+  if (i %% 5 == 0)
+    break
+  print(i)
+}
+```
+--
+
+```
+## [1] 1
+## [1] 2
+## [1] 3
+## [1] 4
+```
+
+---
+
+## 5.3 Loops (4)
+### 5.3.1 Common pitfalls
+
+- Preallocate the output container (_performance_)
+
+```r
+means &lt;- c(1, 50, 20)
+out &lt;- vector("list", length(means))
+```
+
+- Instead of iterating over `1:length(x)`, use `seq_along(x)`
+
+```r
+means &lt;- c()
+1:length(means)
+```
+
+```
+## [1] 1 0
+```
+
+```r
+seq_along(means)
+```
+
+```
+## integer(0)
+```
+---
+
+## 5.3 Loops (5)
+### 5.3.2 Related tools
+
+Flexibility: `for &lt; while &lt; repeat`
+
+.pull-left[
+
+```r
+i &lt;- 0
+while (i &lt; 10) {
+  i &lt;- i + 1
+  if (i %% 2 == 0)
+    next
+  print(i)
+}
+```
+
+```
+## [1] 1
+## [1] 3
+## [1] 5
+## [1] 7
+## [1] 9
+```
+]
+
+.pull-right[
+
+```r
+i &lt;- 0
+repeat({
+  i &lt;- i + 1
+  if (i &gt; 10) break
+  if (i %% 2 == 0) next
+  print(i)
+})
+```
+
+```
+## [1] 1
+## [1] 3
+## [1] 5
+## [1] 7
+## [1] 9
+```
+]
+---
+
+## 5.3 Loops (6)
+### 5.3.3 Exercises
+
+* Why does this code succeed without errors or warnings?
+
+```r
+x &lt;- numeric()
+out &lt;- vector("list", length(x))
+for (i in 1:length(x)) {
+  out[i] &lt;- x[i] ^ 2
+}
+out
+```
+
+* When the following code is evaluated, what can you say about the vector being iterated?
+
+```r
+xs &lt;- c(1, 2, 3)
+for (x in xs) {
+  xs &lt;- c(xs, x * 2)
+}
+xs
+```
+
+---
+
+## 5.3 Loops (7)
+### 5.3.3 Exercises
+* What does the following code tell you about when the index is updated?
+
+```r
+for (i in 1:3) {
+  i &lt;- i * 2
+  print(i)
+}
+```
+---
+## Summary
+.center[
+![recap](images/controlflow.png)
+]
 ---
 
 ## Quiz
