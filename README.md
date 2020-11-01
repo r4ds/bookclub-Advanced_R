@@ -92,12 +92,14 @@ Chapter 4 - Subsetting
 - Cohort 1: [Scott Nestler](https://twitter.com/ScottNestler) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week04/Cohort1/Chap4slides.html#1) | [video](https://www.youtube.com/watch?v=eLMpCc0t1cg))
 - Cohort 2: Mike Jeziorski (slides | [video](https://www.youtube.com/watch?v=Mhq-TX4eA64))
 - Cohort 3: Shelmith Kariuki and Alan Kinene ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week04/Cohort3/chapter4.html#1) | [video](https://www.youtube.com/watch?v=CvvXkXiF3Ig))
+- Cohort 4: Emily Wissel (SLIDES | video)
 
 Chapter 5 - Control flow
 
 - Cohort 1: [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week05/Cohort1/Chapter5.html#1) | [video](https://www.youtube.com/watch?v=96eY6YS_3hU))
 - Cohort 2: [Erick Knackstedt](https://twitter.com/Eknackstedt) (slides | [video](https://www.youtube.com/watch?v=x5I_uHnMxIk))
 - Cohort 3: [Megan Stodel](www.meganstodel.com) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week05/Cohort3/Control-Flow.pdf) | [video](https://www.youtube.com/watch?v=u6UMGWDuxDE))
+- Cohort 4: [Roberto Villegas-Diaz](https://github.com/villegar) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week05/Cohort4/Chapter5.html#1) | video)
 
 Chapter 6 - Functions
 
