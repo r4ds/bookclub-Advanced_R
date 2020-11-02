@@ -92,7 +92,7 @@ Chapter 4 - Subsetting
 - Cohort 1: [Scott Nestler](https://twitter.com/ScottNestler) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week04/Cohort1/Chap4slides.html#1) | [video](https://www.youtube.com/watch?v=eLMpCc0t1cg))
 - Cohort 2: Mike Jeziorski (slides | [video](https://www.youtube.com/watch?v=Mhq-TX4eA64))
 - Cohort 3: Shelmith Kariuki and Alan Kinene ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week04/Cohort3/chapter4.html#1) | [video](https://www.youtube.com/watch?v=CvvXkXiF3Ig))
-- Cohort 4: Emily Wissel (SLIDES | video)
+- Cohort 4: Emily Wissel (SLIDES | [video](https://youtu.be/Hxghhpe9fYs)
 
 Chapter 5 - Control flow
 
