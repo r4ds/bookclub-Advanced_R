@@ -69,14 +69,14 @@ This repo contains 3 main folders:
 
 *Cohort 4 (started 2020-10-05) Mondays, 17:00 ET*
 
-- 2020-11-02 Chapter 5 - Control Flow
 - 2020-11-09 Chapter 6 - Functions
 - 2020-11-16 Chapter 7 - Environments
+- 2020-11-23 Chapter 8 - Conditions
 
 <details>
   <summary> Future Meetings </summary>
 
-- 2020-11-23 Chapter 8 - Conditions
+- 2020-11-30 Chapter 9 - Functionals
 
 </details>
 
