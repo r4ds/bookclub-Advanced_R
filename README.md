@@ -69,14 +69,14 @@ This repo contains 3 main folders:
 
 *Cohort 4 (started 2020-10-05) Mondays, 17:00 ET*
 
-- 2020-11-02 Chapter 5 - Control Flow
 - 2020-11-09 Chapter 6 - Functions
 - 2020-11-16 Chapter 7 - Environments
+- 2020-11-23 Chapter 8 - Conditions
 
 <details>
   <summary> Future Meetings </summary>
 
-- 2020-11-23 Chapter 8 - Conditions
+- 2020-11-30 Chapter 9 - Functionals
 
 </details>
 
@@ -108,28 +108,28 @@ Chapter 3 - Vectors
 Chapter 4 - Subsetting
 
 - Cohort 1: [Scott Nestler](https://twitter.com/ScottNestler) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week04/Cohort1/Chap4slides.html#1) | [video](https://www.youtube.com/watch?v=eLMpCc0t1cg))
-- Cohort 2: Mike Jeziorski (slides | [video](https://www.youtube.com/watch?v=Mhq-TX4eA64))
+- Cohort 2: Mike Jeziorski (SLIDES | [video](https://www.youtube.com/watch?v=Mhq-TX4eA64))
 - Cohort 3: Shelmith Kariuki and Alan Kinene ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week04/Cohort3/chapter4.html#1) | [video](https://www.youtube.com/watch?v=CvvXkXiF3Ig))
-- Cohort 4: Emily Wissel (SLIDES | [video](https://youtu.be/Hxghhpe9fYs)
+- Cohort 4: Emily Wissel (SLIDES | [video](https://youtu.be/Hxghhpe9fYs))
 
 Chapter 5 - Control flow
 
 - Cohort 1: [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week05/Cohort1/Chapter5.html#1) | [video](https://www.youtube.com/watch?v=96eY6YS_3hU))
-- Cohort 2: [Erick Knackstedt](https://twitter.com/Eknackstedt) (slides | [video](https://www.youtube.com/watch?v=x5I_uHnMxIk))
+- Cohort 2: [Erick Knackstedt](https://twitter.com/Eknackstedt) (SLIDES | [video](https://www.youtube.com/watch?v=x5I_uHnMxIk))
 - Cohort 3: [Megan Stodel](www.meganstodel.com) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week05/Cohort3/Control-Flow.pdf) | [video](https://www.youtube.com/watch?v=u6UMGWDuxDE))
-- Cohort 4: [Roberto Villegas-Diaz](https://github.com/villegar) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week05/Cohort4/Chapter5.html#1) | video)
+- Cohort 4: [Roberto Villegas-Diaz](https://github.com/villegar) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week05/Cohort4/Chapter5) | VIDEO)
 
 Chapter 6 - Functions
 
 - Cohort 1: [Asmae Toumi](https://twitter.com/asmae_toumi) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week06/Cohort1/Chap6slides.html#1) | [video](https://youtu.be/UwzGhMndWzs))
-- Cohort 2: [Meenakshi Kushwaha](https://twitter.com/envhealthspeak)([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week06/Cohort2/#1) | [video](https://www.youtube.com/watch?v=51PMEM4Efb8))
+- Cohort 2: [Meenakshi Kushwaha](https://twitter.com/envhealthspeak) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week06/Cohort2/#1) | [video](https://www.youtube.com/watch?v=51PMEM4Efb8))
 - Cohort 3: [Novica Nakov](https://twitter.com/novicanakov) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week06/Cohort3/Chap6slides.html#1) | [video]())
 
 Chapter 7 - Environments
 
 - Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn)  ([slides](https://r4dscommunity.shinyapps.io/environments/) | [static slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week07/Cohort1/Chap7Slides.html#1) | [video](https://www.youtube.com/watch?v=mk7iu1-P8ZU))
-- Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week07/Cohort2/2020_09_17_advancedR_environments.html) | ([video](https://www.youtube.com/watch?v=syRMRYKN30k))
-- Cohort 3: [Anna-Leigh Brown](https://twitter.com/annaleighbrown2) ([slides] | [static slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week07/Cohort3/Environments/Environments.html)|[video](https://youtu.be/fW7Di01gLhw))
+- Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week07/Cohort2/2020_09_17_advancedR_environments.html) | [video](https://www.youtube.com/watch?v=syRMRYKN30k))
+- Cohort 3: [Anna-Leigh Brown](https://twitter.com/annaleighbrown2) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week07/Cohort3/Environments/Environments.html) | [video](https://youtu.be/fW7Di01gLhw))
 
 Chapter 8 - Conditions
 
@@ -139,7 +139,7 @@ Chapter 8 - Conditions
 
 Section 1 - Foundations (Recap)
 
-- Cohort 3: Anna-Leigh Brown (SLIDES | [video](https://youtu.be/Wt7p71_BuYY)
+- Cohort 3: Anna-Leigh Brown (SLIDES | [video](https://youtu.be/Wt7p71_BuYY))
 
 Chapter 9 - Functionals
 
@@ -150,12 +150,12 @@ Chapter 9 - Functionals
 Chapter 10 - Function factories
 
 - Cohort 1: [Jon Harmon](https://twitter.com/jonthegeek) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week10/Cohort1/Chapter10.html#1) | [video](https://www.youtube.com/watch?v=enI5Ynq6olI) | [{factory}](https://cran.r-project.org/package=factory))
-- Cohort 2: Jorge Mendes ([video](https://youtu.be/U-CoF7MCik0))
+- Cohort 2: Jorge Mendes (SLIDES | [video](https://youtu.be/U-CoF7MCik0))
 
 Chapter 11 - Function operators
 
 - Cohort 1: [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week11/Cohort1/Chapter11.html#1) | [video](https://www.youtube.com/watch?v=zzUY03gt_pA&feature=youtu.be))
-- Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) (SLIDES) | ([video](https://youtu.be/fD1QJB2pHik))
+- Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) (SLIDES | [video](https://youtu.be/fD1QJB2pHik))
 
 Chapter 12 + 13 - OOP base types + S3
 
