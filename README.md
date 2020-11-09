@@ -164,7 +164,7 @@ Chapter 12 + 13 - OOP base types + S3
 Chapter 14 - R6
 
 - Cohort 1: Tyler Grant Smith ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Cohort1/Chapter14.html#1) | [video](https://www.youtube.com/watch?v=hPjaOdprgow&feature=youtu.be))
-- Cohort 2: Ezra Porter ([SLIDES](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Cohort2/Chapter-14.html#1) | [https://youtu.be/LVkDJ28XJUE](video))
+- Cohort 2: Ezra Porter ([SLIDES](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Cohort2/Chapter-14.html#1) | [video](https://youtu.be/LVkDJ28XJUE))
 
 Chapter 15 - S4
 
