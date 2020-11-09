@@ -18,14 +18,13 @@ This repo contains 3 main folders:
 
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
-- 2020-11-05 Chapter 14: R6 - Ezra Porter
 - 2020-11-12 Chapter 15: S4
 - 2020-11-19 Chapter 16: Trade-offs & OOP Recap
+- 2020-12-03 Chapter 17: Big picture (of Metaprogramming)
 
 <details>
   <summary> Future Meetings </summary>
 
-- 2020-12-03 Chapter 17: Big picture (of Metaprogramming)
 - 2020-12-10 Chapter 18: Expressions
 - 2020-12-17 Chapter 19: Quasiquotation
 - 2021-01-07 Chapter 20: Evaluation
@@ -165,6 +164,7 @@ Chapter 12 + 13 - OOP base types + S3
 Chapter 14 - R6
 
 - Cohort 1: Tyler Grant Smith ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Cohort1/Chapter14.html#1) | [video](https://www.youtube.com/watch?v=hPjaOdprgow&feature=youtu.be))
+- Cohort 2: Ezra Porter (SLIDES] | [https://youtu.be/LVkDJ28XJUE](video))
 
 Chapter 15 - S4
 
