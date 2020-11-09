@@ -132,7 +132,7 @@ Chapter 8 - Conditions
 
 - Cohort 1: [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week08/Cohort1/Chapter8.html#1) | [video](https://www.youtube.com/watch?v=mwiNe083DLU))
 - Cohort 2: [Abby Vander Linden](https://twitter.com/nopeantelope?lang=en) ([video](https://youtu.be/ZFUr7YRSu2o))
-- Cohort 3: [Shel Kariuki](https://twitter.com/Shel_Kariuki) (SLIDES | [video](https://youtu.be/UZhrsVz6wi0))
+- Cohort 3: [Shel Kariuki](https://twitter.com/Shel_Kariuki) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week08/Cohort3/chapter8.html#1) | [video](https://youtu.be/UZhrsVz6wi0))
 
 Section 1 - Foundations (Recap)
 
@@ -158,13 +158,13 @@ Chapter 11 - Function operators
 
 Chapter 12 + 13 - OOP base types + S3
 
-- Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week12/Cohort1/Advanced_R_12to13_OOP.html#1) | [video](https://www.youtube.com/watch?v=Fy3JF5Em6qY&feature=youtu.be))
+- Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week12/Cohort1/Advanced_R_12to13_OOP_S3.html#1) | [video](https://www.youtube.com/watch?v=Fy3JF5Em6qY&feature=youtu.be))
 - Cohort 2: Chris Yarrison (SLIDES | [video](https://youtu.be/9GkgNC15EAw))
 
 Chapter 14 - R6
 
 - Cohort 1: Tyler Grant Smith ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Cohort1/Chapter14.html#1) | [video](https://www.youtube.com/watch?v=hPjaOdprgow&feature=youtu.be))
-- Cohort 2: Ezra Porter ([SLIDES](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Cohort2/Chapter-14.html#1) | [https://youtu.be/LVkDJ28XJUE](video))
+- Cohort 2: Ezra Porter ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Cohort2/Chapter-14.html#1) | [video](https://youtu.be/LVkDJ28XJUE))
 
 Chapter 15 - S4
 
