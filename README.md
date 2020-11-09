@@ -132,7 +132,7 @@ Chapter 8 - Conditions
 
 - Cohort 1: [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week08/Cohort1/Chapter8.html#1) | [video](https://www.youtube.com/watch?v=mwiNe083DLU))
 - Cohort 2: [Abby Vander Linden](https://twitter.com/nopeantelope?lang=en) ([video](https://youtu.be/ZFUr7YRSu2o))
-- Cohort 3: [Shel Kariuki](https://twitter.com/Shel_Kariuki) (SLIDES | [video](https://youtu.be/UZhrsVz6wi0))
+- Cohort 3: [Shel Kariuki](https://twitter.com/Shel_Kariuki) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week08/Cohort3/chapter8.html#1) | [video](https://youtu.be/UZhrsVz6wi0))
 
 Section 1 - Foundations (Recap)
 
@@ -164,7 +164,7 @@ Chapter 12 + 13 - OOP base types + S3
 Chapter 14 - R6
 
 - Cohort 1: Tyler Grant Smith ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Cohort1/Chapter14.html#1) | [video](https://www.youtube.com/watch?v=hPjaOdprgow&feature=youtu.be))
-- Cohort 2: Ezra Porter ([SLIDES](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Cohort2/Chapter-14.html#1) | [video](https://youtu.be/LVkDJ28XJUE))
+- Cohort 2: Ezra Porter ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Cohort2/Chapter-14.html#1) | [video](https://youtu.be/LVkDJ28XJUE))
 
 Chapter 15 - S4
 
