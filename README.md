@@ -66,14 +66,17 @@ This repo contains 3 main folders:
 
 *Cohort 4 (started 2020-10-05) Mondays, 17:00 ET*
 
-- 2020-11-09 Chapter 6 - Functions
-- 2020-11-16 Chapter 7 - Environments
-- 2020-11-23 Chapter 8 - Conditions
+- 2020-11-16 Chapter 7 - Environments - Stephen H
+- 2020-11-23 Chapter 8 - Conditions - Estevão
+- 2020-11-30 Chapter 9 - Functionals
 
 <details>
   <summary> Future Meetings </summary>
 
-- 2020-11-30 Chapter 9 - Functionals
+- 2020-12-07 Chapter 10 - Function factories
+- 2020-12-14 Chapter 11 - Function operators
+- 2020-12-21 Chapter 12 - Base types (OOP)
+- 2020-12-28 Chapter 13 - S3 - Roberto
 
 </details>
 
@@ -121,6 +124,7 @@ Chapter 6 - Functions
 - Cohort 1: [Asmae Toumi](https://twitter.com/asmae_toumi) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week06/Cohort1/Chap6slides.html#1) | [video](https://youtu.be/UwzGhMndWzs))
 - Cohort 2: [Meenakshi Kushwaha](https://twitter.com/envhealthspeak) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week06/Cohort2/#1) | [video](https://www.youtube.com/watch?v=51PMEM4Efb8))
 - Cohort 3: [Novica Nakov](https://twitter.com/novicanakov) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week06/Cohort3/Chap6slides.html#1) | [video]())
+- Cohort 4: June Choe (SLIDES | [video](https://youtu.be/lg5rzOU6lsg))
 
 Chapter 7 - Environments
 
