@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Shel Kariuki @Shel_Kariuki" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Advanced R
+## Chapter 8: Conditions
+### Shel Kariuki <span class="citation">@Shel_Kariuki</span>
+### 2020/10/05
+
+---
+
+
+
+
+
+
+
+# Outline
+  
+- Section 8.1: Introduction 
+
+--
+
+- Section 8.2: Signalling conditions
+
+--
+
+- Section 8.3: Ignoring conditions
+
+--
+
+- Section 8.4: Handling conditions
+
+--
+
+- Section 8.5: Custom conditions
+
+--
+
+- Section 8.6: Applications
+
+--
+
+- Section 8.7: Quizzes
+
+
+---
+
+# 8.1: Introduction
+
+The **condition system** provides a paired set of tools that allow the author of a function to:
+
+  - indicate that something unusual is happening, 
+
+  - and the user of that function to deal with it.
+
+The function author signals conditions with functions like `stop()` (for errors), `warning()` (for warnings), and `message()`
+
+Then the function user can handle them with functions like `tryCatch()` and `withCallingHandlers()`
+---
+# 8.2: Signalling conditions
+
+There are three conditions that can be signaled in code:
+
+  - `Errors`: They indicate that the function cannot execute at its current state.
+  
+  - `Warnings`:  Indicates that something has gone wrong, but that the function has kind of recovered (or has it?????)
+  
+  - `Messages`: They give more information of actions that are performed on behalf of the user.
+
+
+
+```r
+stop("Hi there, I am an error.")
+```
+
+```
+## Error in eval(expr, envir, enclos): Hi there, I am an error.
+```
+
+```r
+warning("Hi there, be careful when you see me")
+```
+
+```
+## Warning: Hi there, be careful when you see me
+```
+
+```r
+message("I am better than them, aint I?")
+```
+
+```
+## I am better than them, aint I?
+```
+---
+## 8.2.1 Errors
+
+In base R, errors are signalled by `stop()`.
+
+
+```r
+my_function1 &lt;- function()stop("Error! Error! Error!")
+
+my_function1()
+```
+
+```
+## Error in my_function1(): Error! Error! Error!
+```
+
+
+```r
+my_function1 &lt;- function() stop("Error! Error! Error!", call. = FALSE)
+
+my_function1()
+```
+
+```
+## Error: Error! Error! Error!
+```
+
+In rlang, they are signalled by `rlang::abort()`
+
+
+```r
+my_function3 &lt;- function()rlang::abort("rlang's error handling")
+
+my_function3()
+```
+
+```
+## Error: rlang's error handling
+```
+
+---
+&gt; You cannot have multiple error signals in one function.
+
+
+```r
+my_function123 &lt;- function(){
+  
+  stop("Error! Error! Error!")
+  
+  stop("Error! Error! Error!", call. = FALSE)
+  
+  rlang::abort("rlang's error handling")
+}
+
+my_function123()
+```
+
+```
+## Error in my_function123(): Error! Error! Error!
+```
+
+---
+## 8.2.2 Warnings
+Indicates that something has gone wrong, but the function has kind of recovered.
+
+Unlike errors, you can have multiple warnings from a single function call.
+
+
+```r
+my_function4a &lt;- function(){
+ cat("R4DS Cohort 3") 
+ warning("I am the first warning")
+ cat("R4DS Cohort 3 again")
+ warning("I am the second warning")
+}
+
+my_function4a()
+```
+
+```
+## R4DS Cohort 3
+```
+
+```
+## Warning in my_function4a(): I am the first warning
+```
+
+```
+## R4DS Cohort 3 again
+```
+
+```
+## Warning in my_function4a(): I am the second warning
+```
+
+&gt; By default, **warnings are cached and printed only when control returns to the top level**.
+
+---
+
+One can control this behaviour with the `warn` option
+
+  - `options(warn = 0)`: default
+ 
+  
+  - `options(warn = 1)`: makes warnings appear immediately.
+  
+
+```r
+options(warn = 1)
+
+my_function4b &lt;- function(){
+ cat("R4DS Cohort 4") 
+ warning("I am the first warning")
+ 
+cat("R4DS Cohort 4")
+ warning("I am the second warning")
+}
+
+my_function4b()
+```
+
+```
+## R4DS Cohort 4
+```
+
+```
+## Warning in my_function4b(): I am the first warning
+```
+
+```
+## R4DS Cohort 4
+```
+
+```
+## Warning in my_function4b(): I am the second warning
+```
+  
+  - `options(warn = 2)`: turns warnings into errors
+  
+---
+&gt; We can set warnings in rlang with `rlang::warn()`
+
+
+```r
+my_function4c &lt;- function() rlang::warn("This is also a warning")
+
+my_function4c()
+```
+
+```
+## Warning: This is also a warning
+```
+
+&gt; Some warnings should be more of errors than warnings
+
+
+```r
+my_vec1 &lt;- c(15, 16, 35, "50+")
+as.numeric(my_vec1)
+```
+
+```
+## Warning: NAs introduced by coercion
+```
+
+```
+## [1] 15 16 35 NA
+```
+
+```r
+my_vec2 &lt;- c(15, 16, 35, "5 7")
+as.numeric(my_vec2)
+```
+
+```
+## Warning: NAs introduced by coercion
+```
+
+```
+## [1] 15 16 35 NA
+```
+
+---
+
+## 8.2.3 Messages
+
+Messages are signalled by `message()`.
+
+They are informational; use them to tell the user that you’ve done something on their behalf.
+
+Use messages to provide just enough information so the user knows what’s going on, **but not so much that they’re overwhelmed**
+
+
+```r
+library(rKenyaCensus)
+```
+
+Generally any function that produces a message should have some way to suppress it.
+
+One can use `suppressMessages()`
+
+Comparison between `cat()` and `message()`
+
+  - `cat()`:  used when the primary role of the function is to print to the console.  Used when the user asks for something to be printed. 
+  
+  - `message()`: as a side-channel to print to the console when the primary purpose of the function is something else. Used when the developer elects to print something.
+  
+---
+
+
+```r
+my_func5 &lt;- function(){
+  
+  cat("I want my function to print this")
+  
+  message("This function contains a message.")
+  
+}
+my_func5()
+```
+
+```
+## I want my function to print this
+```
+
+```
+## This function contains a message.
+```
+
+---
+# 8.3: Signalling conditions
+
+The simplest way of handling conditions in R is to simply ignore them:
+
+  - Ignore errors with `try()`.
+
+&gt; `try()` allows execution to continue even after an error has occurred.
+
+
+```r
+my_func6a &lt;- function(x,y){
+  x+y
+  cat("Nairobi is the capital city of Kenya")
+}
+my_func6a(2)
+```
+
+```
+## Error in my_func6a(2): argument "y" is missing, with no default
+```
+
+
+```r
+my_func6b &lt;- function(x,y){
+  
+  try(x+y)
+  cat("Nairobi is the capital city of Kenya")
+}
+my_func6b(2)
+```
+
+```
+## Error in try(x + y) : argument "y" is missing, with no default
+## Nairobi is the capital city of Kenya
+```
+---
+
+Unlike errors, messages and warnings don’t terminate execution.
+
+  - Ignore warnings with `suppressWarnings()`
+  
+
+```r
+suppressWarnings(warning("I am a warning, but I am just about to be supressed")) 
+```
+ 
+  - Ignore messages with `suppressMessages()`
+
+
+```r
+suppressMessages({
+  
+  message("I am a message, but I am just bout to be supressed")
+  
+  6^2
+    
+  })
+```
+
+```
+## [1] 36
+```
+
+---
+# 8.4: Handling conditions
+
+Every condition has default behaviour: 
+
+&gt; **errors** stop execution and return to the top level
+
+&gt; **warnings** are captured and displayed in aggregate
+
+&gt; **messages** are displayed immediately 
+
+**Condition handlers** allow us to **temporarily override or supplement the default behaviour**.
+
+`tryCatch()` and `withCallingHandlers()` allow us to register handlers, functions that take the signalled condition as their single argument.
+
+`tryCatch()` defines exiting handlers; after the condition is handled, control returns to the context where `tryCatch()` was called. This makes `tryCatch()` most suitable for working with **errors** and **interrupts**, as these have to exit anyway.
+
+`withCallingHandlers()` defines calling handlers; after the condition is captured control returns to the context where the condition was signalled. This makes it most suitable for working with **non-error conditions**
+
+---
+
+## 8.4.1 Condition objects
+
+Built-in conditions are lists with two elements:
+
+  -   **message**, a length-1 character vector containing the text to display to a user. To extract the message, use `conditionMessage(cnd)`.
+
+  -   **call**, the call which triggered the condition. We extract it using `conditionCall(cnd)`.
+  
+
+```r
+cnd &lt;- rlang::catch_cnd(stop("This is an error!!"))
+str(cnd)
+```
+
+```
+## List of 2
+##  $ message: chr "This is an error!!"
+##  $ call   : language force(expr)
+##  - attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
+```
+
+---
+
+
+## 8.4.2 Exiting handlers: `tryCatch()`
+
+`tryCatch()` registers exiting handlers, so it is used to handle error conditions.
+
+&gt;Exiting handlers because they cause code to exit once the condition has been caught.
+
+Syntax: `tryCatch(my_code,my_error_function)`
+                
+`my_code` : piece of code we are working on.
+
+`my_error_function`: function that contains the code to run when an error is thrown
+
+
+```r
+my_code &lt;- function(x, y){
+  
+  x+y
+}
+
+my_code(2,"Shel")
+```
+
+```
+## Error in x + y: non-numeric argument to binary operator
+```
+---
+
+The handler functions are called with a single argument, the condition object (`cnd`).
+
+
+```r
+my_func &lt;- function(x, y){
+
+  tryCatch(
+    
+    x+y,
+    
+    error = function(cnd) cat("An error has occured")
+  
+  )
+}
+
+my_func(2,"Shel")
+```
+
+```
+## An error has occured
+```
+
+---
+
+## 8.4.3 Calling handlers: `withCallingHandlers()`
+
+`withCallingHandlers()` sets up calling handlers: code execution continues normally once the handler returns
+
+
+```r
+my_func2 &lt;- function(){
+  
+  withCallingHandlers(
+    
+   message("Omg!!, I now get why this book is titled 'Advanced R'"),
+    
+    message = function(cnd){
+      
+    message("This package contains a message, please read it carefully")
+      
+    }
+  )
+}
+
+my_func2()
+```
+
+```
+## This package contains a message, please read it carefully
+```
+
+```
+## Omg!!, I now get why this book is titled 'Advanced R'
+```
+
+
+---
+
+
+```r
+my_func3 &lt;- function(){
+  
+  withCallingHandlers(
+    
+    as.numeric(c(2,3,"5 6")
+               ),
+    
+    warning = function(cnd){
+      
+    warning("A warning has been signalled!!!", call. = FALSE)
+    }
+  )
+}
+
+my_func3()
+```
+
+```
+## Warning: A warning has been signalled!!!
+```
+
+```
+## Warning in withCallingHandlers(as.numeric(c(2, 3, "5 6")), warning = function(cnd)
+## {: NAs introduced by coercion
+```
+
+```
+## [1]  2  3 NA
+```
+
+---
+
+**??muffle**
+
+---
+
+## 8.4.4 Call stacks
+
+---
+## 8.4.5 Exercise
+
+---
+# 8.5: Custom conditions
+
+One of the challenges of error handling in R is that most functions generate one of the built-in conditions, which contain only a message and a call
+
+We can create custom conditions that can contain additional metadata.
+
+`rlang::abort()` makes this very easy as you can supply a custom .subclass and additional metadata.
+---
+## 8.5.1 Motivation
+
+
+```r
+my_func &lt;- function(){
+  
+    as.numeric(c(34, 56, "7 13"))
+}
+my_func()
+```
+
+```
+## Warning in my_func(): NAs introduced by coercion
+```
+
+```
+## [1] 34 56 NA
+```
+
+
+```r
+my_func &lt;- function(x){
+  withCallingHandlers(
+    as.numeric(x),
+    
+    warning = function(cnd){
+    if(is.character(x)){
+      warning("There is a character value in your vector")
+    }
+  }
+)
+}
+my_func(c("7 13"))
+```
+
+```
+## Warning in (function (cnd) : There is a character value in your vector
+```
+
+```
+## Warning in withCallingHandlers(as.numeric(x), warning = function(cnd) {: NAs
+## introduced by coercion
+```
+
+```
+## [1] NA
+```
+
+&gt; Custom conditions are more likely to guide the user towards a correct fix.
+
+&gt; However, they’re no better if you want to programmatically handle the errors: all the useful metadata about the error is jammed into a single string.
+
+---
+## 8.5.2 Signalling
+
+
+
+```r
+my_func &lt;- function(x, y){
+
+  2 + x + y
+}
+
+my_func(3, "3")
+```
+
+```
+## Error in 2 + x + y: non-numeric argument to binary operator
+```
+
+
+```r
+my_func &lt;- function(x, y){
+  
+  if(is.character(x) | is.character(y)){
+    
+    rlang::abort("One of the arguments that you have provided is a character")
+  }
+  2 + x + y
+}
+
+my_func(3, "3")
+```
+
+```
+## Error: One of the arguments that you have provided is a character
+```
+---
+
+
+```r
+my_func &lt;- function(x, y){
+  
+  if(is.character(x) | is.character(y)){
+    rlang::abort(glue::glue({y}, " is a character"))
+  }
+  2 + x + y
+}
+
+my_func(3, "3")
+```
+
+```
+## Error: 3 is a character
+```
+
+
+```r
+my_func &lt;- function(x, y){
+  
+  if(is.character(x) &amp; !is.character(y)){
+    rlang::abort(glue::glue({y}, " is a character input."))
+  }else
+    if(is.character(y) &amp; !is.character(x)){
+     rlang::abort(glue::glue({y}, " is a character input.")) 
+    }else
+      if(is.character(x) &amp; is.character(y)){
+     rlang::abort(glue::glue({x}, " and " ,{y}, " are characters inputs.")) 
+    }
+  2 + x + y
+}
+
+my_func("3", "10")
+```
+
+```
+## Error: 3 and 10 are characters inputs.
+```
+
+
+---
+## 8.5.3 Handling
+
+---
+## 8.5.4 Exercises
+
+---
+# 8.6 Applications
+
+## 8.6.1  Failure value
+
+
+```r
+fail_with &lt;- function(x,y, value = NULL) {
+  tryCatch(
+    error = function(cnd) value,
+    x * y 
+  )
+}
+
+fail_with(2,"3", "You must have insert a character value")
+```
+
+```
+## [1] "You must have insert a character value"
+```
+
+
+
+---
+## 8.6.2  Success and failure values
+
+
+```r
+do_with &lt;- function(x,y, value = NULL) {
+  tryCatch(
+    error = function(cnd) value,
+    {
+      x * y
+      cat("Your inputs are perfect\n\n")
+      
+    }
+    
+  )
+}
+
+do_with(2,3, "You must have insert a character value")
+```
+
+```
+## Your inputs are perfect
+```
+
+---
+## 8.6.3 Resignal
+
+---
+## 8.6.4 Record
+
+---
+## 8.6.5 No default behaviour
+
+---
+## 8.6.6 Exercises
+
+---
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+<style>
+.logo {
+  background-image: url(r4ds.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 110px;
+  height: 128px;
+  z-index: 0;
+}
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"></div>';
+  });
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

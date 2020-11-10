@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Functions</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Meenakshi Kushwaha" />
+    <script src="index_files/header-attrs-2.3/header-attrs.js"></script>
+    <link href="index_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="index_files/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Functions
+## Advanced R
+### Meenakshi Kushwaha
+### 2020/09/02 (updated: 2020-09-11)
+
+---
+
+class:middle, center
+# The Basics
+---
+# Three components
+- ###Argument | formals
+  - list of arguments
+- ###Body
+  - code inside the function
+- ###Environment
+  - data structure that determines **how the function finds the values** associated with the names
+  - specified implicitly based on *where* you define the function
+  
+.footnote[The Basics]  
+---
+# Exception - Primitive functions
+
+- Exist primarily in C so their `formals()`, `body()`, and `environment()` are NULL
+- Only found in base R
+- Examples - `sum()`, `[`
+
+```r 
+typeof(sum)
+#&gt; [1] "builtin"
+typeof(`[`)
+#&gt; [1] "special"
+```
+.footnote[The Basics]  
+---
+# First-class functions
+- R functions are objects in their own right
+- No special syntax for defining and naming a function
+- Typically, create a function object using `function` and bind it to a name with `&lt;-`
+  - Binding step is not necessary
+
+```r
+lapply(mtcars, function(x) length(unique(x)))
+Filter(function(x) !is.numeric(x), mtcars)
+integrate(function(x) sin(x) ^ 2, 0, pi)
+```
+.footnote[The Basics]  
+---
+# Invoking a function
+Use `do.call` if arguments are already in a data structure
+
+```r
+args &lt;- list(1:10, na.rm = TRUE)
+do.call(mean, args)
+&gt; [1] 5.5
+```
+.footnote[The Basics]  
+---
+class:middle, center
+# Function composition
+
+---
+# Nesting
+
+
+```r
+x &lt;- runif(100)
+sqrt(mean(square(deviation(x))))
+#&gt; [1] 0.274
+```
+
+`\(\checkmark\)` Concise, well suited for short sequences  
+**x**  Can be hard to read
+
+.footnote[Function composition]
+???
+Note- code highlight differs if r is not within parentheses
+.footnote[Function composition]
+---
+# Intermediate Objects
+
+
+```r
+out &lt;- deviation(x)
+out &lt;- square(out)
+out &lt;- mean(out)
+out &lt;- sqrt(out)
+out
+#&gt; [1] 0.274
+```
+
+**x**  intermediate names required  
+`\(\checkmark\)` This is useful only when intermediate objects are important  
+
+.footnote[Function composition]
+---
+# Piping 
+
+
+```r
+x %&gt;%
+  deviation() %&gt;%
+  square() %&gt;%
+  mean() %&gt;%
+  sqrt()
+#&gt; [1] 0.274
+```
+`\(\checkmark\)` More readable code  
+**x**  Requires third party package   
+.footnote[Function composition]
+---
+class: center, middle
+# Lexical scoping
+### How does R find the value associated with a name?
+
+**"It looks up the values of names based on how a function is defined, not how it is called"**
+
+---
+# Four rules of lexical scoping
+
+- ### Name masking
+- ### Functions versus variables
+- ### A fresh start
+- ### Dynamic lookup
+.footnote[Lexical scoping]
+---
+## Name masking
+.footnote[Lexical scoping]
+.pull-left[Names defined within the function mask names outside the function 
+
+```r
+x &lt;- 10
+y &lt;- 20
+g02 &lt;- function() {
+  x &lt;- 1
+  y &lt;- 2
+  c(x, y)
+}
+g02()
+#&gt; [1] 1 2
+```
+]
+--
+.pull-right[If a name isn’t defined inside a function, R looks one level up.       
+
+```r
+x &lt;- 2
+g03 &lt;- function() {
+  y &lt;- 1
+  c(x, y)
+}
+g03()
+#&gt; [1] 2 1
+y
+#&gt; [1] 20
+```
+]     
+
+--
+The same rules apply if a function is defined inside another function. 
+
+---
+#Functions vs variables
+- Since functions are objects, scoping rules also apply to functions
+- What happens if you use the same name for a function and non-function object?
+  - R ignores non-function objects when looking for that value
+
+
+```r
+g09 &lt;- function(x) x + 100
+g10 &lt;- function() {
+  g09 &lt;- 10
+  g09(g09)
+}
+g10()
+#&gt; [1] 110
+```
+ 
+ !!! Using same name for different things is a bad idea!!!   
+.footnote[Lexical scoping]
+???
+g09 takes two different values
+best to not use same names (caution from Hadley) but knowing this can help us troubleshoot
+
+---
+# A fresh start
+- Every time a function is called a new environment is created to host its execution. 
+- Each invocation is completely independent
+
+```r
+g11 &lt;- function() {
+  if (!exists("a")) {
+    a &lt;- 1
+  } else {
+    a &lt;- a + 1
+  }
+  a
+}
+
+g11()
+g11()
+```
+
+
+.footnote[Lexical scoping]
+---
+#Dynamic Look up
+.footnote[Lexical scoping]
+- R looks for values when the function is run, not when the function is created. 
+
+
+
+```r
+g12 &lt;- function() x + 1
+x &lt;- 15
+g12()
+#&gt; [1] 16
+
+x &lt;- 20
+g12()
+#&gt; [1] 21
+```
+--
+- If there is a a spelling mistake in the code, you won’t get an error message when you create the function
+- Use `codetools` to detect the external dependencies
+--
+
+```r
+codetools::findGlobals(g12)
+#&gt; [1] "+" "x"
+```
+
+---
+class: middle, center
+# Lazy evaluation
+In R, function arguments are **lazily evaluated**: they’re only evaluated if accessed.
+.left[
+
+```r
+h01 &lt;- function(x) {
+  10
+}
+h01(stop("This is an error!"))
+#&gt; [1] 10
+```
+]
+
+---
+# Promises
+#### Lazy evaluation is powered by "promise": a data structure 
+A promise has three components
+- **An expression**, like `x + y`, which gives rise to the delayed computation
+- **An environment** where the expression should be evaluated
+- **A value**, which is computed and cached the first time a promise is accessed when the expression is evaluated in the specified environment
+
+```r
+double &lt;- function(x) { 
+  message("Calculating...")
+  x * 2
+}
+h03 &lt;- function(x) {
+  c(x, x)
+}
+h03(double(20))
+&gt; Calculating...
+&gt; [1] 40 40
+```
+
+.footnote[Lazy evaluation]
+---
+# Default arguments
+Default arguments can be defined in terms of
+- other arguments
+- variables defined later in the function  
+  - !!! Not recommended because
+      - makes the code harder to understand
+      - need to know the exact order of evaluation
+
+.footnote[Lazy evaluation]
+---
+# Missing arguments
+you can use `missing()` to see if the argument's value comes from the user or default
+
+```r
+h06 &lt;- function(x = 10) {
+  list(missing(x), x)
+}
+str(h06())
+&gt; List of 2
+&gt;  $ : logi TRUE
+&gt;  $ : num 10
+str(h06(10))
+#&gt; List of 2
+#&gt;  $ : logi FALSE
+#&gt;  $ : num 10
+```
+
+.footnote[Lazy evaluation]
+???
+First example uses default and returns TRUE
+second example uses user supplied so logi is FALSE
+---
+# ... (dot dot dot) | ellipsis
+
+- function can take any number of named and unnamed arguments
+- Pass arbitrary no. of functions to your function
+
+
+```r
+red.plot &lt;- function(x, y, ...) {
+  plot(x, y, col="red", ...)
+}
+red.plot(1:10, 1:10, xlab="My x axis", ylab="My y axis")
+```
+
+.footnote[Lazy evaluation. Example from https://nicercode.github.io/guides/functions/]
+---
+class: middle, center
+# Exiting a function
+???
+functions exit in two ways, they either return a value, indicating success, or they throw an error
+---
+# Implicit vs explicit return
+
+```r
+j01 &lt;- function(x) {
+  if (x &lt; 10) {
+    0
+  } else {
+    10
+  }
+}
+j01(5)
+#&gt; [1] 0
+j01(15)
+#&gt; [1] 10
+```
+
+
+```r
+j02 &lt;- function(x) {
+  if (x &lt; 10) {
+    return(0)
+  } else {
+    return(10)
+  }
+}
+```
+
+.footnote[Exiting a function]
+---
+# Invisible values
+- The most common function that returns invisibly is `&lt;-`
+- Can make invisible by applying `invisible()` to the last value
+
+
+
+```r
+j04 &lt;- function() invisible(1)
+j04()
+```
+- Verify if the value exists by using `print()` or wrapping in `()`
+
+
+```r
+print(j04())
+#&gt; [1] 1
+
+(j04())
+#&gt; [1] 1
+```
+
+.footnote[Exiting a function]
+---
+# Errors
+If a function cannot complete its assigned task, it should throw an error with `stop()` indicating the termination of function execution
+
+
+```r
+j05 &lt;- function() {
+  stop("I'm an error")
+  return(10)
+}
+j05()
+#&gt; Error in j05(): I'm an error
+```
+.footnote[Exiting a function]
+---
+# Exit handlers
+Undo any changes made to the global environment
+
+```r
+j06 &lt;- function(x) {
+  cat("Hello\n")
+  on.exit(cat("Goodbye!\n"), add = TRUE)
+  if (x) {
+    return(10)
+  } else {
+    stop("Error")
+  }
+}
+j06(TRUE)
+&gt; Hello
+&gt; Goodbye!
+&gt; [1] 10
+j06(FALSE)
+&gt; Hello
+&gt; Error in j06(FALSE): Error
+&gt; Goodbye!
+```
+
+.footnote[Exiting a function]
+???
+can use it to switch back directories on exit
+
+---
+class: middle, center
+# Function forms
+
+---
+#Prefix form
+- Any function can be written in prefix form
+
+- Function name comes before the arguments eg. `foofy(a, b, c)`
+
+`\(\checkmark\)` Helps better understand the structure of the language
+
+
+```r
+x + y
+`+`(x, y)
+
+names(df) &lt;- c("x", "y", "z")
+`names&lt;-`(df, c("x", "y", "z")) 
+
+for(i in 1:10) print(i)
+`for`(i, 1:10, print(i))
+```
+.footnote[Function forms]
+---
+# Using prefix form
+- By position, like help(mean).
+- Partial matching, like help(top = mean).
+- By name, like help(topic = mean)  
+!!! Use positional matching only for the first one or two arguments. Avoid using positional matching for less commonly used arguments, and **never use partial matching**.!!!
+
+
+
+.footnote[Function forms]
+???
+Use positional matching only for the first one or two arguments; they will be the most commonly used, and most readers will know what they are.
+---
+# Infix form
+- the function name comes in between its arguments, like `x + y`
+- User defined functions begin with `%`
+
+
+```r
+`%+%` &lt;- function(a, b) paste0(a, b)
+"new " %+% "string"
+#&gt; [1] "new string"
+```
+- names can contain any sequence of characters except `%`
+
+
+.footnote[Function forms]
+
+---
+# Replacement
+- Functions that replace values by assignment, like `names(df) &lt;- c("a", "b", "c")`
+- They have the special name `xxx&lt;-`, must have arguments named `x` and value, and must return the modified object
+
+
+```r
+`second&lt;-` &lt;- function(x, value) {
+  x[2] &lt;- value
+  x
+}
+```
+
+
+.footnote[Function forms]
+---
+# Special forms
+- They don't have a consistent form like `[[`, `if`, and `for`
+- Knowing the name of the function that underlies a special form is useful for getting documentation
+- All special forms are implemented as primitive functions; this means printing these functions is not informative
+
+
+```r
+`for`
+&gt; .Primitive("for")
+```
+
+.footnote[Function forms]
+---
+class: middle, center
+#Thank you
+.footnote[kmeena@uw.edu, twitter: @envhealthspeak]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

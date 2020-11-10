@@ -1,0 +1,207 @@
+---
+title: "Advanced R"
+subtitle: "Metaprogramming Review"
+author: "Jon Harmon"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    includes:
+      after_body: insert-logo.html
+---
+
+```{r libraries, include = FALSE}
+library(xaringanthemer)
+library(emo)
+library(lobstr)
+library(magrittr)
+```
+
+```{r xaringan-themer, include = FALSE}
+style_mono_light(
+  base_color = "#3092FF",
+  header_font_google = google_font("Josefin Sans"),
+  text_font_google   = google_font("Montserrat", "300", "300i"),
+  code_font_google   = google_font("Droid Mono"),
+)
+```
+
+# Learning Objectives: Ch. 17
+
+- 17.2 Understand that code in R is data.
+- 17.3 Recognize an **abstract syntax tree** as a representation of a function call.
+- 17.4 Understand that R code can write code.
+- 17.5 Remember that `base::eval` executes expressions in environments.
+- 17.6 Understand that environments can customize evaluation.
+- 17.7 Understand that `rlang::eval_tidy` lets you use data frames like environments.
+- 17.8 Recall that **quosures** bind together an expression with an environment.
+
+--
+## `r emo::ji("heavy_check_mark")`
+
+---
+
+# Learning Objectives: Ch. 18
+
+- 18.2 Translate between ASTs and R code.
+- 18.3 Define the expression subtypes (other than pairlist).
+- 18.4 Describe the grammar used by R's parser to translate code to expressions.
+- 18.5 Write recursive functions to walk the AST.
+- 18.6 Define the expression subtypes.
+
+---
+
+# Learning Objectives: Ch. 18
+
+- 18.2 Translate between ASTs and R code.
+
+```{r ast}
+lobstr::ast({`+` = `-`; 1} + (100 + 1) + 1)
+{`+` = `-`; 1} + (100 + 1) + 1
+```
+
+---
+
+# Learning Objectives: Ch. 18
+
+- 18.3 Define the expression subtypes (other than pairlist).
+ - **Constants:** NULL & length-1 atomic vectors.
+ - **Symbols:** Names of things, such as `x`, `mtcars`, or `mean`.
+ - **Calls:** A captured function... call. Special type of list.
+ - Symbols and calls are captured with `rlang::expr`.
+
+---
+
+# Learning Objectives: Ch. 18
+
+- 18.4 Describe the grammar used by R's parser to translate code to expressions.
+ - **Precedence:** Like math, use () when confusing.
+ - **Associativity:** Pretend parentheses are around the left set, except for ^ and <-.
+ - You can translate **(parse)** strings to code with rlang & base but you shouldn't.
+
+---
+
+# Learning Objectives: Ch. 18
+
+- 18.5 Write recursive functions to walk the AST.
+ - Copy `expr_type`, `switch_expr`, `flat_map_chr` from book.
+ - Fill in a `switch_expr` skeleton depending on usecase.
+ 
+ ```{r walk-ast}
+ lobstr:::ast_tree
+ ```
+
+---
+
+# Learning Objectives: Ch. 18
+
+- 18.6 Define the (remaining) expression subtypes.
+ - **Pairlists:** `mean %>% rlang::fn_fmls() %>% class()`
+ - **Missing arguments:** Use `rlang::missing_arg()` and `rlang::maybe_missing` if you need to explicitly pass missing args.
+ - **Expression vectors:** These exist but you probably don't need to care.
+
+---
+
+# Learning Objectives: Ch. 19
+
+- 19.2 Define quasiquotation.
+- 19.3 Quote expressions in rlang and base R.
+- 19.4 Selectively unquote parts of an expression during quotation.
+- 19.5 Describe the types of non-quoting used in base R.
+- 19.6 Mix `...` and lists to supply arguments to functions.
+- 19.7 Use rlang's quasiquotation functions to generate code.
+- 19.8 Describe the history of quasiquotation.
+
+---
+
+# Learning Objectives: Ch. 19
+
+- 19.2 Define quasiquotation.
+ - Quotation with selective unquoting.
+
+---
+
+# Learning Objectives: Ch. 19
+
+- 19.3 Quote expressions in rlang and base R.
+
+**rlang quasiquoting functions**
+
+|      | Command line | In functions   |
+|------|--------------|----------------|
+| One  | `expr()`     | `enexpr()`     |
+| Many | `exprs()`    | `enexprs()`    |
+
+**base R quoting functions**
+
+|      | Command line | In functions                 |
+|------|--------------|------------------------------|
+| One  | `quote()`    | `substitute()`               |
+| Many | `alist()`    | `as.list(substitute(...()))` |
+
+---
+
+# Learning Objectives: Ch. 19
+
+- 19.4 Selectively unquote parts of an expression during quotation.
+ - `!!` to unquote one thing
+ - `!!!` to unquote many (often dots)
+
+---
+
+# Learning Objectives: Ch. 19
+
+- 19.5 Describe the types of non-quoting used in base R.
+ - `bquote` exists.
+ - **Quoting/non-quoting function pairs:** `$` & `[`
+ - **Quoting/non-quoting argument pairs:** `rm` quotes `...`, doesn't quote `list`
+ - **Argument controls quoting:** `library(pkg)` vs `library(pkg, character.only = TRUE)`.
+ - **Quoting if evaluation fails:** `help` tries to quote then unquotes if that fails.
+ - **plotting functions:** Follow the "standard non-standard evaluation rules."
+
+---
+
+# Learning Objectives: Ch. 19
+
+- 19.6 Mix `...` and lists to supply arguments to functions.
+ - `rlang::exec` vs `base::do.call`
+
+---
+
+# Learning Objectives: Ch. 19
+
+- 19.7 Use rlang's quasiquotation functions to generate code.
+
+```{r summands}
+intercept <- 10
+coefs <- c(x1 = 5, x2 = -4)
+
+summands <- c(intercept,
+  purrr::map2(
+    .x = rlang::syms(names(coefs)),
+    .y = coefs,
+    .f = ~ rlang::expr(!!.x * !!.y)
+  )
+)
+
+eq <- purrr::reduce(.x = summands, .f = ~rlang::expr(!!.x + !!.y))
+eq
+rlang::eval_tidy(eq, list(x1 = 1:10, x2 = 10:1))
+```
+
+---
+
+# Learning Objectives: Ch. 20
+
+- 20.2 Use `base::eval` to process expressions.
+- 20.3 Use `rlang::eval_tidy` to evaluate quosures.
+- 20.4 Use data masks to provide variable definitions for tidy evaluation.
+- 20.5 Avoid errors when working with functions that use tidy evaluation.
+- 20.6 Remember the caveats of working with evaluation in base R.
+
+---
+
+# Learning Objectives: Ch. 21
+
+- 21.2 Generate functions to translate another language into R functions.
+- 21.3 Walk the AST to translate R expressions to another language.

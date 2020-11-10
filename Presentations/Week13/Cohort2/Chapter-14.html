@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced R by Hadley Wickham</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Ezra Porter" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Advanced R by Hadley Wickham
+## Chapter 14: R6
+### Ezra Porter
+### Nov 5 2020
+
+---
+
+
+
+
+&lt;style type="text/css"&gt;
+.remark-code, .remark-inline-code {
+    background: #F0F0F0;
+}
+
+.show-only-last-code-result pre + pre:not(:last-of-type) code[class="remark-code"] {
+    display: none;
+}
+&lt;/style&gt;
+
+# Big Picture
+
+- In functional OOP, like S3, methods belong to functions.
+
+- In **encapsulated OOP**, like R6, methods belong to objects.
+
+&lt;br&gt;&lt;br&gt;
+
+- R6 objects are always modified in place and never copied on modify
+
+  - Powerful for abstracting complex objects with lots of self-contained components you might want to update
+  
+  - Can produce spooky results and spookier code if you're not careful 
+
+&lt;br&gt;
+
+All we'll need is
+
+
+```r
+library(R6)
+```
+
+
+---
+
+# Creating
+
+Create R6 classes by calling `R6::R6Class()` and passing a list of methods and fields
+
+Using exercise 14.2.6.1 as an example:
+
+
+```r
+BankAccount &lt;- R6Class("BankAccount", list(
+  balance = 0,
+  deposit = function(x) {
+    self$balance &lt;- self$balance + x 
+    invisible(self)
+  },
+  withdraw = function(x) {
+    self$balance &lt;- self$balance - x 
+    invisible(self)
+  })
+)
+```
+
+`self$` lets methods reference other fields or methods internal to the object
+
+---
+
+# Using
+
+Create a new instance of a class with the `$new()` method
+
+
+```r
+checking &lt;- BankAccount$new()
+```
+
+Access fields and methods with `$`
+
+
+```r
+checking$balance
+```
+
+```
+## [1] 0
+```
+
+```r
+checking$deposit(10)
+
+checking$balance
+```
+
+```
+## [1] 10
+```
+
+---
+
+# Using cnt'd
+## 14.2.1 Method Chaining
+
+Methods called for their side-effects (like setting internal values) can be chained together
+
+
+```r
+checking$withdraw(10)$withdraw(10)
+
+checking$balance
+```
+
+```
+## [1] -10
+```
+
+&lt;br&gt;
+
+This is powered by having side-effect methods return the object invisibly
+
+```r
+withdraw = function(x) {
+    self$balance &lt;- self$balance - x 
+    invisible(self)
+  }
+```
+
+---
+
+# 14.2.2 Important Methods
+
+Some methods affect the behavior of objects in special ways
+
+`$initialize()` overrides the default behavior of `$new()`
+
+
+```r
+BankAccount &lt;- R6Class("BankAccount", list(
+  balance = 0,
+  pwd = NULL,
+  initialize = function(pwd) {
+    self$pwd &lt;- pwd
+  },
+  deposit = function(x, pwd) {
+    stopifnot(pwd == self$pwd)
+    self$balance &lt;- self$balance + x 
+    invisible(self)
+  },
+  withdraw = function(x, pwd) {
+    stopifnot(pwd == self$pwd)
+    self$balance &lt;- self$balance - x 
+    invisible(self)
+  })
+)
+```
+
+---
+
+# 14.2.2 Important Methods
+
+Some methods affect the behavior of objects in special ways
+
+`$print()` determines how the object is printed
+
+
+
+```r
+BankAccount &lt;- R6Class("BankAccount", list(
+...
+  print = function(...) {
+  cat("Balance:", scales::dollar(self$balance))
+  invisible(self)
+  }
+...
+```
+
+
+```r
+savings &lt;- BankAccount$new(pwd = "dont-tell")
+try(savings$deposit(10, "password123"))
+```
+
+```
+## Error in savings$deposit(10, "password123") : pwd == self$pwd is not TRUE
+```
+
+```r
+(savings$deposit(10, "dont-tell"))
+```
+
+```
+## Balance: $10
+```
+
+---
+
+# 14.2.2 Important Methods
+
+**Beware!** Objects encapsulate methods so our old `BankAccount` objects don't retroactively get newly created methods
+
+
+```r
+checking
+```
+
+```
+## &lt;BankAccount&gt;
+##   Public:
+##     balance: -10
+##     clone: function (deep = FALSE) 
+##     deposit: function (x) 
+##     withdraw: function (x)
+```
+
+```r
+checking &lt;- BankAccount$new(pwd = "dont-tell")
+checking
+```
+
+```
+## Balance: $0
+```
+
+Make sure you rebuild objects when you alter a class during interactive use
+
+---
+
+# 14.2.4 Inheritance
+
+R6 classes can be subclasses of other R6 classes. Define that relationship using the `inherit` argument to `R6Class()`
+
+
+
+```r
+SocialistBankAccount &lt;- R6Class("SocialistBankAccount",
+  inherit = BankAccount,
+  public = list(
+    check_balance = function() {
+      if (self$balance &gt; 100000) {
+        cat("From each according to their ability!")
+        self$balance &lt;- 100000
+      } else if (self$balance &lt; 0) {
+        cat("To each according to their need!")
+        self$balance &lt;- 100
+      }
+    },
+    deposit = function(x, pwd) {
+      super$deposit(x, pwd)
+      self$check_balance()
+    },
+    withdraw = function(x, pwd) {
+    ...
+```
+
+---
+
+# 14.2.4 Inheritance
+
+Our subclass inherits the methods and fields we don't explicitly overwrite from its super class
+
+
+```r
+common_fund &lt;- SocialistBankAccount$new(pwd = "dont-tell")
+common_fund
+```
+
+```
+## Balance: $0
+```
+
+--
+
+`super$` allows us to refer to superclass methods and thereby "delegate" like with `NextMethod()` in S3
+
+```r
+deposit = function(x, pwd) {
+      super$deposit(x, pwd)
+      self$check_balance()
+    }
+```
+
+---
+
+# 14.2.4 Inheritance
+
+```r
+deposit = function(x, pwd) {
+      super$deposit(x, pwd)
+      self$check_balance()
+    }
+```
+
+
+```r
+common_fund$withdraw(10, "dont-tell")
+```
+
+```
+## To each according to their need!
+```
+
+```r
+common_fund
+```
+
+```
+## Balance: $100
+```
+
+--
+
+R6 objects also get S3 classes which automatically reproduce the sub/superclass relationships
+
+
+```r
+class(common_fund)
+```
+
+```
+## [1] "SocialistBankAccount" "BankAccount"          "R6"
+```
+
+---
+
+# 14.3 Controlling Access
+
+Right now users have full access to internal elements of our objects
+
+
+```r
+checking$pwd
+```
+
+```
+## [1] "dont-tell"
+```
+
+We can use the `private` argument of `R6Class()` to set components for internal use
+
+
+
+```r
+SecureBankAccount &lt;- R6Class("SecureBankAccount",
+  public = list(
+    balance = 0,
+    initialize = function(pwd) {
+      private$pwd &lt;- pwd
+    },
+... More methods ...
+  ),
+  private = list(pwd = NULL)
+)
+```
+
+---
+
+# 14.3 Controlling Access
+
+```r
+SecureBankAccount &lt;- R6Class("SecureBankAccount",
+  public = list(
+    balance = 0,
+    initialize = function(pwd) {
+      private$pwd &lt;- pwd
+    },
+... More methods ...
+  ),
+  private = list(pwd = NULL)
+)
+```
+
+
+```r
+secure_checking &lt;- SecureBankAccount$new("dont-tell")
+secure_checking$pwd
+```
+
+```
+## NULL
+```
+
+Just reference `private$` in methods rather than `self$`
+
+---
+
+# 14.4 Reference Semantics
+
+R6 objects are always modified in place. To get a copy you can use the `$clone()` method.
+
+--
+
+The fact that methods of an object can change the object itself makes code harder to reason about.
+
+Hadley's example:
+
+What can we say about the effect of this line of code on `x` and `y` given that they're base objects? Given that they're R6 objects?
+
+```r
+z &lt;- f(x, y)
+```
+
+--
+
+&lt;br&gt;
+
+If `f` calls methods of `x` and `y` it might change them. In our `BankAccount` example the only thing our methods did was change internal values.
+
+---
+
+# 14.4 Reference Semantics
+
+But therein lies the power:
+
+&lt;blockquote&gt;
+14.6.2.3
+Why can’t you model a bank account or a deck of cards with an S3 class?
+&lt;/blockquote&gt;
+
+--
+
+&lt;br&gt;
+
+S3 objects are copied when they're changed so the best you could do is have a generic function return a modified version of the object
+
+---
+
+# 14.4.3 R6 Fields (a cautionary tale)
+
+R6 objects behave unintuitively when the default value of a field is another R6 object
+
+
+```r
+Number &lt;- R6Class("Number", list(
+  value = 0,
+  increment = function() {
+    self$value &lt;- self$value + 1
+  })
+  )
+
+NumberPointer &lt;- R6Class("NumberPointer", list(
+  number = Number$new()
+  ))
+```
+
+&lt;br&gt;
+
+The instance of `Number` will be shared across **all** instances of `NumberPointer`
+
+---
+
+class: show-only-last-code-result
+
+# 14.4.3 R6 Fields (a cautionary tale)
+
+
+```r
+x &lt;- NumberPointer$new()
+y &lt;- NumberPointer$new()
+```
+
+--
+
+
+```r
+x$number$value
+```
+
+```
+## [1] 0
+```
+
+--
+
+
+```r
+y$number$value
+```
+
+```
+## [1] 0
+```
+
+--
+
+
+```r
+x$number$increment()
+```
+
+--
+
+
+```r
+x$number$value
+```
+
+```
+## [1] 1
+```
+
+--
+
+
+```r
+y$number$value
+```
+
+```
+## [1] 1
+```
+
+--
+
+Avoid this by making sure objects are initialized **within** a method so you get a new instance every time
+
+---
+
+# How have I used R6?
+
+I haven't!
+
+--
+
+But this reminded me of how some machine learning and optimization algorithms are implemented in Python
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

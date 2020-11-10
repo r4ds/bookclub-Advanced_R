@@ -233,7 +233,7 @@ flat_map_chr(letters[1:3], ~ rep(., sample(3, 1)))
 ```
 
 ```
-## [1] "a" "a" "a" "b" "c" "c"
+## [1] "a" "a" "a" "b" "b" "b" "c"
 ```
 :::
 

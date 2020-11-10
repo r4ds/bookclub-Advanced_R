@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced R by Hadley Wickham</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Mike Jeziorski" />
+    <meta name="date" content="2020-08-20" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Advanced R by Hadley Wickham
+## Chapter 4: Subsetting
+### Mike Jeziorski
+### 20 Aug 2020
+
+---
+
+
+
+
+# Chapter contents
+
+- 4.2 Selecting multiple elements
+
+- 4.3 Selecting a single element
+
+- 4.4 Subsetting and assignment
+
+- 4.5 Applications
+---
+## 4.2 Selecting multiple elements
+
+- `[ ]` are used to select any number of elements from a vector
+
+### 4.2.1 Atomic vectors
+
+```r
+x &lt;- c(2.1, 4.2, 3.3, 5.4)
+```
+
+#### Six ways to select elements from an atomic vector
+
+- Positive integers: select indicated elements
+
+```r
+x[c(1, 3)] # Don't forget to use c() for multiple indices
+# [1] 2.1 3.3
+```
+
+
+
+- Negative integers: remove indicated elements
+
+```r
+x[-2] # Negative and positive integers cannot be combined
+# [1] 2.1 3.3 5.4
+```
+
+
+---
+- Logical vectors: select elements that match `condition = TRUE`
+
+```r
+x[c(TRUE, TRUE, FALSE, FALSE)]
+# [1] 2.1 4.2
+
+x[x &gt; 3]
+# [1] 4.2 3.3 5.4
+
+# Note the recycling behavior of R, which can cause problems
+
+x[c(TRUE, FALSE)] == x[c(TRUE, FALSE, TRUE, FALSE)]
+
+# NA in the index returns NA
+
+x[c(TRUE, FALSE, NA, TRUE)]
+# [1] 2.1  NA 5.4
+```
+---
+- Empty index: returns the original vector
+      - Can be useful for multidimensional objects
+
+```r
+x[ ]
+# [1] 2.1 4.2 3.3 5.4
+```
+- Zero: returns an empty vector
+
+```r
+x[0]
+# numeric(0)
+```
+- Character vector (used for a named vector)
+
+```r
+(y &lt;- setNames(x, letters[1:4]))
+#   a   b   c   d 
+# 2.1 4.2 3.3 5.4 
+```
+Indices can be reused
+
+```r
+y[c("a", "a", "a")]
+#   a   a   a 
+# 2.1 2.1 2.1
+```
+Partial matching of strings is not allowed with `[ ]`  
+Avoid using a factor as an index, because R will use the underlying integer
+---
+### 4.2.2 Lists
+
+- `[ ]` subsets a list from a list
+
+- `[[ ]]` extracts an element from a list
+
+- `$` also extracts an element from a list
+
+### 4.2.3 Matrices and arrays
+
+- Three ways to subset matrices and arrays
+      1. Multiple vectors
+      
+      2. Single vector
+      
+      3. Matrix
+---
+
+```r
+a &lt;- matrix(1:9, nrow = 3)
+colnames(a) &lt;- c("A", "B", "C")
+
+a[1:2, ]
+#      A B C
+# [1,] 1 4 7
+# [2,] 2 5 8
+
+a[c(TRUE, FALSE, TRUE), c("B", "A")]
+#      B A
+# [1,] 4 1
+# [2,] 6 3
+
+a[0, -2]
+#      A C
+
+dim(a[0, -2])
+# [1] 0 2
+
+a[1, ]
+# A B C 
+# 1 4 7
+
+dim(a[1, ])
+# NULL
+```
+---
+Matrices and arrays are reconfigured vectors, so they can be indexed with single values (indexing down each column in turn)
+
+```r
+vals &lt;- outer(1:5, 1:5, FUN = "paste", sep = ",")
+vals
+#      [,1]  [,2]  [,3]  [,4]  [,5] 
+# [1,] "1,1" "1,2" "1,3" "1,4" "1,5"
+# [2,] "2,1" "2,2" "2,3" "2,4" "2,5"
+# [3,] "3,1" "3,2" "3,3" "3,4" "3,5"
+# [4,] "4,1" "4,2" "4,3" "4,4" "4,5"
+# [5,] "5,1" "5,2" "5,3" "5,4" "5,5"
+
+vals[c(4, 15)]
+# [1] "4,1" "5,3"
+```
+---
+### 4.2.4 Data frames and tibbles
+- Data frames act like both matrices and lists
+      - A single index extracts element(s) (columns) from the list
+
+```r
+mtcars[1:2]
+#                      mpg cyl
+# Mazda RX4           21.0   6
+# Mazda RX4 Wag       21.0   6
+# Datsun 710          22.8   4
+# Hornet 4 Drive      21.4   6
+# Hornet Sportabout   18.7   8
+# Valiant             18.1   6
+# ...
+
+mtcars[c("mpg", "cyl")]
+#                      mpg cyl
+# Mazda RX4           21.0   6
+# Mazda RX4 Wag       21.0   6
+# Datsun 710          22.8   4
+# Hornet 4 Drive      21.4   6
+# Hornet Sportabout   18.7   8
+# Valiant             18.1   6
+# ...
+```
+---
+      - Two indices extract a two-dimensional object
+
+```r
+mtcars[1:2, 1:4]
+```
+
+```
+##               mpg cyl disp  hp
+## Mazda RX4      21   6  160 110
+## Mazda RX4 Wag  21   6  160 110
+```
+
+```r
+#               mpg cyl disp  hp
+# Mazda RX4      21   6  160 110
+# Mazda RX4 Wag  21   6  160 110
+```
+      
+- When subset with `[ ]`, a tibble returns a tibble
+---
+### 4.2.5 Preserving dimensionality
+
+- An important difference between data frames and tibbles is that if a data frame is subset with a single dimension index, it will return a single dimension object.
+
+- Why does this cause problems?  Because the class of object returned depends on the subset indices, so code can break in unexpected ways.
+
+- Two ways to prevent this:
+
+      1. Include the `drop = FALSE` argument when subsetting a data frame
+      
+      2. Use tibbles, which do not drop dimensions
+---
+## 4.3 Selecting a single element
+
+- For lists, `[ ]` subsets a list, while `[[ ]]` and `$` extract an element
+
+### 4.3.1 `[[ ]]`
+
+- A single value must be used inside `[[ ]]`
+
+      - `x[[c(1, 2)]]` is equivalent to `x[[1]][[2]]`
+      
+      - Hadley recommends using `[[ ]]` to select single values from atomic vectors as well, because it is more explicit about what is returned
+---
+### 4.3.2 `$`
+
+- `x$y` is equivalent to `x[["y"]]`
+
+- The `$` operator does not work with stored variables
+
+
+```r
+var &lt;- "cyl"
+mtcars$var
+# NULL
+mtcars[[var]]
+# [1] 6 6 4 6 8 6 8 4 4 6 6 8 8 8 8 8 8 4 4 4 4 8 8 8 8 4 4 4 8 6 8 4
+```
+
+- Unlike `[[ ]]`, `$` allows partial matching, which can be dangerous
+
+      - Ways to avoid this
+      
+            - Set `options(warnPartialMatchDollar = TRUE)`
+            
+            - Use tibbles, which do not allow partial matching
+---
+### 4.3.3 Missing and out-of-bound indices
+- Due to the inconsistency of how R handles such indices, `purrr::pluck()` and `purrr::chuck()` are recommended
+
+```r
+x &lt;- list(
+  a = list(1, 2, 3),
+  b = list(3, 4, 5)
+)
+
+purrr::pluck(x, "a", 1)
+# [1] 1
+
+purrr::pluck(x, "c", 1)
+# NULL
+
+purrr::pluck(x, "c", 1, .default = NA)
+# [1] NA
+```
+
+
+---
+### 4.3.4 `@` and `slot()`
+
+- `@` is `$` for S4 objects (to be revisited in Chapter 15)
+
+- `slot()` is `[[ ]]` for S4 objects
+---
+## 4.4 Subsetting and assignment
+
+- Subsetting can be combined with assignment to edit values
+
+```r
+x &lt;- c("Mary", "James", "Perdo")
+x[3] &lt;- "Pedro"
+x
+# [1] "Mary"  "James" "Pedro"
+```
+
+- The lengths of the subset and assignment vector should be the same to prevent recycling
+
+- An element of a list can be converted to NULL this way
+
+```r
+x &lt;- list(a = 1, b = 2)
+x[["b"]] &lt;- NULL
+str(x)
+# List of 1
+#  $ a: num 1
+```
+---
+- By subsetting with nothing, we can maintain the structure of the object
+
+```r
+mtcars[] &lt;- lapply(mtcars, as.integer)
+is.data.frame(mtcars)
+# [1] TRUE
+
+mtcars &lt;- lapply(mtcars, as.integer)
+is.data.frame(mtcars)
+# [1] FALSE
+```
+
+---
+## 4.5 Applications
+### 4.5.1 Lookup tables (character subsetting)
+
+```r
+x &lt;- c("m", "f", "u", "f", "f", "m", "m")
+lookup &lt;- c(m = "Male", f = "Female", u = NA)
+lookup[x]
+#        m        f        u        f        f        m        m 
+#   "Male" "Female"       NA "Female" "Female"   "Male"   "Male"
+```
+
+
+---
+### 4.5.2 Matching and merging by hand (integer subsetting)
+- The `match()` function allows merging a vector with a table
+
+```r
+grades &lt;- c("D", "A", "C", "B", "F")
+
+info &lt;- data.frame(
+  grade = c("A", "B", "C", "D", "F"),
+  desc = c("Excellent", "Very Good", "Average", "Fair", "Poor"),
+  fail = c(F, F, F, F, T)
+)
+
+id &lt;- match(grades, info$grade)
+id
+# [1] 3 2 2 1 3
+info[id, ]
+#   grade      desc  fail
+# 4     D      Fair FALSE
+# 1     A Excellent FALSE
+# 3     C   Average FALSE
+# 2     B Very Good FALSE
+# 5     F      Poor  TRUE
+```
+
+---
+### 4.5.3 Random samples and bootstrapping (integer subsetting)
+
+```r
+mtcars[sample(nrow(mtcars), 3), ] # use replace = TRUE to replace
+#                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+# Lotus Europa       30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+# Mazda RX4          21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+# Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+```
+
+
+---
+### 4.5.4 Ordering (integer subsetting)
+
+```r
+mtcars[order(mtcars$mpg), ]
+#                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+# Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+# Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+# Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+# Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+# Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+# Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
+# ...
+```
+
+---
+### 4.5.5 Expanding aggregated counts (integer subsetting)
+- We can expand a count column by using `rep()`
+
+```r
+df &lt;- tibble(x = c("Amy", "Julie", "Brian"), n = c(2, 1, 3))
+df[rep(1:nrow(df), df$n), ]
+# A tibble: 6 x 2
+#   x         n
+#   &lt;chr&gt; &lt;dbl&gt;
+# 1 Amy       2
+# 2 Amy       2
+# 3 Julie     1
+# 4 Brian     3
+# 5 Brian     3
+# 6 Brian     3
+```
+
+
+---
+### 4.5.6 Removing columns from data frames (character)
+- We can remove a column by subsetting, which does not change the object
+
+```r
+df[, 1]
+# A tibble: 3 x 1
+#   x    
+#   &lt;chr&gt;
+# 1 Amy  
+# 2 Julie
+# 3 Brian
+```
+- We can also delete the column using `NULL`
+
+```r
+df$n &lt;- NULL
+df
+# A tibble: 3 x 1
+#   x    
+#   &lt;chr&gt;
+# 1 Amy  
+# 2 Julie
+# 3 Brian
+```
+
+
+---
+### 4.5.7 Selecting rows based on a condition (logical subsetting)
+
+
+```r
+mtcars[mtcars$gear == 5, ]
+#                 mpg cyl  disp  hp drat    wt qsec vs am gear carb
+# Porsche 914-2  26.0   4 120.3  91 4.43 2.140 16.7  0  1    5    2
+# Lotus Europa   30.4   4  95.1 113 3.77 1.513 16.9  1  1    5    2
+# Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.5  0  1    5    4
+# Ferrari Dino   19.7   6 145.0 175 3.62 2.770 15.5  0  1    5    6
+# Maserati Bora  15.0   8 301.0 335 3.54 3.570 14.6  0  1    5    8
+```
+
+
+---
+### 4.5.8 Boolean algebra versus sets (logical and integer)
+- `which()` gives the indices of a Boolean vector
+
+
+```r
+(x1 &lt;- 1:10 %% 2 == 0) # 1-10 divisible by 2
+#  [1] FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE
+(x2 &lt;- which(x1))
+# [1]  2  4  6  8 10
+(y1 &lt;- 1:10 %% 5 == 0) # 1-10 divisible by 5
+#  [1] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE
+(y2 &lt;- which(y1))
+# [1]  5 10
+x1 &amp; y1
+# [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
