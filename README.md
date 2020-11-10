@@ -160,6 +160,9 @@ Chapter 11 - Function operators
 - Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) (SLIDES | [video](https://youtu.be/fD1QJB2pHik))
 - Cohort 3: [Anna-Leigh Brown](https://twitter.com/annaleighbrown2) (SLIDES) | [video](https://youtu.be/fW7Di01gLhw))
 
+Chapter 12 - OOP base types
+- Cohort 3: [Megn Stodel](https://twitter.com/MeganStodel) ([slides](https://github.com/MeganStodel/bookclub-Advanced_R/tree/cohort-3-base-types/Presentations/Week12/Cohort3))
+
 Chapter 12 + 13 - OOP base types + S3
 
 - Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week12/Cohort1/Advanced_R_12to13_OOP_S3.html#1) | [video](https://www.youtube.com/watch?v=Fy3JF5Em6qY&feature=youtu.be))
