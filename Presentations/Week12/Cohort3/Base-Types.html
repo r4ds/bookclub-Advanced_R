@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Chapter 12: Base Types</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Megan Stodel (@MeganStodel, www.meganstodel.com)" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Chapter 12: Base Types
+## Advanced R Book Group, Cohort 3
+### Megan Stodel (<span class="citation">@MeganStodel</span>, www.meganstodel.com)
+### 10 November, 2020
+
+---
+
+class: inverse, center, middle
+
+# But first...
+
+---
+# Object-oriented programming (OOP)
+
+In R, functional programming is much more important than OOP. This is because problems are decomposed into simple *functions* rather than simple *objects*. 
+
+OOP can be more challenging in R:
+
+* There are multiple OOP systems (3 are explored in this book).
+
+* The different systems are not objectively set in relative importance so different communities use different systems.
+
+* S3 and S4 use generic function OOP rather than encapsualted OOP, which is more common in other langauges, so it is hard to transfer existing OOP skills to R. 
+---
+# The three systems
+
+* *S3:* Used throughout base R. Functions can return rich results with user-friendly display and programmer-friendly internals. R's first OOP system and relies on common conventions rather than ironclad guarantees. 
+
+* *R6:* A way to escape copy-on-modify semantics; important if you model objects that exist independently of R - for e.g. data that comes from a web API. An implementation of encapsulated OOP. 
+
+* *S4:* A rigorous system that requires careful design consideration, so suited for large systems that might have multiple contributions. Offers more guarantees and greater encapsulation than S3, but is more work upfront. 
+---
+# OOP glossary
+
+* *polymorphism* - a developer can consider a function's interface separately from its implementation, so the same function form can be used for different types of output. 
+
+* *encapsulation* - the user doesn't need to worry about an object's details because they are 'encapsulated' behind a standard interface.
+
+* *class* - the type of an object.
+
+* *method* - a implementation for a specific class.
+
+* *fields* - defined by the class, this is the data possessed by all instances of that class.
+
+* *method dispatch* - the process of finding the correct method for a given class. 
+---
+# But what does that mean?
+## An example
+
+Polymorphism allows `summary()` to produce different outputs for numeric and factor variables.
+
+
+```r
+diamonds &lt;- ggplot2::diamonds
+summary(diamonds$carat)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.2000  0.4000  0.7000  0.7979  1.0400  5.0100
+```
+
+```r
+summary(diamonds$cut)
+```
+
+```
+##      Fair      Good Very Good   Premium     Ideal 
+##      1610      4906     12082     13791     21551
+```
+
+This is more flexible than an `if-else` statement series because any developer can extend the interface.
+---
+# The two paradigms
+
+*Encapsulated* OOP has methods that belong to objects or classes; the object encapsulates both data (with fields) and behaviour (with methods). 
+
+*Functional* OOP has methods that belong to generic functions. From the outside it looks like a regular function call, and internally the components are also functions. 
+
+---
+class: inverse, center, middle
+
+# Base Types
+
+---
+# What is an object?
+
+There are two uses of the word "object". 
+
+So far we have talked very generally...
+
+&gt; "Everything that exists in R is an object." - John Chambers
+
+But not everything is object-oriented. This is to do with the organic evolution of S, because base objects come from S when they were developed before it was considered to need an OOP system. So we distinguish here between _Base objects_ and _OO objects_. 
+---
+# What kind of object is it?
+
+Use `is.object()` (TRUE only if OO object) or `sloop::otype()` (returns object type). The technical difference is whether the object has a 'class' attribute, so you can also test with `attr()`.
+
+
+```r
+num_range &lt;- 1:10
+is.object(num_range)
+```
+
+```
+## [1] FALSE
+```
+
+```r
+sloop::otype(num_range)
+```
+
+```
+## [1] "base"
+```
+
+```r
+attr(num_range, 'class')
+```
+
+```
+## NULL
+```
+---
+# What kind of object is it?
+
+
+```r
+is.object(diamonds)
+```
+
+```
+## [1] TRUE
+```
+
+```r
+sloop::otype(diamonds)
+```
+
+```
+## [1] "S3"
+```
+
+```r
+attr(diamonds, 'class')
+```
+
+```
+## [1] "tbl_df"     "tbl"        "data.frame"
+```
+
+---
+# What kind of object is it?
+
+`sloop::s3_class()` is aso useful; it returns the implicit class used to pick the methods by S3 and S4 systems (which gets missed by `class()`). 
+
+
+```r
+x &lt;- matrix(1:4, nrow = 2)
+class(x)
+```
+
+```
+## [1] "matrix" "array"
+```
+
+```r
+sloop::s3_class(x)
+```
+
+```
+## [1] "matrix"  "integer" "numeric"
+```
+
+---
+# So what is a base type?
+
+Every object has a base type! 
+
+
+```r
+typeof(1:10)
+```
+
+```
+## [1] "integer"
+```
+
+```r
+typeof(diamonds)
+```
+
+```
+## [1] "list"
+```
+
+If a function behaves differently for different base types, they are primarily written in C code using switch statements. This means only R-core can create new types and it is a real mission. Therefore new base types are not added often. 
+
+(Remember: with OO objects, any developer can specify a new behaviour for a new class.)
+
+---
+# Yes, but what are some types?
+
+There are 25 different base types. They can be grouped into...
+
+*VECTORS*, including types `NULL`, `logical`, `integer`, `double`, `complex`, `character`, `list` and `raw`. 
+
+*FUNCTIONS*, including `closure`, `special` and `builtin`. 
+
+*ENVIRONMENTS*
+
+*S4*, which is for S4 classes that don't inherit from an existing base type. 
+
+*LANGUAGE COMPONENTS*, including `symbol`, `language` and `pairlist`. 
+
+There are also some esoteric and rarely used types that mainly exist because they are important for C code. 
+---
+# Is there a numeric type? (1)
+
+There are three different meanings of numeric type so be careful. 
+
+Sometimes used to mean double type - for example `as.numeric()` is the same as `as.double()`.
+
+---
+# Is there a numeric type? (2)
+
+In S3 and S4, a shorthand for either integer or double type, used when picking methods. 
+
+
+```r
+sloop::s3_class(1)
+```
+
+```
+## [1] "double"  "numeric"
+```
+
+```r
+sloop::s3_class(1L)
+```
+
+```
+## [1] "integer" "numeric"
+```
+---
+# Is there a numeric type? (3)
+
+It can also mean objects that behave like numbers. Factors have the type `integer` but don't behave like numbers (you wouldn't care about the mean for e.g.).
+
+
+```r
+typeof(factor("x"))
+```
+
+```
+## [1] "integer"
+```
+
+```r
+is.numeric(factor("x"))
+```
+
+```
+## [1] FALSE
+```
+
+Throughout we are using the second meaning - either integer or double. 
+
+---
+class: inverse, center, middle
+
+# General discussion
+---
+# Some possible topics
+
+* Why use OOP?
+
+* Why are there different OOP systems in R? 
+
+* What are some ways of finding out if an object is an OO object?
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
