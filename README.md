@@ -161,7 +161,7 @@ Chapter 11 - Function operators
 - Cohort 3: [Anna-Leigh Brown](https://twitter.com/annaleighbrown2) (SLIDES) | [video](https://youtu.be/fW7Di01gLhw))
 
 Chapter 12 - OOP base types
-- Cohort 3: [Megn Stodel](https://twitter.com/MeganStodel) ([slides](https://github.com/MeganStodel/bookclub-Advanced_R/tree/cohort-3-base-types/Presentations/Week12/Cohort3))
+- Cohort 3: [Megan Stodel](https://twitter.com/MeganStodel) ([slides](https://github.com/MeganStodel/bookclub-Advanced_R/tree/cohort-3-base-types/Presentations/Week12/Cohort3))
 
 Chapter 12 + 13 - OOP base types + S3
 
