@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-08-18" />
+<meta name="date" content="2020-10-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -355,6 +355,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#debug"><i class="fa fa-check"></i>22.4.2.3 debug</a></li>
 <li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#non-interactive-debugging"><i class="fa fa-check"></i>22.5 Non-interactive debugging</a></li>
 <li><a href="debugging.html#dump.frames">22.5.1 <code>dump.frames</code></a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#debug-pipe"><i class="fa fa-check"></i>Debug Pipe</a></li>
+<li class="chapter" data-level="22.2" data-path="debugging.html"><a href="debugging.html#edic-code-from-another-function"><i class="fa fa-check"></i><b>22.2</b> Edic Code from Another function</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#bonus-tip"><i class="fa fa-check"></i>Bonus tip</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html"><i class="fa fa-check"></i>Measuring performance</a><ul>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#introduction"><i class="fa fa-check"></i>23.1 Introduction</a></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html#profiling"><i class="fa fa-check"></i>23.2 Profiling</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>23.4.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html#microbenchmarking"><i class="fa fa-check"></i>23.3 Microbenchmarking</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html"><i class="fa fa-check"></i>Improving performance</a><ul>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#existing-solutions"><i class="fa fa-check"></i>24.3 Existing solutions</a></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#vectorize"><i class="fa fa-check"></i>24.5 Vectorize</a></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#other-techniques"><i class="fa fa-check"></i>24.8 Other Techniques</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -403,24 +417,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="without-force" class="section level2">
 <h2><span class="header-section-number">10.1</span> WITHOUT FORCE</h2>
 <p>Without <code>force</code>, <code>exp</code> doesn’t get evaluated when <code>power</code> is called. <code>square</code> is a promise to create a function to raise its input to the <code>exp</code>’th power. Once <code>square</code> is called, the promise evaluates, and <code>square</code> becomes a function to raise its input to whatever <code>exp</code> was that first time <code>square</code> was called. That’s what makes it dangerous; what <code>square</code> does depends on the order in which things are called. Dangers and confusions like this are part of why function factories don’t get used that much, despite the fact that they’re really quite cool.</p>
-<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb462-1" data-line-number="1"><span class="kw">suppressMessages</span>(<span class="kw">requireNamespace</span>(<span class="st">&quot;pryr&quot;</span>))</a>
-<a class="sourceLine" id="cb462-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb462-3" data-line-number="3"><span class="co"># make sure this isn&#39;t already defined</span></a>
-<a class="sourceLine" id="cb462-4" data-line-number="4"><span class="kw">rm</span>(x)</a>
-<a class="sourceLine" id="cb462-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb462-6" data-line-number="6">power2 &lt;-<span class="st"> </span><span class="cf">function</span>(exp) {</a>
-<a class="sourceLine" id="cb462-7" data-line-number="7">  <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;outer execution environment: &quot;</span>, <span class="kw">capture.output</span>(<span class="kw">environment</span>()), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>))</a>
-<a class="sourceLine" id="cb462-8" data-line-number="8">  <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;outer enclosure: &quot;</span>, <span class="kw">capture.output</span>(<span class="kw">parent.env</span>(<span class="kw">environment</span>())), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>))</a>
-<a class="sourceLine" id="cb462-9" data-line-number="9">  <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;exp promise info: </span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="kw">paste0</span>(<span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="kw">capture.output</span>(pryr<span class="op">::</span><span class="kw">promise_info</span>(exp)), <span class="dt">collapse =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)))</a>
-<a class="sourceLine" id="cb462-10" data-line-number="10">  out &lt;-<span class="st"> </span><span class="cf">function</span>(x_) {</a>
-<a class="sourceLine" id="cb462-11" data-line-number="11">    <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;inner execution environment: &quot;</span>, <span class="kw">capture.output</span>(<span class="kw">environment</span>()), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>))</a>
-<a class="sourceLine" id="cb462-12" data-line-number="12">    <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;inner enclosure: &quot;</span>, <span class="kw">capture.output</span>(<span class="kw">parent.env</span>(<span class="kw">environment</span>())), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>))</a>
-<a class="sourceLine" id="cb462-13" data-line-number="13">    <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;exp promise info: </span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="kw">paste0</span>(<span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="kw">capture.output</span>(pryr<span class="op">::</span><span class="kw">promise_info</span>(exp)), <span class="dt">collapse =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)))</a>
-<a class="sourceLine" id="cb462-14" data-line-number="14">    x_ <span class="op">^</span><span class="st"> </span>exp</a>
-<a class="sourceLine" id="cb462-15" data-line-number="15">  }</a>
-<a class="sourceLine" id="cb462-16" data-line-number="16">}</a>
-<a class="sourceLine" id="cb462-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb462-18" data-line-number="18">square &lt;-<span class="st"> </span><span class="kw">power2</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb504-1" data-line-number="1"><span class="kw">suppressMessages</span>(<span class="kw">requireNamespace</span>(<span class="st">&quot;pryr&quot;</span>))</a>
+<a class="sourceLine" id="cb504-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb504-3" data-line-number="3"><span class="co"># make sure this isn&#39;t already defined</span></a>
+<a class="sourceLine" id="cb504-4" data-line-number="4"><span class="kw">rm</span>(x)</a>
+<a class="sourceLine" id="cb504-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb504-6" data-line-number="6">power2 &lt;-<span class="st"> </span><span class="cf">function</span>(exp) {</a>
+<a class="sourceLine" id="cb504-7" data-line-number="7">  <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;outer execution environment: &quot;</span>, <span class="kw">capture.output</span>(<span class="kw">environment</span>()), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>))</a>
+<a class="sourceLine" id="cb504-8" data-line-number="8">  <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;outer enclosure: &quot;</span>, <span class="kw">capture.output</span>(<span class="kw">parent.env</span>(<span class="kw">environment</span>())), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>))</a>
+<a class="sourceLine" id="cb504-9" data-line-number="9">  <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;exp promise info: </span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="kw">paste0</span>(<span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="kw">capture.output</span>(pryr<span class="op">::</span><span class="kw">promise_info</span>(exp)), <span class="dt">collapse =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)))</a>
+<a class="sourceLine" id="cb504-10" data-line-number="10">  out &lt;-<span class="st"> </span><span class="cf">function</span>(x_) {</a>
+<a class="sourceLine" id="cb504-11" data-line-number="11">    <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;inner execution environment: &quot;</span>, <span class="kw">capture.output</span>(<span class="kw">environment</span>()), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>))</a>
+<a class="sourceLine" id="cb504-12" data-line-number="12">    <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;inner enclosure: &quot;</span>, <span class="kw">capture.output</span>(<span class="kw">parent.env</span>(<span class="kw">environment</span>())), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>))</a>
+<a class="sourceLine" id="cb504-13" data-line-number="13">    <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;exp promise info: </span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="kw">paste0</span>(<span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="kw">capture.output</span>(pryr<span class="op">::</span><span class="kw">promise_info</span>(exp)), <span class="dt">collapse =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)))</a>
+<a class="sourceLine" id="cb504-14" data-line-number="14">    x_ <span class="op">^</span><span class="st"> </span>exp</a>
+<a class="sourceLine" id="cb504-15" data-line-number="15">  }</a>
+<a class="sourceLine" id="cb504-16" data-line-number="16">}</a>
+<a class="sourceLine" id="cb504-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb504-18" data-line-number="18">square &lt;-<span class="st"> </span><span class="kw">power2</span>(x)</a></code></pre></div>
 <pre><code>#&gt; outer execution environment: &lt;environment: 0x0000000015812568&gt;
 #&gt; outer enclosure: &lt;environment: R_GlobalEnv&gt;
 #&gt; exp promise info: 
@@ -436,7 +450,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt;  $value
 #&gt;  NULL
 #&gt;  </code></pre>
-<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb464-1" data-line-number="1"><span class="kw">square</span>(<span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb506-1" data-line-number="1"><span class="kw">square</span>(<span class="dv">4</span>)</a></code></pre></div>
 <pre><code>#&gt; inner execution environment: &lt;environment: 0x0000000012aee2a8&gt;
 #&gt; inner enclosure: &lt;environment: 0x0000000015812568&gt;
 #&gt; exp promise info: 
@@ -454,8 +468,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt;  
 #&gt; Error in square(4): object &#39;x&#39; not found</code></pre>
 <p>The <code>exp</code> promise is looking for <code>x</code> in the enclosure of <code>power2</code> (global) and can’t find it.</p>
-<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb466-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb466-2" data-line-number="2"><span class="kw">square</span>(<span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb508-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb508-2" data-line-number="2"><span class="kw">square</span>(<span class="dv">4</span>)</a></code></pre></div>
 <pre><code>#&gt; inner execution environment: &lt;environment: 0x0000000017c915d0&gt;
 #&gt; inner enclosure: &lt;environment: 0x0000000015812568&gt;
 #&gt; exp promise info: 
@@ -474,8 +488,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt; Warning in square(4): restarting interrupted promise evaluation
 #&gt; [1] 16</code></pre>
 <p>Notice, that the <code>exp</code> promise still wasn’t evaled until the last line, <code>x_ ^ exp</code>. The warning is caused by our previous failed attempt to evaluate the promise.</p>
-<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb468-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">3</span></a>
-<a class="sourceLine" id="cb468-2" data-line-number="2"><span class="kw">square</span>(<span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb510-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb510-2" data-line-number="2"><span class="kw">square</span>(<span class="dv">5</span>)</a></code></pre></div>
 <pre><code>#&gt; inner execution environment: &lt;environment: 0x0000000017d9b270&gt;
 #&gt; inner enclosure: &lt;environment: 0x0000000015812568&gt;
 #&gt; exp promise info: 
@@ -493,8 +507,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt;  
 #&gt; [1] 25
 # exp was evaled already, so no further warning is produced, and our change to x has no effect.</code></pre>
-<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb470-1" data-line-number="1"><span class="kw">rm</span>(x)</a>
-<a class="sourceLine" id="cb470-2" data-line-number="2">square &lt;-<span class="st"> </span><span class="kw">power2</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb512-1" data-line-number="1"><span class="kw">rm</span>(x)</a>
+<a class="sourceLine" id="cb512-2" data-line-number="2">square &lt;-<span class="st"> </span><span class="kw">power2</span>(x)</a></code></pre></div>
 <pre><code>#&gt; outer execution environment: &lt;environment: 0x0000000017e96e78&gt;
 #&gt; outer enclosure: &lt;environment: R_GlobalEnv&gt;
 #&gt; exp promise info: 
@@ -510,8 +524,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt;  $value
 #&gt;  NULL
 #&gt;  </code></pre>
-<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb472-1" data-line-number="1"><span class="kw">environment</span>(square)<span class="op">$</span>x &lt;-<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb472-2" data-line-number="2"><span class="kw">square</span>(<span class="dv">6</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb514-1" data-line-number="1"><span class="kw">environment</span>(square)<span class="op">$</span>x &lt;-<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb514-2" data-line-number="2"><span class="kw">square</span>(<span class="dv">6</span>)</a></code></pre></div>
 <pre><code>#&gt; inner execution environment: &lt;environment: 0x0000000017f8a530&gt;
 #&gt; inner enclosure: &lt;environment: 0x0000000017e96e78&gt;
 #&gt; exp promise info: 
@@ -529,37 +543,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt;  
 #&gt; Error in square(6): object &#39;x&#39; not found</code></pre>
 <p>Defining <code>x</code> in the function environment doesn’t work, because the promise isn’t looking for <code>x</code> there</p>
-<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb474-1" data-line-number="1">power2 &lt;-<span class="st"> </span><span class="cf">function</span>(exp) <span class="cf">function</span>(x_) x_ <span class="op">^</span><span class="st"> </span>exp</a>
-<a class="sourceLine" id="cb474-2" data-line-number="2"><span class="co"># wasn&#39;t sure this would work without braces...neat</span></a>
-<a class="sourceLine" id="cb474-3" data-line-number="3">square &lt;-<span class="st"> </span><span class="kw">power2</span>(x)</a>
-<a class="sourceLine" id="cb474-4" data-line-number="4"><span class="kw">environment</span>(square)<span class="op">$</span>exp &lt;-<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb474-5" data-line-number="5"><span class="kw">square</span>(<span class="dv">6</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb516-1" data-line-number="1">power2 &lt;-<span class="st"> </span><span class="cf">function</span>(exp) <span class="cf">function</span>(x_) x_ <span class="op">^</span><span class="st"> </span>exp</a>
+<a class="sourceLine" id="cb516-2" data-line-number="2"><span class="co"># wasn&#39;t sure this would work without braces...neat</span></a>
+<a class="sourceLine" id="cb516-3" data-line-number="3">square &lt;-<span class="st"> </span><span class="kw">power2</span>(x)</a>
+<a class="sourceLine" id="cb516-4" data-line-number="4"><span class="kw">environment</span>(square)<span class="op">$</span>exp &lt;-<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb516-5" data-line-number="5"><span class="kw">square</span>(<span class="dv">6</span>)</a></code></pre></div>
 <pre><code>[1] 36</code></pre>
-<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb476-1" data-line-number="1">square &lt;-<span class="st"> </span><span class="kw">power2</span>(x)</a>
-<a class="sourceLine" id="cb476-2" data-line-number="2">exp &lt;-<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb476-3" data-line-number="3"><span class="kw">square</span>(<span class="dv">6</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb518-1" data-line-number="1">square &lt;-<span class="st"> </span><span class="kw">power2</span>(x)</a>
+<a class="sourceLine" id="cb518-2" data-line-number="2">exp &lt;-<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb518-3" data-line-number="3"><span class="kw">square</span>(<span class="dv">6</span>)</a></code></pre></div>
 <pre><code>Error in square(6): object &#39;x&#39; not found</code></pre>
 <p>This doesn’t work because we need to define x within <code>environment(power2)$exp &lt;- 2</code></p>
 <div id="using-force" class="section level3">
 <h3><span class="header-section-number">10.1.1</span> USING FORCE</h3>
-<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb478-1" data-line-number="1"><span class="kw">rm</span>(exp)</a>
-<a class="sourceLine" id="cb478-2" data-line-number="2"><span class="kw">rm</span>(x, power2, square)</a>
-<a class="sourceLine" id="cb478-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb478-4" data-line-number="4">power2 &lt;-<span class="st"> </span><span class="cf">function</span>(exp) {</a>
-<a class="sourceLine" id="cb478-5" data-line-number="5">  <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;outer execution environment: &quot;</span>, <span class="kw">capture.output</span>(<span class="kw">environment</span>()), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>))</a>
-<a class="sourceLine" id="cb478-6" data-line-number="6">  <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;outer enclosure: &quot;</span>, <span class="kw">capture.output</span>(<span class="kw">parent.env</span>(<span class="kw">environment</span>())), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>))</a>
-<a class="sourceLine" id="cb478-7" data-line-number="7">  <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;exp promise info before: </span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="kw">paste0</span>(<span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="kw">capture.output</span>(pryr<span class="op">::</span><span class="kw">promise_info</span>(exp)), <span class="dt">collapse =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)))</a>
-<a class="sourceLine" id="cb478-8" data-line-number="8">  <span class="kw">force</span>(exp)</a>
-<a class="sourceLine" id="cb478-9" data-line-number="9">  <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;exp promise info after: </span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="kw">paste0</span>(<span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="kw">capture.output</span>(pryr<span class="op">::</span><span class="kw">promise_info</span>(exp)), <span class="dt">collapse =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)))</a>
-<a class="sourceLine" id="cb478-10" data-line-number="10">  out &lt;-<span class="st"> </span><span class="cf">function</span>(x_) {</a>
-<a class="sourceLine" id="cb478-11" data-line-number="11">    <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;inner execution environment: &quot;</span>, <span class="kw">capture.output</span>(<span class="kw">environment</span>()), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>))</a>
-<a class="sourceLine" id="cb478-12" data-line-number="12">    <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;inner enclosure: &quot;</span>, <span class="kw">capture.output</span>(<span class="kw">parent.env</span>(<span class="kw">environment</span>())), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>))</a>
-<a class="sourceLine" id="cb478-13" data-line-number="13">    <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;exp promise info: </span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="kw">paste0</span>(<span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="kw">capture.output</span>(pryr<span class="op">::</span><span class="kw">promise_info</span>(exp)), <span class="dt">collapse =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)))</a>
-<a class="sourceLine" id="cb478-14" data-line-number="14">    x_ <span class="op">^</span><span class="st"> </span>exp</a>
-<a class="sourceLine" id="cb478-15" data-line-number="15">  }</a>
-<a class="sourceLine" id="cb478-16" data-line-number="16">}</a>
-<a class="sourceLine" id="cb478-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb478-18" data-line-number="18">square &lt;-<span class="st"> </span><span class="kw">power2</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb520-1" data-line-number="1"><span class="kw">rm</span>(exp)</a>
+<a class="sourceLine" id="cb520-2" data-line-number="2"><span class="kw">rm</span>(x, power2, square)</a>
+<a class="sourceLine" id="cb520-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb520-4" data-line-number="4">power2 &lt;-<span class="st"> </span><span class="cf">function</span>(exp) {</a>
+<a class="sourceLine" id="cb520-5" data-line-number="5">  <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;outer execution environment: &quot;</span>, <span class="kw">capture.output</span>(<span class="kw">environment</span>()), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>))</a>
+<a class="sourceLine" id="cb520-6" data-line-number="6">  <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;outer enclosure: &quot;</span>, <span class="kw">capture.output</span>(<span class="kw">parent.env</span>(<span class="kw">environment</span>())), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>))</a>
+<a class="sourceLine" id="cb520-7" data-line-number="7">  <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;exp promise info before: </span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="kw">paste0</span>(<span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="kw">capture.output</span>(pryr<span class="op">::</span><span class="kw">promise_info</span>(exp)), <span class="dt">collapse =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)))</a>
+<a class="sourceLine" id="cb520-8" data-line-number="8">  <span class="kw">force</span>(exp)</a>
+<a class="sourceLine" id="cb520-9" data-line-number="9">  <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;exp promise info after: </span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="kw">paste0</span>(<span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="kw">capture.output</span>(pryr<span class="op">::</span><span class="kw">promise_info</span>(exp)), <span class="dt">collapse =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)))</a>
+<a class="sourceLine" id="cb520-10" data-line-number="10">  out &lt;-<span class="st"> </span><span class="cf">function</span>(x_) {</a>
+<a class="sourceLine" id="cb520-11" data-line-number="11">    <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;inner execution environment: &quot;</span>, <span class="kw">capture.output</span>(<span class="kw">environment</span>()), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>))</a>
+<a class="sourceLine" id="cb520-12" data-line-number="12">    <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;inner enclosure: &quot;</span>, <span class="kw">capture.output</span>(<span class="kw">parent.env</span>(<span class="kw">environment</span>())), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>))</a>
+<a class="sourceLine" id="cb520-13" data-line-number="13">    <span class="kw">cat</span>(<span class="kw">paste0</span>(<span class="st">&quot;exp promise info: </span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="kw">paste0</span>(<span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="kw">capture.output</span>(pryr<span class="op">::</span><span class="kw">promise_info</span>(exp)), <span class="dt">collapse =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)))</a>
+<a class="sourceLine" id="cb520-14" data-line-number="14">    x_ <span class="op">^</span><span class="st"> </span>exp</a>
+<a class="sourceLine" id="cb520-15" data-line-number="15">  }</a>
+<a class="sourceLine" id="cb520-16" data-line-number="16">}</a>
+<a class="sourceLine" id="cb520-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb520-18" data-line-number="18">square &lt;-<span class="st"> </span><span class="kw">power2</span>(x)</a></code></pre></div>
 <pre><code>#&gt; outer execution environment: &lt;environment: 0x00000000184e4e90&gt;
 #&gt; outer enclosure: &lt;environment: R_GlobalEnv&gt;
 #&gt; exp promise info before: 
@@ -577,8 +591,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt;  
 #&gt; Error in force(exp): object &#39;x&#39; not found
 # error because x isn&#39;t defined</code></pre>
-<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb480-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb480-2" data-line-number="2">square &lt;-<span class="st"> </span><span class="kw">power2</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb522-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb522-2" data-line-number="2">square &lt;-<span class="st"> </span><span class="kw">power2</span>(x)</a></code></pre></div>
 <pre><code>#&gt; outer execution environment: &lt;environment: 0x0000000018cafaf8&gt;
 #&gt; outer enclosure: &lt;environment: R_GlobalEnv&gt;
 #&gt; exp promise info before: 
@@ -606,7 +620,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt;  $value
 #&gt;  [1] 2
 #&gt;  </code></pre>
-<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb482-1" data-line-number="1"><span class="kw">square</span>(<span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb524-1" data-line-number="1"><span class="kw">square</span>(<span class="dv">4</span>)</a></code></pre></div>
 <pre><code>#&gt; inner execution environment: &lt;environment: 0x0000000018d55b48&gt;
 #&gt; inner enclosure: &lt;environment: 0x0000000018cafaf8&gt;
 #&gt; exp promise info: 
@@ -623,8 +637,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt;  [1] 2
 #&gt;  
 #&gt; [1] 16</code></pre>
-<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb484-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">3</span></a>
-<a class="sourceLine" id="cb484-2" data-line-number="2"><span class="kw">square</span>(<span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb526-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb526-2" data-line-number="2"><span class="kw">square</span>(<span class="dv">4</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="garbage-collection" class="section level2 unnumbered">
@@ -642,8 +656,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="approxfun" class="section level4 unnumbered">
 <h4>approxfun</h4>
 <p><code>approxfun</code> creates a function (i.e. mathematical formula) that can be used to find the linear interpolation for any given point, based on the data that was passed into the factory-function at the time it was passed into the function</p>
-<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb485-1" data-line-number="1">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">y=</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)<span class="op">^</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb485-2" data-line-number="2">dat</a></code></pre></div>
+<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb527-1" data-line-number="1">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">y=</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)<span class="op">^</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb527-2" data-line-number="2">dat</a></code></pre></div>
 <pre><code>##     x   y
 ## 1   1   1
 ## 2   2   4
@@ -655,38 +669,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 8   8  64
 ## 9   9  81
 ## 10 10 100</code></pre>
-<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb487-1" data-line-number="1">fn &lt;-<span class="st"> </span><span class="kw">approxfun</span>(dat<span class="op">$</span>x,dat<span class="op">$</span>y)</a>
-<a class="sourceLine" id="cb487-2" data-line-number="2"><span class="kw">fn</span>(<span class="fl">4.5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb529-1" data-line-number="1">fn &lt;-<span class="st"> </span><span class="kw">approxfun</span>(dat<span class="op">$</span>x,dat<span class="op">$</span>y)</a>
+<a class="sourceLine" id="cb529-2" data-line-number="2"><span class="kw">fn</span>(<span class="fl">4.5</span>)</a></code></pre></div>
 <pre><code>## [1] 20.5</code></pre>
-<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb489-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb489-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb489-3" data-line-number="3"><span class="kw">plot</span>(x, y, <span class="dt">main =</span> <span class="st">&quot;approx(.) and approxfun(.)&quot;</span>)</a>
-<a class="sourceLine" id="cb489-4" data-line-number="4"><span class="kw">points</span>(<span class="kw">approx</span>(x, y), <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">pch =</span> <span class="st">&quot;*&quot;</span>)</a>
-<a class="sourceLine" id="cb489-5" data-line-number="5"><span class="kw">points</span>(<span class="kw">approx</span>(x, y, <span class="dt">method =</span> <span class="st">&quot;constant&quot;</span>), <span class="dt">col =</span> <span class="dv">4</span>, <span class="dt">pch =</span> <span class="st">&quot;*&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb531-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb531-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb531-3" data-line-number="3"><span class="kw">plot</span>(x, y, <span class="dt">main =</span> <span class="st">&quot;approx(.) and approxfun(.)&quot;</span>)</a>
+<a class="sourceLine" id="cb531-4" data-line-number="4"><span class="kw">points</span>(<span class="kw">approx</span>(x, y), <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">pch =</span> <span class="st">&quot;*&quot;</span>)</a>
+<a class="sourceLine" id="cb531-5" data-line-number="5"><span class="kw">points</span>(<span class="kw">approx</span>(x, y, <span class="dt">method =</span> <span class="st">&quot;constant&quot;</span>), <span class="dt">col =</span> <span class="dv">4</span>, <span class="dt">pch =</span> <span class="st">&quot;*&quot;</span>)</a></code></pre></div>
 <p><img src="10-function_factories_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 </div>
 <div id="ecdf" class="section level4 unnumbered">
 <h4>ECDF</h4>
-<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb490-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">3</span>) <span class="co"># 3 random numbers</span></a>
-<a class="sourceLine" id="cb490-2" data-line-number="2">Fn &lt;-<span class="st"> </span><span class="kw">ecdf</span>(x) <span class="co"># create distribution function for each x</span></a>
-<a class="sourceLine" id="cb490-3" data-line-number="3"><span class="kw">Fn</span>(x) <span class="co"># apply the distribution function to each number</span></a></code></pre></div>
-<pre><code>## [1] 0.3333333 1.0000000 0.6666667</code></pre>
+<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb532-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">3</span>) <span class="co"># 3 random numbers</span></a>
+<a class="sourceLine" id="cb532-2" data-line-number="2">Fn &lt;-<span class="st"> </span><span class="kw">ecdf</span>(x) <span class="co"># create distribution function for each x</span></a>
+<a class="sourceLine" id="cb532-3" data-line-number="3"><span class="kw">Fn</span>(x) <span class="co"># apply the distribution function to each number</span></a></code></pre></div>
+<pre><code>## [1] 1.0000000 0.6666667 0.3333333</code></pre>
 </div>
 </div>
 <div id="exercise-1" class="section level2 unnumbered">
 <h2>10.2.6.3 Exercise</h2>
 <div class="question">
 <p>How would we make this function using {factory}</p>
-<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb492-1" data-line-number="1">pick &lt;-<span class="st"> </span><span class="cf">function</span>(i) {</a>
-<a class="sourceLine" id="cb492-2" data-line-number="2">  <span class="kw">force</span>(i)</a>
-<a class="sourceLine" id="cb492-3" data-line-number="3">  <span class="cf">function</span>(x) x[[i]]</a>
-<a class="sourceLine" id="cb492-4" data-line-number="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb534-1" data-line-number="1">pick &lt;-<span class="st"> </span><span class="cf">function</span>(i) {</a>
+<a class="sourceLine" id="cb534-2" data-line-number="2">  <span class="kw">force</span>(i)</a>
+<a class="sourceLine" id="cb534-3" data-line-number="3">  <span class="cf">function</span>(x) x[[i]]</a>
+<a class="sourceLine" id="cb534-4" data-line-number="4">}</a></code></pre></div>
 </div>
-<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb493-1" data-line-number="1"><span class="kw">library</span>(factory)</a>
-<a class="sourceLine" id="cb493-2" data-line-number="2">pick &lt;-<span class="st"> </span><span class="kw">build_factory</span>(</a>
-<a class="sourceLine" id="cb493-3" data-line-number="3">  <span class="dt">.factory_fun =</span> <span class="cf">function</span>(x) x[[i]],</a>
-<a class="sourceLine" id="cb493-4" data-line-number="4">  i</a>
-<a class="sourceLine" id="cb493-5" data-line-number="5">)</a></code></pre></div>
+<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb535-1" data-line-number="1"><span class="kw">library</span>(factory)</a>
+<a class="sourceLine" id="cb535-2" data-line-number="2">pick &lt;-<span class="st"> </span><span class="kw">build_factory</span>(</a>
+<a class="sourceLine" id="cb535-3" data-line-number="3">  <span class="dt">.factory_fun =</span> <span class="cf">function</span>(x) x[[i]],</a>
+<a class="sourceLine" id="cb535-4" data-line-number="4">  i</a>
+<a class="sourceLine" id="cb535-5" data-line-number="5">)</a></code></pre></div>
 </div>
 <div id="labelling" class="section level2 unnumbered">
 <h2>10.3.1 Labelling</h2>
@@ -702,23 +716,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div class="TODO">
 <p>Data:</p>
-<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb494-1" data-line-number="1">sd &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">15</span>)</a>
-<a class="sourceLine" id="cb494-2" data-line-number="2">n &lt;-<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb494-3" data-line-number="3">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dv">3</span> <span class="op">*</span><span class="st"> </span>n, <span class="dt">sd =</span> sd), <span class="dt">sd =</span> <span class="kw">rep</span>(sd, n))</a></code></pre></div>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb536-1" data-line-number="1">sd &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">15</span>)</a>
+<a class="sourceLine" id="cb536-2" data-line-number="2">n &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb536-3" data-line-number="3">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dv">3</span> <span class="op">*</span><span class="st"> </span>n, <span class="dt">sd =</span> sd), <span class="dt">sd =</span> <span class="kw">rep</span>(sd, n))</a></code></pre></div>
 <p>Using <code>label_bquote</code> using <code>plotMath</code> explanation……</p>
-<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb495-1" data-line-number="1"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(x)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb495-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb495-3" data-line-number="3"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>sd, <span class="dt">scales =</span> <span class="st">&quot;free_x&quot;</span>, <span class="dt">labeller =</span> <span class="kw">label_bquote</span>(alpha <span class="op">^</span><span class="st"> </span>.(sd))) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb495-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb537-1" data-line-number="1"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(x)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb537-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb537-3" data-line-number="3"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>sd, <span class="dt">scales =</span> <span class="st">&quot;free_x&quot;</span>, <span class="dt">labeller =</span> <span class="kw">label_bquote</span>(alpha <span class="op">^</span><span class="st"> </span>.(sd))) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb537-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>) </a></code></pre></div>
 <p><img src="10-function_factories_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <p>Using <code>number_format</code> will <code>force</code> the computation of the parameters, formatting numbers explanation……</p>
-<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb496-1" data-line-number="1"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(x)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb496-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb496-3" data-line-number="3"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>sd, <span class="dt">scales =</span> <span class="st">&quot;free_x&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb496-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb496-5" data-line-number="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(</a>
-<a class="sourceLine" id="cb496-6" data-line-number="6">  <span class="dt">labels =</span> scales<span class="op">::</span><span class="kw">number_format</span>(<span class="dt">scale =</span> <span class="dv">1</span>, <span class="dt">suffix =</span> <span class="st">&quot; K&quot;</span>) </a>
-<a class="sourceLine" id="cb496-7" data-line-number="7">)</a></code></pre></div>
+<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb538-1" data-line-number="1"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(x)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb538-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb538-3" data-line-number="3"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>sd, <span class="dt">scales =</span> <span class="st">&quot;free_x&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb538-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb538-5" data-line-number="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(</a>
+<a class="sourceLine" id="cb538-6" data-line-number="6">  <span class="dt">labels =</span> scales<span class="op">::</span><span class="kw">number_format</span>(<span class="dt">scale =</span> <span class="dv">1</span>, <span class="dt">suffix =</span> <span class="st">&quot; K&quot;</span>) </a>
+<a class="sourceLine" id="cb538-7" data-line-number="7">)</a></code></pre></div>
 <p><img src="10-function_factories_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 </div>
 </div>
@@ -726,29 +740,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">10.2</span> 10.5 factories and functionals</h2>
 <div class="question">
 <p>Can we {factory} this?</p>
-<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb497-1" data-line-number="1">names &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb497-2" data-line-number="2">  <span class="dt">square =</span> <span class="dv">2</span>, </a>
-<a class="sourceLine" id="cb497-3" data-line-number="3">  <span class="dt">cube =</span> <span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb497-4" data-line-number="4">  <span class="dt">root =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, </a>
-<a class="sourceLine" id="cb497-5" data-line-number="5">  <span class="dt">cuberoot =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb497-6" data-line-number="6">  <span class="dt">reciprocal =</span> <span class="dv">-1</span></a>
-<a class="sourceLine" id="cb497-7" data-line-number="7">)</a>
-<a class="sourceLine" id="cb497-8" data-line-number="8">funs &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map</span>(names, power1)</a></code></pre></div>
+<div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb539-1" data-line-number="1">names &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb539-2" data-line-number="2">  <span class="dt">square =</span> <span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb539-3" data-line-number="3">  <span class="dt">cube =</span> <span class="dv">3</span>, </a>
+<a class="sourceLine" id="cb539-4" data-line-number="4">  <span class="dt">root =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb539-5" data-line-number="5">  <span class="dt">cuberoot =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>, </a>
+<a class="sourceLine" id="cb539-6" data-line-number="6">  <span class="dt">reciprocal =</span> <span class="dv">-1</span></a>
+<a class="sourceLine" id="cb539-7" data-line-number="7">)</a>
+<a class="sourceLine" id="cb539-8" data-line-number="8">funs &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map</span>(names, power1)</a></code></pre></div>
 </div>
-<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb498-1" data-line-number="1">power4 &lt;-<span class="st"> </span><span class="kw">build_factory</span>(</a>
-<a class="sourceLine" id="cb498-2" data-line-number="2">  <span class="dt">fun =</span> <span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb498-3" data-line-number="3">    x <span class="op">^</span><span class="st"> </span>exponent</a>
-<a class="sourceLine" id="cb498-4" data-line-number="4">  },</a>
-<a class="sourceLine" id="cb498-5" data-line-number="5">  exponent</a>
-<a class="sourceLine" id="cb498-6" data-line-number="6">)</a>
-<a class="sourceLine" id="cb498-7" data-line-number="7">power_names &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb498-8" data-line-number="8">  <span class="dt">square =</span> <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb498-9" data-line-number="9">  <span class="dt">cube =</span> <span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb498-10" data-line-number="10">  <span class="dt">root =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb498-11" data-line-number="11">  <span class="dt">cuberoot =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb498-12" data-line-number="12">  <span class="dt">reciprocal =</span> <span class="dv">-1</span></a>
-<a class="sourceLine" id="cb498-13" data-line-number="13">)</a>
-<a class="sourceLine" id="cb498-14" data-line-number="14">powers &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map</span>(power_names, power4)</a></code></pre></div>
+<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb540-1" data-line-number="1">power4 &lt;-<span class="st"> </span><span class="kw">build_factory</span>(</a>
+<a class="sourceLine" id="cb540-2" data-line-number="2">  <span class="dt">fun =</span> <span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb540-3" data-line-number="3">    x <span class="op">^</span><span class="st"> </span>exponent</a>
+<a class="sourceLine" id="cb540-4" data-line-number="4">  },</a>
+<a class="sourceLine" id="cb540-5" data-line-number="5">  exponent</a>
+<a class="sourceLine" id="cb540-6" data-line-number="6">)</a>
+<a class="sourceLine" id="cb540-7" data-line-number="7">power_names &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb540-8" data-line-number="8">  <span class="dt">square =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb540-9" data-line-number="9">  <span class="dt">cube =</span> <span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb540-10" data-line-number="10">  <span class="dt">root =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb540-11" data-line-number="11">  <span class="dt">cuberoot =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb540-12" data-line-number="12">  <span class="dt">reciprocal =</span> <span class="dv">-1</span></a>
+<a class="sourceLine" id="cb540-13" data-line-number="13">)</a>
+<a class="sourceLine" id="cb540-14" data-line-number="14">powers &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map</span>(power_names, power4)</a></code></pre></div>
 
 </div>
 </div>

@@ -10,7 +10,7 @@ ui <- fluidPage(
   
   includeCSS("styles.css"),
   
-  titlePanel(h1("EXPRESSIONS", align = "center")),
+  titlePanel(h1("EXPRESSIONS", align = "center"), windowTitle = "Expressions"),
   tags$p("Applying concepts from Chapter 18 of Hadley's Wickham's Advanced R", align="center"),
   
   br(), br(),

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Kevin Kent" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Advanced R
+## Chapter 7 Environments
+### Kevin Kent
+
+---
+
+
+
+
+
+![r4ds](images/namespace_environment.png) 
+
+"f() binds the environment that binds the name f to the function. But that’s not always the case: in the following example g is bound in a new environment e, but g() binds the global environment."
+
+![r4ds](images/call_stack.png) 
+
+---
+### ??????
+
+![r4ds](images/mind_blown_emoji.jpg) 
+
+---
+
+# Quick Recap - Chapter 6 
+## Environments power lexical scooping
+
+Lexical scooping 
+- Name masking
+- Functions versus variables
+- A fresh start
+- Dynamic lookup
+
+
+.pull-left[
+![r4ds](images/fresh_start.png)
+]
+
+.pull-right[
+![r4ds](images/dynamic_lookup.png)
+]
+
+
+
+---
+
+# What is an R environment?
+
+"The job of an environment is to associate, or bind, a set of names to a set of values." 
+
+- A data structure similar to a named list, except:
+  - Every name must be unique.
+  - The names in an environment are not ordered.
+  - An environment has a parent.
+  - Environments are not copied when modified.
+- R uses environments to find the objects and packages you call
+- They are hierarchical (parents and children)
+- Environments can contain themselves
+
+.pull-left[
+
+
+```r
+library(rlang)
+```
+
+```
+## Warning: package 'rlang' was built under R version 3.6.2
+```
+
+```r
+e1 &lt;- env(
+  a = FALSE,
+  b = "a",
+  c = 2.3,
+  d = 1:3,
+)
+```
+
+]
+
+.pull-right[
+
+![r4ds](images/environments_1.png)
+
+
+]
+
+---
+# Types of Environments
+
+- Current Environment
+- Global
+- Special types
+ - Package
+ - Function
+ - Namespaces
+ - Execution
+ 
+
+---
+
+
+# Environments are hierarhical 
+
+## Every environment has a parent (almost)
+
+![r4ds](images/parents.png) 
+
+
+
+
+---
+
+# Environments are hierarhical 
+
+## Every environment has a parent (almost)
+
+.pull-left[
+
+![r4ds](images/parent_tree.png) 
+
+]
+
+.pull-right[
+
+![r4ds](images/srussian_doll.jpg) 
+
+]
+
+---
+
+# Looking for objects
+
+![r4ds](images/searching_env.png) 
+
+![r4ds](images/where_func.png) 
+
+---
+
+# Iteracting with Environments
+
+## Getting and Setting
+
+
+```r
+e3 &lt;- env(x = 1, y = 2)
+
+e3$z &lt;- 3
+e3[["z"]]
+```
+
+```
+## [1] 3
+```
+
+```r
+## Binding with Poke
+
+env_poke(e3, "a", 100)
+
+## Multiple bindings
+
+env_bind(e3, a = 10, b = 20)
+```
+
+
+---
+
+# Special Environments
+
+- Package
+- Function
+- Namespaces
+- Execution
+ 
+---
+
+# Special Environments 
+## Package
+
+![r4ds](images/package_env.png) 
+
+```r
+search()
+```
+
+```
+##  [1] ".GlobalEnv"             "package:rlang"         
+##  [3] "package:xaringanthemer" "package:stats"         
+##  [5] "package:graphics"       "package:grDevices"     
+##  [7] "package:utils"          "package:datasets"      
+##  [9] "package:methods"        "Autoloads"             
+## [11] "package:base"
+```
+---
+
+# Special Environments 
+## Function
+
+"A function binds the current environment when it is created. This is called the function environment, and is used for lexical scoping. Across computer languages, functions that capture (or enclose) their environments are called closures, which is why this term is often used interchangeably with function in R’s documentation."
+
+
+---
+
+
+# Special Environments 
+## Namespaces
+
+"The goal of namespaces is to make sure that...every package works the same way regardless of what packages are attached by the user."
+
+
+![r4ds](images/namespace.png) 
+
+
+---
+
+# Special Environments 
+## Namespaces
+
+![r4ds](images/namespace_environment.png) 
+---
+
+# Special Environments 
+## Execution 
+
+- Each time a function is called, an execution environment is created
+- Parent is the function environment 
+- Cleaned up by garbage collector after execution is completed (unless execution environment is explicitly returned)
+
+
+---
+
+
+# Special Environments 
+## Execution 
+
+
+![rds:scale 5%](images/execution_env.png) 
+
+
+---
+
+# Call stacks 
+
+A call stack is a record of the functions that were executed in a particular order. Each element of a call stack (or step), is a frame. 
+
+
+```r
+f &lt;- function(x) {
+  g(x = 2)
+}
+g &lt;- function(x) {
+  h(x = 3)
+}
+h &lt;- function(x) {
+  stop()
+}
+```
+
+
+```r
+# f(x = 1)
+# #&gt; Error:
+# traceback()
+# #&gt; 4: stop()
+# #&gt; 3: h(x = 3) 
+# #&gt; 2: g(x = 2)
+# #&gt; 1: f(x = 1)
+```
+
+---
+
+
+# Call stacks 
+
+
+
+```r
+h &lt;- function(x) {
+  lobstr::cst()
+}
+f(x = 1)
+```
+
+```
+##     █
+##  1. └─global::f(x = 1)
+##  2.   └─global::g(x = 2)
+##  3.     └─global::h(x = 3)
+##  4.       └─lobstr::cst()
+```
+
+
+---
+
+## Questions? 
+
+
+---
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+<style>
+.logo {
+  background-image: url(r4ds.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 110px;
+  height: 128px;
+  z-index: 0;
+}
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"></div>';
+  });
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

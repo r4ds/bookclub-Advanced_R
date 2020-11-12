@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-08-18" />
+<meta name="date" content="2020-10-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -355,6 +355,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#debug"><i class="fa fa-check"></i>22.4.2.3 debug</a></li>
 <li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#non-interactive-debugging"><i class="fa fa-check"></i>22.5 Non-interactive debugging</a></li>
 <li><a href="debugging.html#dump.frames">22.5.1 <code>dump.frames</code></a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#debug-pipe"><i class="fa fa-check"></i>Debug Pipe</a></li>
+<li class="chapter" data-level="22.2" data-path="debugging.html"><a href="debugging.html#edic-code-from-another-function"><i class="fa fa-check"></i><b>22.2</b> Edic Code from Another function</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#bonus-tip"><i class="fa fa-check"></i>Bonus tip</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html"><i class="fa fa-check"></i>Measuring performance</a><ul>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#introduction"><i class="fa fa-check"></i>23.1 Introduction</a></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html#profiling"><i class="fa fa-check"></i>23.2 Profiling</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>23.4.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html#microbenchmarking"><i class="fa fa-check"></i>23.3 Microbenchmarking</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html"><i class="fa fa-check"></i>Improving performance</a><ul>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#existing-solutions"><i class="fa fa-check"></i>24.3 Existing solutions</a></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#vectorize"><i class="fa fa-check"></i>24.5 Vectorize</a></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#other-techniques"><i class="fa fa-check"></i>24.8 Other Techniques</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -398,11 +412,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This destinction can be put as: do you want exactly what the developer/coder typed or do you want what was put into the function? This will tell you if you want to use <code>expr</code> or <code>enexpr</code></p>
 <div class="question">
 <p>Hadley creates a table for quoting expressions using base R and tidy eval, but there isn’t really a one to one relationship here. For instance <code>substitute</code> is compared to <code>enexprs</code> but that fails here?</p>
-<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb658-1" data-line-number="1">f4 &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">substitute</span>(x <span class="op">*</span><span class="st"> </span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb658-2" data-line-number="2"><span class="kw">f4</span>(a <span class="op">+</span><span class="st"> </span>b <span class="op">+</span><span class="st"> </span>c)</a>
-<a class="sourceLine" id="cb658-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb658-4" data-line-number="4">f5 &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">enexprs</span>(x<span class="op">*</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb658-5" data-line-number="5"><span class="kw">f5</span>(a <span class="op">+</span><span class="st"> </span>b <span class="op">+</span><span class="st"> </span>c)</a></code></pre></div>
+<div class="sourceCode" id="cb698"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb698-1" data-line-number="1">f4 &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">substitute</span>(x <span class="op">*</span><span class="st"> </span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb698-2" data-line-number="2"><span class="kw">f4</span>(a <span class="op">+</span><span class="st"> </span>b <span class="op">+</span><span class="st"> </span>c)</a>
+<a class="sourceLine" id="cb698-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb698-4" data-line-number="4">f5 &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">enexprs</span>(x<span class="op">*</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb698-5" data-line-number="5"><span class="kw">f5</span>(a <span class="op">+</span><span class="st"> </span>b <span class="op">+</span><span class="st"> </span>c)</a></code></pre></div>
 </div>
 <div class="TODO">
 <p>That is because they are not a 1-1 relationship, <code>substitute</code> has <code>5</code> different functions under the hood (but they are not <code>S3</code> methods!!), these are only related somewhat.</p>
@@ -419,16 +433,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>19.4.6 Polite fiction of !!</h2>
 <div class="question">
 <p>What exactly is happening here? Why is <code>y</code> evaluating to <code>6</code>?!</p>
-<div class="sourceCode" id="cb659"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb659-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb659-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb659-3" data-line-number="3"><span class="kw">with</span>(df, x <span class="op">+</span><span class="st"> </span><span class="op">!!</span>y)</a></code></pre></div>
+<div class="sourceCode" id="cb699"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb699-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb699-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb699-3" data-line-number="3"><span class="kw">with</span>(df, x <span class="op">+</span><span class="st"> </span><span class="op">!!</span>y)</a></code></pre></div>
 <pre><code>## [1] 2 3 4 5 6</code></pre>
 </div>
 <p>Any number that isn’t <code>0</code> is <code>TRUE</code> in R:</p>
-<div class="sourceCode" id="cb661"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb661-1" data-line-number="1"><span class="kw">as.logical</span>(<span class="fl">1.2123</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb701"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb701-1" data-line-number="1"><span class="kw">as.logical</span>(<span class="fl">1.2123</span>)</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>So because <code>y==TRUE</code>, <code>with</code> is taking every element in <code>x</code> and adding <code>1</code> to it because once you introduce a <code>+</code> inside <code>with</code> you’re essentially saying <code>as.numeric(TRUE)</code> which is <code>1</code>.</p>
-<div class="sourceCode" id="cb663"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb663-1" data-line-number="1"><span class="kw">with</span>(df, x <span class="op">+</span><span class="st"> </span><span class="ot">TRUE</span>) <span class="op">==</span><span class="st"> </span><span class="kw">with</span>(df, x <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb703"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb703-1" data-line-number="1"><span class="kw">with</span>(df, x <span class="op">+</span><span class="st"> </span><span class="ot">TRUE</span>) <span class="op">==</span><span class="st"> </span><span class="kw">with</span>(df, x <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) </a></code></pre></div>
 <pre><code>## [1] TRUE TRUE TRUE TRUE TRUE</code></pre>
 <p><code>!x</code> essentially really means <code>!as.logical(x)</code>, <code>1:5 + x</code> essentially really means <code>1:5 + as.integer(x)</code>, so we end up with <code>1:5 + as.integer(!(!(as.logical(y))))</code></p>
 </div>
@@ -447,12 +461,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>19.4.8.2 Exercises</h2>
 <div class="question">
 <p>What exactly is going on here? What is <code>&lt;inline integer&gt;</code>?</p>
-<div class="sourceCode" id="cb665"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb665-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">ast</span>(<span class="kw">mean</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb705"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb705-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">ast</span>(<span class="kw">mean</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>))</a></code></pre></div>
 <pre><code>## █─mean 
 ## └─█─`:` 
 ##   ├─1 
 ##   └─10</code></pre>
-<div class="sourceCode" id="cb667"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb667-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">ast</span>(<span class="kw">mean</span>(<span class="op">!!</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)))</a></code></pre></div>
+<div class="sourceCode" id="cb707"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb707-1" data-line-number="1">lobstr<span class="op">::</span><span class="kw">ast</span>(<span class="kw">mean</span>(<span class="op">!!</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)))</a></code></pre></div>
 <pre><code>## █─mean 
 ## └─&lt;inline integer&gt;</code></pre>
 </div>
@@ -469,17 +483,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>19.6 (…)</h2>
 <div class="question">
 <p>Based on <a href="">this thread</a> it looks like <code>...</code> should be the first line of defense before using tidyeval - why?</p>
-<div class="sourceCode" id="cb669"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb669-1" data-line-number="1">my_groups &lt;-<span class="st"> </span><span class="cf">function</span>(df, ...) {</a>
-<a class="sourceLine" id="cb669-2" data-line-number="2">  df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb669-3" data-line-number="3"><span class="st">    </span><span class="kw">group_by</span>(...) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb669-4" data-line-number="4"><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>())</a>
-<a class="sourceLine" id="cb669-5" data-line-number="5">}</a>
-<a class="sourceLine" id="cb669-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb669-7" data-line-number="7">my_groups &lt;-<span class="st"> </span><span class="cf">function</span>(df, col) {</a>
-<a class="sourceLine" id="cb669-8" data-line-number="8">  df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb669-9" data-line-number="9"><span class="st">    </span><span class="kw">group_by</span>(<span class="op">!!</span><span class="kw">enquo</span>(col)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb669-10" data-line-number="10"><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>())</a>
-<a class="sourceLine" id="cb669-11" data-line-number="11">}</a></code></pre></div>
+<div class="sourceCode" id="cb709"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb709-1" data-line-number="1">my_groups &lt;-<span class="st"> </span><span class="cf">function</span>(df, ...) {</a>
+<a class="sourceLine" id="cb709-2" data-line-number="2">  df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb709-3" data-line-number="3"><span class="st">    </span><span class="kw">group_by</span>(...) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb709-4" data-line-number="4"><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>())</a>
+<a class="sourceLine" id="cb709-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb709-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb709-7" data-line-number="7">my_groups &lt;-<span class="st"> </span><span class="cf">function</span>(df, col) {</a>
+<a class="sourceLine" id="cb709-8" data-line-number="8">  df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb709-9" data-line-number="9"><span class="st">    </span><span class="kw">group_by</span>(<span class="op">!!</span><span class="kw">enquo</span>(col)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb709-10" data-line-number="10"><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>())</a>
+<a class="sourceLine" id="cb709-11" data-line-number="11">}</a></code></pre></div>
 </div>
 <p>The first option lets the robust function <code>group_by</code> figure out any quoting. Furthermore, the second option only allows the user to supply a single column to group by and assumes the user is passing in a valid column.</p>
 <div class="question">
@@ -494,9 +508,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>19.6.2 <code>exec()</code></h2>
 <div class="question">
 <p>Can we use this function instead of <code>do.call</code> in our Expressions shiny app? Do we need to change <code>argumentlist()</code> to use <code>list2</code> rather than <code>list</code>?</p>
-<div class="sourceCode" id="cb670"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb670-1" data-line-number="1"><span class="kw">do.call</span>(call2, <span class="kw">argumentlist</span>(), <span class="dt">quote =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb710"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb710-1" data-line-number="1"><span class="kw">do.call</span>(call2, <span class="kw">argumentlist</span>(), <span class="dt">quote =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 </div>
-<div class="sourceCode" id="cb671"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb671-1" data-line-number="1"><span class="kw">exec</span>(call2, <span class="op">!!!</span><span class="kw">argumentlist</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb711"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb711-1" data-line-number="1"><span class="kw">exec</span>(call2, <span class="op">!!!</span><span class="kw">argumentlist</span>())</a></code></pre></div>
 </div>
 <div id="dots_list" class="section level2 unnumbered">
 <h2>19.6.3 <code>dots_list()</code></h2>
@@ -509,10 +523,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>19.6.4 With base R</h2>
 <div class="question">
 <p>What is going on with this RCurl example and how does it avoid using <code>do.call</code>? Can we find some Hadley source code that uses it since he said he liked it at one point? Why do you think he moved away from it?</p>
-<div class="sourceCode" id="cb672"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb672-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="cf">function</span>(..., .dots) {</a>
-<a class="sourceLine" id="cb672-2" data-line-number="2">  dots &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">list</span>(...), .dots)</a>
-<a class="sourceLine" id="cb672-3" data-line-number="3">  <span class="co"># Do something</span></a>
-<a class="sourceLine" id="cb672-4" data-line-number="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb712"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb712-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="cf">function</span>(..., .dots) {</a>
+<a class="sourceLine" id="cb712-2" data-line-number="2">  dots &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">list</span>(...), .dots)</a>
+<a class="sourceLine" id="cb712-3" data-line-number="3">  <span class="co"># Do something</span></a>
+<a class="sourceLine" id="cb712-4" data-line-number="4">}</a></code></pre></div>
 </div>
 <div class="TODO">
 <p>The <code>dots</code> object combines all the arguments passed as dots and the arguments not passed as dots. This gives a lot (perhaps too much) leeway to the user of the function.</p>

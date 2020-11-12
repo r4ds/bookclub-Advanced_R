@@ -19,7 +19,7 @@ library(lobstr)
 tibble(
   Term = c("Functionals", "Function Factory", "Function Operator"),
   `Required Input` = c("Function", NA, "Function"),
-  `Optional Output` = c("Vector", "Vector,Function", "Function"),
+  `Optional Input` = c("Vector", "Vector,Function", "Function"),
   Output = c("Vector", "Function", "Function"),
 ) %>%
   gt()
