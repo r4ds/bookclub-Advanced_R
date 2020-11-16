@@ -176,10 +176,12 @@ Chapter 14 - R6
 Chapter 15 - S4
 
 - Cohort 1: Pavitra Chakravarty ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week14/Cohort1/Chapter15.html#1) | [video](https://www.youtube.com/watch?v=a1jzpWiksyA&feature=youtu.be))
+- Cohort 2: [Erick Knackstedt](https://twitter.com/Eknackstedt) (slides | video)
 
 Chapter 16 - Tradeoffs/OOP Wrapup
 
 - Cohort 1: [Tan Ho](https://twitter.com/_tanho) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week15/Cohort1/AdvR-W15_Tradeoffs.html#1) | [video](https://www.youtube.com/watch?v=W1uc8HbyZvI&feature=youtu.be) | [{ffscrapr}](https://github.com/dynastyprocess/ffscrapr))
+- Cohort 2: [Erick Knackstedt](https://twitter.com/Eknackstedt) (see Chapter 15)
 
 Chapter 17 - Metaprogramming, big picture
 
