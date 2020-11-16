@@ -1,0 +1,295 @@
+---
+title: "Advanced R"
+subtitle: "Chapters 15 & 16, S4 and Trade-offs"
+author: "Erick Knackstedt"
+institute: "@Eknackstedt"
+date: " `r Sys.Date()` "
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["xaringan-themer.css","custom.css"]
+    includes:
+      after_body: insert-logo.html
+---
+
+
+```{r xaringan-themer, include = FALSE}
+library(xaringanthemer)
+style_mono_light(
+  base_color = "#3092FF",
+  header_font_google = google_font("Josefin Sans"),
+  text_font_google   = google_font("Montserrat", "300", "300i"),
+  code_font_google   = google_font("Droid Mono"),
+)
+```
+
+# Outline
+
+--
+
++ Introducing S4
+--
+
++ Classes, generics, & methods
+--
+
++ Prototypes, constructors, helpers, & validators
+--
+
++ Creating & accessing generics and methods
+--
+
++ Method dispatch, multiple inheritance, & multiple dispatch
+--
+
++ Interaction of S4 & S3
+--
+
++ Trade-offs
+
+---
+
+## Introducing S4
+
+--
+
+> Why S4?
+
+--
+
++ Like S3, uses `function overloading` to throttle the number of functions required to interact with objects
+--
+
++ A more formal and rigorous update to S3
+--
+
++ Much of the code is written by `John Chambers` himself
+--
+
++ Used extensively in the `Bioconductor` project
+--
+
++ Fairly independent of S3, separate systems
+--
+
++ Provides multiple inheritance and multiple dispatch
+--
+
++ Has the slot and a specialized subsetting operator `@`
+--
+
++ Implemented using the `methods` package
+
+---
+
+## Classes, generics, & methods
+
+--
+
+> How do you create a class?
+
+--
+
+`setClass("myClass", slots= ...., contains =...., prototype =....)`
+
+--
+
+> How do you create a generic for the class?
+
+--
+
+`setGeneric(name, def)`
+--
+
+> How do you create a method for the generic?
+
+--
+
+`setMethod(f, signature, definition)`
+
+---
+
+## Prototypes, constructors, helpers, & validators
+
+--
+> If the prototype is optional, why should we use it?
+
+--
+
+This allows you to pass in default values for class slots (attributes)
+--
+
+> I want to build on top of another class. Is there a workaround to copy and pasting attributes from one class to another?
+
+--
+
+Why, yes there is! The `contains` argument in `setClass` allows you to specify the class to inherit from
+--
+
+> If I can use `new()` to construct an object, why do I bother to create a constructor?
+
+--
+
+Apparently programmers want other people to use their stuff. Constructors politely define the slots (attributes) that require data, which you then assign to `new()` in the body of the constructor
+
+---
+
+### Prototypes, constructors, helpers, & validators cont.
+
+--
+
+> I don't want this use of my class to break, how do I validate that an object has the correct attributes?
+
+--
+
+`setValidity(Class, method)`, where the method is a function that contains the validity checks. You define this once and it is associated with object construction going forward. It is not triggered if an object is modified
+
+--
+
+> Well, if I can't validate on modificaiton, what do I do?
+
+--
+
+This is where we build on the idea of helpers and wrap an accessor in a function that also validates the inputs to underlying attributes
+
+---
+
+## Creating & accessing generics and methods
+
+--
+
+> What was the point of a generic again?
+
+--
+
+Generics are functions that describe behavior found across multiple classes of objects. By decomposing functions into generics and methods we solve the issue of function overpopulation
+
+--
+
+> And the S4 syntax for creating one?
+
+--
+
+```{r, eval=FALSE}
+setGeneric(name, def)
+
+# Example
+setGeneric("myGeneric", function(x) standardGeneric("myGeneric"))
+```
+
+---
+
+### Creating & accessing generics and methods cont.
+
+--
+
+> What was the point of a method again?
+
+--
+
+A method is a function for a specific class of object. Which means as a programmer you are still writing up functions for every class but for the user the interface is standardized through the generic
+
+--
+
+> And the S4 syntax for creating one?
+
+--
+
+```{r, eval=FALSE}
+setMethod(f, signature, definition)
+
+#Example
+setMethod("myGeneric", "Person", function(x) {
+  # method implementation
+})
+```
+
+---
+
+## Method dispatch, multiple inheritance, & multiple dispatch
+
+--
+
+> I've overloaded generic functions with a bunch of class specific methods. Now what?
+
+--
+
+The generic function looks at the class and lookups up the method!
+
+--
+
+> What if I built up classes one on top of the other? You know, like evolution or something?
+
+-- 
+
+Well, the generic will search for the methods assigned to the classes and use the one that is "closest". If there there is not a closest, then it picks the method that comes earliest in the alphabet. 
+
+---
+
+## Interaction of S4 & S3
+
+--
+
+> How exactly do these two system allow interactions?
+
+--
+
+Well, you can assign an S3 object to a S4 `slot` or build on top of an S3 object by using `contains`.
+
+--
+
+> Sounds easy! Really glad there isn't a fancy function required to allow this to work!!
+
+--
+
+Silly, of course there is a fancy function required! Seems painless though
+
+`setOldClass(Classes)`
+
+```{r, eval=FALSE}
+setClass("factor",
+  contains = "integer",
+  slots = c(
+    levels = "character"
+  ),
+  prototype = structure(
+    integer(),
+    levels = character()
+  )
+)
+setOldClass("factor", S4Class = "factor")
+```
+
+### Interaction of S4 & S3 cont.
+
+--
+
+> Ok, we've got a way to inherit attributes from S3 Objects. What about importing S3 generics to S4?
+
+--
+
+`setGeneric(name, def)`
+
+Does this break its use for S3 methods?
+
+---
+
+## Trade-offs
+
+> S4 vs S3
+
+--
+
++ S3 and S4 solve similar problems with solutions pointed towards the entire R ecosystem
++ S4 has conventions by design, while S3 allows the same conventions, others, or none
++ S3 seems more like the self-service friendly tool-set
++ S3 is more generally used, S4 is used by large projects like `bioconductor`
+
+--
+
+> R6 vs S3
+
++ R6 seems to allow by nature the build up of a mini-ecosystem of functionality
++ R6 reference semantics seem cool
++ Something about using the `$` to pipe method calls
++ R6 seems to have some nice features to prevent breaking changes when improvements to classes or methods are made
