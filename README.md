@@ -41,7 +41,7 @@ This repo contains 3 main folders:
 
 *Cohort 3 [Europe/Africa]: (started 2020-08-04) Tuesdays, 19:30 CET (CEST)*
 
-- 2020-11-10 Chapters 12 & 13: Base types & S3
+- 2020-12-01 Chapter 13: S3 - Part 2
 - 2020-11-17 Chapter 14: R6
 
 <details>
@@ -158,7 +158,7 @@ Chapter 11 - Function operators
 
 - Cohort 1: [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week11/Cohort1/Chapter11.html#1) | [video](https://www.youtube.com/watch?v=zzUY03gt_pA&feature=youtu.be))
 - Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) (SLIDES | [video](https://youtu.be/fD1QJB2pHik))
-- Cohort 3: [Anna-Leigh Brown](https://twitter.com/annaleighbrown2) (SLIDES) | [video](https://youtu.be/fW7Di01gLhw))
+- Cohort 3: [Anna-Leigh Brown](https://twitter.com/annaleighbrown2) [slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week11/Cohort3/function_operators.html) | [video](https://youtu.be/fW7Di01gLhw))
 
 Chapter 12 - OOP base types
 - Cohort 3: [Megan Stodel](https://twitter.com/MeganStodel) ([slides](https://github.com/MeganStodel/bookclub-Advanced_R/tree/cohort-3-base-types/Presentations/Week12/Cohort3)  | [video](https://youtu.be/IL6iJhAsZAY))
