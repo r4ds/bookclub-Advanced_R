@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-07-29" />
+<meta name="date" content="2020-10-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -308,7 +308,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="17" data-path="big-picture.html"><a href="big-picture.html"><i class="fa fa-check"></i><b>17</b> 17 Big Picture</a><ul>
 <li class="chapter" data-level="" data-path="big-picture.html"><a href="big-picture.html#quosures"><i class="fa fa-check"></i>17.8 Quosures</a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="expressions.html"><a href="expressions.html"><i class="fa fa-check"></i><b>18</b> Expressions</a></li>
+<li class="chapter" data-level="18" data-path="expressions.html"><a href="expressions.html"><i class="fa fa-check"></i><b>18</b> Expressions</a><ul>
+<li class="chapter" data-level="" data-path="expressions.html"><a href="expressions.html#recursive-functions"><i class="fa fa-check"></i>18.5 Recursive functions</a></li>
+</ul></li>
 <li class="chapter" data-level="19" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>19</b> Quasiquotation</a><ul>
 <li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#motivation"><i class="fa fa-check"></i>19.2 Motivation</a></li>
 <li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#substitution"><i class="fa fa-check"></i>19.3.4 Substitution</a></li>
@@ -321,6 +323,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="quasiquotation.html#exec">19.6.2 <code>exec()</code></a></li>
 <li><a href="quasiquotation.html#dots_list">19.6.3 <code>dots_list()</code></a></li>
 <li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#with-base-r"><i class="fa fa-check"></i>19.6.4 With base R</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="evaluation.html"><a href="evaluation.html"><i class="fa fa-check"></i><b>20</b> Evaluation</a><ul>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#introduction"><i class="fa fa-check"></i>20.1 Introduction</a></li>
+<li><a href="evaluation.html#local">20.2.1 <code>local</code></a></li>
+<li><a href="evaluation.html#source">20.2.2 <code>source</code></a></li>
+<li><a href="evaluation.html#function">20.2.3 <code>function</code></a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>20.2.4.5 Exercises</a></li>
+<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#dots"><i class="fa fa-check"></i>20.3.3 Dots</a></li>
+<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#under-the-hood"><i class="fa fa-check"></i>20.3.4 Under the hood</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-1"><i class="fa fa-check"></i>20.3.6.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#basics"><i class="fa fa-check"></i>20.4.1 Basics</a></li>
+<li><a href="evaluation.html#subset">20.4.3 <code>subset</code></a></li>
+<li><a href="evaluation.html#transform">20.4.5 <code>transform</code></a></li>
+<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#handling-ambiguity"><i class="fa fa-check"></i>20.5.2 Handling ambiguity</a></li>
+<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#substitute"><i class="fa fa-check"></i>20.6.1 substitute()</a></li>
+<li><a href="evaluation.html#match.call">20.6.2 <code>match.call</code></a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="translating-r-code.html"><a href="translating-r-code.html"><i class="fa fa-check"></i><b>21</b> Translating R Code</a><ul>
+<li class="chapter" data-level="" data-path="translating-r-code.html"><a href="translating-r-code.html#basic-tag-functions"><i class="fa fa-check"></i>21.2.3 Basic tag functions</a></li>
+<li class="chapter" data-level="" data-path="translating-r-code.html"><a href="translating-r-code.html#tag-functions"><i class="fa fa-check"></i>21.2.4 Tag functions</a></li>
+<li class="chapter" data-level="21.1" data-path="translating-r-code.html"><a href="translating-r-code.html#to_math"><i class="fa fa-check"></i><b>21.1</b> 21.3.3 <code>to_math()</code></a></li>
+<li class="chapter" data-level="21.2" data-path="subsetting.html"><a href="subsetting.html#section"><i class="fa fa-check"></i><b>21.2</b> 21.3.5</a></li>
+<li class="chapter" data-level="21.3" data-path="translating-r-code.html"><a href="translating-r-code.html#unknown-functions"><i class="fa fa-check"></i><b>21.3</b> 21.3.6 Unknown functions</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="debugging.html"><a href="debugging.html"><i class="fa fa-check"></i><b>22</b> Debugging</a><ul>
+<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#lazy-evaluation"><i class="fa fa-check"></i>22.3 Lazy evaluation</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#broswer"><i class="fa fa-check"></i>22.4.1 broswer</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#breakpoints"><i class="fa fa-check"></i>22.4.2.1 Breakpoints</a></li>
+<li class="chapter" data-level="22.1" data-path="debugging.html"><a href="debugging.html#recover"><i class="fa fa-check"></i><b>22.1</b> 22.4.2.2 <code>recover</code></a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#debug"><i class="fa fa-check"></i>22.4.2.3 debug</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#non-interactive-debugging"><i class="fa fa-check"></i>22.5 Non-interactive debugging</a></li>
+<li><a href="debugging.html#dump.frames">22.5.1 <code>dump.frames</code></a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#debug-pipe"><i class="fa fa-check"></i>Debug Pipe</a></li>
+<li class="chapter" data-level="22.2" data-path="debugging.html"><a href="debugging.html#edic-code-from-another-function"><i class="fa fa-check"></i><b>22.2</b> Edic Code from Another function</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#bonus-tip"><i class="fa fa-check"></i>Bonus tip</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html"><i class="fa fa-check"></i>Measuring performance</a><ul>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#introduction"><i class="fa fa-check"></i>23.1 Introduction</a></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html#profiling"><i class="fa fa-check"></i>23.2 Profiling</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>23.4.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html#microbenchmarking"><i class="fa fa-check"></i>23.3 Microbenchmarking</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html"><i class="fa fa-check"></i>Improving performance</a><ul>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#existing-solutions"><i class="fa fa-check"></i>24.3 Existing solutions</a></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#vectorize"><i class="fa fa-check"></i>24.5 Vectorize</a></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#other-techniques"><i class="fa fa-check"></i>24.8 Other Techniques</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -453,6 +501,74 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1"><span class="kw">length</span>(my_matrix) <span class="op">==</span><span class="st"> </span><span class="kw">NCOL</span>(my_matrix) <span class="co"># 6 != 2</span></a></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <p>The length of the matrix is <code>6</code>, and if we manipulate the dimensions of the matrix we see that the NROW is <code>3</code> and and NCOL is <code>2</code>.</p>
+<div class="question">
+<p>Are there any differences in practice between a matrix and 2 x 2 array?</p>
+</div>
+<p>One of the changes in R 4 was something about making 2d arrays exactly the same thing as a matrix.</p>
+<p>Just to propose a small edit: a matrix and a similar dimension array (with 3rd dimension=1)? I think the subsetting of the columns and rows is the main difference. For starters, I have also created some simple examples but with 2x3:</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1">(a_matrix &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">nrow =</span> <span class="dv">2</span>, <span class="dt">ncol =</span> <span class="dv">3</span>))</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    2    4    6</code></pre>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" data-line-number="1">(an_array &lt;-<span class="st"> </span><span class="kw">array</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))) <span class="co"># this actually creates a class of matrix</span></a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    2    4    6</code></pre>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" data-line-number="1">(one_d_array&lt;-<span class="kw">array</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>)))</a></code></pre></div>
+<pre><code>## , , 1
+## 
+##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    2    4    6</code></pre>
+<p>Let us do some testing with subsetting starting with the two matrices, one created using <code>matrix()</code> and the other using <code>array()</code>:</p>
+<div id="subsetting-first-entry" class="section level4 unnumbered">
+<h4>Subsetting first entry</h4>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" data-line-number="1">a_matrix[<span class="dv">1</span>]</a></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb111-1" data-line-number="1">an_array[<span class="dv">1</span>]</a></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" data-line-number="1">a_matrix[<span class="dv">1</span>] <span class="op">==</span><span class="st"> </span>an_array[<span class="dv">1</span>]</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="subsetting-columns" class="section level4 unnumbered">
+<h4>Subsetting columns</h4>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1">a_matrix[,<span class="dv">1</span>]</a></code></pre></div>
+<pre><code>## [1] 1 2</code></pre>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1">an_array[,<span class="dv">1</span>]</a></code></pre></div>
+<pre><code>## [1] 1 2</code></pre>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" data-line-number="1">a_matrix[,<span class="dv">1</span>] <span class="op">==</span><span class="st"> </span>an_array[,<span class="dv">1</span>]</a></code></pre></div>
+<pre><code>## [1] TRUE TRUE</code></pre>
+<p>The subsetting for single entries also seems to work with the 2x2 array (with 3rd dimension = 1):</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1">a_matrix[<span class="dv">1</span>]</a></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" data-line-number="1">one_d_array[<span class="dv">1</span>]</a></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" data-line-number="1">a_matrix[<span class="dv">4</span>]</a></code></pre></div>
+<pre><code>## [1] 4</code></pre>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" data-line-number="1">one_d_array[<span class="dv">4</span>]</a></code></pre></div>
+<pre><code>## [1] 4</code></pre>
+<p>However, problems arise when we try to subset columns and rows. objects of class array require a different kind of subseting:</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" data-line-number="1">a_matrix[,<span class="dv">1</span>]</a></code></pre></div>
+<pre><code>## [1] 1 2</code></pre>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb131-1" data-line-number="1">one_d_array[,<span class="dv">1</span>]</a></code></pre></div>
+<pre><code>Error in one_d_array[, 1] : incorrect number of dimensions</code></pre>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" data-line-number="1">a_matrix[<span class="dv">1</span>, ]</a></code></pre></div>
+<pre><code>[1] 1 3 5</code></pre>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb135-1" data-line-number="1">one_d_array[<span class="dv">1</span>, ]</a></code></pre></div>
+<pre><code>Error in one_d_array[1, ] : incorrect number of dimensions</code></pre>
+<p>To subset for this array class, we need to first access the specific 2x3 matrix, for example:</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb137-1" data-line-number="1">one_d_array[,,<span class="dv">1</span>]</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    2    4    6</code></pre>
+<p>Look at this quick check:</p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" data-line-number="1">one_d_array <span class="op">==</span><span class="st"> </span>a_matrix</a></code></pre></div>
+<pre><code>Error in one_d_array == a_matrix : non-conformable arrays</code></pre>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb141-1" data-line-number="1">one_d_array[,,<span class="dv">1</span>] <span class="op">==</span><span class="st"> </span>a_matrix</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,] TRUE TRUE TRUE
+## [2,] TRUE TRUE TRUE</code></pre>
+</div>
 </div>
 <div id="s3-atomic-vectors" class="section level2 unnumbered">
 <h2>3.4 S3 atomic vectors</h2>
@@ -461,23 +577,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>Classes are built on top of base types - they’re like special, more specific kinds of types. In fact, if a class isn’t specified then <code>class()</code> will default to either the <code>implicit class</code> or <code>typeof</code>.</p>
 <p>So <code>Date</code>, <code>POSIXct</code>, and <code>difftime</code> are specific kinds of doubles, falling under its umbrella.</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1">lubridate<span class="op">::</span><span class="kw">is.Date</span>(<span class="kw">Sys.Date</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb143-1" data-line-number="1">lubridate<span class="op">::</span><span class="kw">is.Date</span>(<span class="kw">Sys.Date</span>())</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" data-line-number="1"><span class="kw">is.double</span>(<span class="kw">Sys.Date</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb145-1" data-line-number="1"><span class="kw">is.double</span>(<span class="kw">Sys.Date</span>())</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" data-line-number="1">lubridate<span class="op">::</span><span class="kw">is.POSIXct</span>(<span class="kw">Sys.time</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" data-line-number="1">lubridate<span class="op">::</span><span class="kw">is.POSIXct</span>(<span class="kw">Sys.time</span>())</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" data-line-number="1"><span class="kw">is.double</span>(<span class="kw">Sys.time</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb149-1" data-line-number="1"><span class="kw">is.double</span>(<span class="kw">Sys.time</span>())</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb111-1" data-line-number="1">lubridate<span class="op">::</span><span class="kw">is.difftime</span>(<span class="kw">as.difftime</span>(<span class="kw">c</span>(<span class="st">&quot;0:3:20&quot;</span>, <span class="st">&quot;11:23:15&quot;</span>)))</a></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1">lubridate<span class="op">::</span><span class="kw">is.difftime</span>(<span class="kw">as.difftime</span>(<span class="kw">c</span>(<span class="st">&quot;0:3:20&quot;</span>, <span class="st">&quot;11:23:15&quot;</span>)))</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" data-line-number="1"><span class="kw">is.double</span>(<span class="kw">as.difftime</span>(<span class="kw">c</span>(<span class="st">&quot;0:3:20&quot;</span>, <span class="st">&quot;11:23:15&quot;</span>)))</a></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" data-line-number="1"><span class="kw">is.double</span>(<span class="kw">as.difftime</span>(<span class="kw">c</span>(<span class="st">&quot;0:3:20&quot;</span>, <span class="st">&quot;11:23:15&quot;</span>)))</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>But then why does <code>my_factor</code> fail to be recognized under its more general <code>integer</code> umbrella?</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1">my_factor &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))</a>
-<a class="sourceLine" id="cb115-2" data-line-number="2"><span class="kw">is.factor</span>(my_factor)</a></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" data-line-number="1">my_factor &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))</a>
+<a class="sourceLine" id="cb155-2" data-line-number="2"><span class="kw">is.factor</span>(my_factor)</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1"><span class="kw">is.integer</span>(my_factor)</a></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" data-line-number="1"><span class="kw">is.integer</span>(my_factor)</a></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="TODO">
 <p>XXX</p>
@@ -505,17 +621,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Technically <code>lazy evaluation</code> means that expressions are not evaluated when they are bound to variables, but their evaluation is deferred until their results are needed by other computations. In this context though we think Hadley just meant that it’s treated as a character if it “looks and smells like a character”.</p>
 <div class="question">
 <p>The solution manual gives the answer and notes:</p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" data-line-number="1">df_coltypes &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb119-2" data-line-number="2">  <span class="dt">a =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>),</a>
-<a class="sourceLine" id="cb119-3" data-line-number="3">  <span class="dt">b =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>),</a>
-<a class="sourceLine" id="cb119-4" data-line-number="4">  <span class="dt">c =</span> <span class="kw">c</span>(1L, 0L),</a>
-<a class="sourceLine" id="cb119-5" data-line-number="5">  <span class="dt">d =</span> <span class="kw">c</span>(<span class="fl">1.5</span>, <span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb119-6" data-line-number="6">  <span class="dt">e =</span> <span class="kw">c</span>(<span class="st">&quot;one&quot;</span> =<span class="st"> </span><span class="dv">1</span>, <span class="st">&quot;two&quot;</span> =<span class="st"> </span><span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb119-7" data-line-number="7">  <span class="dt">g =</span> <span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;f1&quot;</span>, <span class="st">&quot;f2&quot;</span>)),</a>
-<a class="sourceLine" id="cb119-8" data-line-number="8">  <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb119-9" data-line-number="9">)</a>
-<a class="sourceLine" id="cb119-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb119-11" data-line-number="11"><span class="kw">as.matrix</span>(df_coltypes)</a></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" data-line-number="1">df_coltypes &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
+<a class="sourceLine" id="cb159-2" data-line-number="2">  <span class="dt">a =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>),</a>
+<a class="sourceLine" id="cb159-3" data-line-number="3">  <span class="dt">b =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>),</a>
+<a class="sourceLine" id="cb159-4" data-line-number="4">  <span class="dt">c =</span> <span class="kw">c</span>(1L, 0L),</a>
+<a class="sourceLine" id="cb159-5" data-line-number="5">  <span class="dt">d =</span> <span class="kw">c</span>(<span class="fl">1.5</span>, <span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb159-6" data-line-number="6">  <span class="dt">e =</span> <span class="kw">c</span>(<span class="st">&quot;one&quot;</span> =<span class="st"> </span><span class="dv">1</span>, <span class="st">&quot;two&quot;</span> =<span class="st"> </span><span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb159-7" data-line-number="7">  <span class="dt">g =</span> <span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;f1&quot;</span>, <span class="st">&quot;f2&quot;</span>)),</a>
+<a class="sourceLine" id="cb159-8" data-line-number="8">  <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb159-9" data-line-number="9">)</a>
+<a class="sourceLine" id="cb159-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb159-11" data-line-number="11"><span class="kw">as.matrix</span>(df_coltypes)</a></code></pre></div>
 <pre><code>##     a   b       c   d     e   g   
 ## one &quot;a&quot; &quot;TRUE&quot;  &quot;1&quot; &quot;1.5&quot; &quot;1&quot; &quot;f1&quot;
 ## two &quot;b&quot; &quot;FALSE&quot; &quot;0&quot; &quot;2.0&quot; &quot;2&quot; &quot;f2&quot;</code></pre>
@@ -532,14 +648,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Taking the example from <a href="https://csgillespie.github.io/efficientR/programming.html#vectorised-code">Efficient R Programming</a>:</p>
 <div id="vectorized" class="section level3 unnumbered">
 <h3>VECTORIZED:</h3>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1"><span class="kw">sum</span>(<span class="kw">log</span>(x))</a></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" data-line-number="1"><span class="kw">sum</span>(<span class="kw">log</span>(x))</a></code></pre></div>
 </div>
 <div id="non-vectorized" class="section level3 unnumbered">
 <h3>NON-VECTORIZED:</h3>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1">s &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb122-2" data-line-number="2"><span class="cf">for</span>(x0 <span class="cf">in</span> x) {</a>
-<a class="sourceLine" id="cb122-3" data-line-number="3">  s &lt;-<span class="st"> </span>s <span class="op">+</span><span class="st"> </span><span class="kw">log</span>(x0)</a>
-<a class="sourceLine" id="cb122-4" data-line-number="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb162-1" data-line-number="1">s &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb162-2" data-line-number="2"><span class="cf">for</span>(x0 <span class="cf">in</span> x) {</a>
+<a class="sourceLine" id="cb162-3" data-line-number="3">  s &lt;-<span class="st"> </span>s <span class="op">+</span><span class="st"> </span><span class="kw">log</span>(x0)</a>
+<a class="sourceLine" id="cb162-4" data-line-number="4">}</a></code></pre></div>
 <p>The vectorized code is faster because it obeys the golden rule of R programming: <em>“access the underlying C/Fortran routines as quickly as possible; the fewer functions calls required to achieve this, the better”</em>.</p>
 <ul>
 <li>Vectorized Version:

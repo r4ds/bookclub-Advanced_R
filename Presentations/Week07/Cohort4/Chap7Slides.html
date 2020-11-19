@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced R Chapter 7: Environments</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="sholsen at alumni dot emory dot edu" />
+    <link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+    <script src="libs/anchor-sections/anchor-sections.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# <u>Advanced R</u><br>Chapter 7: Environments
+## Stephen Holsenbeck
+### sholsen at alumni dot emory dot edu
+### last updated: 2020-11-16
+
+---
+
+
+
+
+
+
+
+
+
+## Recall from Chapter 6: R has 4 primary scoping rules
+  
+  * **Name masking**
+    * names defined inside a function mask names outside the function
+    
+    * if the name can't be found, R looks one level up
+
+
+  * **Functions versus variables**
+  
+    * if you use a name in a function call, objects that are not functions get ignored in the search
+  
+
+  * **A fresh start**
+  
+    * every time a function is called, a new **environment** gets created. 
+  
+
+  * **Dynamic lookup**
+  
+    * R looks for values only when it needs them (when the function is run) 
+  
+
+---
+## Key Takeaways
+
+
+### **An environment binds a set of names to a set of values**
+
+
+#### Environments are different from lists in the following ways
+
+  1. Every name must be unique.
+
+  2. The names in an environment are not ordered.
+
+  3. An environment has a parent.
+
+  4. Environments are not copied when modified i.e. environments use reference semantics
+
+
+
+
+---
+## 7.2.1 Basics
+### Create a new environment
+  
+* `rlang::env(...)`
+      
+  - variables to be bound in the environment can be supplied via `...`
+      
+      
+
+```r
+e &lt;- rlang::env(a = 1, b = 2)
+ls(e)
+```
+
+```
+## [1] "a" "b"
+```
+    
+* `new.env`
+    
+  - variables supplied after creation via normal assignment `$&lt;-`
+      
+
+```r
+e &lt;- new.env()
+e$a &lt;- 1
+e$b &lt;- 2
+ls(e)
+```
+
+```
+## [1] "a" "b"
+```
+
+---
+## 7.2.1 Basics
+### View an environment
+
+* `rlang::env_print`: descriptive info about environment elements 
+
+
+
+```r
+rlang::env_print(e)
+```
+
+```
+## &lt;environment: 0000000014CB1950&gt;
+## parent: &lt;environment: global&gt;
+## bindings:
+##  * a: &lt;dbl&gt;
+##  * b: &lt;dbl&gt;
+```
+    
+* `rlang::env_names` or `base::names`: to give list of bindings 
+
+
+
+```r
+rlang::env_names(e)
+```
+
+```
+## [1] "a" "b"
+```
+
+```r
+names(e)
+```
+
+```
+## [1] "a" "b"
+```
+
+---
+## 7.2.2 Important Environments
+
+  * current environment: where code will execute 
+
+```r
+x &lt;- 1
+ls(rlang::current_env())
+```
+
+```
+## [1] "e" "x"
+```
+
+```r
+ls(environment())
+```
+
+```
+## [1] "e" "x"
+```
+
+  * global environment 
+
+```r
+ls(.GlobalEnv)
+```
+
+```
+## [1] "e" "x"
+```
+
+```r
+ls(base::globalenv())
+```
+
+```
+## [1] "e" "x"
+```
+
+```r
+ls(rlang::global_env())
+```
+
+```
+## [1] "e" "x"
+```
+
+---
+### 7.2.2 Important Environments
+
+  * empty environment
+
+```r
+ls(base::emptyenv())
+```
+
+```
+## character(0)
+```
+
+```r
+ls(rlang::empty_env())
+```
+
+```
+## character(0)
+```
+
+---
+### 7.2.2 Important Environments
+
+  * function environment
+
+```r
+x &lt;- 1
+envs &lt;- function(pe = rlang::caller_env()) {
+  message("This env:")
+  print(environment())
+  message("Parent env:")
+  print(pe)
+}
+envs()
+```
+
+```
+## This env:
+```
+
+```
+## &lt;environment: 0x00000000187b69b0&gt;
+```
+
+```
+## Parent env:
+```
+
+```
+## &lt;environment: R_GlobalEnv&gt;
+```
+
+---
+### 7.2.2 Important Environments
+
+  * package environment
+
+```r
+library(rlang)
+search()
+```
+
+```
+##  [1] ".GlobalEnv"            "package:rlang"         "package:RevoUtils"    
+##  [4] "package:stats"         "package:graphics"      "package:grDevices"    
+##  [7] "package:utils"         "package:datasets"      "package:RevoUtilsMath"
+## [10] "package:methods"       "Autoloads"             "package:base"
+```
+
+```r
+head(ls(pos = 2), 10)
+```
+
+```
+##  [1] "!!"        "!!!"       "%@%"       "%@%&lt;-"     "%|%"       "%||%"     
+##  [7] ":="        "abort"     "are_na"    "arg_match"
+```
+
+---
+### 7.2.2 Important Environments
+  * Bonus: Why does `caller_env` return two different environments and where is the Internal/Argument Environment coming from?
+
+```r
+purrr::walk(x, function(x, ce, ace = rlang::caller_env()) {
+  .ce &lt;- rlang::caller_env()
+  message("Internal: ")
+  print(.ce)
+  message("Argument: ")
+  print(ace)
+  message("External: ")
+  print(ce)
+  message("Internal: ",paste0(ls(.ce), collapse = "\n"))
+  message("Argument: ",paste0(ls(ace), collapse = "\n"))
+  message("External: ",paste0(ls(ce), collapse = "\n"))
+}, ce = rlang::caller_env())
+```
+
+```
+## Internal:
+```
+
+```
+## &lt;environment: 0x0000000018ca3a20&gt;
+```
+
+```
+## Argument:
+```
+
+```
+## &lt;environment: 0x0000000018ca3a20&gt;
+```
+
+```
+## External:
+```
+
+```
+## &lt;environment: 0x0000000018c9fe10&gt;
+```
+
+```
+## Internal: i
+```
+
+```
+## Argument: i
+```
+
+```
+## External: enclos
+## envir
+## expr
+```
+  
+
+
+---
+## 7.2.3 Parents 
+
+Every environment has a parent:
+
+![](images/Screen Shot 2020-05-13 at 2.49.17 PM.png)
+  
+---
+### 7.2.3 Parents   
+  * The parent environment can be specified. The calling environment will be used otherwise.  Call a parent environment using `rlang::env_parent` or `parent.env`.
+
+```r
+f &lt;- rlang::env(e)
+identical(rlang::env_parent(f), e)
+```
+
+```
+## [1] TRUE
+```
+
+```r
+ls(f)
+```
+
+```
+## character(0)
+```
+
+```r
+f &lt;- rlang::new_environment(list(y = x), parent = e)
+identical(rlang::env_parent(f), e)
+```
+
+```
+## [1] TRUE
+```
+
+```r
+ls(f)
+```
+
+```
+## [1] "y"
+```
+
+---
+### 7.2.3 Parents   
+With base:
+
+```r
+f &lt;- new.env()
+print(parent.env(f))
+```
+
+```
+## &lt;environment: R_GlobalEnv&gt;
+```
+
+```r
+parent.env(f) &lt;- e
+print(parent.env(f))
+```
+
+```
+## &lt;environment: 0x0000000014cb1950&gt;
+```
+
+---
+### 7.2.3 Parents   
+  * R searches the parent environment and all ancestors sequentially until the empty environment.
+  
+  * The sequence of environments ends with the &lt;b&gt;empty environment&lt;/b&gt;
+
+
+  * Retrieve all ancestors using `rlang::env_parents` - *default ends with global*.
+
+```r
+rlang::env_parents(f)
+```
+
+```
+## [[1]]   &lt;env: 0000000014CB1950&gt;
+## [[2]] $ &lt;env: global&gt;
+```
+
+
+---
+### 7.2.3 Parents   
+#### The Empty environment
+
+  * Empty because it has no names/bindings
+  
+  * Has no parent(s)
+  
+  * Always the last environment on the search path
+
+---
+### 7.2.3 Parents   
+
+  * Empty comes after all environments &amp; namespaces
+
+```r
+rlang::env_parents(f, last = emptyenv())
+```
+
+```
+##  [[1]]   &lt;env: 0000000014CB1950&gt;
+##  [[2]] $ &lt;env: global&gt;
+##  [[3]] $ &lt;env: package:rlang&gt;
+##  [[4]] $ &lt;env: package:RevoUtils&gt;
+##  [[5]] $ &lt;env: package:stats&gt;
+##  [[6]] $ &lt;env: package:graphics&gt;
+##  [[7]] $ &lt;env: package:grDevices&gt;
+##  [[8]] $ &lt;env: package:utils&gt;
+##  [[9]] $ &lt;env: package:datasets&gt;
+## [[10]] $ &lt;env: package:RevoUtilsMath&gt;
+## [[11]] $ &lt;env: package:methods&gt;
+## [[12]] $ &lt;env: Autoloads&gt;
+## [[13]] $ &lt;env: package:base&gt;
+## [[14]] $ &lt;env: empty&gt;
+```
+
+---
+## 7.2.4 Super-assignment 
+
+
+ * &lt;b&gt;&lt;&lt;-&lt;/b&gt; overwrites existing variable with same name in a parent, or assigns a new variable in the global environment.
+
+
+
+```r
+f &lt;- function() {
+  z &lt;&lt;- 1
+}
+f()
+e &lt;- environment()
+print(e)
+```
+
+```
+## &lt;environment: R_GlobalEnv&gt;
+```
+
+```r
+ls(e)
+```
+
+```
+## [1] "e"    "envs" "f"    "x"    "z"
+```
+
+---
+### 7.2.4 Super-assignment 
+ * Generally to be avoided, but there are some modify-in-place use cases.
+Example: Iteration over many items with an expensive "needle-in-the-haystack" search operation.
+
+```r
+long_list &lt;- stats::setNames(as.list(1:26), letters)
+results &lt;- NULL
+purrr::iwalk(long_list, ~{
+  if (.y == "w") {
+    results &lt;&lt;- paste0("Number: ", .x)
+  } 
+})
+if (!is.null(results)) {
+  message(results)
+}
+```
+
+```
+## Number: 23
+```
+
+
+
+---
+## 7.2.5 Getting and setting 
+
+
+  * `$`, `[[` can be used with named entries but not numeric indices
+
+```r
+e[["long_list"]] &lt;- long_list
+try(e[[1]] &lt;- long_list)
+```
+
+```
+## Error in e[[1]] &lt;- long_list : wrong args for environment subassignment
+```
+
+
+---
+### 7.2.5 Getting and setting 
+  
+  * `[` does not work with environments
+  
+  * `$` and `[[` return NULL if the binding does not exist
+  
+  * binding a name to NULL does not remove it 
+  
+
+---
+### 7.2.5 Getting and setting 
+#### Other functions 
+
+* Assignment:
+
+  * `base::assign`: adds a binding using a string (`x`), `value` , and `envir`onment
+  
+  * `rlang::env_poke`: adds a binding using an `env`ironment, string (`nm`) and a `value` (similar to above except for argument order). Option to `create` a new binding, or error if no existing binding found.
+  
+  * `rlang::env_bind`: takes a specified environment (`.env`) and binds multiple values (`...`)
+  
+  * `rlang::env_has`: determines if an environment (`.env`) contains variables by names (`nms`) (character vector) 
+  
+  * `rlang::env_unbind`: unbinds from an environment (`.env`) variables by name (`nms`) 
+
+---
+### 7.2.5 Getting and setting 
+🤫🤫🤫 Very untidy hacks ahead.
+  
+  - **`{magrittr}` tricks &amp; mid-pipe intermediate assignments**
+  
+  - `[` is equivalent to `magrittr::inset` but `inset` is usable in a pipe
+  
+  - `[[` is equivalent to `magrittr::inset2` but `inset2` is usable in a pipe
+  
+  - `%T&gt;%` allows you to pass the results of a step in a pipe "around" the next step
+  
+  - `{` allows you to create an expression along a pipe where you can place the result from the previous step in multiple places with `.`
+  
+---
+### 7.2.5 Getting and setting 
+#### Putting it all together
+
+```r
+suppressPackageStartupMessages(library(magrittr))
+long_list &lt;- long_list %&gt;% 
+  magrittr::inset2("a", "letter a") %T&gt;% 
+  {assign("new", .[[2]] * .[[10]], envir = e)} %&gt;% 
+  magrittr::inset(length(.) + 1, "aa")
+long_list[["a"]]
+```
+
+```
+## [1] "letter a"
+```
+
+```r
+long_list[[27]]
+```
+
+```
+## [1] "aa"
+```
+
+```r
+e$new
+```
+
+```
+## [1] 20
+```
+    
+---
+## 7.2.6 Advanced bindings
+
+
+Two binding types:
+
+  1. **Delayed bindings**: evaluated the first time they are accessed
+  
+  2. **Active bindings**: recomputed each time they are accessed
+
+
+
+---
+### 7.2.6 Advanced bindings
+#### Delayed binding example 
+
+
+```r
+rlang::env_bind_lazy(current_env(), b = {Sys.sleep(1); 1})
+
+system.time(print(b))
+```
+
+```
+## [1] 1
+```
+
+```
+##    user  system elapsed 
+##    0.00    0.00    1.01
+```
+
+```r
+system.time(print(b))
+```
+
+```
+## [1] 1
+```
+
+```
+##    user  system elapsed 
+##       0       0       0
+```
+
+
+Both calls give the same output though executed at different times 
+
+
+---
+### 7.2.6 Advanced bindings
+#### Active binding example
+
+
+
+```r
+rlang::env_bind_active(rlang::current_env(), z = rlang::as_function(~{runif(1)}))
+z
+```
+
+```
+## [1] 0.7288888
+```
+
+```r
+z
+```
+
+```
+## [1] 0.6445069
+```
+
+Each output triggers a call to `runif`
+
+
+---
+## 7.3 Recursing Over Environments
+
+
+How do we find which environment contains a name?
+
+**A recursive function**
+
+```r
+where &lt;- function(name, env = caller_env()) {
+  if (identical(env, empty_env())) {
+    # Base case
+    stop("Can't find ", name, call. = FALSE)
+  } else if (env_has(env, name)) {
+    # Success case
+    env
+  } else {
+    # Recursive case
+    where(name, env_parent(env))
+  }
+}
+```
+
+
+
+
+
+---
+### 7.3 Recursing Over Environments
+
+How do we find which environment contains a name?
+**Using a while loop**
+
+```r
+where2 &lt;- function(in_name, env = caller_env()) {
+  while (!identical(env, empty_env())) {
+    if (env_has(env, in_name)) {
+      return(env)
+    }
+    # inspect parent
+    env &lt;- env_parent(env)
+  }
+
+  return (env)
+}
+```
+
+
+
+---
+## 7.4 Special Environments
+### 7.4.1 Package environments and the search path
+
+  * Every attached package becomes a parent of the global environment
+  
+  * The most recently-attached package becomes the immediate parent of the global environment and links to the previous parent as its own parent
+
+![](images/ancestor_sequence.png)
+---
+### 7.4.1 Package environments and the search path
+  * The **search path** is the sequence of environments containing all attached packages and continuing to the empty environment
+
+```r
+purrr::map(list(
+base::search,
+base::searchpaths,
+rlang::search_envs
+), ~{tail(rlang::invoke(.x),5)})
+```
+
+```
+## [[1]]
+## [1] "package:datasets"      "package:RevoUtilsMath" "package:methods"      
+## [4] "Autoloads"             "package:base"         
+## 
+## [[2]]
+## [1] "C:/Program Files/Microsoft/R Open/R-3.5.3/library/datasets"     
+## [2] "C:/Program Files/Microsoft/R Open/R-3.5.3/library/RevoUtilsMath"
+## [3] "C:/Program Files/Microsoft/R Open/R-3.5.3/library/methods"      
+## [4] "Autoloads"                                                      
+## [5] "C:/PROGRA~1/MICROS~3/ROPEN~1/R-35~1.3/library/base"             
+## 
+## [[3]]
+## [[1]] $ &lt;env: package:datasets&gt;
+## [[2]] $ &lt;env: package:RevoUtilsMath&gt;
+## [[3]] $ &lt;env: package:methods&gt;
+## [[4]] $ &lt;env: Autoloads&gt;
+## [[5]] $ &lt;env: package:base&gt;
+```
+
+---
+### 7.4.1 Package environments and the search path
+* The last two packages on the search path are always the `Autoloads` and `base` environments
+  
+
+```r
+.AutoloadEnv;.BaseNamespaceEnv
+```
+
+```
+## &lt;environment: 0x0000000013504600&gt;
+## attr(,"name")
+## [1] "Autoloads"
+```
+
+```
+## &lt;environment: namespace:base&gt;
+```
+
+```r
+identical(base::baseenv(), rlang::base_env())
+```
+
+```
+## [1] TRUE
+```
+ - See `?base::autoload`
+
+---
+## 7.4.2 The function environment
+
+  * A function binds the current environment when it is created i.e. this becomes the parent environment of the function environment.
+
+    - Remember the bonus?
+
+  * A name is typically bound to a function on function creation (unless the function is anonymous and passed as an argument)
+
+  * The environment in which a name is bound to a function is not necessarily the environment that the function binds.
+
+---
+### 7.4.2 The function environment
+**Bonus**: revisited
+
+```r
+purrr::walk(x, function(x, ce, ace = rlang::caller_env()) {
+  .ce &lt;- rlang::caller_env()
+  message("Internal: ")
+  print(.ce)
+  message("Argument: ")
+  print(ace)
+  message("External: ")
+  print(ce)
+  message("Internal: ",paste0(ls(.ce), collapse = "\n"))
+  message("Argument: ",paste0(ls(ace), collapse = "\n"))
+  message("External: ",paste0(ls(ce), collapse = "\n"))
+  browser(expr = interactive())
+}, ce = rlang::caller_env())
+```
+
+```
+## Internal:
+```
+
+```
+## &lt;environment: 0x0000000019362590&gt;
+```
+
+```
+## Argument:
+```
+
+```
+## &lt;environment: 0x0000000019362590&gt;
+```
+
+```
+## External:
+```
+
+```
+## &lt;environment: 0x0000000019360050&gt;
+```
+
+```
+## Internal: i
+```
+
+```
+## Argument: i
+```
+
+```
+## External: enclos
+## envir
+## expr
+```
+
+* Why does the bonus show `env`, `enclos`, `expr` for "External"?
+  - hint: `?eval`
+
+---
+### 7.4.2 The function environment
+**Example**: A function binds the global environment even if bound to another environment.
+
+
+```r
+e$g &lt;- function() {
+  message("This environment:")
+  print(environment())
+  message("The caller environment:")
+  print(rlang::caller_env())
+  message("Is the caller and the parent the same?:")
+  print(identical(rlang::caller_env(), parent.env(environment())))
+  message("Does `x` exist?:")
+  print(exists("x", inherits = FALSE))
+  x
+}
+e$g()
+```
+
+```
+## This environment:
+```
+
+```
+## &lt;environment: 0x0000000019153b98&gt;
+```
+
+```
+## The caller environment:
+```
+
+```
+## &lt;environment: R_GlobalEnv&gt;
+```
+
+```
+## Is the caller and the parent the same?:
+```
+
+```
+## [1] TRUE
+```
+
+```
+## Does `x` exist?:
+```
+
+```
+## [1] FALSE
+```
+
+```
+## [1] 1
+```
+
+---
+### 7.4.2 The function environment
+#### Accessing the environment of a function
+
+Use `rlang::fn_env` or `environment` to access the environment of a function: 
+
+
+```r
+identical(rlang::fn_env(e$g), environment(e$g))
+```
+
+```
+## [1] TRUE
+```
+
+
+
+---
+## 7.4.3 Namespaces
+
+  1. The *package* environment: accessible on the search path
+  
+    * only exported functions will be shown in the environment explorer or with `ls`
+    
+  2. The *namespace* environment: internal to the package 
+  
+    * all bindings in the package environment are found here 
+    
+    * access internal functions with `package:::`
+
+  3. names are bound to the package function in both the package and namespace environments but the function environment specifically sees the namespace environment
+  
+   - The bonus references `i` in the parent environment within the `namespace` environment.
+    
+
+
+---
+### 7.4.3 Namespaces
+#### Detailed example of namespaces and parents of namespaces 
+Consider `sd`: The user calls the function via the name in the package environment but the function uses the names defined in the namespace environment.
+![](images/namespace_ancestors_full.png)
+
+
+
+
+---
+### 7.4.3 Namespaces
+#### What are the parents of the namespace environment? 
+
+
+  * an `imports` environment: all the function dependencies from other packages defined in the *NAMESPACE* file
+    
+  * the `base` environment
+  
+  * the global environment
+  
+![](images/namespace_parents.png)
+
+  
+    
+---
+## 7.4.4 Execution environments
+
+
+  * Created fresh when the function is called 
+  
+  * Not the same as the **function** environment
+  
+  * The parent is the function environment
+  
+  * The environment is ephemeral and will disappear unless explicitly saved
+
+The following function will return the same result all the time even if called repeatedly: 
+
+
+```r
+g &lt;- function(x) {
+  if (!env_has(current_env(), "a")) {
+    message("Defining a")
+    a &lt;- 1
+  } else {
+    a &lt;- a + 1
+  }
+  a
+}
+g()
+```
+
+```
+## Defining a
+```
+
+```
+## [1] 1
+```
+
+```r
+g()
+```
+
+```
+## Defining a
+```
+
+```
+## [1] 1
+```
+
+
+---
+### 7.4.4 Execution environments
+#### Preserving the execution environment
+
+A few ways to preserve the execution environment
+
+  * return it from the function
+
+
+
+```r
+h2 &lt;- function(x) {
+  a &lt;- x * 2
+  current_env()
+}
+.env &lt;- h2(10)
+rlang::env_print(.env)
+```
+
+```
+## &lt;environment: 000000001945F2B0&gt;
+## parent: &lt;environment: global&gt;
+## bindings:
+##  * a: &lt;dbl&gt;
+##  * x: &lt;dbl&gt;
+```
+
+---
+### 7.4.4 Execution environments
+#### Preserving the execution environment
+
+  * return an object with the environment bound to it e.g. a function created in the function will have the execution environment as its own function environment
+  
+ 
+
+
+```r
+plus &lt;- function(x) {
+  function(y) x + y
+}
+
+plus_one &lt;- plus(1)
+plus_one
+```
+
+```
+## function(y) x + y
+## &lt;environment: 0x0000000019818208&gt;
+```
+
+
+---
+## 7.5 Call Stacks
+
+
+The **caller environment**: 
+  
+  * The environment the function was called from 
+  
+  * The environment where function values will be returned to
+
+
+
+```r
+f &lt;- rlang::as_function(~{identical(parent.frame(), rlang::caller_env())})
+f()
+```
+
+```
+## [1] TRUE
+```
+The **call stack**
+
+As functions can call each other, there can be multiple functions evaluating simultaneously. 
+
+Thus call stacks can be:
+  
+  * simple (linear)  
+  
+  * nested (branched)
+
+
+---
+## 7.5.1 Simple Call Stacks
+
+
+**An example of a simple call stack** 
+
+
+```r
+f1 &lt;- function(x, flag) {
+  f2(x = 2)
+}
+f2 &lt;- function(x) {
+  f3(x = 3)
+}
+f3 &lt;- function(x) {
+  stop()
+}
+```
+
+
+```r
+f1(x = 1)
+```
+
+```
+## Error in f3(x = 3):
+```
+
+---
+### 7.5.1 Simple Call Stacks
+#### Using `lobstr::cst`
+
+
+```r
+f3 &lt;- function(x) {
+  lobstr::cst()
+}
+f1(x = 1)
+```
+
+```
+##     x
+##  1. \-global::f1(x = 1)
+##  2.   \-global::f2(x = 2)
+##  3.     \-global::f3(x = 3)
+##  4.       \-lobstr::cst()
+```
+
+---
+### 7.5.1 Simple Call Stacks
+#### Searching the call stack
+
+
+```r
+f3 &lt;- function(x) {
+  invisible(list(try(get("flag", inherits = TRUE)), try(rlang::env_get(nm = "flag", inherit = TRUE))))
+}
+f1(1, flag = FALSE)
+```
+
+```
+## Error in get("flag", inherits = TRUE) : object 'flag' not found
+## Error in rlang::env_get(nm = "flag", inherit = TRUE) : 
+##   argument "default" is missing, with no default
+```
+
+---
+### 7.5.1 Simple Call Stacks
+**Call Stack Use Case**: Searching the call stack for a variable
+
+
+```r
+f3 &lt;- function(x) {
+  .frames &lt;- sys.frames()
+  .calls &lt;- sys.calls()
+  message("First elements of calls: ", paste0(sapply(.calls, `[[`, 1), collapse = ", "))
+  message("Find f1: ")
+  .f1 &lt;- purrr::map_lgl(.calls, ~{
+    .fn &lt;- .x[[1]]
+     stringr::str_detect(deparse(.fn), "^f1")
+  })
+  get("flag", envir = .frames[.f1][[1]], inherits = FALSE)
+}
+f1(1, flag = FALSE)
+```
+
+```
+## First elements of calls: rmarkdown::render, knitr::knit, process_file, withCallingHandlers, process_group, process_group.block, call_block, block_exec, in_dir, evaluate, evaluate::evaluate, evaluate_call, timing_fn, handle, withCallingHandlers, withVisible, eval, eval, f1, f2, f3
+```
+
+```
+## Find f1:
+```
+
+```
+## [1] FALSE
+```
+
+- Remember the bonus?
+
+---
+## 7.5.2 Lazy Evaluation 
+
+Lazy evaluation can lead to multiple branches of the call stack
+
+
+Example:
+
+
+```r
+a &lt;- function(x) b(x)
+b &lt;- function(x) c(x)
+c &lt;- function(x) x
+f3 &lt;- function(x) {
+  lobstr::cst()
+}
+a(f1())
+```
+
+```
+##     x
+##  1. +-global::a(f1())
+##  2. | \-global::b(x)
+##  3. |   \-global::c(x)
+##  4. \-global::f1()
+##  5.   \-global::f2(x = 2)
+##  6.     \-global::f3(x = 3)
+##  7.       \-lobstr::cst()
+```
+
+We can see from the traceback that
+
+  * the function calls avoided evaluating `f1()` until `c` called `x` explicitly, which contained the call to `f1`
+  
+
+
+---
+## 7.5.3 Frames
+
+Each tier of the call stack is called a frame i.e. each function in progress corresponds to a frame of the stack.
+
+Each frame is characterized by:
+  
+  1. An expression, &lt;i&gt;expr&lt;/i&gt; describing the function call
+  
+  2. An environment, &lt;i&gt;env&lt;/i&gt;
+    
+    * usually the execution environment
+    
+    * the environment of the global frame is the global environment
+    
+    * using `eval` generates frames where the environment is a wildcard
+
+  3. A parent, the previous call in the stack
+
+---
+### 7.5.3 Frames
+#### eval expression
+
+```r
+fn &lt;- function(.x) {
+  exp &lt;- rlang::call2(mean, .x)
+  print(exp)
+  rlang::eval_bare(exp)
+}
+ex &lt;- rlang::expr(fn(5))
+eval(ex)
+```
+
+```
+## (function (x, ...) 
+## UseMethod("mean"))(5)
+```
+
+```
+## [1] 5
+```
+
+
+---
+## 7.5.4 Dynamic Scope 
+
+  * R does not use dynamic scoping 
+  
+  * More on dynamic scoping in Chapter 20
+
+
+---
+## 7.6 As Data Structure
+
+Uses for environments:
+
+  1. **Avoiding copies of large data**: environments have reference semantics, you’ll never accidentally create a copy. See R6 objects in Chapter 14.
+
+  2. **Managing state within a package.** Explicit environments are useful in packages because they allow you to maintain state across function calls.
+
+
+  3. **As a hashmap**: A hashmap is a data structure that takes `\(O(1)\)` time to access and object guaranteed.
+
+
+---
+## Quiz Questions
+
+
+  * List at least three ways that an environment differs from a list.
+  
+  * What is the parent of the global environment? 
+  
+  * What is the only environment that doesn't have a parent?
+
+  * What is the enclosing environment of a function? Why is it important?
+
+  * How do you determine the environment from which a function was called?
+
+  * How are `&lt;-` and `&lt;&lt;-` different?
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

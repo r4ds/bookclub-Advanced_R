@@ -1,0 +1,471 @@
+---
+title: "Advanced R by Hadley Wickham"
+subtitle: "Chapter 14: R6"
+author: "Ezra Porter"
+date: "Nov 5 2020"
+output: 
+  xaringan::moon_reader:
+    lib_dir: libs
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+```{css, echo=FALSE}
+.remark-code, .remark-inline-code {
+    background: #F0F0F0;
+}
+
+.show-only-last-code-result pre + pre:not(:last-of-type) code[class="remark-code"] {
+    display: none;
+}
+```
+
+# Big Picture
+
+- In functional OOP, like S3, methods belong to functions.
+
+- In **encapsulated OOP**, like R6, methods belong to objects.
+
+<br><br>
+
+- R6 objects are always modified in place and never copied on modify
+
+  - Powerful for abstracting complex objects with lots of self-contained components you might want to update
+  
+  - Can produce spooky results and spookier code if you're not careful 
+
+<br>
+
+All we'll need is
+
+```{r}
+library(R6)
+```
+
+
+---
+
+# Creating
+
+Create R6 classes by calling `R6::R6Class()` and passing a list of methods and fields
+
+Using exercise 14.2.6.1 as an example:
+
+```{r}
+BankAccount <- R6Class("BankAccount", list(
+  balance = 0,
+  deposit = function(x) {
+    self$balance <- self$balance + x 
+    invisible(self)
+  },
+  withdraw = function(x) {
+    self$balance <- self$balance - x 
+    invisible(self)
+  })
+)
+```
+
+`self$` lets methods reference other fields or methods internal to the object
+
+---
+
+# Using
+
+Create a new instance of a class with the `$new()` method
+
+```{r}
+checking <- BankAccount$new()
+```
+
+Access fields and methods with `$`
+
+```{r}
+checking$balance
+
+checking$deposit(10)
+
+checking$balance
+```
+
+---
+
+# Using cnt'd
+## 14.2.1 Method Chaining
+
+Methods called for their side-effects (like setting internal values) can be chained together
+
+```{r}
+checking$withdraw(10)$withdraw(10)
+
+checking$balance
+```
+
+<br>
+
+This is powered by having side-effect methods return the object invisibly
+
+```r
+withdraw = function(x) {
+    self$balance <- self$balance - x 
+    invisible(self)
+  }
+```
+
+---
+
+# 14.2.2 Important Methods
+
+Some methods affect the behavior of objects in special ways
+
+`$initialize()` overrides the default behavior of `$new()`
+
+```{r}
+BankAccount <- R6Class("BankAccount", list(
+  balance = 0,
+  pwd = NULL,
+  initialize = function(pwd) {
+    self$pwd <- pwd
+  },
+  deposit = function(x, pwd) {
+    stopifnot(pwd == self$pwd)
+    self$balance <- self$balance + x 
+    invisible(self)
+  },
+  withdraw = function(x, pwd) {
+    stopifnot(pwd == self$pwd)
+    self$balance <- self$balance - x 
+    invisible(self)
+  })
+)
+```
+
+---
+
+# 14.2.2 Important Methods
+
+Some methods affect the behavior of objects in special ways
+
+`$print()` determines how the object is printed
+
+```{r, include = FALSE}
+BankAccount$set("public", "print", function(...) {
+  cat("Balance:", scales::dollar(self$balance))
+  invisible(self)
+})
+```
+
+```r
+BankAccount <- R6Class("BankAccount", list(
+...
+  print = function(...) {
+  cat("Balance:", scales::dollar(self$balance))
+  invisible(self)
+  }
+...
+```
+
+```{r}
+savings <- BankAccount$new(pwd = "dont-tell")
+try(savings$deposit(10, "password123"))
+(savings$deposit(10, "dont-tell"))
+```
+
+---
+
+# 14.2.2 Important Methods
+
+**Beware!** Objects encapsulate methods so our old `BankAccount` objects don't retroactively get newly created methods
+
+```{r}
+checking
+checking <- BankAccount$new(pwd = "dont-tell")
+checking
+```
+
+Make sure you rebuild objects when you alter a class during interactive use
+
+---
+
+# 14.2.4 Inheritance
+
+R6 classes can be subclasses of other R6 classes. Define that relationship using the `inherit` argument to `R6Class()`
+
+```{r, include=FALSE}
+SocialistBankAccount <- R6Class("SocialistBankAccount",
+  inherit = BankAccount,
+  public = list(
+    check_balance = function() {
+      if (self$balance > 100000) {
+        cat("From each according to their ability!")
+        self$balance <- 100000
+      } else if (self$balance < 0) {
+        cat("To each according to their need!")
+        self$balance <- 100
+      }
+    }, deposit = function(x, pwd) {
+      super$deposit(x, pwd)
+      self$check_balance()
+    }, withdraw = function(x, pwd) {
+      super$withdraw(x, pwd)
+      self$check_balance()
+    })
+)
+```
+
+```r
+SocialistBankAccount <- R6Class("SocialistBankAccount",
+  inherit = BankAccount,
+  public = list(
+    check_balance = function() {
+      if (self$balance > 100000) {
+        cat("From each according to their ability!")
+        self$balance <- 100000
+      } else if (self$balance < 0) {
+        cat("To each according to their need!")
+        self$balance <- 100
+      }
+    },
+    deposit = function(x, pwd) {
+      super$deposit(x, pwd)
+      self$check_balance()
+    },
+    withdraw = function(x, pwd) {
+    ...
+```
+
+---
+
+# 14.2.4 Inheritance
+
+Our subclass inherits the methods and fields we don't explicitly overwrite from its super class
+
+```{r}
+common_fund <- SocialistBankAccount$new(pwd = "dont-tell")
+common_fund
+```
+
+--
+
+`super$` allows us to refer to superclass methods and thereby "delegate" like with `NextMethod()` in S3
+
+```r
+deposit = function(x, pwd) {
+      super$deposit(x, pwd)
+      self$check_balance()
+    }
+```
+
+---
+
+# 14.2.4 Inheritance
+
+```r
+deposit = function(x, pwd) {
+      super$deposit(x, pwd)
+      self$check_balance()
+    }
+```
+
+```{r}
+common_fund$withdraw(10, "dont-tell")
+common_fund
+```
+
+--
+
+R6 objects also get S3 classes which automatically reproduce the sub/superclass relationships
+
+```{r}
+class(common_fund)
+```
+
+---
+
+# 14.3 Controlling Access
+
+Right now users have full access to internal elements of our objects
+
+```{r}
+checking$pwd
+```
+
+We can use the `private` argument of `R6Class()` to set components for internal use
+
+```{r, include = FALSE}
+SecureBankAccount <- R6Class("SecureBankAccount",
+  public = list(
+    balance = 0,
+    initialize = function(pwd) {
+      private$pwd <- pwd
+    },
+    deposit = function(x, pwd) {
+      stopifnot(pwd == private$pwd)
+      self$balance <- self$balance + x 
+      invisible(self)
+    }
+  ),
+  private = list(pwd = NULL)
+)
+```
+
+```r
+SecureBankAccount <- R6Class("SecureBankAccount",
+  public = list(
+    balance = 0,
+    initialize = function(pwd) {
+      private$pwd <- pwd
+    },
+... More methods ...
+  ),
+  private = list(pwd = NULL)
+)
+```
+
+---
+
+# 14.3 Controlling Access
+
+```r
+SecureBankAccount <- R6Class("SecureBankAccount",
+  public = list(
+    balance = 0,
+    initialize = function(pwd) {
+      private$pwd <- pwd
+    },
+... More methods ...
+  ),
+  private = list(pwd = NULL)
+)
+```
+
+```{r}
+secure_checking <- SecureBankAccount$new("dont-tell")
+secure_checking$pwd
+```
+
+Just reference `private$` in methods rather than `self$`
+
+---
+
+# 14.4 Reference Semantics
+
+R6 objects are always modified in place. To get a copy you can use the `$clone()` method.
+
+--
+
+The fact that methods of an object can change the object itself makes code harder to reason about.
+
+Hadley's example:
+
+What can we say about the effect of this line of code on `x` and `y` given that they're base objects? Given that they're R6 objects?
+
+```r
+z <- f(x, y)
+```
+
+--
+
+<br>
+
+If `f` calls methods of `x` and `y` it might change them. In our `BankAccount` example the only thing our methods did was change internal values.
+
+---
+
+# 14.4 Reference Semantics
+
+But therein lies the power:
+
+<blockquote>
+14.6.2.3
+Why can’t you model a bank account or a deck of cards with an S3 class?
+</blockquote>
+
+--
+
+<br>
+
+S3 objects are copied when they're changed so the best you could do is have a generic function return a modified version of the object
+
+---
+
+# 14.4.3 R6 Fields (a cautionary tale)
+
+R6 objects behave unintuitively when the default value of a field is another R6 object
+
+```{r}
+Number <- R6Class("Number", list(
+  value = 0,
+  increment = function() {
+    self$value <- self$value + 1
+  })
+  )
+
+NumberPointer <- R6Class("NumberPointer", list(
+  number = Number$new()
+  ))
+```
+
+<br>
+
+The instance of `Number` will be shared across **all** instances of `NumberPointer`
+
+---
+
+class: show-only-last-code-result
+
+# 14.4.3 R6 Fields (a cautionary tale)
+
+```{r}
+x <- NumberPointer$new()
+y <- NumberPointer$new()
+```
+
+--
+
+```{r}
+x$number$value
+```
+
+--
+
+```{r}
+y$number$value
+```
+
+--
+
+```{r}
+x$number$increment()
+```
+
+--
+
+```{r}
+x$number$value
+```
+
+--
+
+```{r}
+y$number$value
+```
+
+--
+
+Avoid this by making sure objects are initialized **within** a method so you get a new instance every time
+
+---
+
+# How have I used R6?
+
+I haven't!
+
+--
+
+But this reminded me of how some machine learning and optimization algorithms are implemented in Python

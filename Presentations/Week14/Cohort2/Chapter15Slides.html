@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Erick Knackstedt" />
+    <meta name="date" content="2020-11-12" />
+    <script src="libs/header-attrs-2.5/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Advanced R
+## Chapters 15 &amp; 16, S4 and Trade-offs
+### Erick Knackstedt
+### <span class="citation">@Eknackstedt</span>
+### 2020-11-12
+
+---
+
+
+
+
+
+# Outline
+
+--
+
++ Introducing S4
+--
+
++ Classes, generics, &amp; methods
+--
+
++ Prototypes, constructors, helpers, &amp; validators
+--
+
++ Creating &amp; accessing generics and methods
+--
+
++ Method dispatch, multiple inheritance, &amp; multiple dispatch
+--
+
++ Interaction of S4 &amp; S3
+--
+
++ Trade-offs
+
+---
+
+## Introducing S4
+
+--
+
+&gt; Why S4?
+
+--
+
++ Like S3, uses `function overloading` to throttle the number of functions required to interact with objects
+--
+
++ A more formal and rigorous update to S3
+--
+
++ Much of the code is written by `John Chambers` himself
+--
+
++ Used extensively in the `Bioconductor` project
+--
+
++ Fairly independent of S3, separate systems
+--
+
++ Provides multiple inheritance and multiple dispatch
+--
+
++ Has the slot and a specialized subsetting operator `@`
+--
+
++ Implemented using the `methods` package
+
+---
+
+## Classes, generics, &amp; methods
+
+--
+
+&gt; How do you create a class?
+
+--
+
+`setClass("myClass", slots= ...., contains =...., prototype =....)`
+
+--
+
+&gt; How do you create a generic for the class?
+
+--
+
+`setGeneric(name, def)`
+--
+
+&gt; How do you create a method for the generic?
+
+--
+
+`setMethod(f, signature, definition)`
+
+---
+
+## Prototypes, constructors, helpers, &amp; validators
+
+--
+&gt; If the prototype is optional, why should we use it?
+
+--
+
+This allows you to pass in default values for class slots (attributes)
+--
+
+&gt; I want to build on top of another class. Is there a workaround to copy and pasting attributes from one class to another?
+
+--
+
+Why, yes there is! The `contains` argument in `setClass` allows you to specify the class to inherit from
+--
+
+&gt; If I can use `new()` to construct an object, why do I bother to create a constructor?
+
+--
+
+Apparently programmers want other people to use their stuff. Constructors politely define the slots (attributes) that require data, which you then assign to `new()` in the body of the constructor
+
+---
+
+### Prototypes, constructors, helpers, &amp; validators cont.
+
+--
+
+&gt; I don't want this use of my class to break, how do I validate that an object has the correct attributes?
+
+--
+
+`setValidity(Class, method)`, where the method is a function that contains the validity checks. You define this once and it is associated with object construction going forward. It is not triggered if an object is modified
+
+--
+
+&gt; Well, if I can't validate on modificaiton, what do I do?
+
+--
+
+This is where we build on the idea of helpers and wrap an accessor in a function that also validates the inputs to underlying attributes
+
+---
+
+## Creating &amp; accessing generics and methods
+
+--
+
+&gt; What was the point of a generic again?
+
+--
+
+Generics are functions that describe behavior found across multiple classes of objects. By decomposing functions into generics and methods we solve the issue of function overpopulation
+
+--
+
+&gt; And the S4 syntax for creating one?
+
+--
+
+
+```r
+setGeneric(name, def)
+
+# Example
+setGeneric("myGeneric", function(x) standardGeneric("myGeneric"))
+```
+
+---
+
+### Creating &amp; accessing generics and methods cont.
+
+--
+
+&gt; What was the point of a method again?
+
+--
+
+A method is a function for a specific class of object. Which means as a programmer you are still writing up functions for every class but for the user the interface is standardized through the generic
+
+--
+
+&gt; And the S4 syntax for creating one?
+
+--
+
+
+```r
+setMethod(f, signature, definition)
+
+#Example
+setMethod("myGeneric", "Person", function(x) {
+  # method implementation
+})
+```
+
+---
+
+## Method dispatch, multiple inheritance, &amp; multiple dispatch
+
+--
+
+&gt; I've overloaded generic functions with a bunch of class specific methods. Now what?
+
+--
+
+The generic function looks at the class and lookups up the method!
+
+--
+
+&gt; What if I built up classes one on top of the other? You know, like evolution or something?
+
+-- 
+
+Well, the generic will search for the methods assigned to the classes and use the one that is "closest". If there there is not a closest, then it picks the method that comes earliest in the alphabet. 
+
+---
+
+## Interaction of S4 &amp; S3
+
+--
+
+&gt; How exactly do these two system allow interactions?
+
+--
+
+Well, you can assign an S3 object to a S4 `slot` or build on top of an S3 object by using `contains`.
+
+--
+
+&gt; Sounds easy! Really glad there isn't a fancy function required to allow this to work!!
+
+--
+
+Silly, of course there is a fancy function required! Seems painless though
+
+`setOldClass(Classes)`
+
+
+```r
+setClass("factor",
+  contains = "integer",
+  slots = c(
+    levels = "character"
+  ),
+  prototype = structure(
+    integer(),
+    levels = character()
+  )
+)
+setOldClass("factor", S4Class = "factor")
+```
+
+### Interaction of S4 &amp; S3 cont.
+
+--
+
+&gt; Ok, we've got a way to inherit attributes from S3 Objects. What about importing S3 generics to S4?
+
+--
+
+`setGeneric(name, def)`
+
+Does this break its use for S3 methods?
+
+---
+
+## Trade-offs
+
+&gt; S4 vs S3
+
+--
+
++ S3 and S4 solve similar problems with solutions pointed towards the entire R ecosystem
++ S4 has conventions by design, while S3 allows the same conventions, others, or none
++ S3 seems more like the self-service friendly tool-set
++ S3 is more generally used, S4 is used by large projects like `bioconductor`
+
+--
+
+&gt; R6 vs S3
+
++ R6 seems to allow by nature the build up of a mini-ecosystem of functionality
++ R6 reference semantics seem cool
++ Something about using the `$` to pipe method calls
++ R6 seems to have some nice features to prevent breaking changes when improvements to classes or methods are made
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+<style>
+.logo {
+  background-image: url(r4ds.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 110px;
+  height: 128px;
+  z-index: 0;
+}
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"></div>';
+  });
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

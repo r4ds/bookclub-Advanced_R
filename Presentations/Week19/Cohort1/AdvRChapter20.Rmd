@@ -1,0 +1,748 @@
+---
+title: "Advanced R Chapter 20: Evaluation"
+subtitle: "Daryn Ramsden"
+author: "thisisdaryn at gmail dot com"
+date: "last updated: `r Sys.Date()`"
+institution: ""
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: libs/switch-themer.css
+    chakra: libs/remark.js
+    nature:
+      highlightLines: true
+      countIncrementalSlides: false
+    includes:
+      after_body: libs/toggle.html
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      warning = FALSE,
+                      message = FALSE,
+                      comment = "")
+xaringanExtra::use_tile_view()
+xaringanExtra::use_panelset()
+xaringanExtra::use_webcam()
+xaringanExtra::use_editable()
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE,         
+  mute_unhighlighted_code = TRUE  
+)
+
+library(rlang)
+```
+
+## Evaluation: What is this chapter about?
+
+  * **Evaluation**:  evaluating quoted expressions in custom environments to achieve specific goals.
+
+  * The fact that we are customising the environments means all the forms of evaluation we go over are **non-standard**
+  
+  * Particular emphasis is placed on one type of *Non-standard Evaluation (NSE)*, **Tidy Evaluation**
+  
+  * To do *Tidy Evaluation*, we make use of functions in the `rlang` package  
+  
+
+
+---
+## The Basics: `base::eval()`
+
+
+`eval`: evaluates an input expression in an input environment. 
+
+Arguments to `eval`:
+
+  * *expr*: the expression you want to evaluate
+
+  * *envir*: the environment you want to evaluate it in 
+  
+  
+```{r}
+x <- 10
+eval(rlang::expr(x))
+```
+```{r}
+y <- 2
+eval(expr(x + y), env(x = 1000))
+```
+
+
+---
+### Something to observe
+
+The first argument of `eval` is evaluated not quoted. 
+
+
+```{r}
+eval(print(x + 1), env(x = 1000))
+```
+
+```{r}
+eval(expr(print(x + 1)), env(x = 1000))
+```
+
+---
+### Application: `local()`
+
+`local()`: a base R function that allows you to carry out a series of steps in new environment.
+
+  * common use case: carrying out a multi-step computation and disposing of intermediate data automatically
+
+```{r}
+not_foo <- local({
+  x <- 10
+  y <- 200
+  x + y
+})
+```
+
+
+---
+### Replicating `local` using `eval`
+
+We can replicate `local`: 
+
+```{r}
+local2 <- function(expr) {
+  env <- env(caller_env())
+  eval(enexpr(expr), env)
+}
+
+foo <- local2({
+  x <- 10
+  y <- 200
+  x + y
+})
+
+foo
+```
+
+
+---
+## Application: replicating `source`
+
+Similarly, we can replicate `source`: 
+
+.panelset[
+.panel[.panel-name[Replicating `source`]
+
+```{r eval = FALSE}
+source2 <- function(path, env = caller_env()) {
+  file <- paste(readLines(path, warn = FALSE), collapse = "\n")
+  exprs <- parse_exprs(file)
+
+  res <- NULL
+  for (i in seq_along(exprs)) {
+    res <- eval(exprs[[i]], env)
+  }
+
+  invisible(res)
+}
+```
+
+
+]
+.panel[.panel-name[More concisely]
+
+```{r eval = FALSE}
+source3 <- function(file, env = parent.frame()) {
+  lines <- parse(file) # creates an expression vector
+  res <- eval(lines, envir = env)
+  invisible(res)
+}
+```
+
+
+]
+]
+
+
+
+---
+## Quosures: what are they? 
+
+Encapsulation of:
+  * expression
+  
+  * environment
+  
+Coupling is so important that `rlang` provides a composite structure 
+  
+---
+### Quosures:  How do you make them?
+
+`rlang` provides 3 ways:
+
+--
+
+1. `enquo()` and `enquos()` 
+  
+  * this is the best way
+  
+--
+
+2. `rlang::quo()` and `rlang::quos()`
+
+  * these exist to match `expr()` and `exprs()`. 
+  * You probably don't need this
+
+--
+
+3. `new_quosure()`
+
+  * useful for learning
+  * You probably don't need this either
+
+---
+### Examples creating quosures
+
+```{r}
+quosure_create <- function(x) enquo(x)
+quosure_create(a + b)
+```
+
+```{r}
+quosures_create <- function(x)enquos(x)
+quosures_create(list(x = x ^ 2, y = y ^ 3, z = z ^ 4))
+```
+
+
+---
+### Creating quosures using `quo` and `new_quosure`
+
+
+#### Using `quo`
+
+```{r}
+quo(x + y + z)
+```
+
+#### Using `new_quosure`
+
+```{r}
+new_quosure(expr(x + y), env(x = 1, y = 10))
+```
+
+
+---
+### Quosures: Under the hood 
+
+
+```{r}
+super_quosure <- new_quosure(expr(x + y + z))
+class(super_quosure) # are subclasses of formulas
+```
+
+```{r}
+is_call(super_quosure) # are call objects
+```
+
+
+```{r}
+attr(super_quosure, ".Environment") #have a .Environment attribute
+```
+
+
+```{r}
+get_expr(super_quosure) # an expression can be extracted
+get_env(super_quosure) # an environment can be extracted
+```
+
+
+---
+## Tidy evaluation: What we really came for
+
+A form of NSE utilizing 3 main features:
+
+  * quasiquotation
+    
+    * talked about this last week
+
+
+  * quosures
+
+  
+  * data masks
+  
+    * soon ... 
+
+---
+### `eval_tidy()`: the function that does the work
+
+`eval_tidy` takes two arguments: 
+
+  1. a quosure
+  
+  2. a data mask (data frame): first place to look for variable definitions
+  
+Example: using `eval_tidy` to find the largest penguin (mass) in `palmerpenguins::penguins`:  
+  
+```{r}
+library(palmerpenguins)
+
+penguin_quosure <- quosure_create(max(body_mass_g, na.rm = TRUE))
+
+# Now use the penguins data frame as data mask
+eval_tidy(penguin_quosure, penguins) 
+```
+
+---
+### Example: replicating `with`
+
+How `with` works:
+
+```{r}
+library(palmerpenguins)
+with(penguins, mean(body_mass_g, na.rm = TRUE))
+```
+
+
+A new version of `with`:
+
+```{r}
+with2 <- function(data, expr) {
+  expr <- enquo(expr)
+  eval_tidy(expr, data)
+}
+```
+
+
+```{r}
+with2(penguins, mean(body_mass_g, na.rm = TRUE))
+```
+
+---
+### Another example: replicating `subset`
+
+
+```{r}
+subset2 <- function(data, rows) {
+  rows <- enquo(rows)
+  rows_val <- eval_tidy(rows, data)
+  stopifnot(is.logical(rows_val))
+
+  data[rows_val, , drop = FALSE]
+}
+
+df <- subset2(penguins, species == "Adelie")
+table(df$species)
+```
+
+
+---
+## Using pronouns to avoid ambiguity
+
+The data mask provides two pronouns: .data and .env.
+
+  * .data$x always refers to x in the data mask.
+  * .env$x always refers to x in the environmen
+
+```{r}
+x <- 1
+df <- data.frame(x = 2)
+```
+
+
+```{r}
+with2(df, .data$x)
+```
+
+
+```{r}
+with2(df, .env$x)
+```
+
+There's no reason that should work. But it does and can be used to avoid ambiguity.
+
+---
+### Why does that work? 
+
+
+  * `.data` and `.env` are actually exported from `rlang`
+  
+    * `.data` retrieves data-variables from the data frame
+    
+    * `.env` retrieves env-variables from the enviroment
+  
+  * They are not real data frames: they just act like them sometimes 
+    
+    * you can't take do `names(.data)` or `map` over it. 
+
+
+---
+### When is tidy evaluation actually beneficial?
+
+A practical example:
+
+```{r}
+resample <- function(df, n) {
+  idx <- sample(nrow(df), n, replace = TRUE)
+  df[idx, , drop = FALSE]
+}
+```
+
+You want to create a new function that resamples and subsamples in a single step
+
+
+---
+### Example continued: 
+
+An approach that does not work:
+
+
+```{r error = TRUE}
+subsample <- function(df, cond, n = nrow(df)) {
+  df <- subset2(df, cond)
+  resample(df, n)
+}
+
+df <- data.frame(x = c(1, 1, 1, 2, 2), y = 1:5)
+subsample(df, x == 1)
+```
+
+`subsample()` doesn’t quote any arguments so cond is evaluated normally (not in a data mask), and we get an error when it tries to find a binding for x.
+
+---
+### Example continued 
+
+
+An approach that does work
+
+
+```{r}
+subsample <- function(df, cond, n = nrow(df)) {
+  cond <- enquo(cond)
+
+  df <- subset2(df, !!cond)
+  resample(df, n)
+}
+
+subsample(df, x == 1)
+```
+
+---
+### Tidy evaluation handles ambiguity well 
+
+Consider the function that is meant to find all the rows of df where *x* is at least some threshold value:
+
+```{r}
+threshold_x <- function(df, val) {
+  subset2(df, x >= val)
+}
+```
+
+How can this go wrong?
+
+  * if `val` is in `df`
+  
+  * if `x` is in the calling environment but not in `df`
+  
+---
+### A more robust implementation
+
+Here's a better implementation:
+
+```{r error = TRUE}
+threshold_x <- function(df, val) {
+  subset2(df, .data$x >= .env$val)
+}
+```
+
+
+Case 1: `x` is in the calling environment but not in `df`
+
+```{r error = TRUE}
+no_x <- data.frame(y = 1:3)
+x <- 10
+threshold_x(no_x, 2)
+```
+
+Case 2: If `val` is in `df`
+
+```{r error = TRUE}
+has_val <- data.frame(x = 1:3, val = 9:11)
+threshold_x(has_val, 2)
+```
+
+
+
+
+
+---
+### NSE in base R 
+
+
+Two common patterns for NSE in base R:
+
+  1. `substitute()` and evaluation in the caller environment using `eval()`
+  
+  2. `match.call()`, call manipulation, and evaluation in the caller environment
+  
+  
+---
+### NSE Using `substitute`
+
+
+`substitute` returns the parse tree for the (unevaluated) expression expr, substituting any variables bound in env.
+
+`eval`: evaluates an R expression. Its arguments are:
+
+  * *expr*: an object to be evaluated.
+
+  * *envir*: the environment in which expr is to be evaluated. May also be NULL, a list, a data frame, a pairlist or an integer as specified to sys.call.
+
+  * *enclos*: Relevant when envir is a (pair)list or a data frame. Specifies the enclosure, i.e., where R looks for objects not found in *envir*.
+  
+---
+### NSE in base example:  
+
+
+How `subset` is used: 
+
+```{r}
+sample_df <- data.frame(a = 1:5, b = 5:1, c = c(5, 3, 1, 4, 1))
+
+
+subset(sample_df, a >= 4)
+```
+
+How `subset` is implemented in base 
+
+```{r}
+subset_base <- function(data, rows) {
+  rows <- substitute(rows)
+  rows_val <- eval(rows, data, caller_env())
+  stopifnot(is.logical(rows_val))
+
+  data[rows_val, , drop = FALSE]
+}
+```
+
+---
+### Problems with `base::subset`
+
+  1.  always evaluates rows in the calling environment, but if ... has been used, then the expression might need to be evaluated elsewhere.
+  
+    * this means you cannot reliably work with functionals like `map()` or `lapply()`
+  
+  2. Calling `subset()` from another function requires some care: you have to use substitute() to capture a call to subset() complete expression, and then evaluate
+  
+  3. `eval()` doesn’t provide any pronouns so there’s no way to require part of the expression to come from the data. 
+
+
+---
+### Alternative to `subset`:  Using tidy evaluation
+
+```{r}
+subset_tidy <- function(data, rows) {
+  rows <- enquo(rows)
+  rows_val <- eval_tidy(rows, data)
+  stopifnot(is.logical(rows_val))
+
+  data[rows_val, , drop = FALSE]
+}
+```
+
+
+---
+### NSE with `match.call`: Background
+
+`match.call`: returns a call in which all of the specified arguments are specified by their full names.
+
+```{r}
+my_func <- function(input1, input2){
+  match.call()
+}
+```
+
+```{r}
+my_func(input1 = 1)
+```
+
+```{r}
+my_func(input2 = 1, 2)
+```
+
+```{r error =TRUE}
+my_func(input3 = 2)
+```
+
+
+
+
+---
+## Using match.call in NSE 
+
+Steps in using `match.call` to do NSE:
+
+  1. Capture the complete call 
+  
+  2. Modify it
+  
+  3. Evaluate the results
+
+---  
+### Example: `write.csv` 
+
+
+```{r}
+write.csv <- function(...) {
+  call <- match.call(write.table, expand.dots = TRUE)
+
+  call[[1]] <- quote(write.table)
+  call$sep <- ","
+  call$dec <- "."
+
+  eval(call, parent.frame())
+}
+```
+
+---
+### Alternate implementation of `write.csv`
+
+It could have been done like this: 
+
+```{r}
+write.csv <- function(...) {
+  write.table(..., sep = ",", dec = ".")
+}
+```
+
+
+
+---
+### Wrapping modeling functions
+
+Simplest possible wrapper:
+
+```{r}
+lm2 <- function(formula, data) {
+  lm(formula, data)
+}
+```
+
+
+```{r}
+lm2(bill_length_mm ~ body_mass_g, penguins)
+```
+
+---
+### A better wrapper function
+
+```{r}
+lm3 <- function(formula, data, env = caller_env()) {
+  formula <- enexpr(formula)
+  data <- enexpr(data)
+
+  lm_call <- expr(lm(!!formula, data = !!data))
+  expr_print(lm_call)
+  eval(lm_call, env)
+}
+
+lm3(bill_length_mm ~ body_mass_g, penguins)
+```
+
+---
+### Things to note
+
+
+There are 3 key steps: 
+
+  1. capture the unevaluated arguments using `enexpr()`, and capture the caller environment using `caller_env()`.
+
+  2. generate a new expression using `expr()` and unquoting.
+
+  3. evaluate that expression in the caller environment.
+
+Nice side-effect: Unquoting can be used to generate formulas 
+
+```{r}
+y <- expr(bill_length_mm)
+x1 <- expr(body_mass_g)
+x2 <- expr(species)
+lm3(!!y ~ !!x1 + !!x2, penguins)
+```
+
+---
+### Potential problem situation: Mingling objects 
+
+Problem: What if you want a function that resamples before training the model?
+
+
+Something that doesn't work:
+```{r error = TRUE}
+resample_lm0 <- function(formula, data, env = caller_env()) {
+  formula <- enexpr(formula)
+  resample_data <- resample(data, n = nrow(data))
+
+  lm_call <- expr(lm(!!formula, data = resample_data))
+  expr_print(lm_call)
+  eval(lm_call, env)
+}
+
+df <- data.frame(x = 1:10, y = 5 + 3 * (1:10) + round(rnorm(10), 2))
+resample_lm0(y ~ x, data = df)
+```
+
+`lm_call` and `resample_data` are in different environments. 
+
+
+
+---
+### Example: Approach 1
+
+
+Unquote the data frame into the call:
+
+```{r}
+df <- data.frame(x = 1:10, y = 5 + 3 * (1:10) + round(rnorm(10), 2))
+
+resample_lm1 <- function(formula, data, env = caller_env()) {
+  formula <- enexpr(formula)
+  resample_data <- resample(data, n = nrow(data))
+
+  lm_call <- expr(lm(!!formula, data = !!resample_data))
+  expr_print(lm_call)
+  eval(lm_call, env)
+}
+resample_lm1(y ~ x, data = df)$call
+```
+
+
+
+---
+### Example continued: a cleaner approach
+
+A cleaner approach:
+
+  1. create a new environment that inherits from the caller 
+  
+  2. bind variables that you’ve created inside the function to that environment.
+
+
+```{r}
+resample_lm2 <- function(formula, data, env = caller_env()) {
+  formula <- enexpr(formula)
+  resample_data <- resample(data, n = nrow(data))
+
+  lm_env <- env(env, resample_data = resample_data)
+  lm_call <- expr(lm(!!formula, data = resample_data))
+  expr_print(lm_call)
+  eval(lm_call, lm_env)
+}
+resample_lm2(y ~ x, data = df)
+```
+
+
+---
+### Abrupt ending: Overall takeaways 
+
+
+  * There are many ways to do non-standard evaluation
+  
+  * Tidy evaluation is a good framework for applying NSE
+
+
+ 

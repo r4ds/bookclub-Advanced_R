@@ -43,7 +43,7 @@ var <- ifelse((sample(1:10, 1) == 1), print("In range"), print("Out of range"))
 ```
 
 ```
-## [1] "In range"
+## [1] "Out of range"
 ```
 
 ```r
@@ -51,7 +51,7 @@ var
 ```
 
 ```
-## [1] "In range"
+## [1] "Out of range"
 ```
 
 `ifelse` explicitly returns its result, whereas `if` invisibly returns it!

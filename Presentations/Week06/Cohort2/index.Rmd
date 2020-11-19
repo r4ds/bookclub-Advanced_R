@@ -1,0 +1,477 @@
+---
+title: "Functions"
+subtitle: "Advanced R"
+author: "Meenakshi Kushwaha"
+date: "2020/09/02 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader
+---
+class:middle, center
+# The Basics
+---
+# Three components
+- ###Argument | formals
+  - list of arguments
+- ###Body
+  - code inside the function
+- ###Environment
+  - data structure that determines **how the function finds the values** associated with the names
+  - specified implicitly based on *where* you define the function
+  
+.footnote[The Basics]  
+---
+# Exception - Primitive functions
+
+- Exist primarily in C so their `formals()`, `body()`, and `environment()` are NULL
+- Only found in base R
+- Examples - `sum()`, `[`
+
+```r 
+typeof(sum)
+#> [1] "builtin"
+typeof(`[`)
+#> [1] "special"
+```
+.footnote[The Basics]  
+---
+# First-class functions
+- R functions are objects in their own right
+- No special syntax for defining and naming a function
+- Typically, create a function object using `function` and bind it to a name with `<-`
+  - Binding step is not necessary
+```{r eval=FALSE}
+lapply(mtcars, function(x) length(unique(x)))
+Filter(function(x) !is.numeric(x), mtcars)
+integrate(function(x) sin(x) ^ 2, 0, pi)
+```
+.footnote[The Basics]  
+---
+# Invoking a function
+Use `do.call` if arguments are already in a data structure
+```{r, eval=FALSE}
+args <- list(1:10, na.rm = TRUE)
+do.call(mean, args)
+> [1] 5.5
+```
+.footnote[The Basics]  
+---
+class:middle, center
+# Function composition
+
+---
+# Nesting
+
+```{r eval=FALSE}
+x <- runif(100)
+sqrt(mean(square(deviation(x))))
+#> [1] 0.274
+```
+
+$\checkmark$ Concise, well suited for short sequences  
+**x**  Can be hard to read
+
+.footnote[Function composition]
+???
+Note- code highlight differs if r is not within parentheses
+.footnote[Function composition]
+---
+# Intermediate Objects
+
+```{r eval=FALSE}
+out <- deviation(x)
+out <- square(out)
+out <- mean(out)
+out <- sqrt(out)
+out
+#> [1] 0.274
+```
+
+**x**  intermediate names required  
+$\checkmark$ This is useful only when intermediate objects are important  
+
+.footnote[Function composition]
+---
+# Piping 
+
+```{r eval=FALSE}  
+x %>%
+  deviation() %>%
+  square() %>%
+  mean() %>%
+  sqrt()
+#> [1] 0.274
+```
+$\checkmark$ More readable code  
+**x**  Requires third party package   
+.footnote[Function composition]
+---
+class: center, middle
+# Lexical scoping
+### How does R find the value associated with a name?
+
+**"It looks up the values of names based on how a function is defined, not how it is called"**
+
+---
+# Four rules of lexical scoping
+
+- ### Name masking
+- ### Functions versus variables
+- ### A fresh start
+- ### Dynamic lookup
+.footnote[Lexical scoping]
+---
+## Name masking
+.footnote[Lexical scoping]
+.pull-left[Names defined within the function mask names outside the function 
+```{r eval=FALSE}
+x <- 10
+y <- 20
+g02 <- function() {
+  x <- 1
+  y <- 2
+  c(x, y)
+}
+g02()
+#> [1] 1 2
+```
+]
+--
+.pull-right[If a name isn’t defined inside a function, R looks one level up.       
+```{r eval=FALSE}
+x <- 2
+g03 <- function() {
+  y <- 1
+  c(x, y)
+}
+g03()
+#> [1] 2 1
+y
+#> [1] 20
+```
+]     
+
+--
+The same rules apply if a function is defined inside another function. 
+
+---
+#Functions vs variables
+- Since functions are objects, scoping rules also apply to functions
+- What happens if you use the same name for a function and non-function object?
+  - R ignores non-function objects when looking for that value
+
+```{r eval=FALSE}
+g09 <- function(x) x + 100
+g10 <- function() {
+  g09 <- 10
+  g09(g09)
+}
+g10()
+#> [1] 110
+```
+ 
+ !!! Using same name for different things is a bad idea!!!   
+.footnote[Lexical scoping]
+???
+g09 takes two different values
+best to not use same names (caution from Hadley) but knowing this can help us troubleshoot
+
+---
+# A fresh start
+- Every time a function is called a new environment is created to host its execution. 
+- Each invocation is completely independent
+```{r eval=FALSE}
+g11 <- function() {
+  if (!exists("a")) {
+    a <- 1
+  } else {
+    a <- a + 1
+  }
+  a
+}
+
+g11()
+g11()
+```
+
+
+.footnote[Lexical scoping]
+---
+#Dynamic Look up
+.footnote[Lexical scoping]
+- R looks for values when the function is run, not when the function is created. 
+
+
+```{r eval=FALSE}
+g12 <- function() x + 1
+x <- 15
+g12()
+#> [1] 16
+
+x <- 20
+g12()
+#> [1] 21
+```
+--
+- If there is a a spelling mistake in the code, you won’t get an error message when you create the function
+- Use `codetools` to detect the external dependencies
+--
+```{r eval=FALSE}
+codetools::findGlobals(g12)
+#> [1] "+" "x"
+```
+
+---
+class: middle, center
+# Lazy evaluation
+In R, function arguments are **lazily evaluated**: they’re only evaluated if accessed.
+.left[
+```{r eval=FALSE}
+h01 <- function(x) {
+  10
+}
+h01(stop("This is an error!"))
+#> [1] 10
+```
+]
+
+---
+# Promises
+#### Lazy evaluation is powered by "promise": a data structure 
+A promise has three components
+- **An expression**, like `x + y`, which gives rise to the delayed computation
+- **An environment** where the expression should be evaluated
+- **A value**, which is computed and cached the first time a promise is accessed when the expression is evaluated in the specified environment
+```{r eval=FALSE}
+double <- function(x) { 
+  message("Calculating...")
+  x * 2
+}
+h03 <- function(x) {
+  c(x, x)
+}
+h03(double(20))
+> Calculating...
+> [1] 40 40
+```
+
+.footnote[Lazy evaluation]
+---
+# Default arguments
+Default arguments can be defined in terms of
+- other arguments
+- variables defined later in the function  
+  - !!! Not recommended because
+      - makes the code harder to understand
+      - need to know the exact order of evaluation
+
+.footnote[Lazy evaluation]
+---
+# Missing arguments
+you can use `missing()` to see if the argument's value comes from the user or default
+```{r eval=FALSE}
+h06 <- function(x = 10) {
+  list(missing(x), x)
+}
+str(h06())
+> List of 2
+>  $ : logi TRUE
+>  $ : num 10
+str(h06(10))
+#> List of 2
+#>  $ : logi FALSE
+#>  $ : num 10
+```
+
+.footnote[Lazy evaluation]
+???
+First example uses default and returns TRUE
+second example uses user supplied so logi is FALSE
+---
+# ... (dot dot dot) | ellipsis
+
+- function can take any number of named and unnamed arguments
+- Pass arbitrary no. of functions to your function
+
+```{r eval=FALSE}
+red.plot <- function(x, y, ...) {
+  plot(x, y, col="red", ...)
+}
+red.plot(1:10, 1:10, xlab="My x axis", ylab="My y axis")
+
+```
+
+.footnote[Lazy evaluation. Example from https://nicercode.github.io/guides/functions/]
+---
+class: middle, center
+# Exiting a function
+???
+functions exit in two ways, they either return a value, indicating success, or they throw an error
+---
+# Implicit vs explicit return
+```{r eval=FALSE}
+j01 <- function(x) {
+  if (x < 10) {
+    0
+  } else {
+    10
+  }
+}
+j01(5)
+#> [1] 0
+j01(15)
+#> [1] 10
+```
+
+```{r eval=FALSE}
+j02 <- function(x) {
+  if (x < 10) {
+    return(0)
+  } else {
+    return(10)
+  }
+}
+```
+
+.footnote[Exiting a function]
+---
+# Invisible values
+- The most common function that returns invisibly is `<-`
+- Can make invisible by applying `invisible()` to the last value
+
+
+```{r eval=FALSE}
+j04 <- function() invisible(1)
+j04()
+```
+- Verify if the value exists by using `print()` or wrapping in `()`
+
+```{r eval=FALSE}
+print(j04())
+#> [1] 1
+
+(j04())
+#> [1] 1
+```
+
+.footnote[Exiting a function]
+---
+# Errors
+If a function cannot complete its assigned task, it should throw an error with `stop()` indicating the termination of function execution
+
+```{r eval=FALSE}
+j05 <- function() {
+  stop("I'm an error")
+  return(10)
+}
+j05()
+#> Error in j05(): I'm an error
+```
+.footnote[Exiting a function]
+---
+# Exit handlers
+Undo any changes made to the global environment
+```{r eval=FALSE}
+j06 <- function(x) {
+  cat("Hello\n")
+  on.exit(cat("Goodbye!\n"), add = TRUE)
+  if (x) {
+    return(10)
+  } else {
+    stop("Error")
+  }
+}
+j06(TRUE)
+> Hello
+> Goodbye!
+> [1] 10
+j06(FALSE)
+> Hello
+> Error in j06(FALSE): Error
+> Goodbye!
+```
+
+.footnote[Exiting a function]
+???
+can use it to switch back directories on exit
+
+---
+class: middle, center
+# Function forms
+
+---
+#Prefix form
+- Any function can be written in prefix form
+
+- Function name comes before the arguments eg. `foofy(a, b, c)`
+
+$\checkmark$ Helps better understand the structure of the language
+
+```{r eval=FALSE}
+x + y
+`+`(x, y)
+
+names(df) <- c("x", "y", "z")
+`names<-`(df, c("x", "y", "z")) 
+
+for(i in 1:10) print(i)
+`for`(i, 1:10, print(i))
+```
+.footnote[Function forms]
+---
+# Using prefix form
+- By position, like help(mean).
+- Partial matching, like help(top = mean).
+- By name, like help(topic = mean)  
+!!! Use positional matching only for the first one or two arguments. Avoid using positional matching for less commonly used arguments, and **never use partial matching**.!!!
+
+
+
+.footnote[Function forms]
+???
+Use positional matching only for the first one or two arguments; they will be the most commonly used, and most readers will know what they are.
+---
+# Infix form
+- the function name comes in between its arguments, like `x + y`
+- User defined functions begin with `%`
+
+```{r eval=FALSE}
+`%+%` <- function(a, b) paste0(a, b)
+"new " %+% "string"
+#> [1] "new string"
+
+```
+- names can contain any sequence of characters except `%`
+
+
+.footnote[Function forms]
+
+---
+# Replacement
+- Functions that replace values by assignment, like `names(df) <- c("a", "b", "c")`
+- They have the special name `xxx<-`, must have arguments named `x` and value, and must return the modified object
+
+```{r eval=FALSE}
+`second<-` <- function(x, value) {
+  x[2] <- value
+  x
+}
+```
+
+
+.footnote[Function forms]
+---
+# Special forms
+- They don't have a consistent form like `[[`, `if`, and `for`
+- Knowing the name of the function that underlies a special form is useful for getting documentation
+- All special forms are implemented as primitive functions; this means printing these functions is not informative
+
+```{r eval=FALSE}
+`for`
+> .Primitive("for")
+```
+
+.footnote[Function forms]
+---
+class: middle, center
+#Thank you
+.footnote[kmeena@uw.edu, twitter: @envhealthspeak]

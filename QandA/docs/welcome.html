@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-07-29" />
+<meta name="date" content="2020-10-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -308,7 +308,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="17" data-path="big-picture.html"><a href="big-picture.html"><i class="fa fa-check"></i><b>17</b> 17 Big Picture</a><ul>
 <li class="chapter" data-level="" data-path="big-picture.html"><a href="big-picture.html#quosures"><i class="fa fa-check"></i>17.8 Quosures</a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="expressions.html"><a href="expressions.html"><i class="fa fa-check"></i><b>18</b> Expressions</a></li>
+<li class="chapter" data-level="18" data-path="expressions.html"><a href="expressions.html"><i class="fa fa-check"></i><b>18</b> Expressions</a><ul>
+<li class="chapter" data-level="" data-path="expressions.html"><a href="expressions.html#recursive-functions"><i class="fa fa-check"></i>18.5 Recursive functions</a></li>
+</ul></li>
 <li class="chapter" data-level="19" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>19</b> Quasiquotation</a><ul>
 <li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#motivation"><i class="fa fa-check"></i>19.2 Motivation</a></li>
 <li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#substitution"><i class="fa fa-check"></i>19.3.4 Substitution</a></li>
@@ -321,6 +323,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="quasiquotation.html#exec">19.6.2 <code>exec()</code></a></li>
 <li><a href="quasiquotation.html#dots_list">19.6.3 <code>dots_list()</code></a></li>
 <li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#with-base-r"><i class="fa fa-check"></i>19.6.4 With base R</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="evaluation.html"><a href="evaluation.html"><i class="fa fa-check"></i><b>20</b> Evaluation</a><ul>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#introduction"><i class="fa fa-check"></i>20.1 Introduction</a></li>
+<li><a href="evaluation.html#local">20.2.1 <code>local</code></a></li>
+<li><a href="evaluation.html#source">20.2.2 <code>source</code></a></li>
+<li><a href="evaluation.html#function">20.2.3 <code>function</code></a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>20.2.4.5 Exercises</a></li>
+<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#dots"><i class="fa fa-check"></i>20.3.3 Dots</a></li>
+<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#under-the-hood"><i class="fa fa-check"></i>20.3.4 Under the hood</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-1"><i class="fa fa-check"></i>20.3.6.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#basics"><i class="fa fa-check"></i>20.4.1 Basics</a></li>
+<li><a href="evaluation.html#subset">20.4.3 <code>subset</code></a></li>
+<li><a href="evaluation.html#transform">20.4.5 <code>transform</code></a></li>
+<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#handling-ambiguity"><i class="fa fa-check"></i>20.5.2 Handling ambiguity</a></li>
+<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#substitute"><i class="fa fa-check"></i>20.6.1 substitute()</a></li>
+<li><a href="evaluation.html#match.call">20.6.2 <code>match.call</code></a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="translating-r-code.html"><a href="translating-r-code.html"><i class="fa fa-check"></i><b>21</b> Translating R Code</a><ul>
+<li class="chapter" data-level="" data-path="translating-r-code.html"><a href="translating-r-code.html#basic-tag-functions"><i class="fa fa-check"></i>21.2.3 Basic tag functions</a></li>
+<li class="chapter" data-level="" data-path="translating-r-code.html"><a href="translating-r-code.html#tag-functions"><i class="fa fa-check"></i>21.2.4 Tag functions</a></li>
+<li class="chapter" data-level="21.1" data-path="translating-r-code.html"><a href="translating-r-code.html#to_math"><i class="fa fa-check"></i><b>21.1</b> 21.3.3 <code>to_math()</code></a></li>
+<li class="chapter" data-level="21.2" data-path="subsetting.html"><a href="subsetting.html#section"><i class="fa fa-check"></i><b>21.2</b> 21.3.5</a></li>
+<li class="chapter" data-level="21.3" data-path="translating-r-code.html"><a href="translating-r-code.html#unknown-functions"><i class="fa fa-check"></i><b>21.3</b> 21.3.6 Unknown functions</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="debugging.html"><a href="debugging.html"><i class="fa fa-check"></i><b>22</b> Debugging</a><ul>
+<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#lazy-evaluation"><i class="fa fa-check"></i>22.3 Lazy evaluation</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#broswer"><i class="fa fa-check"></i>22.4.1 broswer</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#breakpoints"><i class="fa fa-check"></i>22.4.2.1 Breakpoints</a></li>
+<li class="chapter" data-level="22.1" data-path="debugging.html"><a href="debugging.html#recover"><i class="fa fa-check"></i><b>22.1</b> 22.4.2.2 <code>recover</code></a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#debug"><i class="fa fa-check"></i>22.4.2.3 debug</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#non-interactive-debugging"><i class="fa fa-check"></i>22.5 Non-interactive debugging</a></li>
+<li><a href="debugging.html#dump.frames">22.5.1 <code>dump.frames</code></a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#debug-pipe"><i class="fa fa-check"></i>Debug Pipe</a></li>
+<li class="chapter" data-level="22.2" data-path="debugging.html"><a href="debugging.html#edic-code-from-another-function"><i class="fa fa-check"></i><b>22.2</b> Edic Code from Another function</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#bonus-tip"><i class="fa fa-check"></i>Bonus tip</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html"><i class="fa fa-check"></i>Measuring performance</a><ul>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#introduction"><i class="fa fa-check"></i>23.1 Introduction</a></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html#profiling"><i class="fa fa-check"></i>23.2 Profiling</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>23.4.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html#microbenchmarking"><i class="fa fa-check"></i>23.3 Microbenchmarking</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html"><i class="fa fa-check"></i>Improving performance</a><ul>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#existing-solutions"><i class="fa fa-check"></i>24.3 Existing solutions</a></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#vectorize"><i class="fa fa-check"></i>24.5 Vectorize</a></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#other-techniques"><i class="fa fa-check"></i>24.8 Other Techniques</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -345,7 +393,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Advanced R Companion</h1>
 <p class="author"><em>R4DS Reading Group</em></p>
-<p class="date"><em>2020-07-29</em></p>
+<p class="date"><em>2020-10-05</em></p>
 </div>
 <div id="welcome" class="section level1">
 <h1><span class="header-section-number">Chapter 1</span> Welcome</h1>

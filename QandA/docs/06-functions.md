@@ -227,11 +227,11 @@ func_1(test_tbl, x1)
 ## # A tibble: 5 x 1
 ##      x1
 ##   <dbl>
-## 1 0.565
-## 2 0.590
-## 3 0.491
-## 4 0.792
-## 5 0.957
+## 1 0.835
+## 2 0.364
+## 3 0.728
+## 4 0.192
+## 5 0.353
 ```
 
 
@@ -304,7 +304,7 @@ mega_model(c("a", "b", "c"))
 ```
 
 ```
-##  [1] 231 215 300 211 247 246 280 264 219 269
+##  [1] 207 213 218 293 211 254 240 261 239 278
 ```
 
 
@@ -475,6 +475,38 @@ plop(iris, Species)[1:10]
 ##  [1] setosa setosa setosa setosa setosa setosa setosa setosa setosa setosa
 ## Levels: setosa versicolor virginica
 ```
+
+:::question
+I am going through chapter 6 of the book and can't figure out how or why or what is different in terms of explanation of these two chunks of code:
+
+```
+g07 <- function(x) x + 1
+g08 <- function() {
+  g07 <- function(x) x + 100
+  g07(10)
+}
+g08()
+#> [1] 110
+```
+
+```
+y <- 10
+h02 <- function(x) {
+  y <- 100
+  x + 1
+}
+h02(y)
+#> [1] 11
+```
+
+:::
+
+In (1), the `g07` function defined in the `g08` function takes precedence over the `g07` function defined in the global scope (i.e. the first line). So when `g08` is called (last line), `g07` defined in `g08` is executed with the `g07(10)` call. This function adds the input (i.e. `10`) to `100`, which returns `110`.
+
+In (2), when `h02` is called, the `y` from the global scope (i.e. first line) is passed into the `h02` function. In the scope of the function, `y` from the global scope becomes the `x` argument in the `h02` function. The assignment of `y <- 100` in the local scope is a "red herring" (i.e. it isn't used by the function at all). Then, seeing how `y <- 100` is not used, it should be more clear that the value of `10` passed into the function as `x` (i.e. `y` from the global scope) is used to get the output `11`. (`10` is added to `1`.)
+
+Note that with (2), the function would fail if `y <- 10` hadn't been defined in the global environment. On the other hand, with (1), the function would not fail if the `g07` function had not been defined in the global environment (because only the `g07` function defined in the body of `g08` matters).
+
 
 
 ## 6.5.2 Default arguments {-}
@@ -713,7 +745,7 @@ hist
 ```
 ## function (x, ...) 
 ## UseMethod("hist")
-## <bytecode: 0x7fe95a06d6f0>
+## <bytecode: 0x7fabddb09ad0>
 ## <environment: namespace:graphics>
 ```
 does not give me the actual contents of the actual function....

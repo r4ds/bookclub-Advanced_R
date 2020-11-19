@@ -24,7 +24,7 @@
 <meta name="author" content="R4DS Reading Group" />
 
 
-<meta name="date" content="2020-07-29" />
+<meta name="date" content="2020-10-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -308,7 +308,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="17" data-path="big-picture.html"><a href="big-picture.html"><i class="fa fa-check"></i><b>17</b> 17 Big Picture</a><ul>
 <li class="chapter" data-level="" data-path="big-picture.html"><a href="big-picture.html#quosures"><i class="fa fa-check"></i>17.8 Quosures</a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="expressions.html"><a href="expressions.html"><i class="fa fa-check"></i><b>18</b> Expressions</a></li>
+<li class="chapter" data-level="18" data-path="expressions.html"><a href="expressions.html"><i class="fa fa-check"></i><b>18</b> Expressions</a><ul>
+<li class="chapter" data-level="" data-path="expressions.html"><a href="expressions.html#recursive-functions"><i class="fa fa-check"></i>18.5 Recursive functions</a></li>
+</ul></li>
 <li class="chapter" data-level="19" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>19</b> Quasiquotation</a><ul>
 <li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#motivation"><i class="fa fa-check"></i>19.2 Motivation</a></li>
 <li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#substitution"><i class="fa fa-check"></i>19.3.4 Substitution</a></li>
@@ -321,6 +323,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="quasiquotation.html#exec">19.6.2 <code>exec()</code></a></li>
 <li><a href="quasiquotation.html#dots_list">19.6.3 <code>dots_list()</code></a></li>
 <li class="chapter" data-level="" data-path="quasiquotation.html"><a href="quasiquotation.html#with-base-r"><i class="fa fa-check"></i>19.6.4 With base R</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="evaluation.html"><a href="evaluation.html"><i class="fa fa-check"></i><b>20</b> Evaluation</a><ul>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#introduction"><i class="fa fa-check"></i>20.1 Introduction</a></li>
+<li><a href="evaluation.html#local">20.2.1 <code>local</code></a></li>
+<li><a href="evaluation.html#source">20.2.2 <code>source</code></a></li>
+<li><a href="evaluation.html#function">20.2.3 <code>function</code></a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>20.2.4.5 Exercises</a></li>
+<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#dots"><i class="fa fa-check"></i>20.3.3 Dots</a></li>
+<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#under-the-hood"><i class="fa fa-check"></i>20.3.4 Under the hood</a></li>
+<li class="chapter" data-level="" data-path="conditions.html"><a href="conditions.html#exercises-1"><i class="fa fa-check"></i>20.3.6.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="s3.html"><a href="s3.html#basics"><i class="fa fa-check"></i>20.4.1 Basics</a></li>
+<li><a href="evaluation.html#subset">20.4.3 <code>subset</code></a></li>
+<li><a href="evaluation.html#transform">20.4.5 <code>transform</code></a></li>
+<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#handling-ambiguity"><i class="fa fa-check"></i>20.5.2 Handling ambiguity</a></li>
+<li class="chapter" data-level="" data-path="evaluation.html"><a href="evaluation.html#substitute"><i class="fa fa-check"></i>20.6.1 substitute()</a></li>
+<li><a href="evaluation.html#match.call">20.6.2 <code>match.call</code></a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="translating-r-code.html"><a href="translating-r-code.html"><i class="fa fa-check"></i><b>21</b> Translating R Code</a><ul>
+<li class="chapter" data-level="" data-path="translating-r-code.html"><a href="translating-r-code.html#basic-tag-functions"><i class="fa fa-check"></i>21.2.3 Basic tag functions</a></li>
+<li class="chapter" data-level="" data-path="translating-r-code.html"><a href="translating-r-code.html#tag-functions"><i class="fa fa-check"></i>21.2.4 Tag functions</a></li>
+<li class="chapter" data-level="21.1" data-path="translating-r-code.html"><a href="translating-r-code.html#to_math"><i class="fa fa-check"></i><b>21.1</b> 21.3.3 <code>to_math()</code></a></li>
+<li class="chapter" data-level="21.2" data-path="subsetting.html"><a href="subsetting.html#section"><i class="fa fa-check"></i><b>21.2</b> 21.3.5</a></li>
+<li class="chapter" data-level="21.3" data-path="translating-r-code.html"><a href="translating-r-code.html#unknown-functions"><i class="fa fa-check"></i><b>21.3</b> 21.3.6 Unknown functions</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="debugging.html"><a href="debugging.html"><i class="fa fa-check"></i><b>22</b> Debugging</a><ul>
+<li class="chapter" data-level="" data-path="functions.html"><a href="functions.html#lazy-evaluation"><i class="fa fa-check"></i>22.3 Lazy evaluation</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#broswer"><i class="fa fa-check"></i>22.4.1 broswer</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#breakpoints"><i class="fa fa-check"></i>22.4.2.1 Breakpoints</a></li>
+<li class="chapter" data-level="22.1" data-path="debugging.html"><a href="debugging.html#recover"><i class="fa fa-check"></i><b>22.1</b> 22.4.2.2 <code>recover</code></a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#debug"><i class="fa fa-check"></i>22.4.2.3 debug</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#non-interactive-debugging"><i class="fa fa-check"></i>22.5 Non-interactive debugging</a></li>
+<li><a href="debugging.html#dump.frames">22.5.1 <code>dump.frames</code></a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#debug-pipe"><i class="fa fa-check"></i>Debug Pipe</a></li>
+<li class="chapter" data-level="22.2" data-path="debugging.html"><a href="debugging.html#edic-code-from-another-function"><i class="fa fa-check"></i><b>22.2</b> Edic Code from Another function</a></li>
+<li class="chapter" data-level="" data-path="debugging.html"><a href="debugging.html#bonus-tip"><i class="fa fa-check"></i>Bonus tip</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html"><i class="fa fa-check"></i>Measuring performance</a><ul>
+<li class="chapter" data-level="" data-path="subsetting.html"><a href="subsetting.html#introduction"><i class="fa fa-check"></i>23.1 Introduction</a></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html#profiling"><i class="fa fa-check"></i>23.2 Profiling</a></li>
+<li class="chapter" data-level="" data-path="names-and-values.html"><a href="names-and-values.html#exercises"><i class="fa fa-check"></i>23.4.2 Exercises</a></li>
+<li class="chapter" data-level="" data-path="measuring-performance.html"><a href="measuring-performance.html#microbenchmarking"><i class="fa fa-check"></i>23.3 Microbenchmarking</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html"><i class="fa fa-check"></i>Improving performance</a><ul>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#existing-solutions"><i class="fa fa-check"></i>24.3 Existing solutions</a></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#vectorize"><i class="fa fa-check"></i>24.5 Vectorize</a></li>
+<li class="chapter" data-level="" data-path="improving-performance.html"><a href="improving-performance.html#other-techniques"><i class="fa fa-check"></i>24.8 Other Techniques</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -348,24 +396,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>5.2.2 Vectorised if</h2>
 <div class="question">
 <p>Why does <code>if</code> <code>else</code> print <code>&quot;Out of range&quot;</code> once but <code>ifelse</code> prints it twice?</p>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" data-line-number="1"><span class="cf">if</span> (<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">1</span>) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="kw">print</span>(<span class="st">&quot;In range&quot;</span>) <span class="cf">else</span> <span class="kw">print</span>(<span class="st">&quot;Out of range&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb216-1" data-line-number="1"><span class="cf">if</span> (<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">1</span>) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="kw">print</span>(<span class="st">&quot;In range&quot;</span>) <span class="cf">else</span> <span class="kw">print</span>(<span class="st">&quot;Out of range&quot;</span>)</a></code></pre></div>
 <pre><code>[1] &quot;Out of range&quot;</code></pre>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" data-line-number="1"><span class="kw">ifelse</span>((<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">1</span>) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>), <span class="kw">print</span>(<span class="st">&quot;In range&quot;</span>), <span class="kw">print</span>(<span class="st">&quot;Out of range&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb218-1" data-line-number="1"><span class="kw">ifelse</span>((<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">1</span>) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>), <span class="kw">print</span>(<span class="st">&quot;In range&quot;</span>), <span class="kw">print</span>(<span class="st">&quot;Out of range&quot;</span>))</a></code></pre></div>
 <pre><code>[1] &quot;Out of range&quot;
 [1] &quot;Out of range&quot;</code></pre>
 </div>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" data-line-number="1">var &lt;-<span class="st"> </span><span class="cf">if</span> (<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">1</span>) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="kw">print</span>(<span class="st">&quot;In range&quot;</span>)</a>
-<a class="sourceLine" id="cb180-2" data-line-number="2">var</a></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb220-1" data-line-number="1">var &lt;-<span class="st"> </span><span class="cf">if</span> (<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">1</span>) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="kw">print</span>(<span class="st">&quot;In range&quot;</span>)</a>
+<a class="sourceLine" id="cb220-2" data-line-number="2">var</a></code></pre></div>
 <pre><code>NULL</code></pre>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb182-1" data-line-number="1">var &lt;-<span class="st"> </span><span class="kw">ifelse</span>((<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">1</span>) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>), <span class="kw">print</span>(<span class="st">&quot;In range&quot;</span>), <span class="kw">print</span>(<span class="st">&quot;Out of range&quot;</span>))</a></code></pre></div>
-<pre><code>## [1] &quot;In range&quot;</code></pre>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" data-line-number="1">var</a></code></pre></div>
-<pre><code>## [1] &quot;In range&quot;</code></pre>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb222-1" data-line-number="1">var &lt;-<span class="st"> </span><span class="kw">ifelse</span>((<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">1</span>) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>), <span class="kw">print</span>(<span class="st">&quot;In range&quot;</span>), <span class="kw">print</span>(<span class="st">&quot;Out of range&quot;</span>))</a></code></pre></div>
+<pre><code>## [1] &quot;Out of range&quot;</code></pre>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb224-1" data-line-number="1">var</a></code></pre></div>
+<pre><code>## [1] &quot;Out of range&quot;</code></pre>
 <p><code>ifelse</code> explicitly returns its result, whereas <code>if</code> invisibly returns it!</p>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" data-line-number="1"><span class="kw">ifelse</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>), <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb226-1" data-line-number="1"><span class="kw">ifelse</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>), <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>## [1] 1 3 1</code></pre>
 <p>Honestly, <code>ifelse()</code> is weird. Try this too:</p>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb188-1" data-line-number="1"><span class="kw">ifelse</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>), <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb228-1" data-line-number="1"><span class="kw">ifelse</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>), <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>## [1] 1 3 3</code></pre>
 </div>
 <div id="loops" class="section level2 unnumbered">
@@ -373,15 +421,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="question">
 <p>Can the body of the loop change the set?</p>
 </div>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" data-line-number="1">my_set &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">20</span>, <span class="dv">99</span>)</a>
-<a class="sourceLine" id="cb190-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb190-3" data-line-number="3"><span class="cf">for</span> (i <span class="cf">in</span> my_set){</a>
-<a class="sourceLine" id="cb190-4" data-line-number="4">  <span class="cf">if</span> (i<span class="op">==</span><span class="dv">1</span>){</a>
-<a class="sourceLine" id="cb190-5" data-line-number="5">    my_set[<span class="dv">9</span>]=<span class="st"> </span><span class="dv">20</span></a>
-<a class="sourceLine" id="cb190-6" data-line-number="6">    }</a>
-<a class="sourceLine" id="cb190-7" data-line-number="7">  <span class="kw">print</span>(<span class="st">&quot;hello&quot;</span>)</a>
-<a class="sourceLine" id="cb190-8" data-line-number="8">  <span class="kw">print</span>(my_set)</a>
-<a class="sourceLine" id="cb190-9" data-line-number="9">  }</a></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb230-1" data-line-number="1">my_set &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">20</span>, <span class="dv">99</span>)</a>
+<a class="sourceLine" id="cb230-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb230-3" data-line-number="3"><span class="cf">for</span> (i <span class="cf">in</span> my_set){</a>
+<a class="sourceLine" id="cb230-4" data-line-number="4">  <span class="cf">if</span> (i<span class="op">==</span><span class="dv">1</span>){</a>
+<a class="sourceLine" id="cb230-5" data-line-number="5">    my_set[<span class="dv">9</span>]=<span class="st"> </span><span class="dv">20</span></a>
+<a class="sourceLine" id="cb230-6" data-line-number="6">    }</a>
+<a class="sourceLine" id="cb230-7" data-line-number="7">  <span class="kw">print</span>(<span class="st">&quot;hello&quot;</span>)</a>
+<a class="sourceLine" id="cb230-8" data-line-number="8">  <span class="kw">print</span>(my_set)</a>
+<a class="sourceLine" id="cb230-9" data-line-number="9">  }</a></code></pre></div>
 <pre><code>## [1] &quot;hello&quot;
 ## [1]  1 20 99 NA NA NA NA NA 20
 ## [1] &quot;hello&quot;
@@ -397,29 +445,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>What is meant here by “special purpose”? Can we come up with a case where you can’t substitute <code>if</code> for <code>switch</code> or the other way around? Use <code>switch</code>. Is it safe to say to <code>switch</code> when you have character inputs (as the book suggests) and use <code>case_when</code> or <code>if</code> for numerics?</p>
 </div>
 <p>Switch is special in that only ONE value can be true, as in the case from our presentation the shiny input can only ever be ONE of the strings on the left it cannot be multiple.</p>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb192-1" data-line-number="1">datasetInput &lt;-<span class="st"> </span><span class="kw">reactive</span>({ </a>
-<a class="sourceLine" id="cb192-2" data-line-number="2">  <span class="cf">switch</span>(input<span class="op">$</span>dataset,</a>
-<a class="sourceLine" id="cb192-3" data-line-number="3">         <span class="st">&quot;materials&quot;</span> =<span class="st"> </span>brewing_materials,</a>
-<a class="sourceLine" id="cb192-4" data-line-number="4">         <span class="st">&quot;size&quot;</span> =<span class="st"> </span>brewer_size,</a>
-<a class="sourceLine" id="cb192-5" data-line-number="5">         <span class="st">&quot;states&quot;</span> =<span class="st"> </span>beer_states,</a>
-<a class="sourceLine" id="cb192-6" data-line-number="6">         <span class="st">&quot;taxed&quot;</span> =<span class="st"> </span>beer_taxed)</a>
-<a class="sourceLine" id="cb192-7" data-line-number="7">})</a></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb232-1" data-line-number="1">datasetInput &lt;-<span class="st"> </span><span class="kw">reactive</span>({ </a>
+<a class="sourceLine" id="cb232-2" data-line-number="2">  <span class="cf">switch</span>(input<span class="op">$</span>dataset,</a>
+<a class="sourceLine" id="cb232-3" data-line-number="3">         <span class="st">&quot;materials&quot;</span> =<span class="st"> </span>brewing_materials,</a>
+<a class="sourceLine" id="cb232-4" data-line-number="4">         <span class="st">&quot;size&quot;</span> =<span class="st"> </span>brewer_size,</a>
+<a class="sourceLine" id="cb232-5" data-line-number="5">         <span class="st">&quot;states&quot;</span> =<span class="st"> </span>beer_states,</a>
+<a class="sourceLine" id="cb232-6" data-line-number="6">         <span class="st">&quot;taxed&quot;</span> =<span class="st"> </span>beer_taxed)</a>
+<a class="sourceLine" id="cb232-7" data-line-number="7">})</a></code></pre></div>
 </div>
 <div id="common-pitfalls" class="section level2 unnumbered">
 <h2>5.3.1 common pitfalls</h2>
 <div class="question">
 <p>What does the book mean by leveraging <code>vector</code> for preallocating the loop output? How is this different from creating an empty list to instantiate the loop?</p>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb193-1" data-line-number="1">means &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">50</span>, <span class="dv">20</span>)</a>
-<a class="sourceLine" id="cb193-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb193-3" data-line-number="3">out_vector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="kw">length</span>(means))</a>
-<a class="sourceLine" id="cb193-4" data-line-number="4"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(means)) {</a>
-<a class="sourceLine" id="cb193-5" data-line-number="5">  out_vector[[i]] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, means[[i]])</a>
-<a class="sourceLine" id="cb193-6" data-line-number="6">}</a>
-<a class="sourceLine" id="cb193-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb193-8" data-line-number="8">out_list &lt;-<span class="st"> </span><span class="kw">list</span>()</a>
-<a class="sourceLine" id="cb193-9" data-line-number="9"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(means)) {</a>
-<a class="sourceLine" id="cb193-10" data-line-number="10">  out_list[[i]] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, means[[i]])</a>
-<a class="sourceLine" id="cb193-11" data-line-number="11">}</a></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb233-1" data-line-number="1">means &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">50</span>, <span class="dv">20</span>)</a>
+<a class="sourceLine" id="cb233-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb233-3" data-line-number="3">out_vector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="kw">length</span>(means))</a>
+<a class="sourceLine" id="cb233-4" data-line-number="4"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(means)) {</a>
+<a class="sourceLine" id="cb233-5" data-line-number="5">  out_vector[[i]] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, means[[i]])</a>
+<a class="sourceLine" id="cb233-6" data-line-number="6">}</a>
+<a class="sourceLine" id="cb233-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb233-8" data-line-number="8">out_list &lt;-<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb233-9" data-line-number="9"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(means)) {</a>
+<a class="sourceLine" id="cb233-10" data-line-number="10">  out_list[[i]] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, means[[i]])</a>
+<a class="sourceLine" id="cb233-11" data-line-number="11">}</a></code></pre></div>
 </div>
 <p>By preallocating the length of the <code>out_vector</code> we’re leveraging <code>modify-in-place</code> rather than <code>copy-on-modify</code>.</p>
 <div class="question">
@@ -432,12 +480,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="exercises" class="section level2 unnumbered">
 <h2>5.3.3.1 Exercises</h2>
 <div class="question">
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb194-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">numeric</span>()</a>
-<a class="sourceLine" id="cb194-2" data-line-number="2">out &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="kw">length</span>(x))</a>
-<a class="sourceLine" id="cb194-3" data-line-number="3"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(x)) {</a>
-<a class="sourceLine" id="cb194-4" data-line-number="4">  out[i] &lt;-<span class="st"> </span>x[i] <span class="op">^</span><span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb194-5" data-line-number="5">}</a>
-<a class="sourceLine" id="cb194-6" data-line-number="6">out</a></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb234-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">numeric</span>()</a>
+<a class="sourceLine" id="cb234-2" data-line-number="2">out &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="kw">length</span>(x))</a>
+<a class="sourceLine" id="cb234-3" data-line-number="3"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(x)) {</a>
+<a class="sourceLine" id="cb234-4" data-line-number="4">  out[i] &lt;-<span class="st"> </span>x[i] <span class="op">^</span><span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb234-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb234-6" data-line-number="6">out</a></code></pre></div>
 <pre><code>## [[1]]
 ## [1] NA</code></pre>
 <p>I understand that this works because we can count down in a loop - so the first iteration <code>x[1] == NA</code>, and the second <code>x[2] == numeric(0)</code> but where does this value go? Is it just evaluated but not stored since R counts from 1?</p>
@@ -445,53 +493,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This question is actually the bigger question, “Can you assign something to index 0 in R?” and it doesn’t seem that you can.</p>
 <div id="assignment-to-a-valid-index" class="section level3 unnumbered">
 <h3>Assignment to a valid index</h3>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb196-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
-<a class="sourceLine" id="cb196-2" data-line-number="2">mylist[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;something&quot;</span>)</a>
-<a class="sourceLine" id="cb196-3" data-line-number="3">mylist[<span class="dv">1</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb236-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb236-2" data-line-number="2">mylist[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;something&quot;</span>)</a>
+<a class="sourceLine" id="cb236-3" data-line-number="3">mylist[<span class="dv">1</span>]</a></code></pre></div>
 <pre><code>## [[1]]
 ## [1] &quot;something&quot;</code></pre>
 </div>
 <div id="assignment-to-0" class="section level3 unnumbered">
 <h3>Assignment to [0]</h3>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb198-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
-<a class="sourceLine" id="cb198-2" data-line-number="2">mylist[<span class="dv">0</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;something&quot;</span>)</a>
-<a class="sourceLine" id="cb198-3" data-line-number="3">mylist[<span class="dv">0</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb238-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb238-2" data-line-number="2">mylist[<span class="dv">0</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;something&quot;</span>)</a>
+<a class="sourceLine" id="cb238-3" data-line-number="3">mylist[<span class="dv">0</span>]</a></code></pre></div>
 <pre><code>## list()</code></pre>
 <p>It’s interesting that it’s syntactically correct to assign to <code>mylist[0]</code> but it does nothing!</p>
 </div>
 <div id="empty-index" class="section level3 unnumbered">
 <h3>Empty index</h3>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb200-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
-<a class="sourceLine" id="cb200-2" data-line-number="2">mylist[<span class="dv">1</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb240-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb240-2" data-line-number="2">mylist[<span class="dv">1</span>]</a></code></pre></div>
 <pre><code>## [[1]]
 ## NULL</code></pre>
 <p>R defaultly accesses the first layer using <code>[</code> and says there are no elements in the first layer of <code>mylist</code> and returns <code>NULL</code>. But when you do <code>mylist[[1]]</code> R says <code>Out of Bounds</code> because the first layer of <code>mylist</code> has been called and there is no layer at all. That’s why R throws error in <code>[[</code> case.</p>
 </div>
 <div id="impossible-index" class="section level3 unnumbered">
 <h3>Impossible Index <code>[[</code></h3>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb202-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
-<a class="sourceLine" id="cb202-2" data-line-number="2">mylist[[<span class="dv">0</span>]]</a></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb242-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb242-2" data-line-number="2">mylist[[<span class="dv">0</span>]]</a></code></pre></div>
 <pre><code>Error in mylist[[0]] : attempt to select less than one element in get1index &lt;real&gt;</code></pre>
 <p><code>[[</code> isolates one element whereas <code>[</code> can be used to get subsets of varying sizes.
 <code>[[</code> gets precisely one element, no more no less, or it fails. So <code>[[0]]&lt;-</code> cannot work because index zero cannot hold a value.</p>
 </div>
 <div id="impossible-index--" class="section level3 unnumbered">
 <h3>Impossible Index <code>[[&lt;-</code></h3>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb204-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
-<a class="sourceLine" id="cb204-2" data-line-number="2">mylist[[<span class="dv">0</span>]] &lt;-<span class="st"> &quot;something&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb244-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb244-2" data-line-number="2">mylist[[<span class="dv">0</span>]] &lt;-<span class="st"> &quot;something&quot;</span></a></code></pre></div>
 <pre><code>Error in mylist[[0]] &lt;- &quot;something&quot; : attempt to select less than one element in integerOneIndex</code></pre>
 </div>
 <div id="undefined-name" class="section level3 unnumbered">
 <h3>Undefined name</h3>
 <p>Selection using an undefined - but possible name - gives NULL</p>
-<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb206-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
-<a class="sourceLine" id="cb206-2" data-line-number="2">mylist[[<span class="st">&quot;undefined_name&quot;</span>]]</a></code></pre></div>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb246-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb246-2" data-line-number="2">mylist[[<span class="st">&quot;undefined_name&quot;</span>]]</a></code></pre></div>
 </div>
 <div id="out-of-bounds" class="section level3 unnumbered">
 <h3>Out of Bounds</h3>
 <p>Selection using a possible - but not currently allocated - index gives an out of bounds error</p>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb207-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
-<a class="sourceLine" id="cb207-2" data-line-number="2">mylist[[<span class="dv">10</span>]]</a></code></pre></div>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb247-1" data-line-number="1">mylist =<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb247-2" data-line-number="2">mylist[[<span class="dv">10</span>]]</a></code></pre></div>
 <pre><code>Error in mylist[[10]] : subscript out of bounds </code></pre>
 </div>
 </div>
@@ -512,29 +560,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We can visualize how the <code>ifelse</code> logic on a single element above will operate on each element within a vector:</p>
 <p><img src="images/ifelse.png" width="352" style="display: block; margin: auto;" /></p>
 <p>For instance if we can run:</p>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb209-1" data-line-number="1"><span class="kw">ifelse</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>), <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb249-1" data-line-number="1"><span class="kw">ifelse</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>), <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>## [1] 1 3 1</code></pre>
 <p>Lets break down what’s happening:</p>
 <p>Create a test answer:</p>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb211-1" data-line-number="1">test &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb211-2" data-line-number="2">yes &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb211-3" data-line-number="3">no &lt;-<span class="st"> </span><span class="dv">3</span></a></code></pre></div>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb251-1" data-line-number="1">test &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb251-2" data-line-number="2">yes &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb251-3" data-line-number="3">no &lt;-<span class="st"> </span><span class="dv">3</span></a></code></pre></div>
 <p>which indices in the test are TRUE and which are FALSE</p>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb212-1" data-line-number="1">yes_idx &lt;-<span class="st"> </span><span class="kw">which</span>(test) <span class="co"># 1,3</span></a>
-<a class="sourceLine" id="cb212-2" data-line-number="2">no_idx &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="op">!</span>test) <span class="co"># 2</span></a></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb252-1" data-line-number="1">yes_idx &lt;-<span class="st"> </span><span class="kw">which</span>(test) <span class="co"># 1,3</span></a>
+<a class="sourceLine" id="cb252-2" data-line-number="2">no_idx &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="op">!</span>test) <span class="co"># 2</span></a></code></pre></div>
 <p>set up our answer</p>
-<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb213-1" data-line-number="1">answer &lt;-<span class="st"> </span>test <span class="co"># T, F, T</span></a></code></pre></div>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb253-1" data-line-number="1">answer &lt;-<span class="st"> </span>test <span class="co"># T, F, T</span></a></code></pre></div>
 <p>grow the yes and no answers to the length of the test (input)</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb214-1" data-line-number="1">yes_final &lt;-<span class="st"> </span><span class="kw">rep</span>(yes, <span class="dt">length.out =</span> <span class="kw">length</span>(test))</a>
-<a class="sourceLine" id="cb214-2" data-line-number="2">no_final &lt;-<span class="st"> </span><span class="kw">rep</span>(no, <span class="dt">length.out =</span> <span class="kw">length</span>(test))</a></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb254-1" data-line-number="1">yes_final &lt;-<span class="st"> </span><span class="kw">rep</span>(yes, <span class="dt">length.out =</span> <span class="kw">length</span>(test))</a>
+<a class="sourceLine" id="cb254-2" data-line-number="2">no_final &lt;-<span class="st"> </span><span class="kw">rep</span>(no, <span class="dt">length.out =</span> <span class="kw">length</span>(test))</a></code></pre></div>
 <p>fill the answer with yes or no from the enlarged yes/no answers</p>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb215-1" data-line-number="1">answer[yes_idx] &lt;-<span class="st"> </span>yes_final[yes_idx]  <span class="co"># 1,1</span></a>
-<a class="sourceLine" id="cb215-2" data-line-number="2">answer[no_idx] &lt;-<span class="st"> </span>no_final[no_idx]     <span class="co"># 3</span></a></code></pre></div>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb255-1" data-line-number="1">answer[yes_idx] &lt;-<span class="st"> </span>yes_final[yes_idx]  <span class="co"># 1,1</span></a>
+<a class="sourceLine" id="cb255-2" data-line-number="2">answer[no_idx] &lt;-<span class="st"> </span>no_final[no_idx]     <span class="co"># 3</span></a></code></pre></div>
 <p>return our final answer:</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb216-1" data-line-number="1">answer</a></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb256-1" data-line-number="1">answer</a></code></pre></div>
 <pre><code>## [1] 1 3 1</code></pre>
 <p>Another example: we can run</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb218-1" data-line-number="1"><span class="kw">ifelse</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>), <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="st">&quot;FALSE&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb258-1" data-line-number="1"><span class="kw">ifelse</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>), <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="st">&quot;FALSE&quot;</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;1&quot;     &quot;FALSE&quot; &quot;3&quot;     &quot;FALSE&quot; &quot;5&quot;     &quot;6&quot;</code></pre>
 <p>we can see that ifelse places the numbers in <code>1:10</code> based on their index where our condition is to <code>TRUE</code> and inserts the string <code>&quot;FALSE&quot;</code> whenever the condition is <code>FALSE</code></p>
 </div>
@@ -542,17 +590,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>Complexity</h2>
 <p>Cyclomatic complexity is a software metric used to indicate the complexity of a program. It is computed using the control flow graph of the program: the nodes of the graph correspond to indivisible groups of commands of a program, and a directed edge connects two nodes if the second command might be executed immediately after the first command.</p>
 <p>We can use the package <code>cyclocomp</code> to look at the cyclomatic complexity of functions. Looking at each function from the Chapter 5 presentation:</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb220-1" data-line-number="1">controlflow_functions &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb220-2" data-line-number="2">  <span class="dt">if_func =</span> if_func,</a>
-<a class="sourceLine" id="cb220-3" data-line-number="3">  <span class="dt">if_else_func =</span> if_else_func,</a>
-<a class="sourceLine" id="cb220-4" data-line-number="4">  <span class="dt">ifelse_func =</span> ifelse_func,</a>
-<a class="sourceLine" id="cb220-5" data-line-number="5">  <span class="dt">casewhen_func =</span> casewhen_func,</a>
-<a class="sourceLine" id="cb220-6" data-line-number="6">  <span class="dt">switch_func =</span> switch_func, </a>
-<a class="sourceLine" id="cb220-7" data-line-number="7">  <span class="dt">for_func =</span> for_func,</a>
-<a class="sourceLine" id="cb220-8" data-line-number="8">  <span class="dt">while_func =</span> while_func,</a>
-<a class="sourceLine" id="cb220-9" data-line-number="9">  <span class="dt">repeat_func =</span> repeat_func)</a>
-<a class="sourceLine" id="cb220-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb220-11" data-line-number="11">purrr<span class="op">::</span><span class="kw">map_df</span>(controlflow_functions, cyclocomp)</a></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb260-1" data-line-number="1">controlflow_functions &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb260-2" data-line-number="2">  <span class="dt">if_func =</span> if_func,</a>
+<a class="sourceLine" id="cb260-3" data-line-number="3">  <span class="dt">if_else_func =</span> if_else_func,</a>
+<a class="sourceLine" id="cb260-4" data-line-number="4">  <span class="dt">ifelse_func =</span> ifelse_func,</a>
+<a class="sourceLine" id="cb260-5" data-line-number="5">  <span class="dt">casewhen_func =</span> casewhen_func,</a>
+<a class="sourceLine" id="cb260-6" data-line-number="6">  <span class="dt">switch_func =</span> switch_func, </a>
+<a class="sourceLine" id="cb260-7" data-line-number="7">  <span class="dt">for_func =</span> for_func,</a>
+<a class="sourceLine" id="cb260-8" data-line-number="8">  <span class="dt">while_func =</span> while_func,</a>
+<a class="sourceLine" id="cb260-9" data-line-number="9">  <span class="dt">repeat_func =</span> repeat_func)</a>
+<a class="sourceLine" id="cb260-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb260-11" data-line-number="11">purrr<span class="op">::</span><span class="kw">map_df</span>(controlflow_functions, cyclocomp)</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 8
 ##   if_func if_else_func ifelse_func casewhen_func switch_func for_func while_func
 ##     &lt;int&gt;        &lt;int&gt;       &lt;int&gt;         &lt;int&gt;       &lt;int&gt;    &lt;int&gt;      &lt;int&gt;
