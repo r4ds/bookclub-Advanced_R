@@ -18,14 +18,13 @@ This repo contains 3 main folders:
 
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
-- 2020-11-19 Chapter 17: Big picture (of Metaprogramming)
 - 2020-12-03 Chapter 18: Expressions
 - 2020-12-10 Chapter 19: Quasiquotation
+- 2021-12-17 Chapter 20: Evaluation
 
 <details>
   <summary> Future Meetings </summary>
 
-- 2021-12-17 Chapter 20: Evaluation
 - 2021-01-07 Chapter 21: Translating R code
 - 2021-01-14 Metaprogramming Recap
 - 2021-01-21 Chapter 22: Debugging
@@ -112,7 +111,7 @@ Chapter 4 - Subsetting
 Chapter 5 - Control flow
 
 - Cohort 1: [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week05/Cohort1/Chapter5.html#1) | [video](https://www.youtube.com/watch?v=96eY6YS_3hU))
-- Cohort 2: [Erick Knackstedt](https://twitter.com/Eknackstedt) (SLIDES | [video](https://www.youtube.com/watch?v=x5I_uHnMxIk))
+- Cohort 2: [Erick Knackstedt](https://twitter.com/Eknackstedt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week05/Cohort2/Chapter5Slides.html#1) | [video](https://www.youtube.com/watch?v=x5I_uHnMxIk))
 - Cohort 3: [Megan Stodel](www.meganstodel.com) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week05/Cohort3/Control-Flow.pdf) | [video](https://www.youtube.com/watch?v=u6UMGWDuxDE))
 - Cohort 4: [Roberto Villegas-Diaz](https://github.com/villegar) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week05/Cohort4/Chapter5) | [video](https://youtu.be/G4YOvwsSw2Q))
 
@@ -175,12 +174,12 @@ Chapter 14 - R6
 Chapter 15 - S4
 
 - Cohort 1: Pavitra Chakravarty ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week14/Cohort1/Chapter15.html#1) | [video](https://www.youtube.com/watch?v=a1jzpWiksyA&feature=youtu.be))
-- Cohort 2: Erick Knackstedt (SLIDES | [video](https://youtu.be/bzo37PHCM1I))
+- Cohort 2: [Erick Knackstedt](https://twitter.com/Eknackstedt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week14/Cohort2/Chapter15Slides.html#1) | [video](https://youtu.be/bzo37PHCM1I))
 
 Chapter 16 - Tradeoffs/OOP Wrapup
 
 - Cohort 1: [Tan Ho](https://twitter.com/_tanho) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week15/Cohort1/AdvR-W15_Tradeoffs.html#1) | [video](https://www.youtube.com/watch?v=W1uc8HbyZvI&feature=youtu.be) | [{ffscrapr}](https://github.com/dynastyprocess/ffscrapr))
-- Cohort 2: Erick Knackstedt (SLIDES | [video](https://youtu.be/bzo37PHCM1I) (with chapter 15))
+- Cohort 2: [Erick Knackstedt](https://twitter.com/Eknackstedt) (see Chapter 15)
 
 Chapter 17 - Metaprogramming, big picture
 
