@@ -1,0 +1,356 @@
+---
+title: "Chapter 13 - S3 - Part 2"
+output: 
+    learnr::tutorial:
+        css: css/styles.css
+        toc: true
+        toc_depth: 2
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(purrr)
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE)
+library(pacman)
+p_load(sloop)
+```
+
+# 13 S3 Continued {-}
+## Definitions 1 
+
+In S3 we create an a new S3 object with `structure` and giving our object
+some class
+
+```{r}
+new_classy_boi <- function(x = double(), clothes = character()) {
+  stopifnot(is.double(x))
+  stopifnot(is.character(clothes))
+  structure(x, 
+            class = "boi",
+            clothes = clothes)
+}
+
+```
+
+
+__generic functions__ functions like `mean` or `summary` which work on a range of
+different types
+
+__method__ the way that `summary` works on a `numeric` vs a `data.frame`
+
+
+```{r}
+library(palmerpenguins)
+
+summary(penguins$species)
+
+summary(penguins$flipper_length_mm)
+
+summary(penguins)
+```
+## Definitions 2
+
+Recall that __methods__ are chosen from the available methods in a __generic function__
+like `print` and that we can look at the __method__ choosen with
+`sloop::s3_dispatch`
+
+
+```{r}
+my_fancy_boi = new_classy_boi(4,'socks')
+sloop::s3_dispatch(print(my_fancy_boi))
+print(my_fancy_boi)
+```
+
+Well that's pretty ugly. Let's make a better `print` method for our `classy_boi`
+
+## Making a new method
+
+```{r}
+new_classy_boi <- function(x = double(), 
+                           clothes = character()) {
+  stopifnot(is.double(x))
+  stopifnot(is.character(clothes))
+  structure(x, 
+            class = "boi",
+            clothes = clothes)
+}
+
+print.boi <- function(x) {
+  clothes <- attr(x, "clothes")
+  print(glue::glue("I have {x} {clothes}.\n OOO so fancy!!!"))
+  invisible(x)
+}
+
+my_fancy_boi = new_classy_boi(4,"socks")
+sloop::s3_dispatch(print(my_fancy_boi))
+print(my_fancy_boi)
+
+```
+
+## 13.5.1 Exercise 2 - 1
+
+What would a constructor function for lm objects, new_lm(), look like? Use ?lm and experimentation to figure out the required fields and their types.
+
+First questions to ask ourselves, 
+
+What are the attributes in an `lm` object?
+
+```{r}
+attributes(lm(body_mass_g ~ bill_depth_mm, data = penguins))
+```
+## 13.5.1 Exercise 2 - 2
+
+What kind of things are those? 
+```
+?lm
+```
+
+![](images/lm_help_page.png)
+
+## 13.5.1 Exercise 2 - 3
+
+What rules do we want for our constructor?
+The constructor should follow three principles:
+
+1. Be called new_myclass().
+
+2. Have one argument for the base object, and one for each attribute.
+
+3. Check the type of the base object and the types of each attribute.
+
+```{r}
+new_lm <- function(
+  coefficients, residuals, effects, rank, fitted.values, assign,
+  qr, df.residual, xlevels, call, terms, model
+) {
+  
+  stopifnot(
+    is.double(coefficients), 
+    is.double(residuals), 
+    is.double(effects), 
+    is.integer(rank), 
+    is.double(fitted.values),
+    is.integer(assign), 
+    is.list(qr), 
+    is.integer(df.residual),
+    is.list(xlevels), 
+    is.language(call), 
+    is.language(terms),
+    is.list(model)
+  )
+  
+  structure(
+    list(
+      coefficients = coefficients,
+      residuals = residuals,
+      effects = effects,
+      rank = rank, 
+      fitted.values = fitted.values,
+      assign = assign,
+      qr = qr,
+      df.residual = df.residual,
+      xlevels = xlevels,
+      call = call,
+      terms = terms, 
+      model = model
+    ),
+    class = "lm"
+  )
+}
+
+```
+
+## 13.6 Super and subclasses
+
+S3 classes share behavior through the idea of inheritance
+
+In S3 we have `superclasses` and `subclasses`
+
+Example if we make an ordered factor with `ordered`
+```{r}
+class(ordered("x"))
+```
+
+Here the `superclass` is `factor` and the `subclass` is `ordered`. 
+
+S3 will let you shoot yourself in the foot if you want, so be reasonable and
+impose some logic on making sub and superclasses
+
+1. The base type of the subclass should be that same as the superclass.
+
+2. The attributes of the subclass should be a superset of the attributes of the superclass.
+
+## 13.6 Inheritance
+
+During method dispatch, R will look through the object's classes for the right methods
+
+```{r}
+s3_dispatch(print(ordered("x")))
+```
+
+A method can delegate work by calling `NextMethod()`.  `s3_dispatch()` reports delegation with `->`.
+
+```{r}
+s3_dispatch(ordered("x")[1])
+```
+
+## 13.6 Inheritance - A Toy Example
+
+Let's understand what the heck that just meant. 
+
+```{r}
+new_secret <- function(x = double()) {
+  stopifnot(is.double(x))
+  structure(x, 
+            class = "secret")
+}
+
+print.secret <- function(x, ...) {
+  print(strrep("x", nchar(x)))
+  invisible(x)
+}
+
+x <- new_secret(c(15, 1, 456))
+print(x)
+```
+
+What happens when we try to index into our `x` with `[`?
+
+## 13.6 Inheritance - A Toy Example - 2
+
+```{r}
+x[1]
+```
+
+Rats, we wanted to hide that information. 
+
+Let's make a `[.secret` method
+
+```{r}
+`[.secret` <- function(x, i) {
+  x <- unclass(x)
+  new_secret(x[i])
+}
+x[1]
+```
+
+But this is kind of inefficient, as we're making a copy of `x`. 
+
+## 13.6 Inheritance - A Toy Example - 3
+
+We use the `NextMethod()` which will delegate to the next method??
+
+```{r}
+`[.secret` <- function(x, i) {
+  new_secret(NextMethod())
+}
+
+s3_dispatch(x[1])
+```
+
+Here the actual work of indexing is done by the `[ (internal)` 
+but because we're creating the result back into a `new_secret` object, 
+we mantain our `secret` class and we don't waste creating a copy of `x`.
+
+## 13.6 Inheritance - Let's make some `subclasses`
+
+If we want to allow for subclasses, our parent constructor needs 
+to have `...` and `class` arguments. 
+
+```{r}
+new_classy_boi <- function(x = double(), 
+                           clothes = character(),
+                           class = character(),
+                           ...) {
+    stopifnot(is.double(x))
+    stopifnot(is.character(clothes))
+    stopifnot(is.character(class))
+    
+
+    structure(
+        x,
+        ...,
+        clothes = clothes,
+        class = c(class, "boi")
+    )
+    
+}
+
+
+new_super_classy_boi <- function(x,clothes, repetitions) {
+    
+    new_classy_boi(x, 
+                   clothes = clothes,
+                   class = "superclassyboi",
+                   repeats = repetitions)
+}
+
+print.boi <- function(x) {
+    clothes <- attr(x, "rep")
+    cat(paste0("I have ", x, " ", clothes, ".\n OOO so fancy!!!"))
+    invisible(x)
+}
+print.superclassyboi <- function(x) {
+    clothes <- attr(x, "clothes")
+    repeats <- attr(x, "repeats")
+    for (i in 1:repeats) {
+        print(paste0("I have ", x, " ", clothes, ".\n OOO so fancy!!!"))
+    }
+    invisible(x)
+}
+
+my_fancy_boi = new_classy_boi(4,clothes = "socks")
+my_even_fancier_boi = new_super_classy_boi(13,clothes = "hats",repetitions = 3)
+
+print(my_fancy_boi)
+print(my_even_fancier_boi)
+```
+## 13.6 Inheritance - Allowing it correctly
+
+Back to the toy example
+
+```{r}
+new_secret <- function(x, ..., class = character()) {
+  stopifnot(is.double(x))
+
+  structure(
+    x,
+    ...,
+    class = c(class, "secret")
+  )
+}
+new_supersecret <- function(x) {
+  new_secret(x, class = "supersecret")
+}
+
+print.supersecret <- function(x, ...) {
+  print(rep("xxxxx", length(x)))
+  invisible(x)
+}
+
+x2 <- new_supersecret(c(15, 1, 456))
+x2
+```
+
+
+```{r}
+`[.secret` <- function(x, ...) {
+  new_secret(NextMethod())
+}
+
+x2[1:3]
+```
+
+
+
+
+```{r}
+`[.secret` <- function(x, ...) {
+  vctrs::vec_restore(NextMethod(), x)
+}
+x2[1:3]
+```
+
+
