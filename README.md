@@ -164,7 +164,7 @@ Chapter 12 + 13 - OOP base types + S3
 
 - Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week12/Cohort1/Advanced_R_12to13_OOP_S3.html#1) | [video](https://www.youtube.com/watch?v=Fy3JF5Em6qY&feature=youtu.be))
 - Cohort 2: Chris Yarrison (SLIDES | [video](https://youtu.be/9GkgNC15EAw))
-- Cohort 3 (13, part 1): Anne Hoffrichter (SLIDES | [video](https://youtu.be/q7lFXSLdC1g))
+- Cohort 3 (13, part 1): Anne Hoffrichter ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Cohort 3/part1/13_S3_part1.html) | [video](https://youtu.be/q7lFXSLdC1g))
 
 Chapter 14 - R6
 
