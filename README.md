@@ -63,16 +63,26 @@ This repo contains 3 main folders:
 
 *Cohort 4 (started 2020-10-05) Mondays, 17:00 ET*
 
-- 2020-11-23 Chapter 8 - Conditions - Estevão
-- 2020-11-30 Chapter 9 - Functionals
-- 2020-12-07 Chapter 10 - Function factories
+- 2020-12-14 Chapter 11 - Function operators
+- 2020-12-21 Chapter 12 - Base types (OOP)
+- 2020-12-28 Chapter 13 - S3 - Roberto
 
 <details>
   <summary> Future Meetings </summary>
 
-- 2020-12-14 Chapter 11 - Function operators
-- 2020-12-21 Chapter 12 - Base types (OOP)
-- 2020-12-28 Chapter 13 - S3 - Roberto
+- 2021-01-04 Chapter 14: R6
+- 2021-01-11 Chapter 15: S4
+- 2021-01-18 Chapter 16: Trade-offs & Section 3 Recap
+- 2021-01-25 Chapter 17: Big picture (of Metaprogramming)
+- 2021-02-01 Chapter 18: Expressions
+- 2021-02-08 Chapter 19: Quasiquotation
+- 2021-02-15 Chapter 20: Evaluation
+- 2021-02-22 Chapter 21: Translating R code
+- 2021-03-01 Section 4 Recap
+- 2021-03-08 Chapter 22: Debugging
+- 2021-03-15 Chapters 23 & 24: Measuring & Improving performance
+- 2021-03-22 Chapter 25 Rewriting R code in C++
+- 2021-03-29 Book Recap and Reflection
 
 </details>
 
@@ -150,6 +160,7 @@ Chapter 10 - Function factories
 - Cohort 1: [Jon Harmon](https://twitter.com/jonthegeek) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week10/Cohort1/Chapter10.html#1) | [video](https://www.youtube.com/watch?v=enI5Ynq6olI) | [{factory}](https://cran.r-project.org/package=factory))
 - Cohort 2: Jorge Mendes (SLIDES | [video](https://youtu.be/U-CoF7MCik0))
 - Cohort 3: Sam Bryce-Smith (SLIDES | [video](https://youtu.be/qgn7WTITnNs))
+- Cohort 4: August Comte ([video](https://youtu.be/GHp2W4JxVaY))
 
 Chapter 11 - Function operators
 
