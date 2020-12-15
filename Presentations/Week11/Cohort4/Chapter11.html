@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced R Chapter 11: Function Operators</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="sholsen at alumni dot emory dot edu" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# <u>Advanced R</u><br>Chapter 11: Function Operators
+## Stephen Holsenbeck
+### sholsen at alumni dot emory dot edu
+### last updated: 2020-12-14
+
+---
+
+
+
+
+
+
+
+
+
+
+&lt;style type="text/css"&gt;
+hide {
+  display: none;
+}
+.remark-slide-content h1 {
+  font-size: 45px;
+}
+h1 {
+  font-size: 2em;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+}
+.remark-slide-content {
+  font-size: 16px
+}
+.remark-code {
+  font-size: 14px;
+}
+code.r {
+  font-size: 14px;
+}
+pre {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.red {
+  color: #FF0000;
+}
+.footnote {
+  color: #800020;
+  font-size: 9px;
+}
+&lt;/style&gt;
+
+
+## 11.1 Overview 
+
+
+- &gt; A function operator (FO) is a function that takes one (or more) functions as input and returns a function as output. 
+
+
+- &gt; FOs allow you to factor out complexity in order to make your code more readable and reusable.
+
+
+&lt;table class=" lightable-minimal" style='font-family: "Trebuchet MS", verdana, sans-serif; margin-left: auto; margin-right: auto;'&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Term &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Required Input &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Optional Input &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Output &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Functionals &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Function &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Vector &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Vector &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Function Factory &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Vector, Function &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Function &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Function Operator &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Function &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Vector &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Function &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+Three types of FOs:
+
++ __Behavioral FO__: Change the behavior of a function, e.g. "memorizing" previous outputs
+
+  + `memoise::memoise()`
+
++ __Output FO__: Wrap a function and change the output
+
+  + `purrr::possibly()`, `purrr::safely()`, `purrr::quietly()`
+
++ __Input FO__: Pre-fill arguments of a function
+
+  + `purrr::partial()`
+
+---
+
+### A general example
+
+
+
+```r
+slowly &lt;- function(f, n){
+  force(f)
+  force(n)
+  function(...){
+    stopifnot(is.numeric(n))
+    message(
+      glue::glue('Sleeping for {n} seconds.')
+    )
+    Sys.sleep(n)
+    f(...)
+  }
+}
+
+purrr::walk(
+  c('hello', 'world'),
+* slowly(cat, 0.1),
+  sep = '\n' # Passed to `f()` via `...`
+)
+```
+
+```
+## Sleeping for 0.1 seconds.
+```
+
+```
+## hello
+```
+
+```
+## Sleeping for 0.1 seconds.
+```
+
+```
+## world
+```
+
+.footnote[
+https://gist.github.com/ColinFay/d32cf4c9c5fb8d849f12a4e98d6c0549
+]
+
+---
+
+## 11.2 Existing FOs
+
+
+
+Useful when `map`ping over unpredictable inputs or trying various attempts:
+
+ - files
+ - manually input data
+ - survey responses
+ - webpages
+ - statistical modeling across imbalanced classes
+ 
+---
+
+### `purrr::safely` example
+
+
+```r
+state_data &lt;- tibble::rownames_to_column(as.data.frame(state.x77), "State")
+get_state_stats &lt;- rlang::as_function(~{
+  .l &lt;- state_data$State %in% .x
+  if (purrr::some(.l, isTRUE)) {
+    state_data[.l,]
+  } else 
+    stop("No match", call. = FALSE)
+  })
+
+purrr::map(c(
+  "Georgia",
+  "Pennsylvania",
+  "Texas",
+  "Puerto Rico"
+), get_state_stats)
+```
+
+```
+## Error: No match
+```
+
+---
+#### `purrr::safely` example cont.
+
+
+
+```r
+safe_state_stats &lt;- purrr::safely(get_state_stats)
+state_stats &lt;- purrr::map(c(
+  "Georgia",
+  "Pennsylvania",
+  "Texas",
+  "Puerto Rico"
+), safe_state_stats)
+str(state_stats, max.level = 2)
+```
+
+```
+## List of 4
+##  $ :List of 2
+##   ..$ result:'data.frame':	1 obs. of  9 variables:
+##   ..$ error : NULL
+##  $ :List of 2
+##   ..$ result:'data.frame':	1 obs. of  9 variables:
+##   ..$ error : NULL
+##  $ :List of 2
+##   ..$ result:'data.frame':	1 obs. of  9 variables:
+##   ..$ error : NULL
+##  $ :List of 2
+##   ..$ result: NULL
+##   ..$ error :List of 2
+##   .. ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
+```
+
+---
+#### `purrr::safely` example cont.
+
+
+```r
+state_stats &lt;- purrr::transpose(state_stats)
+str(state_stats, max.level = 2)
+```
+
+```
+## List of 2
+##  $ result:List of 4
+##   ..$ :'data.frame':	1 obs. of  9 variables:
+##   ..$ :'data.frame':	1 obs. of  9 variables:
+##   ..$ :'data.frame':	1 obs. of  9 variables:
+##   ..$ : NULL
+##  $ error :List of 4
+##   ..$ : NULL
+##   ..$ : NULL
+##   ..$ : NULL
+##   ..$ :List of 2
+##   .. ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
+```
+
+
+---
+
+#### `purrr::safely` example cont.
+
+
+```r
+knitr::kable(dplyr::bind_rows(state_stats$result))
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; State &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Population &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Income &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Illiteracy &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Life Exp &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Murder &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; HS Grad &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Frost &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Area &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Georgia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4931 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4091 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 68.54 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13.9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 40.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 60 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 58073 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Pennsylvania &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11860 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4449 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 70.43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 50.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 126 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 44966 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Texas &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12237 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4188 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 70.90 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 47.4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 35 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 262134 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+
+--- 
+
+### `purrr::possibly`
+ 
+Similar to `purrr::safely` except:
+
+- requires `otherwise` which specifies the outcome when an error occurs 
+- only returns objects / alternatives and not errors.
+
+---
+### `purrr::quietly`
+ 
+Similar to `purrr::safely` except:
+
+- returns a list with 
+  - result
+  - output
+  - messages
+  - warnings
+
+
+---
+
+### Caching Computations with `memoise::memoise()`
+
+Testing the speed of `memoise::memoise()`
+
+
+```r
+slow_function &lt;- function(x) {
+  Sys.sleep(0.2)
+  x * runif(1)
+}
+fast_function &lt;- memoise::memoise(slow_function)
+```
+
+&lt;br /&gt;
+
+
+```r
+system.time(slow_function(1))
+```
+
+```
+##    user  system elapsed 
+##    0.00    0.00    0.22
+```
+
+```r
+*system.time(slow_function(1))
+```
+
+```
+##    user  system elapsed 
+##    0.00    0.00    0.21
+```
+
+
+```r
+system.time(fast_function(11))
+```
+
+```
+##    user  system elapsed 
+##     0.0     0.0     0.2
+```
+
+```r
+*system.time(fast_function(11))
+```
+
+```
+##    user  system elapsed 
+##    0.11    0.00    0.11
+```
+
+---
+
+### `memoise::memoise` continued
+
+Even if you've changed the inputs since the most recent call, it will still be fast.
+
+
+```r
+system.time(fast_function(22))
+```
+
+```
+##    user  system elapsed 
+##    0.00    0.00    0.21
+```
+
+```r
+system.time(fast_function(33))
+```
+
+```
+##    user  system elapsed 
+##    0.00    0.00    0.21
+```
+
+```r
+*system.time(fast_function(22))
+```
+
+```
+##    user  system elapsed 
+##       0       0       0
+```
+
+
+In fact, it remembers everything from the same session (assuming you haven't used `memoise::forget()`).
+
+
+```r
+system.time(fast_function(11))
+```
+
+```
+##    user  system elapsed 
+##       0       0       0
+```
+
+```r
+system.time(fast_function(22))
+```
+
+```
+##    user  system elapsed 
+##       0       0       0
+```
+
+```r
+system.time(fast_function(33))
+```
+
+```
+##    user  system elapsed 
+##       0       0       0
+```
+
+---
+
+
+### `purrr::partial`
+
+Using `purrr::partial()` to set `na.rm = TRUE`
+
+
+```r
+purrr::map(list(
+  rnorm(3, 1.5)
+  , c(rnorm(3, 1.5), NA)
+), mean)
+```
+
+```
+## [[1]]
+## [1] 1.772745
+## 
+## [[2]]
+## [1] NA
+```
+
+```r
+# With partial
+pmean &lt;- purrr::partial(mean, na.rm = TRUE)
+purrr::map(list(
+  rnorm(3, 1.5)
+  , c(rnorm(3, 1.5), NA)
+), pmean)
+```
+
+```
+## [[1]]
+## [1] 1.315077
+## 
+## [[2]]
+## [1] 1.015954
+```
+
+---
+
+### 11.3.1 #5
+
+&gt; Modify delay_by() so that instead of delaying by a fixed amount of time, it ensures that a certain amount of time has elapsed since the function was last called. That is, if you called `g &lt;- delay_by(1, f); g(); Sys.sleep(2); g()` there shouldn’t be an extra delay.
+
+
+
+```r
+delay_by &lt;- function(f, delay, .t = Sys.time(), ...) {
+  force(f)
+  force(delay)
+  amount &lt;- .t + delay - Sys.time()
+  timestamp()
+  function (...) {
+      Sys.sleep(amount)
+    timestamp()
+      f(...)
+    }
+}
+
+
+
+delay_by(runif, as.difftime(4, units = "secs"))(10)
+```
+
+```
+## ##------ Mon Dec 14 16:48:19 2020 ------##
+## ##------ Mon Dec 14 16:48:23 2020 ------##
+```
+
+```
+##  [1] 0.4937448 0.7664275 0.8185756 0.5335981 0.7858075 0.7531393 0.5597671
+##  [8] 0.2708085 0.1565269 0.4187038
+```
+
+---
+# Using `purrr::safely` demo
+
+---
+
+# Thanks to Cohort 1's Tony ElHabr
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
