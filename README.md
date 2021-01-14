@@ -18,9 +18,12 @@ This repo contains 3 main folders:
 
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
-- 2021-01-07 Chapter 20: Evaluation
-- 2021-01-14 Chapter 21: Translating R code
-- 2021-01-21 Metaprogramming Recap
+- 2021-01-14 Chapter 21: Translating R code - Jorge Mendes 
+- 2021-01-21 Metaprogramming Recap 
+- 2021-01-28 Chapter 22: Debugging - Mike Jeziorski
+- 2021-02-04 Chapter 23: Measuring Performance - Josh Pohlkamp-Hartt
+- 2021-02-11 Chapter 24: Improving Performance
+- 2021-02-18 Chapter 25: Rewriting R code in C++ - Kevin Kent
 
 <details>
   <summary> Future Meetings </summary>
