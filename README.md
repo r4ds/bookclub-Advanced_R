@@ -184,7 +184,7 @@ Chapter 16 - Tradeoffs/OOP Wrapup
 Chapter 17 - Metaprogramming, big picture
 
 - Cohort 1: [Tony ElHabr](https://twitter.com/TonyElHabr) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week16/Cohort1/Chapter17.html#1) | [video](https://www.youtube.com/watch?v=10gRbFMoh7g))
-- Cohort 2: [Josh Pohlkamp-Hartt](https://twitter.com/jpohlkamphartt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week16/Cohort2_America/Chapter17Slides.html#1) 
+- Cohort 2: [Josh Pohlkamp-Hartt](https://twitter.com/jpohlkamphartt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week16/Cohort2_America/Chapter17Slides.html#1) | [video](https://youtu.be/vKKDU6x3BE8))
 
 Chapter 18 - Expressions
 
