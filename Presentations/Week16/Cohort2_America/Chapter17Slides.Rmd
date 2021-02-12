@@ -300,7 +300,7 @@ eval_tidy(expr(x + y), df, env(x=11:15))
 
 ```{r}
 df <- data.frame(x = 1:5, y = rep(1,5))
-eval_tidy(expr(.env$x + y), df, env(x=11:15))
+eval_tidy(expr(.env$x + y), df)
 ```
 
 
