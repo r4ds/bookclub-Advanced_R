@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced R by Hadley Wickham</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jake Riley" />
+    <meta name="date" content="2020-12-03" />
+    <script src="libs/header-attrs-2.1/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <script src="libs/kePrint-0.0.1/kePrint.js"></script>
+    <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Advanced R by Hadley Wickham
+## Chapter 18: Expressions
+### Jake Riley
+### Dec. 3, 2020
+
+---
+
+
+&lt;style type="text/css"&gt;
+.remark-code, .remark-inline-code {
+    background: #F0F0F0;
+}
+
+.remark-code {
+    font-size: 12px;
+}
+
+.remark-slide-content h1 {
+    font-size: 35px;
+}
+
+.remark-slide-content {
+    font-size: 14px;
+}
+&lt;/style&gt;
+
+
+
+
+
+# Chapter 18
+
+metaprogramming: treating code as data
+
+Libraries:
+
+
+```r
+library(tidyverse)
+library(rlang)
+```
+
+Agenda:
+
+- Expressions
+
+- Abstract Syntax Trees (AST)
+
+- Symbols
+
+- Calls
+
+- Parsing
+
+- Live demos
+
+
+
+---
+
+# Expressions
+
+If you try to run this in a new session, you will get an error as x isn't defined
+
+```r
+x * 10
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'x' not found
+```
+
+As an expression, we can interact with code without running it
+
+```r
+z &lt;- expr(x * 10)
+z
+```
+
+```
+## x * 10
+```
+
+The code isn't evaluated until we use `eval()`
+
+
+```r
+x &lt;- 4
+eval(z)
+```
+
+```
+## [1] 40
+```
+---
+
+# Evaluating multiple expressions
+
+We can write multiple expressions at once &amp; it acts similar to `source()`
+
+`expression()` returns a vector and can be passed to `eval()`  
+
+
+
+```r
+eval(expression(
+  x &lt;- 4,
+  x * 10
+))
+```
+
+```
+## [1] 40
+```
+
+`exprs()` does not and has to be used in a loop
+
+
+```r
+for (i in  exprs(x &lt;- 4,x * 10)) {
+  print(i)
+  print(eval(i))
+}
+```
+
+```
+## x &lt;- 4
+## [1] 4
+## x * 10
+## [1] 40
+```
+
+---
+
+# `expression()` vs `expr()`
+
+- `expression()` is ready for evaluation
+
+- `expr()` is ready for manipulation
+
+&lt;img src="images/view_comparison.png" width="1392" /&gt;
+
+---
+
+# 18.2.3 Ways to write
+
+- **infix call:** function is between objects, is evaluated
+
+```r
+x &lt;- 5 + 10
+```
+
+- **prefix call:** function is in front of objects, is evaluated
+most common with functions
+
+```r
+mean(5:10)
+`+`(5, 10)
+`&lt;-`(x, `+`(5, 10))
+```
+
+
+- **expression:** the code as written, not evaluated
+class = "expression"
+
+```r
+expression(x &lt;- 5 + 10)
+```
+
+
+
+- **call:** uses a named function followed by it's arguments, is not evaluated
+class = "language"
+
+```r
+call("+", 5, 10)
+```
+
+
+
+
+---
+
+# Abstract Syntax Trees
+
+- `lobstr::ast()` is nice but I prefer `View()`
+
+
+
+&lt;img src="images/ast.png" width="500px" height="500px" /&gt;
+
+---
+
+# Replacing code
+
+
+```r
+z &lt;- expression(mean(1:10))
+# View(z)
+eval(z)
+```
+
+```
+## [1] 5.5
+```
+
+```r
+z[[1]][[1]]
+```
+
+```
+## mean
+```
+
+```r
+z[[1]][[1]] &lt;- sum
+
+# View(z)
+eval(z)
+```
+
+```
+## [1] 55
+```
+
+
+
+---
+
+# 18.3.2 Symbols
+
+**symbol** is the "name" of an object, ex: `mtcars`, `mean`, etc
+
+You can convert a **string to a symbol** with `rlang::sym()`
+
+I use this a lot when debugging tidy evaluation
+```r
+* x &lt;- rlang::sym("hwy")
+
+head(mpg) %&gt;% 
+  select_if(is.numeric) %&gt;% 
+* mutate('{{x}}_kpl' := {{x}} * 0.425)
+```
+
+&lt;table class=" lightable-paper" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;'&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; displ &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; year &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; cyl &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; cty &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; hwy &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; hwy_kpl &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 29 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: yellow !important;"&gt; 12.325 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 21 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 29 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: yellow !important;"&gt; 12.325 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2008 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 31 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: yellow !important;"&gt; 13.175 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2008 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 21 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: yellow !important;"&gt; 12.750 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: yellow !important;"&gt; 11.050 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: yellow !important;"&gt; 11.050 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+You can convert **a symbol to a string** with
+
+`as.character(expression(hwy))`
+
+or `rlang::as_string(rlang::expr(hwy))`
+
+---
+
+# 18.3.3 Standardized Calls
+
+* `call_standardise()` is almost the same as `match_call()` 
+
+
+```r
+new_msg &lt;- function(data, digits = 5, ...) {
+  message(
+    paste(
+*     match.call()$data,
+      "has", 
+      nrow(data), 
+      "rows"
+    )
+  )
+}
+```
+
+
+```r
+new_msg(digits = 3, mpg)
+```
+
+```
+## mpg has 234 rows
+```
+
+
+```r
+new_msg(d = mpg)
+```
+
+```
+## Error in new_msg(d = mpg): argument 1 matches multiple formal arguments
+```
+
+
+```r
+new_msg(da = mpg)
+```
+
+```
+## mpg has 234 rows
+```
+
+Can get a heads up about this with
+
+`options(warnPartialMatchArgs = TRUE)`
+
+---
+
+# 18.4 Parsing
+
+`parse_exprs()` is the same as `parse(text = ...)`
+
+
+```r
+x3 &lt;- "a &lt;- 1; a + 1"
+
+parse(text = x3)
+```
+
+```
+## expression(a &lt;- 1, a + 1)
+```
+
+```r
+as.list(parse(text = x3))
+```
+
+```
+## [[1]]
+## a &lt;- 1
+## 
+## [[2]]
+## a + 1
+```
+
+```r
+rlang::parse_exprs(x3)
+```
+
+```
+## [[1]]
+## a &lt;- 1
+## 
+## [[2]]
+## a + 1
+```
+
+You can deparse with `expr_text()`
+
+```r
+z &lt;- expr(y &lt;- x + 10)
+expr_text(z)
+```
+
+```
+## [1] "y &lt;- x + 10"
+```
+
+
+---
+
+# Conclusion
+
+- `rlang` functions are more "ready to go"
+
+- have protective features to bring back vectors of the same length as the input (`parse_exprs()` vs `deparse()`)
+
+
+- [shinyobjects](https://rjake.github.io/shinyobjects/articles/how-it-works.html)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

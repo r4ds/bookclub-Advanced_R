@@ -1,0 +1,354 @@
+---
+title: "<u>Advanced R</u><br>Chapter 11: Function Operators"
+subtitle: "Stephen Holsenbeck"
+author: "sholsen at alumni dot emory dot edu"
+date: "last updated: `r Sys.Date()`"
+institution: ""
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    chakra: libs/remark.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(fig.align="center", fig.width=5, fig.height=5, warning = FALSE, message = TRUE)
+library(magrittr)
+```
+
+```{r xaringan-themer, include = FALSE}
+xaringanthemer::style_duo_accent(
+  primary_color = "#bada90",
+  secondary_color = "#bada55",
+  header_font_google = xaringanthemer::google_font("Roboto", "400"),
+  header_background_content_padding_top = "3.5rem",
+  text_font_google   = xaringanthemer::google_font("Lato", "300"),
+  header_color = "skyblue",
+  title_slide_text_color = "#c9d6de",
+  padding = "12px 32px 12px 32px",
+  code_font_google = xaringanthemer::google_font("Oxygen Mono", "200"),
+  code_highlight_color = "rgba(232,239,250, 0.3)",
+  code_font_size = "0.75rem",
+  code_inline_font_size = "0.9rem",
+  title_slide_background_image = "images/switchboard-operator.jpg"
+  
+)
+xaringanthemer::style_extra_css(
+  list(
+    pre = list( 
+    display = "block",
+    `font-family` = "monospace",
+    `white-space` = "pre-wrap",
+    margin = "0px"
+    ),
+    `h1,h2,h3,h4,h5` = list(
+      `padding-top` = ".25rem",
+      `padding-bottom` = ".25rem",
+      `margin-top` = ".25rem",
+      `margin-bottom` = ".25rem"
+    ),
+    `.title-slide > h1, h2, h3` = list(
+      `background-color` = "rgba(255,255,240, .5);",
+      `text-shadow` = "2px 2px rgba(0,0,0,.4);"
+      )
+    )
+, append = TRUE)
+```
+
+
+
+```{css, echo = F}
+hide {
+  display: none;
+}
+.remark-slide-content h1 {
+  font-size: 45px;
+}
+h1 {
+  font-size: 2em;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+}
+.remark-slide-content {
+  font-size: 16px
+}
+.remark-code {
+  font-size: 14px;
+}
+code.r {
+  font-size: 14px;
+}
+pre {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.red {
+  color: #FF0000;
+}
+.footnote {
+  color: #800020;
+  font-size: 9px;
+}
+```
+
+
+## 11.1 Overview 
+
+
+- > A function operator (FO) is a function that takes one (or more) functions as input and returns a function as output. 
+
+
+- > FOs allow you to factor out complexity in order to make your code more readable and reusable.
+
+
+```{r, 'fo table', eval=T, echo=F, include=T}
+kableExtra::kable_minimal(knitr::kable(tibble::tibble(
+    Term = c('Functionals', 'Function Factory', 'Function Operator'),
+    `Required Input` = c('Function', '', 'Function'),
+    `Optional Input` = c('Vector', 'Vector, Function', 'Vector'),
+    Output = c('Vector', 'Function', 'Function')
+  ))) 
+```
+
+--
+
+Three types of FOs:
+
++ __Behavioral FO__: Change the behavior of a function, e.g. "memorizing" previous outputs
+
+  + `memoise::memoise()`
+
++ __Output FO__: Wrap a function and change the output
+
+  + `purrr::possibly()`, `purrr::safely()`, `purrr::quietly()`
+
++ __Input FO__: Pre-fill arguments of a function
+
+  + `purrr::partial()`
+
+---
+
+### A general example
+
+
+```{r 'general example'}
+slowly <- function(f, n){
+  force(f)
+  force(n)
+  function(...){
+    stopifnot(is.numeric(n))
+    message(
+      glue::glue('Sleeping for {n} seconds.')
+    )
+    Sys.sleep(n)
+    f(...)
+  }
+}
+
+purrr::walk(
+  c('hello', 'world'),
+  slowly(cat, 0.1), #<<
+  sep = '\n' # Passed to `f()` via `...`
+)
+```
+
+.footnote[
+https://gist.github.com/ColinFay/d32cf4c9c5fb8d849f12a4e98d6c0549
+]
+
+---
+
+## 11.2 Existing FOs
+
+
+
+Useful when `map`ping over unpredictable inputs or trying various attempts:
+
+ - files
+ - manually input data
+ - survey responses
+ - webpages
+ - statistical modeling across imbalanced classes
+ 
+---
+
+### `purrr::safely` example
+
+```{r 'safely ex', error = TRUE}
+state_data <- tibble::rownames_to_column(as.data.frame(state.x77), "State")
+get_state_stats <- rlang::as_function(~{
+  .l <- state_data$State %in% .x
+  if (purrr::some(.l, isTRUE)) {
+    state_data[.l,]
+  } else 
+    stop("No match", call. = FALSE)
+  })
+
+purrr::map(c(
+  "Georgia",
+  "Pennsylvania",
+  "Texas",
+  "Puerto Rico"
+), get_state_stats)
+```
+
+---
+#### `purrr::safely` example cont.
+
+
+```{r 'safely ex 2'}
+safe_state_stats <- purrr::safely(get_state_stats)
+state_stats <- purrr::map(c(
+  "Georgia",
+  "Pennsylvania",
+  "Texas",
+  "Puerto Rico"
+), safe_state_stats)
+str(state_stats, max.level = 2)
+```
+
+---
+#### `purrr::safely` example cont.
+
+```{r 'safely ex 3'}
+state_stats <- purrr::transpose(state_stats)
+str(state_stats, max.level = 2)
+```
+
+
+---
+
+#### `purrr::safely` example cont.
+
+```{r 'safely ex 4'}
+knitr::kable(dplyr::bind_rows(state_stats$result))
+```
+
+
+
+--- 
+
+### `purrr::possibly`
+ 
+Similar to `purrr::safely` except:
+
+- requires `otherwise` which specifies the outcome when an error occurs 
+- only returns objects / alternatives and not errors.
+
+---
+### `purrr::quietly`
+ 
+Similar to `purrr::safely` except:
+
+- returns a list with 
+  - result
+  - output
+  - messages
+  - warnings
+
+
+---
+
+### Caching Computations with `memoise::memoise()`
+
+Testing the speed of `memoise::memoise()`
+
+```{r 'memoise 1'}
+slow_function <- function(x) {
+  Sys.sleep(0.2)
+  x * runif(1)
+}
+fast_function <- memoise::memoise(slow_function)
+```
+
+<br />
+
+```{r 'memoise 2'}
+system.time(slow_function(1))
+system.time(slow_function(1)) #<<
+```
+
+```{r 'memoise 3'}
+system.time(fast_function(11))
+system.time(fast_function(11)) #<<
+```
+
+---
+
+### `memoise::memoise` continued
+
+Even if you've changed the inputs since the most recent call, it will still be fast.
+
+```{r 'memoise 4'}
+system.time(fast_function(22))
+system.time(fast_function(33))
+system.time(fast_function(22)) #<<
+```
+
+
+In fact, it remembers everything from the same session (assuming you haven't used `memoise::forget()`).
+
+```{r 'memoise 5'}
+system.time(fast_function(11))
+system.time(fast_function(22))
+system.time(fast_function(33))
+```
+
+---
+
+
+### `purrr::partial`
+
+Using `purrr::partial()` to set `na.rm = TRUE`
+
+```{r 'partial ex'}
+purrr::map(list(
+  rnorm(3, 1.5)
+  , c(rnorm(3, 1.5), NA)
+), mean)
+# With partial
+pmean <- purrr::partial(mean, na.rm = TRUE)
+purrr::map(list(
+  rnorm(3, 1.5)
+  , c(rnorm(3, 1.5), NA)
+), pmean)
+```
+
+---
+
+### 11.3.1 #5
+> Modify delay_by() so that instead of delaying by a fixed amount of time, it ensures that a certain amount of time has elapsed since the function was last called. That is, if you called `g <- delay_by(1, f); g(); Sys.sleep(2); g()` there shouldn’t be an extra delay.
+
+
+```{r 'Exercise 11.3.1'}
+
+delay_by <- function(f, delay, .t = Sys.time(), ...) {
+  force(f)
+  force(delay)
+  amount <- .t + delay - Sys.time()
+  timestamp()
+  function (...) {
+      Sys.sleep(amount)
+    timestamp()
+      f(...)
+    }
+}
+
+
+
+delay_by(runif, as.difftime(4, units = "secs"))(10)
+```
+
+---
+# Using `purrr::safely` demo
+
+---
+
+# Thanks to Cohort 1's Tony ElHabr

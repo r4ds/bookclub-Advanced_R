@@ -1,0 +1,377 @@
+---
+title: "Advanced R"
+subtitle: "Chapter 14"
+author: |
+  | Stephen Holsenbeck
+  | Template & Layout: Tyler Grant Smith
+institute: '`r fontawesome::fa("github", fill = "#f0f042")`&nbsp;[yogat3ch](http://github.com/yogat3ch)<br>`r fontawesome::fa("twitter", fill = "#f0f042")`&nbsp;[ascensionasana](http://twitter.com/ascensionasana)<br>`r fontawesome::fa("linkedin", fill = "#f0f042")`&nbsp;[holsenbeck](http://linkedin.com/in/holsenbeck)<br>`r fontawesome::fa("globe", fill = "#f0f042")`&nbsp;[themindful.life](http://www.themindful.life)'
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["xaringan-themer.css", "custom.css"]
+    lib_dir: libs
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      titleSlideClass: ['left', 'middle']
+    includes:
+      after_body: ["insert-logo.html", "use-fontawesome.html"]
+---
+
+<style>
+.hljs-github .hljs {
+color: #333;
+background: #f8f8f8
+}
+</style>
+
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+```{r libraries, include=FALSE}
+# devtools::install_github("ropenscilabs/icon")
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(R6)
+  library(glue)
+  library(xaringanthemer)
+  library(tidyverse)
+  library(glue)
+  library(rlang)
+  library(emo)
+  requireNamespace("pkgsearch")
+  requireNamespace("testthat")
+})
+```
+
+```{r xaringan-themer, include = FALSE}
+r_icon <- fontawesome::fa("r-project")
+
+style_duo_accent_inverse(
+  primary_color = "#f0f042",
+  title_slide_text_color = "#f0f042",
+  secondary_color = "#eb9641",
+  header_font_google = google_font("PT Sans"),
+  text_font_google   = google_font("Varela Round", "300", "300i"),
+  base_font_size     = "18px",
+  code_font_google   = google_font("Fira Code"),
+  title_slide_background_image = "images/r6logo.png"
+)
+```
+
+# R6
+<div class="show-logo"></div>
+
+<div class='container'>
+```{r package_details, results='asis', echo=FALSE}
+info <- library(help = "R6")$info
+cat(paste0(
+  info[[1]] %>% 
+    stringr::str_replace_all("^([^:]*):", "<b>\\1</b>:"),
+  collapse = "<br>"))
+
+```
+</div>
+
+---
+# R6 in the wild
+
+#### How many?
+```{r 'how_many'}
+purrr::map_dbl(c("Depends", "Imports", "Suggests"), ~attr(do.call(pkgsearch::advanced_search, rlang::list2(!!.x := "R6")), "metadata")$total) %>%
+  sum() %>% 
+  glue(" packages on CRAN utilize `R6`.")
+```
+---
+#### Notable R6 Packages:
+```{r 'notable_r6', results='asis'}
+r6_pkgs <- purrr::map(c("callr", "processx", "plumber", "promises", "websocket", "keras", "roxygen2", "QuantTools", "testthat"), ~pkgsearch::advanced_search(Package = .x))
+
+htmltools::tags$ol(do.call(htmltools::tagList, purrr::map(r6_pkgs, ~htmltools::tags$li(htmltools::tags$p(glue::glue("{htmltools::tags$code(.x$package)}: {.x$title}"))))))
+```
+---
+## 14.1 [Introduction](https://adv-r.hadley.nz/r6.html#introduction-13)
+Two special properties:
+
+ - R6 uses the encapsulated OOP paradigm, which means that methods belong to objects, not generics, and you call them like `object$method()`.
+
+ - R6 objects are mutable, which means that they are modified in place, and hence have reference semantics.
+
+---
+### [Outline](https://adv-r.hadley.nz/r6.html#outline-12)
+
+ - 14.2 introduces `R6::R6Class()`, the one function that you need to know to create R6 classes. 
+
+ - 14.3 discusses the access mechanisms of R6: private and active fields.
+
+ - 14.4 explores the consequences of R6’s reference semantics.
+
+ - 14.5 describes why Hadley covers R6, rather than the base RC system.
+
+---
+## 14.2 [Classes & Methods](https://adv-r.hadley.nz/r6.html#r6-classes)
+ - `classname` argument with `UpperCamelCase` convention.
+ - `public` argument supplies a list of methods (functions) and fields (anything else) that make up the public interface of the object.
+```{r inside_r6}
+callr::r_process
+```
+**Always assign the result of `R6Class()` into a variable with the same name as the class**
+
+---
+- Construct a new object from the class by calling `new()`
+```{r 'new'}
+px <- callr::r_process$new(
+  callr::r_process_options(
+    func = rlang::as_function(~ {
+      purrr::reduce(1:10, ~{
+        Sys.sleep(.1)
+        .x * .y
+        }, .init = 1)
+    })
+  )
+)
+```
+- call methods and access fields with `$`
+```{r 'poll'}
+purrr::walk(vector(length = 2), ~{
+  Sys.sleep(1.2)
+  print(px$is_alive())
+}) 
+px$get_result()
+```
+---
+
+### 14.2.1 [Method Chaining](https://adv-r.hadley.nz/r6.html#method-chaining)
+ - Commonly used in languages like Python and JavaScript
+ - Method chaining is deeply related to the pipe
+```{r method_chaining}
+Accumulator <- R6::R6Class("Accumulator", list(
+  sum = 0,
+  add = function(x = 1) {
+    self$sum <- self$sum + x 
+    invisible(self)
+  })
+)
+a <- Accumulator$new()
+a$
+  add(4)$
+  add(4)$
+  sum
+
+```
+ 
+---
+### 14.2.2 [Important Methods](https://adv-r.hadley.nz/r6.html#r6-important-methods)
+ - `$initialize()`: overrides the default behaviour of `$new()`
+  - add checks for input arguments
+  - if more expensive validation is required, use `$validate` separately.
+ - `$print()`: allows you to override the default printing behaviour.
+  - `$print()` should return `invisible(self)`.
+ - methods are bound to individual objects IE previously created objects do not get new methods 
+```{r 'sample'}
+Person <- R6Class("Person", list(
+  name = NULL,
+  age = NA,
+  initialize = function(name, age = NA) {
+    self$name <- name
+    self$age <- age
+  },
+  print = function(...) {
+    cat("Person: \n")
+    cat("  Name: ", self$name, "\n", sep = "")
+    cat("  Age:  ", self$age, "\n", sep = "")
+    invisible(self)
+  }
+))
+```
+---
+### 14.2.3 [Adding methods after creation](https://adv-r.hadley.nz/r6.html#adding-methods-after-creation)
+ - `$set()`: Add new elements to an existing class    
+```{r 'add_methods'}
+Accumulator <- R6Class("Accumulator")
+Accumulator$set("public", "sum", 0)
+Accumulator$set("public", "add", function(x = 1) {
+  self$sum <- self$sum + x 
+  invisible(self)
+})
+```
+---
+### 14.2.4 [Inheritance](https://adv-r.hadley.nz/r6.html#inheritance)
+- `inherit` argument takes an R6 class object to inherit from
+```{r 'chatty'}
+AccumulatorChatty <- R6Class("AccumulatorChatty", 
+  inherit = Accumulator,
+  public = list(
+    add = function(x = 1) {
+      cat("Adding ", x, "\n", sep = "")
+      super$add(x = x)
+    }
+  )
+)
+
+x2 <- AccumulatorChatty$new()
+x2$add(10)$add(1)$sum
+```
+ - `$add()` overrides the superclass implementation, but we can still delegate to the superclass implementation by using `super$`. (This is analogous to NextMethod() in S3)
+ 
+---
+### 14.2.5 [Introspection](https://adv-r.hadley.nz/r6.html#introspection)
+```{r 'all methods'}
+names(px)
+```
+
+---
+## 14.3 [Controlling Access](https://adv-r.hadley.nz/r6.html#r6-access)
+### 14.3.1 [Privacy](https://adv-r.hadley.nz/r6.html#privacy)
+`R6Class` has two other arguments that work similarly to public:
+
+ - `private`: a list of methods & fields that are only available from within the class, not outside of it.
+   - Fields and methods defined in private are available within the methods using private$ instead of self$. You cannot access private fields or methods outside of the class.
+ - `active`: allows you to use accessor functions to define dynamic, or active, fields.
+
+---
+Private fields cannot be accessed from outside of the class:
+```{r private_fields}
+Person <- R6Class("Person", 
+  public = list(
+    initialize = function(name, age = NA) {
+      private$name <- name
+      private$age <- age
+    },
+    print = function(...) {
+      cat("Person: \n")
+      cat("  Name: ", private$name, "\n", sep = "")
+      cat("  Age:  ", private$age, "\n", sep = "")
+    }
+  ),
+  private = list(
+    age = NA,
+    name = NULL
+  )
+)
+
+hadley3 <- Person$new("Hadley")
+hadley3
+hadley3$name
+```
+---
+### 14.3.2 [Active Fields](https://adv-r.hadley.nz/r6.html#active-fields)
+Active fields are implemented using active bindings (Section 7.2.6). Each active binding is a function that takes a single argument: `value`
+```{r active_fields}
+Rando <- R6::R6Class("Rando",
+  private = list(
+    .random = 1
+  ),
+  public = list(
+    initialize = function(init = 1) {
+      private$.random <- init
+    }
+  ),
+  active = list(
+    random = function(value) {
+      if (missing(value)) {
+        private$.random <- runif(1)
+      } else {
+        stop("`$random` is read-only", call. = FALSE)
+      }
+    }
+  )
+)
+```
+---
+```{r 'active_fields_example', error = TRUE}
+x <- Rando$new()
+x$random
+x$random <- 4
+x$random(4)
+```
+
+---
+## 14.4 [Reference Semantics](https://adv-r.hadley.nz/r6.html#r6-semantics)
+ - objects are not copied when modified
+ - if you want a copy, you’ll need to explicitly `$clone()` the object
+  - $clone() does not recursively clone nested R6 objects. If you want that, you’ll need to use $clone(deep = TRUE)
+ - It is harder to reason about code that uses R6 objects because you need to understand more context.
+ - It makes sense to think about when an R6 object is deleted, and you can write a `$finalize()` to complement the `$initialize()`.
+ - If one of the fields is an R6 object, you must create it inside `$initialize()`, not `R6Class()`.
+ 
+---
+### 14.4.1 [Reasoning](https://adv-r.hadley.nz/r6.html#reasoning)
+
+`f()` calls methods of `x` or `y`, it might modify them as well as `z`
+```{r, eval = F}
+x <- List$new(a = 1)
+y <- List$new(b = 2)
+
+z <- f(x, y)
+```
+ - write functions that either return a value, or modify their R6 inputs, but not both 
+ 
+---
+### 14.4.2 [Finalizer](https://adv-r.hadley.nz/r6.html#finalizer)
+Think of `$finalize()` as a complement to `$initialize()`. Finalizers usually play a similar role to `on.exit()`
+
+```{r temporary_file}
+TemporaryFile <- R6Class("TemporaryFile", list(
+  path = NULL,
+  initialize = function() {
+    self$path <- tempfile()
+  },
+  finalize = function() {
+    message("Cleaning up ", self$path)
+    unlink(self$path)
+  }
+))
+tf <- TemporaryFile$new()
+rm(tf)
+```
+
+---
+### 14.4.3 [R6 fields](https://adv-r.hadley.nz/r6.html#r6-fields)
+If you use an R6 class as the default value of a field, it will be shared across all instances of the object! Take the following code: we want to create a temporary database every time we call `TemporaryDatabase$new()`, but the current code always uses the same path.
+
+
+```{r r6_fields}
+TemporaryDatabase <- R6Class("TemporaryDatabase", list(
+  con = NULL,
+  file = TemporaryFile$new(),
+  initialize = function() {
+    self$con <- DBI::dbConnect(RSQLite::SQLite(), path = file$path)
+  },
+  finalize = function() {
+    DBI::dbDisconnect(self$con)
+  }
+))
+
+db_a <- TemporaryDatabase$new()
+db_b <- TemporaryDatabase$new()
+
+db_a$file$path == db_b$file$path
+```
+---
+To fix the problem, we need to make sure it’s called every time that `TemporaryDatabase$new()` is called, i.e. we need to put it in `$initialize()`
+```{r r6_fields_cont, eval = F}
+TemporaryDatabase <- R6Class("TemporaryDatabase", list(
+  con = NULL,
+  file = NULL,
+  initialize = function() {
+    self$file <- TemporaryFile$new()
+    self$con <- DBI::dbConnect(RSQLite::SQLite(), path = file$path)
+  },
+  finalize = function() {
+    DBI::dbDisconnect(self$con)
+  }
+))
+```
+ 
+---
+## In use
+
+Discussion
+
+
+
