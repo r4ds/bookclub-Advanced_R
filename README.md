@@ -84,7 +84,29 @@ This repo contains 3 main folders:
 
 </details>
 
+
 <hr>
+
+*Cohort 5 [Europe/Africa]: (started 2021-03-16) Tuesdays, 18:30 CET (CEST)*
+
+- 2021-03-23 Chapter 02: Names and Values - Hoda Mazaheri
+- 2021-03-30 Chapter 03: Vectors  -  Layla Bouzoubaa
+- 2021-04-06 Chapter 04: Subsetting - kayteeflick
+- 2021-04-13 Chapter 05: Control flow - Jiwan Heo
+- 2021-04-20 Chapter 06: Functions - Brett Longworth 
+- 2021-04-27 Chapter 07: Enviroments - Adrian Fletcher 
+- 2021-05-04 Chapter 08:  Conditions - 
+
+
+<details>
+  <summary> Future Meetings </summary>
+
+- 2021-01-26 Chapter 09: Functionals
+
+</details>
+
+<hr>
+
 
 ### Presentations & Recordings
 
@@ -94,6 +116,7 @@ Chapter 1 - Introduction
 - Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) ([slides](https://docs.google.com/presentation/d/1oKhqSY6L6yI3yMwB4JB1eduLqu6UWPZ7Y1v32FK042I/edit?usp=sharing) | [video](https://www.youtube.com/watch?v=PCG52lU_YlA&t))
 - Cohort 3: [Novica Nakov](https://twitter.com/novicanakov) ([video](https://www.youtube.com/watch?v=f6PuOnuZWBc))
 - Cohort 4: Emily Wissel (SLIDES | [video](https://youtu.be/qDaJvX-Mpls))
+- Cohort 5: [Shamsuddeen Muhammad](https://twitter.com/Shmuhammadd) ([slides](https://shmuhammad2004.github.io/Introduction_AdvR_bookclub/book-discussion-format.html)|[video](https://www.youtube.com/watch?v=BvmiQlWOP5o))
 
 Chapter 2 - Names and values
 
