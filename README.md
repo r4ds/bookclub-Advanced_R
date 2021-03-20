@@ -189,6 +189,7 @@ Chapter 15 - S4
 
 - Cohort 1: Pavitra Chakravarty ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week14/Cohort1/Chapter15.html#1) | [video](https://www.youtube.com/watch?v=a1jzpWiksyA&feature=youtu.be))
 - Cohort 2: [Erick Knackstedt](https://twitter.com/Eknackstedt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week14/Cohort2/Chapter15Slides.html#1) | [video](https://youtu.be/bzo37PHCM1I))
+- Cohort 3: (part1) Anne Hoffrichter ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week15/Cohort3/part1/Chapter15_S4_part1.html) | [video](https://www.youtube.com/watch?v=WWnJ5Cl-aTE&list=PL3x6DOfs2NGhUCEVefMkCEiJKE_C-gwV5&index=18))
 
 Chapter 16 - Tradeoffs/OOP Wrapup
 
@@ -209,6 +210,7 @@ Chapter 19 - Quasiquotation
 
 - Cohort 1: [Jon Harmon](https://twitter.com/jonthegeek) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week18/Cohort1/Chapter19.html#1) | [video](https://youtu.be/tbByqsRRvdE))
 - Cohort 2: Chris Yarrison (SLIDES | [video](https://youtu.be/IXE21pR8EJ0))
+- Cohort 3: Anne Hoffrichter ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week19/Cohort3/Chapter19_Quasiquotation.html) | [video]())
 
 Chapter 20 - Evaluation
 
