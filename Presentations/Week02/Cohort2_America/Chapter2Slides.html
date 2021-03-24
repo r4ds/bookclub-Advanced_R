@@ -4,7 +4,7 @@
     <title>Advanced R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Josh Pohlkamp-Hartt" />
-    <meta name="date" content="2020-08-05" />
+    <meta name="date" content="2021-02-06" />
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="custom.css" type="text/css" />
   </head>
@@ -16,7 +16,7 @@ class: center, middle, inverse, title-slide
 ## Chapter 2: Names and Values
 ### Josh Pohlkamp-Hartt
 ### <span class="citation">@JPohlkampHartt</span>
-### 2020-08-05
+### 2021-02-06
 
 ---
 
@@ -93,7 +93,7 @@ obj_addr(x)
 ```
 
 ```
-## [1] "0x7f8d67b643f8"
+## [1] "0x7fa0c0336e28"
 ```
 
 ```r
@@ -101,7 +101,7 @@ obj_addr(y)
 ```
 
 ```
-## [1] "0x7f8d67b643f8"
+## [1] "0x7fa0c0336e28"
 ```
 ]
 .pull-right[
@@ -143,7 +143,7 @@ obj_addr(x)
 ```
 
 ```
-## [1] "0x7f8d67b643f8"
+## [1] "0x7fa0c0336e28"
 ```
 
 ```r
@@ -151,7 +151,7 @@ obj_addr(y)
 ```
 
 ```
-## [1] "0x7f8d6e054b48"
+## [1] "0x7fa0c41eca08"
 ```
 ]
 .pull-right[
@@ -169,7 +169,7 @@ cat(tracemem(x), "\n")
 ```
 
 ```
-## &lt;0x7f8d67b92b48&gt;
+## &lt;0x7fa0be68bcd8&gt;
 ```
 
 
@@ -179,7 +179,7 @@ y[[3]] &lt;- 4L
 ```
 
 ```
-## tracemem[0x7f8d67b92b48 -&gt; 0x7f8d67426f38]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt;
+## tracemem[0x7fa0be68bcd8 -&gt; 0x7fa0bd53a8e8]: eval eval withVisible withCallingHandlers handle timing_fn evaluate_call &lt;Anonymous&gt; evaluate in_dir block_exec call_block process_group.block process_group withCallingHandlers process_file &lt;Anonymous&gt; &lt;Anonymous&gt;
 ```
 
 If we modify `y` again, we will not make another copy. That’s because the new object now only has a single name bound to it, `y`, so R applies modify-in-place optimisation.
@@ -241,15 +241,15 @@ ref(l1, l2)
 ```
 
 ```
-## █ [1:0x7f8d6e7bb4f8] &lt;list&gt; 
-## ├─[2:0x7f8d6e764c10] &lt;dbl&gt; 
-## ├─[3:0x7f8d6e764bd8] &lt;dbl&gt; 
-## └─[4:0x7f8d6e764ba0] &lt;dbl&gt; 
+## █ [1:0x7fa0bd6a38a8] &lt;list&gt; 
+## ├─[2:0x7fa0bd669fc0] &lt;dbl&gt; 
+## ├─[3:0x7fa0bd669f88] &lt;dbl&gt; 
+## └─[4:0x7fa0bd669f50] &lt;dbl&gt; 
 ##  
-## █ [5:0x7f8d6eaa9138] &lt;list&gt; 
-## ├─[2:0x7f8d6e764c10] 
-## ├─[3:0x7f8d6e764bd8] 
-## └─[6:0x7f8d6ea697e0] &lt;dbl&gt;
+## █ [5:0x7fa0bd7f4ac8] &lt;list&gt; 
+## ├─[2:0x7fa0bd669fc0] 
+## ├─[3:0x7fa0bd669f88] 
+## └─[6:0x7fa0bd785bd0] &lt;dbl&gt;
 ```
 
 
@@ -319,11 +319,11 @@ ref(x, character = T)
 ```
 
 ```
-## █ [1:0x7f8d6e6540f8] &lt;chr&gt; 
-## ├─[2:0x7f8d661b2970] &lt;string: "a"&gt; 
-## ├─[2:0x7f8d661b2970] 
-## ├─[3:0x7f8d6e520a18] &lt;string: "abc"&gt; 
-## └─[4:0x7f8d66402e10] &lt;string: "d"&gt;
+## █ [1:0x7fa0bd6a3ad8] &lt;chr&gt; 
+## ├─[2:0x7fa0bcac6130] &lt;string: "a"&gt; 
+## ├─[2:0x7fa0bcac6130] 
+## ├─[3:0x7fa0bd459d58] &lt;string: "abc"&gt; 
+## └─[4:0x7fa0bf1ab2e8] &lt;string: "d"&gt;
 ```
 
 This has implications for how much memory a character vector uses. To find out, we use `lobstr::obj_size()`.

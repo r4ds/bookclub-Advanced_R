@@ -1,0 +1,1107 @@
+---
+title: "Advanced R Ch. 6 - Functions"
+subtitle: "Cohort 4"
+author: "<br><br>June Choe<br><br>@yjunechoe"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    includes:
+      after_body: insert-logo.html
+---
+
+class: inverse, middle, center
+
+# 6.2 Function Fundamentals
+
+```{r xaringan-themer, include = FALSE}
+library(xaringanthemer)
+style_mono_light(
+  base_color = "#053F61",
+  header_font_google = google_font("Josefin Sans"),
+  text_font_google   = google_font("Montserrat", "300", "300i"),
+  code_font_google   = google_font("Droid Mono"),
+)
+```
+
+```{css, echo = FALSE}
+a {
+  text-decoration: underline;
+}
+```
+
+---
+
+# Function Fundamentals
+
+- Functions can be broken down into three components:
+
+    - **arguments**
+    - **body**
+    - **environment**
+
+- Functions are objects
+
+```{r}
+miles_to_km <- function(miles) {
+  # A mile is approx. ~1.61 kilometers
+  miles * 1.61
+}
+```
+
+```{r}
+miles_to_km
+```
+
+---
+
+# Function Components (formals)
+
+**Formals** are the _list of arguments_ that the function takes
+
+```{r}
+formals(miles_to_km)
+```
+
+```{r}
+str(formals(miles_to_km))
+```
+
+---
+
+# Function Components (body)
+
+**Body** is the _code_ inside the function
+
+```{r}
+body(miles_to_km)
+```
+
+---
+
+# Function Components (environment)
+
+**Environment** is the data structure that tells the function how/where to look for the _values_ associated with _names_
+
+```{r}
+environment(miles_to_km)
+```
+
+---
+
+# Function Components (comments?)
+
+Stored in the attribute `srcref` ("source reference")
+
+```{r}
+attr(miles_to_km, "srcref")
+```
+
+What about functions from installed packages?
+
+`scales:::precision` from [github](https://github.com/r-lib/scales/blob/master/R/label-number.r)
+
+```{r, echo = FALSE, out.width="500px"}
+knitr::include_graphics("scales-precision.png", error = FALSE)
+```
+
+---
+
+# Function Components (comments?)
+
+```{r}
+body(scales:::precision)
+```
+
+
+```{r}
+attr(scales:::precision, "srcref")
+```
+
+---
+
+# Primitive functions
+
+- Calls C code directly
+
+- Are only found in the {base} package
+
+- Of either `builtin` or `special`
+
+```{r}
+base_funs <- ls("package:base")
+base_funs[1:12]
+```
+
+```{r, warning = FALSE}
+base_fun_types <- purrr::map_chr(base_funs,
+  function(x){
+    fun <- rlang::enquo(x)
+    fun <- paste0("`", fun, "`")
+    typeof(eval(parse(text = fun)))
+  }
+)
+```
+
+---
+
+```{r}
+base_funs[base_fun_types == "builtin"][1:100] # Total 147
+```
+
+---
+
+```{r}
+base_funs[base_fun_types == "special"]
+```
+
+---
+
+Primitive functions exist in C, so the function components are all `NULL`
+
+**builtin**
+
+```{r}
+c
+typeof(c)
+formals(c)
+body(c)
+environment(c)
+```
+
+---
+
+Primitive functions exist in C, so the function components are all `NULL`
+
+**special**
+
+```{r}
+rep
+typeof(rep)
+formals(rep)
+body(rep)
+environment(rep)
+```
+
+---
+
+# First-Class Functions
+
+Functions are objects = can bind to a name w/ the assignment operator `<-`
+
+```{r}
+add1 <- function(x) {x + 1}
+```
+
+Don't need to though = **anonymous functions**
+
+```{r}
+lapply(1:2, function(x) {x + 1})
+purrr::map_dbl(1:2, function(x) {x + 1})
+purrr::map_dbl(1:2, ~ .x + 1)
+```
+
+---
+
+# First-Class Functions (aside...)
+
+```{r}
+purrr::as_mapper(~ .x + 1)
+```
+
+```{r}
+add1_v2 <- purrr::as_mapper(~ .x + 1)
+add1_v2(1:2)
+```
+
+Still anonymous:
+
+```{r}
+purrr::as_mapper(~ .x + 1)(1:2)
+```
+
+---
+
+# Invoking a function
+
+If arguments are stored in a list, can use `do.call` to call a function with those arguments
+
+```{r}
+(args <- list(1:10, na.rm = TRUE))
+```
+
+```{r}
+do.call("mean", args)
+```
+
+Function can also be unquoted:
+
+```{r}
+do.call(mean, args)
+```
+
+---
+
+# Invoking a function (aside...)
+
+```{r}
+formals(mean)
+```
+
+But first element of `args` wasn't **named** `x`?? Did `do.call` match `1:10` by index?
+
+- Flip order:
+
+```{r}
+do.call("mean", list(na.rm = TRUE, 1:10))
+```
+
+- Add more unnamed elements ("arguments"):
+
+```{r, error = TRUE}
+do.call("mean", list(1:10, na.rm = TRUE, 11:20))
+```
+
+
+
+
+---
+
+class: middle, center
+
+# [6.2.5 Exercises](https://adv-r.hadley.nz/functions.html#exercises-14)
+
+
+
+
+
+---
+
+class: inverse, middle, center
+
+# 6.3 Function Composition
+
+---
+
+# Base R
+
+Two ways to compose function calls in base R:
+
+- Nest function calls
+
+```{r}
+sqrt(mean(1:100))
+```
+
+- Save & pass along intermediate variables
+
+```{r}
+out <- mean(1:100)
+out <- sqrt(out)
+out
+```
+
+---
+
+# Pipes!
+
+```{r}
+library(magrittr)
+```
+
+Allows you to focus on what's being **done** (the functions/"_verbs_"), as opposed to what's being **modified** (the objects/"_nouns_")
+
+```{r}
+1:100 %>% 
+  mean() %>% 
+  sqrt()
+```
+
+Mind the [style guide](https://style.tidyverse.org/pipes.html#no-arguments)!
+
+
+
+---
+
+class: inverse, middle, center
+
+# 6.4 Lexical Scoping
+
+---
+
+# Lexical Scoping
+
+**Lexical scoping**: look up the values of names based on how a function is **defined**, not how it is **called**
+
+```{r}
+x <- 10
+g01 <- function() {
+  x <- 20
+  x
+}
+g01()
+```
+
+Follows four primary rules in R:
+
+1. Name masking
+2. Functions vs. variables
+3. A fresh start
+4. Dynamic lookup
+
+---
+
+# 1. Name masking
+
+Names defined _inside_ a function **masks** names defined _outside_ the function.
+
+If name isn't defined inside a function, R looks one level ("environment") up:
+
+```{r}
+x <- 2
+g03 <- function() {
+  y <- 1 #< Not assigned in global environment
+  c(x, y)
+}
+g03()
+```
+
+---
+
+# 1. Name masking
+
+What does this return?
+
+```{r 6-4-2, eval = FALSE}
+x <- 1
+g04 <- function() {
+  y <- 2
+  i <- function() {
+    z <- 3
+    c(x, y, z)
+  }
+  i()
+}
+g04()
+```
+
+--
+
+```{r 6-4-2, echo = FALSE}
+```
+
+
+---
+
+# 2. Functions vs. variables
+
+Since functions are objects, scoping rules also apply to functions
+
+```{r}
+g07 <- function(x) x + 1       # defined once outside
+g08 <- function() {
+  g07 <- function(x) x + 100   # defined again inside
+  g07(10)
+}
+g08()
+```
+
+---
+
+# 2. Functions vs. variables
+
+When function and a non-function share the same name and the name is called as a function, R **ignores the non-function**.
+
+```{r}
+g09 <- function(x) x + 100  # defined as function outside
+g10 <- function() {
+  g09 <- 10                 # defined as non-function inside
+  g09(g09)
+}
+g10()
+```
+
+---
+
+# 3. A fresh start
+
+Every time a function is called, a **new environment** is created to host its execution
+
+```{r}
+g11 <- function() {
+  if (!exists("a")) {
+    a <- 1
+  } else {
+    a <- a + 1
+  }
+  a
+}
+g11()
+```
+
+```{r}
+exists("a")
+```
+
+```{r}
+g11()
+```
+
+
+---
+
+# 4. Dynamic lookup
+
+Output of function can depend on objects outside the function environment:
+
+```{r}
+g12 <- function() x + 1
+x <- 15
+g12()
+```
+
+```{r}
+x <- 20
+g12()
+```
+
+
+---
+
+# 4. Dynamic lookup
+
+To prevent R from looking for names outside the function environment, can set function environment to `emptyenv()`
+
+```{r, error = TRUE}
+environment(g12)
+environment(g12) <- emptyenv()
+environment(g12)
+g12()
+```
+
+--
+
+Oof now it can't even find `+` 
+
+~ "R relies on lexical scoping to find _everything_"
+
+
+
+
+---
+
+class: middle, center
+
+# [6.4.5 Exercises](https://adv-r.hadley.nz/functions.html#exercises-15)
+
+
+
+
+---
+
+class: inverse, middle, center
+
+# 6.5 Lazy Evaluation
+
+
+---
+
+# Lazy Evaluation
+
+In R, function arguments are only evaluated **if accessed**
+
+"Lazy" because not evaluated unless needed
+
+```{r}
+h01 <- function(x) {
+  10
+}
+
+h01(stop("This is an error!"))
+```
+
+How does it work? **promises**
+
+---
+
+# Promises (a.k.a. "thunk")
+
+A promise is a **data structure** that powers lazy eval
+
+Has three components:
+
+- An **expression** that gives rise to delayed computation
+
+- An **environment** where the expression should be evaluated
+
+- A **value** that is evaluated at most **ONCE** in the specified environment
+
+--
+
+```{r}
+double <- function(x) { 
+  message("Calculating...")
+  x * 2
+}
+h03 <- function(x) {
+  c(x, x)
+}
+
+h03(double(20))
+```
+
+---
+
+# Default arguments
+
+`x * 2` and `a + b` in the formals not evaluated until `c(x, y, z)` is encountered, at which point all names involved have been defined.
+
+```{r}
+h04 <- function(x = 1, y = x * 2, z = a + b) {
+  a <- 10
+  b <- 100
+  c(x, y, z)
+}
+h04()
+```
+
+--
+
+```{r, error = TRUE}
+h04_v2<- function(x = 1, y = x * 2, z = a + b) {
+  a <- 10
+  result <- c(x, y, z)
+  b <- 100 # `b` assignment moved
+  result
+}
+h04_v2()
+```
+
+---
+
+# Default arguments
+
+As we saw, _default_ arguments are evaluated **inside the function**
+
+While _user-supplied_ arguments are evaluated in the global environment*
+
+```{r}
+h05 <- function(x = ls()) {
+  a <- 1
+  x
+}
+```
+
+```{r}
+h05() # ls() evaluated inside h05
+```
+
+```{r, eval = FALSE}
+h05(ls()) # ls() evaluated in global environment
+```
+
+```{r, echo = FALSE}
+"h05"
+```
+
+
+---
+
+# Missing arguments
+
+Use `missing` to determine if an argument's value is **user-supplied**
+
+```{r}
+h06 <- function(x = 10) {
+  list(missing(x), x)
+}
+```
+
+--
+
+```{r}
+str(h06()) # `x` not user-supplied
+```
+
+--
+
+```{r}
+str(h06(10)) # `x` is user-supplied
+```
+
+--
+
+**NOTE**: It's not that the _value_ of x is missing. Use `exists()` to test that instead
+
+---
+
+# Missing arguments
+
+Using `missing()` not encouraged (why?? idk tbh)
+
+--
+
+Checking for missing arguments should be handled using `NULL`
+
+```{r}
+sample_hadley <- function(x, size = NULL, replace = FALSE, prob = NULL) {
+  if (is.null(size)) {
+    size <- length(x)
+  }
+  x[sample.int(length(x), size, replace = replace, prob = prob)]
+}
+```
+
+--
+
+Again, something like this also works (see: 6.5.2), but is discouraged
+
+```{r}
+sample_me <- function(x, size = length(x), replace = FALSE, prob = NULL) {
+  x[sample.int(length(x), size, replace = replace, prob = prob)]
+}
+```
+
+
+
+
+---
+
+class: middle, center
+
+# [6.5.4 Exercises](https://adv-r.hadley.nz/functions.html#exercises-16)
+
+
+
+
+---
+
+class: inverse, middle, center
+
+# 6.6 ... dot-dot-dot
+
+
+---
+
+# `...` dot-dot-dot
+
+Allows functions to take any number of additional arguments
+
+Can be passed on to another function
+
+--
+
+Wrapping `...` in a list evaluates the args and stores them
+
+```{r}
+i04 <- function(...) {
+  list(...)
+}
+str(i04(a = 1, b = 2))
+```
+
+---
+
+# `...` dot-dot-dot
+
+Two primary uses of `...`:
+
+- Passing additional arguments to a function that is also passed as a function
+
+```{r}
+x <- list(c(1, 3, NA), c(4, NA, 6))
+str(lapply(x, mean, na.rm = TRUE)) # map(x, mean, na.rm = TRUE)
+```
+
+--
+
+```{r}
+str(lapply(x, function(x) {mean(x, na.rm = TRUE)})) # same
+```
+
+--
+
+- Something with S3 generics, but I'm going to ignore it for now `r emo::ji("smile")`
+
+---
+
+# Use cases of `...`?
+
+- `do.call` (similar to `lapply` example):
+
+```{r, eval = FALSE}
+run_simulations <- function(model, ...) {
+  params <- list(....)
+  do.call(model, params)
+}
+```
+
+Note this doesn't work (guess who got stuck here?):
+
+```{r, eval = FALSE}
+run_simulations <- function(model, ...) {
+  do.call(model, ...)
+}
+```
+
+- `{ggplot2}` [multiple components example](https://ggplot2-book.org/programming.html#additional-arguments)
+
+--
+
+- Anything else ??
+
+
+
+
+
+
+---
+
+class: middle, center
+
+# [6.6.1 Exercises](https://adv-r.hadley.nz/functions.html#exercises-17)
+
+
+
+
+---
+
+class: inverse, middle, center
+
+# 6.7 Exiting a function
+
+---
+
+# Implicit vs explicit returns
+
+Two ways for a function to return a value:
+
+```{r}
+implicit <- function() {
+  1
+}
+explicit <- function() {
+  return(1)
+}
+```
+
+```{r}
+implicit()
+```
+
+```{r}
+explicit()
+```
+
+--
+
+Check [style guide](https://style.tidyverse.org/functions.html#return) - placement of `return` can affect control flow and [piping](https://magrittr.tidyverse.org/news/index.html#behaviour-of-return-in-a-pipeline)
+
+---
+
+# Invisible values
+
+Calling a function automatically prints returned value in interactive context
+
+```{r}
+j03 <- function() 1
+j03()
+```
+
+--
+
+Can suppress automatic printing by applying `invisible()` to **last value**
+
+```{r}
+j04 <- function() invisible(1)
+j04()
+```
+
+--
+
+You can then explicitly print using `print()`, `()`, and `withVisible()`
+
+```{r}
+withVisible(j04())
+```
+
+---
+
+# Errors
+
+- Indicates that something has gone wrong
+
+- Forces the user to deal with the problem
+
+A function can throw an error with `stop()`
+
+```{r, error = TRUE}
+j05 <- function() {
+  stop("I'm an error")
+  return(10)
+}
+j05()
+```
+
+`stop()` doesn't need a message but should probably have one
+
+```{r, error = TRUE}
+j05 <- function() {
+  stop()
+  return(10)
+}
+j05()
+```
+
+---
+
+# Exit handlers
+
+Sometimes a function can make changes to the global environment
+
+- Though it doesn't really happen much in **functional programming**
+
+```{r, warning = FALSE}
+getOption("stringsAsFactors")
+side_effect_fun <- function() {
+  options(stringsAsFactors = TRUE) # Ha!
+  print(getOption("stringsAsFactors"))
+}
+side_effect_fun()
+getOption("stringsAsFactors")
+```
+
+You need **exit handlers** to undo these changes if they're meant to be temp
+
+---
+
+# Exit handlers
+
+```{r}
+options(stringsAsFactors = FALSE)
+side_effect_fun_v2 <- function() {
+  options(stringsAsFactors = TRUE)
+  print(getOption("stringsAsFactors"))
+  on.exit(options(stringsAsFactors = FALSE), add = TRUE) #<
+}
+side_effect_fun_v2()
+getOption("stringsAsFactors")
+```
+
+---
+
+# Exit handlers
+
+What's the `add` argument inside `on.exit()` ???
+
+- If you have multiple exit handlers, setting `add=TRUE` combines them
+
+- Good practice to **always set to TRUE**
+
+```{r}
+j08 <- function() {
+  on.exit(message("a"), add = TRUE)
+  on.exit(message("b"), add = TRUE)
+}
+j08()
+```
+
+```{r}
+j08_v2 <- function() {
+  on.exit(message("a"))
+  on.exit(message("b"))
+}
+j08_v2()
+```
+
+
+---
+
+class: middle, center
+
+# [6.7.5 Exercises](https://adv-r.hadley.nz/functions.html#exercises-18)
+
+
+
+
+---
+
+class: inverse, middle, center
+
+# 6.8 Function forms
+
+
+---
+
+# Function forms
+
+Four ways of calling a function
+
+- **prefix** functions _precede_ arguments
+
+- **infix** functions come _between_ arguments
+
+- **replacement** functions _replace_ values by assignment
+
+- **special** functions - e.g., `[[`.`if`, `for`
+
+---
+
+# Re-writing to prefix form
+
+All functions in R can be re-written in **prefix** form!
+
+- infix:
+
+```{r, eval = FALSE}
+x + y
+`+`(x, y)
+```
+
+- replacement:
+
+```{r, eval = FALSE}
+names(df) <- c("x", "y", "z")
+`names<-`(df, c("x", "y", "z"))
+```
+
+- special:
+
+```{r, eval = FALSE}
+for(i in 1:10) print(i)
+`for`(i, 1:10, print(i))
+```
+
+---
+
+# Prefix form
+
+Three ways to specify arguments
+
+- Position: `help(mean)`
+
+- Name: `help(topic = mean)`
+
+- Partial matching(!): `help(top = mean)`
+
+--
+
+Why partial matching? `r emo::ji("thinking")`
+
+Perhaps because formals are lists, and lists can be accessed with partial matching??
+
+```{r}
+help_args <- list(topic = "mean")
+help_args$top
+```
+
+---
+
+# Infix functions
+
+User-defined ones must begin and end with `%`
+
+```{r}
+`%+%` <- function(a, b) paste0(a, b)
+"new " %+% "string"
+```
+
+--
+
+Order matters
+
+```{r}
+`%++%` <- function(a, b) paste0(b, a)
+"new " %++% "string"
+```
+
+--
+
+You _can_ define multi-argument infixes, but impossible to use in infix form(?)
+
+```{r}
+`%+++%` <- function(a, b, c) sum(a, b, c)
+`%+++%`(1, 2, 3)
+```
+
+
+---
+
+# Replacement functions
+
+Must end with `<-` in the name
+
+```{r}
+`second<-` <- function(x, value) {
+  x[2] <- value
+  x
+}
+```
+
+This "replacement" still follows **copy-on-modify**
+
+```{r, message = FALSE}
+x <- 1:10
+tracemem(x)
+second(x) <- 6L
+```
+
+---
+
+# Replacement functions
+
+Additional arguments must be added to LHS
+
+```{r}
+`modify<-` <- function(x, position, value) {
+  x[position] <- value
+  x
+}
+modify(x, 1) <- 10
+x
+```
+
+---
+
+# Special forms
+
+Not super interesting?
+
+If you want to refer to it in any other context, need back ticks
+
+```{r, eval = FALSE}
+?`(`
+```
+
+All special forms are primitive functions written in C
+
+```{r}
+`for`
+`if`
+```
+
+--
+
+`r emo::ji("thinking")`
+
+```{r, error = TRUE}
+`else`
+```
+
+
+
+---
+
+class: middle, center
+
+# [6.8.6 Exercises](https://adv-r.hadley.nz/functions.html#exercises-19)
+
+
+---
+
+class: inverse, middle, center
+
+# Thank you!
+
+
+

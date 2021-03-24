@@ -1,0 +1,261 @@
+---
+title: "Advanced R"
+subtitle: "Chapter 5: Control flow"
+author: "Erick Knackstedt"
+institute: "@Eknackstedt"
+date: " `r Sys.Date()` "
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["xaringan-themer.css","custom.css"]
+    includes:
+      after_body: insert-logo.html
+---
+
+
+```{r xaringan-themer, include = FALSE}
+library(xaringanthemer)
+style_mono_light(
+  base_color = "#3092FF",
+  header_font_google = google_font("Josefin Sans"),
+  text_font_google   = google_font("Montserrat", "300", "300i"),
+  code_font_google   = google_font("Droid Mono"),
+)
+```
+
+
+# Outline
+
+- Choices with if(), ifelse(), switch(), and case_when()
+
+--
+
+- Looping with for, while, and repeat
+
+--
+
+- Exercises
+
+---
+
+
+## Choices
+
+What is the basic form of an if() statement?
+
+--
+
+```{r eval=FALSE, include=TRUE}
+if (condition) true_action
+if (condition) true_action else false_action
+```
+
+--
+
+What are valid inputs for the condition?
+
+--
+
+- A statement that evaluates to a single TRUE or FALSE condition
+
+--
+
+For the action?
+ 
+--
+ 
+- An action or a value. For FALSE, same as TRUE but can also be omitted
+
+--
+
+What does an if() statement return?
+
+--
+
+- A value on TRUE
+- A value or NA on FALSE
+
+---
+
+### Choices cont.
+
+What is the difference between if() and ifelse()?
+
+--
+
+- ifelse() is vectorised
+- if() only accepts a single TRUE or FALSE. ifelse() can iterate a conditional check and evaluate the expression for each element being iterated on
+
+--
+
+Is there another alternative to ifelse()?
+
+--
+
+- case_when() is vectorised and allows multiple condition/value pairs
+
+--
+
+Ok, so if() lets me create logical branches when the condition evaluates to FALSE. Is there a way I can get around nesting if statements?
+
+--
+
+- There is! switch()
+- switch() seems to take a vector of values to use in the conditional statement, and then a list of value/action pairs to describe the different actions to take based on evaluation.  
+
+---
+
+## Loops
+
+I really don't want to repeat this task over and over again. What can I do?
+
+--
+
+- While iteration is built into a lot of functions, often times you need to leverage iteration manually. Loops are the tools to achieve this. 
+
+```{r eval=FALSE, include=TRUE}
+for (item in vector) perform_action
+```
+
+- Within parenthesis you name an element from a vector of values. 
+- In the action you can use the element value in the action or ignore it
+
+--
+
+What happens to the value assigned to the item?
+
+--
+
+- The item <- value assignment exists in the execution environment, until overwritten or slotted away.
+- This implies that if you are assigning values you should pre-allocate a memory container. Be specific about the value type.
+
+--
+
+When should I create the container, and where?
+
+--
+
+- Set up the container before you run the loop
+- Set the container up in the execution environment (if you are running the loop in function, set up the container in the function)
+
+---
+
+### Loops cont.
+
+For loops use the index to determine the number of iterations. What if I don't know the number of iterations up front?
+
+--
+
+- This is where while and repeat come in handy
+- With a while loop you define the number of iterations conditionally, using the logic covered in the section on Choice 
+- With a repeat loop the process iterates until it encounters break
+
+--
+
+I get the purpose of a while loop. But what about a repeat loop?
+
+--
+
+- I'm with ya, I don't get it either. Anybody?
+
+--
+
+Apparently it is powerful though. To quote from the book:
+
+> You can rewrite any for loop to use while instead, and you can rewrite any while loop to use repeat, but the converses are not true. That means while is more flexible than for, and repeat is more flexible than while. It’s good practice, however, to use the least-flexible solution to a problem, so you should use for wherever possible.
+
+
+---
+
+## Exercises 5.2.4
+
+> What type of vector does each of the following calls to ifelse() return?
+
+```{r eval=FALSE, include=TRUE}
+ifelse(TRUE, 1, "no")
+ifelse(FALSE, 1, "no")
+ifelse(NA, 1, "no")
+```
+
+--
+
+The "choice" is evaluated to true, false, and unknown, respectively. The return values are mixed between numeric and character values, while unknown is returned for an unknown evaluation.
+
+---
+
+### Exercises 5.2.4 cont.
+
+> Why does the following code work?
+
+```{r eval=FALSE, include=TRUE}
+x <- 1:10
+if (length(x)) "not empty" else "empty"
+#> [1] "not empty"
+
+x <- numeric()
+if (length(x)) "not empty" else "empty"
+#> [1] "empty"
+```
+
+--
+
+0 and 1 represent FALSE and TRUE. The length function in the first case returns a positive integer, while in the second case return a 0. 0 is interpreted as FALSE, while 1+ is interpreted as TRUE.
+
+
+---
+## Exercises 5.3.3
+
+> Why does this code succeed without errors or warnings?
+
+
+```{r eval=FALSE, include=TRUE}
+x <- numeric()
+out <- vector("list", length(x))
+for (i in 1:length(x)) {
+  out[i] <- x[i] ^ 2
+}
+out
+```
+
+--
+
+Iteration on a zero length vector returns an unknown value.
+
+---
+
+### Exercises 5.3.3 cont.
+
+> When the following code is evaluated, what can you say about the vector being iterated?
+
+```{r eval=FALSE, include=TRUE}
+x <- c(1, 2, 3)
+xs <- c(1, 2, 3)
+for (x in xs) {
+  xs <- c(xs, x * 2)
+}
+xs
+```
+
+--
+
+This is replication a vertorized operation using a for loop. It concatenates the string, and each element * 2.
+
+---
+
+### Exercises 5.3.3 cont.
+
+> What does the following code tell you about when the index is updated?
+
+``` {r eval=FALSE, include=TRUE}
+for (i in 1:3) {
+  i <- i * 2
+  print(i) 
+}
+#> [1] 2
+#> [1] 4
+#> [1] 6
+```
+
+--
+
+This assigns the value to i, multiplies it by 2, and then prints the value assigned to i. It repeats this for each element in the vector. At the end, you see all values printed once, while i points to the last value it was assigned during iteration, 6. 

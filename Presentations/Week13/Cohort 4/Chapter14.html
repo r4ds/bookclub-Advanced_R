@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced R</title>
+    <meta charset="utf-8" />
+    <meta name="date" content="2021-01-24" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: left, middle, title-slide
+
+# Advanced R
+## Chapter 14
+### <div class="line-block">Stephen Holsenbeck<br />
+Template &amp; Layout: Tyler Grant Smith</div>
+### <svg style="height:0.8em;top:.04em;position:relative;fill:#f0f042;" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg> <a href="http://github.com/yogat3ch">yogat3ch</a><br><svg style="height:0.8em;top:.04em;position:relative;fill:#f0f042;" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg> <a href="http://twitter.com/ascensionasana">ascensionasana</a><br><svg style="height:0.8em;top:.04em;position:relative;fill:#f0f042;" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg> <a href="http://linkedin.com/in/holsenbeck">holsenbeck</a><br><svg style="height:0.8em;top:.04em;position:relative;fill:#f0f042;" viewBox="0 0 496 512"><path d="M336.5 160C322 70.7 287.8 8 248 8s-74 62.7-88.5 152h177zM152 256c0 22.2 1.2 43.5 3.3 64h185.3c2.1-20.5 3.3-41.8 3.3-64s-1.2-43.5-3.3-64H155.3c-2.1 20.5-3.3 41.8-3.3 64zm324.7-96c-28.6-67.9-86.5-120.4-158-141.6 24.4 33.8 41.2 84.7 50 141.6h108zM177.2 18.4C105.8 39.6 47.8 92.1 19.3 160h108c8.7-56.9 25.5-107.8 49.9-141.6zM487.4 192H372.7c2.1 21 3.3 42.5 3.3 64s-1.2 43-3.3 64h114.6c5.5-20.5 8.6-41.8 8.6-64s-3.1-43.5-8.5-64zM120 256c0-21.5 1.2-43 3.3-64H8.6C3.2 212.5 0 233.8 0 256s3.2 43.5 8.6 64h114.6c-2-21-3.2-42.5-3.2-64zm39.5 96c14.5 89.3 48.7 152 88.5 152s74-62.7 88.5-152h-177zm159.3 141.6c71.4-21.2 129.4-73.7 158-141.6h-108c-8.8 56.9-25.6 107.8-50 141.6zM19.3 352c28.6 67.9 86.5 120.4 158 141.6-24.4-33.8-41.2-84.7-50-141.6h-108z"/></svg> <a href="http://www.themindful.life">themindful.life</a>
+### 2021-01-24
+
+---
+
+
+&lt;style&gt;
+.hljs-github .hljs {
+color: #333;
+background: #f8f8f8
+}
+&lt;/style&gt;
+
+
+
+
+
+
+
+# R6
+&lt;div class="show-logo"&gt;&lt;/div&gt;
+
+&lt;div class='container'&gt;
+&lt;b&gt;Package&lt;/b&gt;:            R6&lt;br&gt;&lt;b&gt;Title&lt;/b&gt;:              Encapsulated Classes with Reference Semantics&lt;br&gt;&lt;b&gt;Version&lt;/b&gt;:            2.5.0&lt;br&gt;&lt;b&gt;Authors@R&lt;/b&gt;:          person("Winston", "Chang", role = c("aut", "cre"),
+                    email = "winston@stdout.org")&lt;br&gt;&lt;b&gt;Description&lt;/b&gt;:        Creates classes with reference semantics, similar
+                    to R's built-in reference classes. Compared to
+                    reference classes, R6 classes are simpler and
+                    lighter-weight, and they are not built on S4
+                    classes so they do not require the methods package.
+                    These classes allow public and private members, and
+                    they support inheritance, even when the classes are
+                    defined in different packages.&lt;br&gt;&lt;b&gt;Depends&lt;/b&gt;:            R (&gt;= 3.0)&lt;br&gt;&lt;b&gt;Suggests&lt;/b&gt;:           knitr, microbenchmark, pryr, testthat, ggplot2,
+                    scales&lt;br&gt;&lt;b&gt;License&lt;/b&gt;:            MIT + file LICENSE&lt;br&gt;&lt;b&gt;URL&lt;/b&gt;:                https://r6.r-lib.org, https://github.com/r-lib/R6/&lt;br&gt;&lt;b&gt;LazyData&lt;/b&gt;:           true&lt;br&gt;&lt;b&gt;BugReports&lt;/b&gt;:         https://github.com/r-lib/R6/issues&lt;br&gt;&lt;b&gt;RoxygenNote&lt;/b&gt;:        6.1.1&lt;br&gt;&lt;b&gt;NeedsCompilation&lt;/b&gt;:   no&lt;br&gt;&lt;b&gt;Packaged&lt;/b&gt;:           2020-10-28 18:30:05 UTC; winston&lt;br&gt;&lt;b&gt;Author&lt;/b&gt;:             Winston Chang [aut, cre]&lt;br&gt;&lt;b&gt;Maintainer&lt;/b&gt;:         Winston Chang &lt;winston@stdout.org&gt;&lt;br&gt;&lt;b&gt;Repository&lt;/b&gt;:         CRAN&lt;br&gt;&lt;b&gt;Date/Publication&lt;/b&gt;:   2020-10-28 19:30:02 UTC&lt;br&gt;&lt;b&gt;Built&lt;/b&gt;:              R 4.0.3; ; 2020-11-26 14:46:25 UTC; windows
+&lt;/div&gt;
+
+---
+# R6 in the wild
+
+#### How many?
+
+```r
+purrr::map_dbl(c("Depends", "Imports", "Suggests"), ~attr(do.call(pkgsearch::advanced_search, rlang::list2(!!.x := "R6")), "metadata")$total) %&gt;%
+  sum() %&gt;% 
+  glue(" packages on CRAN utilize `R6`.")
+```
+
+```
+## 364 packages on CRAN utilize `R6`.
+```
+---
+#### Notable R6 Packages:
+
+```r
+r6_pkgs &lt;- purrr::map(c("callr", "processx", "plumber", "promises", "websocket", "keras", "roxygen2", "QuantTools", "testthat"), ~pkgsearch::advanced_search(Package = .x))
+
+htmltools::tags$ol(do.call(htmltools::tagList, purrr::map(r6_pkgs, ~htmltools::tags$li(htmltools::tags$p(glue::glue("{htmltools::tags$code(.x$package)}: {.x$title}"))))))
+```
+
+<ol>
+<li>
+<p>&lt;code&gt;callr&lt;/code&gt;: Call R from R</p>
+</li>
+<li>
+<p>&lt;code&gt;processx&lt;/code&gt;: Execute and Control System Processes</p>
+</li>
+<li>
+<p>&lt;code&gt;plumber&lt;/code&gt;: An API Generator for R</p>
+</li>
+<li>
+<p>&lt;code&gt;promises&lt;/code&gt;: Abstractions for Promise-Based Asynchronous Programming</p>
+</li>
+<li>
+<p>&lt;code&gt;websocket&lt;/code&gt;: 'WebSocket' Client Library</p>
+</li>
+<li>
+<p>&lt;code&gt;keras&lt;/code&gt;: R Interface to 'Keras'</p>
+</li>
+<li>
+<p>&lt;code&gt;roxygen2&lt;/code&gt;: In-Line Documentation for R</p>
+</li>
+<li>
+<p>&lt;code&gt;QuantTools&lt;/code&gt;: Enhanced Quantitative Trading Modelling</p>
+</li>
+<li>
+<p>&lt;code&gt;testthat&lt;/code&gt;: Unit Testing for R</p>
+</li>
+</ol>
+---
+## 14.1 [Introduction](https://adv-r.hadley.nz/r6.html#introduction-13)
+Two special properties:
+
+ - R6 uses the encapsulated OOP paradigm, which means that methods belong to objects, not generics, and you call them like `object$method()`.
+
+ - R6 objects are mutable, which means that they are modified in place, and hence have reference semantics.
+
+---
+### [Outline](https://adv-r.hadley.nz/r6.html#outline-12)
+
+ - 14.2 introduces `R6::R6Class()`, the one function that you need to know to create R6 classes. 
+
+ - 14.3 discusses the access mechanisms of R6: private and active fields.
+
+ - 14.4 explores the consequences of R6’s reference semantics.
+
+ - 14.5 describes why Hadley covers R6, rather than the base RC system.
+
+---
+## 14.2 [Classes &amp; Methods](https://adv-r.hadley.nz/r6.html#r6-classes)
+ - `classname` argument with `UpperCamelCase` convention.
+ - `public` argument supplies a list of methods (functions) and fields (anything else) that make up the public interface of the object.
+
+```r
+callr::r_process
+```
+
+```
+## &lt;r_process&gt; object generator
+##   Inherits from: &lt;processx::process&gt;
+##   Public:
+##     initialize: function (options) 
+##     get_result: function () 
+##     finalize: function () 
+##     clone: function (deep = FALSE) 
+##   Private:
+##     options: NULL
+##   Parent env: &lt;environment: namespace:callr&gt;
+##   Locked objects: TRUE
+##   Locked class: FALSE
+##   Portable: TRUE
+```
+**Always assign the result of `R6Class()` into a variable with the same name as the class**
+
+---
+- Construct a new object from the class by calling `new()`
+
+```r
+px &lt;- callr::r_process$new(
+  callr::r_process_options(
+    func = rlang::as_function(~ {
+      purrr::reduce(1:10, ~{
+        Sys.sleep(.1)
+        .x * .y
+        }, .init = 1)
+    })
+  )
+)
+```
+- call methods and access fields with `$`
+
+```r
+purrr::walk(vector(length = 2), ~{
+  Sys.sleep(1.2)
+  print(px$is_alive())
+}) 
+```
+
+```
+## [1] TRUE
+## [1] FALSE
+```
+
+```r
+px$get_result()
+```
+
+```
+## [1] 3628800
+```
+---
+
+### 14.2.1 [Method Chaining](https://adv-r.hadley.nz/r6.html#method-chaining)
+ - Commonly used in languages like Python and JavaScript
+ - Method chaining is deeply related to the pipe
+
+```r
+Accumulator &lt;- R6::R6Class("Accumulator", list(
+  sum = 0,
+  add = function(x = 1) {
+    self$sum &lt;- self$sum + x 
+    invisible(self)
+  })
+)
+a &lt;- Accumulator$new()
+a$
+  add(4)$
+  add(4)$
+  sum
+```
+
+```
+## [1] 8
+```
+ 
+---
+### 14.2.2 [Important Methods](https://adv-r.hadley.nz/r6.html#r6-important-methods)
+ - `$initialize()`: overrides the default behaviour of `$new()`
+  - add checks for input arguments
+  - if more expensive validation is required, use `$validate` separately.
+ - `$print()`: allows you to override the default printing behaviour.
+  - `$print()` should return `invisible(self)`.
+ - methods are bound to individual objects IE previously created objects do not get new methods 
+
+```r
+Person &lt;- R6Class("Person", list(
+  name = NULL,
+  age = NA,
+  initialize = function(name, age = NA) {
+    self$name &lt;- name
+    self$age &lt;- age
+  },
+  print = function(...) {
+    cat("Person: \n")
+    cat("  Name: ", self$name, "\n", sep = "")
+    cat("  Age:  ", self$age, "\n", sep = "")
+    invisible(self)
+  }
+))
+```
+---
+### 14.2.3 [Adding methods after creation](https://adv-r.hadley.nz/r6.html#adding-methods-after-creation)
+ - `$set()`: Add new elements to an existing class    
+
+```r
+Accumulator &lt;- R6Class("Accumulator")
+Accumulator$set("public", "sum", 0)
+Accumulator$set("public", "add", function(x = 1) {
+  self$sum &lt;- self$sum + x 
+  invisible(self)
+})
+```
+---
+### 14.2.4 [Inheritance](https://adv-r.hadley.nz/r6.html#inheritance)
+- `inherit` argument takes an R6 class object to inherit from
+
+```r
+AccumulatorChatty &lt;- R6Class("AccumulatorChatty", 
+  inherit = Accumulator,
+  public = list(
+    add = function(x = 1) {
+      cat("Adding ", x, "\n", sep = "")
+      super$add(x = x)
+    }
+  )
+)
+
+x2 &lt;- AccumulatorChatty$new()
+x2$add(10)$add(1)$sum
+```
+
+```
+## Adding 10
+## Adding 1
+```
+
+```
+## [1] 11
+```
+ - `$add()` overrides the superclass implementation, but we can still delegate to the superclass implementation by using `super$`. (This is analogous to NextMethod() in S3)
+ 
+---
+### 14.2.5 [Introspection](https://adv-r.hadley.nz/r6.html#introspection)
+
+```r
+names(px)
+```
+
+```
+##  [1] ".__enclos_env__"       "clone"                 "finalize"             
+##  [4] "get_result"            "initialize"            "resume"               
+##  [7] "suspend"               "get_memory_info"       "get_cpu_times"        
+## [10] "get_wd"                "get_username"          "get_status"           
+## [13] "get_cmdline"           "get_exe"               "get_name"             
+## [16] "as_ps_handle"          "get_poll_connection"   "poll_io"              
+## [19] "get_error_file"        "get_output_file"       "get_input_file"       
+## [22] "write_input"           "read_all_error_lines"  "read_all_output_lines"
+## [25] "read_all_error"        "read_all_output"       "get_error_connection" 
+## [28] "get_output_connection" "get_input_connection"  "has_poll_connection"  
+## [31] "has_error_connection"  "has_output_connection" "has_input_connection" 
+## [34] "is_incomplete_error"   "is_incomplete_output"  "read_error_lines"     
+## [37] "read_output_lines"     "read_error"            "read_output"          
+## [40] "supervise"             "is_supervised"         "get_start_time"       
+## [43] "print"                 "format"                "get_exit_status"      
+## [46] "wait"                  "is_alive"              "get_pid"              
+## [49] "interrupt"             "signal"                "kill_tree"            
+## [52] "kill"
+```
+
+---
+## 14.3 [Controlling Access](https://adv-r.hadley.nz/r6.html#r6-access)
+### 14.3.1 [Privacy](https://adv-r.hadley.nz/r6.html#privacy)
+`R6Class` has two other arguments that work similarly to public:
+
+ - `private`: a list of methods &amp; fields that are only available from within the class, not outside of it.
+   - Fields and methods defined in private are available within the methods using private$ instead of self$. You cannot access private fields or methods outside of the class.
+ - `active`: allows you to use accessor functions to define dynamic, or active, fields.
+
+---
+Private fields cannot be accessed from outside of the class:
+
+```r
+Person &lt;- R6Class("Person", 
+  public = list(
+    initialize = function(name, age = NA) {
+      private$name &lt;- name
+      private$age &lt;- age
+    },
+    print = function(...) {
+      cat("Person: \n")
+      cat("  Name: ", private$name, "\n", sep = "")
+      cat("  Age:  ", private$age, "\n", sep = "")
+    }
+  ),
+  private = list(
+    age = NA,
+    name = NULL
+  )
+)
+
+hadley3 &lt;- Person$new("Hadley")
+hadley3
+```
+
+```
+## Person: 
+##   Name: Hadley
+##   Age:  NA
+```
+
+```r
+hadley3$name
+```
+
+```
+## NULL
+```
+---
+### 14.3.2 [Active Fields](https://adv-r.hadley.nz/r6.html#active-fields)
+Active fields are implemented using active bindings (Section 7.2.6). Each active binding is a function that takes a single argument: `value`
+
+```r
+Rando &lt;- R6::R6Class("Rando",
+  private = list(
+    .random = 1
+  ),
+  public = list(
+    initialize = function(init = 1) {
+      private$.random &lt;- init
+    }
+  ),
+  active = list(
+    random = function(value) {
+      if (missing(value)) {
+        private$.random &lt;- runif(1)
+      } else {
+        stop("`$random` is read-only", call. = FALSE)
+      }
+    }
+  )
+)
+```
+---
+
+```r
+x &lt;- Rando$new()
+x$random
+```
+
+```
+## [1] 0.1352006
+```
+
+```r
+x$random &lt;- 4
+```
+
+```
+## Error: `$random` is read-only
+```
+
+```r
+x$random(4)
+```
+
+```
+## Error in eval(expr, envir, enclos): attempt to apply non-function
+```
+
+---
+## 14.4 [Reference Semantics](https://adv-r.hadley.nz/r6.html#r6-semantics)
+ - objects are not copied when modified
+ - if you want a copy, you’ll need to explicitly `$clone()` the object
+  - $clone() does not recursively clone nested R6 objects. If you want that, you’ll need to use $clone(deep = TRUE)
+ - It is harder to reason about code that uses R6 objects because you need to understand more context.
+ - It makes sense to think about when an R6 object is deleted, and you can write a `$finalize()` to complement the `$initialize()`.
+ - If one of the fields is an R6 object, you must create it inside `$initialize()`, not `R6Class()`.
+ 
+---
+### 14.4.1 [Reasoning](https://adv-r.hadley.nz/r6.html#reasoning)
+
+`f()` calls methods of `x` or `y`, it might modify them as well as `z`
+
+```r
+x &lt;- List$new(a = 1)
+y &lt;- List$new(b = 2)
+
+z &lt;- f(x, y)
+```
+ - write functions that either return a value, or modify their R6 inputs, but not both 
+ 
+---
+### 14.4.2 [Finalizer](https://adv-r.hadley.nz/r6.html#finalizer)
+Think of `$finalize()` as a complement to `$initialize()`. Finalizers usually play a similar role to `on.exit()`
+
+
+```r
+TemporaryFile &lt;- R6Class("TemporaryFile", list(
+  path = NULL,
+  initialize = function() {
+    self$path &lt;- tempfile()
+  },
+  finalize = function() {
+    message("Cleaning up ", self$path)
+    unlink(self$path)
+  }
+))
+tf &lt;- TemporaryFile$new()
+rm(tf)
+```
+
+---
+### 14.4.3 [R6 fields](https://adv-r.hadley.nz/r6.html#r6-fields)
+If you use an R6 class as the default value of a field, it will be shared across all instances of the object! Take the following code: we want to create a temporary database every time we call `TemporaryDatabase$new()`, but the current code always uses the same path.
+
+
+
+```r
+TemporaryDatabase &lt;- R6Class("TemporaryDatabase", list(
+  con = NULL,
+  file = TemporaryFile$new(),
+  initialize = function() {
+    self$con &lt;- DBI::dbConnect(RSQLite::SQLite(), path = file$path)
+  },
+  finalize = function() {
+    DBI::dbDisconnect(self$con)
+  }
+))
+
+db_a &lt;- TemporaryDatabase$new()
+db_b &lt;- TemporaryDatabase$new()
+
+db_a$file$path == db_b$file$path
+```
+
+```
+## [1] TRUE
+```
+---
+To fix the problem, we need to make sure it’s called every time that `TemporaryDatabase$new()` is called, i.e. we need to put it in `$initialize()`
+
+```r
+TemporaryDatabase &lt;- R6Class("TemporaryDatabase", list(
+  con = NULL,
+  file = NULL,
+  initialize = function() {
+    self$file &lt;- TemporaryFile$new()
+    self$con &lt;- DBI::dbConnect(RSQLite::SQLite(), path = file$path)
+  },
+  finalize = function() {
+    DBI::dbDisconnect(self$con)
+  }
+))
+```
+ 
+---
+## In use
+
+Discussion
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<style>
+.logo {
+  background-image: url(r4dsr6.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 112px;
+  height: 150px;
+  z-index: 0;
+}
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.show-logo' 
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"></div>';
+  });
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
