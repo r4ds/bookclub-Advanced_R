@@ -206,7 +206,8 @@ Chapter 14 - R6
 
 - Cohort 1: Tyler Grant Smith ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Cohort1/Chapter14.html#1) | [video](https://www.youtube.com/watch?v=hPjaOdprgow&feature=youtu.be))
 - Cohort 2: Ezra Porter ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Cohort2/Chapter-14.html#1) | [video](https://youtu.be/LVkDJ28XJUE))
-- Cohort 3: [Anna-Leigh Brown](https://twitter.com/annaleighbrown2) (SLIDES | [video](https://youtu.be/rCjQTbQ22qc))
+- Cohort 3: (14, part 1) [Anna-Leigh Brown](https://twitter.com/annaleighbrown2) (SLIDES | [video](https://youtu.be/rCjQTbQ22qc))
+- Cohort 3: (14, part 2) [Megan Stodel](https://twitter.com/MeganStodel) ([slides](Presentations/Week14/Cohort3/R6.pdf))  
 
 Chapter 15 - S4
 
@@ -228,6 +229,7 @@ Chapter 18 - Expressions
 
 - Cohort 1: [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week17/Cohort1/Chapter18.html#1) | [video](https://youtu.be/2NixH3QAerQ) | [app](https://r4dscommunity.shinyapps.io/adv_r-expressions/) | [app code](https://github.com/r4ds/bookclub-Advanced_R/tree/master/Presentations/Week17/Cohort1/expressions))
 - Cohort 2: Jake Riley (SLIDES | [video](https://youtu.be/mYOUgzoRcjI))
+- Cohort 3: [Megan Stodel](https://twitter.com/MeganStodel) ([slides](Presentations/Week14/Cohort3/Expressions.pdf))  
 
 Chapter 19 - Quasiquotation
 
@@ -255,6 +257,7 @@ Chapter 23 / 24 - Measuring & Improving Performance:
 
 - Cohort 1: [Jonathan Leslie](https://twitter.com/jlesliedata) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week23/Cohort1/Chapters23-24.html) | [video](https://www.youtube.com/watch?v=YngflemRSD0))
 - Cohort 2: [Josh Pohlkamp-Hartt](https://twitter.com/jpohlkamphartt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week23/Cohort2_America/Chapter23Slides.html)
+- Cohort 3: (Chapter 24 [Megan Stodel](https://twitter.com/MeganStodel) ([slides](Presentations/Week14/Cohort3/improving_performance.pdf))  
 
 
 Chapter 25: Rcpp
