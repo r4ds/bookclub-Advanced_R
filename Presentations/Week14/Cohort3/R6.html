@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Chapter 14: R6 (part 2)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Megan Stodel (@MeganStodel, www.meganstodel.com)" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Chapter 14: R6 (part 2)
+## Advanced R Book Group, Cohort 3
+### Megan Stodel (<span class="citation">@MeganStodel</span>, www.meganstodel.com)
+### 7 December, 2020
+
+---
+
+class: inverse, center, middle
+
+# Controlling Access
+
+---
+# Privacy
+
+* In R6, you can define private fields/methods, which can only be accessed from within the class. 
+
+* Works similarly to the public argument - provide it with a named list of methods (functions) and fields. 
+
+* Available within methods using `private$` instead of `self$`.
+---
+# Example
+
+
+```r
+library(R6)
+
+Person &lt;- R6Class("Person", 
+  public = list(
+    initialize = function(name, location = NULL) {
+      private$name &lt;- name
+      private$location &lt;- location
+    },
+    print = function(...) {
+      cat("Person: \n")
+      cat("  Name: ", private$name, "\n", sep = "")
+      cat("  Location:  ", private$location, "\n", sep = "")
+    }
+  ),
+  private = list(
+    name = NULL,
+    location = NULL
+  )
+)
+```
+
+---
+# Using it
+
+You can't call `$age` or `$name` from outside the class. 
+
+
+```r
+megan &lt;- Person$new(name = "Megan", location = "London")
+megan
+```
+
+```
+## Person: 
+##   Name: Megan
+##   Location:  London
+```
+
+```r
+megan$name
+```
+
+```
+## NULL
+```
+
+---
+# Why would you use this?
+
+* Gives you control over what people can access.
+
+* Easier to refactor in future because others won't be relying on it. 
+
+* (More important in other languages, because object hierarchies in R tend to be simpler)
+
+---
+# Active Fields
+
+* You can define components that look like fields from the outside, but are defined with functions. 
+
+* Each active binding is a function that takes the argument `value` - if missing, the value is being retrieved, otherwise it's being modified.
+
+---
+# Example
+
+Active field `random` returns a different value every time you access it.
+
+
+```r
+Rando &lt;- R6::R6Class("Rando", active = list(
+  random = function(value) {
+    if (missing(value)) {
+      runif(1)  
+    } else {
+      stop("Can't set `$random`", call. = FALSE)
+    }
+  }
+))
+
+x &lt;- Rando$new()
+x$random
+```
+
+```
+## [1] 0.9629635
+```
+
+```r
+x$random
+```
+
+```
+## [1] 0.5774945
+```
+
+---
+# Why would you use this?
+
+Can provide additional checks in conjunction with private fields. 
+
+
+```r
+Person &lt;- R6Class("Person", 
+  private = list(
+    .name = NULL
+  ),
+  active = list(
+    name = function(value) {
+      if (missing(value)) {
+        private$.name
+      } else {
+        stopifnot(is.character(value), length(value) == 1)
+        private$.name &lt;- value
+        self
+      }
+    }
+  ),
+  public = list(
+    initialize = function(name) {
+      private$.name &lt;- name
+    }
+  )
+)
+```
+---
+# Which looks like...
+
+
+```r
+megan &lt;- Person$new(name = "Megan")
+megan$name
+```
+
+```
+## [1] "Megan"
+```
+
+```r
+megan$name &lt;- 10
+```
+
+```
+## Error in (function (value) : is.character(value) is not TRUE
+```
+
+```r
+megan$name &lt;- c("Megan", "Stodel")
+```
+
+```
+## Error in (function (value) : length(value) == 1 is not TRUE
+```
+---
+# EXCERCISES
+
+1. Create a bank account class that prevents you from directly setting the account balance, but you can still withdraw from and deposit to. Throw an error if you attempt to go into overdraft.
+
+2. Create a class with a write-only $password field. It should have $check_password(password) method that returns TRUE or FALSE, but there should be no way to view the complete password.
+
+3. Extend the Rando class with another active binding that allows you to access the previous random value. Ensure that active binding is the only way to access the value.
+
+4. Can subclasses access private fields/methods from their parent? Perform an experiment to find out. [RAN OUT OF TIME FOR THIS]
+
+---
+class: inverse, center, middle
+
+# Reference Semantics
+
+---
+# What?
+
+Objects are NOT copied when modified
+
+
+```r
+y1 &lt;- Accumulator$new() 
+y2 &lt;- y1
+y1$add(10)
+c(y1 = y1$sum, y2 = y2$sum)
+```
+
+```
+## y1 y2 
+## 10 10
+```
+
+If you want a copy, explicitly `$clone()` the objects. 
+
+```r
+y1 &lt;- Accumulator$new() 
+y2 &lt;- y1$clone()
+y1$add(10)
+c(y1 = y1$sum, y2 = y2$sum)
+```
+
+```
+## y1 y2 
+## 10  0
+```
+
+---
+# Reasoning
+
+Reference semantics makes it hard to reason about code.
+
+
+```r
+x &lt;- list(a = 1)
+y &lt;- list(b = 2)
+z &lt;- f(x, y)
+```
+For the vast majority of functions, you know that the final line only modifies z.
+
+```r
+x &lt;- List$new(a = 1)
+y &lt;- List$new(b = 2)
+z &lt;- f(x, y)
+```
+The final line is much harder to reason about: if `f()` calls methods of x or y, it might modify them as well as z. 
+
+This is the biggest potential downside of R6 and you should take care to avoid it by writing functions that either return a value, or modify their R6 inputs, but not both. 
+---
+# Finalizer
+
+R6 objects are only deleted once, when finalized. 
+
+Think of `$finalize()` as a complement to `initialize()` - cleans up any resources created by the initializer. 
+
+This method will be run when it is deleted or when R exits.
+
+---
+# Example
+
+```r
+TemporaryFile &lt;- R6Class("TemporaryFile", list(
+  path = NULL,
+  initialize = function() {
+    self$path &lt;- tempfile()
+  },
+  finalize = function() {
+    message("Cleaning up ", self$path)
+    unlink(self$path)
+  }
+))
+```
+
+---
+# R6 fields
+
+If you use an R6 class as the default value of a field, it will be shared across all instances of the object. Therefore put it in `$initialize()` if you want it called fresh each time. 
+
+
+```r
+TemporaryDatabase &lt;- R6Class("TemporaryDatabase", list(
+  con = NULL,
+  file = NULL,
+  initialize = function() {
+    self$file &lt;- TemporaryFile$new()
+    self$con &lt;- DBI::dbConnect(RSQLite::SQLite(), path = file$path)
+  },
+  finalize = function() {
+    DBI::dbDisconnect(self$con)
+  }
+))
+
+db_a &lt;- TemporaryDatabase$new()
+db_b &lt;- TemporaryDatabase$new()
+
+db_a$file$path == db_b$file$path
+```
+
+```
+## [1] FALSE
+```
+---
+# EXCERCISE
+
+1. Create a class that allows you to write a line to a specified file. You should open a connection to the file in `$initialize()`, append a line using `cat()` in `$append_line()`, and close the connection in `$finalize()`.
+
+---
+# R6 vs RC (Reference Classes)
+
+* R6 is very similar to a built-in OO system called reference classes, or RC for short. I prefer R6 to RC because:
+
+* R6 is much simpler. Both R6 and RC are built on top of environments, but while R6 uses S3, RC uses S4. This means to fully understand RC, you need to understand how the more complicated S4 works.
+
+* R6 has comprehensive online documentation at https://r6.r-lib.org.
+
+* R6 has a simpler mechanism for cross-package subclassing, which just works without you having to think about it. For RC, read the details in the "External Methods; Inter-Package Superclasses" section of ?setRefClass.
+
+* RC mingles variables and fields in the same stack of environments so that you get (field) and set (field &lt;&lt;- value) fields like regular values. R6 puts fields in a separate environment so you get (self$field) and set (self$field &lt;- value) with a prefix. The R6 approach is more verbose but I like it because it is more explicit.
+
+---
+# Even more reasons
+
+* R6 is much faster than RC. Generally, the speed of method dispatch is not important outside of microbenchmarks. However, RC is quite slow, and switching from RC to R6 led to a substantial performance improvement in the shiny package. For more details, see vignette("Performance", "R6").
+
+* RC is tied to R. That means if any bugs are fixed, you can only take advantage of the fixes by requiring a newer version of R. This makes it difficult for packages (like those in the tidyverse) that need to work across many R versions.
+
+* Finally, because the ideas that underlie R6 and RC are similar, it will only require a small amount of additional effort to learn RC if you need to.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

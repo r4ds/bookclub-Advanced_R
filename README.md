@@ -18,12 +18,10 @@ This repo contains 3 main folders:
 
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
-- 2021-01-14 Chapter 21: Translating R code - Jorge Mendes 
-- 2021-01-21 Metaprogramming Recap 
-- 2021-01-28 Chapter 22: Debugging - Mike Jeziorski
-- 2021-02-04 Chapter 23: Measuring Performance - Josh Pohlkamp-Hartt
-- 2021-02-11 Chapter 24: Improving Performance
-- 2021-02-18 Chapter 25: Rewriting R code in C++ - Kevin Kent
+- 2021-02-04 Chapter 22: Debugging - Mike Jeziorski
+- 2021-02-11 Chapter 23: Measuring Performance - Josh Pohlkamp-Hartt
+- 2021-02-18 Chapter 24: Improving Performance 
+- 2021-02-25 Chapter 25: Rewriting R code in C++ - Kevin Kent
 
 <details>
   <summary> Future Meetings </summary>
@@ -86,7 +84,29 @@ This repo contains 3 main folders:
 
 </details>
 
+
 <hr>
+
+*Cohort 5 [Europe/Africa]: (started 2021-03-16) Tuesdays, 18:30 CET (CEST)*
+
+- 2021-03-23 Chapter 02: Names and Values - Hoda Mazaheri
+- 2021-03-30 Chapter 03: Vectors  -  Layla Bouzoubaa
+- 2021-04-06 Chapter 04: Subsetting - kayteeflick
+- 2021-04-13 Chapter 05: Control flow - Jiwan Heo
+- 2021-04-20 Chapter 06: Functions - Brett Longworth 
+- 2021-04-27 Chapter 07: Enviroments - Adrian Fletcher 
+- 2021-05-04 Chapter 08:  Conditions - 
+
+
+<details>
+  <summary> Future Meetings </summary>
+
+- 2021-01-26 Chapter 09: Functionals
+
+</details>
+
+<hr>
+
 
 ### Presentations & Recordings
 
@@ -96,6 +116,7 @@ Chapter 1 - Introduction
 - Cohort 2: [Kevin Kent](https://twitter.com/kevin_m_kent) ([slides](https://docs.google.com/presentation/d/1oKhqSY6L6yI3yMwB4JB1eduLqu6UWPZ7Y1v32FK042I/edit?usp=sharing) | [video](https://www.youtube.com/watch?v=PCG52lU_YlA&t))
 - Cohort 3: [Novica Nakov](https://twitter.com/novicanakov) ([video](https://www.youtube.com/watch?v=f6PuOnuZWBc))
 - Cohort 4: Emily Wissel (SLIDES | [video](https://youtu.be/qDaJvX-Mpls))
+- Cohort 5: [Shamsuddeen Muhammad](https://twitter.com/Shmuhammadd) ([slides](https://shmuhammad2004.github.io/Introduction_AdvR_bookclub/book-discussion-format.html)|[video](https://www.youtube.com/watch?v=BvmiQlWOP5o))
 
 Chapter 2 - Names and values
 
@@ -185,12 +206,14 @@ Chapter 14 - R6
 
 - Cohort 1: Tyler Grant Smith ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Cohort1/Chapter14.html#1) | [video](https://www.youtube.com/watch?v=hPjaOdprgow&feature=youtu.be))
 - Cohort 2: Ezra Porter ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Cohort2/Chapter-14.html#1) | [video](https://youtu.be/LVkDJ28XJUE))
-- Cohort 3: [Anna-Leigh Brown](https://twitter.com/annaleighbrown2) (SLIDES | [video](https://youtu.be/rCjQTbQ22qc))
+- Cohort 3: (14, part 1) [Anna-Leigh Brown](https://twitter.com/annaleighbrown2) (SLIDES | [video](https://youtu.be/rCjQTbQ22qc))
+- Cohort 3: (14, part 2) [Megan Stodel](https://twitter.com/MeganStodel) ([slides](Presentations/Week14/Cohort3/R6.pdf))  
 
 Chapter 15 - S4
 
 - Cohort 1: Pavitra Chakravarty ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week14/Cohort1/Chapter15.html#1) | [video](https://www.youtube.com/watch?v=a1jzpWiksyA&feature=youtu.be))
 - Cohort 2: [Erick Knackstedt](https://twitter.com/Eknackstedt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week14/Cohort2/Chapter15Slides.html#1) | [video](https://youtu.be/bzo37PHCM1I))
+- Cohort 3: (part1) Anne Hoffrichter ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week15/Cohort3/part1/Chapter15_S4_part1.html) | [video](https://www.youtube.com/watch?v=WWnJ5Cl-aTE&list=PL3x6DOfs2NGhUCEVefMkCEiJKE_C-gwV5&index=18))
 
 Chapter 16 - Tradeoffs/OOP Wrapup
 
@@ -206,11 +229,13 @@ Chapter 18 - Expressions
 
 - Cohort 1: [Maya Gans](https://maya.rbind.io) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week17/Cohort1/Chapter18.html#1) | [video](https://youtu.be/2NixH3QAerQ) | [app](https://r4dscommunity.shinyapps.io/adv_r-expressions/) | [app code](https://github.com/r4ds/bookclub-Advanced_R/tree/master/Presentations/Week17/Cohort1/expressions))
 - Cohort 2: Jake Riley (SLIDES | [video](https://youtu.be/mYOUgzoRcjI))
+- Cohort 3: [Megan Stodel](https://twitter.com/MeganStodel) ([slides](Presentations/Week14/Cohort3/Expressions.pdf))  
 
 Chapter 19 - Quasiquotation
 
 - Cohort 1: [Jon Harmon](https://twitter.com/jonthegeek) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week18/Cohort1/Chapter19.html#1) | [video](https://youtu.be/tbByqsRRvdE))
 - Cohort 2: Chris Yarrison (SLIDES | [video](https://youtu.be/IXE21pR8EJ0))
+- Cohort 3: Anne Hoffrichter ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week19/Cohort3/Chapter19_Quasiquotation.html) | [video]())
 
 Chapter 20 - Evaluation
 
@@ -231,6 +256,9 @@ Chapter 22 - Debugging:
 Chapter 23 / 24 - Measuring & Improving Performance:
 
 - Cohort 1: [Jonathan Leslie](https://twitter.com/jlesliedata) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week23/Cohort1/Chapters23-24.html) | [video](https://www.youtube.com/watch?v=YngflemRSD0))
+- Cohort 2: [Josh Pohlkamp-Hartt](https://twitter.com/jpohlkamphartt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week23/Cohort2_America/Chapter23Slides.html)
+- Cohort 3: (Chapter 24 [Megan Stodel](https://twitter.com/MeganStodel) ([slides](Presentations/Week14/Cohort3/improving_performance.pdf))  
+
 
 Chapter 25: Rcpp
 

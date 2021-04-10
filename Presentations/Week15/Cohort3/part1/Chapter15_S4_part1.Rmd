@@ -1,0 +1,410 @@
+---
+title: "Chapter 15 - S4"
+output: learnr::tutorial
+runtime: shiny_prerendered
+tutorial:
+  progressive: true
+  version: 1.1
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(methods)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Chapter 15 - S4 part1
+## 15.1 Introduction
+
+- similar to S3
+- stricter implementation
+- specialised functions for: 
+  - creating classes: `setClass()`
+  - generics: `setGeneric()`
+  - methods: `setMethod()`
+- multiple inheritance (i.e. a class can have multiple parents)
+- multiple dispatch (i.e. method dispatch can use the class of multiple arguments)
+
+S4 has a special component: __slot__. It's accessed using the subsetting operator @
+
+## 15.2 Basics {-}
+
+Definition of a class: 
+
+ - Name of the class
+ - definition of slots
+ - names & classes of class data
+
+```{r}
+setClass("Person", 
+  slots = c(
+    name = "character", 
+    age = "numeric"
+  )
+)
+```
+
+Construct new objects with `new()`
+
+
+```{r}
+Bob <- new("Person", name = "Bob Marley", age = NA_real_)
+```
+
+Given an S4 object you can see its class with `is()` and access slots with `@` (equivalent to `$`) and `slot()` (equivalent to `[[`):
+
+```{r}
+is(Bob)
+Bob@name
+slot(Bob, "age")
+```
+
+__Accessor__ functions:
+
+1. Create generics with `setGeneric()`
+
+```{r}
+setGeneric("age", function(x) standardGeneric("age"))
+setGeneric("age<-", function(x, value) standardGeneric("age<-"))
+```
+
+2. Define methods with `setMethod()`
+
+```{r}
+setMethod("age", "Person", function(x) x@age)
+setMethod("age<-", "Person", function(x, value) {
+  x@age <- value
+  x
+})
+
+age(Bob) <- 36
+age(Bob)
+```
+
+To identify objects and functions we can use `sloop`
+
+```{r}
+sloop::otype(Bob)
+sloop::ftype(age)
+```
+
+## Exercises
+
+1. `lubridate::period()` returns an S4 class. What slots does it have? What class is each slot? What accessors does it provide?
+
+## 
+
+1. `lubridate::period()` returns an S4 class. What slots does it have? What class is each slot? What accessors does it provide?
+
+```{r}
+library(lubridate)
+example <- lubridate::period()
+class?Period
+
+is(example)
+```
+
+What slots does it have? What class is each slot?
+
+Period class objects have six slots. 
+
+1) .Data, a numeric object. The apparent amount of seconds to add to the period. 
+2) minute, a numeric object. The apparent amount of minutes to add to the period. 
+3) hour, a numeric object. The apparent amount of hours to add to the period.
+4) day, a numeric object. The apparent amount of days to add to the period.
+5) month, a numeric object. The apparent amount of months to add to the period. 
+6) year, a numeric object. The apparent amount of years to add to the period.
+
+```{r}
+getClass("Period")
+```
+
+
+What accessors does it provide?
+
+
+```{r}
+year(example)
+month(example)
+day(example)
+hour(example)
+minute(example)
+second(example)
+```
+
+##
+
+2. What other ways can you find help for a method? Read ?"?" and summarise the details.
+
+##
+
+2. What other ways can you find help for a method? Read ?"?" and summarise the details.
+
+```
+## define a S4 generic function and some methods
+combo <- function(x, y) c(x, y)
+setGeneric("combo")
+setMethod("combo", c("numeric", "numeric"), function(x, y) x+y)
+
+## assume we have written some documentation
+## for combo, and its methods ....
+
+?combo  # produces the function documentation
+
+methods?combo  # looks for the overall methods documentation
+
+method?combo("numeric", "numeric")  # documentation for the method above
+
+?combo(1:10, rnorm(10))  # ... the same method, selected according to
+                         # the arguments (one integer, the other numeric)
+
+?combo(1:10, letters)    # documentation for the default method
+```
+
+
+## 15.3 Classes
+
+To define an S4 class, call `setClass()` with three arguments: 
+
+- class __name__ (CamelCase)
+- named character vector for the __slots__ 
+- __prototype__ (list of default values for each slot)
+
+```{r}
+setClass("Person", 
+  slots = c(
+    name = "character", 
+    age = "numeric"
+  ), 
+  prototype = list(
+    name = NA_character_,
+    age = NA_real_
+  )
+)
+
+me <- new("Person", name = "Anne")
+str(me)
+
+```
+
+## 15.3.1 Inheritance
+
+`contains` can be used as an argument to `setClass()` to specify if any behaviour is inherited from another class. 
+
+```{r}
+setClass("Employee", 
+  contains = "Person", 
+  slots = c(
+    boss = "Person"
+  ),
+  prototype = list(
+    boss = new("Person")
+  )
+)
+
+str(new("Employee"))
+```
+
+## 15.3.2 Introspection
+
+To check inheritance of objects, use `is()`
+
+```{r}
+is(new("Person"))
+is(new("Employee"))
+```
+
+```{r}
+is(me, "Person")
+```
+
+## 15.3.3 Redefinition
+
+```{r, error=TRUE}
+setClass("A", slots = c(x = "numeric"))
+a <- new("A", x = 10)
+
+setClass("A", slots = c(a_different_slot = "numeric"))
+a
+```
+
+__This can cause confusion during interactive creation of new classes.__
+
+
+## 15.3.4 Helper
+
+A helper should always: 
+
+- Have the same name as the class, e.g. `myclass()`
+- Have a thoughtfully crafted user interface with carefully chosen default values and useful conversions
+- Create carefully crafted error messages tailored towards an end-user
+- Finish by calling `methods::new()`
+
+
+
+```{r}
+Person <- function(name, age = NA) {
+  age <- as.double(age)
+  
+  new("Person", name = name, age = age)
+}
+
+Person("Anne")
+```
+
+## 15.3.5 Validator
+
+The constructor automatically checks that the slots have correct classes:
+
+```{r, error=TRUE}
+Person(name=3, age=T)
+```
+
+For checks like length of slots, one will have to write a validator with `setValidity()`: 
+
+```{r}
+Person("Anne", age = c(32, 25))
+```
+
+```{r}
+setValidity("Person", function(object) {
+  if (length(object@name) != length(object@age)) {
+    "@name and @age must be same length"
+  } else {
+    TRUE
+  }
+})
+```
+
+```{r, error=TRUE}
+Person("Anne", age = c(32, 25))
+```
+
+The validity check is only performed when you create a new object. You can still modify it after creation, and generate invalid input. 
+
+```{r, error=TRUE}
+alex <- Person("Alex", age = 30)
+alex@age <- 1:10
+alex
+validObject(alex)
+```
+
+## 15.3.6 Exercises
+
+1. Extend the Person class with fields to match `utils::person()`. Think about what slots you will need, what class each slot should have, and what you’ll need to check in your validity method.
+
+## 
+
+1. Extend the Person class with fields to match `utils::person()`. Think about what slots you will need, what class each slot should have, and what you’ll need to check in your validity method.
+
+utils::person(given = NULL, family = NULL, middle = NULL,
+       email = NULL, role = NULL, comment = NULL,
+       first = NULL, last = NULL)
+
+```{r 15-3-6-1, exercise=TRUE}
+setClass("Person", 
+  slots = c(
+    given = "character", 
+    family = "character",
+    email = "character",
+    role = "character",
+    comment = "character"
+  ), 
+  prototype = list(
+    given = NA_character_,
+    family = NA_character_,
+    email = NA_character_,
+    role = NA_character_,
+    comment = NA_character_
+  )
+)
+
+setValidity("Person", function(object) {
+  if (length(object@given) != length(object@family)) {
+    "@given and @family must be same length"
+  } else {
+    TRUE
+  }
+  if(object@role %in% c("aut", "com", "cph", "cre", "ctb", "ctr", "dtc", "fnd", "rev", "ths", "trl", NA_character_)){
+    TRUE
+  }else{
+    "@role must be one of \"aut\", \"com\", \"cph\", \"cre\", \"ctb\", \"ctr\", \"dtc\", \"fnd\", \"rev\", \"ths\", \"trl\""
+  }
+})
+
+Person <- function(given, family, email = NA_character_, role = NA_character_, comment = NA_character_) {
+  new("Person", given = given, family = family, email = email, role = role, comment = comment)
+}
+
+Person("Anne", "Hoffrichter")
+Person("Anne")
+```
+
+
+
+##
+
+2. What happens if you define a new S4 class that doesn’t have any slots? (Hint: read about virtual classes in `?setClass`.)
+
+##
+
+2. What happens if you define a new S4 class that doesn’t have any slots? (Hint: read about virtual classes in `?setClass`.)
+
+```{r}
+?setClass
+```
+
+If the class is virtual, an attempt to generate an object from either the generator or new() will result in an error.
+
+Classes exist for which no actual objects can be created, the virtual classes.
+
+The most common and useful form of virtual class is the class union, a virtual class that is defined in a call to `setClassUnion()` rather than a call to `setClass()`. This call lists the members of the union—subclasses that extend the new class. Methods that are written with the class union in the signature are eligible for use with objects from any of the member classes. Class unions can include as members classes whose definition is otherwise sealed, including basic R data types. (A class may be defined as the union of other classes; that is, as a virtual class defined as a superclass of several other classes. Class unions are useful in method signatures or as slots in other classes, when we want to allow one of several classes to be supplied.)
+
+Calls to `setClass()` will also create a virtual class, either when only the Class argument is supplied (no slots or superclasses) or when the `contains=` argument includes the special class name `"VIRTUAL"`.
+
+In the latter case, a virtual class may include slots to provide some common behavior without fully defining the object—see the class traceable for an example. Note that `"VIRTUAL"` does not carry over to subclasses; a class that contains a virtual class is not itself automatically virtual.
+
+```{r}
+setClass("A", representation("VIRTUAL")) 
+showClass("A")
+```
+
+
+```{r}
+suppressPackageStartupMessages(library(GenomicRanges))
+showClass("GenomicRanges")
+showClass("GenomicRanges_OR_GRangesList")
+```
+
+
+##
+
+3. Imagine you were going to reimplement factors, dates, and data frames in S4. Sketch out the `setClass()` calls that you would use to define the classes. Think about appropriate slots and prototype.
+
+
+##
+
+3. Imagine you were going to reimplement factors, dates, and data frames in S4. Sketch out the `setClass()` calls that you would use to define the classes. Think about appropriate slots and prototype.
+
+```
+factor(x = character(), levels, labels = levels, 
+  exclude = NA, ordered = is.ordered(x), nmax = NA)
+```
+
+```{r 15-3-6-3, exercise=TRUE}
+setClass("NewFactor",
+         slots=c(x="character",
+                 levels="integer"
+           ),
+         prototype = list(
+           x=NA_character_,
+           levels=seq_along(x)
+         )
+         )
+```
+
+
+
+
+

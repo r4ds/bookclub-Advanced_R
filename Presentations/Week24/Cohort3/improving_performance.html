@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Chapter 24: Improving Performance</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Megan Stodel (@MeganStodel, www.meganstodel.com)" />
+    <link href="Improving_performance_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="Improving_performance_files/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Chapter 24: Improving Performance
+## Advanced R Book Group, Cohort 3
+### Megan Stodel (<span class="citation">@MeganStodel</span>, www.meganstodel.com)
+### 15 March, 2021
+
+---
+
+# Some overarching points
+
+* It can be inefficient to 'improve performance' if you save a tiny amount of time on a rarely used process and spend hours achieving it. 
+
+* It is useful to be exposed to as much R information as possible to achieve a more intuitive sense of measures you can take and to gain a vocabulary that will allow you to more effectively search for answers. 
+
+* Keep a record of things as you troubleshoot. 
+
+---
+# Code organisation
+
+Where you have a few options, write them up as functions so they are easy to compare with benchmarking. 
+
+Perform benchmarking with a good number of cases so it can be representative. 
+
+---
+# Check for existing solutions
+
+* CRAN task views: aim to provide some guidance which packages on CRAN are relevant for tasks related to a certain topic.
+
+* Reverse dependencies of Rcpp, as listed on its CRAN page. Since these packages use C++, they're likely to be fast.
+
+---
+# Exercises (24.3.1)
+
+What are faster alternatives to `lm()`? Which are specifically designed to work with larger datasets?
+
+--
+
+```r
+set.seed(129)
+
+n &lt;- 7
+p &lt;- 2
+X &lt;- matrix(rnorm(n * p), n, p) # no intercept!
+y &lt;- rnorm(n)
+w &lt;- rnorm(n)^2
+```
+---
+
+```r
+mb &lt;- microbenchmark::microbenchmark(lm(y~X), 
+                                     lm.fit(X,y), 
+                                     .lm.fit(X,y), 
+                                     speedglm::speedlm(y~X))
+
+boxplot(mb, notch=TRUE)
+```
+
+```
+## Warning in bxp(list(stats = structure(c(1385.001, 1454.1005, 1581.201,
+## 2379.6015, : some notches went outside hinges ('box'): maybe set notch=FALSE
+```
+
+![](Improving_performance_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+---
+# Exercises (24.3.1)
+
+What package implements a version of match() that's faster for repeated lookups? How much faster is it?
+
+--
+
+{fastmatch} - only slightly faster initially but much faster subsequently. 
+
+---
+# Exercises (24.3.1)
+
+List four functions (not just those in base R) that convert a string into a date time object. What are their strengths and weaknesses?
+
+--
+
+
+```r
+set.seed(100)
+x &lt;- as.character(Sys.Date()-sample(40000, 1000, TRUE))
+mb &lt;- microbenchmark::microbenchmark(as.Date(x),
+                                     date::as.date(x,"ymd"), 
+                                     lubridate::parse_date_time(x,'%y-%m-%d'), 
+                                     anytime::anydate(x))
+```
+---
+
+```r
+boxplot(mb, notch=TRUE)
+```
+
+![](Improving_performance_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+
+---
+# Exercises (24.3.1)
+
+Which packages provide the ability to compute a rolling mean?
+
+--
+
+{zoo}, {roll}, {data.table}, {slider}...
+---
+# Exercises (24.3.1)
+
+What are the alternatives to optim()?
+
+--
+
+There is a [CRAN task view](https://cran.r-project.org/web/views/Optimization.html) on this. 
+
+---
+# Doing as little as possible
+
+Functions that are more tailored to the task are easier to optimize. 
+
+(Discussion point: but less broadly useful?)
+
+---
+Things that might be relevant:
+
+* The function should work with your data as it is, rather than coercing it to a different type. For example, using `apply()` on a data.frame is not ideal because the input gets turned into a matrix.
+
+* Some functions are more efficient if you provide more information, i.e. specify argument values. This is because they either will need to intuit the best approach if you don't provide it, or could use one that is inefficient for your specific use case. For example, `unlist(x, use.names = FALSE)` is much faster than `unlist(x)`.
+
+* If you are calling a method repeatedly, sometimes you can avoid the costs of method dispatch by doing the method lookup once only. For example, `mean.default()` is faster than `mean()` for some vectors.
+
+* The size of the input matters - for example, using `mean()` and `mean.default()` does not have a real different for large vectors because the majority of the time is spent computing the mean and not finding the underlying implementation . So, if you are benchmarking and optimising, use realistic data.
+
+NB: Sometimes speed is at the cost of safety because checks are being removed, so results are more likely to fail in unanticipated ways or handle unexpected (missing) data weirdly.
+
+---
+
+# Exercises (24.4.3) Q1
+
+What's the difference between rowSums() and .rowSums()?
+
+--
+
+`rowSums()` is a wrapper around `.rowSums()`, adding in some extra stuff like checking the input and dealing wiht complex numbers. So we would expect it to be slower but safer.
+
+
+```r
+m &lt;- matrix(rnorm(1e6), nrow = 1000)
+
+mb &lt;- microbenchmark::microbenchmark(
+  rowSums(m),
+  .rowSums(m, 1000, 1000)
+)
+```
+---
+
+```r
+plot(mb)
+```
+
+![](Improving_performance_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+
+But it's not even that much slower...so probably worth using!
+
+---
+# Exercises (24.4.3) Q2
+
+Make a faster version of chisq.test() that only computes the chi-square test statistic when the input is two numeric vectors with no missing values.
+
+--
+
+Looking at the source code for `chisq.test()` it includes a bunch of safety features like validating the input. Strip that all out...
+
+
+```r
+faster_chisq &lt;- function(xy_combo){
+  margin1 &lt;- rowSums(xy_combo)
+  margin2 &lt;- colSums(xy_combo)
+  n &lt;- sum(xy_combo)
+  me &lt;- tcrossprod(margin1, margin2) / n
+  x_stat &lt;- sum((xy_combo - me)^2 / me)
+  df &lt;- (length(margin1) - 1) * (length(margin2) - 1)
+  p.value &lt;- pchisq(x_stat, df = df, lower.tail = FALSE)
+  list(x_stat = x_stat, df = df, p.value = p.value)
+}
+```
+
+---
+
+
+```r
+a &lt;- 21:25
+b &lt;- seq(21, 29, 2)
+m &lt;- cbind(a, b)
+
+mb &lt;- microbenchmark::microbenchmark(
+  chisq.test(m),
+  faster_chisq(m)
+)
+```
+---
+
+```r
+plot(mb)
+```
+
+![](Improving_performance_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+
+---
+# Vectorise
+
+Makes problems simpler - think about entire vectors rather than the component parts. Loops are written in C instead of R, which are faster.
+
+Some key applications:
+
+* Vectorised matrix functions, like `rowSums()` and `colMeans()`.
+
+* Vectorised subsetting, for example `x[is.na(x)] &lt;- 0` will replace all missing values with 0.
+
+* Good for extracting or replacing values in scattered locations.
+
+But there is a downside: it is harder to predict how operations will scale.
+
+You're often better off writing your vectorised function in C++ which is next chapter!
+
+---
+# Excercises (24.5.1) Q1
+
+The density functions, e.g., dnorm(), have a common interface. Which arguments are vectorised over? What does rnorm(10, mean = 10:1) do?
+
+--
+
+They are vectorised over their numeric arguments, which are the first argument, and then `mean` and `sd`.
+
+The given function generates ten random numbers from different normal distributions, which differe in their means based on the sequence.
+
+---
+# Excercises (24.5.1) Q1
+
+Compare the speed of apply(x, 1, sum) with rowSums(x) for varying sizes of x.
+
+--
+
+
+```r
+rowsums &lt;- bench::press(
+  p = seq(500, 5000, length.out = 10),
+  {
+    mat &lt;- tcrossprod(rnorm(p), rnorm(p))
+    bench::mark(
+      rowSums = rowSums(mat),
+      apply = apply(mat, 1, sum)
+    )
+  }
+)
+```
+---
+![](Improving_performance_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+---
+# Excercises (24.5.1) Q1
+How can you use crossprod() to compute a weighted sum? How much faster is it than the naive sum(x * w)?
+
+--
+
+We can hand the vectors to crossprod(), which converts them to row- and column-vectors and then multiplies these. The result is the dot product, which corresponds to a weighted sum.
+
+
+```r
+x &lt;- rnorm(10)
+w &lt;- rnorm(10)
+all.equal(sum(x * w), crossprod(x, w)[[1]])
+```
+
+```
+## [1] TRUE
+```
+
+---
+
+
+```r
+weightedsum &lt;- bench::press(
+  n = 1:10,
+  {
+    x &lt;- rnorm(n * 1e6)
+    bench::mark(
+      sum = sum(x * x),
+      crossprod = crossprod(x, x)[[1]]
+    )
+  }
+)
+```
+---
+![](Improving_performance_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+
+---
+# Avoiding copies
+
+Growing objects with loops is slow. Avoid.
+
+---
+# Case study
+
+Let's look through [in the book](https://adv-r.hadley.nz/perf-improve.html#t-test).
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
