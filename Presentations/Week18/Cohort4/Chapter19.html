@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced R</title>
+    <meta charset="utf-8" />
+    <meta name="date" content="2021-02-22" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="addendum.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: left, middle, title-slide
+
+# Advanced R
+## Chapter 19: Quasiquotation
+### <div class="line-block">Stephen Holsenbeck<br />
+Template &amp; Layout: Jon Harmon</div>
+### <svg style="height:0.8em;top:.04em;position:relative;fill:white;" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg> <a href="http://github.com/yogat3ch">yogat3ch</a><br><svg style="height:0.8em;top:.04em;position:relative;fill:white;" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg> <a href="http://twitter.com/ascensionasana">ascensionasana</a><br><svg style="height:0.8em;top:.04em;position:relative;fill:white;" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg> <a href="http://linkedin.com/in/holsenbeck">holsenbeck</a><br><svg style="height:0.8em;top:.04em;position:relative;fill:white;" viewBox="0 0 496 512"><path d="M336.5 160C322 70.7 287.8 8 248 8s-74 62.7-88.5 152h177zM152 256c0 22.2 1.2 43.5 3.3 64h185.3c2.1-20.5 3.3-41.8 3.3-64s-1.2-43.5-3.3-64H155.3c-2.1 20.5-3.3 41.8-3.3 64zm324.7-96c-28.6-67.9-86.5-120.4-158-141.6 24.4 33.8 41.2 84.7 50 141.6h108zM177.2 18.4C105.8 39.6 47.8 92.1 19.3 160h108c8.7-56.9 25.5-107.8 49.9-141.6zM487.4 192H372.7c2.1 21 3.3 42.5 3.3 64s-1.2 43-3.3 64h114.6c5.5-20.5 8.6-41.8 8.6-64s-3.1-43.5-8.5-64zM120 256c0-21.5 1.2-43 3.3-64H8.6C3.2 212.5 0 233.8 0 256s3.2 43.5 8.6 64h114.6c-2-21-3.2-42.5-3.2-64zm39.5 96c14.5 89.3 48.7 152 88.5 152s74-62.7 88.5-152h-177zm159.3 141.6c71.4-21.2 129.4-73.7 158-141.6h-108c-8.8 56.9-25.6 107.8-50 141.6zM19.3 352c28.6 67.9 86.5 120.4 158 141.6-24.4-33.8-41.2-84.7-50-141.6h-108z"/></svg> <a href="http://www.themindful.life">themindful.life</a>
+### 2021-02-22
+
+---
+
+
+
+
+
+
+## 19.1: [Introduction](https://adv-r.hadley.nz/quasiquotation.html#introduction-18)
+
+* **Quotation** prevents evaluation
+* **Unquotation** re-allows evaluation
+* **Quasiquotation** allows you to mix the two
+  * Useful (?) for metaprogramming
+  * Let's see if that's true!
+
+---
+
+### [19.2: Motivation](https://adv-r.hadley.nz/quasiquotation.html#quasi-motivation)
+
+
+```r
+cement &lt;- function(...) {
+  args &lt;- rlang::ensyms(...)
+  paste(
+    purrr::map(args, rlang::as_string), 
+    collapse = " "
+  )
+}
+```
+--
+
+```r
+canonical &lt;- paste(
+  letters[c(3, 15, 14, 20, 18, 9, 22, 5, 4)],
+  collapse = ""
+)
+cement(
+  This, example, is, !!canonical
+)
+```
+
+```
+## [1] "This example is contrived"
+```
+
+---
+
+### [19.2.1: Vocabulary](https://adv-r.hadley.nz/quasiquotation.html#vocabulary)
+
+* **Evaluated** arguments obey R's normal rules.
+* **Quoted** arguments are captured and processed in a special way.
+
+--
+
+```r
+# Evaluated
+mean(1:5)
+```
+
+```
+## [1] 3
+```
+
+```r
+1:5
+```
+
+```
+## [1] 1 2 3 4 5
+```
+--
+
+```r
+# Quoted
+library(rlang)
+```
+
+```r
+rlang
+#&gt; Error: object 'rlang' not found
+```
+
+---
+
+### 19.2.1: Cont
+
+* **quoting function**
+  * a function that quotes 1 or more arguments
+* non-standard evaluation (NSE)
+&lt;p style="font-size:.75em"&gt;&lt;strong&gt;quoting function&lt;/strong&gt; == function that quotes 1 or more arguments == NSE&lt;/p&gt;
+
+--
+
+**Kinda.** Technically NSE is about arguments only.
+
+---
+
+### [19.2.2: Exercises: Base](https://adv-r.hadley.nz/quasiquotation.html#exercises-56)
+
+
+
+&lt;code class ='r hljs remark-code'&gt;library(MASS)&lt;br&gt;&lt;br&gt;mtcars2 &lt;- subset(mtcars, cyl == 4)&lt;br&gt;&lt;br&gt;with(mtcars2, sum(vs))&lt;/code&gt;
+
+```
+
+## [1] 10
+
+```
+
+
+
+&lt;code class ='r hljs remark-code'&gt;sum(mtcars2$am)&lt;/code&gt;
+
+```
+
+## [1] 8
+
+```
+---
+### [19.2.2: Exercises: Base](https://adv-r.hadley.nz/quasiquotation.html#exercises-56)
+
+&lt;code class ='r hljs remark-code'&gt;library(&lt;span style='background-color:#ffff7f'&gt;MASS&lt;/span&gt;)&lt;br&gt;&lt;br&gt;mtcars2 &lt;- subset(mtcars, &lt;span style='background-color:#ffff7f'&gt;cyl == 4&lt;/span&gt;)&lt;br&gt;&lt;br&gt;with(mtcars2, &lt;span style='background-color:#ffff7f'&gt;sum(vs)&lt;/span&gt;)&lt;/code&gt;
+
+```
+
+## [1] 10
+
+```
+
+
+
+&lt;code class ='r hljs remark-code'&gt;sum(mtcars2$&lt;span style='background-color:#ffff7f'&gt;am&lt;/span&gt;)&lt;/code&gt;
+
+```
+
+## [1] 8
+
+```
+
+---
+
+### [19.2.2: Exercises: Tidyverse](https://adv-r.hadley.nz/quasiquotation.html#exercises-56)
+
+
+&lt;code class ='r hljs remark-code'&gt;suppressWarnings({&lt;br&gt;&amp;nbsp;&amp;nbsp;library(dplyr, warn.conflicts = FALSE)&lt;br&gt;&amp;nbsp;&amp;nbsp;library(ggplot2, warn.conflicts = FALSE)&lt;br&gt;})&lt;br&gt;byCyl &lt;- mtcars %&gt;%&lt;br&gt;&amp;nbsp;&amp;nbsp;group_by(cyl) %&gt;%&lt;br&gt;&amp;nbsp;&amp;nbsp;summarise(mean = mean(mpg), .groups = "drop_last")&lt;br&gt;&lt;br&gt;ggplot(byCyl, aes(cyl, mean)) + geom_point()&lt;/code&gt;
+
+
+![](Chapter19_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+
+---
+
+### [19.2.2: Exercises: Tidyverse](https://adv-r.hadley.nz/quasiquotation.html#exercises-56)
+
+
+&lt;code class ='r hljs remark-code'&gt;suppressWarnings({&lt;br&gt;&amp;nbsp;&amp;nbsp;library(&lt;span style='background-color:#ffff7f'&gt;dplyr&lt;/span&gt;, warn.conflicts = FALSE)&lt;br&gt;&amp;nbsp;&amp;nbsp;library(&lt;span style='background-color:#ffff7f'&gt;ggplot2&lt;/span&gt;, warn.conflicts = FALSE)&lt;br&gt;})&lt;br&gt;byCyl &lt;- mtcars %&gt;%&lt;br&gt;&amp;nbsp;&amp;nbsp;group_by(&lt;span style='background-color:#ffff7f'&gt;cyl&lt;/span&gt;) %&gt;%&lt;br&gt;&amp;nbsp;&amp;nbsp;summarise(mean = mean(&lt;span style='background-color:#ffff7f'&gt;mpg&lt;/span&gt;), .groups = "drop_last")&lt;br&gt;&lt;br&gt;ggplot(byCyl, aes(&lt;span style='background-color:#ffff7f'&gt;cyl&lt;/span&gt;, &lt;span style='background-color:#ffff7f'&gt;mean&lt;/span&gt;)) + geom_point()&lt;/code&gt;
+
+
+![](Chapter19_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+
+
+---
+
+## 19.3: [Quoting](https://adv-r.hadley.nz/quasiquotation.html#quoting)
+
+* "We'll need a pair of functions" (~6 pairs, including base)
+  * **directly supplied** vs
+  * **indirectly supplied**
+
+---
+
+### 19.3.1: [Capturing expressions](https://adv-r.hadley.nz/quasiquotation.html#capturing-expressions)
+  
+* `{rlang}` capturing expressions:
+  * `expr`:  quotes expression directly
+
+```r
+rlang::expr(x)
+```
+
+```
+## x
+```
+
+```r
+(function(x) rlang::expr(x)) (1 + 2 + 3)
+```
+
+```
+## x
+```
+--  
+  * `enexpr`: quote the expression from the user
+
+```r
+(function(x) rlang::enexpr(x)) (1 + 2 + 3)
+```
+
+```
+## 1 + 2 + 3
+```
+
+
+---
+
+### 19.3.1: [Capturing expressions](https://adv-r.hadley.nz/quasiquotation.html#capturing-expressions)
+ * `exprs`: quotes multiple expressions directly
+
+```r
+rlang::exprs(x = 1 ^ 2, y = 2 ^ 3, z = 3 ^ 4)
+```
+
+```
+## $x
+## 1^2
+## 
+## $y
+## 2^3
+## 
+## $z
+## 3^4
+```
+--
+* `enexprs`: quotes multiple expressions from the user
+
+```r
+(function(...) rlang::enexprs(...)) (I(4 * 10e8), sd(c(4,5)))
+```
+
+```
+## [[1]]
+## I(4 * 1e+09)
+## 
+## [[2]]
+## sd(c(4, 5))
+```
+
+---
+
+### 19.3.2: [Capturing symbols](https://adv-r.hadley.nz/quasiquotation.html#capturing-symbols)
+
+* `sym`: converts the character data in an object or character directly to a symbol
+
+```r
+rlang::sym("this")
+```
+
+```
+## this
+```
+
+```r
+chr &lt;- "mpg"
+sym_object &lt;- rlang::sym(chr)
+# sneak peak
+dplyr::select(mtcars, !!sym_object) %&gt;% head(1)
+```
+
+```
+##           mpg
+## Mazda RX4  21
+```
+---
+### 19.3.2: Cont.
+
+* `ensym`: converts user specified character data in an object or character directly to a symbol
+
+```r
+(function(data, symbol) dplyr::select(data, !!rlang::ensym(symbol))) (mtcars, "mpg") %&gt;% head(1)
+```
+
+```
+##           mpg
+## Mazda RX4  21
+```
+
+```r
+(function(data, symbol) dplyr::select(data, all_of(!!rlang::ensym(symbol)))) (mtcars, chr) %&gt;% head(1)
+```
+
+```
+##           mpg
+## Mazda RX4  21
+```
+---
+### 19.3.2: [Capturing symbols](https://adv-r.hadley.nz/quasiquotation.html#capturing-symbols)
+
+* `syms`: converts multiple characters in an object or character vector directly to a symbol
+
+```r
+rlang::syms(c("this", "that", "the other"))
+```
+
+```
+## [[1]]
+## this
+## 
+## [[2]]
+## that
+## 
+## [[3]]
+## `the other`
+```
+
+```r
+chr &lt;- c("mpg", "hp")
+sym_object &lt;- rlang::syms(chr)
+dplyr::select(mtcars, !!!sym_object) %&gt;% head(1)
+```
+
+```
+##           mpg  hp
+## Mazda RX4  21 110
+```
+---
+### 19.3.2: Cont.
+
+* `ensyms`: converts user specified character vector to symbols
+
+```r
+(function(data, symbols) dplyr::select(data, all_of(!!!rlang::ensyms(symbols)))) (mtcars, chr) %&gt;% head(1)
+```
+
+```
+##           mpg  hp
+## Mazda RX4  21 110
+```
+
+```r
+(function(data, ...) dplyr::select(data, !!!rlang::ensyms(...))) (mtcars, "mpg", "drat", "hp") %&gt;% head(1)
+```
+
+```
+##           mpg drat  hp
+## Mazda RX4  21  3.9 110
+```
+
+---
+
+### 19.3.3: [With base R](https://adv-r.hadley.nz/quasiquotation.html#with-base-r)
+
+* `expr` = `quote`
+* `exprs` = `alist`
+* The base function closest to `enexpr` is `substitute`
+
+
+```r
+(function(x) substitute(x ^ 2)) (x + y)
+```
+
+```
+## (x + y)^2
+```
+
+* The equivalent to `enexprs` is an undocumented feature of `substitute` 
+
+```r
+(function(...) as.list(substitute(...()))) (x = 1, y = 10 * z)
+```
+
+```
+## $x
+## [1] 1
+## 
+## $y
+## 10 * z
+```
+  
+ * `bquote` provides a limited form of quasiquotation, see [Section 19.5](https://adv-r.hadley.nz/quasiquotation.html#base-nonquote)
+ * `~`, the formula, is a quoting function that also captures the environment. See [Section 20.3.4](https://adv-r.hadley.nz/evaluation.html#quosure-impl).
+---
+
+### 19.3.4: [Substitution](https://adv-r.hadley.nz/quasiquotation.html#substitution)
+
+* `substitute` can be used to... substitute
+
+
+```r
+(function(x) substitute(x * 2)) (a + b + c)
+```
+
+```
+## (a + b + c) * 2
+```
+
+---
+
+### 19.3.4: [Substitution](https://adv-r.hadley.nz/quasiquotation.html#substitution)
+
+* <span style="color:#0c5460;">Recommendation:</span> use the second argument to substitute to make it explicit
+
+
+```r
+(function(a) substitute(x + a, list(x = 4))) (a = 10 * x)
+```
+
+```
+## 4 + a
+```
+--
+<span style="color:#856404;">Warning:</span> notice that it inactivates expression substitution when a list is supplied to substitute
+
+
+```r
+(function(a) substitute(x + a)) (a = 10 * x)
+```
+
+```
+## x + 10 * x
+```
+
+---
+
+### 19.3: [Substitution - Summary ](https://adv-r.hadley.nz/quasiquotation.html#summary-1)
+&lt;div class="inline-table"&gt;&lt;table class="table table-sm"&gt;
+&lt;caption&gt;
+&lt;span id="tab:quoting-rlang"&gt;Table 19.1: &lt;/span&gt; rlang quasiquoting functions&lt;/caption&gt;
+&lt;thead&gt;&lt;tr class="header"&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;Developer&lt;/th&gt;
+&lt;th&gt;User&lt;/th&gt;
+&lt;/tr&gt;&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class="odd"&gt;
+&lt;td&gt;One&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;&lt;a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html"&gt;expr()&lt;/a&gt;&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;&lt;a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html"&gt;enexpr()&lt;/a&gt;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class="even"&gt;
+&lt;td&gt;Many&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;&lt;a href="https://ggplot2.tidyverse.org/reference/tidyeval.html"&gt;exprs()&lt;/a&gt;&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;&lt;a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html"&gt;enexprs()&lt;/a&gt;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;&lt;/div&gt;
+&lt;hr&gt;
+
+--
+
+&lt;div class="inline-table"&gt;&lt;table class="table table-sm"&gt;
+&lt;caption&gt;
+&lt;span id="tab:quoting-base"&gt;Table 19.2: &lt;/span&gt; base R quoting functions&lt;/caption&gt;
+&lt;thead&gt;&lt;tr class="header"&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;Developer&lt;/th&gt;
+&lt;th&gt;User&lt;/th&gt;
+&lt;/tr&gt;&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class="odd"&gt;
+&lt;td&gt;One&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;&lt;a href="https://rdrr.io/r/base/substitute.html"&gt;quote()&lt;/a&gt;&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;&lt;a href="https://rdrr.io/r/base/substitute.html"&gt;substitute()&lt;/a&gt;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class="even"&gt;
+&lt;td&gt;Many&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;&lt;a href="https://rdrr.io/r/base/list.html"&gt;alist()&lt;/a&gt;&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;&lt;a href="https://rdrr.io/r/base/list.html"&gt;as.list(substitute(...()))&lt;/a&gt;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;&lt;/div&gt;
+---
+## 19.4: [Unquoting](https://adv-r.hadley.nz/quasiquotation.html#unquoting)
+
+* _quasiquotation_ means you can unquote selectively
+* Base R doesn't allow you to selectively unquote (mostly)
+* Unquoting means "replace the symbol with stored object itself"
+
+---
+
+### 19.4.1: [Unquoting one argument](https://adv-r.hadley.nz/quasiquotation.html#unquoting-one-argument)
+
+* The confusingly beautiful heart of quasiquotation: **!!**
+* Use it to unquote one thing
+* `!!` preserves operator precedence because it works with expressions
+
+
+```r
+x &lt;- expr(-1)
+y &lt;- "a character"
+rlang::expr(f(!!x, y))
+```
+
+```
+## f(-1, y)
+```
+
+```r
+rlang::expr(f(x, !!y))
+```
+
+```
+## f(x, "a character")
+```
+
+```r
+rlang::expr(mean(1:3) + mean(4:6))
+```
+
+```
+## mean(1:3) + mean(4:6)
+```
+
+```r
+rlang::expr(!!mean(1:3) + !!mean(4:6))
+```
+
+```
+## 2 + 5
+```
+
+
+---
+
+### 19.4.2: [Unquoting a function](https://adv-r.hadley.nz/quasiquotation.html#unquoting-a-function)
+
+* Now we start to move toward metaprogramming
+* `expr(!!f(x, y))` unquotes the result of `f(x, y)`, so an extra pair of parentheses is needed
+
+
+```r
+replace_f &lt;- function(func) {
+  rlang::expr((!!rlang::enexpr(func))(x, y)) # Would be better if we used the actual formals...
+}
+replace_f(mean)
+```
+
+```
+## mean(x, y)
+```
+
+```r
+replace_f(rlang::enexpr)
+```
+
+```
+## rlang::enexpr(x, y)
+```
+---
+### 19.4.2: [Unquoting a function Cont.](https://adv-r.hadley.nz/quasiquotation.html#unquoting-a-function)
+* to avoid nested parentheses it can be clearer to use `rlang::call2`:
+
+```r
+replace_f &lt;- function(func) {
+  call2(enexpr(func), expr(x), expr(y))
+}
+replace_f(mean)
+```
+
+```
+## mean(x, y)
+```
+
+---
+### 19.4.3 [Unquoting a missing argument](https://adv-r.hadley.nz/quasiquotation.html#unquote-missing)
+Will it work?
+
+```r
+arg &lt;- missing_arg()
+expr(foo(!!arg, !!arg))
+```
+
+```
+## Error in enexpr(expr): argument "arg" is missing, with no default
+```
+
+workaround: `rlang::maybe_missing`
+
+```r
+expr(foo(!!maybe_missing(arg), !!maybe_missing(arg)))
+```
+
+```
+## foo(, )
+```
+
+---
+### 19.4.4 [Unquoting in special forms](https://adv-r.hadley.nz/quasiquotation.html#unquoting-in-special-forms)
+
+```r
+x &lt;- expr(x)
+expr(df$!!x)
+```
+
+```
+## Error: &lt;text&gt;:2:9: unexpected '!'
+## 1: x &lt;- expr(x)
+## 2: expr(df$!
+##            ^
+```
+
+```r
+(function(x) expr(`$`(df, !!enexpr(x)))) (y)
+```
+
+```
+## df$y
+```
+
+---
+### 19.4.5: [Unquoting many arguments](https://adv-r.hadley.nz/quasiquotation.html#unquoting-many-arguments)
+
+* `!!!` is to `!!` as `exprs` is to `expr`
+* works with or without names
+* **"unquote-splice"** because it **unquotes** the list then **splices** them in as if they were all separate arguments
+* can be used in any rlang function that takes ... regardless of whether or not ... is quoted or evaluated.
+
+
+```r
+multi_arg &lt;- list(a = 1, b = 2, c = "other")
+rlang::expr(f(!!!multi_arg, another_arg))
+```
+
+```
+## f(a = 1, b = 2, c = "other", another_arg)
+```
+
+```r
+call2("f", !!!multi_arg, expr(y))
+```
+
+```
+## f(a = 1, b = 2, c = "other", y)
+```
+
+---
+
+### 19.4.6: [The polite fiction of !!](https://adv-r.hadley.nz/quasiquotation.html#the-polite-fiction-of)
+
+* `!!` and `!!!` don't actually exist
+
+
+```r
+rlang::`!!`
+```
+
+```
+## function (x) 
+## {
+##     abort("`!!` can only be used within a quasiquoted argument")
+## }
+## &lt;bytecode: 0x000000001d794700&gt;
+## &lt;environment: namespace:rlang&gt;
+```
+
+```r
+rlang::`!!!`
+```
+
+```
+## function (x) 
+## {
+##     abort("`!!!` can only be used within a quasiquoted argument")
+## }
+## &lt;bytecode: 0x000000001d81b9b8&gt;
+## &lt;environment: namespace:rlang&gt;
+```
+---
+### 19.4.6: Cont.
+
+ * it's actually the built-in
+
+```r
+!TRUE
+```
+
+```
+## [1] FALSE
+```
+
+```r
+!!TRUE
+```
+
+```
+## [1] TRUE
+```
+
+```r
+!!!TRUE
+```
+
+```
+## [1] FALSE
+```
+---
+### 19.4.6: Cont.
+The biggest downside to using a fake operator is that you might get silent errors when misusing !! outside of quasiquoting functions:
+* silently incorrect results when working with numeric values
+
+```r
+df &lt;- data.frame(x = 1:5)
+y &lt;- 100
+with(df, x + !!y)
+```
+
+```
+## [1] 2 3 4 5 6
+```
+ * If you actually need double negation use `!(!x)`
+ 
+---
+
+### 19.4.7: [Non-standard ASTs](https://adv-r.hadley.nz/quasiquotation.html#non-standard-ast)
+if you inline more complex objects, their attributes are not printed:
+
+```r
+(x1 &lt;- expr(class(!!data.frame(x = 10))))
+```
+
+```
+## class(list(x = 10))
+```
+
+```r
+eval(x1)
+```
+
+```
+## [1] "data.frame"
+```
+-- 
+The solution? Use `rlang::expr_print`
+
+```r
+expr_print(x1)
+```
+
+```
+## class(&lt;df[,1]&gt;)
+```
+
+---
+### 19.5 [Non-Quoting](https://adv-r.hadley.nz/quasiquotation.html#base-nonquote)
+
+`bquote`
+
+* does not provide an unquote-splice operator that allows you to unquote multiple expressions stored in a list
+* lacks the ability to handle code accompanied by an environment
+
+
+```r
+xyz &lt;- bquote((x + y + z))
+bquote(-.(xyz) / 2)
+```
+
+```
+## -(x + y + z)/2
+```
+
+---
+
+### 19.5 Non-quoting techniques 1/4
+There are four basic forms seen in base R:
+
+1. A pair of quoting and non-quoting  _functions_
+  * closely related to `$`: `subset`, `transform`, and `with`
+  * `&lt;-/assign` and `::/getExportedValue` work similarly
+
+
+```r
+x &lt;- list(var = 1, y = 2)
+var &lt;- "y"
+x$var
+```
+
+```
+## [1] 1
+```
+
+```r
+x[[var]]
+```
+
+```
+## [1] 2
+```
+
+---
+
+### 19.5 Non-quoting techniques 2/4
+
+2. A pair of quoting and non-quoting _arguments_
+* `data` and `save` work similarly
+
+```r
+x &lt;- 1
+rm(x)
+ls(pattern = "x")
+```
+
+```
+## [1] "x1"  "xyz"
+```
+
+```r
+y &lt;- 2
+vars &lt;- c("y", "vars")
+rm(list = vars)
+ls(pattern = "^y$")
+```
+
+```
+## character(0)
+```
+
+---
+
+### 19.5 Non-quoting techniques 3/4
+
+3. An argument that controls whether a different argument is quoting or non-quoting
+
+```r
+library(MASS)
+pkg &lt;- "MASS"
+library(pkg, character.only = TRUE)
+```
+
+
+---
+### 19.5 Non-quoting techniques 4/4
+
+4. Quoting if evaluation fails
+  * `ls`, `page`, and `match.fun`
+
+```r
+# Shows help for var
+help(var)
+
+var &lt;- "mean"
+# Shows help for mean
+help(var)
+
+var &lt;- 10
+# Shows help for var
+help(var)
+```
+
+---
+## [19.6 ... (dot-dot-dot)](https://adv-r.hadley.nz/quasiquotation.html#tidy-dots)
+
+* This section is the leftovers, it isn't about `...` per se
+* `:=` "colon-equals" or "walrus"
+  * Another fiction to trick R into working how we want
+  * LHS of `=` can't be evaluated, so we trick R
+
+
+```r
+var &lt;- "my_var_name"
+val &lt;- 1:3
+tibble::tibble(!!var := val)
+```
+
+```
+## # A tibble: 3 x 1
+##   my_var_name
+##         &lt;int&gt;
+## 1           1
+## 2           2
+## 3           3
+```
+
+---
+### [19.6.1 - Examples](https://adv-r.hadley.nz/quasiquotation.html#examples)
+
+Dots (...) can be converted to a usable list with `rlang::list2` or [`rlang::dots_list`]((https://adv-r.hadley.nz/quasiquotation.html#dots_list))
+
+```r
+set_attr &lt;- function(.x, ...) {
+  attr &lt;- rlang::list2(...)
+  attributes(.x) &lt;- attr
+  .x
+}
+
+attrs &lt;- list(x = 1, y = 2)
+attr_name &lt;- "z"
+
+1:10 %&gt;%
+  set_attr(w = 0, !!!attrs, !!attr_name := 3) %&gt;% 
+  str()
+```
+
+```
+##  int [1:10] 1 2 3 4 5 6 7 8 9 10
+##  - attr(*, "w")= num 0
+##  - attr(*, "x")= num 1
+##  - attr(*, "y")= num 2
+##  - attr(*, "z")= num 3
+```
+
+---
+
+### [19.6.2: exec()](https://adv-r.hadley.nz/quasiquotation.html#exec)
+
+* `rlang::exec` is similar to `base::do.call`
+* Allows you to use unquoting to do fancy things
+
+
+```r
+# Directly
+exec("mean", x = 1:10, na.rm = TRUE, trim = 0.1)
+```
+
+```
+## [1] 5.5
+```
+
+```r
+# Indirectly
+args &lt;- list(x = 1:10, na.rm = TRUE, trim = 0.1)
+exec("mean", !!!args)
+```
+
+```
+## [1] 5.5
+```
+
+```r
+# Mixed
+params &lt;- list(na.rm = TRUE, trim = 0.1)
+exec("mean", x = 1:10, !!!params)
+```
+
+```
+## [1] 5.5
+```
+
+---
+### [19.6.2: exec() - Cont.](https://adv-r.hadley.nz/quasiquotation.html#exec)
+
+```r
+# Indirect arguments
+arg_name &lt;- "na.rm"
+arg_val &lt;- TRUE
+exec("mean", 1:10, !!arg_name := arg_val)
+```
+
+```
+## [1] 5.5
+```
+
+```r
+# Functionalization
+x &lt;- c(runif(10), NA)
+funs &lt;- c("mean", "median", "sd")
+purrr::map_dbl(funs, exec, x, na.rm = TRUE)
+```
+
+```
+## [1] 0.6329536 0.6326214 0.3121253
+```
+
+---
+### [19.6.3: dots_list()](https://adv-r.hadley.nz/quasiquotation.html#dots_list)
+
+ * `.ignore_empty` allows you to control exactly which arguments are ignored.
+ * `.homonyms` controls what happens if multiple arguments use the same name
+ * `.preserve_empty` controls what to do with them empty arguments that are not ignored
+ 
+---
+### [19.6.4: With base R](https://adv-r.hadley.nz/quasiquotation.html#do-call)
+
+
+`do.call`: The first argument, what, gives a function to call. The second argument, args, is a list of arguments to pass to that function.
+
+
+```r
+do.tibble &lt;- function(...) {
+  do.call(tibble::tibble, rlang::dots_list(...))
+}
+do.tibble(a = 1:5)
+```
+
+```
+## # A tibble: 5 x 1
+##       a
+##   &lt;int&gt;
+## 1     1
+## 2     2
+## 3     3
+## 4     4
+## 5     5
+```
+
+
+---
+## 19.7: Case studies
+
+### [19.7.1: lobstr::ast()](https://adv-r.hadley.nz/quasiquotation.html#lobstrast)
+
+
+```r
+z &lt;- expr(foo(x, y))
+lobstr::ast(z)
+```
+
+```
+## z
+```
+
+```r
+lobstr::ast(!!z)
+```
+
+```
+## o-foo 
+## +-x 
+## \-y
+```
+
+---
+### [19.7.2: Map-reduce to generate code](https://adv-r.hadley.nz/quasiquotation.html#map-reduce-to-generate-code)
+
+---
+### [19.7.3: Slicing an array](https://adv-r.hadley.nz/quasiquotation.html#slicing-an-array)
+
+```r
+slice &lt;- function(x, along, index) {
+  stopifnot(length(along) == 1)
+  stopifnot(length(index) == 1)
+    
+  nd &lt;- length(dim(x))
+  indices &lt;- rep(list(missing_arg()), nd)
+  indices[[along]] &lt;- index
+  
+  expr(x[!!!indices])
+}
+x &lt;- array(sample(30), c(5, 2, 3))
+slice(x, 1, 3)
+```
+
+```
+## x[3, , ]
+```
+
+```r
+slice(x, 2, 2)
+```
+
+```
+## x[, 2, ]
+```
+
+```r
+slice(x, 3, 1)
+```
+
+```
+## x[, , 1]
+```
+---
+### [19.7.4: Creating functions](https://adv-r.hadley.nz/quasiquotation.html#new-function)
+`rlang::new_function`: a function that creates a function from its three components: arguments, body, and (optionally) an environment:
+
+
+```r
+power &lt;- function(exponent) {
+  new_function(
+    exprs(x = ), 
+    expr({
+      x ^ !!exponent
+    }), 
+    caller_env()
+  )
+}
+power(0.5)
+```
+
+```
+## function (x) 
+## {
+##     x^0.5
+## }
+```
+---
+### [19.7.5: Exercises](https://adv-r.hadley.nz/quasiquotation.html#exercises-60)
+
+2. Re-implement the Box-Cox transform defined below using unquoting and `new_function`:
+
+
+```r
+bc &lt;- function(lambda) {
+  if (lambda == 0) {
+    function(x) log(x)
+  } else {
+    function(x) (x ^ lambda - 1) / lambda
+  }
+}
+```
+---
+### [19.7.5: Exercises Cont. ](https://adv-r.hadley.nz/quasiquotation.html#exercises-60)
+
+
+```r
+bc2 &lt;- function(lambda) {
+  rlang::new_function(
+    rlang::exprs(lambda = ),
+    purrr::when(lambda, 
+         . == 0 ~ expr(log(x)),
+          ~ expr((x ^ lambda - 1) / lambda))
+  )
+}
+bc2(0)
+```
+
+```
+## function (lambda) 
+## log(x)
+## &lt;environment: 0x0000000014e2ca78&gt;
+```
+
+```r
+bc2(2)
+```
+
+```
+## function (lambda) 
+## (x^lambda - 1)/lambda
+## &lt;environment: 0x00000000148796f8&gt;
+```
+---
+## [19.8 History](https://adv-r.hadley.nz/quasiquotation.html#history)
+
+Quasiquotation was first used in a programming language, Lisp, in the mid-1970s.103 Lisp has one quoting function `` ` ``, and uses `,` for unquoting. Most languages with a Lisp heritage behave similarly. For example, Racket (`` ` `` and @), Clojure (`` ` `` and ~), and Julia (: and @) all have quasiquotation tools that differ only slightly from Lisp. 
+---
+### [19.8 History Cont](https://adv-r.hadley.nz/quasiquotation.html#history)
+
+My attempt to resolve these limitations led to the lazyeval package (2014-2015). Unfortunately, my analysis of the problem was incomplete and while lazyeval solved some problems, it created others. It was not until I started working with Lionel Henry on the problem that all the pieces finally fell into place and we created the full tidy evaluation framework (2017).
+ - Hadley Wickham
+ 
+---
+.center[# Thank you!]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightLines": true,
+"highlightStyle": "github",
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<style>
+.logo {
+  background-image: url(r4ds.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 110px;
+  height: 128px;
+  z-index: 0;
+}
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"></div>';
+  });
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,729 @@
+---
+title: "Advanced R"
+subtitle: "Chapter 19: Quasiquotation"
+author: |
+  | Stephen Holsenbeck
+  | Template & Layout: Jon Harmon
+institute: '`r fontawesome::fa("github", fill = "white")`&nbsp;[yogat3ch](http://github.com/yogat3ch)<br>`r fontawesome::fa("twitter", fill = "white")`&nbsp;[ascensionasana](http://twitter.com/ascensionasana)<br>`r fontawesome::fa("linkedin", fill = "white")`&nbsp;[holsenbeck](http://linkedin.com/in/holsenbeck)<br>`r fontawesome::fa("globe", fill = "white")`&nbsp;[themindful.life](http://www.themindful.life)'
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    nature:
+      highlightLines: true
+      highlightStyle: github
+      countIncrementalSlides: false
+      titleSlideClass: ['left', 'middle']
+    lib_dir: libs
+    css: [xaringan-themer.css, addendum.css]
+    includes:
+      after_body: insert-logo.html
+---
+
+```{r xaringan-themer, include = FALSE}
+library(xaringanthemer)
+style_mono_light(
+  base_color = "#3092FF",
+  header_font_google = google_font("Josefin Sans"),
+  text_font_google   = google_font("Montserrat", "300", "300i"),
+  code_font_google   = google_font("Droid Mono"),
+)
+sass::sass(sass::sass_file("libs/addendum.scss"), output = "addendum.css", cache = FALSE)
+```
+
+```{r libraries, include = FALSE}
+library(rlang)
+library(knitr)
+library(purrr)
+library(flair)
+```
+
+## 19.1: [Introduction](https://adv-r.hadley.nz/quasiquotation.html#introduction-18)
+
+* **Quotation** prevents evaluation
+* **Unquotation** re-allows evaluation
+* **Quasiquotation** allows you to mix the two
+  * Useful (?) for metaprogramming
+  * Let's see if that's true!
+
+---
+
+### [19.2: Motivation](https://adv-r.hadley.nz/quasiquotation.html#quasi-motivation)
+
+```{r cement, results='hide'}
+cement <- function(...) {
+  args <- rlang::ensyms(...)
+  paste(
+    purrr::map(args, rlang::as_string), 
+    collapse = " "
+  )
+}
+```
+--
+```{r cement-call}
+canonical <- paste(
+  letters[c(3, 15, 14, 20, 18, 9, 22, 5, 4)],
+  collapse = ""
+)
+cement(
+  This, example, is, !!canonical
+)
+```
+
+---
+
+### [19.2.1: Vocabulary](https://adv-r.hadley.nz/quasiquotation.html#vocabulary)
+
+* **Evaluated** arguments obey R's normal rules.
+* **Quoted** arguments are captured and processed in a special way.
+
+--
+```{r vocabulary}
+# Evaluated
+mean(1:5)
+1:5
+```
+--
+```{r vocabulary-2}
+# Quoted
+library(rlang)
+```
+```{r vocabulary-quoted, eval = FALSE}
+rlang
+#> Error: object 'rlang' not found
+```
+
+---
+
+### 19.2.1: Cont
+
+* **quoting function**
+  * a function that quotes 1 or more arguments
+* non-standard evaluation (NSE)
+<p style="font-size:.75em"><strong>quoting function</strong> == function that quotes 1 or more arguments == NSE</p>
+
+--
+
+**Kinda.** Technically NSE is about arguments only.
+
+---
+
+### [19.2.2: Exercises: Base](https://adv-r.hadley.nz/quasiquotation.html#exercises-56)
+
+
+```{r motivation-examples-noflair-flaired, echo = FALSE}
+code <- "library(MASS)
+
+mtcars2 <- subset(mtcars, cyl == 4)
+
+with(mtcars2, sum(vs))
+sum(mtcars2$am)"
+flair::decorate(code) %>% 
+  flair::knit_print.with_flair()
+```
+---
+### [19.2.2: Exercises: Base](https://adv-r.hadley.nz/quasiquotation.html#exercises-56)
+```{r motivation-examples-flair, echo = FALSE}
+flair::decorate(code) %>% 
+  flair::flair("MASS") %>% 
+  flair::flair("cyl == 4") %>% 
+  flair::flair("sum(vs)") %>% 
+  flair::flair("am") %>% 
+  flair::knit_print.with_flair()
+```
+
+---
+
+### [19.2.2: Exercises: Tidyverse](https://adv-r.hadley.nz/quasiquotation.html#exercises-56)
+
+```{r motivation-examples-t-noflair, fig.show='hide', message=FALSE, warnings = FALSE, echo = FALSE}
+
+
+
+code <- '
+suppressWarnings({
+  library(dplyr, warn.conflicts = FALSE)
+  library(ggplot2, warn.conflicts = FALSE)
+})
+byCyl <- mtcars %>%
+  group_by(cyl) %>%
+  summarise(mean = mean(mpg), .groups = "drop_last")
+
+ggplot(byCyl, aes(cyl, mean)) + geom_point()'
+flair::decorate(code) %>% 
+  flair::knit_print.with_flair()
+```
+
+---
+
+### [19.2.2: Exercises: Tidyverse](https://adv-r.hadley.nz/quasiquotation.html#exercises-56)
+
+```{r motivation-examples-t-flair, echo = FALSE}
+flair::decorate(code) %>% 
+  flair::flair("dplyr") %>% 
+  flair::flair("ggplot2") %>% 
+  flair::flair("cyl") %>% 
+  flair::flair_rx("(?<=\\()mpg") %>% 
+  flair::flair_rx("mean(?=\\))") %>% 
+  flair::knit_print.with_flair()
+```
+
+
+---
+
+## 19.3: [Quoting](https://adv-r.hadley.nz/quasiquotation.html#quoting)
+
+* "We'll need a pair of functions" (~6 pairs, including base)
+  * **directly supplied** vs
+  * **indirectly supplied**
+
+---
+
+### 19.3.1: [Capturing expressions](https://adv-r.hadley.nz/quasiquotation.html#capturing-expressions)
+  
+* `{rlang}` capturing expressions:
+  * `expr`:  quotes expression directly
+```{r expr}
+rlang::expr(x)
+(function(x) rlang::expr(x)) (1 + 2 + 3)
+```
+--  
+  * `enexpr`: quote the expression from the user
+```{r enexpr}
+(function(x) rlang::enexpr(x)) (1 + 2 + 3)
+```
+
+
+---
+
+### 19.3.1: [Capturing expressions](https://adv-r.hadley.nz/quasiquotation.html#capturing-expressions)
+ * `exprs`: quotes multiple expressions directly
+```{r exprs}
+rlang::exprs(x = 1 ^ 2, y = 2 ^ 3, z = 3 ^ 4)
+```
+--
+* `enexprs`: quotes multiple expressions from the user
+```{r enexprs}
+(function(...) rlang::enexprs(...)) (I(4 * 10e8), sd(c(4,5)))
+```
+
+---
+
+### 19.3.2: [Capturing symbols](https://adv-r.hadley.nz/quasiquotation.html#capturing-symbols)
+
+* `sym`: converts the character data in an object or character directly to a symbol
+```{r sym}
+rlang::sym("this")
+chr <- "mpg"
+sym_object <- rlang::sym(chr)
+# sneak peak
+dplyr::select(mtcars, !!sym_object) %>% head(1)
+```
+---
+### 19.3.2: Cont.
+
+* `ensym`: converts user specified character data in an object or character directly to a symbol
+```{r ensym}
+(function(data, symbol) dplyr::select(data, !!rlang::ensym(symbol))) (mtcars, "mpg") %>% head(1)
+
+(function(data, symbol) dplyr::select(data, all_of(!!rlang::ensym(symbol)))) (mtcars, chr) %>% head(1)
+```
+---
+### 19.3.2: [Capturing symbols](https://adv-r.hadley.nz/quasiquotation.html#capturing-symbols)
+
+* `syms`: converts multiple characters in an object or character vector directly to a symbol
+```{r syms}
+rlang::syms(c("this", "that", "the other"))
+chr <- c("mpg", "hp")
+sym_object <- rlang::syms(chr)
+dplyr::select(mtcars, !!!sym_object) %>% head(1)
+```
+---
+### 19.3.2: Cont.
+
+* `ensyms`: converts user specified character vector to symbols
+```{r ensyms}
+(function(data, symbols) dplyr::select(data, all_of(!!!rlang::ensyms(symbols)))) (mtcars, chr) %>% head(1)
+
+(function(data, ...) dplyr::select(data, !!!rlang::ensyms(...))) (mtcars, "mpg", "drat", "hp") %>% head(1)
+```
+
+---
+
+### 19.3.3: [With base R](https://adv-r.hadley.nz/quasiquotation.html#with-base-r)
+
+* `expr` = `quote`
+* `exprs` = `alist`
+* The base function closest to `enexpr` is `substitute`
+
+```{r 'substitute'}
+(function(x) substitute(x ^ 2)) (x + y)
+```
+
+* The equivalent to `enexprs` is an undocumented feature of `substitute` 
+```{r substitute_special}
+(function(...) as.list(substitute(...()))) (x = 1, y = 10 * z)
+```
+  
+ * `bquote` provides a limited form of quasiquotation, see [Section 19.5](https://adv-r.hadley.nz/quasiquotation.html#base-nonquote)
+ * `~`, the formula, is a quoting function that also captures the environment. See [Section 20.3.4](https://adv-r.hadley.nz/evaluation.html#quosure-impl).
+---
+
+### 19.3.4: [Substitution](https://adv-r.hadley.nz/quasiquotation.html#substitution)
+
+* `substitute` can be used to... substitute
+
+```{r substitution}
+(function(x) substitute(x * 2)) (a + b + c)
+
+```
+
+---
+
+### 19.3.4: [Substitution](https://adv-r.hadley.nz/quasiquotation.html#substitution)
+
+* `r htmltools::tags$span(style = "color:#0c5460;", "Recommendation:")` use the second argument to substitute to make it explicit
+
+```{r substitution_with_list}
+(function(a) substitute(x + a, list(x = 4))) (a = 10 * x)
+```
+--
+`r htmltools::tags$span(style = "color:#856404;", "Warning:")` notice that it inactivates expression substitution when a list is supplied to substitute
+
+```{r substitution2}
+(function(a) substitute(x + a)) (a = 10 * x)
+
+```
+
+---
+
+### 19.3: [Substitution - Summary ](https://adv-r.hadley.nz/quasiquotation.html#summary-1)
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:quoting-rlang">Table 19.1: </span> rlang quasiquoting functions</caption>
+<thead><tr class="header">
+<th></th>
+<th>Developer</th>
+<th>User</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>One</td>
+<td><code><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">expr()</a></code></td>
+<td><code><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">enexpr()</a></code></td>
+</tr>
+<tr class="even">
+<td>Many</td>
+<td><code><a href="https://ggplot2.tidyverse.org/reference/tidyeval.html">exprs()</a></code></td>
+<td><code><a href="https://dplyr.tidyverse.org/reference/tidyeval-compat.html">enexprs()</a></code></td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+
+--
+
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:quoting-base">Table 19.2: </span> base R quoting functions</caption>
+<thead><tr class="header">
+<th></th>
+<th>Developer</th>
+<th>User</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>One</td>
+<td><code><a href="https://rdrr.io/r/base/substitute.html">quote()</a></code></td>
+<td><code><a href="https://rdrr.io/r/base/substitute.html">substitute()</a></code></td>
+</tr>
+<tr class="even">
+<td>Many</td>
+<td><code><a href="https://rdrr.io/r/base/list.html">alist()</a></code></td>
+<td><code><a href="https://rdrr.io/r/base/list.html">as.list(substitute(...()))</a></code></td>
+</tr>
+</tbody>
+</table></div>
+---
+## 19.4: [Unquoting](https://adv-r.hadley.nz/quasiquotation.html#unquoting)
+
+* _quasiquotation_ means you can unquote selectively
+* Base R doesn't allow you to selectively unquote (mostly)
+* Unquoting means "replace the symbol with stored object itself"
+
+---
+
+### 19.4.1: [Unquoting one argument](https://adv-r.hadley.nz/quasiquotation.html#unquoting-one-argument)
+
+* The confusingly beautiful heart of quasiquotation: **!!**
+* Use it to unquote one thing
+* `!!` preserves operator precedence because it works with expressions
+
+```{r bang-bang}
+x <- expr(-1)
+y <- "a character"
+rlang::expr(f(!!x, y))
+rlang::expr(f(x, !!y))
+rlang::expr(mean(1:3) + mean(4:6))
+rlang::expr(!!mean(1:3) + !!mean(4:6))
+```
+
+
+---
+
+### 19.4.2: [Unquoting a function](https://adv-r.hadley.nz/quasiquotation.html#unquoting-a-function)
+
+* Now we start to move toward metaprogramming
+* `expr(!!f(x, y))` unquotes the result of `f(x, y)`, so an extra pair of parentheses is needed
+
+```{r replace-function}
+replace_f <- function(func) {
+  rlang::expr((!!rlang::enexpr(func))(x, y)) # Would be better if we used the actual formals...
+}
+replace_f(mean)
+replace_f(rlang::enexpr)
+```
+---
+### 19.4.2: [Unquoting a function Cont.](https://adv-r.hadley.nz/quasiquotation.html#unquoting-a-function)
+* to avoid nested parentheses it can be clearer to use `rlang::call2`:
+```{r 'call2'}
+replace_f <- function(func) {
+  call2(enexpr(func), expr(x), expr(y))
+}
+replace_f(mean)
+```
+
+---
+### 19.4.3 [Unquoting a missing argument](https://adv-r.hadley.nz/quasiquotation.html#unquote-missing)
+Will it work?
+```{r 'missing', error = TRUE}
+arg <- missing_arg()
+expr(foo(!!arg, !!arg))
+```
+
+workaround: `rlang::maybe_missing`
+```{r missing2}
+expr(foo(!!maybe_missing(arg), !!maybe_missing(arg)))
+```
+
+---
+### 19.4.4 [Unquoting in special forms](https://adv-r.hadley.nz/quasiquotation.html#unquoting-in-special-forms)
+```{r special, error = TRUE}
+x <- expr(x)
+expr(df$!!x)
+```
+```{r special2}
+(function(x) expr(`$`(df, !!enexpr(x)))) (y)
+```
+
+---
+### 19.4.5: [Unquoting many arguments](https://adv-r.hadley.nz/quasiquotation.html#unquoting-many-arguments)
+
+* `!!!` is to `!!` as `exprs` is to `expr`
+* works with or without names
+* **"unquote-splice"** because it **unquotes** the list then **splices** them in as if they were all separate arguments
+* can be used in any rlang function that takes ... regardless of whether or not ... is quoted or evaluated.
+
+```{r bang-bang-bang}
+multi_arg <- list(a = 1, b = 2, c = "other")
+rlang::expr(f(!!!multi_arg, another_arg))
+call2("f", !!!multi_arg, expr(y))
+```
+
+---
+
+### 19.4.6: [The polite fiction of !!](https://adv-r.hadley.nz/quasiquotation.html#the-polite-fiction-of)
+
+* `!!` and `!!!` don't actually exist
+
+```{r fictional-functions, error = TRUE}
+rlang::`!!`
+rlang::`!!!`
+```
+---
+### 19.4.6: Cont.
+
+ * it's actually the built-in
+```{r negation, error = TRUE}
+!TRUE
+!!TRUE
+!!!TRUE
+```
+---
+### 19.4.6: Cont.
+The biggest downside to using a fake operator is that you might get silent errors when misusing !! outside of quasiquoting functions:
+* silently incorrect results when working with numeric values
+```{r 'silent_error'}
+df <- data.frame(x = 1:5)
+y <- 100
+with(df, x + !!y)
+```
+ * If you actually need double negation use `!(!x)`
+ 
+---
+
+### 19.4.7: [Non-standard ASTs](https://adv-r.hadley.nz/quasiquotation.html#non-standard-ast)
+if you inline more complex objects, their attributes are not printed:
+```{r 'Complex objects'}
+(x1 <- expr(class(!!data.frame(x = 10))))
+eval(x1)
+```
+-- 
+The solution? Use `rlang::expr_print`
+```{r expr_print}
+expr_print(x1)
+```
+
+---
+### 19.5 [Non-Quoting](https://adv-r.hadley.nz/quasiquotation.html#base-nonquote)
+
+`bquote`
+
+* does not provide an unquote-splice operator that allows you to unquote multiple expressions stored in a list
+* lacks the ability to handle code accompanied by an environment
+
+```{r 'bquote'}
+xyz <- bquote((x + y + z))
+bquote(-.(xyz) / 2)
+```
+
+---
+
+### 19.5 Non-quoting techniques 1/4
+There are four basic forms seen in base R:
+
+1. A pair of quoting and non-quoting  _functions_
+  * closely related to `$`: `subset`, `transform`, and `with`
+  * `<-/assign` and `::/getExportedValue` work similarly
+
+```{r 'quoting_non-quoting'}
+x <- list(var = 1, y = 2)
+var <- "y"
+x$var
+x[[var]]
+```
+
+---
+
+### 19.5 Non-quoting techniques 2/4
+
+2. A pair of quoting and non-quoting _arguments_
+* `data` and `save` work similarly
+```{r 'pair of quoting and unquoting'}
+x <- 1
+rm(x)
+ls(pattern = "x")
+y <- 2
+vars <- c("y", "vars")
+rm(list = vars)
+ls(pattern = "^y$")
+```
+
+---
+
+### 19.5 Non-quoting techniques 3/4
+
+3. An argument that controls whether a different argument is quoting or non-quoting
+```{r 'diff_arg'}
+library(MASS)
+pkg <- "MASS"
+library(pkg, character.only = TRUE)
+```
+
+
+---
+### 19.5 Non-quoting techniques 4/4
+
+4. Quoting if evaluation fails
+  * `ls`, `page`, and `match.fun`
+```{r 'quote if eval fails', eval = FALSE}
+# Shows help for var
+help(var)
+
+var <- "mean"
+# Shows help for mean
+help(var)
+
+var <- 10
+# Shows help for var
+help(var)
+```
+
+---
+## [19.6 ... (dot-dot-dot)](https://adv-r.hadley.nz/quasiquotation.html#tidy-dots)
+
+* This section is the leftovers, it isn't about `...` per se
+* `:=` "colon-equals" or "walrus"
+  * Another fiction to trick R into working how we want
+  * LHS of `=` can't be evaluated, so we trick R
+
+```{r walrus_assignment}
+var <- "my_var_name"
+val <- 1:3
+tibble::tibble(!!var := val)
+```
+
+---
+### [19.6.1 - Examples](https://adv-r.hadley.nz/quasiquotation.html#examples)
+
+Dots (...) can be converted to a usable list with `rlang::list2` or [`rlang::dots_list`]((https://adv-r.hadley.nz/quasiquotation.html#dots_list))
+```{r using_dots}
+set_attr <- function(.x, ...) {
+  attr <- rlang::list2(...)
+  attributes(.x) <- attr
+  .x
+}
+
+attrs <- list(x = 1, y = 2)
+attr_name <- "z"
+
+1:10 %>%
+  set_attr(w = 0, !!!attrs, !!attr_name := 3) %>% 
+  str()
+```
+
+---
+
+### [19.6.2: exec()](https://adv-r.hadley.nz/quasiquotation.html#exec)
+
+* `rlang::exec` is similar to `base::do.call`
+* Allows you to use unquoting to do fancy things
+
+```{r exec1}
+# Directly
+exec("mean", x = 1:10, na.rm = TRUE, trim = 0.1)
+
+# Indirectly
+args <- list(x = 1:10, na.rm = TRUE, trim = 0.1)
+exec("mean", !!!args)
+
+# Mixed
+params <- list(na.rm = TRUE, trim = 0.1)
+exec("mean", x = 1:10, !!!params)
+```
+
+---
+### [19.6.2: exec() - Cont.](https://adv-r.hadley.nz/quasiquotation.html#exec)
+```{r exec2}
+# Indirect arguments
+arg_name <- "na.rm"
+arg_val <- TRUE
+exec("mean", 1:10, !!arg_name := arg_val)
+
+# Functionalization
+x <- c(runif(10), NA)
+funs <- c("mean", "median", "sd")
+purrr::map_dbl(funs, exec, x, na.rm = TRUE)
+```
+
+---
+### [19.6.3: dots_list()](https://adv-r.hadley.nz/quasiquotation.html#dots_list)
+
+ * `.ignore_empty` allows you to control exactly which arguments are ignored.
+ * `.homonyms` controls what happens if multiple arguments use the same name
+ * `.preserve_empty` controls what to do with them empty arguments that are not ignored
+ 
+---
+### [19.6.4: With base R](https://adv-r.hadley.nz/quasiquotation.html#do-call)
+
+
+`do.call`: The first argument, what, gives a function to call. The second argument, args, is a list of arguments to pass to that function.
+
+```{r do.call}
+do.tibble <- function(...) {
+  do.call(tibble::tibble, rlang::dots_list(...))
+}
+do.tibble(a = 1:5)
+```
+
+
+---
+## 19.7: Case studies
+
+### [19.7.1: lobstr::ast()](https://adv-r.hadley.nz/quasiquotation.html#lobstrast)
+
+```{r ast}
+z <- expr(foo(x, y))
+lobstr::ast(z)
+lobstr::ast(!!z)
+```
+
+---
+### [19.7.2: Map-reduce to generate code](https://adv-r.hadley.nz/quasiquotation.html#map-reduce-to-generate-code)
+
+---
+### [19.7.3: Slicing an array](https://adv-r.hadley.nz/quasiquotation.html#slicing-an-array)
+```{r 'slicing an array'}
+slice <- function(x, along, index) {
+  stopifnot(length(along) == 1)
+  stopifnot(length(index) == 1)
+    
+  nd <- length(dim(x))
+  indices <- rep(list(missing_arg()), nd)
+  indices[[along]] <- index
+  
+  expr(x[!!!indices])
+}
+x <- array(sample(30), c(5, 2, 3))
+slice(x, 1, 3)
+slice(x, 2, 2)
+slice(x, 3, 1)
+
+```
+---
+### [19.7.4: Creating functions](https://adv-r.hadley.nz/quasiquotation.html#new-function)
+`rlang::new_function`: a function that creates a function from its three components: arguments, body, and (optionally) an environment:
+
+```{r 'creating functions'}
+power <- function(exponent) {
+  new_function(
+    exprs(x = ), 
+    expr({
+      x ^ !!exponent
+    }), 
+    caller_env()
+  )
+}
+power(0.5)
+```
+---
+### [19.7.5: Exercises](https://adv-r.hadley.nz/quasiquotation.html#exercises-60)
+
+2. Re-implement the Box-Cox transform defined below using unquoting and `new_function`:
+
+```{r bc}
+bc <- function(lambda) {
+  if (lambda == 0) {
+    function(x) log(x)
+  } else {
+    function(x) (x ^ lambda - 1) / lambda
+  }
+}
+```
+---
+### [19.7.5: Exercises Cont. ](https://adv-r.hadley.nz/quasiquotation.html#exercises-60)
+
+```{r bc2}
+bc2 <- function(lambda) {
+  rlang::new_function(
+    rlang::exprs(lambda = ),
+    purrr::when(lambda, 
+         . == 0 ~ expr(log(x)),
+          ~ expr((x ^ lambda - 1) / lambda))
+  )
+}
+bc2(0)
+bc2(2)
+```
+---
+## [19.8 History](https://adv-r.hadley.nz/quasiquotation.html#history)
+
+Quasiquotation was first used in a programming language, Lisp, in the mid-1970s.103 Lisp has one quoting function `` ` ``, and uses `,` for unquoting. Most languages with a Lisp heritage behave similarly. For example, Racket (`` ` `` and @), Clojure (`` ` `` and ~), and Julia (: and @) all have quasiquotation tools that differ only slightly from Lisp. 
+---
+### [19.8 History Cont](https://adv-r.hadley.nz/quasiquotation.html#history)
+
+My attempt to resolve these limitations led to the lazyeval package (2014-2015). Unfortunately, my analysis of the problem was incomplete and while lazyeval solved some problems, it created others. It was not until I started working with Lionel Henry on the problem that all the pieces finally fell into place and we created the full tidy evaluation framework (2017).
+ - Hadley Wickham
+ 
+---
+.center[# Thank you!]
+
