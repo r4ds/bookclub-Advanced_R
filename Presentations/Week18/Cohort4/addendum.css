@@ -1,0 +1,8 @@
+div.title-slide h3 a {
+  color: white;
+  text-decoration: underline;
+}
+
+pre {
+  white-space: pre-wrap;
+}
