@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Ch.5 Control Flow</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jiwan Heo @jiwanheo" />
+    <meta name="date" content="2021-04-20" />
+    <script src="Chapter5_files/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Ch.5 Control Flow
+## Advanced-R Bookclub Cohort 5
+### Jiwan Heo <span class="citation">@jiwanheo</span>
+### 2021-04-20
+
+---
+
+
+
+
+
+
+## Control Flow
+The way things get executed
+
+&lt;img src="https://imgs.xkcd.com/comics/loop.png" style="display: block; margin-left: auto; margin-right: auto; width: 15%;"&gt;
+
+  .pull-left[
+### Choices:
+
+*   if else
+*   ifelse
+* _dplyr::if_else_
+*   _dplyr::case_when_
+*   switch
+]
+
+.pull-right[
+
+### Loops:
+
+*  for
+*  while
+*  repeat
+]
+
+---
+class: inverse middle center
+# Choices
+
+&lt;img src="https://preview.redd.it/8u8rd9v9d5t61.png?width=960&amp;crop=smart&amp;auto=webp&amp;s=4077e56ce9fba8e895f6d7ae83627c479c33da99" style="display: block; margin-left: auto; margin-right: auto; width: 80%;"&gt;
+---
+class: inverse middle center
+
+## Choice #1 if else 
+
+---
+## Choice #1 if else 
+
+.pull-left[
+
+### Syntax
+
+
+```r
+if (condition) {
+  true_action
+} 
+else {
+  false_action
+}
+```
+]
+--
+
+.pull-right[
+
+### Example
+
+```r
+inverse_colour &lt;- function(colour) {
+  if(colour == "red") {
+    return("blue")
+  } 
+  else if(colour == "green") {
+    return("yello")
+  } 
+  else {
+    return("Oops!")
+  }
+}
+
+inverse_colour("pink")
+```
+
+```
+## [1] "Oops!"
+```
+
+]
+---
+
+## Choice #1 if else 
+
+### Pointers: 
+
+✓ if( no else ) { return(NULL) }
+
+--
+
+
+```r
+bg_fill &lt;- function(bool) {
+  if(bool) {
+    theme(panel.background = element_rect(fill = "#D5A18E"))
+  } 
+}
+```
+
+.pull-left[
+
+```r
+library(ggplot2)
+ggplot(mtcars, aes(mpg, cyl)) + 
+  geom_point() + 
+  bg_fill(TRUE)
+```
+
+&lt;img src="Chapter5_files/figure-html/unnamed-chunk-4-1.png" width="100%" /&gt;
+]
+
+.pull-right[
+
+```r
+ggplot(mtcars, aes(mpg, cyl)) + 
+  geom_point() + 
+  bg_fill(FALSE)
+```
+
+&lt;img src="Chapter5_files/figure-html/unnamed-chunk-5-1.png" width="100%" /&gt;
+]
+
+---
+
+## Choice #1 if else 
+
+### Pointers
+
+✓ if( condition is a logical vector of +1 length ) { only first element is evaluated }
+
+--
+
+.pull-left[
+
+```r
+my_result &lt;- if (c(TRUE, FALSE)) {
+  1
+} else {
+  2
+} 
+my_result
+```
+
+```
+## [1] 1
+```
+]
+
+.pull-right[
+
+```r
+my_result &lt;- if (c(0, 1, 2)) {
+  1
+} else {
+  2
+} 
+my_result
+```
+
+```
+## [1] 2
+```
+]
+
+Where can you use this behaviour?
+
+
+---
+class: inverse middle center
+
+## Choice #2 ifelse 
+
+---
+
+## Choice #2 ifelse
+
+`ifelse` is a vectorized `if else`. 
+
+```r
+x &lt;- 1:10
+ifelse(x %% 5 == 0, x, 9999)
+```
+
+```
+##  [1] 9999 9999 9999 9999    5 9999
+##  [7] 9999 9999 9999   10
+```
+
+--
+Recommended to use only when yes/no results are of the same type, due to coercion.
+
+
+
+```r
+x &lt;- 1:10
+ifelse(x %% 5 == 0, x, TRUE)
+```
+
+```
+##  [1]  1  1  1  1  5  1  1  1  1 10
+```
+
+---
+
+## Choice #2 ifelse
+
+There's also a `dplyr::if_else`, which enforces the yes/no results to be of the same type.
+
+
+```r
+# Not Run
+
+ifelse(1 != 2,"a", 3)
+dplyr::if_else(1 != 2,"a", 3)
+```
+
+---
+## Choice #2 ifelse
+
+Here's one way to use an `ifelse`: (but don't)
+
+
+```r
+library(dplyr)
+
+mtcars %&gt;% 
+  tibble::as.tibble() %&gt;% 
+  head() %&gt;% 
+  mutate(
+    my_cyl = ifelse(cyl == 4, # Condition 1
+                    "cyl is 4", # True value 1
+                    ifelse(cyl == 6, # False value 1 &amp; Condition 2
+                           "cyl is 6", # True value 2
+                           "cyl is 8") # False value 2
+                    )
+  )
+```
+
+```
+## # A tibble: 6 x 12
+##     mpg   cyl  disp    hp  drat
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  21       6   160   110  3.9 
+## 2  21       6   160   110  3.9 
+## 3  22.8     4   108    93  3.85
+## 4  21.4     6   258   110  3.08
+## 5  18.7     8   360   175  3.15
+## 6  18.1     6   225   105  2.76
+## # ... with 7 more variables:
+## #   wt &lt;dbl&gt;, qsec &lt;dbl&gt;, vs &lt;dbl&gt;,
+## #   am &lt;dbl&gt;, gear &lt;dbl&gt;,
+## #   carb &lt;dbl&gt;, my_cyl &lt;chr&gt;
+```
+
+---
+## Choice #2 ifelse
+![](https://i.redd.it/mlmgfzh5w3xy.png)
+---
+
+class: inverse middle center
+## Choice #3 dplyr::case_when
+
+---
+
+## Choice #3 dplyr::case_when
+
+Another vectorized equivalent of if else
+
+---
+
+## Choice #3 dplyr::case_when
+
+### Syntax
+
+
+```r
+dplyr::case_when(
+  condition1 ~ value1,
+  condition2 ~ value2,
+  condition3 ~ value3.
+  TRUE ~ else_value
+)
+```
+
+---
+
+## Choice #3 dplyr::case_when
+
+### Example 
+
+
+```r
+dogs &lt;- c("Doberman", "Dalmatian", "Beagle", "Corgi", "Cat")
+
+dplyr::case_when(
+  dogs %in% c("Doberman", "Dalmatian") ~ "Big boi", # Condition/value 1
+  dogs == "Beagle" ~ "Smol boi", # Condition/value 2
+  stringr::str_detect(dogs, "rg") ~ "Smol boi", # Condition/value 3
+  TRUE ~ "Meow" # Condition/value 4 (else)
+)
+```
+
+```
+## [1] "Big boi"  "Big boi"  "Smol boi"
+## [4] "Smol boi" "Meow"
+```
+
+
+&lt;img src="https://s3.amazonaws.com/cdn-origin-etr.akc.org/wp-content/uploads/2017/11/11123543/Beagles-standing-in-a-frosty-field-on-a-cold-morning.jpg" style="display: block; margin-left: auto; margin-right: auto; width: 50%;"&gt;
+
+
+
+---
+
+## Choice #3 dplyr::case_when
+
+```r
+mtcars %&gt;% 
+  tibble::as.tibble() %&gt;% 
+  head() %&gt;% 
+  mutate(
+    my_cyl = case_when(
+      cyl == 4 ~ "cyl is 4", # Condition/value 1
+      cyl == 6 ~ "cyl is 6", # Condition/value 2
+      cyl == 8 ~ "cyl is 8", # Condition/value 3
+      TRUE ~ "Shouldn't reach here!") # else
+  )
+```
+
+```
+## # A tibble: 6 x 12
+##     mpg   cyl  disp    hp  drat
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  21       6   160   110  3.9 
+## 2  21       6   160   110  3.9 
+## 3  22.8     4   108    93  3.85
+## 4  21.4     6   258   110  3.08
+## 5  18.7     8   360   175  3.15
+## 6  18.1     6   225   105  2.76
+## # ... with 7 more variables:
+## #   wt &lt;dbl&gt;, qsec &lt;dbl&gt;, vs &lt;dbl&gt;,
+## #   am &lt;dbl&gt;, gear &lt;dbl&gt;,
+## #   carb &lt;dbl&gt;, my_cyl &lt;chr&gt;
+```
+
+
+---
+class: inverse middle center
+## Choice #4 switch
+---
+
+## Choice #4 switch
+
+Notice the slightly different way of writing conditions, and the fall-through of output values
+
+
+```r
+name_dogs &lt;- function(dog) {
+  switch(dog,
+         mastiff = ,
+         doberman = ,
+         dalmatian = "Big boi",
+         chihuahua = ,
+         beagle = "Smol boi",
+         stop("Invalid value")
+  )
+}
+```
+
+
+```r
+name_dogs("doberman")
+```
+
+```
+## [1] "Big boi"
+```
+
+```r
+name_dogs("chihuahua")
+```
+
+```
+## [1] "Smol boi"
+```
+
+---
+class: inverse middle center
+
+# Loops
+
+&lt;img src="https://scontent.fybz2-1.fna.fbcdn.net/v/t1.6435-0/p180x540/93494723_3081488058569091_3999617908475953152_n.jpg?_nc_cat=100&amp;ccb=1-3&amp;_nc_sid=8bfeb9&amp;_nc_ohc=Tq3n6M1NozUAX_cAb4D&amp;_nc_ht=scontent.fybz2-1.fna&amp;tp=6&amp;oh=f6c132f576a0abfa66120b5248692bc5&amp;oe=609B14FB" style="display: block; margin-left: auto; margin-right: auto; width: 50%;"&gt;
+
+---
+
+## Loop #1 for
+
+### Syntax
+
+```r
+for (item in vector) {
+  perform_action
+}
+```
+---
+
+## Loop #1 for
+
+### Pointers
+
+✓ Loop _assigns_ item and overwrites at each iteration 
+
+
+```r
+i &lt;- 100
+print(lobstr::obj_addr(i))
+```
+
+```
+## [1] "0x280fe5ffa48"
+```
+
+```r
+print(i)
+```
+
+```
+## [1] 100
+```
+
+```r
+for (i in 1:3) {
+  print(lobstr::obj_addr(i))
+  print(i)
+}
+```
+
+```
+## [1] "0x280fec18050"
+## [1] 1
+## [1] "0x280fec17a30"
+## [1] 2
+## [1] "0x280fec17448"
+## [1] 3
+```
+
+---
+
+## Loop #1 for
+
+### Pointers
+
+✓ Pre-allocate output container
+
+```r
+means &lt;- c(1, 50, 20)
+out &lt;- vector("list", length(means))
+for (i in 1:length(means)) {
+  out[[i]] &lt;- rnorm(10, means[[i]])
+}
+```
+
+---
+
+## Loop #1 for
+
+### Pointers
+
+
+✓ Don't use 1:length(vector)
+
+```r
+for (i in 1:length(c())) {
+  print(i)
+}
+```
+
+```
+## [1] 1
+## [1] 0
+```
+
+If the vector has length 0, __:__ counts backwards
+
+---
+
+## Loop #2 while
+
+### Syntax
+
+```r
+while(condition) {
+  action
+}
+```
+
+More flexible than `for`
+
+You'd typically want to put in a stop condition
+
+---
+
+## Loop #3 repeat
+
+### Syntax
+
+```r
+repeat(action)
+```
+
+More flexible than `while`
+
+You'd typically want to put in a stop condition
+
+---
+class: center middle inverse 
+# Thanks!
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<style>
+.logo {
+  background-image: url(r4ds.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 110px;
+  height: 128px;
+  z-index: 0;
+}
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"></div>';
+  });
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
