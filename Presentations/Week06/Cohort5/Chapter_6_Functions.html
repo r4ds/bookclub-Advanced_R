@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Brett Longworth" />
+    <meta name="date" content="2021-04-25" />
+    <script src="libs/header-attrs-2.6/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Advanced R
+## Chapter 6: Functions
+### Brett Longworth
+### 2021-04-25
+
+---
+
+
+
+
+# Fundamentals
+
+* Functions can be broken down into three components: arguments, body, and environment.
+
+* Functions are objects, just as vectors are objects.
+
+In R, you'll often see functions called __closures__. This name reflects the fact that R functions capture, or enclose, their environments. Key for understanding the dreaded 
+
+`Object of type ‘closure’ is not subsettable`
+
+
+---
+
+# Parts of a function
+
+* `formals()` - list of arguments passed to a function
+* `body()` - code of a function 
+* `environment()` - the "space(s)" where a function can find values associated with names
+
+&lt;img src="https://1sajzl2az82tq30aw1izck61-wpengine.netdna-ssl.com/wp-content/uploads//2020/11/capsule.svg" height="400px" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Primitive functions
+
+Primitive functions call C code directly and have `NULL` `formals()`, `body()`, and `environment()`. Only found in {base} package.
+
+`sum()` and `[` are examples.
+
+They have either type `builtin` or type `special`.
+
+
+```r
+typeof(sum)
+```
+
+```
+## [1] "builtin"
+```
+
+```r
+typeof(`[`)
+```
+
+```
+## [1] "special"
+```
+
+---
+
+# Creating functions
+
+* Functions are objects, like all "things" in R. 
+* Name by assignment while creating, just like any other object.
+
+
+```r
+hello_bob &lt;- function(name = "Bob") {
+        paste("Hello", name)
+}
+```
+
+or 
+
+
+```r
+f01 &lt;- function(x) sin(1 / x ^ 2)
+```
+
+---
+
+# Anonymous functions
+
+Just don't bind it!
+
+Most often used as a helper in functional programming.
+
+
+```r
+lapply(mtcars, function(x) length(unique(x)))
+Filter(function(x) !is.numeric(x), mtcars)
+integrate(function(x) sin(x) ^ 2, 0, pi)
+```
+
+You can put functions in a list! Woah!
+
+
+```r
+funs &lt;- list(
+  half = function(x) x / 2,
+  double = function(x) x * 2
+)
+
+funs$double(10)
+```
+
+---
+
+# Calling functions
+
+Typically: 
+
+
+```r
+function(arguments) 
+```
+
+We'll talk about other forms (infix operators, etc.) later...
+
+Functions can also be invoked using `do.call()`:
+
+
+```r
+args &lt;- list(1:10, na.rm = TRUE)
+
+do.call(mean, args)
+```
+
+```
+## [1] 5.5
+```
+
+---
+
+# Function Composition - Base R
+
+### Nesting
+
+
+```r
+sqrt(mean(1:100))
+```
+
+### Intermediate variables
+
+
+```r
+out &lt;- mean(1:100)
+out &lt;- sqrt(out)
+out
+```
+
+---
+
+# The Pipe!
+
+Reads left to right.
+
+Puts focus on what's happening (functions (_verbs_)) rather than on the objects being operated on (_nouns_).
+
+
+```r
+library(magrittr)
+
+1:100 %&gt;%
+  mean() %&gt;%
+  sqrt()
+```
+
+### Composition comparison
+
+* **Nesting** is concise, but hard for humans to read.
+* **Naming** is useful when having the intermediates is useful, but wasteful if not.
+* **Piping** is readable, but only works for linear transformation chains. Also requires a package.
+
+---
+
+# Lexical scoping
+
+**Scoping**: where a function can look to find named objects. What _environment_ can code use to find names?
+
+**Lexical scoping**: look up the values of names based on how a function is _defined_, not how it is _called_
+
+
+```r
+x &lt;- 10
+g01 &lt;- function() {
+  x &lt;- 20
+  x
+}
+g01()
+```
+
+```
+## [1] 20
+```
+
+---
+
+# Scoping rules
+
+1. Name masking
+2. Functions vs. variables
+3. Fresh start
+4. Dynamic lookup
+
+---
+
+# Name masking
+
+1. Use names defined inside a function first
+2. Look one level (environment) up if missing
+
+
+```r
+x &lt;- 1
+z &lt;- 0
+g03 &lt;- function() {
+  y &lt;- 2 #&lt; Not assigned in global environment
+  z &lt;- 3 # Assigned in both function and global context
+  c(x, y, z) # x isn't in func. so look up a level
+}
+g03()
+```
+
+```
+## [1] 1 2 3
+```
+
+---
+
+# Object type
+
+## (Functions vs variables)
+
+R will use the context a name is used in to filter available names.
+
+
+```r
+g09 &lt;- function(x) x + 100  # defined as function outside
+g10 &lt;- function() {
+  g09 &lt;- 10                 # defined as non-function inside
+  g09(g09) 
+}
+g10()
+```
+
+```
+## [1] 110
+```
+
+* The numeric g09 can't be used as a function, so R looks a level up.
+* The numeric g09 can be used as an argument, so the definition inside takes precedence
+
+---
+
+# Fresh start
+
+Every function call produces a new environment for the function to run in.
+
+
+```r
+g11 &lt;- function() {
+  if (!exists("a")) {
+    a &lt;- 1
+  } else {
+    a &lt;- a + 1
+  }
+  a
+}
+g11()
+```
+
+```
+## [1] 1
+```
+
+
+```r
+exists("a")
+```
+
+```
+## [1] FALSE
+```
+
+
+```r
+g11()
+```
+
+```
+## [1] 1
+```
+
+---
+
+# Dynamic lookup
+
+R won't look for names/values until the function is run.
+
+Combined with the name masking rule, this can lead to some unexpected behavior.
+
+
+```r
+g12 &lt;- function() x + 1
+x &lt;- 15
+g12()
+```
+
+```
+## [1] 16
+```
+
+
+```r
+x &lt;- 20
+g12()
+```
+
+```
+## [1] 21
+```
+
+---
+
+# Lazy evaluation
+
+R doesn't evaluate arguments unless/until they are needed.
+
+R evaluates arguments when they are **accessed** within the function.
+
+
+```r
+h01 &lt;- function(x) {
+  10
+}
+h01(stop("This is an error!"))
+```
+
+```
+## [1] 10
+```
+
+R doesn't evaluate x (the stop function) because it isn't used in the function body.
+
+---
+
+# Promises
+
+A promise is the data structure that powers lazy eval.
+
+Promises have three components:
+
+- An expression `x + y`
+- An environment to evaluate the expression in
+- A value which is computed and cached when a promise is accessed
+
+---
+
+# Default arguments
+
+Lazy evaluation enables default values for parameters to be defined in terms of other arguments or objects defined later in the function body.
+
+
+
+```r
+h04 &lt;- function(x = 1, y = x * 2, z = a + b) {
+  a &lt;- 10
+  b &lt;- 100
+  c(x, y, z)
+}
+h04()
+```
+
+```
+## [1]   1   2 110
+```
+
+`x * 2` and `a + b` in the formals are not evaluated until `c(x, y, z)` needs them.
+
+This is cool, but it's confusing when reading code, so better not to use it.
+
+---
+
+# Missing arguments
+
+The `missing()` function will tell you whether the user supplied a parameter, or whether the default was used.
+
+
+```r
+h06 &lt;- function(x = 10) {
+  missing(x)
+}
+
+h06()
+```
+
+```
+## [1] TRUE
+```
+
+
+
+```r
+h06(10)
+```
+
+```
+## [1] FALSE
+```
+
+---
+
+# Missing arguments (ctd.)
+
+Again, it can be a little hard to read, so better to use a `NULL` default and test for it.
+
+
+```r
+args(sample)
+```
+
+```
+## function (x, size, replace = FALSE, prob = NULL) 
+## NULL
+```
+
+This more clearly defines required arguments:
+
+
+```r
+sample &lt;- function(x, size = NULL, replace = FALSE, prob = NULL) {
+  if (is.null(size)) {
+    size &lt;- length(x)
+  }
+  
+  x[sample.int(length(x), size, replace = replace, prob = prob)]
+}
+```
+
+---
+
+# ... (dot-dot-dot)
+
+Allows functions to take any number of additional arguments
+
+Can pass these extra arguments to another function.
+
+
+```r
+red.plot &lt;- function(x, y, ...) {
+  plot(x, y, col="red", ...)
+}
+red.plot(1:10, 1:10, xlab="My x axis", ylab="My y axis")
+```
+
+![](Chapter_6_Functions_files/figure-html/unnamed-chunk-26-1.png)&lt;!-- --&gt;
+
+Axis labels are passed through to `plot` without being defined as parameters in `red.plot`.
+
+---
+
+# ...... (dot-dot-dot, ctd.)
+
+`...` allows any number of arguments to be passed
+
+### Use to pass:
+
+* arbitrary arguments to another function (as in prev.)
+* an unknown number of arguments to your function.
+
+
+```r
+sum(1, 2, 3) == sum(c(1, 2, 3))
+```
+
+```
+## [1] TRUE
+```
+
+
+---
+
+# Exiting a function
+
+Functions return a value if successful, an error if not
+
+
+```r
+f &lt;- function(x) x^2
+f(2)
+```
+
+```
+## [1] 4
+```
+
+
+
+```r
+f("nope")
+```
+
+```
+## Error in x^2: non-numeric argument to binary operator
+```
+
+---
+
+# Explicit/implicit returns
+
+The reason why I invariably forget the return statement in other languages (Thanks R).
+
+### Implicit
+
+
+```r
+f &lt;- function(x) x^2
+```
+
+### Explicit
+
+
+```r
+f &lt;- function(x) return(x^2)
+```
+
+* Use implicit when return is clear and at end of function.
+* Use explicit when it may not be clear where return comes from.
+
+---
+
+# Return visibility
+
+Function return values are **visible**, ie. printed automatically, by default.
+
+Prevent automatic printing by making return **invisible**
+
+
+```r
+f &lt;- function(x) invisible(x^2)
+f(2)
+```
+
+
+```r
+x &lt;- f(2)
+x
+```
+
+```
+## [1] 4
+```
+
+In general, any function called primarily for a side effect (like `&lt;-`, `print()`, or `plot()`) should return an invisible value (typically the value of the first argument).
+
+Functional-style programming should almost always have a visible return.
+
+---
+
+# Returning an error
+
+If a function can't work as expected, throw an error!
+
+
+```r
+f &lt;- function(x) {
+        if (!is.numeric(x)) stop("You can't square a brick!")
+        x^2
+}
+
+f("brick")
+```
+
+```
+## Error in f("brick"): You can't square a brick!
+```
+
+---
+
+# Exit handlers
+
+`on.exit` executes when the function finishes, whether or not there's an error.
+
+
+```r
+hello_goodbye &lt;- function(x) {
+  on.exit(cat("hello!\n"), add = TRUE)
+  if (!x) stop("Hello?")
+  cat("You say goodbye and I say \n")
+}
+```
+
+
+```r
+hello_goodbye(TRUE)
+```
+
+```
+## You say goodbye and I say 
+## hello!
+```
+
+
+```r
+hello_goodbye(FALSE)
+```
+
+```
+## Error in hello_goodbye(FALSE): Hello?
+```
+
+```
+## hello!
+```
+
+Always set `add = TRUE` when using `on.exit()`. If you don't, each call to `on.exit()` will overwrite the previous exit handler.
+
+---
+
+# Exit handlers
+
+* Functions can change the global environment. 
+* Unless that's the function of the function (looking at you, `options()`), change it back when exiting.
+* Avoid environment-altering function when coding in functional style.
+
+---
+
+# Function Forms
+
+&gt; To understand computations in R, two slogans are helpful:
+&gt; 
+&gt; * Everything that exists is an object.
+&gt; * Everything that happens is a function call.
+&gt;
+&gt; — John Chambers
+
+
+### Four ways of calling a function
+
+- **prefix** functions _precede_ arguments
+
+- **infix** functions come _between_ arguments
+
+- **replacement** functions _replace_ values by assignment
+
+- **special** functions - e.g., `[[`, `if`, `for`
+
+---
+
+# Re-writing to prefix form
+
+All functions in R can be re-written in **prefix** form!
+
+### infix:
+
+
+```r
+x + y
+`+`(x, y)
+```
+
+### replacement:
+
+
+```r
+names(df) &lt;- c("x", "y", "z")
+`names&lt;-`(df, c("x", "y", "z"))
+```
+
+### special:
+
+
+```r
+for(i in 1:10) print(i)
+`for`(i, 1:10, print(i))
+```
+
+---
+
+# Prefix form arguments
+
+Specify arguments in three ways:
+* By position, like `help(mean)`.
+* Using partial matching, like `help(top = mean)`.
+* By name, like `help(topic = mean)`
+
+### Best practices
+
+* Limit position matching to first few arguments
+* Avoid partial matching
+
+`help(top = mean)`
+I didn't know `help` had an option named `top`!
+
+---
+
+# Infix functions
+
+#### Backticks are your friend for special forms!
+
+``help(`+`)``
+
+#### Create infix function with backticks and `%`
+
+
+```r
+`%+%` &lt;- function(a, b) paste0(a, b)
+"new " %+% "string"
+```
+
+```
+## [1] "new string"
+```
+
+`
+
+---
+
+
+# Replacement functions
+
+#### Define replacement functions with backticks and end name with `&lt;-`
+
+
+```r
+`second&lt;-` &lt;- function(x, value) {
+  x[2] &lt;- value
+  x
+}
+```
+
+Use by placing function call on left side of assignment
+
+
+```r
+x &lt;- 1:10
+second(x) &lt;- 5L
+x
+```
+
+```
+##  [1]  1  5  3  4  5  6  7  8  9 10
+```
+
+---
+
+# Special forms
+
+Since everything is an object, things we don't usually think of as functions are still just functions at heart. Even `function()`!
+
+
+```r
+function(arg1, arg2) {body} (`function`(alist(arg1, arg2), body, env))
+```
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
