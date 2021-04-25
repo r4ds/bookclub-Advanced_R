@@ -36,12 +36,17 @@ In R, you'll often see functions called __closures__. This name reflects the fac
 ---
 
 # Parts of a function
-
+.pull-left[
 * `formals()` - list of arguments passed to a function
 * `body()` - code of a function 
 * `environment()` - the "space(s)" where a function can find values associated with names
+]
 
-&lt;img src="https://1sajzl2az82tq30aw1izck61-wpengine.netdna-ssl.com/wp-content/uploads//2020/11/capsule.svg" height="400px" style="display: block; margin: auto;" /&gt;
+.pull-right[
+&lt;img src="capsule.svg" height="400px" style="display: block; margin: auto;" /&gt;
+
+.right[https://codeocean.com/]
+]
 
 ---
 
@@ -168,6 +173,7 @@ out
 
 # The Pipe!
 
+.pull-left[
 Reads left to right.
 
 Puts focus on what's happening (functions (_verbs_)) rather than on the objects being operated on (_nouns_).
@@ -180,6 +186,13 @@ library(magrittr)
   mean() %&gt;%
   sqrt()
 ```
+]
+
+.pull-right[
+&lt;img src="MagrittePipe.jpg" height="200px" style="display: block; margin: auto;" /&gt;
+
+.right[René Magritte]
+]
 
 ### Composition comparison
 
@@ -469,7 +482,7 @@ red.plot &lt;- function(x, y, ...) {
 red.plot(1:10, 1:10, xlab="My x axis", ylab="My y axis")
 ```
 
-![](Chapter_6_Functions_files/figure-html/unnamed-chunk-26-1.png)&lt;!-- --&gt;
+![](Chapter_6_Functions_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
 
 Axis labels are passed through to `plot` without being defined as parameters in `red.plot`.
 
@@ -667,7 +680,7 @@ Always set `add = TRUE` when using `on.exit()`. If you don't, each call to `on.e
 
 All functions in R can be re-written in **prefix** form!
 
-### infix:
+#### infix:
 
 
 ```r
@@ -675,7 +688,7 @@ x + y
 `+`(x, y)
 ```
 
-### replacement:
+#### replacement:
 
 
 ```r
@@ -683,7 +696,7 @@ names(df) &lt;- c("x", "y", "z")
 `names&lt;-`(df, c("x", "y", "z"))
 ```
 
-### special:
+#### special:
 
 
 ```r

@@ -38,14 +38,19 @@ In R, you'll often see functions called __closures__. This name reflects the fac
 ---
 
 # Parts of a function
-
+.pull-left[
 * `formals()` - list of arguments passed to a function
 * `body()` - code of a function 
 * `environment()` - the "space(s)" where a function can find values associated with names
+]
 
+.pull-right[
 ```{r, echo=FALSE, fig.align='center', out.height='400px'}
-knitr::include_graphics("https://1sajzl2az82tq30aw1izck61-wpengine.netdna-ssl.com/wp-content/uploads//2020/11/capsule.svg")
+knitr::include_graphics("capsule.svg")
 ```
+
+.right[https://codeocean.com/]
+]
 
 ---
 
@@ -148,6 +153,7 @@ out
 
 # The Pipe!
 
+.pull-left[
 Reads left to right.
 
 Puts focus on what's happening (functions (_verbs_)) rather than on the objects being operated on (_nouns_).
@@ -159,6 +165,15 @@ library(magrittr)
   mean() %>%
   sqrt()
 ```
+]
+
+.pull-right[
+```{r, echo=FALSE, fig.align='center', out.height='200px'}
+knitr::include_graphics("MagrittePipe.jpg")
+```
+
+.right[René Magritte]
+]
 
 ### Composition comparison
 
@@ -532,21 +547,21 @@ Always set `add = TRUE` when using `on.exit()`. If you don't, each call to `on.e
 
 All functions in R can be re-written in **prefix** form!
 
-### infix:
+#### infix:
 
 ```{r, eval = FALSE}
 x + y
 `+`(x, y)
 ```
 
-### replacement:
+#### replacement:
 
 ```{r, eval = FALSE}
 names(df) <- c("x", "y", "z")
 `names<-`(df, c("x", "y", "z"))
 ```
 
-### special:
+#### special:
 
 ```{r, eval = FALSE}
 for(i in 1:10) print(i)
