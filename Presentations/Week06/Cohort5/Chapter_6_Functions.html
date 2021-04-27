@@ -4,8 +4,8 @@
     <title>Advanced R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Brett Longworth" />
-    <meta name="date" content="2021-04-25" />
-    <script src="libs/header-attrs-2.6/header-attrs.js"></script>
+    <meta name="date" content="2021-04-27" />
+    <script src="libs/header-attrs-2.7/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # Advanced R
 ## Chapter 6: Functions
 ### Brett Longworth
-### 2021-04-25
+### 2021-04-27
 
 ---
 
@@ -28,9 +28,11 @@ class: center, middle, inverse, title-slide
 
 * Functions are objects, just as vectors are objects.
 
-In R, you'll often see functions called __closures__. This name reflects the fact that R functions capture, or enclose, their environments. Key for understanding the dreaded 
+In R, you'll often see functions called __closures__. This name reflects the fact that R functions capture, or enclose, their environments. 
 
-`Object of type ‘closure’ is not subsettable`
+Key for understanding the dreaded:
+
+.center[.large[`Object of type ‘closure’ is not subsettable`]]
 
 
 ---
@@ -102,7 +104,7 @@ f01 &lt;- function(x) sin(1 / x ^ 2)
 
 Just don't bind it!
 
-Most often used as a helper in functional programming.
+Most often used as a helper in functional programming. Rule of thumb: is it hard to read? if so, write a named function instead.
 
 
 ```r
@@ -441,7 +443,7 @@ h06(10)
 
 # Missing arguments (ctd.)
 
-Again, it can be a little hard to read, so better to use a `NULL` default and test for it.
+This can be a little hard to read, so better to use a `NULL` default and test for it.
 
 
 ```r
@@ -468,34 +470,40 @@ sample &lt;- function(x, size = NULL, replace = FALSE, prob = NULL) {
 
 ---
 
-# ... (dot-dot-dot)
+# Lazy booleans
 
-Allows functions to take any number of additional arguments
+Booleans are also only evaluated as needed. 
 
-Can pass these extra arguments to another function.
+- If the LHS of an `AND` comparison is `FALSE`, `FALSE` is returned without evaluating the RHS. 
+- If LHS of `OR` is `TRUE`, `TRUE` is returned.
 
 
 ```r
-red.plot &lt;- function(x, y, ...) {
-  plot(x, y, col="red", ...)
-}
-red.plot(1:10, 1:10, xlab="My x axis", ylab="My y axis")
+FALSE &amp;&amp; "who cares?"
 ```
 
-![](Chapter_6_Functions_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
+```
+## [1] FALSE
+```
 
-Axis labels are passed through to `plot` without being defined as parameters in `red.plot`.
+
+```r
+TRUE || "whatevs."
+```
+
+```
+## [1] TRUE
+```
 
 ---
 
-# ...... (dot-dot-dot, ctd.)
+# ... (dot-dot-dot)
 
-`...` allows any number of arguments to be passed
+`...` allows any number of arguments to be passed, and can pass these to another function.
 
-### Use to pass:
+#### Passing many arguments:
 
-* arbitrary arguments to another function (as in prev.)
-* an unknown number of arguments to your function.
+`sum()` uses this&lt;sup&gt;*&lt;/sup&gt; to take objects to add together.
 
 
 ```r
@@ -506,6 +514,24 @@ sum(1, 2, 3) == sum(c(1, 2, 3))
 ## [1] TRUE
 ```
 
+.footnote[*not really, since sum is a primitive, but you get the idea.]
+---
+
+# ...... (dot-dot-dot, ctd.)
+
+#### Pass extra arguments to another function.
+
+
+```r
+red.plot &lt;- function(x, y, ...) {
+  plot(x, y, col="red", ...)
+}
+red.plot(1:10, 1:10, xlab="My x axis", ylab="My y axis")
+```
+
+![](Chapter_6_Functions_files/figure-html/unnamed-chunk-30-1.png)&lt;!-- --&gt;
+
+Axis labels are passed through to `plot` without being defined as parameters in `red.plot`.
 
 ---
 
@@ -708,7 +734,7 @@ for(i in 1:10) print(i)
 
 # Prefix form arguments
 
-Specify arguments in three ways:
+### Specify arguments in three ways:
 * By position, like `help(mean)`.
 * Using partial matching, like `help(top = mean)`.
 * By name, like `help(topic = mean)`
@@ -725,11 +751,11 @@ I didn't know `help` had an option named `top`!
 
 # Infix functions
 
-#### Backticks are your friend for special forms!
+### Backticks are your friend for special forms!
 
 ``help(`+`)``
 
-#### Create infix function with backticks and `%`
+### Create infix function with backticks and `%`
 
 
 ```r
@@ -748,7 +774,7 @@ I didn't know `help` had an option named `top`!
 
 # Replacement functions
 
-#### Define replacement functions with backticks and end name with `&lt;-`
+### Define replacement functions with backticks and end name with `&lt;-`
 
 
 ```r
@@ -758,7 +784,7 @@ I didn't know `help` had an option named `top`!
 }
 ```
 
-Use by placing function call on left side of assignment
+### Use by placing function call on left side of assignment
 
 
 ```r

@@ -22,6 +22,19 @@ style_mono_light(
   code_font_family = "Fira Code",
   code_font_url = "https://cdn.jsdelivr.net/gh/tonsky/FiraCode@2/distr/fira_code.css"
 )
+
+# Add extra css styles
+style_extra_css(
+  css = list(
+    ".small" = list("font-size" = "90%"),
+    ".large" = list("font-size" = "130%"),
+    ".full-width" = list(
+      display = "flex",
+      width = "100%",
+      flex = "1 1 auto"
+    )
+  )
+)
 ```
 
 # Fundamentals
@@ -30,9 +43,11 @@ style_mono_light(
 
 * Functions are objects, just as vectors are objects.
 
-In R, you'll often see functions called __closures__. This name reflects the fact that R functions capture, or enclose, their environments. Key for understanding the dreaded 
+In R, you'll often see functions called __closures__. This name reflects the fact that R functions capture, or enclose, their environments. 
 
-`Object of type ‘closure’ is not subsettable`
+Key for understanding the dreaded:
+
+.center[.large[`Object of type ‘closure’ is not subsettable`]]
 
 
 ---
@@ -92,7 +107,7 @@ f01 <- function(x) sin(1 / x ^ 2)
 
 Just don't bind it!
 
-Most often used as a helper in functional programming.
+Most often used as a helper in functional programming. Rule of thumb: is it hard to read? if so, write a named function instead.
 
 ```{r, eval = FALSE}
 lapply(mtcars, function(x) length(unique(x)))
@@ -362,7 +377,7 @@ h06(10)
 
 # Missing arguments (ctd.)
 
-Again, it can be a little hard to read, so better to use a `NULL` default and test for it.
+This can be a little hard to read, so better to use a `NULL` default and test for it.
 
 ```{r}
 args(sample)
@@ -382,11 +397,41 @@ sample <- function(x, size = NULL, replace = FALSE, prob = NULL) {
 
 ---
 
+# Lazy booleans
+
+Booleans are also only evaluated as needed. 
+
+- If the LHS of an `AND` comparison is `FALSE`, `FALSE` is returned without evaluating the RHS. 
+- If LHS of `OR` is `TRUE`, `TRUE` is returned.
+
+```{r}
+FALSE && "who cares?"
+```
+
+```{r}
+TRUE || "whatevs."
+```
+
+---
+
 # ... (dot-dot-dot)
 
-Allows functions to take any number of additional arguments
+`...` allows any number of arguments to be passed, and can pass these to another function.
 
-Can pass these extra arguments to another function.
+#### Passing many arguments:
+
+`sum()` uses this<sup>*</sup> to take objects to add together.
+
+```{r}
+sum(1, 2, 3) == sum(c(1, 2, 3))
+```
+
+.footnote[*not really, since sum is a primitive, but you get the idea.]
+---
+
+# ...... (dot-dot-dot, ctd.)
+
+#### Pass extra arguments to another function.
 
 ```{r fig.height = 3}
 red.plot <- function(x, y, ...) {
@@ -396,22 +441,6 @@ red.plot(1:10, 1:10, xlab="My x axis", ylab="My y axis")
 ```
 
 Axis labels are passed through to `plot` without being defined as parameters in `red.plot`.
-
----
-
-# ...... (dot-dot-dot, ctd.)
-
-`...` allows any number of arguments to be passed
-
-### Use to pass:
-
-* arbitrary arguments to another function (as in prev.)
-* an unknown number of arguments to your function.
-
-```{r}
-sum(1, 2, 3) == sum(c(1, 2, 3))
-```
-
 
 ---
 
@@ -572,7 +601,7 @@ for(i in 1:10) print(i)
 
 # Prefix form arguments
 
-Specify arguments in three ways:
+### Specify arguments in three ways:
 * By position, like `help(mean)`.
 * Using partial matching, like `help(top = mean)`.
 * By name, like `help(topic = mean)`
@@ -589,11 +618,11 @@ I didn't know `help` had an option named `top`!
 
 # Infix functions
 
-#### Backticks are your friend for special forms!
+### Backticks are your friend for special forms!
 
 ``help(`+`)``
 
-#### Create infix function with backticks and `%`
+### Create infix function with backticks and `%`
 
 ```{r}
 `%+%` <- function(a, b) paste0(a, b)
@@ -607,7 +636,7 @@ I didn't know `help` had an option named `top`!
 
 # Replacement functions
 
-#### Define replacement functions with backticks and end name with `<-`
+### Define replacement functions with backticks and end name with `<-`
 
 ```{r}
 `second<-` <- function(x, value) {
@@ -616,7 +645,7 @@ I didn't know `help` had an option named `top`!
 }
 ```
 
-Use by placing function call on left side of assignment
+### Use by placing function call on left side of assignment
 
 ```{r}
 x <- 1:10
