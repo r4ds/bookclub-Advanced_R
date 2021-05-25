@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="R4DS Reading Group" />
+    <script src="libs/header-attrs-2.8/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Advanced R
+## Chapter 10
+### R4DS Reading Group
+
+---
+
+
+
+
+
+
+# Overview
+
+- What is a function factory?
+  - Function factories and manufactured functions
+  - Manufactured function environments
+  - Promises and `force`
+  - {factory}
+- Why use a function factory?
+  - Stateful functions
+  - ggplot2
+  - {scales}
+- Functionals + function factories
+  
+
+```r
+library(rlang)
+library(ggplot2)
+library(scales)
+# remotes::install_github("jonthegeek/factory")
+library(factory)
+```
+
+---
+
+class: inverse, hide-logo
+
+# What is a function factory?
+
+&lt;br&gt;
+.center[![](images/functions_meme.jpg)]
+
+---
+
+# Function factories and manufactured functions
+
+- Functions are objects
+- Functions return whatever objects they produce, even if it's a function!
+
+
+```r
+power1 &lt;- function(exp) {
+  function(x) {
+    x ^ exp
+  }
+}
+```
+
+
+
+```r
+# Manufactured functions
+square1 &lt;- power1(2)
+cube1 &lt;- power1(3)
+square1(8)
+```
+
+```
+## [1] 64
+```
+
+---
+
+# Manufactured function environments
+
+Let's see what our functions are doing...
+
+.pull-left[
+
+```r
+square1
+```
+
+```
+## function(x) {
+##     x ^ exp
+##   }
+## &lt;environment: 0x55e342461418&gt;
+```
+]
+
+.pull-right[
+
+```r
+cube1
+```
+
+```
+## function(x) {
+##     x ^ exp
+##   }
+## &lt;bytecode: 0x55e3439faf88&gt;
+## &lt;environment: 0x55e3426094f8&gt;
+```
+]
+
+Well, that's not useful. Let's look at the functions' environments using `rlang::fn_env()`
+
+
+```r
+c(fn_env(square1)$exp, fn_env(cube1)$exp)
+```
+
+```
+## [1] 2 3
+```
+
+---
+
+# Where does exp come from?
+
+Exp comes from the enclosing environment, not the function body.
+
+![](images/power-simple.png)
+
+---
+
+# Promise dangers
+
+Lazy evaluation + factories = **danger**
+
+
+```r
+x &lt;- 2
+square &lt;- power1(x)
+x &lt;- 3
+```
+
+What does `square(2)` return?
+
+--
+
+
+```r
+square(2)
+```
+
+```
+## [1] 8
+```
+
+Uh oh.
+---
+
+# Lazy Factories
+
+#### The value of `exp` isn't evaluated until it's needed - creating `square` doesn't need to know `exp`, so R waits until we need a value for `exp`.
+
+#### Our factory builds functions that aren't complete until the user runs them!
+
+---
+
+# Forcing evaluation
+
+`force(x)` forces evaluation by evaluating `x`&lt;sup&gt;*&lt;/sup&gt;
+
+
+```r
+power2 &lt;- function(exp) {
+  force(exp)
+  function(x) {
+    x ^ exp
+  }
+}
+```
+
+.footnote[*Technically just `exp` instead of `force(exp)` does the same thing, but `force()` makes our intentions clear.]
+
+---
+
+# {factory}
+
+Jon Harmon (@jonthegeek) created a [package](https://github.com/jonthegeek/factory) to handle some of the fancy stuff. Uses `{rlang}` and quasinotation ([Chapter 19](https://adv-r.hadley.nz/quasiquotation.html)) to work its magic&lt;sup&gt;*&lt;/sup&gt;.
+
+.pull-left[
+
+Use `factory::build_factory()` to produce our power function.
+
+
+```r
+power3 &lt;- factory::build_factory(
+  function(x) {
+    x ^ exponent
+  },
+  exponent
+)
+```
+]
+
+--
+
+.pull-right[
+
+Same shenanigans for `my_exponent` as before.
+
+
+```r
+my_exponent &lt;- 2
+square3 &lt;- power3(my_exponent)
+my_exponent &lt;- 3
+square3(2)
+```
+
+```
+## [1] 4
+```
+
+```r
+square3
+```
+
+```
+## function (x) 
+## {
+##     x^2
+## }
+```
+]
+
+.footnote[*"Any sufficiently advanced technology is indistinguishable from magic." - Arthur C. Clarke]
+---
+
+class: inverse, hide-logo
+
+# Why use a function factory?
+
+
+&lt;br&gt;
+.center[![](images/Inception_sm.jpg)]
+
+---
+
+# Stateful functions
+
+.pull-left[
+
+```r
+new_counter &lt;- function() {
+  i &lt;- 0
+  
+  function() {
+    i &lt;&lt;- i + 1
+    i
+  }
+}
+
+counter_one &lt;- new_counter()
+counter_two &lt;- new_counter()
+```
+]
+
+.pull-right[
+
+```r
+counter_one()
+```
+
+```
+## [1] 1
+```
+
+```r
+counter_one()
+```
+
+```
+## [1] 2
+```
+
+```r
+counter_two()
+```
+
+```
+## [1] 1
+```
+]
+
+.footnote[Since we're in the section on functional programming, are these counters pure functions and/or good functional style?]
+
+---
+
+# {ggplot2}
+
+*Lots* of ggplot2 functions accept functions as arguments
+
+
+```r
+?ggplot2::geom_histogram
+```
+
+&gt; `binwidth` The width of the bins. Can be specified as a numeric value **or as a function that calculates width from unscaled x.** Here, "unscaled x" refers to the original x values in the data, before application of any scale transformation. When specifying a function along with a grouping structure, the function will be called once per group...
+
+---
+
+# Histogram binwidths
+
+.pull-left[
+
+```r
+# construct some sample data with very 
+# different numbers in each cell
+
+sd &lt;- c(1, 5, 15)
+n &lt;- 100
+
+df &lt;- data.frame(x = rnorm(3 * n, sd = sd), sd = rep(sd, n))
+
+ggplot(df, aes(x)) + 
+  geom_histogram(binwidth = 2) + 
+  facet_wrap(~ sd, scales = "free_x") + 
+  labs(x = NULL)
+```
+]
+
+.pull-right[
+![](Chapter10_FunctionFactories_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+]
+
+---
+
+# Define binwidths with function-fu
+
+.pull-left[
+
+```r
+binwidth_bins &lt;- function(n) {
+  force(n)
+  
+  function(x) {
+    (max(x) - min(x)) / n
+  }
+}
+
+ggplot(df, aes(x)) + 
+  geom_histogram(binwidth = binwidth_bins(20)) + 
+  facet_wrap(~ sd, scales = "free_x") + 
+  labs(x = NULL)
+```
+]
+
+.pull-right[
+![](Chapter10_FunctionFactories_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+]
+
+---
+
+# {scales}
+
+The {scales} package is full of function factories.
+
+
+```r
+scales::number_format
+```
+
+```
+## function (accuracy = NULL, scale = 1, prefix = "", suffix = "", 
+##     big.mark = " ", decimal.mark = ".", trim = TRUE, ...) 
+## {
+##     force_all(accuracy, scale, prefix, suffix, big.mark, decimal.mark, 
+##         trim, ...)
+##     function(x) number(x, accuracy = accuracy, scale = scale, 
+##         prefix = prefix, suffix = suffix, big.mark = big.mark, 
+##         decimal.mark = decimal.mark, trim = trim, ...)
+## }
+## &lt;bytecode: 0x55e34697bcd0&gt;
+## &lt;environment: namespace:scales&gt;
+```
+
+---
+
+# Functional function factories with functionals
+
+.pull-left[
+
+```r
+names &lt;- list(
+  square = 2, 
+  cube = 3, 
+  root = 1/2, 
+  cuberoot = 1/3, 
+  reciprocal = -1
+)
+```
+
+
+
+```r
+funs &lt;- purrr::map(names, power1)
+```
+]
+
+.pull-right[
+
+```r
+funs$root(64)
+```
+
+```
+## [1] 8
+```
+
+```r
+funs$root
+```
+
+```
+## function(x) {
+##     x ^ exp
+##   }
+## &lt;bytecode: 0x55e3439faf88&gt;
+## &lt;environment: 0x55e346d2a4c8&gt;
+```
+]
+
+---
+
+# Avoiding $itis...
+
+#### Using `with()`
+
+```r
+with(funs, root(100))
+```
+
+```
+## [1] 10
+```
+
+#### Using `attach()`
+
+```r
+attach(funs)
+root(100)
+```
+
+```
+## [1] 10
+```
+
+```r
+detach(funs)
+```
+
+---
+
+class: inverse, hide-logo
+
+# Questions?
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+<style>
+.logo {
+  background-image: url(r4ds.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 110px;
+  height: 128px;
+  z-index: 0;
+}
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"></div>';
+  });
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
