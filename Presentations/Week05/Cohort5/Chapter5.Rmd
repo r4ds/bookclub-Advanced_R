@@ -1,0 +1,438 @@
+---
+title: "Ch.5 Control Flow"
+subtitle: "Advanced-R Bookclub Cohort 5"  
+author: 
+  - "Jiwan Heo @jiwanheo"
+date: '2021-04-20'
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    includes:
+      after_body: insert-logo.html
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  fig.show = TRUE,
+  hiline = TRUE
+)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_mono_light(
+  base_color = "#274156",
+  white_color = "#EEEAE7",
+  header_font_google = google_font("Ubuntu"),
+  text_font_google   = google_font("Merriweather", "300", "300i"),
+  base_font_size     = "18px",
+  code_font_google   = google_font("Fira Code")
+)
+```
+
+## Control Flow
+The way things get executed
+
+<img src="https://imgs.xkcd.com/comics/loop.png" style="display: block; margin-left: auto; margin-right: auto; width: 15%;">
+
+  .pull-left[
+### Choices:
+
+*   if else
+*   ifelse
+* _dplyr::if_else_
+*   _dplyr::case_when_
+*   switch
+]
+
+.pull-right[
+
+### Loops:
+
+*  for
+*  while
+*  repeat
+]
+
+---
+class: inverse middle center
+# Choices
+
+<img src="https://preview.redd.it/8u8rd9v9d5t61.png?width=960&crop=smart&auto=webp&s=4077e56ce9fba8e895f6d7ae83627c479c33da99" style="display: block; margin-left: auto; margin-right: auto; width: 80%;">
+---
+class: inverse middle center
+
+## Choice #1 if else 
+
+---
+## Choice #1 if else 
+
+.pull-left[
+
+### Syntax
+
+```{r eval = FALSE}
+if (condition) {
+  true_action
+} 
+else {
+  false_action
+}
+```
+]
+--
+
+.pull-right[
+
+### Example
+```{r}
+inverse_colour <- function(colour) {
+  if(colour == "red") {
+    return("blue")
+  } 
+  else if(colour == "green") {
+    return("yello")
+  } 
+  else {
+    return("Oops!")
+  }
+}
+
+inverse_colour("pink")
+```
+
+]
+---
+
+## Choice #1 if else 
+
+### Pointers: 
+
+✓ if( no else ) { return(NULL) }
+
+--
+
+```{r}
+bg_fill <- function(bool) {
+  if(bool) {
+    theme(panel.background = element_rect(fill = "#D5A18E"))
+  } 
+}
+```
+
+.pull-left[
+```{r}
+library(ggplot2)
+ggplot(mtcars, aes(mpg, cyl)) + 
+  geom_point() + 
+  bg_fill(TRUE)
+```
+]
+
+.pull-right[
+```{r}
+ggplot(mtcars, aes(mpg, cyl)) + 
+  geom_point() + 
+  bg_fill(FALSE)
+```
+]
+
+---
+
+## Choice #1 if else 
+
+### Pointers
+
+✓ if( condition is a logical vector of +1 length ) { only first element is evaluated }
+
+--
+
+.pull-left[
+```{r}
+my_result <- if (c(TRUE, FALSE)) {
+  1
+} else {
+  2
+} 
+my_result
+```
+]
+
+.pull-right[
+```{r}
+my_result <- if (c(0, 1, 2)) {
+  1
+} else {
+  2
+} 
+my_result
+```
+]
+
+Where can you use this behaviour?
+
+
+---
+class: inverse middle center
+
+## Choice #2 ifelse 
+
+---
+
+## Choice #2 ifelse
+
+`ifelse` is a vectorized `if else`. 
+```{r}
+x <- 1:10
+ifelse(x %% 5 == 0, x, 9999)
+```
+
+--
+Recommended to use only when yes/no results are of the same type, due to coercion.
+
+
+```{r}
+x <- 1:10
+ifelse(x %% 5 == 0, x, TRUE)
+```
+
+---
+
+## Choice #2 ifelse
+
+There's also a `dplyr::if_else`, which enforces the yes/no results to be of the same type.
+
+```{r eval = FALSE}
+# Not Run
+
+ifelse(1 != 2,"a", 3)
+dplyr::if_else(1 != 2,"a", 3)
+```
+
+---
+## Choice #2 ifelse
+
+Here's one way to use an `ifelse`: (but don't)
+
+```{r}
+library(dplyr)
+
+mtcars %>% 
+  tibble::as.tibble() %>% 
+  head() %>% 
+  mutate(
+    my_cyl = ifelse(cyl == 4, # Condition 1
+                    "cyl is 4", # True value 1
+                    ifelse(cyl == 6, # False value 1 & Condition 2
+                           "cyl is 6", # True value 2
+                           "cyl is 8") # False value 2
+                    )
+  )
+```
+
+---
+## Choice #2 ifelse
+![](https://i.redd.it/mlmgfzh5w3xy.png)
+---
+
+class: inverse middle center
+## Choice #3 dplyr::case_when
+
+---
+
+## Choice #3 dplyr::case_when
+
+Another vectorized equivalent of if else
+
+---
+
+## Choice #3 dplyr::case_when
+
+### Syntax
+
+```{r eval = FALSE}
+dplyr::case_when(
+  condition1 ~ value1,
+  condition2 ~ value2,
+  condition3 ~ value3.
+  TRUE ~ else_value
+)
+```
+
+---
+
+## Choice #3 dplyr::case_when
+
+### Example 
+
+```{r}
+dogs <- c("Doberman", "Dalmatian", "Beagle", "Corgi", "Cat")
+
+dplyr::case_when(
+  dogs %in% c("Doberman", "Dalmatian") ~ "Big boi", # Condition/value 1
+  dogs == "Beagle" ~ "Smol boi", # Condition/value 2
+  stringr::str_detect(dogs, "rg") ~ "Smol boi", # Condition/value 3
+  TRUE ~ "Meow" # Condition/value 4 (else)
+)
+```
+
+
+<img src="https://s3.amazonaws.com/cdn-origin-etr.akc.org/wp-content/uploads/2017/11/11123543/Beagles-standing-in-a-frosty-field-on-a-cold-morning.jpg" style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
+
+
+
+---
+
+## Choice #3 dplyr::case_when
+```{r}
+mtcars %>% 
+  tibble::as.tibble() %>% 
+  head() %>% 
+  mutate(
+    my_cyl = case_when(
+      cyl == 4 ~ "cyl is 4", # Condition/value 1
+      cyl == 6 ~ "cyl is 6", # Condition/value 2
+      cyl == 8 ~ "cyl is 8", # Condition/value 3
+      TRUE ~ "Shouldn't reach here!") # else
+  )
+
+```
+
+
+---
+class: inverse middle center
+## Choice #4 switch
+---
+
+## Choice #4 switch
+
+Notice the slightly different way of writing conditions, and the fall-through of output values
+
+```{r}
+name_dogs <- function(dog) {
+  switch(dog,
+         mastiff = ,
+         doberman = ,
+         dalmatian = "Big boi",
+         chihuahua = ,
+         beagle = "Smol boi",
+         stop("Invalid value")
+  )
+}
+```
+
+```{r}
+name_dogs("doberman")
+name_dogs("chihuahua")
+```
+
+---
+class: inverse middle center
+
+# Loops
+
+<img src="https://scontent.fybz2-1.fna.fbcdn.net/v/t1.6435-0/p180x540/93494723_3081488058569091_3999617908475953152_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=8bfeb9&_nc_ohc=Tq3n6M1NozUAX_cAb4D&_nc_ht=scontent.fybz2-1.fna&tp=6&oh=f6c132f576a0abfa66120b5248692bc5&oe=609B14FB" style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
+
+---
+
+## Loop #1 for
+
+### Syntax
+```{r eval = FALSE}
+for (item in vector) {
+  perform_action
+}
+```
+---
+
+## Loop #1 for
+
+### Pointers
+
+✓ Loop _assigns_ item and overwrites at each iteration 
+
+```{r}
+i <- 100
+print(lobstr::obj_addr(i))
+print(i)
+
+for (i in 1:3) {
+  print(lobstr::obj_addr(i))
+  print(i)
+}
+```
+
+---
+
+## Loop #1 for
+
+### Pointers
+
+✓ Pre-allocate output container
+```{r}
+means <- c(1, 50, 20)
+out <- vector("list", length(means))
+for (i in 1:length(means)) {
+  out[[i]] <- rnorm(10, means[[i]])
+}
+```
+
+---
+
+## Loop #1 for
+
+### Pointers
+
+
+✓ Don't use 1:length(vector)
+```{r}
+for (i in 1:length(c())) {
+  print(i)
+}
+```
+
+If the vector has length 0, __:__ counts backwards
+
+---
+
+## Loop #2 while
+
+### Syntax
+```{r eval = FALSE}
+while(condition) {
+  action
+}
+```
+
+More flexible than `for`
+
+You'd typically want to put in a stop condition
+
+---
+
+## Loop #3 repeat
+
+### Syntax
+```{r eval = FALSE}
+repeat(action)
+```
+
+More flexible than `while`
+
+You'd typically want to put in a stop condition
+
+---
+class: center middle inverse 
+# Thanks!
