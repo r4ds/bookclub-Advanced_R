@@ -4,7 +4,7 @@
     <title>Advanced R</title>
     <meta charset="utf-8" />
     <meta name="author" content="R4DS Reading Group" />
-    <script src="libs/header-attrs-2.3/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.7/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -121,7 +121,7 @@ square1
 ## function(x) {
 ##     x ^ exponent
 ##   }
-## &lt;environment: 0x000000001b3595a8&gt;
+## &lt;environment: 0x55c87035f430&gt;
 ```
 
 ```r
@@ -132,8 +132,8 @@ cube1
 ## function(x) {
 ##     x ^ exponent
 ##   }
-## &lt;bytecode: 0x000000001b4c1c88&gt;
-## &lt;environment: 0x000000001b3a3430&gt;
+## &lt;bytecode: 0x55c870b278c0&gt;
+## &lt;environment: 0x55c8703c0a98&gt;
 ```
 
 ```r
@@ -308,10 +308,6 @@ guess(50)
 ?ggplot2::geom_histogram
 ```
 
-```
-## starting httpd help server ... done
-```
-
 &gt; `binwidth` The width of the bins. Can be specified as a numeric value **or as a function that calculates width from unscaled x.** Here, "unscaled x" refers to the original x values in the data, before application of any scale transformation. When specifying a function along with a grouping structure, the function will be called once per group...
 
 ---
@@ -335,7 +331,7 @@ scales::number_format
 ##         prefix = prefix, suffix = suffix, big.mark = big.mark, 
 ##         decimal.mark = decimal.mark, trim = trim, ...)
 ## }
-## &lt;bytecode: 0x00000000196a4728&gt;
+## &lt;bytecode: 0x55c86e395628&gt;
 ## &lt;environment: namespace:scales&gt;
 ```
 
@@ -360,7 +356,7 @@ head(boot_mtcars1())
 ```
 
 ```
-## [1] 24.45596 23.12083 24.68581 20.45908 21.25010 18.94530
+## [1] 21.39959 20.81963 20.98059 20.96952 16.11920 20.53945
 ```
 
 ```r
@@ -368,7 +364,7 @@ head(boot_mtcars1())
 ```
 
 ```
-## [1] 21.39959 19.63716 26.98924 16.64029 16.28914 21.25762
+## [1] 22.36284 18.01441 20.34280 22.20594 20.10120 16.18225
 ```
 
 ---
@@ -384,7 +380,7 @@ boot_mtcars1
 ## function() {
 ##     fitted_vals + sample(resid_vals)
 ##   }
-## &lt;environment: 0x00000000192b97e0&gt;
+## &lt;environment: 0x55c86d43d068&gt;
 ```
 
 ```r
