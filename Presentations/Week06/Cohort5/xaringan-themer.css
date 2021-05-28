@@ -20,7 +20,7 @@
  * ------------------------------------------------------- */
 @import url(https://fonts.googleapis.com/css?family=Montserrat:300,300i&display=swap);
 @import url(https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap);
-@import url(https://fonts.googleapis.com/css?family=Droid+Sans+Mono&display=swap);
+@import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@2/distr/fira_code.css);
 
 
 :root {
@@ -32,34 +32,34 @@
   --header-font-family: 'Josefin Sans';
   --header-font-is-google: 1;
   --header-font-family-fallback: Georgia, serif;
-  --code-font-family: 'Droid Sans Mono';
-  --code-font-is-google: 1;
+  --code-font-family: 'Fira Code';
+  --code-font-is-google: 0;
   --base-font-size: 20px;
   --text-font-size: 1rem;
   --code-font-size: 0.9rem;
   --code-inline-font-size: 1em;
-  --header-h1-font-size: 2.25rem;
+  --header-h1-font-size: 2.75rem;
   --header-h2-font-size: 2.25rem;
   --header-h3-font-size: 1.75rem;
 
   /* Colors */
-  --text-color: #2166B2;
-  --header-color: #3092FF;
-  --background-color: #EAF4FF;
-  --link-color: #3092FF;
-  --text-bold-color: #3092FF;
+  --text-color: #032C43;
+  --header-color: #053F61;
+  --background-color: #E6EBEF;
+  --link-color: #053F61;
+  --text-bold-color: #053F61;
   --code-highlight-color: rgba(255,255,0,0.5);
-  --inverse-text-color: #EAF4FF;
-  --inverse-background-color: #3092FF;
-  --inverse-header-color: #EAF4FF;
-  --inverse-link-color: #3092FF;
-  --title-slide-background-color: #3092FF;
-  --title-slide-text-color: #EAF4FF;
-  --header-background-color: #3092FF;
-  --header-background-text-color: #EAF4FF;
-  --base: #3092FF;
-  --white: #EAF4FF;
-  --black: #2166B2;
+  --inverse-text-color: #E6EBEF;
+  --inverse-background-color: #053F61;
+  --inverse-header-color: #E6EBEF;
+  --inverse-link-color: #053F61;
+  --title-slide-background-color: #053F61;
+  --title-slide-text-color: #E6EBEF;
+  --header-background-color: #053F61;
+  --header-background-text-color: #E6EBEF;
+  --base: #053F61;
+  --white: #E6EBEF;
+  --black: #032C43;
 }
 
 html {
@@ -100,10 +100,10 @@ h1, h2, h3 {
 }
 .remark-inline-code {
   font-size: var(--code-inline-font-size);
-  color: #3092FF;
+  color: #053F61;
 }
 .remark-slide-number {
-  color: #3092FF;
+  color: #053F61;
   opacity: 1;
   font-size: 0.9em;
 }
@@ -148,10 +148,10 @@ a, a > code {
   float: left;
 }
 .left-column h2, .left-column h3 {
-  color: #3092FF99;
+  color: #053F6199;
 }
 .left-column h2:last-of-type, .left-column h3:last-child {
-  color: #3092FF;
+  color: #053F61;
 }
 .right-column {
   width: 75%;
@@ -173,7 +173,7 @@ img, video, iframe {
   max-width: 100%;
 }
 blockquote {
-  border-left: solid 5px #3092FF80;
+  border-left: solid 5px #053F6180;
   padding-left: 1em;
 }
 .remark-slide table {
@@ -188,7 +188,7 @@ th, td {
   padding: 5px;
 }
 .remark-slide thead, .remark-slide tfoot, .remark-slide tr:nth-child(even) {
-  background: #D5E9FF;
+  background: #CDD8DF;
 }
 table.dataTable tbody {
   background-color: var(--background-color);
@@ -198,7 +198,7 @@ table.dataTable.display tbody tr.odd {
   background-color: var(--background-color);
 }
 table.dataTable.display tbody tr.even {
-  background-color: #D5E9FF;
+  background-color: #CDD8DF;
 }
 table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
   background-color: rgba(255, 255, 255, 0.5);
@@ -257,3 +257,17 @@ table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
   background-color: var(--black);
 }
 
+
+
+/* Extra CSS */
+.small {
+  font-size: 90%;
+}
+.large {
+  font-size: 130%;
+}
+.full-width {
+  display: flex;
+  width: 100%;
+  flex: 1 1 auto;
+}

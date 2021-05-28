@@ -4,7 +4,7 @@
     <title>Advanced R</title>
     <meta charset="utf-8" />
     <meta name="author" content="R4DS Reading Group" />
-    <script src="libs/header-attrs-2.7/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.8/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -32,49 +32,14 @@ class: center, middle, inverse, title-slide
 - Why use a function factory?
   - Stateful functions
   - ggplot2
-  - Expensive calculations
+  - {scales}
+- Functionals + function factories
   
 
 ```r
 library(rlang)
-```
-
-```
-## 
-## Attaching package: 'rlang'
-```
-
-```
-## The following objects are masked from 'package:purrr':
-## 
-##     %@%, as_function, flatten, flatten_chr, flatten_dbl, flatten_int,
-##     flatten_lgl, flatten_raw, invoke, list_along, modify, prepend,
-##     splice
-```
-
-```r
 library(ggplot2)
 library(scales)
-```
-
-```
-## 
-## Attaching package: 'scales'
-```
-
-```
-## The following object is masked from 'package:purrr':
-## 
-##     discard
-```
-
-```
-## The following object is masked from 'package:readr':
-## 
-##     col_factor
-```
-
-```r
 # remotes::install_github("jonthegeek/factory")
 library(factory)
 ```
@@ -85,19 +50,28 @@ class: inverse, hide-logo
 
 # What is a function factory?
 
+&lt;br&gt;
+.center[![](images/functions_meme.jpg)]
+
 ---
 
 # Function factories and manufactured functions
 
+- Functions are objects
+- Functions return whatever objects they produce, even if it's a function!
+
 
 ```r
-# Function factory
-power1 &lt;- function(exponent) {
+power1 &lt;- function(exp) {
   function(x) {
-    x ^ exponent
+    x ^ exp
   }
 }
+```
 
+
+
+```r
 # Manufactured functions
 square1 &lt;- power1(2)
 cube1 &lt;- power1(3)
@@ -112,6 +86,9 @@ square1(8)
 
 # Manufactured function environments
 
+Let's see what our functions are doing...
+
+.pull-left[
 
 ```r
 square1
@@ -119,10 +96,13 @@ square1
 
 ```
 ## function(x) {
-##     x ^ exponent
+##     x ^ exp
 ##   }
-## &lt;environment: 0x55c87035f430&gt;
+## &lt;environment: 0x55ca7c796c28&gt;
 ```
+]
+
+.pull-right[
 
 ```r
 cube1
@@ -130,19 +110,31 @@ cube1
 
 ```
 ## function(x) {
-##     x ^ exponent
+##     x ^ exp
 ##   }
-## &lt;bytecode: 0x55c870b278c0&gt;
-## &lt;environment: 0x55c8703c0a98&gt;
+## &lt;bytecode: 0x55ca7dd30510&gt;
+## &lt;environment: 0x55ca7c93ed08&gt;
 ```
+]
+
+Well, that's not useful. Let's look at the functions' environments using `rlang::fn_env()`
+
 
 ```r
-c(fn_env(square1)$exponent, fn_env(cube1)$exponent)
+c(fn_env(square1)$exp, fn_env(cube1)$exp)
 ```
 
 ```
 ## [1] 2 3
 ```
+
+---
+
+# Where does exp come from?
+
+Exp comes from the enclosing environment, not the function body.
+
+![](images/power-simple.png)
 
 ---
 
@@ -152,40 +144,60 @@ Lazy evaluation + factories = **danger**
 
 
 ```r
-my_exponent &lt;- 2
-square1b &lt;- power1(my_exponent)
-my_exponent &lt;- 3
-square1b(2)
+x &lt;- 2
+square &lt;- power1(x)
+x &lt;- 3
+```
+
+What does `square(2)` return?
+
+--
+
+
+```r
+square(2)
 ```
 
 ```
 ## [1] 8
 ```
 
+Uh oh.
+---
+
+# Lazy Factories
+
+#### The value of `exp` isn't evaluated until it's needed - creating `square` doesn't need to know `exp`, so R waits until we need a value for `exp`.
+
+#### Our factory builds functions that aren't complete until the user runs them!
+
 ---
 
 # Forcing evaluation
 
-`force` forces evaluation
+`force(x)` forces evaluation by evaluating `x`&lt;sup&gt;*&lt;/sup&gt;
 
 
 ```r
-power2 &lt;- function(exponent) {
-  force(exponent)
+power2 &lt;- function(exp) {
+  force(exp)
   function(x) {
-    x ^ exponent
+    x ^ exp
   }
 }
 ```
 
-*(technically just `exponent` instead of `force(exponent)` does the same thing)*
+.footnote[*Technically just `exp` instead of `force(exp)` does the same thing, but `force()` makes our intentions clear.]
 
 ---
 
 # {factory}
 
-- I created a [package](https://github.com/jonthegeek/factory) to handle some of the fancy stuff.
-- Maybe discuss internals in Chapter 19?
+Jon Harmon (@jonthegeek) created a [package](https://github.com/jonthegeek/factory) to handle some of the fancy stuff. Uses `{rlang}` and quasinotation ([Chapter 19](https://adv-r.hadley.nz/quasiquotation.html)) to work its magic&lt;sup&gt;*&lt;/sup&gt;.
+
+.pull-left[
+
+Use `factory::build_factory()` to produce our power function.
 
 
 ```r
@@ -195,6 +207,17 @@ power3 &lt;- factory::build_factory(
   },
   exponent
 )
+```
+]
+
+--
+
+.pull-right[
+
+Same shenanigans for `my_exponent` as before.
+
+
+```r
 my_exponent &lt;- 2
 square3 &lt;- power3(my_exponent)
 my_exponent &lt;- 3
@@ -215,87 +238,68 @@ square3
 ##     x^2
 ## }
 ```
+]
 
+.footnote[*"Any sufficiently advanced technology is indistinguishable from magic." - Arthur C. Clarke]
 ---
 
 class: inverse, hide-logo
 
 # Why use a function factory?
 
+
+&lt;br&gt;
+.center[![](images/Inception_sm.jpg)]
+
 ---
 
 # Stateful functions
 
+.pull-left[
 
 ```r
-new_guessing_game &lt;- function() {
-  target &lt;- sample(1:100, 1)
-  previous_diff &lt;- NA_integer_
-  function(guess) {
-    if (guess %in% 1:100) {
-      if (guess == target) {
-        message("Correct!")
-        return(invisible(TRUE))
-      }
-      new_diff &lt;- abs(target - guess)
-      if (is.na(previous_diff) || new_diff == previous_diff) {
-        message("Try again!")
-      } else if (new_diff &lt; previous_diff) message("Warmer!")
-      else message("Colder!")
-      previous_diff &lt;&lt;- new_diff
-    } else stop("Your guess should be between 1 and 100.")
-    return(invisible(FALSE))
+new_counter &lt;- function() {
+  i &lt;- 0
+  
+  function() {
+    i &lt;&lt;- i + 1
+    i
   }
 }
+
+counter_one &lt;- new_counter()
+counter_two &lt;- new_counter()
 ```
+]
 
----
-
-# Stateful functions (cont)
-
-
-
+.pull-right[
 
 ```r
-guess &lt;- new_guessing_game()
-guess(50)
+counter_one()
 ```
 
 ```
-## Try again!
+## [1] 1
 ```
 
 ```r
-guess(75)
+counter_one()
 ```
 
 ```
-## Colder!
-```
-
-```r
-guess(50)
-```
-
-```
-## Warmer!
+## [1] 2
 ```
 
 ```r
-guess(25)
+counter_two()
 ```
 
 ```
-## Warmer!
+## [1] 1
 ```
+]
 
-```r
-guess(50)
-```
-
-```
-## Colder!
-```
+.footnote[Since we're in the section on functional programming, are these counters pure functions and/or good functional style?]
 
 ---
 
@@ -309,6 +313,58 @@ guess(50)
 ```
 
 &gt; `binwidth` The width of the bins. Can be specified as a numeric value **or as a function that calculates width from unscaled x.** Here, "unscaled x" refers to the original x values in the data, before application of any scale transformation. When specifying a function along with a grouping structure, the function will be called once per group...
+
+---
+
+# Histogram binwidths
+
+.pull-left[
+
+```r
+# construct some sample data with very 
+# different numbers in each cell
+
+sd &lt;- c(1, 5, 15)
+n &lt;- 100
+
+df &lt;- data.frame(x = rnorm(3 * n, sd = sd), sd = rep(sd, n))
+
+ggplot(df, aes(x)) + 
+  geom_histogram(binwidth = 2) + 
+  facet_wrap(~ sd, scales = "free_x") + 
+  labs(x = NULL)
+```
+]
+
+.pull-right[
+![](Chapter10_FuntionFactories_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+]
+
+---
+
+# Define binwidths with function-fu
+
+.pull-left[
+
+```r
+binwidth_bins &lt;- function(n) {
+  force(n)
+  
+  function(x) {
+    (max(x) - min(x)) / n
+  }
+}
+
+ggplot(df, aes(x)) + 
+  geom_histogram(binwidth = binwidth_bins(20)) + 
+  facet_wrap(~ sd, scales = "free_x") + 
+  labs(x = NULL)
+```
+]
+
+.pull-right[
+![](Chapter10_FuntionFactories_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+]
 
 ---
 
@@ -331,72 +387,83 @@ scales::number_format
 ##         prefix = prefix, suffix = suffix, big.mark = big.mark, 
 ##         decimal.mark = decimal.mark, trim = trim, ...)
 ## }
-## &lt;bytecode: 0x55c86e395628&gt;
+## &lt;bytecode: 0x55ca80b0b480&gt;
 ## &lt;environment: namespace:scales&gt;
 ```
 
 ---
 
-# Expensive calculations
+# Functional function factories with functionals
+
+.pull-left[
+
+```r
+names &lt;- list(
+  square = 2, 
+  cube = 3, 
+  root = 1/2, 
+  cuberoot = 1/3, 
+  reciprocal = -1
+)
+```
+
 
 
 ```r
-boot_model &lt;- function(df, formula) {
-  # Pretend these calculations would be slow
-  mod &lt;- lm(formula, data = df)
-  fitted_vals &lt;- unname(fitted(mod))
-  resid_vals &lt;- unname(resid(mod))
-  rm(mod) # Or use {factory} and this won't be necessary!
-  function() {
-    fitted_vals + sample(resid_vals)
-  }
-}
-boot_mtcars1 &lt;- boot_model(mtcars, mpg ~ wt)
-head(boot_mtcars1())
+funs &lt;- purrr::map(names, power1)
+```
+]
+
+.pull-right[
+
+```r
+funs$root(64)
 ```
 
 ```
-## [1] 21.39959 20.81963 20.98059 20.96952 16.11920 20.53945
+## [1] 8
 ```
 
 ```r
-head(boot_mtcars1())
+funs$root
 ```
 
 ```
-## [1] 22.36284 18.01441 20.34280 22.20594 20.10120 16.18225
+## function(x) {
+##     x ^ exp
+##   }
+## &lt;bytecode: 0x55ca7dd30510&gt;
+## &lt;environment: 0x55ca80e47e30&gt;
 ```
+]
 
 ---
 
-# Expensive calculations (cont)
+# Avoiding $itis...
 
-
-```r
-boot_mtcars1
-```
-
-```
-## function() {
-##     fitted_vals + sample(resid_vals)
-##   }
-## &lt;environment: 0x55c86d43d068&gt;
-```
+#### Using `with()`
 
 ```r
-head(rlang::fn_env(boot_mtcars1)$fitted_vals)
+with(funs, root(100))
 ```
 
 ```
-## [1] 23.28261 21.91977 24.88595 20.10265 18.90014 18.79325
+## [1] 10
+```
+
+#### Using `attach()`
+
+```r
+attach(funs)
+root(100)
+```
+
+```
+## [1] 10
 ```
 
 ```r
-head(rlang::fn_env(boot_mtcars1)$resid_vals)
-```
-
-```
-## [1] -2.2826106 -0.9197704 -2.0859521  1.2973499 -0.2001440 -0.6932545
+detach(funs)
 ```
 
 ---
@@ -407,7 +474,9 @@ class: inverse, hide-logo
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
-<script>var slideshow = remark.create();
+<script>var slideshow = remark.create({
+"ratio": "16:9"
+});
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
 });
