@@ -194,7 +194,7 @@ Chapter 11 - Function operators
 
 Chapter 12 - OOP base types
 - Cohort 3: [Megan Stodel](https://twitter.com/MeganStodel) ([slides](https://github.com/MeganStodel/bookclub-Advanced_R/tree/cohort-3-base-types/Presentations/Week12/Cohort3)  | [video](https://youtu.be/IL6iJhAsZAY))
-- Cohort 5: [Hannes Oberreiter](https://twitter.com/btree_hannes) ([slides](https://hannesoberreiter.github.io/advr-r-oo-presi/index_basic.html#1))
+- Cohort 5: [Hannes Oberreiter](https://twitter.com/btree_hannes) ([slides](https://hannesoberreiter.github.io/advr-r-oo-presi/index_basic.html#1) | [video](https://youtu.be/NeHtEGab1Og))
 
 Chapter 12 + 13 - OOP base types + S3
 
@@ -202,7 +202,7 @@ Chapter 12 + 13 - OOP base types + S3
 - Cohort 2: Chris Yarrison (SLIDES | [video](https://youtu.be/9GkgNC15EAw))
 - Cohort 3 (13, part 1): Anne Hoffrichter ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Cohort3/part1/13_S3_part1.html) | [video](https://youtu.be/q7lFXSLdC1g))
 - Cohort 3 (13, part 2): [Anna-Leigh Brown](https://twitter.com/annaleighbrown2) (SLIDES | [video](https://youtu.be/2rHS_urTGFg))
-- Cohort 5: [Hannes Oberreiter](https://twitter.com/btree_hannes) ([slides](https://hannesoberreiter.github.io/advr-r-oo-presi/index_s3.html#1))
+- Cohort 5: [Hannes Oberreiter](https://twitter.com/btree_hannes) ([slides](https://hannesoberreiter.github.io/advr-r-oo-presi/index_s3.html#1) | [video](https://youtu.be/NeHtEGab1Og))
 
 Chapter 14 - R6
 
