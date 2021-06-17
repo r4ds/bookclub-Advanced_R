@@ -210,6 +210,7 @@ Chapter 14 - R6
 - Cohort 2: Ezra Porter ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Cohort2/Chapter-14.html#1) | [video](https://youtu.be/LVkDJ28XJUE))
 - Cohort 3: (14, part 1) [Anna-Leigh Brown](https://twitter.com/annaleighbrown2) (SLIDES | [video](https://youtu.be/rCjQTbQ22qc))
 - Cohort 3: (14, part 2) [Megan Stodel](https://twitter.com/MeganStodel) ([slides](Presentations/Week14/Cohort3/R6.pdf))  
+- Cohort 5: [Hannes Oberreiter](https://twitter.com/btree_hannes) ([slides - Cohort 2](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week13/Cohort2/Chapter-14.html#1) | [video](https://youtu.be/NXmlqK2LxWw))
 
 Chapter 15 - S4
 
