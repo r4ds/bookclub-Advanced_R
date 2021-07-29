@@ -1,0 +1,315 @@
+---
+title: "Advanced R - Expressions"
+subtitle: "eval is Evil, The eval function is the most misused feature of JavaScript. Avoid it. - Evan Crockford"
+author: "Hannes Oberreiter"
+date: "Cohort 5"
+output:
+  xaringan::moon_reader:
+    chakra: libs/remark-latest.min.js
+    css: 
+     - default
+     - libs/custom-themer.css
+     - libs/animate.min.css
+    yolo: false
+    seal: true
+    lib_dir: libs
+    self_contained: true
+    nature:
+      highlightStyle: sunburst
+      highlightSpans: true
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+class: left, top
+
+```{r setup, include=FALSE, warnings=FALSE}
+options(htmltools.dir.version = FALSE)
+options(crayon.enabled = FALSE)
+library(tidyverse)
+library(rlang)
+library(lobstr)
+library(knitr)
+```
+
+## Intro
+
+What if we want to run a defined code but don't actually have the input yet!
+
+```{r}
+try(Result <- a + b)
+```
+--
+We need first to `capture` our code into an **Expression**, so it wont be executed straight away.
+
+```{r}
+(Expression <- rlang::expr(Result <- a + b))
+```
+
+--
+The previous generated **Expression** can be evaluated (`eval`):
+```{r}
+a <- b <- 1
+eval(Expression)
+Result
+```
+
+---
+class: left, top
+
+## Expression and Evaluation Notes
+
+- expr() and enquo() prevents evaluation (defusing, quoting)
+  - enquo() defuses expressions supplied as argument by the user of a function
+  - base: quote() and substitute()
+- eval_tidy() evaluation of an saved expression
+  - base: eval()
+
+> The process by which a computer language takes a string and constructs an expression is called **parsing**, and is governed by a set of rules known as a **grammar.**
+  
+---
+class: left, top
+
+### Quosure
+
+Quoted expression that includes a reference to the context where it was created.
+
+```{r}
+multiply_expr_by_10 <- function(expr) {
+  expr       <- enquo(expr)
+  local_ten  <- 10
+  quo(!!expr * local_ten)
+}
+quo <- multiply_expr_by_10(a + b)
+quo
+eval_tidy(quo)
+```
+
+---
+class: left, top
+
+## ASTs Review
+
+Package lobstr `ast`
+
+```{r}
+lobstr::ast(f(x, "y", 1))
+```
+
+RStudio TreeViewer
+
+```{r, eval = FALSE}
+View(expr(f(x, "y", 1)))
+```
+
+```{r, echo=FALSE, out.width="", fig.cap="", fig.align="center"}
+knitr::include_graphics("./img/view_expression.png")
+```
+
+---
+class: left, top
+
+## ASTs Syntax
+
+```{r, eval = FALSE}
+lobstr::ast(f(g(1, 2), h(3, 4, i())))
+```
+
+```{r, echo=FALSE, out.width="50%", fig.cap="", fig.align="center"}
+knitr::include_graphics("https://d33wubrfki0l68.cloudfront.net/9e269a7eb3509ae2e9f3fa9583ff2195b947cc53/d5886/diagrams/expressions/complicated.png")
+```
+
+- Evaluation from deepest-to-shallowest (not guaranteed)
+- Abstract Syntax: white space and comments are ignored
+  - exception: `y <- x` != `y < -x`
+
+---
+class: left, top
+#### Inside - Out Example
+
+```{r}
+sum(10 * sum(1+1+1), mean(c((1+1), 4)))
+```
+
+- most operators are **left-associative**, i.e. the operations on the left are evaluated first (expections: exponentiation and assignment):
+
+
+```{r}
+lobstr::ast(1 + 2 + 3) # ( 1 + 2 ) + 3
+```
+
+
+```{r, echo=FALSE}
+kable(
+  tibble(
+    operator = c(":: :::","$ @", "[ [[","^",
+                 "- +",":","%any%","* /","+ -",
+                 "< > <= >= == !=	", "!","& &&","| ||",
+                 "~","-> ->>","<- <<-","=","?"
+                 ),
+    meaning = c(
+      "access variables in a namespace",
+      "component / slot extraction",
+      "indexing",
+      "exponentiation (right to left)",
+      "unary minus and plus",
+      "sequence operator",
+      "special operators (including %% and %/%",
+      "multiply, divide",
+      "(binary) add, subtract",
+      "ordering and comparison",
+      "negation",
+      "and",
+      "or",
+      "as in formulae",
+      "rightwards assignment",
+      "assignment (right to left)",
+      "assignment (right to left)",
+      "help (unary and binary)"
+    ),
+    associativity = c(
+      "left-associative","left-associative","left-associative",
+      "right-associative",
+      "left-associative","left-associative","left-associative",
+      "left-associative","left-associative","left-associative",
+      "left-associative","left-associative","left-associative",
+      "left-associative",
+      "right-associative","right-associative","right-associative",
+      "left-associative"
+    )
+  ) %>%  head(4)
+)
+```
+
+---
+class: left, top
+
+## Infix Calls
+
+- Does not matter how you write it: function or infix
+
+```{r}
+expr(y <- x * 10)
+expr(`<-`(y, `*`(x, 10)))
+```
+
+
+```{r, echo=FALSE, out.width="50%", fig.cap="", fig.align="center"}
+knitr::include_graphics("https://d33wubrfki0l68.cloudfront.net/e32631051094207bc971e4352744db7ba6f8aac1/6f551/diagrams/expressions/prefix.png")
+```
+
+---
+class: left, top
+
+## Expression Data Types
+
+- **constants**, expression of a constant is the same as outside of the expression
+
+```{r}
+expr(1) == 1
+```
+
+- **symbols**, represents name of an object
+
+```{r}
+x <- 1
+expr(x) == sym("x")
+expr(x) == x
+# Reverse
+rlang::as_string(expr(x))
+```
+
+---
+class: left, top
+
+## Calls
+
+- **call object** represents a captured function call
+  - type of list (pairlist to be precise)
+  
+```{r}
+lobstr::ast(f(a = 1, b = 2))
+```
+```{r}
+is.call(expr(f(a = 1, b = 2)))
+```
+
+---
+class: left, top
+
+## Manipulating Expressions
+
+```{r}
+x <- expr(f(a = 1, b = 2))
+x[[1]]
+x[[2]]
+x$a <- 3
+x
+```
+
+---
+class: left, top
+
+## Constructing
+
+```{r}
+call2("<-", expr(x), 10)
+call2("mean", x = expr(x), na.rm = TRUE)
+```
+
+> Using call2() to create complex expressions is a bit clunky. You’ll learn another technique in Chapter 19.
+
+
+---
+class: center, middle
+
+
+```{r, echo=FALSE, out.width="", fig.cap="", fig.align="center"}
+knitr::include_graphics("./img/parse.jpg")
+```
+
+---
+class: left, top
+
+## Parsing
+
+```{r}
+x1 <- "2 + 10"
+eval(x1) # Eval wont work as it is still a string
+(p1 <- rlang::parse_expr(x1)) # multiple expressions with parse_exprS
+```
+
+Base (returns Expression Vector, means it is not a list but a vector of expressions more or less the same):
+```{r}
+(p2 <- parse(text = x1))
+```
+
+```{r}
+(eval(p1)) == (eval(p2))
+```
+
+---
+class: left, top
+
+## Deparsing
+
+- given an expression, you want the string that would generate it
+
+```{r}
+z <- expr(1+2)
+expr_text(z)
+```
+
+-  does happen when we print the expression automatically
+
+```{r}
+print(z)
+```
+
+---
+class: center, middle
+
+```{r, echo=FALSE, out.width="", fig.cap="", fig.align="center"}
+knitr::include_graphics("./img/eval_evil.jpeg")
+```
+
