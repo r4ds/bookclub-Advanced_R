@@ -11,7 +11,7 @@ print.advr_html <- function(x, ...) {
 }
 
 
-html("hello cohort 5!")
+html(c("hello cohort 5!", "blah"))
 
 
 escape <- function(x) UseMethod("escape")
