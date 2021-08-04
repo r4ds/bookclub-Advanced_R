@@ -1,0 +1,525 @@
+---
+title: "Translating R Code"
+subtitle: "Advanced R"  
+author: "Layla Bouzoubaa"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE,
+  eval = FALSE
+)
+library(rlang)
+library(magrittr)
+library(purrr)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#C59CFF",
+  secondary_color = "#98A68A",
+  inverse_header_color = "#FFFFFF",
+  header_font_google = google_font("Josefin Sans"),
+  text_font_google   = google_font("Montserrat", "300", "300i"),
+  code_font_google   = google_font("Droid Mono")
+)
+```
+
+## Objectives
+
+- Introduce why translating R is useful
+
+- Understand what a Domain Specific Language (DSL) is
+
+- Walk through how elements of functional programming is used to generate HTML
+
+- Walk through how elements of functional programming is used to generate LaTex
+
+---
+class: inverse center middle
+
+# WHY???
+
+---
+
+## Translating R Code
+
+- Consistency/Readability 
+
+```{r eval=FALSE}
+library(dbplyr)
+translate_sql(x ^ 2)
+#> <SQL> POWER(`x`, 2.0)
+translate_sql(x < 5 & !is.na(x))
+#> <SQL> `x` < 5.0 AND NOT(((`x`) IS NULL))
+translate_sql(!first %in% c("John", "Roger", "Robert"))
+#> <SQL> NOT(`first` IN ('John', 'Roger', 'Robert'))
+translate_sql(select == 7)
+#> <SQL> `select` = 7.0
+```
+
+
+- Efficiency
+
+- Express problems & solutions in the same level of abstraction
+
+???
+dbplyr is the database backend for dplyr. It allows you to use remote database tables as if they are in-memory data frames by automatically converting dplyr code into SQL.
+
+without these functions, you would have to switch languages in your script, with the help of other libraries, which may make it challenging for non-SQL collaborators to understand your code.
+---
+class: inverse center middle
+
+# DSLs
+
+---
+name: DSL
+
+## **D**omain **S**pecific **L**anguages (DSLs)
+
+.pull-left[
+
+- What?
+
+> A Domain Specific Language is a programming language with a higher level of abstraction optimized for a specific class of problems. A DSL uses the concepts and rules from the field or domain.
+
+- How are they different from other programming languages?
+
+  - less complex than a general-purpose language
+  - developed in close coordination with the experts in the field for which the DSL is being designed. 
+
+.footnote[https://www.jetbrains.com/mps/concepts/domain-specific-languages/]
+]
+
+.pull-right[
+
+### Advantages
+
+- efficient
+
+- avoid paying any runtime overhead
+
+- thinking becomes clearer
+
+- integration between the techies and the domain people
+
+- independent of the target platform
+
+- increased quality
+]
+
+???
+
+In many cases, DSLs are intended to be used not by software people, but instead by non-programmers who are fluent in the domain the DSL addresses.
+
+Once you've got the language and some form of transformation engine - DSL becomes much more efficient, simply because you don't have to do the grunt work manually
+
+if you're generating source code from your DSL program (as opposed to interpreting it) you can use nice, domain-specific abstractions without paying any runtime overhead, because the generator, just like a compiler, can remove the abstractions and generate efficient code.
+
+If you have a way of expressing domain concerns in a language that is closely aligned with the domain, your thinking becomes clearer because the code you write is not cluttered by implementation details
+
+Using DSLs and an execution engine makes the application logic expressed in the DSL code independent of the target platform. Using DSLs can increase the quality of the created product: fewer bugs, better architectural conformance, increased maintainability. 
+---
+class: inverse center middle
+
+# HTML
+
+---
+## Domain: HTML
+
+### Basics  
+
+.pull-left[
+
+Basic structure of a page:
+
+```html
+<html>
+<body>
+  #body of your page
+</body>
+</html>
+```
+]
+
+.pull-right[
+
+Elements: these are your main "tags"  
+
+- `<h1> Heading 1 </h1>`
+
+- `<p> Wine is life.</p>`  
+
+Attributes: provide additional information for the element, such as an image source (`src`) or a link's path (`href`). These are usually displayed as key/value pairs, i.e. `width="500"`. 
+  
+- *void* tags do not have any children/ content so their attributes are what is most important, i.e. `<img />` has `src`, `width` and `height`
+
+]
+---
+
+## Example
+
+![](img/inspect.png)
+---
+
+## Objective
+
+### Make this:
+
+```html
+
+<body>
+  <h1 id='first'>A heading</h1>
+  <p>Some text &amp; <b>some bold text.</b></p>
+  <img src='myimg.png' width='100' height='100' />
+</body>
+
+```
+
+### With this:
+
+```
+
+with_html(
+  body(
+    h1("A heading", id = "first"),
+    p("Some text &", b("some bold text.")),
+    img(src = "myimg.png", width = 100, height = 100)
+  )
+)
+
+```
+
+???
+this DSL is consistent with the domain. it follows the same nesting structure, named args become attributes and unnamed become the content of the tag, and certain cahracters like "&" are escaped.
+---
+
+## Let's do it `r emo::ji("muscle")` - Escaping
+
+.pull-left[
+
+**Problem**:  
+
+`&`, `<`and `>` need to be automatically escaped while making sure they are not doubly escaped.
+
+]
+.pull-right[
+**Solution**:
+
+```{r}
+# S3 classes for distinguishing HTML from text
+html <- function(x) structure(x, class = "advr_html")
+
+print.advr_html <- function(x, ...) {
+  out <- paste0("<HTML> ", x)
+  cat(paste(strwrap(out), collapse = "\n"), "\n", sep = "")
+}
+
+# funs for escaping text to html 
+# and already escaped chars
+
+escape <- function(x) UseMethod("escape")
+
+escape.character <- function(x) {
+  x <- gsub("&", "&amp;", x)
+  x <- gsub("<", "&lt;", x)
+  x <- gsub(">", "&gt;", x)
+
+  html(x)
+}
+
+escape.advr_html <- function(x) x
+```
+]
+
+???
+
+because escaping is so fundamental to making this work, we will start with it
+
+the way to get around these challenges is by creating an S3 class that distiguishes between regular text and html
+
+There are two methods in the generic "escape" class - the character and the advr_html class. the first allows you to escape the characters and the second is for when you do not escape them. 
+---
+## Let's do it `r emo::ji("muscle")` - Basic Tags
+
+.pull-left[
+
+**Problem**:
+
+- `<p>Some text &amp; <b>some bold text.</b></p>`
+
+- Cannot put all the possible attributes of `<p>` because of volume and custom attributes
+
+**Solution**:
+
+`p("Some text. ", b(i("some bold italic text")), class = "mypara")`
+
+1. Separate elements that are named and unnamed using `rlang::list2()`
+
+  1. `rlang::list2()` : collects arguments via dynamic dots
+
+1. Check to see if they are named or not
+
+1. Return named/unnamed components separately
+
+]
+.pull-right[
+
+
+```{r}
+dots_partition <- function(...) {
+  dots <- list2(...)
+  
+ if (is.null(names(dots))) {
+  is_named <- rep(FALSE, length(dots))
+} else {
+  is_named <- names(dots) != ""
+}
+  
+  list(
+    named = dots[is_named],
+    unnamed = dots[!is_named]
+  )
+}
+
+str(dots_partition(a = 1, 2, b = 3, 4))
+#> List of 2
+#>  $ named  :List of 2
+#>   ..$ a: num 1
+#>   ..$ b: num 3
+#>  $ unnamed:List of 2
+#>   ..$ : num 2
+#>   ..$ : num 4
+```
+
+]
+
+???
+what we going to do is create a function for one of the more basic tags and then generalise it for all HTML tags. 
+p is one of the most common HTML tags. It has children like <i> and <b> 
+
+so the first step is to create a function that partition anything that comes through the dynamic dots
+
+---
+## Let's do it `r emo::ji("muscle")` - Basic Tags pt.2
+
+```{r}
+source("dsl-html-attributes.r")
+p <- function(...) {
+  dots <- dots_partition(...)
+  # grabs name/values pairs
+  attribs <- html_attributes(dots$named)
+  # check to see if there are children
+  children <- map_chr(dots$unnamed, escape)
+
+  html(paste0(
+    "<p", attribs, ">",
+    paste(children, collapse = ""),
+    "</p>"
+  ))
+}
+
+p("Some text")
+#> <HTML> <p>Some text</p>
+p("Some text", id = "myid")
+#> <HTML> <p id='myid'>Some text</p>
+p("Some text", class = "important", `data-value` = 10)
+#> <HTML> <p class='important' data-value='10'>Some text</p>
+```
+
+???
+now we create the <p> function. 
+
+---
+## Tag Functions
+
+.pull-left[
+**Problem**: generalise `p()` for other tags, like `<b>`
+
+**Solution**:
+
+1. Create a function with `rlang::new_function()`
+
+1. Wrap the helper funcs within `expr({})`
+
+  1. partition args  
+  1. get attrs  
+  1. get children  
+  1. put it all together in nested `paste0`  
+  
+1. Return objects into the environment in which the fun was called otherwise the tags would be returned in the env in which the tag func was created
+  
+]
+.pull-right[
+
+```{r}
+tag <- function(tag) {
+  new_function(
+    # not entirely sure what this line does
+    exprs(... = ),
+    expr({
+      dots <- dots_partition(...)
+      attribs <- html_attributes(dots$named)
+      children <- map_chr(dots$unnamed, escape)
+
+      html(paste0(
+        !!paste0("<", tag), attribs, ">",
+        paste(children, collapse = ""),
+        !!paste0("</", tag, ">")
+      ))
+    }),
+    caller_env()
+  )
+}
+
+p <- tag("p")
+b <- tag("b")
+i <- tag("i")
+p("Some text. ", b(i("some bold italic text")), class = "mypara")
+#> <HTML> <p class='mypara'>Some text. <b><i>
+#> some bold italic text</i></b></p>
+
+```
+
+]
+
+???
+
+now that we have created a tag for <p> we can generalise it
+
+---
+## Void Tags
+
+Now we need a func to handle *void tags* like `<img>` - remember void tags have no children, they only have attributes so we need the function to produce an error if the `tag` argument is *unnamed*
+
+```{r}
+void_tag <- function(tag) {
+  new_function(
+    exprs(... = ),
+    expr({
+      dots <- dots_partition(...)
+      if (length(dots$unnamed) > 0) {
+        abort(!!paste0("<", tag, "> must not have unnamed arguments"))
+      }
+      attribs <- html_attributes(dots$named)
+
+      html(paste0(!!paste0("<", tag), attribs, " />"))
+    }),
+    caller_env()
+  )
+}
+
+img(src = "myimage.png", width = 100, height = 100)
+#> <HTML> <img src='myimage.png' width='100' height='100' />
+```
+
+---
+
+### ALL THE TAGS `r emo::ji("dance")`
+
+```{r}
+tags <- c("a", "abbr", "address", "article", "aside", "audio",
+  "b","bdi", "bdo", "blockquote", "body", "button", "canvas",
+  "caption","cite", "code", "colgroup", "data", "datalist",
+  "dd", "del","details", "dfn", "div", "dl", "dt", "em",
+  "eventsource","fieldset", "figcaption", "figure", "footer",
+  "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header",
+  "hgroup", "html", "i","iframe", "ins", "kbd", "label",
+  "legend", "li", "mark", "map","menu", "meter", "nav",
+  "noscript", "object", "ol", "optgroup", "option", "output",
+  "p", "pre", "progress", "q", "ruby", "rp","rt", "s", "samp",
+  "script", "section", "select", "small", "span", "strong",
+  "style", "sub", "summary", "sup", "table", "tbody", "td",
+  "textarea", "tfoot", "th", "thead", "time", "title", "tr",
+  "u", "ul", "var", "video"
+)
+
+void_tags <- c("area", "base", "br", "col", "command", "embed",
+  "hr", "img", "input", "keygen", "link", "meta", "param",
+  "source", "track", "wbr"
+)
+```
+
+???
+
+beware several of the tags clash with base r funcs so do not have them in the global environment or wrap them in a list
+---
+## Implementation
+
+1. Named list containing all the tag functions:
+
+```{r}
+html_tags <- c(
+  tags %>% set_names() %>% map(tag),
+  void_tags %>% set_names() %>% map(void_tag)
+)
+# returns a large list of functions for each of the tags and void tags
+```
+
+2. Explicit utilization
+
+```{r}
+html_tags$p(
+  "Some text. ",
+  html_tags$b(html_tags$i("some bold italic text")),
+  class = "mypara"
+)
+#> <HTML> <p class='mypara'>Some text. <b><i>some bold italic
+#> text</i></b></p>
+```
+
+---
+## The DSL! 
+
+Finish with a function that puts it all together
+
+```{r}
+with_html <- function(code) {
+  # environment in which you call the func
+  code <- enquo(code)
+  # transforms data into a data mask allowing quosures 
+  # allows you to pass in the html_tags list as the data object to code quosure
+  eval_tidy(code, html_tags)
+}
+```
+
+Example:
+
+```{r}
+with_html(
+  body(
+    h1("A heading", id = "first"),
+    p("Some text &", b("some bold text.")),
+    # void tag
+    img(src = "myimg.png", width = 100, height = 100)
+  )
+)
+#> <HTML> <body><h1 id='first'>A heading</h1><p>Some text &amp;<b>some
+#> bold text.</b></p><img src='myimg.png' width='100' height='100'
+#> /></body>
+```
+
+---
+class: center, middle
+
+# Thanks!
+
