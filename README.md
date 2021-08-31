@@ -88,6 +88,9 @@ This repo contains 3 main folders:
 
 *Cohort 5 [Europe/Africa]: (started 2021-03-16) Tuesdays, 18:30 CET (CEST)*
 
+<details>
+  <summary> Schedule </summary>
+
 - 2021-03-23 Chapter 02: Names and Values - Hoda Mazaheri
 - 2021-03-30 Chapter 03: Vectors  -  Layla Bouzoubaa
 - 2021-04-06 Chapter 04: Subsetting - kayteeflick
@@ -107,10 +110,12 @@ This repo contains 3 main folders:
 - 2021-07-20 Chapter 19: Quasiquotation - Shamsuddeen
 - 2021-07-27 Chapter 20: Evaluation - Jiwan Heo
 - 2021-08-03 Chapter 21: Translating R Code - Layla Bouzoubaa
-- 2021-08-10 Chapter 22: Debugging -
-- 2021-08-17 Chapter 23: Measuring performance - Brett Longworth
-- 2021-08-24 Chapter 24: Improving performance -
+- 2021-08-17 Chapter 22: Debugging - Mariela
+- 2021-08-24 Chapter 23: Measuring performance - Brett Longworth
+- 2021-08-24 Chapter 24: Improving performance - Brett Longworth
 - 2021-08-31 Chapter 25: re-write R code in C++ - Hannes Oberreiter
+
+</details>
 
 <hr>
 
