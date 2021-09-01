@@ -271,10 +271,10 @@ Chapter 23 / 24 - Measuring & Improving Performance:
 - Cohort 2: [Josh Pohlkamp-Hartt](https://twitter.com/jpohlkamphartt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week23/Cohort2_America/Chapter23Slides.html)
 - Cohort 3: (Chapter 24 [Megan Stodel](https://twitter.com/MeganStodel) ([slides](Presentations/Week14/Cohort3/improving_performance.pdf))  
 
-
 Chapter 25: Rcpp
 
 - Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week24/Cohort1/Chapter25.html) | [video](https://youtu.be/2JDeacWl1DM))
+- Cohort 5: [Hannes Oberreiter](https://twitter.com/btree_hannes) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week25/Cohort5/index_C.html) | [video](https://youtu.be/nske4iqsgh0))
 
 Book Recap
 
