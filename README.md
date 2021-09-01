@@ -18,14 +18,13 @@ This repo contains 3 main folders:
 
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
+<details>
+  <summary> Schedule </summary>
+
 - 2021-02-04 Chapter 22: Debugging - Mike Jeziorski
 - 2021-02-11 Chapter 23: Measuring Performance - Josh Pohlkamp-Hartt
 - 2021-02-18 Chapter 24: Improving Performance 
 - 2021-02-25 Chapter 25: Rewriting R code in C++ - Kevin Kent
-
-<details>
-  <summary> Future Meetings </summary>
-
 - 2021-01-28 Chapter 22: Debugging
 - 2021-02-04 Chapters 23 & 24: Measuring & Improving performance
 - 2021-02-11 Chapter 25 Rewriting R code in C++
@@ -37,13 +36,12 @@ This repo contains 3 main folders:
 
 *Cohort 3 [Europe/Africa]: (started 2020-08-04) Tuesdays, 19:30 CET (CEST)*
 
+<details>
+  <summary> Schedule </summary>
+
 - 2021-01-05 Chapter 14: R6 - Part 2
 - 2021-01-12 Chapter 15: S4
 - 2021-01-19 Chapter 16: Trade-offs & Section 3 Recap
-
-<details>
-  <summary> Future Meetings </summary>
-
 - 2021-01-26 Chapter 16: Trade-offs & Section 3 Recap
 - 2021-02-02 Chapter 17: Big picture (of Metaprogramming)
 - 2021-02-09 Chapter 18: Expressions
@@ -62,13 +60,12 @@ This repo contains 3 main folders:
 
 *Cohort 4 (started 2020-10-05) Mondays, 17:00 ET*
 
+<details>
+  <summary> Schedule </summary>
+
 - 2021-01-04 Chapter 12 - Base types (OOP)
 - 2021-01-11 Chapter 13 - S3 - Roberto
 - 2021-01-17 Chapter 14: R6
-
-<details>
-  <summary> Future Meetings </summary>
-
 - 2021-01-18 Chapter 15: S4
 - 2021-01-25 Chapter 16: Trade-offs & Section 3 Recap
 - 2021-02-01 Chapter 17: Big picture (of Metaprogramming)
