@@ -1,4 +1,5 @@
 # R4DS Advanced R Bookclub
+
 A weekly reading group following the chapters of [Advanced R by Hadley Wickham (2nd ed)](https://adv-r.hadley.nz/)
 
 Visit the [#book_club-advanced_r channel](https://r4ds.io/join) on Slack to join the video chat!
@@ -12,6 +13,7 @@ This repo contains 3 main folders:
 - Data: Example datasets are stored in this folder to help facilitate practical applications - including [beer production](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-03-31/readme.md) and [beer reviews](https://www.kaggle.com/rdoume/beerreviews). Feel free to add your own!
 
 #### Some helpful links:
+
 - GitHub navigation: [GitHub Web Editor](https://youtu.be/d41oc2OMAuI) | [GitHub Local Setup](https://www.youtube.com/watch?v=hNUNPkoledI)
 
 ### Meeting Schedule
@@ -158,7 +160,7 @@ Chapter 6 - Functions
 
 - Cohort 1: [Asmae Toumi](https://twitter.com/asmae_toumi) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week06/Cohort1/Chap6slides.html#1) | [video](https://youtu.be/UwzGhMndWzs))
 - Cohort 2: [Meenakshi Kushwaha](https://twitter.com/envhealthspeak) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week06/Cohort2/#1) | [video](https://www.youtube.com/watch?v=51PMEM4Efb8))
-- Cohort 3: [Novica Nakov](https://twitter.com/novicanakov) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week06/Cohort3/Chap6slides.html#1) | [video]())
+- Cohort 3: [Novica Nakov](https://twitter.com/novicanakov) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week06/Cohort3/Chap6slides.html#1) | [video](https://youtu.be/Vwuo-e_Ir0s))
 - Cohort 4: June Choe (SLIDES | [video](https://youtu.be/lg5rzOU6lsg))
 
 Chapter 7 - Environments
@@ -201,6 +203,7 @@ Chapter 11 - Function operators
 - Cohort 4: Stephen Holsenbeck (SLIDES | [video](https://youtu.be/rVooJFdbePs))
 
 Chapter 12 - OOP base types
+
 - Cohort 3: [Megan Stodel](https://twitter.com/MeganStodel) ([slides](https://github.com/MeganStodel/bookclub-Advanced_R/tree/cohort-3-base-types/Presentations/Week12/Cohort3)  | [video](https://youtu.be/IL6iJhAsZAY))
 - Cohort 5: [Hannes Oberreiter](https://twitter.com/btree_hannes) ([slides](https://hannesoberreiter.github.io/advr-r-oo-presi/index_basic.html#1) | [video](https://youtu.be/NeHtEGab1Og))
 
