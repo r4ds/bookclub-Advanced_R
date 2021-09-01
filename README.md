@@ -1,4 +1,5 @@
 # R4DS Advanced R Bookclub
+
 A weekly reading group following the chapters of [Advanced R by Hadley Wickham (2nd ed)](https://adv-r.hadley.nz/)
 
 Visit the [#book_club-advanced_r channel](https://r4ds.io/join) on Slack to join the video chat!
@@ -12,20 +13,20 @@ This repo contains 3 main folders:
 - Data: Example datasets are stored in this folder to help facilitate practical applications - including [beer production](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-03-31/readme.md) and [beer reviews](https://www.kaggle.com/rdoume/beerreviews). Feel free to add your own!
 
 #### Some helpful links:
+
 - GitHub navigation: [GitHub Web Editor](https://youtu.be/d41oc2OMAuI) | [GitHub Local Setup](https://www.youtube.com/watch?v=hNUNPkoledI)
 
 ### Meeting Schedule
 
 *Cohort 2 [Americas]: (started 2020-07-30) - Thursdays, 7:30pm EDT/EST*
 
+<details>
+  <summary> Schedule </summary>
+
 - 2021-02-04 Chapter 22: Debugging - Mike Jeziorski
 - 2021-02-11 Chapter 23: Measuring Performance - Josh Pohlkamp-Hartt
 - 2021-02-18 Chapter 24: Improving Performance 
 - 2021-02-25 Chapter 25: Rewriting R code in C++ - Kevin Kent
-
-<details>
-  <summary> Future Meetings </summary>
-
 - 2021-01-28 Chapter 22: Debugging
 - 2021-02-04 Chapters 23 & 24: Measuring & Improving performance
 - 2021-02-11 Chapter 25 Rewriting R code in C++
@@ -37,13 +38,12 @@ This repo contains 3 main folders:
 
 *Cohort 3 [Europe/Africa]: (started 2020-08-04) Tuesdays, 19:30 CET (CEST)*
 
+<details>
+  <summary> Schedule </summary>
+
 - 2021-01-05 Chapter 14: R6 - Part 2
 - 2021-01-12 Chapter 15: S4
 - 2021-01-19 Chapter 16: Trade-offs & Section 3 Recap
-
-<details>
-  <summary> Future Meetings </summary>
-
 - 2021-01-26 Chapter 16: Trade-offs & Section 3 Recap
 - 2021-02-02 Chapter 17: Big picture (of Metaprogramming)
 - 2021-02-09 Chapter 18: Expressions
@@ -62,13 +62,12 @@ This repo contains 3 main folders:
 
 *Cohort 4 (started 2020-10-05) Mondays, 17:00 ET*
 
+<details>
+  <summary> Schedule </summary>
+
 - 2021-01-04 Chapter 12 - Base types (OOP)
 - 2021-01-11 Chapter 13 - S3 - Roberto
 - 2021-01-17 Chapter 14: R6
-
-<details>
-  <summary> Future Meetings </summary>
-
 - 2021-01-18 Chapter 15: S4
 - 2021-01-25 Chapter 16: Trade-offs & Section 3 Recap
 - 2021-02-01 Chapter 17: Big picture (of Metaprogramming)
@@ -87,6 +86,9 @@ This repo contains 3 main folders:
 <hr>
 
 *Cohort 5 [Europe/Africa]: (started 2021-03-16) Tuesdays, 18:30 CET (CEST)*
+
+<details>
+  <summary> Schedule </summary>
 
 - 2021-03-23 Chapter 02: Names and Values - Hoda Mazaheri
 - 2021-03-30 Chapter 03: Vectors  -  Layla Bouzoubaa
@@ -107,10 +109,12 @@ This repo contains 3 main folders:
 - 2021-07-20 Chapter 19: Quasiquotation - Shamsuddeen
 - 2021-07-27 Chapter 20: Evaluation - Jiwan Heo
 - 2021-08-03 Chapter 21: Translating R Code - Layla Bouzoubaa
-- 2021-08-10 Chapter 22: Debugging -
-- 2021-08-17 Chapter 23: Measuring performance - Brett Longworth
-- 2021-08-24 Chapter 24: Improving performance -
+- 2021-08-17 Chapter 22: Debugging - Mariela
+- 2021-08-24 Chapter 23: Measuring performance - Brett Longworth
+- 2021-08-24 Chapter 24: Improving performance - Brett Longworth
 - 2021-08-31 Chapter 25: re-write R code in C++ - Hannes Oberreiter
+
+</details>
 
 <hr>
 
@@ -156,7 +160,7 @@ Chapter 6 - Functions
 
 - Cohort 1: [Asmae Toumi](https://twitter.com/asmae_toumi) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week06/Cohort1/Chap6slides.html#1) | [video](https://youtu.be/UwzGhMndWzs))
 - Cohort 2: [Meenakshi Kushwaha](https://twitter.com/envhealthspeak) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week06/Cohort2/#1) | [video](https://www.youtube.com/watch?v=51PMEM4Efb8))
-- Cohort 3: [Novica Nakov](https://twitter.com/novicanakov) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week06/Cohort3/Chap6slides.html#1) | [video]())
+- Cohort 3: [Novica Nakov](https://twitter.com/novicanakov) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week06/Cohort3/Chap6slides.html#1) | [video](https://youtu.be/Vwuo-e_Ir0s))
 - Cohort 4: June Choe (SLIDES | [video](https://youtu.be/lg5rzOU6lsg))
 
 Chapter 7 - Environments
@@ -199,6 +203,7 @@ Chapter 11 - Function operators
 - Cohort 4: Stephen Holsenbeck (SLIDES | [video](https://youtu.be/rVooJFdbePs))
 
 Chapter 12 - OOP base types
+
 - Cohort 3: [Megan Stodel](https://twitter.com/MeganStodel) ([slides](https://github.com/MeganStodel/bookclub-Advanced_R/tree/cohort-3-base-types/Presentations/Week12/Cohort3)  | [video](https://youtu.be/IL6iJhAsZAY))
 - Cohort 5: [Hannes Oberreiter](https://twitter.com/btree_hannes) ([slides](https://hannesoberreiter.github.io/advr-r-oo-presi/index_basic.html#1) | [video](https://youtu.be/NeHtEGab1Og))
 
@@ -269,10 +274,10 @@ Chapter 23 / 24 - Measuring & Improving Performance:
 - Cohort 2: [Josh Pohlkamp-Hartt](https://twitter.com/jpohlkamphartt) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week23/Cohort2_America/Chapter23Slides.html)
 - Cohort 3: (Chapter 24 [Megan Stodel](https://twitter.com/MeganStodel) ([slides](Presentations/Week14/Cohort3/improving_performance.pdf))  
 
-
 Chapter 25: Rcpp
 
 - Cohort 1: [Daryn Ramsden](https://twitter.com/thisisdaryn) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week24/Cohort1/Chapter25.html) | [video](https://youtu.be/2JDeacWl1DM))
+- Cohort 5: [Hannes Oberreiter](https://twitter.com/btree_hannes) ([slides](https://r4ds.github.io/bookclub-Advanced_R/Presentations/Week25/Cohort5/index_C.html) | [video](https://youtu.be/nske4iqsgh0))
 
 Book Recap
 
