@@ -1,5 +1,9 @@
 # R4DS Advanced R Bookclub
 
+**THIS IS AN OLD REPOSITORY FOR THIS CLUB! SEE [bookclub-advr](https://github.com/r4ds/bookclub-advr) FOR THE NEW ITERATION!**
+
+---
+
 A weekly reading group following the chapters of [Advanced R by Hadley Wickham (2nd ed)](https://adv-r.hadley.nz/)
 
 Visit the [#book_club-advanced_r channel](https://r4ds.io/join) on Slack to join the video chat!
